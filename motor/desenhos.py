@@ -418,3 +418,65 @@ def _fig_desenho(svg: str, legenda: str, altura: int) -> str:
         f'<span class="cred">Esquema autoral, desenhado para este caso.</span>'
         f"</figcaption></figure>"
     )
+
+
+# ═══════════════════════════ quadro de hipóteses ═══════════════════════════
+
+# O caso do NEJM não entrega o diagnóstico: entrega dados, e o discussant vai
+# derrubando candidatos até sobrar um. O quadro é esse movimento, visível.
+# Ele reaparece ao longo do caso, e cada dado novo derruba ou enfraquece uma
+# linha — com o motivo escrito ao lado. O nome da doença só sobra no fim.
+
+ESTADOS = {
+    "de_pe": ("", "de pé"),
+    "enfraquecida": ("fraca", "enfraquecida"),
+    "derrubada": ("fora", "derrubada"),
+    "confirmada": ("dentro", "confirmada"),
+}
+
+
+def hip(chave: str, nome: str, exige: str) -> dict:
+    """Um candidato do diferencial.
+
+    `exige` é o que teria de ser verdade para ele ser o diagnóstico — não o que
+    este paciente tem. A diferença é o caso inteiro: escrever "púrpura palpável
+    e mononeurite múltipla" na linha da vasculite ANCA é apontar o dedo para o
+    paciente antes de qualquer exame.
+    """
+    return {"chave": chave, "nome": nome, "exige": exige}
+
+
+def quadro(hipoteses, estado=None, passo_a_passo: bool = True,
+           titulo: str = "", novos=None) -> str:
+    """O diferencial e o que já aconteceu com cada linha.
+
+    `estado` mapeia chave -> (situação, motivo). Quem não aparece segue de pé.
+    Cada mudança de situação entra como um passo de revelação, para que o
+    professor derrube uma por vez enquanto a turma discute.
+
+    `novos` são as chaves podadas NESTE passo: só elas mostram o motivo por
+    extenso. As que já tinham caído aparecem riscadas e mudas — repetir todos
+    os motivos a cada reaparição enche a tela e apaga o que acabou de mudar.
+    """
+    estado = estado or {}
+    novos = set(novos) if novos is not None else set(estado)
+    linhas = []
+    for h in hipoteses:
+        sit, motivo = estado.get(h["chave"], ("de_pe", ""))
+        if sit not in ESTADOS:
+            raise ValueError(f"situação desconhecida: {sit!r}; use {sorted(ESTADOS)}")
+        cls, rotulo = ESTADOS[sit]
+        muda = sit != "de_pe"
+        passo = " pv" if (muda and passo_a_passo and h["chave"] in novos) else ""
+        linhas.append(
+            f'<div class="hp {cls}{passo}" data-hip="{h["chave"]}">'
+            f'<div class="hn">{texto(h["nome"])}</div>'
+            f'<div class="hx">{texto(h["exige"])}</div>'
+            + (f'<div class="hm"><b>{texto(rotulo)}</b> {texto(motivo)}</div>'
+               if muda and h["chave"] in novos
+               else (f'<div class="hm mudo">{texto(rotulo)}</div>' if muda
+                     else '<div class="hm"></div>'))
+            + "</div>"
+        )
+    cab = f'<div class="qt">{texto(titulo)}</div>' if titulo else ""
+    return f'<div class="quadro">{cab}{"".join(linhas)}</div>'

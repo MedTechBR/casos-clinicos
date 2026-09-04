@@ -50,40 +50,41 @@ P1 = pergunta(
 
 P2 = pergunta(
     2,
-    "Quais exames você não pode deixar de pedir na primeira hora?",
+    "O paciente está no pronto-socorro há quarenta minutos. Qual exame muda "
+    "a sua conduta ainda nesta hora?",
     [
         alt(
             "Espirometria com difusão de monóxido de carbono",
-            "A difusão aumenta na hemorragia alveolar e é um dado "
-            "elegante. Um paciente com saturação de 88% e dispneia em "
-            "repouso não consegue realizar o exame.",
+            "A difusão aumenta na hemorragia alveolar e é um dado elegante. Um "
+            "paciente com saturação de 88% e dispneia em repouso não consegue "
+            "executar a manobra, e o resultado não chegaria nesta hora.",
         ),
         alt(
-            "Sedimento urinário, com pesquisa de dismorfismo "
+            "Sedimento urinário em urina fresca, com pesquisa de dismorfismo "
             "eritrocitário e de cilindros",
-            "Custa pouco, fica pronto em minutos e localiza o "
-            "sangramento. Depende de urina fresca e de alguém no "
-            "microscópio.", certa=True,
+            "É o único exame desta lista que fica pronto em minutos, custa "
+            "quase nada e responde à pergunta que separa dois mundos: o "
+            "sangramento vem do glomérulo ou do trato urinário? Depende de "
+            "urina fresca e de alguém disposto a olhar no microscópio.",
+            certa=True,
         ),
         alt(
             "Angiotomografia de tórax para tromboembolismo pulmonar",
-            "A hemoptise levanta a suspeita, mas o quadro tem oito "
-            "semanas, cursa com anemia e o infiltrado é difuso. Não é "
-            "apresentação embólica.",
+            "A hemoptise levanta a suspeita, mas o quadro tem oito semanas, "
+            "cursa com anemia e o infiltrado é difuso e bilateral. Não é "
+            "apresentação embólica, e o contraste custa caro num rim que já "
+            "está caindo.",
         ),
         alt(
-            "ANCA e anticorpo anti-membrana basal glomerular, no mesmo "
-            "pedido",
-            "São as duas sorologias que decidem a conduta das próximas "
-            "horas. O anti-MBG tem prioridade porque, na doença de "
-            "Goodpasture, a demora de poucos dias custa a função renal de "
-            "forma definitiva.", certa=True,
+            "Painel sorológico completo de doenças autoimunes",
+            "As sorologias serão pedidas, e algumas delas decidirão o "
+            "tratamento — mas nenhuma volta nesta hora. Pedir tudo de uma vez "
+            "não é a mesma coisa que saber o que fazer enquanto se espera.",
         ),
         alt(
-            "Painel de autoanticorpos de miosite",
-            "Não há fraqueza proximal, elevação de CPK ou lesão cutânea "
-            "compatível. O exame não responde a nenhuma pergunta que "
-            "esteja em aberto.",
+            "Ecocardiograma transtorácico",
+            "Faz falta mais adiante, quando for preciso julgar uma das "
+            "hipóteses da lista. Não muda nada nos próximos sessenta minutos.",
         ),
     ],
 )
@@ -131,10 +132,10 @@ P4 = pergunta(
             "motivos.",
         ),
         alt(
-            "Vasculite associada ao ANCA e doença anti-membrana basal "
-            "glomerular",
-            "As duas cursam com complemento normal. É por isso que elas "
-            "seguem no topo da lista depois deste resultado.",
+            "Endocardite infecciosa e nefrite pós-infecciosa",
+            "Ao contrário: são justamente duas das causas que CONSOMEM "
+            "complemento, e o resultado normal argumenta contra elas — não a "
+            "favor. Vale conferir a direção da inferência antes de marcar.",
         ),
         alt(
             "Nenhum; o complemento não discrimina nesta situação",

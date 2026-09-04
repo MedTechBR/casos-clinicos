@@ -25,6 +25,17 @@ def _quebra(h, alvo, veneno, antes=True):
     return h.replace(alvo, (veneno + alvo) if antes else (alvo + veneno), 1)
 
 
+def _antes_da_pergunta(h, n, veneno):
+    """Injeta o texto no fim do slide ANTERIOR à pergunta n.
+
+    A checagem ignora de propósito o próprio slide da pergunta — envenenar ali
+    não prova nada.
+    """
+    i = h.index(f'<div class="qn">Pergunta {n}</div>')
+    fim = h.rindex("</section>", 0, i)
+    return h[:fim] + veneno + h[fim:]
+
+
 CASOS = [
     (
         "alinhamento pergunta/resposta",
@@ -52,6 +63,12 @@ CASOS = [
         V.v_creditos,
         lambda h: re.sub(r'<span class="cred">.*?</span>', '<span class="cred"></span>',
                          h, count=1, flags=re.S),
+    ),
+    (
+        "a resposta não está no slide anterior",
+        V.v_sem_spoiler,
+        lambda h: _antes_da_pergunta(h, 3,
+                                     "<p>O sangramento é glomerular.</p>"),
     ),
     (
         "créditos batem com as figuras",

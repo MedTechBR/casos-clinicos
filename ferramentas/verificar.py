@@ -137,6 +137,50 @@ def v_banco(h, r):
     r.add("coerência banco × slides", not erros, " · ".join(erros))
 
 
+def v_sem_spoiler(h, r):
+    """A resposta não pode estar impressa no slide anterior à pergunta.
+
+    É o defeito que mais custa à sessão e o mais fácil de reintroduzir: alguém
+    acrescenta uma caixa explicativa antes da pergunta que ela responde, e o
+    grupo passa a copiar em vez de raciocinar. A checagem compara as palavras
+    de conteúdo da alternativa correta com o texto dos dois slides anteriores.
+    """
+    S = slides(h)
+    erros = []
+    banais = set("""a as o os um uma de do da dos das em no na nos nas por para
+        com sem que e ou se ao aos as e mais menos ser ter há não já também
+        quando onde qual quais como este esta esse essa isso aquilo seu sua
+        entre sobre ate depois antes durante deve devem pode podem""".split())
+    for i, s_ in enumerate(S):
+        if 'class="slide ans' not in s_ or i < 2:
+            continue
+        certas = re.findall(r'<li class="ok">.*?<div class="tt">(.*?)</div>', s_, re.S)
+        # os dois slides antes da pergunta (a pergunta é i-1)
+        antes = " ".join(S[max(0, i - 3):i - 1])
+        antes = re.sub(r'class="pnote".*?</div>\s*</div>', " ", antes, flags=re.S)
+        # o quadro de hipóteses é a lista de trabalho do grupo, não uma caixa
+        # explicativa: ele nomeia todos os candidatos por definição, e nomear
+        # não é o mesmo que entregar a inferência que a pergunta pede
+        antes = re.sub(r'<div class="quadro.*?</div>\s*(?=<div class="(?:cap|box)|</div>)',
+                       " ", antes, flags=re.S)
+        antes = re.sub(r'<div class="hp[^"]*".*?</div></div>', " ", antes, flags=re.S)
+        pa = set(_norm(_texto(antes)).split()) - banais
+        for t in certas:
+            pc = [w for w in _norm(_texto(t)).split() if len(w) > 4 and w not in banais]
+            if not pc:
+                continue
+            comuns = [w for w in pc if w in pa]
+            if len(comuns) / len(pc) >= 0.7:
+                erros.append(f"slide {i+1}: “{_texto(t)[:52]}” já está escrita "
+                             f"antes ({len(comuns)}/{len(pc)} palavras)")
+    r.add("a resposta não está no slide anterior", not erros, " · ".join(erros))
+
+
+def _norm(t):
+    t = unicodedata.normalize("NFD", t).encode("ascii", "ignore").decode().lower()
+    return re.sub(r"[^a-z0-9 ]+", " ", t)
+
+
 def v_arvore(h, r):
     """Todo destino aponta para um bloco que existe; todo bloco é alcançável."""
     ids = set(re.findall(r'<section class="[^"]*" id="s-([^"]+)"', h))
@@ -312,6 +356,7 @@ def main(caminho=None):
     v_titulos(h, r)
     v_markdown(h, r)
     v_banco(h, r)
+    v_sem_spoiler(h, r)
     v_arvore(h, r)
     v_creditos(h, r)
     v_creditos_batem(h, r)

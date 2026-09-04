@@ -15,10 +15,37 @@ from motor.conteudo import (
     painel, passo, revelar, rotulo, seta, sinais, tabela,
 )
 from motor.desenhos import (
-    capilar_compartilhado, comparacao, crescente_glomerular, linha_do_tempo,
-    mapa_do_corpo, marco, padroes_imunofluorescencia,
+    capilar_compartilhado, crescente_glomerular, hip, linha_do_tempo,
+    mapa_do_corpo, marco, padroes_imunofluorescencia, quadro,
 )
-from motor.slides import bloco, capa, discussao, narrativa, tela
+from motor.slides import bloco, capa, discussao, momento, narrativa, tela
+
+# ─────────────────────────── o diferencial ───────────────────────────
+#
+# A lista que o grupo levanta depois do exame físico, e que cada dado novo
+# poda. `exige` diz o que TERIA de ser verdade para o candidato ser o
+# diagnóstico — não o que este paciente tem. É a diferença entre o método do
+# discussant e apontar o dedo: escrever "púrpura palpável e mononeurite
+# múltipla" na linha da vasculite ANCA entrega o caso antes do primeiro exame.
+
+HIPOTESES = [
+    hip("urologico", "Sangramento urinário com pneumopatia à parte",
+        "Hemácias isomórficas, sem cilindros — e duas doenças independentes"),
+    hip("anca", "Vasculite de pequeno vaso associada ao ANCA",
+        "ANCA reagente e glomerulonefrite sem depósitos imunes na biópsia"),
+    hip("mbg", "Doença anti-membrana basal glomerular",
+        "Anti-MBG reagente e depósito linear ao longo da membrana basal"),
+    hip("lupus", "Lúpus eritematoso sistêmico",
+        "FAN e anti-DNA reagentes, complemento consumido, depósitos granulosos"),
+    hip("crio", "Crioglobulinemia mista",
+        "Crioglobulinas positivas e C4 desproporcionalmente baixo"),
+    hip("endocardite", "Endocardite infecciosa",
+        "Hemocultura positiva e vegetação ao ecocardiograma"),
+    hip("infeccao", "Infecção pulmonar grave com lesão renal aguda",
+        "Um foco infeccioso identificado, e o rim acompanhando a sepse"),
+    hip("droga", "Vasculite induzida por droga",
+        "Hidralazina, propiltiouracila, minociclina ou levamisol em uso"),
+]
 
 from .banco import BANCO
 from .perguntas import P1, P2, P3, P4, P5, P6, P7, P8, P9
@@ -93,13 +120,12 @@ SLIDES = [
                   "Dispneia em repouso. Cerca de 50 mL de sangue vivo em duas "
                   "ocasiões.", agora=True),
         ]),
-        box("O que a régua mostra",
-            p("A doença não começou no pulmão. Começou na via aérea superior, "
-              "passou pelas articulações e pelo estado geral, e só nas duas "
-              "últimas semanas chegou ao alvéolo. Oito semanas é tempo demais "
-              "para infecção aguda e tempo de menos para doença crônica "
-              "estabelecida."),
-            tipo="pausa"),
+        nota("Antes de avançar",
+            p("Peça à turma que descreva o curso antes de você comentar: onde "
+              "a doença começou, para onde foi, e o que oito semanas excluem "
+              "nas duas pontas. A inferência é o exercício — entregá-la "
+              "impressa ao lado dos dados é o que transforma raciocínio em "
+              "leitura.")),
         centro=True,
     ),
     narrativa("O caso · bloco 2", "Exame físico",
@@ -149,7 +175,7 @@ SLIDES = [
              "algumas lesões com centro escurecido."),
             ("nervo",
              "Pé caído à direita e déficit ulnar à esquerda. Assimétrico, sem "
-             "nível medular e sem raiz única: mononeurite múltipla."),
+             "nível medular e sem raiz única."),
         ], altura=344),
         nota("Antes de avançar",
             p("Revele um território por vez e peça à turma que nomeie o "
@@ -180,24 +206,25 @@ SLIDES = [
         centro=True,
         ident="parede_compartilhada",
     ),
-    discussao("Síndrome pulmão-rim",
-        p("A lista de causas de hemorragia alveolar associada a "
-          "glomerulonefrite é curta, e cada uma delas deixa uma marca "
-          "própria fora do pulmão e do rim."),
-        tabela(["Causa", "Mecanismo", "Complemento", "Achado que costuma acompanhar"], [
-            ["Vasculite associada ao ANCA", "Vasculite necrosante pauci-imune de pequeno vaso", "Normal", "Púrpura palpável, mononeurite múltipla, via aérea superior"],
-            ["Doença anti-membrana basal glomerular", "Anticorpo contra o colágeno tipo IV", "Normal", "Acometimento restrito a pulmão e rim"],
-            ["Lúpus eritematoso sistêmico", "Deposição de imunocomplexos", "**Baixo**", "Rash, artrite, citopenias, serosite"],
-            ["Crioglobulinemia mista", "Crioprecipitado obstruindo e inflamando", "**C4 muito baixo**", "Púrpura, neuropatia, associação com hepatite C"],
-            ["Endocardite infecciosa", "Embolização e imunocomplexos", "Baixo ou normal", "Sopro novo, febre alta, hemocultura positiva"],
-            ["Infecção grave com lesão renal aguda", "Duas lesões independentes", "Normal", "Foco infeccioso identificável"],
-        ], tamanho="sm"),
-        box("Observação",
-            p("A hemoptise associada a queda rápida da filtração glomerular é "
-              "situação de urgência diagnóstica. O anti-MBG e o ANCA devem "
-              "ser solicitados no momento em que a hipótese é levantada, e "
-              "não depois da biópsia.")),
+    momento("Segunda parte",
+        "Diagnóstico diferencial",
+        "A partir daqui o caso para de contar e começa a testar. A lista que o "
+        "grupo levantar agora é a que vai sendo podada, um resultado por vez.",
+        ident="p2_diferencial"),
+    discussao("O que pode fazer as duas coisas",
+        p("Hemorragia alveolar com glomerulonefrite é uma lista curta, e a "
+          "turma consegue levantá-la em voz alta antes de qualquer resultado. "
+          "A coluna da direita não diz o que este paciente tem: diz o que "
+          "**teria de ser verdade** para cada candidato ser o diagnóstico. É "
+          "essa coluna que a investigação vai testar, uma linha por vez."),
+        quadro(HIPOTESES, titulo="Levantado pelo grupo, ao fim do exame físico"),
+        nota("Como conduzir",
+            p("Não mostre o quadro pronto. Peça as hipóteses à turma primeiro e "
+              "escreva no quadro branco; só então revele esta tela, e compare. "
+              "O que a turma esqueceu costuma ser mais instrutivo do que o que "
+              "ela lembrou — em geral esquecem a endocardite e a droga.")),
         densidade="dense",
+        ident="quadro_1",
     ),
     P2,
     tela("O caso · bloco 3", "Exames da admissão",
@@ -328,7 +355,45 @@ SLIDES = [
         ),
         densidade="dense",
     ),
+    discussao("A primeira linha cai",
+        p("O sedimento não nomeou nenhuma doença. Ele fez outra coisa, que vem "
+          "antes: eliminou a possibilidade de que houvesse duas doenças "
+          "independentes, uma no pulmão e outra na bexiga. A partir daqui o "
+          "caso tem um mecanismo só, e é glomerular."),
+        quadro(HIPOTESES, {
+            "urologico": ("derrubada",
+                          "Hemácias dismórficas em 40% e cilindros hemáticos: "
+                          "o sangue atravessou o glomérulo"),
+        }, titulo="Depois do sedimento urinário"),
+        densidade="xd",
+        ident="quadro_2",
+    ),
     P4,
+    discussao("O complemento poda a lista",
+        p("Complemento normal não é resultado sem graça: é uma das bifurcações "
+          "mais baratas da investigação da glomerulonefrite. Ele separa as "
+          "causas que consomem complemento das que não consomem, e derruba "
+          "três linhas de uma vez."),
+        quadro(HIPOTESES, {
+            "urologico": ("derrubada", "Sedimento glomerular"),
+            "lupus": ("derrubada",
+                      "C3 e C4 normais, FAN e anti-DNA não reagentes"),
+            "crio": ("derrubada",
+                     "C4 de 28 mg/dL: a crioglobulinemia consome C4 de forma "
+                     "desproporcional"),
+            "endocardite": ("enfraquecida",
+                            "Complemento normal ou baixo; hemoculturas em "
+                            "andamento, sem sopro novo"),
+        }, titulo="Depois do complemento e do painel de autoanticorpos",
+           novos=["lupus", "crio", "endocardite"]),
+        nota("Antes de avançar",
+            p("Pergunte quem sobrou e por quê. Três candidatos em pé, e nenhum "
+              "deles foi testado ainda — as sorologias específicas ainda não "
+              "voltaram. É este o momento de decidir se a imunossupressão "
+              "espera o resultado.")),
+        densidade="xd",
+        ident="quadro_3",
+    ),
     bloco("O caso · bloco 5", "Tomografia de tórax",
         cols(
             [
@@ -374,16 +439,12 @@ SLIDES = [
         cols(
             [
                 box("Descrição do procedimento",
-                    p("Lavado do lobo médio em três alíquotas de 60 mL. Cada "
-                      "alíquota retornou mais hemorrágica que a anterior. Não "
+                    p("Lavado do lobo médio em três alíquotas de 60 mL. Não "
                       "havia lesão endobrônquica, sangramento de sítio único "
-                      "ou coágulo obstruindo brônquio.")),
+                      "ou coágulo obstruindo brônquio. O aspecto das alíquotas "
+                      "e a contagem diferencial saem a seguir.")),
                 cap("Lavado broncoalveolar"),
                 painel([
-                    exame("Aspecto das alíquotas", "Progressivamente hemorrágicas",
-                           "claras", "critico"),
-                    exame("Hemossiderófagos", "34% dos macrófagos",
-                           "abaixo de 20%", "critico"),
                     exame("Cultura para bactérias", "Negativa",
                            "negativa"),
                     exame("Cultura para fungos", "Negativa",
@@ -397,13 +458,11 @@ SLIDES = [
                 ]),
             ],
             [
-                box("Os dois critérios",
-                    p("Alíquotas sequencialmente mais hemorrágicas indicam "
-                      "sangue proveniente do alvéolo, e não de um ponto do "
-                      "brônquio. Hemossiderófagos acima de 20% indicam "
-                      "sangramento com pelo menos 48 a 72 horas, tempo "
-                      "necessário para o macrófago digerir a hemoglobina e "
-                      "acumular hemossiderina.")),
+                nota("Antes de avançar",
+                    p("As culturas já estão na tela; o aspecto das alíquotas e "
+                      "a contagem diferencial, não. Faça a pergunta antes de "
+                      "mostrá-los: o grupo tem de dizer o que PROCURA no "
+                      "lavado, e não reconhecer o que já leu.")),
                 box("A função das culturas",
                     p("As culturas negativas são o que autoriza a "
                       "imunossupressão. Tratar infecção difusa como "
@@ -414,6 +473,69 @@ SLIDES = [
         densidade="xd",
     ),
     P5,
+    tela("O caso · bloco 6", "O que o lavado mostrou",
+        cols(
+            [
+                cap("Aspecto e contagem"),
+                painel([
+                    exame("Aspecto das alíquotas",
+                          "Progressivamente hemorrágicas, da primeira à terceira",
+                          "claras", "critico"),
+                    exame("Hemossiderófagos", "34% dos macrófagos",
+                          "abaixo de 20%", "critico"),
+                    exame("Neutrófilos", "18% da celularidade",
+                          "abaixo de 3%", "alterado"),
+                    exame("Linfócitos", "12% da celularidade",
+                          "10 a 15%"),
+                ]),
+            ],
+            [
+                box("Por que os dois juntos",
+                    p("Alíquotas sequencialmente mais hemorrágicas dizem que o "
+                      "sangue vem do alvéolo, e não de um ponto do brônquio: "
+                      "sangramento localizado clareia com a lavagem, "
+                      "sangramento difuso não."),
+                    p("Hemossiderófagos acima de 20% dizem outra coisa, e é a "
+                      "que muda a conversa: o sangramento tem pelo menos 48 a "
+                      "72 horas, tempo de o macrófago digerir a hemoglobina e "
+                      "acumular hemossiderina. Não é o episódio de ontem — "
+                      "vem acontecendo.")),
+                box("O que ainda não sabemos",
+                    p("Hemorragia alveolar está provada, e infecção está "
+                      "afastada como causa. Nada disso diz qual das linhas do "
+                      "quadro é a responsável.")),
+            ],
+        ),
+        densidade="dense",
+        ident="lavado_achado",
+    ),
+    discussao("O que sobra antes do resultado",
+        p("O lavado provou hemorragia alveolar e não cresceu nada. As três "
+          "linhas que sobram não podem ser separadas por mais nenhum exame "
+          "barato: daqui em diante, quem decide é a sorologia e a biópsia."),
+        quadro(HIPOTESES, {
+            "urologico": ("derrubada", "Sedimento glomerular"),
+            "lupus": ("derrubada", "Complemento normal, FAN não reagente"),
+            "crio": ("derrubada", "C4 normal"),
+            "endocardite": ("enfraquecida",
+                            "Três pares de hemocultura negativos em cinco dias, "
+                            "ecocardiograma sem vegetação"),
+            "infeccao": ("enfraquecida",
+                         "Lavado sem bactéria, fungo, micobactéria ou "
+                         "Pneumocystis"),
+        }, titulo="Depois do lavado broncoalveolar",
+           novos=["endocardite", "infeccao"]),
+        nota("Antes de avançar",
+            p("Este é o momento de fazer a pergunta que o caso não fez até "
+              "aqui: começar a imunossupressão hoje, ou esperar o laudo? "
+              "Deixe a turma se dividir antes de virar a tela.")),
+        densidade="xd",
+        ident="quadro_4",
+    ),
+    momento("Terceira parte",
+        "O resultado que estava pendente",
+        "As sorologias foram pedidas na primeira hora. Voltaram agora.",
+        ident="p3_resultado"),
     tela("O caso · bloco 7", "Painel imunológico",
         cols(
             [
@@ -461,6 +583,31 @@ SLIDES = [
             ],
         ),
         densidade="xd",
+    ),
+    discussao("Sobra uma",
+        p("O p-ANCA em 1:640 com anti-MPO de 148 U/mL, o anti-MBG não reagente "
+          "e a lista de medicações limpa fecham a poda começada no exame "
+          "físico. O nome só aparece agora, e aparece como resultado do "
+          "percurso — não como ponto de partida."),
+        quadro(HIPOTESES, {
+            "urologico": ("derrubada", "Sedimento glomerular"),
+            "lupus": ("derrubada", "Complemento normal, FAN não reagente"),
+            "crio": ("derrubada", "C4 normal, crioglobulinas negativas"),
+            "endocardite": ("derrubada",
+                            "Hemoculturas negativas, ecocardiograma sem "
+                            "vegetação"),
+            "infeccao": ("derrubada", "Lavado estéril"),
+            "mbg": ("derrubada", "Anti-MBG não reagente"),
+            "droga": ("derrubada",
+                      "Em uso apenas de losartana e sinvastatina; nenhuma das "
+                      "quatro drogas implicadas"),
+            "anca": ("confirmada",
+                     "p-ANCA 1:640, anti-MPO 148 U/mL — falta a biópsia dizer "
+                     "se é pauci-imune"),
+        }, titulo="Depois do painel imunológico",
+           novos=["mbg", "droga", "anca"]),
+        densidade="xd",
+        ident="quadro_5",
     ),
     bloco("O caso · bloco 8", "Biópsia renal percutânea",
         cols(
@@ -576,6 +723,11 @@ SLIDES = [
         densidade="xd",
     ),
     P7,
+    momento("Quarta parte",
+        "Tratamento",
+        "O diagnóstico está fechado. A partir daqui as perguntas deixam de ser "
+        "sobre o que o paciente tem e passam a ser sobre o que fazer com ele.",
+        ident="p4_tratamento"),
     discussao("Indução de remissão",
         p("A indução tem duas peças que não se substituem. O glicocorticoide "
           "controla a inflamação em horas a dias. O imunossupressor impede "
@@ -636,6 +788,10 @@ SLIDES = [
               "dias.")),
         densidade="dense",
     ),
+    momento("Quinta parte",
+        "A complicação",
+        "Nem toda piora sob tratamento é a doença piorando.",
+        ident="p5_complicacao"),
     narrativa("O caso · bloco 9", "Evolução no quinto dia",
         cols(
             [
