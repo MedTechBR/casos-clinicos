@@ -35,19 +35,36 @@ function aplicar(ef, sinal){
 /* ─────────────────────── a barra de prontuário ─────────────────────── */
 
 const barra = document.getElementById('est');
+
+/* A barra é o cabeçalho do prontuário, e só entra quando o caso já apresentou
+   os quatro números que ela repete. Antes disso ela dizia creatinina 3,8 na
+   capa, com a história ainda por contar: um enigma no alto da tela, e um
+   vazamento. */
+const DESDE = JSON.parse(document.getElementById('estado_desde').textContent);
+function barraNoAr(){
+  if (!DESDE) return true;
+  const alvo = slidePorId(DESDE);
+  return !!alvo && S.indexOf(cur()) >= S.indexOf(alvo);
+}
+function ajustarBarra(){
+  const noAr = barraNoAr();
+  barra.classList.toggle('on', noAr);
+  document.body.classList.toggle('com-estado', noAr);
+}
+
 function pintarEstado(){
   const campos = Object.entries(CAMPOS).map(([k, c]) => {
     const v = EST[k], v0 = EST0[k];
     const piorou = c.sobe_e_piora ? v > v0 : v < v0;
     const mudou = v !== v0;
     return '<span class="ec' + (mudou ? (piorou ? ' pior' : ' melhor') : '') + '">'
-      + '<i>' + c.rotulo + '</i>' + v.toFixed(c.casas) + c.unidade
+      + '<i>' + c.rotulo + '</i>' + v.toFixed(c.casas).replace('.', ',') + c.unidade
       + (mudou ? '<u>' + (v > v0 ? '▲' : '▼') + '</u>' : '') + '</span>';
   }).join('');
   const flags = EST.sinalizadores.map(f =>
     '<span class="ef">' + (SINAIS[f] || f) + '</span>').join('');
-  barra.innerHTML = campos + flags;
-  barra.classList.toggle('on', true);
+  barra.innerHTML = '<span class="et">Estado do paciente</span>' + campos + flags;
+  ajustarBarra();
   pintarValoresNaProsa();
 }
 

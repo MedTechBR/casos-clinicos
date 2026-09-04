@@ -654,9 +654,16 @@ body.apagado #stage::after{content:"";position:absolute;inset:0;
   font-family:var(--sans);font-size:12.5px}
 #est.on{display:flex;flex-wrap:wrap}
 .slide{padding-top:44px}
-body.ramificado .slide{padding-top:62px}
-body.ramificado .cover,body.ramificado .mom{padding-top:0}
-body.ramificado .cover #est,body.ramificado .mom #est{display:none}
+/* O recuo do topo acompanha a barra, e não o caso: enquanto ela não entra, os
+   62px eram uma faixa vazia acima do título nos treze primeiros slides. */
+body.com-estado .slide{padding-top:62px}
+body.com-estado .cover,body.com-estado .mom{padding-top:0}
+/* A regra antiga mirava `#est` dentro de `.cover`, e ele nunca esteve lá: é
+   irmão do palco, não filho do slide. A barra aparecia na capa. Quem decide
+   agora é o runtime, pelo identificador em `ESTADO_DESDE`. */
+.et{color:var(--tinta3);font-size:10.5px;letter-spacing:1.4px;
+  text-transform:uppercase;margin-right:26px;white-space:nowrap;
+  align-self:center}
 .ec{margin-right:26px;color:var(--tinta);font-variant-numeric:tabular-nums;
   font-weight:600;white-space:nowrap}
 .ec i{font-style:normal;font-weight:400;color:var(--tinta3);margin-right:6px;

@@ -40,6 +40,11 @@ IMG = Path(__file__).parent / "img"
 # conduta, com os exames pedidos e com o relógio, e a barra mostra sempre.
 ESTADO = estado(horas=0, creatinina=3.8, spo2=88, hb=7.8)
 
+# A barra só entra quando o caso já mostrou esses quatro números. Antes dos
+# exames da admissão ela seria um enigma no alto da tela — e entregaria a
+# creatinina antes de a história ser contada.
+ESTADO_DESDE = "exames_admissao"
+
 
 SLIDES = [
     capa(
@@ -49,7 +54,9 @@ SLIDES = [
         "**4 decisões · 8 desfechos · 100 a 120 minutos** O caso começa nas "
         "síndromes e só estreita quando um resultado autoriza. Não corre em "
         "linha reta: o que o grupo pedir e o que decidir mudam o que as telas "
-        "seguintes mostram, e o paciente que chega ao fim é outro. "
+        "seguintes mostram, e o paciente que chega ao fim é outro. A faixa do "
+        "alto entra com os exames da admissão e passa a acompanhar quatro "
+        "números — cada decisão e cada hora gasta mexem neles. "
         "{{M abre o mapa da árvore; V volta ao nó anterior.}}",
         "Caso autoral, construído para ensino. O paciente é ficcional. As "
         "imagens são ilustrativas, de repositórios de licença aberta, e não "
@@ -117,11 +124,13 @@ SLIDES = [
         centro=True,
     ),
     narrativa("O caso · bloco 2", "Exame físico",
-        p("Ao exame, a temperatura era de 37,8 °C, a pressão arterial de "
-          "148/92 mmHg, a frequência cardíaca de 104 batimentos por minuto e "
-          "a frequência respiratória de 28 incursões por minuto. A saturação "
-          "de oxigênio era de 88% enquanto o paciente respirava ar ambiente, "
-          "e subiu para 94% com cateter nasal a 4 L por minuto."),
+        # A regra editorial deste projeto é narrar os vitais dentro da prosa.
+        # Aqui ela abre exceção, a pedido: são seis números lidos de uma vez na
+        # beira do leito, e a turma precisa deles à vista enquanto o resto do
+        # exame é revelado passo a passo.
+        sinais("T **37,8 °C**", "PA **148/92** mmHg", "FC **104** bpm",
+               "FR **28** irpm",
+               "SpO₂ **88%** {{ar ambiente}} → 94% {{cateter a 4 L/min}}"),
         passo(p("O paciente estava dispneico, preferia permanecer sentado e "
                 "completava apenas frases curtas. Havia palidez "
                 "cutâneo-mucosa acentuada. À ausculta pulmonar, crepitações "
@@ -292,6 +301,14 @@ SLIDES = [
                 ]),
             ],
         ),
+        nota("A faixa do alto",
+            p("A partir deste slide o caso passa a mostrar, no alto da tela, "
+              "tempo de internação, creatinina, saturação e hemoglobina. Não é "
+              "placar: é o cabeçalho do prontuário. Cada decisão e cada exame "
+              "pedido mexem nesses quatro números, e a seta ao lado do valor "
+              "diz para que lado ele foi desde a admissão. Vale apontar isso "
+              "para a turma uma vez, aqui, e não mencionar mais — o número "
+              "andando sozinho faz o argumento.")),
         ident="exames_admissao",
     ),
     discussao("Topografia da lesão renal",

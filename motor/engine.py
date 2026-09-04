@@ -44,7 +44,7 @@ def _corta(t: str, n: int = 46) -> str:
     return (corte or t[:n]).rstrip(" ,;:.") + "…"
 
 
-def montar(*, titulo, slug, rodape, slides, banco, img_dir: Path, css=None,
+def montar(*, estado_desde=None, titulo, slug, rodape, slides, banco, img_dir: Path, css=None,
            js=None, estado_inicial=None) -> str:
     slides = [s for grupo in slides for s in (grupo if isinstance(grupo, list) else [grupo])]
     total = len(slides)
@@ -68,6 +68,11 @@ def montar(*, titulo, slug, rodape, slides, banco, img_dir: Path, css=None,
         f"{json.dumps(CAMPOS, ensure_ascii=False)}</script>"
         f'<script type="application/json" id="sinais">'
         f"{json.dumps(SINALIZADORES, ensure_ascii=False)}</script>"
+        # A barra de estado só faz sentido depois que o caso apresentou os
+        # números que ela repete. Antes disso ela é um enigma no alto da tela —
+        # e, pior, entrega creatinina e saturação antes da história.
+        f'<script type="application/json" id="estado_desde">'
+        f"{json.dumps(estado_desde, ensure_ascii=False)}</script>"
     )
 
     secoes = []
@@ -200,6 +205,7 @@ def build(caso, destino: Path) -> Path:
         banco=caso.BANCO,
         img_dir=caso.IMG,
         estado_inicial=getattr(caso, "ESTADO", None),
+        estado_desde=getattr(caso, "ESTADO_DESDE", None),
     )
     destino.parent.mkdir(parents=True, exist_ok=True)
     destino.write_text(html, encoding="utf-8")

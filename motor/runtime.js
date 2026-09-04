@@ -120,6 +120,7 @@ function show(n, fim){
   location.hash = i + 1;
   herdarVotos(S[i]);
   if (typeof cobrarBloco === 'function') cobrarBloco(S[i]);
+  if (typeof ajustarBarra === 'function') ajustarBarra();
   if (editando) ligarEdicao();
 }
 
