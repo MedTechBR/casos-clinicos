@@ -44,7 +44,8 @@ def _corta(t: str, n: int = 46) -> str:
     return (corte or t[:n]).rstrip(" ,;:.") + "…"
 
 
-def montar(*, titulo, slug, rodape, slides, banco, img_dir: Path, css=None, js=None) -> str:
+def montar(*, titulo, slug, rodape, slides, banco, img_dir: Path, css=None,
+           js=None, estado_inicial=None) -> str:
     slides = [s for grupo in slides for s in (grupo if isinstance(grupo, list) else [grupo])]
     total = len(slides)
 
@@ -55,6 +56,19 @@ def montar(*, titulo, slug, rodape, slides, banco, img_dir: Path, css=None, js=N
 
     css = css or (MOTOR / "estilo.css").read_text()
     js = js or (MOTOR / "runtime.js").read_text()
+    ram = (MOTOR / "ramificacao.js").read_text()
+
+    from .arvore import CAMPOS, SINALIZADORES, estado
+
+    est0 = estado_inicial or estado()
+    dados = (
+        f'<script type="application/json" id="estado0">'
+        f"{json.dumps(est0, ensure_ascii=False)}</script>"
+        f'<script type="application/json" id="campos">'
+        f"{json.dumps(CAMPOS, ensure_ascii=False)}</script>"
+        f'<script type="application/json" id="sinais">'
+        f"{json.dumps(SINALIZADORES, ensure_ascii=False)}</script>"
+    )
 
     secoes = []
     for n, s in enumerate(slides, 1):
@@ -63,8 +77,10 @@ def montar(*, titulo, slug, rodape, slides, banco, img_dir: Path, css=None, js=N
             f'<div class="foot"><span>{rodape}</span>'
             f'<span>{n} / {total}</span></div>'
         )
+        segue = f' data-segue="{s["segue"]}"' if s.get("segue") else ""
         secoes.append(
-            f'<section class="{cls}" id="s-{s["id"]}" data-n="{n}">{s["corpo"]}{pe}</section>'
+            f'<section class="{cls}" id="s-{s["id"]}" data-n="{n}"{segue}>'
+            f"{s['corpo']}{pe}</section>"
         )
     corpo = "".join(secoes)
 
@@ -156,12 +172,17 @@ def montar(*, titulo, slug, rodape, slides, banco, img_dir: Path, css=None, js=N
         f'<div id="etapas" data-runtime></div></div></div>'
         f'<div id="grid"><div class="g">{miniaturas}</div></div>'
         f"{gaveta}"
+        f'<div id="est" data-runtime></div>'
+        f'<div id="mapa" data-runtime></div>'
+        f'<button id="seguir" data-runtime="attr">seguir &rarr;</button>'
         f'<div id="cron" data-runtime></div>'
         f'<div id="aviso" data-runtime></div>'
         f'<div id="help">{ajuda}</div>'
         f"<script type=\"application/json\" id=\"banco\" data-slug=\"{slug}\">"
         f"{json.dumps(banco, ensure_ascii=False).replace(chr(60) + chr(47), chr(60) + chr(92) + chr(47))}</script>"
-        f"<script>\n{js}</script></body></html>"
+        f"{dados}"
+        f"<script>\n{js}</script>"
+        f"<script>\n{ram}</script></body></html>"
     )
 
 
@@ -173,6 +194,7 @@ def build(caso, destino: Path) -> Path:
         slides=caso.SLIDES,
         banco=caso.BANCO,
         img_dir=caso.IMG,
+        estado_inicial=getattr(caso, "ESTADO", None),
     )
     destino.parent.mkdir(parents=True, exist_ok=True)
     destino.write_text(html, encoding="utf-8")

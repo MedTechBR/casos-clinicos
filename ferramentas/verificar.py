@@ -320,13 +320,64 @@ def v_contas(h, r):
 
 
 def v_arvore(h, r):
-    """Todo destino aponta para um bloco que existe; todo bloco é alcançável."""
+    """Cobertura da árvore: todo nó alcançável, todo ramo com desfecho escrito,
+    nenhum destino apontando para bloco inexistente.
+
+    Sem isso, um ramo pode apontar para um id que ninguém escreveu — e o erro
+    só aparece na frente da turma, quando o professor clica.
+    """
     ids = set(re.findall(r'<section class="[^"]*" id="s-([^"]+)"', h))
     destinos = set(re.findall(r'data-vai="([^"]+)"', h))
-    orfaos = destinos - ids
-    r.add("cobertura da árvore", not orfaos,
-          f"destinos sem bloco: {sorted(orfaos)}" if orfaos
-          else f"{len(ids)} blocos, {len(destinos)} destinos")
+    segue = set(re.findall(r'data-segue="([^"]+)"', h))
+    nos = set(re.findall(r'<section class="slide no[^"]*" id="s-([^"]+)"', h))
+    fins = set(re.findall(r'<section class="slide fim[^"]*" id="s-([^"]+)"', h))
+
+    erros = []
+    orfaos = (destinos | segue) - ids
+    if orfaos:
+        erros.append(f"destino sem bloco: {sorted(orfaos)}")
+
+    if nos:
+        # todo nó tem de ser alcançável a partir do primeiro slide, seguindo
+        # data-segue (dentro do ramo) e data-vai (a escolha no nó)
+        S = slides(h)
+        ordem, adj = [], {}
+        for sec in S:
+            k = re.search(r'id="s-([^"]+)"', sec).group(1)
+            ordem.append(k)
+            sg = re.search(r'data-segue="([^"]+)"', sec)
+            vai = set(re.findall(r'data-vai="([^"]+)"', sec))
+            adj[k] = vai | ({sg.group(1)} if sg else set())
+        # slide que não declara destino nem ramo segue para o vizinho do DOM
+        for a, b in zip(ordem, ordem[1:]):
+            if not adj[a]:
+                adj[a] = {b}
+        vistos, fila = set(), [ordem[0]]
+        while fila:
+            k = fila.pop()
+            if k in vistos:
+                continue
+            vistos.add(k)
+            fila.extend(adj.get(k, ()))
+        inalcancaveis = (nos | fins) - vistos
+        if inalcancaveis:
+            erros.append(f"nó ou desfecho inalcançável: {sorted(inalcancaveis)}")
+
+        for k in nos:
+            sec = next(x for x in S if f'id="s-{k}"' in x)
+            n = len(re.findall(r'class="rm"', sec))
+            if not 2 <= n <= 3:
+                erros.append(f"nó {k}: {n} ramos (use 2 ou 3)")
+            if len(re.findall(r'class="wy" hidden', sec)) != n:
+                erros.append(f"nó {k}: ramo sem justificativa fisiológica")
+
+    if nos and not fins:
+        erros.append("há nós de decisão e nenhum desfecho escrito")
+
+    r.add("cobertura da árvore", not erros, " · ".join(erros)
+          or (f"{len(nos)} nós · {len(fins)} desfechos · "
+              f"{len(destinos)} ramos, todos com destino" if nos
+              else "caso sem ramificação"))
 
 
 # o que conta como declaração de licença

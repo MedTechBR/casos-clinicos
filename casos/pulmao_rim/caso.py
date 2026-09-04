@@ -50,6 +50,11 @@ HIPOTESES = [
         "Hidralazina, propiltiouracila, minociclina ou levamisol em uso"),
 ]
 
+from motor.arvore import estado
+from .arvore import (
+    B_CEDO, B_CFX, B_ESPERA, B_RESGATE, B_RTX, B_SO_DIALISE,
+    F, N1, N2A, N2B, N3A, N3B, N3C, N3D,
+)
 from .banco import BANCO
 from .perguntas import (
     P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12,
@@ -59,6 +64,11 @@ TITULO = "Homem de 63 anos com hemoptise, púrpura e queda de função renal"
 SLUG = "pulmao-rim"
 RODAPE = "Síndrome pulmão-rim · caso interativo"
 IMG = Path(__file__).parent / "img"
+
+# O estado do paciente na admissão. A partir do primeiro nó ele muda com a
+# conduta, com os exames pedidos e com o relógio, e a barra mostra sempre.
+ESTADO = estado(horas=0, creatinina=3.8, spo2=88, hb=7.8)
+
 
 SLIDES = [
     capa(
@@ -106,7 +116,7 @@ SLIDES = [
                 "ocupacional. As únicas medicações em uso eram losartana e "
                 "sinvastatina. Não usava hidralazina, propiltiouracila ou "
                 "minociclina.")),
-        densidade="dense",
+        densidade="xd",
     ),
     bloco("O caso · bloco 1", "Curso de oito semanas",
         linha_do_tempo([
@@ -922,120 +932,20 @@ SLIDES = [
         ident="plasmaferese_paciente",
     ),
     momento("Quinta parte",
-        "A complicação",
-        "Nem toda piora sob tratamento é a doença piorando.",
-        ident="p5_complicacao"),
-    narrativa("O caso · bloco 9", "Evolução no quinto dia",
-        cols(
-            [
-                p("O paciente recebeu pulso de metilprednisolona por três "
-                  "dias, primeira dose de ciclofosfamida com ajuste para a "
-                  "função renal, sulfametoxazol-trimetoprima profilático e "
-                  "três sessões de plasmaférese. Ao terceiro dia a "
-                  "hemoptise havia "
-                  "cessado e a saturação subira para 94% com cateter nasal."),
-                passo(p("Na manhã do quinto dia surgiu febre de 38,9 °C com "
-                        "calafrio. Tornou-se taquipneico e passou a "
-                        "necessitar de máscara com reservatório. A filha "
-                        "notou que ele ficou confuso ao fim da tarde. A "
-                        "diurese das últimas 24 horas foi de 380 mL, com "
-                        "balanço hídrico acumulado positivo de 4,2 litros. A "
-                        "pressão arterial era de 96/54 mmHg, a frequência "
-                        "cardíaca de 118 batimentos por minuto e a frequência "
-                        "respiratória de 32 incursões por minuto, com "
-                        "saturação de 90% sob máscara.")),
-            ],
-            [
-                cap("Exames colhidos naquela manhã"),
-                painel([
-                    exame("Hemoglobina", "6,9 g/dL {{(era 7,8)}}",
-                           "13,5 a 17,5", "critico"),
-                    exame("Leucócitos", "1.900/mm³ {{(eram 14.200)}}",
-                           "4.000 a 11.000", "critico"),
-                    exame("Neutrófilos", "620/mm³",
-                           "1.800 a 7.000", "critico"),
-                    exame("Plaquetas", "172.000/mm³",
-                           "150.000 a 450.000"),
-                    exame("Creatinina", "4,6 mg/dL {{(era 3,8)}}",
-                           "até 1,3", "critico"),
-                    exame("Procalcitonina", "3,1 ng/mL {{(era 0,4)}}",
-                           "abaixo de 0,5", "critico"),
-                    exame("PCR", "204 mg/L",
-                           "até 5", "alterado"),
-                    exame("Radiografia de tórax", "Infiltrado que piorou, agora assimétrico",
-                           "—", "alterado"),
-                ]),
-                nota("Antes de avançar",
-                    p("Peça três hipóteses e, para cada uma, um exame. O dado "
-                      "que reorganiza a lista é a neutropenia de 620, "
-                      "produzida pelo tratamento que foi prescrito cinco dias "
-                      "antes.")),
-            ],
-        ),
-        densidade="dense",
-    ),
-    P9,
-    P12,
-    discussao("Deterioração durante a indução",
-        p("A partir do momento em que a indução começa, toda piora passa a "
-          "ter duas explicações possíveis, e elas pedem condutas opostas. "
-          "Doença não controlada pede mais imunossupressão. Complicação do "
-          "tratamento pede menos."),
-        tabela(["Hipótese", "O que favorece", "O que pedir", "Conduta se confirmada"], [
-            ["Infecção", "Procalcitonina de 0,4 para 3,1; neutrófilos de 620; "
-                    "febre com calafrio; infiltrado assimétrico", "Hemoculturas, cultura de aspirado traqueal, radiografia, "
-                    "tomografia", "Antibiótico para neutropenia febril, e considerar "
-                    "postergar a próxima dose"],
-            ["Doença ativa", "Hemoptise que retorna, sedimento com mais cilindros, "
-                    "ANCA em ascensão", "Sedimento urinário, hemoglobina seriada, broncoscopia", "Intensificar a indução, considerar resgate"],
-            ["Sobrecarga volêmica", "Balanço de +4,2 L com diurese de 380 mL; infiltrado "
-                    "bilateral difuso", "Peso diário, balanço hídrico, ultrassom de veia cava e "
-                    "pulmão", "Diurético, ou diálise por hipervolemia"],
-            ["Novo sangramento alveolar", "Queda adicional de hemoglobina com infiltrado que piora", "Broncoscopia com lavado", "Corrigir coagulação e intensificar o tratamento da "
-                    "vasculite"],
-            ["Tromboembolismo", "Vasculite ativa é estado protrombótico reconhecido; "
-                    "imobilidade", "Angiotomografia de tórax", "Anticoagulação, pesando o risco de sangramento alveolar"],
-        ], tamanho="xs"),
-        densidade="dense",
-    ),
-    narrativa("O caso · bloco 10", "Evolução",
-        cols(
-            [
-                p("Foram colhidas hemoculturas e iniciado cefepima empírico "
-                  "na primeira hora. As culturas cresceram //Staphylococcus "
-                  "aureus// sensível a oxacilina em dois de dois pares, com o "
-                  "cateter venoso central como foco provável. O cateter foi "
-                  "retirado e o esquema desescalonado no terceiro dia. A "
-                  "segunda dose de ciclofosfamida foi postergada até a "
-                  "recuperação dos neutrófilos, e filgrastim foi administrado "
-                  "por três dias."),
-                passo(p("A partir do sexto dia necessitou de hemodiálise "
-                        "intermitente por hipervolemia e uremia, durante "
-                        "dezoito dias. Recuperou diurese na quarta semana e "
-                        "saiu de diálise, com creatinina estabilizando em 2,1 "
-                        "mg/dL, o que corresponde a filtração glomerular "
-                        "estimada de 32 mL/min/1,73 m².")),
-            ],
-            [
-                p("A hemoptise não retornou. A hemoglobina subiu para 9,4 "
-                  "g/dL sem nova transfusão. O pé direito mantinha força de "
-                  "3/5 para dorsiflexão na alta, em fisioterapia, com uso de "
-                  "órtese. As lesões purpúricas desapareceram na segunda "
-                  "semana."),
-                passo(p("Recebeu alta no 32º dia, com prednisona em desmame, "
-                        "rituximabe programado para manutenção, "
-                        "sulfametoxazol-trimetoprima profilático, plano de "
-                        "vacinação respeitando a janela do rituximabe, e "
-                        "consultas de nefrologia e reumatologia agendadas "
-                        "para duas semanas.")),
-                box("Registrado no resumo de alta",
-                    p("Anti-MPO de 148 U/mL na admissão e de 28 U/mL na alta. "
-                      "Sedimento urinário com 6 hemácias por campo, sem "
-                      "cilindros hemáticos. Proteinúria de 0,7 g em 24 horas.")),
-            ],
-        ),
-        densidade="dense",
-    ),
+        "A partir daqui, quem decide é você",
+        "O caso deixa de correr em linha reta. A conduta escolhida e o tempo "
+        "gasto levam este paciente por caminhos que não se reencontram. "
+        "M abre o mapa, V volta ao nó anterior.",
+        ident="p5_arvore"),
+    N1,
+    B_CEDO, N2A, B_RTX, N3A,
+    B_CFX, N3B,
+    B_ESPERA, N2B, B_RESGATE, N3C,
+    B_SO_DIALISE, N3D,
+    *[dict(f, segue="pontos_principais") for f in F],
+    # Depois dos oito desfechos vem a síntese. O quinto dia, a deterioração e
+    # a evolução deixaram de ser um bloco linear: cada um deles agora existe
+    # dentro do ramo que o produziu, com números diferentes.
     bloco("Síntese", "Pontos principais",
         cols(
             [
@@ -1074,6 +984,7 @@ SLIDES = [
             ],
         ),
         densidade="dense",
+        ident="pontos_principais",
     ),
     bloco("Anexo", "Checklist: síndrome pulmão-rim",
         cols(

@@ -69,9 +69,37 @@ function recuar(){
   if (p.length){ fechar(p[p.length - 1]); pintar(); return true; }
   return false;
 }
-function tudo(v){ passos().forEach(e => v ? abrir(e) : fechar(e)); pintar(); }
+function tudo(v){
+  passos().forEach(e => v ? abrir(e) : fechar(e));
+  /* as justificativas dos ramos também são conteúdo do slide: sem isto o A
+     não mostrava tudo, e a régua de densidade media o nó pela metade */
+  cur().querySelectorAll('.ramos .wy').forEach(w => { w.hidden = !v; });
+  pintar();
+}
 
-/* ───────────────────────── navegação ───────────────────────── */
+/* ───────────────────────── navegação ─────────────────────────
+   Dentro de um ramo, o próximo bloco é o que o slide declara em data-segue,
+   não o vizinho do DOM. Sem isso o "seguir" atravessaria de um ramo para o
+   outro, que é exatamente o que a árvore aberta não pode fazer. */
+function adiante(){
+  const s = S[i];
+  if (s.classList.contains('no')){
+    const ul = s.querySelector('.ramos');
+    if (ul && !ul.classList.contains('decidido')){
+      aviso('escolha uma conduta para seguir');
+      return;
+    }
+    const b = document.getElementById('seguir');
+    if (b.classList.contains('on')){ seguirRamo(); return; }
+  }
+  if (s.classList.contains('fim')){
+    aviso('fim deste ramo — V volta ao nó, M abre o mapa');
+    return;
+  }
+  const k = s.dataset.segue;
+  if (k){ irPara(k); return; }
+  show(i + 1);
+}
 /* Quantos passos cada slide já tinha revelado. Sem isso, voltar ao slide
    anterior para responder uma dúvida e seguir em frente apagava tudo o que a
    turma já tinha visto, e o professor revelava de novo na frente dela. */
@@ -440,7 +468,7 @@ addEventListener('keydown', e => {
   if (e.key === 'a' || e.key === 'A'){ tudo(true); return; }
   if (e.key === 'z' || e.key === 'Z'){ tudo(false); return; }
   if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)){
-    if (e.shiftKey || !avancar()) show(i + 1);
+    if (e.shiftKey || !avancar()) adiante();
     e.preventDefault();
   } else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)){
     if (e.shiftKey || !recuar()) show(i - 1, true);
@@ -479,7 +507,7 @@ document.addEventListener('click', e => {
   if (li){ if (!editando) marcar(li); return; }
   if (e.target.closest('#grid') || e.target.closest('#gav') || e.target.closest('#gavb')
       || e.target.closest('#edt') || editando) return;
-  if (e.clientX > innerWidth * 0.55){ if (!avancar()) show(i + 1); }
+  if (e.clientX > innerWidth * 0.55){ if (!avancar()) adiante(); }
   else if (e.clientX < innerWidth * 0.2){ if (!recuar()) show(i - 1, true); }
 });
 

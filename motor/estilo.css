@@ -154,33 +154,11 @@ ol>li::before{content:counter(it);position:absolute;left:0;top:.06em;
 
 /* ─────────────────────────── prosa longa ─────────────────────────── */
 
-/* Prosa longa em duas colunas com filete, como na página impressa. Uma coluna
-   estreita boiando num campo vazio à direita é o que faz o slide parecer
-   template; e a medida de leitura fica na faixa certa em vez de esticar.
-   column-fill:auto enche a primeira coluna antes de passar para a segunda, o
-   que faz a revelação passo a passo escorrer na ordem em que se lê. */
-/* balanceado, não column-fill:auto: com auto o texto cabia inteiro na primeira
-   coluna e a segunda ficava vazia. Balanceado, cada passo revelado redistribui
-   parágrafos inteiros — a página vai se enchendo, que é o efeito desejado. */
-.narr .body{font-size:21px;line-height:1.56;columns:2;column-gap:44px;
-  column-rule:1px solid var(--linha);orphans:2;widows:2;
-  /* o corpo abraça o texto: com flex:1 o filete descia por meia tela vazia.
-     Sem max-height:100% — 100% é a altura do slide inteiro, não desconta
-     kicker e título, e a régua acusava transbordo onde não havia. */
-  flex:0 1 auto;min-height:0}
-.narr .body p{margin-bottom:13px;max-width:none;
-  -webkit-column-break-inside:avoid;break-inside:avoid-column}
-/* a margem do último parágrafo entrava no scrollHeight e a régua acusava
-   6px de transbordo num slide que cabia folgado */
-.body>*:last-child{margin-bottom:0}
-.body>*:last-child>p:last-child,.body>*:last-child>ul:last-child,
-.body>*:last-child>ol:last-child,.body p:last-child{margin-bottom:0}
-.narr .body .pv{break-inside:avoid-column}
-/* uma coluna quando o slide tem pouco texto ou traz painel ao lado */
-.narr.uma .body{columns:1;column-rule:none;height:auto}
-.narr.uma .body p{max-width:68ch}
-.narr .body p.lead::first-letter{float:left;font-size:58px;line-height:.82;
-  font-weight:600;padding:5px 10px 0 0;color:var(--sangue)}
+/* Uma coluna, de cima para baixo. Duas colunas obrigam o olho a descer, voltar
+   ao topo e descer de novo — em texto revelado passo a passo, projetado, isso
+   é confuso. Parágrafo 1 acima, parágrafo 2 abaixo. */
+.narr .body{font-size:21px;line-height:1.56;flex:0 1 auto;min-height:0}
+.narr .body p{margin-bottom:14px;max-width:78ch}
 .narr.dense .body{font-size:19px;line-height:1.5}
 .narr.dense .body p{margin-bottom:10px}
 .narr.xd .body{font-size:17px;line-height:1.44}
@@ -456,7 +434,9 @@ figure.dz .cred{color:var(--tinta3)}
 /* tabela velada */
 table.oc tbody tr.hid{cursor:pointer}
 table.oc tbody tr.hid .vv{display:none}
-table.oc tbody tr .dots{display:none}
+/* os traços só existem para a linha velada; num painel não velado eles
+   apareciam antes de cada valor */
+.dots{display:none}
 table.oc tbody tr.hid .dots{display:inline;color:var(--linha2);letter-spacing:2px;
   font-weight:400}
 table.oc tbody tr.hid:hover td{background:var(--papel2)}
@@ -658,6 +638,110 @@ body.apagado #stage::after{content:"";position:absolute;inset:0;
   background:rgba(20,19,23,.92);padding:8px 16px;opacity:0;
   transition:opacity .25s;pointer-events:none;z-index:80}
 #aviso.on{opacity:1}
+
+/* ═══════════════ ramificação: estado, nó, mapa e desfecho ═══════════════ */
+
+/* Barra de prontuário: discreta, sempre visível, mesma estética dos slides.
+   Sem pontuação, sem estrela, sem barra de vida — é um prontuário. */
+#est{position:absolute;left:0;right:0;top:0;display:none;gap:0;
+  align-items:baseline;padding:7px 56px 6px;z-index:7;
+  border-bottom:1px solid var(--linha);background:var(--papel2);
+  font-family:var(--sans);font-size:12.5px}
+#est.on{display:flex;flex-wrap:wrap}
+.slide{padding-top:44px}
+body.ramificado .slide{padding-top:62px}
+body.ramificado .cover,body.ramificado .mom{padding-top:0}
+body.ramificado .cover #est,body.ramificado .mom #est{display:none}
+.ec{margin-right:26px;color:var(--tinta);font-variant-numeric:tabular-nums;
+  font-weight:600;white-space:nowrap}
+.ec i{font-style:normal;font-weight:400;color:var(--tinta3);margin-right:6px;
+  font-size:11px;letter-spacing:.4px}
+.ec u{text-decoration:none;margin-left:4px;font-size:10px}
+.ec.pior{color:var(--grave)}
+.ec.melhor{color:var(--certo)}
+.ef{margin-right:16px;color:var(--tinta2);border:1px solid var(--linha2);
+  padding:1px 8px;font-size:11px;letter-spacing:.3px;white-space:nowrap}
+
+/* O nó de decisão: as condutas são escolhas, não alternativas de prova */
+.no .qhint{color:var(--sangue);font-style:italic;font-family:var(--serifa);
+  font-size:15px;letter-spacing:0;text-transform:none;margin:2px 0 10px}
+.ramos{list-style:none;margin:0;border-top:1px solid var(--linha)}
+.ramos li{border-bottom:1px solid var(--linha);padding:13px 14px 13px 0;
+  display:flex;gap:15px;align-items:baseline;cursor:pointer;position:relative;
+  transition:color .16s,padding-left .16s}
+.ramos li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:0;
+  background:var(--sangue);transition:width .16s}
+.ramos li:hover::before{width:2px}
+.ramos li:hover{padding-left:6px}
+.ramos .k{font-family:var(--sans);font-weight:700;color:var(--tinta3);
+  min-width:17px;font-size:14px}
+.ramos .tt{font-size:19px;line-height:1.3;color:var(--tinta)}
+.ramos .rt{font-family:var(--sans);font-size:11px;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--tinta3);margin-top:3px}
+.ramos .wy{font-size:16px;line-height:1.42;color:var(--tinta2);margin-top:7px;
+  font-family:var(--serifa);animation:sobe .3s ease}
+.ramos.decidido li{cursor:default}
+.ramos.decidido li:hover{padding-left:0}
+.ramos.decidido li:hover::before{width:0}
+.ramos.decidido li:not(.escolhido){opacity:.55}
+.ramos li.escolhido::before{width:4px}
+.ramos li.escolhido{padding-left:16px}
+.ramos li.escolhido .tt{font-weight:600}
+.ramos li.escolhido .k{color:var(--sangue)}
+
+#seguir{position:absolute;right:56px;bottom:44px;display:none;z-index:9;
+  font-family:var(--sans);font-size:12.5px;font-weight:700;letter-spacing:1.4px;
+  text-transform:uppercase;color:#fff;background:var(--sangue);border:none;
+  padding:10px 20px;cursor:pointer}
+#seguir.on{display:block;animation:sobe .3s ease}
+#seguir:hover{background:#a33520}
+
+/* Desfecho: o filete diz onde este final está entre os possíveis */
+.fim{border-top:5px solid var(--linha2)}
+.fim.q-melhor{border-top-color:var(--certo)}
+.fim.q-medio{border-top-color:var(--alterado)}
+.fim.q-pior{border-top-color:var(--grave)}
+
+/* Mapa da árvore: onde estou, por onde passei, o que não escolhi */
+#mapa{position:fixed;inset:0;background:rgba(13,12,10,.96);display:none;
+  overflow:auto;padding:44px 60px;z-index:75;color:var(--sobre-escuro);
+  font-family:var(--sans)}
+#mapa.on{display:block}
+#mapa .mt{font-family:var(--serifa);font-style:italic;font-size:17px;
+  color:var(--sobre-escuro2);margin:0 0 14px;padding-bottom:8px;
+  border-bottom:1px solid rgba(255,255,255,.14)}
+#mapa .mt:not(:first-child){margin-top:30px}
+.mn{padding:12px 0 14px 16px;border-left:2px solid rgba(255,255,255,.16);
+  margin-bottom:10px;cursor:pointer}
+.mn.feito{border-left-color:var(--sangue2)}
+.mn.aqui{border-left-color:#fff}
+.mn b{display:block;font-family:var(--serifa);font-size:19px;font-weight:600;
+  color:#fff;margin-bottom:8px}
+.mn.aqui b::after{content:" — você está aqui";font-family:var(--sans);
+  font-size:11px;letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--sangue2);font-weight:700}
+.mrs{display:flex;flex-wrap:wrap;gap:8px}
+.mr{font-size:12.5px;line-height:1.3;color:var(--sobre-escuro2);
+  border:1px solid rgba(255,255,255,.18);padding:5px 11px;max-width:34ch}
+.mr.esc{color:#fff;border-color:var(--sangue2);background:rgba(194,91,69,.18)}
+.mfs{display:flex;flex-wrap:wrap;gap:9px}
+.mf{font-size:12.5px;padding:6px 12px;cursor:pointer;
+  border-left:3px solid var(--linha2);background:rgba(255,255,255,.05);
+  color:var(--sobre-escuro2)}
+.mf.q-melhor{border-left-color:var(--certo)}
+.mf.q-medio{border-left-color:var(--alterado)}
+.mf.q-pior{border-left-color:var(--grave)}
+.mf.aqui{color:#fff;background:rgba(255,255,255,.14)}
+#mapa .mh{margin-top:30px;font-size:11.5px;letter-spacing:1.2px;
+  text-transform:uppercase;color:#7a736a}
+
+@media print{
+  #est{display:flex!important;position:relative;padding:6px 0 6px;
+    background:none;border-bottom:1px solid var(--linha)}
+  #mapa,#seguir{display:none!important}
+  .ramos .wy{display:block!important}
+  .ramos li{opacity:1!important}
+}
 
 /* ─────────────────────────── ajuda ─────────────────────────── */
 

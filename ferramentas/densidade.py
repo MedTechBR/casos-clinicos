@@ -51,6 +51,10 @@ def _medir_js() -> str:
             return r.width > 0 && (r.right > br.right + 1 || r.left < br.left - 1);
         }).length;
         return {
+            // o título não é chave única: quatro blocos de ramo podem se
+            // chamar "Quinto dia". O identificador é, e é por ele que a
+            // ferramenta encontra o slide no fonte.
+            id: s.id.replace(/^s-/, ''),
             titulo: t ? t.textContent.trim() : '',
             classes: [...s.classList],
             // pergunta, resposta, capa e divisor não são governados por esta
@@ -102,24 +106,66 @@ def _mover(d, passo):
     return DEGRAUS[max(0, min(len(DEGRAUS) - 1, i + passo))]
 
 
-def aplicar(caso: str, titulo: str, nova) -> bool:
-    f = RAIZ / "casos" / caso / "caso.py"
-    src = f.read_text()
-    alvo = titulo.replace('"', '\\"')
-    i = src.find(f'"{alvo}"')
-    if i < 0:
-        print(f"       ?? não achei o slide “{titulo}” em {f.name}")
-        return False
-    fim = src.find("\n    ),", i)
-    trecho = src[i:fim]
-    if nova is None:
-        novo = re.sub(r'\n\s*densidade="[a-z]*",', "", trecho)
-    elif "densidade=" in trecho:
-        novo = re.sub(r'densidade="[a-z]*"', f'densidade="{nova}"', trecho)
-    else:
-        novo = trecho + f'\n        densidade="{nova}",'
-    f.write_text(src[:i] + novo + src[fim:])
-    return True
+def aplicar(caso: str, ident: str, titulo: str, nova) -> bool:
+    """Troca a densidade do slide `ident` no fonte do caso.
+
+    A âncora precisa ser a linha que ABRE o slide. Procurar a chave solta
+    encontra antes o `vai_para="x"` do ramo que aponta para ele, que fica mais
+    acima no arquivo — e a ferramenta editava o lugar errado, em silêncio.
+    """
+    for nome in ("caso.py", "arvore.py"):
+        f = RAIZ / "casos" / caso / nome
+        if not f.exists():
+            continue
+        src = f.read_text()
+        linhas = src.split("\n")
+        pos, n = None, 0
+        for k, l in enumerate(linhas):
+            nu = l.strip()
+            # `ident="x"` em qualquer lugar, ou a chave como primeiro argumento
+            # posicional — nunca depois de um `algo=`
+            if (f'ident="{ident}"' in l
+                    or re.match(rf'^"{re.escape(ident)}",', nu)
+                    or re.search(rf'\(\s*"{re.escape(ident)}",', l)):
+                pos, n = k, len(linhas[:k])
+                break
+        if pos is None:
+            continue
+
+        # o fim da chamada, por balanço de parênteses a partir da linha que abre
+        ini = pos
+        while ini > 0 and linhas[ini].strip().startswith(('"', "'")) \
+                and "(" not in linhas[ini]:
+            ini -= 1
+        saldo, fim = 0, None
+        for k in range(ini, len(linhas)):
+            saldo += linhas[k].count("(") - linhas[k].count(")")
+            if k > ini and saldo <= 0:
+                fim = k
+                break
+        if fim is None:
+            print(f"       ?? não achei o fim do slide {ident!r}")
+            return False
+
+        trecho = "\n".join(linhas[ini:fim + 1])
+        if "densidade=" in trecho:
+            # densidade=None é válido e serve às duas formas de escrita
+            novo_t = re.sub(r'densidade="[a-z]*"',
+                            f'densidade="{nova}"' if nova else "densidade=None",
+                            trecho)
+        elif nova is None:
+            return True          # já está no degrau mais folgado
+        else:
+            # entra antes do fecho da chamada, com a indentação do corpo
+            ult = linhas[fim]
+            ind = " " * (len(ult) - len(ult.lstrip()) + 4)
+            novo_t = ("\n".join(linhas[ini:fim])
+                      + f'\n{ind}densidade="{nova}",\n' + ult)
+        f.write_text("\n".join(linhas[:ini] + novo_t.split("\n") + linhas[fim + 1:]))
+        return True
+
+    print(f"       ?? não achei o slide {ident!r} ({titulo}) em {caso}")
+    return False
 
 
 def _construir(caso: str) -> Path:
@@ -161,14 +207,14 @@ def main(caso="pulmao_rim", aplicar_mudanca=False):
                     print("       !! já está no degrau mais apertado. Corte "
                           "conteúdo ou divida o slide em dois.")
                 else:
-                    mudou |= aplicar(caso, r["titulo"], nova)
+                    mudou |= aplicar(caso, r["id"], r["titulo"], nova)
         for n, r in sorted(folgar.items()):
             atual = _atual(r["classes"])
             nova = _mover(atual, -1)
             print(f"  {n:2d} ↓ “{r['titulo'][:40]}” ocupa {r['ocupacao']:.0%} "
                   f"· {atual} → {nova or 'normal'}")
             if aplicar_mudanca:
-                mudou |= aplicar(caso, r["titulo"], nova)
+                mudou |= aplicar(caso, r["id"], r["titulo"], nova)
         if not aplicar_mudanca or not mudou:
             return 1 if apertar else 0
     print("\n!! não convergiu: algum slide está oscilando entre dois degraus")

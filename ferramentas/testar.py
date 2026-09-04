@@ -298,6 +298,103 @@ def rodar(caminho: Path) -> int:
         t.checa("clicar na miniatura pula para o slide",
                 pg.evaluate("document.querySelector('.slide.on').dataset.n") == "9")
 
+        # ── ramificação ──────────────────────────────────────────────────
+        if pg.evaluate("document.querySelectorAll('.slide.no').length"):
+            def zerar():
+                pg.evaluate("""() => {
+                    EST = JSON.parse(JSON.stringify(EST0));
+                    caminho.length = 0;
+                    document.querySelectorAll('.ramos').forEach(u => {
+                        u.classList.remove('decidido');
+                        u.querySelectorAll('li').forEach(l => l.classList.remove('escolhido'));
+                        u.querySelectorAll('.wy').forEach(w => w.hidden = true);
+                    });
+                    pintarEstado();
+                }""")
+
+            def percorrer(escolhas):
+                pg.evaluate("irPara('n1')")
+                pg.wait_for_timeout(120)
+                for _ in range(30):
+                    cls = pg.evaluate("document.querySelector('.slide.on').className")
+                    sid = pg.evaluate("document.querySelector('.slide.on').id")
+                    if "fim" in cls.split():
+                        return sid
+                    if "no" in cls.split():
+                        pg.click(f".slide.on .ramos li:nth-child({escolhas.pop(0)})")
+                        pg.wait_for_timeout(180)
+                        pg.click("#seguir")
+                        pg.wait_for_timeout(180)
+                    else:
+                        pg.keyboard.press("a")
+                        pg.wait_for_timeout(70)
+                        pg.keyboard.press("ArrowRight")
+                        pg.wait_for_timeout(160)
+                return "nao_chegou"
+
+            zerar()
+            pg.evaluate("irPara('n1')")
+            pg.wait_for_timeout(150)
+            t.checa("barra de estado do paciente aparece",
+                    "Creatinina" in pg.evaluate(
+                        "document.getElementById('est').textContent"))
+            e0 = pg.evaluate("JSON.parse(JSON.stringify(EST))")
+            pg.click(".slide.on .ramos li:nth-child(2)")
+            pg.wait_for_timeout(250)
+            e1 = pg.evaluate("JSON.parse(JSON.stringify(EST))")
+            t.checa("a escolha muda o estado do paciente",
+                    e1["creatinina"] > e0["creatinina"] and e1["horas"] > e0["horas"],
+                    f"Cr {e0['creatinina']}→{e1['creatinina']}, "
+                    f"{e0['horas']:.0f}h→{e1['horas']:.0f}h")
+            t.checa("a justificativa fisiológica aparece depois da escolha",
+                    not pg.evaluate(
+                        "document.querySelector('#s-n1 li.escolhido .wy').hidden"))
+            t.checa("as duas justificativas ficam visíveis, para o contrafactual",
+                    pg.evaluate(
+                        "[...document.querySelectorAll('#s-n1 .wy')]"
+                        ".every(w=>!w.hidden)"))
+            pg.keyboard.press("v")
+            pg.wait_for_timeout(300)
+            e2 = pg.evaluate("JSON.parse(JSON.stringify(EST))")
+            t.checa("V volta ao nó e DESFAZ o estado", e2 == e0,
+                    f"Cr {e2['creatinina']} (era {e0['creatinina']})")
+            t.checa("V devolve o nó ao estado de não decidido",
+                    not pg.evaluate(
+                        "document.querySelector('#s-n1 .ramos')"
+                        ".classList.contains('decidido')"))
+
+            pg.keyboard.press("m")
+            pg.wait_for_timeout(200)
+            t.checa("M abre o mapa da árvore",
+                    pg.evaluate("document.getElementById('mapa').classList.contains('on')"))
+            mn = pg.evaluate("document.querySelectorAll('#mapa .mn').length")
+            mf = pg.evaluate("document.querySelectorAll('#mapa .mf').length")
+            nn = pg.evaluate("document.querySelectorAll('.slide.no').length")
+            nf = pg.evaluate("document.querySelectorAll('.slide.fim').length")
+            t.checa("o mapa lista todos os nós e desfechos",
+                    mn == nn and mf == nf,
+                    f"mapa {mn} nós / {mf} desfechos · baralho {nn} / {nf}")
+            pg.keyboard.press("m")
+            pg.wait_for_timeout(150)
+
+            # todo caminho leva a um desfecho, e caminhos diferentes a desfechos
+            # diferentes: é a única prova de que a árvore não reconverge
+            fins = {}
+            for esc in ([1, 1, 1], [1, 1, 2], [1, 2, 1], [1, 2, 2],
+                        [2, 1, 1], [2, 1, 2], [2, 2, 1], [2, 2, 2]):
+                zerar()
+                fins["".join(map(str, esc))] = percorrer(list(esc))
+            t.checa("todo caminho chega a um desfecho",
+                    all(v.startswith("s-f_") for v in fins.values()),
+                    ", ".join(f"{k}→{v}" for k, v in fins.items() if not v.startswith("s-f_"))
+                    or f"{len(fins)} caminhos")
+            t.checa("caminhos diferentes levam a desfechos diferentes",
+                    len(set(fins.values())) == len(fins),
+                    f"{len(set(fins.values()))} desfechos distintos em {len(fins)} caminhos")
+            zerar()
+            pg.evaluate("show(0)")
+            pg.wait_for_timeout(120)
+
         # ── modo de edição e round-trip do Ctrl+S ────────────────────────
         pg.keyboard.press("e")
         t.checa("E entra no modo de edição", pg.evaluate("document.body.classList.contains('editando')"))
@@ -346,10 +443,19 @@ def rodar(caminho: Path) -> int:
         t.checa("arquivo salvo não carrega alternativa marcada", "sel" not in
                 re.sub(r'class="([^"]*)"', lambda m: m.group(1),
                        "".join(re.findall(r'<li class="[^"]*sel[^"]*"', marcacao))))
-        t.checa("tabelas voltam veladas no arquivo salvo",
-                marcacao.count("<tr") - marcacao.count("<tr>") ==
-                len(re.findall(r'<tr class="[^"]*\bhid\b', marcacao)),
-                f"{len(re.findall(chr(60)+chr(116)+chr(114)+chr(32)+chr(99)+'lass=\"[^\"]*.hid', marcacao))} linhas veladas")
+        # toda linha de tabela velada tem de voltar oculta no arquivo salvo
+        veladas, abertas = 0, 0
+        for tb in re.findall(r'<table class="lab oc".*?</table>', marcacao, re.S):
+            # só o corpo: a linha de cabeçalho não é velada, e contá-la fazia
+            # o teste acusar defeito que não existe
+            corpo = re.search(r"<tbody>(.*?)</tbody>", tb, re.S)
+            for tr in re.findall(r"<tr[^>]*>", corpo.group(1) if corpo else ""):
+                if "hid" in tr:
+                    veladas += 1
+                else:
+                    abertas += 1
+        t.checa("tabelas voltam veladas no arquivo salvo", abertas == 0,
+                f"{veladas} veladas, {abertas} abertas")
 
         # o arquivo salvo tem que continuar funcionando
         pg2 = ctx.new_page()

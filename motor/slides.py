@@ -21,13 +21,16 @@ def _id(t: str) -> str:
     return t[:48]
 
 
-def _slide(*, tipo, classes, corpo, ident=None, titulo="", **extra) -> dict:
+def _slide(*, tipo, classes, corpo, ident=None, titulo="", segue=None, **extra) -> dict:
     s = {
         "tipo": tipo,
         "classes": [c for c in classes if c],
         "corpo": corpo,
         "id": ident or _id(titulo or tipo),
         "titulo": titulo,
+        # dentro de um ramo, o próximo bloco é declarado, não é o vizinho do
+        # DOM: é o que permite os ramos não reconvergirem
+        "segue": segue,
     }
     s.update(extra)
     return s
@@ -76,7 +79,8 @@ def _grau_do_titulo(t: str) -> str:
     return ""
 
 
-def _generico(tipo, base, kicker, titulo, conteudo, densidade, ident, centro=False):
+def _generico(tipo, base, kicker, titulo, conteudo, densidade, ident, centro=False,
+              segue=None):
     corpo = (
         (f'<div class="kicker">{texto(kicker)}</div>\n' if kicker else "")
         + f"<h2>{texto(titulo)}</h2>\n"
@@ -86,6 +90,7 @@ def _generico(tipo, base, kicker, titulo, conteudo, densidade, ident, centro=Fal
         tipo=tipo,
         classes=[base, _dens(densidade), "centro" if centro else "",
                  _grau_do_titulo(titulo)],
+        segue=segue,
         corpo=corpo,
         ident=ident,
         titulo=titulo,
@@ -94,24 +99,24 @@ def _generico(tipo, base, kicker, titulo, conteudo, densidade, ident, centro=Fal
 
 
 def narrativa(kicker: str, titulo: str, *conteudo: str, densidade=None, ident=None,
-              centro: bool = False) -> dict:
+              centro: bool = False, segue: str = None) -> dict:
     """Prosa longa: história, exame físico, evolução. Corpo em corpo maior."""
     return _generico("narrativa", "narr", kicker, titulo, conteudo,
-                     densidade, ident, centro)
+                     densidade, ident, centro, segue)
 
 
 def tela(kicker: str, titulo: str, *conteudo: str, densidade=None, ident=None,
-         centro: bool = False) -> dict:
+         centro: bool = False, segue: str = None) -> dict:
     """Tela de sistema: painéis de resultado sobre fundo de prontuário."""
     return _generico("tela", "screen", kicker, titulo, conteudo,
-                     densidade, ident, centro)
+                     densidade, ident, centro, segue)
 
 
 def bloco(kicker: str, titulo: str, *conteudo: str, densidade=None, ident=None,
-          centro: bool = False) -> dict:
+          centro: bool = False, segue: str = None) -> dict:
     """Bloco comum: imagem com laudo, tabela, síntese, anexo."""
     return _generico("bloco", "", kicker, titulo, conteudo,
-                     densidade, ident, centro)
+                     densidade, ident, centro, segue)
 
 
 def discussao(titulo: str, *conteudo: str, densidade="dense", ident=None,
