@@ -22,26 +22,24 @@ fit();
 
 /* ───────────────────── etapas de revelação ───────────────────── */
 function cur(){ return document.querySelector('.slide.on') || S[i]; }
-function passos(s){ return [...(s || cur()).querySelectorAll('.rv,.pv,svg.ov.rvov,table.oc')]; }
+/* A tabela velada abria inteira num toque de seta. Cada linha é um passo:
+   é assim que o painel de exames vira exercício, valor a valor. */
+function passos(s){
+  const alvo = s || cur();
+  return [...alvo.querySelectorAll('.rv,.pv,svg.ov.rvov,table.oc tbody tr')];
+}
 function feito(el){
-  if (el.tagName === 'TABLE')
-    return ![...el.querySelectorAll('tbody tr')].some(r => r.classList.contains('hid'));
+  if (el.tagName === 'TR') return !el.classList.contains('hid');
   return el.classList.contains('on');
 }
 function abrir(el){
-  if (el.tagName === 'TABLE'){
-    el.querySelectorAll('tbody tr.hid').forEach(r => r.classList.remove('hid'));
-    return;
-  }
+  if (el.tagName === 'TR'){ el.classList.remove('hid'); return; }
   el.classList.add('on');
   if (el.tagName === 'svg'){ const f = el.closest('figure'); if (f) f.classList.add('on'); }
   espelhar(el, true);
 }
 function fechar(el){
-  if (el.tagName === 'TABLE'){
-    el.querySelectorAll('tbody tr').forEach(r => r.classList.add('hid'));
-    return;
-  }
+  if (el.tagName === 'TR'){ el.classList.add('hid'); return; }
   el.classList.remove('on');
   if (el.tagName === 'svg'){ const f = el.closest('figure'); if (f) f.classList.remove('on'); }
   espelhar(el, false);
@@ -74,10 +72,21 @@ function recuar(){
 function tudo(v){ passos().forEach(e => v ? abrir(e) : fechar(e)); pintar(); }
 
 /* ───────────────────────── navegação ───────────────────────── */
+/* Quantos passos cada slide já tinha revelado. Sem isso, voltar ao slide
+   anterior para responder uma dúvida e seguir em frente apagava tudo o que a
+   turma já tinha visto, e o professor revelava de novo na frente dela. */
+const revelado = new Map();
 function show(n, fim){
+  const antes = S.indexOf(cur());
+  if (antes >= 0) revelado.set(antes, passos(S[antes]).filter(feito).length);
   i = Math.max(0, Math.min(S.length - 1, n));
   S.forEach((s, k) => s.classList.toggle('on', k === i));
-  if (!fim) passos(S[i]).forEach(fechar); else tudo(true);
+  const p = passos(S[i]);
+  if (fim) { p.forEach(abrir); }
+  else {
+    const ate = revelado.get(i) || 0;
+    p.forEach((e, k) => k < ate ? abrir(e) : fechar(e));
+  }
   pintar();
   bar.style.width = ((i + 1) / S.length * 100) + '%';
   location.hash = i + 1;
@@ -378,6 +387,24 @@ function relogio(){
   }
 }
 
+/* ─────────────────── cabine do professor ───────────────────
+   A nota do apresentador só existia no PDF: em sala, o professor tinha o
+   roteiro no papel e o slide na tela. N traz a nota para a tela, quando ele
+   quer lê-la em voz alta ou conferir o que ia perguntar.
+   B apaga a tela — é o gesto que devolve a atenção da turma à discussão, e
+   toda ferramenta de apresentação tem. */
+function notaNaTela(){
+  document.body.classList.toggle('com-nota');
+  const n = cur().querySelector('.pnote');
+  if (document.body.classList.contains('com-nota') && !n){
+    const a = document.getElementById('aviso');
+    a.textContent = 'este slide não tem nota do apresentador';
+    a.classList.add('on');
+    setTimeout(() => a.classList.remove('on'), 1800);
+  }
+}
+function telaPreta(){ document.body.classList.toggle('apagado'); }
+
 /* ───────────────────────── entrada ───────────────────────── */
 addEventListener('keydown', e => {
   if (e.target === q) return;
@@ -398,6 +425,8 @@ addEventListener('keydown', e => {
   }
   if (e.key === 'c' || e.key === 'C'){ limparVotos(); e.preventDefault(); return; }
   if (e.key === 't' || e.key === 'T'){ relogio(); e.preventDefault(); return; }
+  if (e.key === 'n' || e.key === 'N'){ notaNaTela(); e.preventDefault(); return; }
+  if (e.key === 'b' || e.key === 'B'){ telaPreta(); e.preventDefault(); return; }
   if (e.key === 'q' || e.key === 'Q'){
     /* pula para a próxima pergunta: em sala, a turma pede para voltar a uma
        pergunta o tempo todo, e procurar slide a slide come a discussão. */
@@ -410,10 +439,10 @@ addEventListener('keydown', e => {
   if (e.key === 'e' || e.key === 'E'){ modoEdicao(!editando); e.preventDefault(); return; }
   if (e.key === 'a' || e.key === 'A'){ tudo(true); return; }
   if (e.key === 'z' || e.key === 'Z'){ tudo(false); return; }
-  if (['ArrowRight', 'PageDown', ' ', 'Enter', 'n'].includes(e.key)){
+  if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)){
     if (e.shiftKey || !avancar()) show(i + 1);
     e.preventDefault();
-  } else if (['ArrowLeft', 'PageUp', 'Backspace', 'p'].includes(e.key)){
+  } else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)){
     if (e.shiftKey || !recuar()) show(i - 1, true);
     e.preventDefault();
   }

@@ -43,12 +43,17 @@ HIPOTESES = [
         "Hemocultura positiva e vegetação ao ecocardiograma"),
     hip("infeccao", "Infecção pulmonar grave com lesão renal aguda",
         "Um foco infeccioso identificado, e o rim acompanhando a sepse"),
+    hip("lepto", "Leptospirose na forma pulmonar hemorrágica",
+        "Exposição a água de enchente ou a roedor, e sorologia ou PCR "
+        "reagente — no Ceará, entra na lista por epidemiologia"),
     hip("droga", "Vasculite induzida por droga",
         "Hidralazina, propiltiouracila, minociclina ou levamisol em uso"),
 ]
 
 from .banco import BANCO
-from .perguntas import P1, P2, P3, P4, P5, P6, P7, P8, P9
+from .perguntas import (
+    P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12,
+)
 
 TITULO = "Homem de 63 anos com hemoptise, púrpura e queda de função renal"
 SLUG = "pulmao-rim"
@@ -60,7 +65,7 @@ SLIDES = [
         "Homem de 63 anos com hemoptise, púrpura e queda de função renal",
         "Sintomas nasais, articulares, pulmonares e renais ao longo de oito "
         "semanas.",
-        "**13 blocos de caso · 9 perguntas · 90 a 110 minutos** O caso avança "
+        "**16 blocos de caso · 12 perguntas · 110 a 130 minutos** O caso avança "
         "em blocos de informação nova. As perguntas são curtas e servem para "
         "abrir discussão, não para testar memória.",
         "Caso autoral, construído para ensino. O paciente é ficcional. As "
@@ -223,7 +228,7 @@ SLIDES = [
               "escreva no quadro branco; só então revele esta tela, e compare. "
               "O que a turma esqueceu costuma ser mais instrutivo do que o que "
               "ela lembrou — em geral esquecem a endocardite e a droga.")),
-        densidade="dense",
+        densidade="xd",
         ident="quadro_1",
     ),
     P2,
@@ -364,7 +369,12 @@ SLIDES = [
             "urologico": ("derrubada",
                           "Hemácias dismórficas em 40% e cilindros hemáticos: "
                           "o sangue atravessou o glomérulo"),
-        }, titulo="Depois do sedimento urinário"),
+            "lepto": ("derrubada",
+                      "Oito semanas de curso, sem exposição a enchente ou "
+                      "roedor: a forma pulmonar hemorrágica se instala em dias, "
+                      "não em meses"),
+        }, titulo="Depois do sedimento urinário",
+           novos=["urologico", "lepto"]),
         densidade="xd",
         ident="quadro_2",
     ),
@@ -376,6 +386,7 @@ SLIDES = [
           "três linhas de uma vez."),
         quadro(HIPOTESES, {
             "urologico": ("derrubada", "Sedimento glomerular"),
+            "lepto": ("derrubada", "Curso de oito semanas, sem exposição"),
             "lupus": ("derrubada",
                       "C3 e C4 normais, FAN e anti-DNA não reagentes"),
             "crio": ("derrubada",
@@ -515,6 +526,7 @@ SLIDES = [
           "barato: daqui em diante, quem decide é a sorologia e a biópsia."),
         quadro(HIPOTESES, {
             "urologico": ("derrubada", "Sedimento glomerular"),
+            "lepto": ("derrubada", "Curso de oito semanas, sem exposição"),
             "lupus": ("derrubada", "Complemento normal, FAN não reagente"),
             "crio": ("derrubada", "C4 normal"),
             "endocardite": ("enfraquecida",
@@ -532,6 +544,7 @@ SLIDES = [
         densidade="xd",
         ident="quadro_4",
     ),
+    P10,
     momento("Terceira parte",
         "O resultado que estava pendente",
         "As sorologias foram pedidas na primeira hora. Voltaram agora.",
@@ -584,6 +597,7 @@ SLIDES = [
         ),
         densidade="xd",
     ),
+    P11,
     discussao("Sobra uma",
         p("O p-ANCA em 1:640 com anti-MPO de 148 U/mL, o anti-MBG não reagente "
           "e a lista de medicações limpa fecham a poda começada no exame "
@@ -591,6 +605,7 @@ SLIDES = [
           "percurso — não como ponto de partida."),
         quadro(HIPOTESES, {
             "urologico": ("derrubada", "Sedimento glomerular"),
+            "lepto": ("derrubada", "Curso de oito semanas, sem exposição"),
             "lupus": ("derrubada", "Complemento normal, FAN não reagente"),
             "crio": ("derrubada", "C4 normal, crioglobulinas negativas"),
             "endocardite": ("derrubada",
@@ -960,6 +975,7 @@ SLIDES = [
         densidade="dense",
     ),
     P9,
+    P12,
     discussao("Deterioração durante a indução",
         p("A partir do momento em que a indução começa, toda piora passa a "
           "ter duas explicações possíveis, e elas pedem condutas opostas. "

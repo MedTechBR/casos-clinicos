@@ -47,6 +47,7 @@ P1 = pergunta(
         ),
     ],
     ordem=[0, 1, 2, 4, 3],
+    titulo_resposta="Quatro territórios, um só compartimento vascular",
 )
 
 P2 = pergunta(
@@ -88,6 +89,7 @@ P2 = pergunta(
         ),
     ],
     ordem=[1, 0, 2, 3, 4],
+    titulo_resposta="O exame que responde antes de a sorologia voltar",
 )
 
 P3 = pergunta(
@@ -120,6 +122,7 @@ P3 = pergunta(
         ),
     ],
     ordem=[0, 1, 3, 2],
+    titulo_resposta="Cilindro hemático localiza o sangramento no glomérulo",
 )
 
 P4 = pergunta(
@@ -153,6 +156,7 @@ P4 = pergunta(
         ),
     ],
     ordem=[0, 3, 1, 2],
+    titulo_resposta="O complemento separa quem consome de quem não consome",
 )
 
 P5 = pergunta(
@@ -187,6 +191,7 @@ P5 = pergunta(
         ),
     ],
     ordem=[0, 2, 1, 4, 3],
+    titulo_resposta="Dois achados, e cada um diz uma coisa diferente",
 )
 
 P6 = pergunta(
@@ -220,6 +225,7 @@ P6 = pergunta(
         ),
     ],
     ordem=[2, 0, 1, 3],
+    titulo_resposta="A imunofluorescência separa mecanismos, não gradua lesão",
 )
 
 P7 = pergunta(
@@ -256,6 +262,7 @@ P7 = pergunta(
         ),
     ],
     ordem=[0, 1, 2, 3, 4],
+    titulo_resposta="A indução tem duas peças, e nenhuma delas é opcional",
 )
 
 P8 = pergunta(
@@ -329,4 +336,131 @@ P9 = pergunta(
         ),
     ],
     ordem=[0, 1, 2, 3],
+    titulo_resposta="Nem toda piora sob tratamento é a doença piorando",
+)
+
+
+# ─────────────────────── perguntas de decisão ───────────────────────
+#
+# As nove primeiras cobrem o diagnóstico. Estas três cobrem as decisões que o
+# interno e o residente vão de fato tomar, e que o caso respondia sozinho em
+# caixas — resposta de pergunta que nunca foi feita.
+
+P10 = pergunta(
+    10,
+    "O lavado está estéril, o ANCA foi pedido e não voltou, e a creatinina "
+    "subiu de 3,4 para 3,8 em vinte e quatro horas. Começa a imunossupressão "
+    "hoje?",
+    [
+        alt(
+            "Não: sem sorologia e sem biópsia, tratar é tratar às cegas",
+            "Rigor que custa néfron. A glomerulonefrite rapidamente progressiva "
+            "perde função em dias, e a janela de recuperação fecha junto. "
+            "Esperar o laudo de uma biópsia que ainda vai ser marcada não é "
+            "prudência, é adiamento.",
+        ),
+        alt(
+            "Sim: pulso de glicocorticoide agora, e o resto quando os "
+            "resultados chegarem",
+            "É a conduta defensável. O pulso é reversível, cobre as três "
+            "hipóteses que sobraram, e o que ele muda na biópsia feita nos "
+            "dias seguintes é pequeno. O que não se pode antecipar é o "
+            "imunossupressor de manutenção, que decide o resto do ano.",
+            certa=True,
+        ),
+        alt(
+            "Sim: pulso de glicocorticoide e rituximabe, para não perder tempo",
+            "Antecipa demais. O rituximabe compromete o paciente por seis a "
+            "doze meses e a escolha depende do que a sorologia e a biópsia "
+            "vão dizer. Pressa no reversível é diferente de pressa no "
+            "irreversível.",
+        ),
+        alt(
+            "Só depois de excluir endocardite com hemocultura e ecocardiograma",
+            "A exclusão é obrigatória e já está em curso — mas ela não precisa "
+            "estar concluída para o pulso começar. O que a endocardite proíbe "
+            "é a imunossupressão prolongada, não a primeira dose.",
+        ),
+    ],
+    titulo_resposta="Pressa no reversível, cautela no irreversível",
+    ordem=[1, 0, 3, 2],
+)
+
+P11 = pergunta(
+    11,
+    "O p-ANCA veio 1:640 e o anti-MPO, 148 U/mL. O que esse resultado, "
+    "sozinho, autoriza a concluir?",
+    [
+        alt(
+            "Que o diagnóstico é vasculite associada ao ANCA",
+            "Sorologia não é diagnóstico. O ANCA tem sensibilidade e "
+            "especificidade altas no contexto certo, mas é positivo em "
+            "endocardite, tuberculose, uso de cocaína adulterada com levamisol "
+            "e em várias doenças que este caso ainda não afastou por completo.",
+        ),
+        alt(
+            "Que a probabilidade da hipótese subiu muito, e que ela precisa "
+            "do tecido para fechar",
+            "É o que um resultado faz: move a probabilidade. Num paciente com "
+            "sedimento glomerular, hemorragia alveolar e complemento normal, "
+            "esse título move muito — mas quem separa pauci-imune de "
+            "imunocomplexo é a imunofluorescência da biópsia.",
+            certa=True,
+        ),
+        alt(
+            "Que a doença anti-membrana basal está afastada",
+            "Isso quem afasta é o anti-MBG não reagente, que veio no mesmo "
+            "painel. Um ANCA positivo não exclui a sobreposição: ela ocorre "
+            "justamente em quem tem os dois.",
+        ),
+        alt(
+            "Que o título prediz a gravidade e vai guiar o tratamento",
+            "O título não acompanha a atividade de forma confiável ao longo do "
+            "tempo, e não se ajusta terapia por ele. O que prediz recidiva é o "
+            "antígeno, e não a altura do título.",
+        ),
+    ],
+    titulo_resposta="Sorologia move probabilidade, não fecha diagnóstico",
+    ordem=[1, 0, 2, 3],
+)
+
+P12 = pergunta(
+    12,
+    "Cresceu //Staphylococcus aureus// em dois de dois pares. Que hipótese "
+    "esse resultado obriga a reabrir?",
+    [
+        alt(
+            "Nenhuma: é infecção de cateter no paciente neutropênico, e o "
+            "diagnóstico já está fechado pela biópsia",
+            "É a leitura mais provável, e provavelmente a certa. Mas “mais "
+            "provável” não é o mesmo que “não preciso olhar”, e o custo de "
+            "olhar aqui é um ecocardiograma.",
+        ),
+        alt(
+            "Endocardite infecciosa, que foi derrubada da lista com "
+            "hemoculturas que agora se sabe que podem ter sido colhidas cedo "
+            "demais",
+            "É o mimetizador perfeito da síndrome que a turma acabou de "
+            "diagnosticar: a endocardite produz ANCA positivo, "
+            "glomerulonefrite pauci-imune, púrpura e hemorragia alveolar — e o "
+            "tratamento é o oposto do que este paciente está recebendo. Com "
+            "//S. aureus// em dois de dois pares, ela volta para a mesa até "
+            "que o ecocardiograma diga o contrário.",
+            certa=True,
+        ),
+        alt(
+            "Vasculite induzida por droga, agora que há antibiótico em uso",
+            "A vasculite por droga é causada por hidralazina, "
+            "propiltiouracila, minociclina e levamisol, e leva semanas a meses "
+            "para se instalar. Oxacilina iniciada hoje não produz o quadro que "
+            "começou há oito semanas.",
+        ),
+        alt(
+            "Doença anti-membrana basal, pela recaída da hemorragia alveolar",
+            "O anti-MBG veio não reagente e a imunofluorescência não mostrou "
+            "depósito linear. Nada no quinto dia muda esses dois resultados.",
+        ),
+    ],
+    titulo_resposta="O mimetizador que estava na lista desde o começo",
+    ordem=[2, 1, 0, 3],
 )

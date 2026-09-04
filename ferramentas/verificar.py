@@ -15,6 +15,7 @@ import unicodedata
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(RAIZ))
 
 # Títulos de efeito: substantivo simples é a regra. "Exame físico", nunca
 # "Quando o pulmão acusa o rim".
@@ -63,9 +64,12 @@ def v_alternativas(h, r):
     for i, s in enumerate(S):
         if 'class="slide ans' not in s:
             continue
-        anunciada = set(re.findall(r"[A-E]", _texto(re.search(r"<h2>(.*?)</h2>", s, re.S).group(1))))
+        # a letra do gabarito vive em .gab desde que o título da resposta
+        # passou a ser a ideia que a pergunta ensina, e não a letra
+        g = re.search(r'class="gab">(.*?)</span>', s, re.S)
+        anunciada = set(re.findall(r"\b[A-E]\b", _texto(g.group(1)) if g else ""))
         marcadas = set()
-        for m in re.finditer(r'<li class="ok">(.*?)</li>', s, re.S):
+        for m in re.finditer(r'<li class="ok[^"]*">(.*?)</li>', s, re.S):
             marcadas.add(_texto(re.search(r'class="k">(.*?)</span>', m.group(1), re.S).group(1)))
         if anunciada != marcadas:
             erros.append(f"slide {i+1}: anuncia {sorted(anunciada)}, marca {sorted(marcadas)}")
@@ -154,7 +158,8 @@ def v_sem_spoiler(h, r):
     for i, s_ in enumerate(S):
         if 'class="slide ans' not in s_ or i < 2:
             continue
-        certas = re.findall(r'<li class="ok">.*?<div class="tt">(.*?)</div>', s_, re.S)
+        certas = re.findall(r'<li class="ok[^"]*">.*?<div class="tt">(.*?)</div>',
+                            s_, re.S)
         # os dois slides antes da pergunta (a pergunta é i-1)
         antes = " ".join(S[max(0, i - 3):i - 1])
         antes = re.sub(r'class="pnote".*?</div>\s*</div>', " ", antes, flags=re.S)
@@ -199,7 +204,7 @@ def v_gabarito(h, r):
         if 'class="slide ans' not in s:
             continue
         alts = [(m.group(1), m.group(2), _texto(m.group(3))) for m in re.finditer(
-            r'<li class="(ok|no)"><span class="k">([A-E])</span>.*?'
+            r'<li class="(ok|no)[^"]*"><span class="k">([A-E])</span>.*?'
             r'<div class="tt">(.*?)</div>', s, re.S)]
         if not alts:
             continue
@@ -222,6 +227,12 @@ def v_gabarito(h, r):
     c = Counter(letras)
     faltando = [x for x in "ABCDE" if x not in c]
     erros = []
+    # com poucas perguntas, distribuição de letra não quer dizer nada: um caso
+    # de duas perguntas não tem como cobrir cinco letras
+    if total < 5:
+        r.add("higiene do gabarito", True,
+              f"{total} perguntas — poucas para aferir distribuição")
+        return
     if len(faltando) > 1:
         erros.append(f"letras que nunca são corretas: {', '.join(faltando)}")
     if c and max(c.values()) > max(2, len(letras) * 0.45):
@@ -302,9 +313,10 @@ def v_contas(h, r):
             erros.append(f"CKD-EPI 2021: creatinina {cr} aos {idade:.0f} anos dá "
                          f"{calc:.0f} mL/min/1,73 m², o banco diz {tfg:.0f}")
 
-    if faltando:
-        erros.append("não consegui aferir: " + ", ".join(faltando))
-    r.add("as contas fecham", not erros, " · ".join(erros) or " · ".join(feitas))
+    # analito ausente do banco não é erro: é caso que não publica aquele número
+    nota = (" · não aferível: " + ", ".join(faltando)) if faltando else ""
+    r.add("as contas fecham", not erros,
+          " · ".join(erros) if erros else (" · ".join(feitas) + nota) or "nada a aferir")
 
 
 def v_arvore(h, r):
@@ -474,6 +486,9 @@ def v_velado_nao_vaza(caminho: Path, r):
 
 
 def main(caminho=None):
+    if caminho and not str(caminho).endswith(".html"):
+        from ferramentas.tirar import alvo
+        caminho = alvo(caminho)
     caminho = Path(caminho or RAIZ / "saida" / "pulmao-rim.html")
     h = caminho.read_text()
     print(f"\nverificando {caminho.name}\n")

@@ -15,6 +15,16 @@ RAIZ = Path(__file__).resolve().parent.parent
 DEST = RAIZ / "saida" / "revisao"
 
 
+def alvo(caso="pulmao_rim") -> Path:
+    """O HTML montado do caso. Cravar o nome aqui faz a ferramenta medir
+    um arquivo e escrever em outro quando existir um segundo caso."""
+    import importlib
+    import sys as _s
+    _s.path.insert(0, str(RAIZ))
+    m = importlib.import_module(f"casos.{caso}.caso")
+    return RAIZ / "saida" / f"{m.SLUG}.html"
+
+
 def tirar(caminho: Path, quais=None, por_passo=False, dest: Path = DEST, sufixo=""):
     from playwright.sync_api import sync_playwright
 
@@ -56,8 +66,9 @@ def tirar(caminho: Path, quais=None, por_passo=False, dest: Path = DEST, sufixo=
 
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    tirar(RAIZ / "saida" / "pulmao-rim.html", [int(a) for a in args] or None,
-          "--passos" in sys.argv)
+    caso = next((a for a in args if not a.isdigit()), "pulmao_rim")
+    nums = [int(a) for a in args if a.isdigit()]
+    tirar(alvo(caso), nums or None, "--passos" in sys.argv)
 
 
 def folha_de_contato(caminho: Path, dest: Path = None, colunas: int = 5):

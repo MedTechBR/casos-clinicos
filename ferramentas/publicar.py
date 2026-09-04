@@ -12,6 +12,7 @@ import sys
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(RAIZ))
 
 
 def publicar(caminho: Path, destino: Path = None) -> Path:
@@ -39,5 +40,7 @@ def publicar(caminho: Path, destino: Path = None) -> Path:
 
 
 if __name__ == "__main__":
-    alvo = Path(sys.argv[1]) if len(sys.argv) > 1 else RAIZ / "saida" / "pulmao-rim.html"
+    from ferramentas.tirar import alvo as _alvo
+    a = sys.argv[1] if len(sys.argv) > 1 else "pulmao_rim"
+    alvo = Path(a) if a.endswith(".html") else _alvo(a)
     publicar(alvo)

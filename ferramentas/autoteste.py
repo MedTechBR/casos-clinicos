@@ -31,7 +31,7 @@ def _antes_da_pergunta(h, n, veneno):
     A checagem ignora de propósito o próprio slide da pergunta — envenenar ali
     não prova nada.
     """
-    i = h.index(f'<div class="qn">Pergunta {n}</div>')
+    i = h.index(f"Pergunta {n}</div>")
     fim = h.rindex("</section>", 0, i)
     return h[:fim] + veneno + h[fim:]
 
@@ -40,7 +40,7 @@ CASOS = [
     (
         "alinhamento pergunta/resposta",
         V.v_alternativas,
-        lambda h: h.replace('<li class="ok">', '<li class="no">', 1),
+        lambda h: h.replace('<li class="ok pv">', '<li class="no pv">', 1),
     ),
     (
         "títulos sem efeito",
@@ -74,9 +74,9 @@ CASOS = [
         "higiene do gabarito",
         V.v_gabarito,
         # devolve todos os gabaritos para a letra D, como no banco original
-        lambda h: re.sub(r'<li class="(ok|no)"><span class="k">[A-E]</span>',
-                         lambda m: f'<li class="{m.group(1)}"><span class="k">D</span>',
-                         h),
+        lambda h: re.sub(r'<li class="(ok|no)( pv)?"><span class="k">[A-E]</span>',
+                         lambda m: f'<li class="{m.group(1)}{m.group(2) or ""}">'
+                                   f'<span class="k">D</span>', h),
     ),
     (
         "as contas fecham",
@@ -95,6 +95,9 @@ CASOS = [
 
 
 def main(caminho=None):
+    if caminho and not str(caminho).endswith(".html"):
+        from ferramentas.tirar import alvo
+        caminho = alvo(caminho)
     caminho = Path(caminho or RAIZ / "saida" / "pulmao-rim.html")
     h = caminho.read_text()
     print(f"\ntestando as verificações contra {caminho.name}\n")

@@ -82,25 +82,33 @@ def pergunta(
         f'<ul class="alts multi{duas}" data-max="{maxsel}">{itens}</ul>'
     )
 
+    # O slide de resposta era a única tela do baralho sem revelação: as cinco
+    # alternativas apareciam julgadas ao mesmo tempo, e a manchete era a letra
+    # do gabarito. A turma lia a resposta antes de o professor conseguir
+    # perguntar "por que não a A?". Agora cada alternativa é um passo, o
+    # veredito e o comentário entram junto, e o título é a ideia que a pergunta
+    # ensina — a letra vira um dado discreto ao lado dela.
     fb = "".join(
-        f'<li class="{"ok" if a["certa"] else "no"}"><span class="k">{LETRAS[i]}</span>'
+        f'<li class="{"ok" if a["certa"] else "no"} pv">'
+        f'<span class="k">{LETRAS[i]}</span>'
         f'<div class="ft"><div class="tt">{texto(a["t"])}</div>'
         f'<div class="wy">{texto(a["porque"])}</div></div>'
         f'<span class="mk">&#{10003 if a["certa"] else 10007};</span></li>'
         for i, a in enumerate(alternativas)
     )
+    manchete = texto(titulo_resposta) if titulo_resposta else texto(enunciado)
     corpo_a = (
-        f'<div class="tag">Resposta {n}</div>\n<h2>{_letras(alternativas)}</h2>\n'
-        f'<div class="body"><ul class="alts fb{duas}">{fb}</ul>'
-        + (f'<div class="cap">{texto(titulo_resposta)}</div>' if titulo_resposta else "")
-        + "</div>"
+        f'<div class="tag">Resposta {n}'
+        f'<span class="gab">{_letras(alternativas)}</span></div>\n'
+        f"<h2>{manchete}</h2>\n"
+        f'<div class="body"><ul class="alts fb{duas}">{fb}</ul></div>'
     )
 
     base = ident or f"p{n}"
     return [
         _slide(tipo="pergunta", classes=["q"], corpo=corpo_q, ident=base, titulo=enunciado,
-               numero=n, grid=f"P{n} — {enunciado}"),
-        _slide(tipo="resposta", classes=["ans", "dense"], corpo=corpo_a, ident=f"{base}_r",
-               titulo=titulo_resposta or enunciado, numero=n,
+               numero=n, grid=f"P{n} — {texto(enunciado)}"),
+        _slide(tipo="resposta", classes=["ans", "dense"], corpo=corpo_a,
+               ident=f"{base}_r", titulo=titulo_resposta or enunciado, numero=n,
                grid=f"R{n} — {titulo_resposta or _letras(alternativas)}"),
     ]

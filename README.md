@@ -20,14 +20,30 @@ motor/            o motor, comum a todos os casos
   runtime.js      navegação, revelação, gaveta, edição
   engine.py       montagem do arquivo final
 casos/
+  _modelo/        ponto de partida para um caso novo
   pulmao_rim/     caso.py (slides) · perguntas.py · banco.py · img/
 ferramentas/
-  verificar.py    linter: transbordo, alternativas, títulos, coerência
+  verificar.py    linter: 12 verificações (ver abaixo)
+  autoteste.py    envenena o arquivo e exige que cada verificação acuse
   testar.py       teste de fumaça da interatividade (Playwright)
   densidade.py    mede e escolhe a densidade tipográfica de cada slide
-  tirar.py        capturas de tela para revisão visual
+  tirar.py        capturas + folha de contato dos slides
+  grade.py        grade de coordenadas sobre as imagens, para anotar
   publicar.py     HTML -> PDF
   comparar.py     compara duas versões, slide a slide
+```
+
+Toda ferramenta recebe o nome do caso: `python3 ferramentas/verificar.py
+pulmao_rim`. Sem isso, no segundo caso a ferramenta mediria um arquivo e
+escreveria em outro, em silêncio.
+
+## Caso novo
+
+```bash
+cp -r casos/_modelo casos/<nome>
+python3 build.py <nome>
+python3 ferramentas/densidade.py <nome> --aplicar
+python3 ferramentas/verificar.py <nome>
 ```
 
 ## Uso
@@ -78,6 +94,21 @@ sistema informa. Um analito por entrada.
 
 **Imagens.** Só licença aberta verificável, com crédito e licença no slide e em
 `casos/*/img/CREDITOS.md`. Nunca figura do NEJM.
+
+**O caso se abre aos poucos.** O diagnóstico é o destino, não o ponto de
+partida. O grupo levanta o diferencial, cada dado novo poda uma linha do
+quadro de hipóteses com o motivo ao lado, e o nome da doença só aparece
+quando o percurso terminou. `v_sem_spoiler` recusa alternativa correta que já
+esteja impressa nos dois slides anteriores à pergunta.
+
+**O formato não pode entregar a resposta.** `v_gabarito` mede a distribuição
+das letras corretas, o viés de tamanho da correta e o par repetido nas
+perguntas de dupla resposta — as três assinaturas de banco gerado
+automaticamente.
+
+**As contas são conferidas.** `v_contas` refaz Henderson-Hasselbalch, a
+compensação por Winters, a relação PaO₂/FiO₂ e o CKD-EPI 2021 sobre os
+próprios números do banco.
 
 **O slide é canônico.** Se o slide mostra creatinina 3,8, a gaveta não mostra
 outra coisa. `verificar.py` confere.
