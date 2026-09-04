@@ -659,13 +659,11 @@ SLIDES = [
                       "o tufo e interrompe a filtração daquele glomérulo. É a "
                       "lesão que explica queda de função renal em dias, e não "
                       "em meses.")),
-                box("Por que a classe importa",
-                    p("Crescente **celular** é lesão ativa, e lesão ativa "
-                      "responde a imunossupressão. Crescente fibrosa e "
-                      "esclerose global não respondem: são cicatriz. A "
-                      "proporção entre uma coisa e outra é o que a "
-                      "classificação de Berden mede, e é de onde vem a "
-                      "estimativa de recuperação da função renal.")),
+                box("Ativa contra cicatriz",
+                    p("Crescente **celular** é lesão ativa e responde a "
+                      "imunossupressão. Crescente fibrosa e esclerose global "
+                      "são cicatriz e não respondem. A distinção é verdadeira — "
+                      "e não é o que a classificação de Berden faz.")),
                 nota("Antes de avançar",
                     p("Pergunte quantos por cento de crescentes eles esperam "
                       "encontrar antes de revelar o laudo. A turma costuma "
@@ -675,6 +673,50 @@ SLIDES = [
         ),
         densidade="dense",
         ident="crescente_celular",
+    ),
+    discussao("A classificação de Berden",
+        cols(
+            [
+                p("Berden não calcula proporção entre lesão ativa e crônica. "
+                  "Ela é **categórica**: aloca a biópsia inteira numa de quatro "
+                  "classes mutuamente exclusivas, pela regra dos 50%, contando "
+                  "na microscopia óptica apenas três coisas — glomérulos "
+                  "globalmente escleróticos, glomérulos normais e glomérulos "
+                  "com crescentes celulares —, e nessa ordem."),
+                tabela(["Se…", "A classe é"], [
+                    ["Metade ou mais globalmente esclerosados", "Esclerótica"],
+                    ["Senão, metade ou mais **normais**", "Focal"],
+                    ["Senão, metade ou mais com crescente celular", "Crescêntica"],
+                    ["Sem predomínio de nenhum padrão", "Mista"],
+                ], tamanho="sm"),
+            ],
+            [
+                box("A variável que mais pesa não é o crescente",
+                    p("É o glomérulo poupado: a classe focal é definida pela "
+                      "preservação, não pela lesão. E repare no que fica de "
+                      "fora — Berden só olha o glomérulo, de modo que a fibrose "
+                      "intersticial de 10% deste laudo, a atrofia tubular e a "
+                      "própria creatinina não entram na conta."),
+                    tipo="pausa"),
+                box("A contraintuição que vale discutir",
+                    p("Na coorte original, a sobrevida renal em cinco anos foi "
+                      "de 93% na focal, 76% na crescêntica, 61% na mista e 50% "
+                      "na esclerótica. A crescêntica, apesar do aspecto "
+                      "dramático, teve a segunda melhor: muito crescente "
+                      "celular é muita lesão potencialmente reversível. A "
+                      "urgência deste caso vem da velocidade da perda e da "
+                      "hemorragia alveolar, não de a classe ser a pior.")),
+                nota("Se a turma perguntar",
+                    p("A literatura posterior sustenta os extremos e desmancha "
+                      "o meio: a metanálise de 2017 confirmou focal melhor que "
+                      "crescêntica e crescêntica melhor que esclerótica, mas "
+                      "não achou diferença entre crescêntica e mista. Vinte e "
+                      "quatro glomérulos amostrados, acima do mínimo de dez que "
+                      "a classificação exige, tornam a classe confiável aqui.")),
+            ],
+        ),
+        densidade="dense",
+        ident="berden",
     ),
     P6,
     discussao("Os três padrões da imunofluorescência",
@@ -706,21 +748,52 @@ SLIDES = [
           "prediz melhor o risco de recidiva e a resposta ao tratamento."),
         tabela(["", "Poliangiite microscópica", "Granulomatose com poliangiite", "Granulomatose eosinofílica"], [
             ["Sorologia típica", "Anti-MPO, p-ANCA", "Anti-PR3, c-ANCA", "Anti-MPO em 30 a 40%"],
-            ["Granuloma", "Ausente", "Presente", "Presente, com eosinófilos"],
+            ["Granuloma", "Ausente", "Esperado na via aérea e no pulmão; quase nunca no rim", "Presente, com eosinófilos"],
             ["Via aérea superior", "Ausente ou leve", "Destrutiva: sela, perfuração", "Pólipo nasal, rinite"],
             ["Pulmão", "Capilarite, hemorragia alveolar", "Nódulo escavado, massa, estenose", "Asma, infiltrado migratório"],
             ["Rim", "Muito frequente", "Frequente", "Menos frequente"],
             ["Asma e eosinofilia", "Ausentes", "Ausentes", "Obrigatórias"],
             ["Risco de recidiva", "Menor", "Maior", "Intermediário"],
-            ["Neste paciente", "Compatível", "Improvável: sem granuloma e sem lesão destrutiva", "Excluída: sem asma, 320 eosinófilos"],
+            ["Neste paciente", "Compatível", "Improvável, mas **não pela biópsia**: pesa o anti-MPO e a ausência de nódulo escavado", "Excluída: sem asma, 320 eosinófilos"],
         ], tamanho="xs"),
-        box("Revisar a lista de medicamentos",
-            p("Hidralazina, propiltiouracila, minociclina e levamisol, este "
-              "último como adulterante de cocaína, produzem anti-MPO em "
-              "título alto e vasculite clinicamente indistinguível. Nenhum "
-              "deles está em uso neste paciente, mas a pergunta é obrigatória "
-              "e costuma não ser feita.")),
         densidade="xd",
+    ),
+    discussao("Duas armadilhas da classificação",
+        cols(
+            [
+                box("Ausência de granuloma no rim não conta contra a GPA",
+                    p("A biópsia deste paciente é **renal**, e granuloma "
+                      "praticamente não aparece no rim — nem mesmo na "
+                      "granulomatose com poliangiite. Na meta-análise de Bajema "
+                      "e cols., de 1997, que reuniu 349 casos publicados, das "
+                      "134 biópsias renais apenas sete mostravam granuloma "
+                      "renal, cerca de 5%, contra 70% de proliferação "
+                      "extracapilar e 54% de necrose fibrinoide."),
+                    p("O granuloma da GPA mora na via aérea e no pulmão; no "
+                      "rim, a lesão da GPA e a da poliangiite microscópica são "
+                      "a mesma glomerulonefrite pauci-imune necrosante. E nos "
+                      "critérios ACR/EULAR de 2022 o item é granuloma em "
+                      "qualquer tecido, somando dois pontos quando presente e "
+                      "zero quando ausente: a ausência jamais subtrai."),
+                    tipo="erro"),
+            ],
+            [
+                box("Revisar a lista de medicamentos",
+                    p("Hidralazina, propiltiouracila, minociclina e levamisol, "
+                      "este último como adulterante de cocaína, produzem "
+                      "anti-MPO em título alto e vasculite clinicamente "
+                      "indistinguível. Nenhum deles está em uso neste paciente, "
+                      "mas a pergunta é obrigatória e costuma não ser feita."),
+                    tipo="erro"),
+                nota("Antes de avançar",
+                    p("Pergunte em qual das duas a turma cairia. A primeira é "
+                      "erro de raciocínio: concluir a partir do tecido errado. "
+                      "A segunda é erro de anamnese: não perguntar. As duas são "
+                      "mais comuns do que erro de leitura de exame.")),
+            ],
+        ),
+        densidade="dense",
+        ident="armadilhas_classificacao",
     ),
     P7,
     momento("Quarta parte",
@@ -743,8 +816,9 @@ SLIDES = [
                     ["Imunossupressor", "Rituximabe ou ciclofosfamida", "Eficácia equivalente na indução. Rituximabe "
                             "preferido em jovens, na recidiva e quando a "
                             "fertilidade importa"],
-                    ["Profilaxia", "Sulfametoxazol-trimetoprima para //Pneumocystis//", "Obrigatória. É a medida mais esquecida e a que "
-                            "mais evita morte na indução"],
+                    ["Profilaxia", "Sulfametoxazol-trimetoprima para //Pneumocystis//", "400/80 mg por dia, ou 800/160 mg em dias "
+                            "alternados. Recomendação de grau B, apoiada em "
+                            "estudo observacional, não em ensaio"],
                     ["Ajuste de dose", "Ciclofosfamida reduzida pela idade e pela função "
                             "renal", "Com 63 anos e creatinina de 3,8, a dose plena "
                             "produz neutropenia previsível"],
@@ -1020,9 +1094,14 @@ SLIDES = [
                      "corticoide oral.",
                      "Rituximabe ou ciclofosfamida, com dose ajustada à idade "
                      "e à função renal.",
-                     "Sulfametoxazol-trimetoprima para //Pneumocystis//.",
-                     "Plasmaférese se o anti-MBG for positivo; caso a caso na "
-                     "hemorragia alveolar.",
+                     "Sulfametoxazol-trimetoprima para //Pneumocystis//: "
+                     "400/80 mg/dia ou 800/160 mg em dias alternados, pelo "
+                     "tempo do curso de ciclofosfamida, ou seis meses após "
+                     "indução com rituximabe.",
+                     "Plasmaférese: acrescentar na sobreposição anti-MBG; "
+                     "considerar com creatinina acima de 3,4 mg/dL, diálise, "
+                     "creatinina em ascensão rápida ou hemorragia alveolar com "
+                     "hipoxemia.",
                     ]),
                 h3("Manutenção e alta"),
                 lista([
