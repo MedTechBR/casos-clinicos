@@ -594,10 +594,10 @@ B_IMAGEM_2 = custa(narrativa("O caso · ramo da imagem", "Voltando à urina, com
       "minutos o que nove horas de imagem não resolveram: hemácias "
       "dismórficas em 62% do campo e cilindros hemáticos numerosos. "
       "Complemento, FAN, anti-DNA e crioglobulinas foram pedidos junto e "
-      "voltaram negativos; as hemoculturas, estéreis. O "
-      "ANCA e o anti-membrana basal glomerular só foram solicitados agora, e "
-      "é por eles que o caso passa a esperar, com <<creatinina>> e <<horas>> "
-      "de relógio."),
+      "voltaram negativos; as hemoculturas, estéreis. As sorologias "
+      "específicas da glomerulonefrite só foram solicitadas agora, e é por "
+      "elas que o caso passa a esperar, com <<creatinina>> e <<horas>> de "
+      "relógio."),
     quadro(RIM, {
         "glomerular": ("confirmada",
                        "Hemácias dismórficas em 62% e cilindros hemáticos"),

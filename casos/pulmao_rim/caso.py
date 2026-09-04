@@ -46,7 +46,8 @@ SLIDES = [
         "Homem de 63 anos com hemoptise, púrpura e queda de função renal",
         "Sintomas nasais, articulares, pulmonares e renais ao longo de oito "
         "semanas.",
-        "**4 decisões · 8 desfechos · 90 a 110 minutos** O caso não corre em "
+        "**4 decisões · 8 desfechos · 100 a 120 minutos** O caso começa nas "
+        "síndromes e só estreita quando um resultado autoriza. Não corre em "
         "linha reta: o que o grupo pedir e o que decidir mudam o que as telas "
         "seguintes mostram, e o paciente que chega ao fim é outro. "
         "{{M abre o mapa da árvore; V volta ao nó anterior.}}",
@@ -202,11 +203,9 @@ SLIDES = [
     discussao("De onde vem o sangue",
         p("Sangue que sai pela boca pode vir do nariz, do brônquio, do alvéolo "
           "ou do capilar pulmonar, e cada origem manda pedir um exame "
-          "diferente. Este paciente tem crostas hemáticas aderidas ao septo e "
-          "epistaxe quase diária: a hipótese mais banal da lista é também a "
-          "que a história sustenta melhor. A coluna do meio não diz o que ele "
-          "tem — diz o que **teria de ser verdade** para cada linha ser a "
-          "resposta."),
+          "diferente. A coluna do meio não diz o que este paciente tem — diz "
+          "o que **teria de ser verdade** para cada linha ser a resposta, e é "
+          "essa coluna que a investigação vai testar."),
         quadro(TORAX, {
             "congestao": ("derrubada",
                           "Sem estase jugular, terceira bulha ou edema; "
@@ -451,10 +450,10 @@ SLIDES = [
                 box("O que o padrão permite dizer",
                     p("Vidro fosco difuso e bilateral é compatível com "
                       "hemorragia alveolar, edema, infecção difusa e "
-                      "pneumonite. A ausência de nódulo escavado torna menos "
-                      "provável a apresentação clássica da granulomatose com "
-                      "poliangiite. A ausência de derrame e de cardiomegalia "
-                      "argumenta contra congestão.")),
+                      "pneumonite: quatro das linhas do quadro do tórax, e a "
+                      "imagem não escolhe entre elas. O que ela resolve é por "
+                      "exclusão — sem massa nem nódulo escavado, sem derrame, "
+                      "sem cardiomegalia, e sem falha de enchimento.")),
                 box("O que ainda falta",
                     p("Vidro fosco não estabelece o diagnóstico de hemorragia "
                       "alveolar. A comprovação é feita na broncoscopia, que "
@@ -1063,11 +1062,10 @@ SLIDES = [
                   "em poucos dias."),
             ],
             [
-                box("O que dizer à turma",
-                    p("Um residente que aprende “o PEXIVAS acabou com a "
-                      "plasmaférese” aprendeu errado. O certo é: o PEXIVAS "
-                      "acabou com a plasmaférese indiscriminada e mostrou que "
-                      "ela não salva vidas. O ganho é renal, o custo é "
+                box("O que o PEXIVAS mudou, e o que não",
+                    p("Ele não acabou com a plasmaférese: acabou com a "
+                      "plasmaférese indiscriminada, e mostrou que ela não "
+                      "reduz mortalidade. O ganho é renal, o custo é "
                       "infeccioso, e o cálculo é feito paciente a paciente."),
                     tipo="regra"),
                 nota("Antes de avançar",
@@ -1100,6 +1098,11 @@ SLIDES = [
         cols(
             [
                 lista([
+                     "A lista se levanta no nível em que o paciente se "
+                     "apresenta. Hemoptise pede a pergunta de onde vem o "
+                     "sangue, não a lista das vasculites: o diferencial de "
+                     "síndrome pulmão-rim só existe depois de provadas as "
+                     "duas síndromes.",
                      "Dois territórios distantes acometidos simultaneamente "
                      "pedem uma explicação única. No pulmão e no rim, essa "
                      "explicação costuma estar no vaso de pequeno calibre.",

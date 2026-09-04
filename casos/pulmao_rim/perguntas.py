@@ -551,11 +551,13 @@ P14 = pergunta(
             "lavado, que ainda não voltou, e não o aspecto do líquido.",
         ),
         alt(
-            "Descarta a doença anti-membrana basal glomerular, que só produz "
-            "hemorragia alveolar em fumantes",
-            "O tabagismo aumenta o acometimento pulmonar na doença anti-MBG e "
-            "não é condição para ele. Este paciente, aliás, é ex-tabagista de "
-            "trinta anos-maço. Nenhuma hipótese se descarta por imagem.",
+            "Descarta neoplasia broncopulmonar sangrante, porque não há massa "
+            "nem nódulo à tomografia",
+            "Esta é a única das cinco que quase acerta, e por isso é a mais "
+            "instrutiva: a tomografia realmente torna a neoplasia muito "
+            "improvável. Mas a broncoscopia é que fecha essa linha, ao "
+            "percorrer a árvore brônquica sem achar lesão — e nenhuma das "
+            "duas explica o rim, que segue sem ter sido investigado.",
         ),
         alt(
             "Confirma vasculite de pequeno vaso, porque o vidro fosco difuso "
