@@ -52,12 +52,12 @@ HIPOTESES = [
 
 from motor.arvore import estado
 from .arvore import (
-    B_CEDO, B_CFX, B_ESPERA, B_RESGATE, B_RTX, B_SO_DIALISE,
-    F, N1, N2A, N2B, N3A, N3B, N3C, N3D,
+    B_CEDO, B_CFX, B_ESPERA, B_IMAGEM, B_PAINEL, B_RESGATE, B_RTX,
+    B_SO_DIALISE, F, N0, N1, N2A, N2B, N3A, N3B, N3C, N3D,
 )
 from .banco import BANCO
 from .perguntas import (
-    P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12,
+    P1, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12,
 )
 
 TITULO = "Homem de 63 anos com hemoptise, púrpura e queda de função renal"
@@ -241,7 +241,9 @@ SLIDES = [
         densidade="xd",
         ident="quadro_1",
     ),
-    P2,
+    N0,
+    B_PAINEL,
+    B_IMAGEM,
     tela("O caso · bloco 3", "Exames da admissão",
         cols(
             [
@@ -294,6 +296,7 @@ SLIDES = [
                 ]),
             ],
         ),
+        ident="exames_admissao",
     ),
     tela("O caso · bloco 4", "Sedimento urinário",
         cols(

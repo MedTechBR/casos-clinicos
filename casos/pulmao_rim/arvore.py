@@ -461,3 +461,89 @@ F = [
               "vigésimo primeiro dia.")),
         qualidade="pior"),
 ]
+
+
+# ═══════ NÓ 0 — que exames você pede, e é isso que o caso mostra ═══════
+#
+# Antes deste nó o caso desfilava resultado que ninguém tinha pedido. Agora a
+# investigação que aparece nas telas seguintes é a que o grupo escolheu, e o
+# que ele não pediu simplesmente não está lá quando faz falta.
+
+N0 = no(
+    "n0", "Decisão · a investigação", "Que exames você pede agora",
+    "A lista está levantada e nada foi pedido. O que você pedir decide o que "
+    "este caso vai mostrar — e o que não vai.",
+    [
+        ramo("beira_do_leito",
+             "Sedimento urinário em urina fresca, gasometria e hemograma, "
+             "agora; sorologias e imagem na sequência",
+             vai_para="exames_admissao",
+             rotulo="o que fica pronto em minutos",
+             efeito_=efeito(horas=+1),
+             porque="O sedimento separa sangramento glomerular de urológico "
+                    "em minutos e por quase nada, e poda a primeira linha da "
+                    "lista. As sorologias vão no mesmo pedido — mas não são "
+                    "elas que orientam a próxima hora."),
+        ramo("painel_completo",
+             "Painel completo de uma vez: sorologias, tomografia e "
+             "broncoscopia, e reavaliar quando tudo voltar",
+             vai_para="b_painel",
+             rotulo="pedir tudo não é o mesmo que saber o que fazer",
+             efeito_=efeito(horas=+34, creatinina=+1.4, spo2=-3, hb=-0.7),
+             porque="Nenhum dos três volta nesta hora, e o mais rápido e "
+                    "barato ficou de fora. Trinta e quatro horas depois a "
+                    "lista segue inteira e o rim perdeu 1,4 mg/dL."),
+        ramo("imagem_primeiro",
+             "Tomografia de tórax e broncoscopia primeiro, para achar a fonte "
+             "do sangramento",
+             vai_para="b_imagem",
+             rotulo="persegue o órgão que sangra visível",
+             efeito_=efeito(horas=+9, creatinina=+0.4, spo2=-1),
+             porque="A hemoptise chama atenção; o rim sangra calado. A "
+                    "imagem confirma o que já se sabia e não distingue "
+                    "nenhuma linha da lista das outras."),
+    ],
+    densidade="xd",
+)
+
+B_PAINEL = narrativa("O caso · ramo do painel", "Trinta e quatro horas depois",
+    p("As sorologias, a tomografia e a broncoscopia foram pedidas no mesmo "
+      "momento. A tomografia saiu em seis horas e mostrou vidro fosco difuso e "
+      "bilateral; a broncoscopia foi feita no dia seguinte e confirmou "
+      "hemorragia alveolar, com culturas em andamento. As sorologias seguem "
+      "pendentes."),
+    p("Nesse intervalo a creatinina subiu de 3,8 para 5,2 mg/dL e a saturação "
+      "caiu para 85%. Ninguém olhou a urina."),
+    box("O que não foi pedido",
+        p("O sedimento urinário custava quase nada e ficava pronto em minutos, "
+          "e era o único exame do pedido que separava sangramento glomerular "
+          "de urológico. Sem ele, a primeira linha da lista continua em pé — e "
+          "as trinta e quatro horas foram gastas confirmando o que a "
+          "radiografia e a ausculta já diziam."),
+        tipo="alerta"),
+    nota("Antes de avançar",
+        p("Pergunte à turma qual exame do pedido mudou alguma conduta. "
+          "Nenhum mudou. Pedir tudo de uma vez parece cauteloso e é o oposto: "
+          "adia a decisão pelo tempo do exame mais lento.")),
+    ident="b_painel", segue="n1")
+
+B_IMAGEM = narrativa("O caso · ramo da imagem", "Nove horas depois",
+    p("A tomografia mostrou opacidades em vidro fosco difusas e bilaterais, "
+      "sem nódulo escavado, massa ou derrame. A broncoscopia mostrou alíquotas "
+      "progressivamente hemorrágicas e hemossiderófagos em 34% dos macrófagos: "
+      "hemorragia alveolar confirmada, com pelo menos quarenta e oito horas de "
+      "evolução."),
+    p("A creatinina subiu para 4,2 mg/dL. O contraste da tomografia não ajudou "
+      "nisso."),
+    box("Confirmou o que já se sabia",
+        p("Hemoptise de 50 mL com crepitações difusas e anemia já dizia "
+          "hemorragia alveolar. A imagem tornou o achado inequívoco e não "
+          "distinguiu nenhuma das oito linhas da lista entre si — todas cursam "
+          "com vidro fosco difuso."),
+        tipo="erro"),
+    nota("Antes de avançar",
+        p("O rim sangra calado e o pulmão sangra visível. É por isso que a "
+          "hemoptise puxa a investigação para o tórax, e é por isso que a "
+          "urina é o exame esquecido. Pergunte quem, na sala, teria pedido "
+          "primeiro o sedimento.")),
+    ident="b_imagem", segue="n1")
