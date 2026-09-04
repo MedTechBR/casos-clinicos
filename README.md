@@ -22,6 +22,9 @@ motor/            o motor, comum a todos os casos
 casos/
   _modelo/        ponto de partida para um caso novo
   pulmao_rim/     caso.py (slides) · perguntas.py · banco.py · img/
+motor/
+  arvore.py       nós, ramos, estado do paciente e desfechos
+  ramificacao.js  caminho percorrido, volta ao nó e mapa
 ferramentas/
   verificar.py    linter: 12 verificações (ver abaixo)
   autoteste.py    envenena o arquivo e exige que cada verificação acuse
@@ -70,7 +73,9 @@ nenhuma.
 | `C` | zera a votação |
 | `Q` | pula para a próxima pergunta · `Shift+Q` volta para a anterior |
 | `T` | cronômetro da sessão |
-| `X` | gaveta de exames |
+| `X` | gaveta de exames — **cada exame pedido adianta o relógio do caso** |
+| `M` | mapa da árvore: onde estou, por onde passei, o que não escolhi |
+| `V` | volta ao nó anterior **desfazendo o estado** — é o contrafactual |
 | `O` | visão geral em miniaturas |
 | `E` | modo de edição · `Ctrl+S` baixa o HTML editado |
 | `F` | tela cheia |
@@ -79,6 +84,47 @@ A votação é por levantamento de mão: você conta e digita. Não precisa de
 servidor, de celular nem de internet. O resultado acompanha para o slide de
 resposta, e a barra da alternativa certa fica verde-escura — a turma vê no que
 apostou antes de saber a resposta.
+
+## Ramificação
+
+O caso não corre em linha reta. A conduta escolhida e os exames pedidos levam
+o paciente por caminhos que **não reconvergem** e terminam em desfechos
+distintos. No pulmão-rim: 3 momentos de decisão, 2 ramos cada, **8 desfechos**.
+
+Quatro coisas alimentam o estado, que persiste entre os slides e aparece numa
+barra de prontuário — sem pontuação, sem estrela, sem barra de vida:
+
+1. a conduta escolhida em cada nó;
+2. os exames pedidos na gaveta, e os que se deixou de pedir;
+3. o tempo gasto, que a função renal sente;
+4. a reavaliação clínica, que libera informação nova.
+
+**Erro é recuperável, com custo.** Nenhum ramo termina no nó: a escolha ruim
+produz piora imediata e visível, o caso continua, e dentro do ramo ruim ainda
+existe uma decisão de resgate. Mas o melhor final do ramo ruim é pior que o
+pior final do ramo certo. O aluno nunca fica travado; ele paga.
+
+Cada ramo mostra a **justificativa fisiológica** depois da escolha — as duas,
+para o contrafactual. `V` volta ao nó desfazendo o estado, que é o gesto de
+"e se tivéssemos feito o outro?".
+
+`v_cobertura da árvore` recusa destino sem bloco, nó inalcançável, ramo sem
+justificativa e desfecho não escrito.
+
+```python
+no("n1", "Decisão · primeira hora", "O que você faz na próxima hora",
+   "O paciente está no pronto-socorro há quarenta minutos…",
+   [
+     ramo("colher_e_tratar", "Colher tudo e iniciar pulso hoje",
+          vai_para="b_cedo",
+          efeito_=efeito(horas=+4, creatinina=+0.1, liga=["imunossupressao"]),
+          porque="O pulso é reversível e cobre as três hipóteses…"),
+     ramo("esperar_sorologia", "Aguardar as sorologias",
+          vai_para="b_espera",
+          efeito_=efeito(horas=+38, creatinina=+1.6, spo2=-4, hb=-0.9),
+          porque="A glomerulonefrite rapidamente progressiva perde função…"),
+   ])
+```
 
 ## Regras que não se discutem
 

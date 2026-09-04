@@ -248,7 +248,10 @@ function lev(a, b, teto){
   return ant[n];
 }
 function cartao(e){
-  if (!pedidos.includes(e.n)) pedidos.push(e.n);
+  if (!pedidos.includes(e.n)){
+    pedidos.push(e.n);
+    if (typeof custoDoExame === 'function') custoDoExame(e);
+  }
   const ed = editando ? ' contenteditable="true"' : '', ix = BANCO.indexOf(e);
   return '<div class="card" data-ix="' + ix + '">'
     + '<div class="cn">' + e.n + '</div><div class="cc">' + (e.c || '') + '</div>'

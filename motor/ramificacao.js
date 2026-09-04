@@ -28,7 +28,32 @@ function aplicar(ef, sinal){
     const i = EST.sinalizadores.indexOf(f);
     if (i >= 0) EST.sinalizadores.splice(i, 1);
   });
+  /* ─────────── o exame pedido consome tempo, e o rim sente ───────────
+   O terceiro gatilho do estado: cada exame pedido na gaveta adianta o
+   relógio pelo tempo que ele leva de verdade. Pedir sedimento custa meia
+   hora; pedir sorologia custa dois dias, e é por isso que o caso não pode
+   esperar por ela. Pedir tudo "por via das dúvidas" tem preço. */
+const CUSTO_HORA = {
+  'Urina': 0.5, 'Gasometria': 0.3, 'Hemograma': 0.5, 'Bioquímica': 0.5,
+  'Coagulação': 0.5, 'Inflamação': 1, 'Microbiologia': 48, 'Sorologia': 24,
+  'Imunologia': 48, 'Imagem': 3, 'Procedimento': 6,
+  'Anatomia patológica': 72, 'Neurofisiologia': 12,
+};
+
+function custoDoExame(e){
+  const h = CUSTO_HORA[e.c];
+  if (!h) return;
+  EST.horas = Math.round((EST.horas + h) * 10) / 10;
+  // a função renal acompanha o relógio enquanto a doença não é tratada
+  if (!EST.sinalizadores.includes('imunossupressao') && h >= 12){
+    EST.creatinina = Math.round((EST.creatinina + h / 24 * 0.6) * 10) / 10;
+  }
   pintarEstado();
+  aviso('pedido registrado — ' + (h < 1 ? Math.round(h * 60) + ' min' : h + ' h')
+        + ' no relógio do caso');
+}
+
+pintarEstado();
 }
 
 /* ─────────────────────── a barra de prontuário ─────────────────────── */
@@ -94,7 +119,32 @@ function voltarAoNo(){
     return;
   }
   EST = JSON.parse(JSON.stringify(p.antes));
+  /* ─────────── o exame pedido consome tempo, e o rim sente ───────────
+   O terceiro gatilho do estado: cada exame pedido na gaveta adianta o
+   relógio pelo tempo que ele leva de verdade. Pedir sedimento custa meia
+   hora; pedir sorologia custa dois dias, e é por isso que o caso não pode
+   esperar por ela. Pedir tudo "por via das dúvidas" tem preço. */
+const CUSTO_HORA = {
+  'Urina': 0.5, 'Gasometria': 0.3, 'Hemograma': 0.5, 'Bioquímica': 0.5,
+  'Coagulação': 0.5, 'Inflamação': 1, 'Microbiologia': 48, 'Sorologia': 24,
+  'Imunologia': 48, 'Imagem': 3, 'Procedimento': 6,
+  'Anatomia patológica': 72, 'Neurofisiologia': 12,
+};
+
+function custoDoExame(e){
+  const h = CUSTO_HORA[e.c];
+  if (!h) return;
+  EST.horas = Math.round((EST.horas + h) * 10) / 10;
+  // a função renal acompanha o relógio enquanto a doença não é tratada
+  if (!EST.sinalizadores.includes('imunossupressao') && h >= 12){
+    EST.creatinina = Math.round((EST.creatinina + h / 24 * 0.6) * 10) / 10;
+  }
   pintarEstado();
+  aviso('pedido registrado — ' + (h < 1 ? Math.round(h * 60) + ' min' : h + ' h')
+        + ' no relógio do caso');
+}
+
+pintarEstado();
   const s = slidePorId(p.de);
   const ul = s.querySelector('.ramos');
   ul.classList.remove('decidido');
@@ -165,5 +215,30 @@ addEventListener('keydown', e => {
     abrirMapa(false);
   }
 });
+
+/* ─────────── o exame pedido consome tempo, e o rim sente ───────────
+   O terceiro gatilho do estado: cada exame pedido na gaveta adianta o
+   relógio pelo tempo que ele leva de verdade. Pedir sedimento custa meia
+   hora; pedir sorologia custa dois dias, e é por isso que o caso não pode
+   esperar por ela. Pedir tudo "por via das dúvidas" tem preço. */
+const CUSTO_HORA = {
+  'Urina': 0.5, 'Gasometria': 0.3, 'Hemograma': 0.5, 'Bioquímica': 0.5,
+  'Coagulação': 0.5, 'Inflamação': 1, 'Microbiologia': 48, 'Sorologia': 24,
+  'Imunologia': 48, 'Imagem': 3, 'Procedimento': 6,
+  'Anatomia patológica': 72, 'Neurofisiologia': 12,
+};
+
+function custoDoExame(e){
+  const h = CUSTO_HORA[e.c];
+  if (!h) return;
+  EST.horas = Math.round((EST.horas + h) * 10) / 10;
+  // a função renal acompanha o relógio enquanto a doença não é tratada
+  if (!EST.sinalizadores.includes('imunossupressao') && h >= 12){
+    EST.creatinina = Math.round((EST.creatinina + h / 24 * 0.6) * 10) / 10;
+  }
+  pintarEstado();
+  aviso('pedido registrado — ' + (h < 1 ? Math.round(h * 60) + ' min' : h + ' h')
+        + ' no relógio do caso');
+}
 
 pintarEstado();

@@ -326,7 +326,7 @@ figure.dz .cred{color:var(--tinta3)}
   background:none;margin:0;color:var(--tinta2);
   transition:color .16s,box-shadow .16s,padding-left .16s;position:relative}
 .alts li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:0;
-  background:var(--sangue);transition:width .16s}
+  height:auto;background:var(--sangue);transition:width .16s}
 .alts li:hover{color:var(--tinta)}
 .alts li:hover::before{width:2px}
 .alts li.sel{color:var(--tinta);padding-left:16px;font-weight:500}
@@ -669,8 +669,10 @@ body.ramificado .cover #est,body.ramificado .mom #est{display:none}
 .ramos li{border-bottom:1px solid var(--linha);padding:13px 14px 13px 0;
   display:flex;gap:15px;align-items:baseline;cursor:pointer;position:relative;
   transition:color .16s,padding-left .16s}
+/* height:auto anula o marcador de lista global (ul>li::before, 1,5px), que
+   truncava o filete do ramo escolhido a um risquinho no topo */
 .ramos li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:0;
-  background:var(--sangue);transition:width .16s}
+  height:auto;background:var(--sangue);transition:width .16s}
 .ramos li:hover::before{width:2px}
 .ramos li:hover{padding-left:6px}
 .ramos .k{font-family:var(--sans);font-weight:700;color:var(--tinta3);
@@ -703,7 +705,7 @@ body.ramificado .cover #est,body.ramificado .mom #est{display:none}
 .fim.q-pior{border-top-color:var(--grave)}
 
 /* Mapa da árvore: onde estou, por onde passei, o que não escolhi */
-#mapa{position:fixed;inset:0;background:rgba(13,12,10,.96);display:none;
+#mapa{position:fixed;inset:0;background:#0d0c0a;display:none;
   overflow:auto;padding:44px 60px;z-index:75;color:var(--sobre-escuro);
   font-family:var(--sans)}
 #mapa.on{display:block}

@@ -327,7 +327,7 @@ figure.dz .cred{color:var(--tinta3)}
   background:none;margin:0;color:var(--tinta2);
   transition:color .16s,box-shadow .16s,padding-left .16s;position:relative}
 .alts li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:0;
-  background:var(--sangue);transition:width .16s}
+  height:auto;background:var(--sangue);transition:width .16s}
 .alts li:hover{color:var(--tinta)}
 .alts li:hover::before{width:2px}
 .alts li.sel{color:var(--tinta);padding-left:16px;font-weight:500}
@@ -670,8 +670,10 @@ body.ramificado .cover #est,body.ramificado .mom #est{display:none}
 .ramos li{border-bottom:1px solid var(--linha);padding:13px 14px 13px 0;
   display:flex;gap:15px;align-items:baseline;cursor:pointer;position:relative;
   transition:color .16s,padding-left .16s}
+/* height:auto anula o marcador de lista global (ul>li::before, 1,5px), que
+   truncava o filete do ramo escolhido a um risquinho no topo */
 .ramos li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:0;
-  background:var(--sangue);transition:width .16s}
+  height:auto;background:var(--sangue);transition:width .16s}
 .ramos li:hover::before{width:2px}
 .ramos li:hover{padding-left:6px}
 .ramos .k{font-family:var(--sans);font-weight:700;color:var(--tinta3);
@@ -704,7 +706,7 @@ body.ramificado .cover #est,body.ramificado .mom #est{display:none}
 .fim.q-pior{border-top-color:var(--grave)}
 
 /* Mapa da árvore: onde estou, por onde passei, o que não escolhi */
-#mapa{position:fixed;inset:0;background:rgba(13,12,10,.96);display:none;
+#mapa{position:fixed;inset:0;background:#0d0c0a;display:none;
   overflow:auto;padding:44px 60px;z-index:75;color:var(--sobre-escuro);
   font-family:var(--sans)}
 #mapa.on{display:block}
@@ -1097,7 +1099,7 @@ body.editando .slide.on [contenteditable]:focus{outline:2px solid var(--sangue2)
 <h1>A partir daqui, quem decide é você</h1>
 <div class="lede">O caso deixa de correr em linha reta. A conduta escolhida e o tempo gasto levam este paciente por caminhos que não se reencontram. M abre o mapa, V volta ao nó anterior.</div><div class="foot"><span>Síndrome pulmão-rim · caso interativo</span><span>51 / 75</span></div></section><section class="slide no dense" id="s-n1" data-n="52"><div class="kicker">Decisão · primeira hora</div>
 <h2>O que você faz na próxima hora</h2>
-<div class="body"><div class="qhint">Decisão — a escolha muda o rumo do caso, e não há volta automática</div><ul class="ramos"><li class="rm" data-ramo="colher_e_tratar" data-vai="b_cedo" data-efeito='{"horas": 4, "creatinina": 0.1, "spo2": 0, "hb": 0, "liga": ["imunossupressao"], "desliga": []}'><span class="k">A</span><div class="ft"><div class="tt">Colher sorologia, hemocultura e biópsia em fila, e iniciar pulso de metilprednisolona hoje</div><div class="rt">trata cedo, sem fechar o diagnóstico</div><div class="wy" hidden>O pulso é reversível e cobre as três hipóteses que sobraram. Colher antes preserva a hemocultura e a imunofluorescência, que é o que a biópsia dos próximos dias ainda vai poder dizer. A creatinina sobe um pouco pela hipoperfusão da própria doença, não pela conduta.</div></div></li><li class="rm" data-ramo="esperar_sorologia" data-vai="b_espera" data-efeito='{"horas": 38, "creatinina": 1.6, "spo2": -4, "hb": -0.9, "liga": [], "desliga": []}'><span class="k">B</span><div class="ft"><div class="tt">Aguardar as sorologias antes de qualquer imunossupressão</div><div class="rt">rigor que custa néfron</div><div class="wy" hidden>A glomerulonefrite rapidamente progressiva perde função em dias, e a janela de recuperação fecha junto com ela. Em trinta e oito horas a creatinina subiu 1,6 mg/dL, a hemoglobina caiu com o sangramento alveolar em curso e a saturação acompanhou. Nada disso foi causado por esperar — foi causado por não tratar enquanto se esperava.</div></div></li></ul></div><div class="foot"><span>Síndrome pulmão-rim · caso interativo</span><span>52 / 75</span></div></section><section class="slide narr dense" id="s-b_cedo" data-n="53" data-segue="n2a"><div class="kicker">O caso · ramo A</div>
+<div class="body"><div class="qhint">Decisão — a escolha muda o rumo do caso, e não há volta automática</div><ul class="ramos"><li class="rm" data-ramo="colher_e_tratar" data-vai="b_cedo" data-efeito='{"horas": 4, "creatinina": 0.1, "spo2": 0, "hb": 0, "liga": ["imunossupressao"], "desliga": []}'><span class="k">A</span><div class="ft"><div class="tt">Colher sorologia, hemocultura e biópsia em fila, e iniciar pulso de metilprednisolona hoje</div><div class="rt">trata cedo, sem fechar o diagnóstico</div><div class="wy" hidden>O pulso é reversível e cobre as três hipóteses que sobraram. Colher antes preserva a hemocultura e a imunofluorescência, que é o que a biópsia dos próximos dias ainda vai poder dizer. A creatinina sobe um pouco pela hipoperfusão da própria doença, não pela conduta.</div></div></li><li class="rm" data-ramo="esperar_sorologia" data-vai="b_espera" data-efeito='{"horas": 38, "creatinina": 1.6, "spo2": -4, "hb": -0.9, "liga": [], "desliga": []}'><span class="k">B</span><div class="ft"><div class="tt">Aguardar as sorologias antes de qualquer imunossupressão</div><div class="rt">rigor que custa néfron</div><div class="wy" hidden>A glomerulonefrite rapidamente progressiva perde função em dias, e a janela de recuperação fecha junto com ela. Em trinta e oito horas a creatinina subiu 1,6 mg/dL, a hemoglobina caiu com o sangramento alveolar em curso e a saturação acompanhou. Nada disso foi causado por esperar — foi causado por não tratar enquanto se esperava.</div></div></li></ul></div><div class="foot"><span>Síndrome pulmão-rim · caso interativo</span><span>52 / 75</span></div></section><section class="slide narr" id="s-b_cedo" data-n="53" data-segue="n2a"><div class="kicker">O caso · ramo A</div>
 <h2>Primeiras quarenta e oito horas</h2>
 <div class="body">
 <p>O pulso de metilprednisolona foi administrado quatro horas após a admissão, depois de colhidas as três hemoculturas e as sorologias. A hemoptise diminuiu no segundo dia e a saturação subiu para 93% com cateter nasal.</p><p>A creatinina estabilizou em 3,9 mg/dL. A biópsia renal foi feita no terceiro dia e mostrou glomerulonefrite crescêntica pauci-imune, com 62% de crescentes celulares. O p-ANCA voltou em 1:640 e o anti-MPO em 148 U/mL; o anti-MBG veio não reagente.</p><div class="box rule"><b class="bt">O que o tempo comprou</b><p>Função renal preservada no patamar da admissão e diagnóstico fechado com a imunofluorescência intacta. A partir daqui a decisão é sobre o imunossupressor — e essa, ao contrário do pulso, compromete o paciente por meses.</p></div>
@@ -1115,7 +1117,7 @@ body.editando .slide.on [contenteditable]:focus{outline:2px solid var(--sangue2)
 <p>Ciclofosfamida endovenosa em dose plena. No quinto dia a creatinina caiu para 3,7 mg/dL e a hemoptise cessou, mas o hemograma mostra 900 leucócitos com 210 neutrófilos — neutropenia profunda, mais precoce e mais grave do que o esperado para o quinto dia.</p><p>Febre de 39,2 °C com calafrio e hipotensão que respondeu a volume. Procalcitonina de 5,8 ng/mL.</p><div class="box red"><b class="bt">A dose não ajustada aparece aqui</b><p>Com filtração de 17 mL/min/1,73 m², a dose plena produziu exposição muito acima da pretendida. A neutropenia de 210 neutrófilos não é a esperada do quinto dia: é a da dose errada.</p></div>
 </div><div class="foot"><span>Síndrome pulmão-rim · caso interativo</span><span>57 / 75</span></div></section><section class="slide no dense" id="s-n3b" data-n="58"><div class="kicker">Decisão · quinto dia</div>
 <h2>Neutropenia profunda no quinto dia</h2>
-<div class="body"><div class="qhint">Decisão — a escolha muda o rumo do caso, e não há volta automática</div><ul class="ramos"><li class="rm" data-ramo="atb_e_fator" data-vai="f_ba" data-efeito='{"horas": 120, "creatinina": -0.3, "spo2": 2, "hb": 0.4, "liga": ["antibiotico"], "desliga": []}'><span class="k">A</span><div class="ft"><div class="tt">Antibiótico de amplo espectro, culturas e fator estimulador de colônias, suspendendo a ciclofosfamida</div><div class="rt">trata e corrige a causa da neutropenia</div><div class="wy" hidden>A neutropenia aqui é iatrogênica e previsível, e suspender a droga é parte do tratamento. O fator estimulador encurta o nadir num paciente com 210 neutrófilos e bacteremia.</div></div></li><li class="rm" data-ramo="so_atb" data-vai="f_bb" data-efeito='{"horas": 120, "creatinina": 0, "spo2": -4, "hb": -0.4, "liga": ["antibiotico", "vm"], "desliga": []}'><span class="k">B</span><div class="ft"><div class="tt">Antibiótico de amplo espectro e culturas, mantendo a ciclofosfamida para não perder o controle da vasculite</div><div class="rt">protege a doença, não o paciente</div><div class="wy" hidden>Manter a droga que está causando a neutropenia enquanto se trata a infecção que a neutropenia permitiu prolonga o nadir por mais uma semana. A vasculite não recidiva em sete dias sem ciclofosfamida; a bacteremia, sim, se aprofunda.</div></div></li></ul></div><div class="foot"><span>Síndrome pulmão-rim · caso interativo</span><span>58 / 75</span></div></section><section class="slide narr dense t-g" id="s-b_espera" data-n="59" data-segue="n2b"><div class="kicker">O caso · ramo B</div>
+<div class="body"><div class="qhint">Decisão — a escolha muda o rumo do caso, e não há volta automática</div><ul class="ramos"><li class="rm" data-ramo="atb_e_fator" data-vai="f_ba" data-efeito='{"horas": 120, "creatinina": -0.3, "spo2": 2, "hb": 0.4, "liga": ["antibiotico"], "desliga": []}'><span class="k">A</span><div class="ft"><div class="tt">Antibiótico de amplo espectro, culturas e fator estimulador de colônias, suspendendo a ciclofosfamida</div><div class="rt">trata e corrige a causa da neutropenia</div><div class="wy" hidden>A neutropenia aqui é iatrogênica e previsível, e suspender a droga é parte do tratamento. O fator estimulador encurta o nadir num paciente com 210 neutrófilos e bacteremia.</div></div></li><li class="rm" data-ramo="so_atb" data-vai="f_bb" data-efeito='{"horas": 120, "creatinina": 0, "spo2": -4, "hb": -0.4, "liga": ["antibiotico", "vm"], "desliga": []}'><span class="k">B</span><div class="ft"><div class="tt">Antibiótico de amplo espectro e culturas, mantendo a ciclofosfamida para não perder o controle da vasculite</div><div class="rt">protege a doença, não o paciente</div><div class="wy" hidden>Manter a droga que está causando a neutropenia enquanto se trata a infecção que a neutropenia permitiu prolonga o nadir por mais uma semana. A vasculite não recidiva em sete dias sem ciclofosfamida; a bacteremia, sim, se aprofunda.</div></div></li></ul></div><div class="foot"><span>Síndrome pulmão-rim · caso interativo</span><span>58 / 75</span></div></section><section class="slide narr t-g" id="s-b_espera" data-n="59" data-segue="n2b"><div class="kicker">O caso · ramo B</div>
 <h2>Trinta e oito horas depois</h2>
 <div class="body">
 <p>As sorologias não voltaram no primeiro dia. Na manhã do segundo, a creatinina estava em 5,4 mg/dL, a diurese havia caído para 400 mL nas últimas vinte e quatro horas e o potássio subira para 6,1 mEq/L. A saturação caiu para 84% em ar ambiente e o paciente passou a precisar de máscara com reservatório.</p><p>A hemoglobina caiu de 7,8 para 6,9 g/dL, sem sangramento externo: o alvéolo continuou sangrando durante a espera. A radiografia mostra infiltrado que progrediu nos dois terços inferiores.</p><div class="box red"><b class="bt">O que a espera custou</b><p>O rigor de não tratar sem diagnóstico é defensável em quase toda doença — e é errado nesta. A crescente celular vira crescente fibrosa em dias, e o que fibrosa não volta com nenhum tratamento. O paciente ainda pode ser tratado; parte do rim que ele tinha na chegada, não.</p></div><div class="pnote"><b class="bt">Antes de avançar</b><p>Pergunte à turma o que exatamente foi perdido. A resposta não é 'tempo' — é néfron. E pergunte quem, na sala, teria feito a mesma escolha: ela é a mais comum entre internos, e é por isso que ela está aqui.</p></div>
@@ -1412,7 +1414,10 @@ function lev(a, b, teto){
   return ant[n];
 }
 function cartao(e){
-  if (!pedidos.includes(e.n)) pedidos.push(e.n);
+  if (!pedidos.includes(e.n)){
+    pedidos.push(e.n);
+    if (typeof custoDoExame === 'function') custoDoExame(e);
+  }
   const ed = editando ? ' contenteditable="true"' : '', ix = BANCO.indexOf(e);
   return '<div class="card" data-ix="' + ix + '">'
     + '<div class="cn">' + e.n + '</div><div class="cc">' + (e.c || '') + '</div>'
@@ -1718,7 +1723,32 @@ function aplicar(ef, sinal){
     const i = EST.sinalizadores.indexOf(f);
     if (i >= 0) EST.sinalizadores.splice(i, 1);
   });
+  /* ─────────── o exame pedido consome tempo, e o rim sente ───────────
+   O terceiro gatilho do estado: cada exame pedido na gaveta adianta o
+   relógio pelo tempo que ele leva de verdade. Pedir sedimento custa meia
+   hora; pedir sorologia custa dois dias, e é por isso que o caso não pode
+   esperar por ela. Pedir tudo "por via das dúvidas" tem preço. */
+const CUSTO_HORA = {
+  'Urina': 0.5, 'Gasometria': 0.3, 'Hemograma': 0.5, 'Bioquímica': 0.5,
+  'Coagulação': 0.5, 'Inflamação': 1, 'Microbiologia': 48, 'Sorologia': 24,
+  'Imunologia': 48, 'Imagem': 3, 'Procedimento': 6,
+  'Anatomia patológica': 72, 'Neurofisiologia': 12,
+};
+
+function custoDoExame(e){
+  const h = CUSTO_HORA[e.c];
+  if (!h) return;
+  EST.horas = Math.round((EST.horas + h) * 10) / 10;
+  // a função renal acompanha o relógio enquanto a doença não é tratada
+  if (!EST.sinalizadores.includes('imunossupressao') && h >= 12){
+    EST.creatinina = Math.round((EST.creatinina + h / 24 * 0.6) * 10) / 10;
+  }
   pintarEstado();
+  aviso('pedido registrado — ' + (h < 1 ? Math.round(h * 60) + ' min' : h + ' h')
+        + ' no relógio do caso');
+}
+
+pintarEstado();
 }
 
 /* ─────────────────────── a barra de prontuário ─────────────────────── */
@@ -1784,7 +1814,32 @@ function voltarAoNo(){
     return;
   }
   EST = JSON.parse(JSON.stringify(p.antes));
+  /* ─────────── o exame pedido consome tempo, e o rim sente ───────────
+   O terceiro gatilho do estado: cada exame pedido na gaveta adianta o
+   relógio pelo tempo que ele leva de verdade. Pedir sedimento custa meia
+   hora; pedir sorologia custa dois dias, e é por isso que o caso não pode
+   esperar por ela. Pedir tudo "por via das dúvidas" tem preço. */
+const CUSTO_HORA = {
+  'Urina': 0.5, 'Gasometria': 0.3, 'Hemograma': 0.5, 'Bioquímica': 0.5,
+  'Coagulação': 0.5, 'Inflamação': 1, 'Microbiologia': 48, 'Sorologia': 24,
+  'Imunologia': 48, 'Imagem': 3, 'Procedimento': 6,
+  'Anatomia patológica': 72, 'Neurofisiologia': 12,
+};
+
+function custoDoExame(e){
+  const h = CUSTO_HORA[e.c];
+  if (!h) return;
+  EST.horas = Math.round((EST.horas + h) * 10) / 10;
+  // a função renal acompanha o relógio enquanto a doença não é tratada
+  if (!EST.sinalizadores.includes('imunossupressao') && h >= 12){
+    EST.creatinina = Math.round((EST.creatinina + h / 24 * 0.6) * 10) / 10;
+  }
   pintarEstado();
+  aviso('pedido registrado — ' + (h < 1 ? Math.round(h * 60) + ' min' : h + ' h')
+        + ' no relógio do caso');
+}
+
+pintarEstado();
   const s = slidePorId(p.de);
   const ul = s.querySelector('.ramos');
   ul.classList.remove('decidido');
@@ -1855,6 +1910,31 @@ addEventListener('keydown', e => {
     abrirMapa(false);
   }
 });
+
+/* ─────────── o exame pedido consome tempo, e o rim sente ───────────
+   O terceiro gatilho do estado: cada exame pedido na gaveta adianta o
+   relógio pelo tempo que ele leva de verdade. Pedir sedimento custa meia
+   hora; pedir sorologia custa dois dias, e é por isso que o caso não pode
+   esperar por ela. Pedir tudo "por via das dúvidas" tem preço. */
+const CUSTO_HORA = {
+  'Urina': 0.5, 'Gasometria': 0.3, 'Hemograma': 0.5, 'Bioquímica': 0.5,
+  'Coagulação': 0.5, 'Inflamação': 1, 'Microbiologia': 48, 'Sorologia': 24,
+  'Imunologia': 48, 'Imagem': 3, 'Procedimento': 6,
+  'Anatomia patológica': 72, 'Neurofisiologia': 12,
+};
+
+function custoDoExame(e){
+  const h = CUSTO_HORA[e.c];
+  if (!h) return;
+  EST.horas = Math.round((EST.horas + h) * 10) / 10;
+  // a função renal acompanha o relógio enquanto a doença não é tratada
+  if (!EST.sinalizadores.includes('imunossupressao') && h >= 12){
+    EST.creatinina = Math.round((EST.creatinina + h / 24 * 0.6) * 10) / 10;
+  }
+  pintarEstado();
+  aviso('pedido registrado — ' + (h < 1 ? Math.round(h * 60) + ' min' : h + ' h')
+        + ' no relógio do caso');
+}
 
 pintarEstado();
 </script></body></html>

@@ -97,7 +97,7 @@ B_CEDO = narrativa("O caso · ramo A", "Primeiras quarenta e oito horas",
           "é sobre o imunossupressor — e essa, ao contrário do pulso, "
           "compromete o paciente por meses."),
         tipo="regra"),
-    ident="b_cedo", segue="n2a", densidade="dense")
+    ident="b_cedo", segue="n2a", densidade=None)
 
 # ─────────────── ramo 1B: esperou ───────────────
 
@@ -122,7 +122,7 @@ B_ESPERA = narrativa("O caso · ramo B", "Trinta e oito horas depois",
           "'tempo' — é néfron. E pergunte quem, na sala, teria feito a mesma "
           "escolha: ela é a mais comum entre internos, e é por isso que ela "
           "está aqui.")),
-    ident="b_espera", segue="n2b", densidade="dense")
+    ident="b_espera", segue="n2b", densidade=None)
 
 # ═══════════════════════ NÓ 2 — a indução ═══════════════════════
 
