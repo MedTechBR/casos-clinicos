@@ -126,8 +126,14 @@ def v_banco(h, r):
             valor = re.search(r'class="vv">(.*?)</span>', m.group(2), re.S)
             ns = numeros(_texto(valor.group(1) if valor else m.group(2)))
             nb = numeros(_texto(e["r"]))
-            if ns and not (ns & nb):
-                erros.append(f"{e['n']}: slide {sorted(ns)} x banco {sorted(nb)}")
+            # todo número que o slide mostra tem que existir no banco. Exigir
+            # apenas UM número em comum deixa passar o caso que importa: o
+            # slide diz 9,9 e o banco 3,8, mas os dois citam o valor antigo
+            # de dois meses atrás e a checagem se dá por satisfeita.
+            faltando = ns - nb
+            if faltando:
+                erros.append(f"{e['n']}: slide mostra {sorted(faltando)}, "
+                             f"ausente do banco {sorted(nb)}")
     r.add("coerência banco × slides", not erros, " · ".join(erros))
 
 
@@ -141,13 +147,26 @@ def v_arvore(h, r):
           else f"{len(ids)} blocos, {len(destinos)} destinos")
 
 
+# o que conta como declaração de licença
+LICENCA = re.compile(r"cc\s*by|cc0|domínio público|public domain|phil|"
+                     r"esquema autoral", re.I)
+
+
 def v_creditos(h, r):
-    """Toda figura precisa de crédito e licença legíveis."""
+    """Toda figura precisa de autor E licença. Texto qualquer não basta."""
     figs = re.findall(r"<figure.*?</figure>", h, re.S)
-    sem = [i + 1 for i, f in enumerate(figs) if 'class="cred"' not in f or not _texto(
-        re.search(r'class="cred">(.*?)</span>', f, re.S).group(1) if 'class="cred"' in f else "")]
+    sem = []
+    for i, f in enumerate(figs, 1):
+        m = re.search(r'class="cred">(.*?)</span>', f, re.S)
+        t = _texto(m.group(1)) if m else ""
+        if not t:
+            sem.append(f"figura {i}: sem crédito")
+        elif not LICENCA.search(t):
+            sem.append(f"figura {i}: crédito sem licença ({t[:40]})")
+        elif len(t.split("·")[0].strip()) < 3 and "autoral" not in t.lower():
+            sem.append(f"figura {i}: crédito sem autor ({t[:40]})")
     r.add("crédito e licença nas figuras", not sem,
-          f"figuras sem crédito: {sem}" if sem else f"{len(figs)} figuras com crédito")
+          " · ".join(sem) if sem else f"{len(figs)} figuras com autor e licença")
 
 
 def v_creditos_batem(h, r):
@@ -170,7 +189,8 @@ def v_creditos_batem(h, r):
         r.add("créditos batem com as figuras", True, "sem slide de créditos")
         return
     # cada crédito de imagem listado tem que corresponder a alguma figura
-    listados = re.findall(r"([A-Za-zÀ-ÿ ]+):\s*([A-Za-zÀ-ÿ.\- ]+?)\s*·", creditos)
+    # o autor pode trazer barra, ponto e inicial ("CDC / D. Loren Ketai")
+    listados = re.findall(r"([A-Za-zÀ-ÿ ]+):\s*([A-Za-zÀ-ÿ0-9./\- ]+?)\s*·", creditos)
     sobrando = [f"{o.strip()} ({a.strip()})" for o, a in listados
                 if a.strip().lower() not in autores
                 and "wikimedia" not in o and "commons" not in o]
