@@ -78,8 +78,12 @@ def montar(*, titulo, slug, rodape, slides, banco, img_dir: Path, css=None,
             f'<span>{n} / {total}</span></div>'
         )
         segue = f' data-segue="{s["segue"]}"' if s.get("segue") else ""
+        # custo de tempo do próprio bloco: um ramo que passa dois dias
+        # esperando cobra do rim sem que ninguém tenha decidido nada
+        custo = (f' data-custo=\'{json.dumps(s["custo"], ensure_ascii=False)}\''
+                 if s.get("custo") else "")
         secoes.append(
-            f'<section class="{cls}" id="s-{s["id"]}" data-n="{n}"{segue}>'
+            f'<section class="{cls}" id="s-{s["id"]}" data-n="{n}"{segue}{custo}>'
             f"{s['corpo']}{pe}</section>"
         )
     corpo = "".join(secoes)

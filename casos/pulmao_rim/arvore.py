@@ -9,17 +9,21 @@ caso continua, e dentro dele ainda há uma decisão de resgate. Mas o melhor
 final do ramo ruim é pior que o pior final do ramo certo.
 """
 
-from motor.arvore import desfecho, efeito, no, ramo
+from motor.arvore import custa, desfecho, efeito, no, ramo
 from motor.conteudo import box, nota, p
+from motor.desenhos import quadro
 from motor.slides import narrativa
+
+from .hipoteses import HIPOTESES
 
 # ═══════════════════════ NÓ 1 — a primeira hora ═══════════════════════
 
 N1 = no(
     "n1", "Decisão · primeira hora", "O que você faz na próxima hora",
-        "O paciente está no pronto-socorro há quarenta minutos, com saturação de "
-    "88% em ar ambiente, creatinina de 3,8 mg/dL e sedimento glomerular. As "
-    "sorologias levam de dois a cinco dias.",
+    "O paciente está internado há <<horas>>, com saturação de <<spo2>> em ar "
+    "ambiente, creatinina de <<creatinina>> e sedimento glomerular. As "
+    "sorologias específicas levam de dois a cinco dias, e podem já ter sido "
+    "pedidas ou não, conforme o que se decidiu na investigação.",
     [
         ramo("colher_e_tratar",
              "Colher sorologia, hemocultura e biópsia em fila, e iniciar pulso "
@@ -525,7 +529,7 @@ B_PAINEL = narrativa("O caso · ramo do painel", "Trinta e quatro horas depois",
         p("Pergunte à turma qual exame do pedido mudou alguma conduta. "
           "Nenhum mudou. Pedir tudo de uma vez parece cauteloso e é o oposto: "
           "adia a decisão pelo tempo do exame mais lento.")),
-    ident="b_painel", segue="n1")
+    ident="b_painel")
 
 B_IMAGEM = narrativa("O caso · ramo da imagem", "Nove horas depois",
     p("A tomografia mostrou opacidades em vidro fosco difusas e bilaterais, "
@@ -546,4 +550,68 @@ B_IMAGEM = narrativa("O caso · ramo da imagem", "Nove horas depois",
           "hemoptise puxa a investigação para o tórax, e é por isso que a "
           "urina é o exame esquecido. Pergunte quem, na sala, teria pedido "
           "primeiro o sedimento.")),
-    ident="b_imagem", segue="n1")
+    ident="b_imagem")
+
+
+# ─────────── o que cada rota da investigação ainda tem de atravessar ───────────
+#
+# Antes, estes dois ramos saltavam do nó da investigação direto para o nó do
+# tratamento: quem pedisse errado nunca via a imunofluorescência, a biópsia nem
+# a classificação de Berden. Punir a escolha ruim tirando a aula é o contrário
+# de ensinar. Agora cada rota atravessa a sua própria aquisição — outra ordem,
+# outro preço, outra conversa — e as três desembocam nas imagens que elas
+# mesmas pediram e no resultado imunológico, que é onde o diagnóstico fecha.
+# A tomografia e o lavado foram feitos nos três caminhos: o que muda é quando,
+# a que custo e depois de quanta coisa já ter sido decidida sem eles.
+
+B_PAINEL_2 = custa(narrativa("O caso · ramo do painel", "A lista, podada de uma vez",
+    p("O sedimento urinário foi enfim examinado, em urina fresca: hemácias "
+      "dismórficas em 62% do campo e cilindros hemáticos numerosos. "
+      "Complemento normal, FAN e anti-DNA não reagentes, crioglobulinas "
+      "negativas em tubo aquecido, hemoculturas e culturas do lavado "
+      "hemoculturas estéreis. A infecção segue de pé: a cultura do lavado ainda "
+      "não voltou. A creatinina está em <<creatinina>> e o paciente completou "
+      "<<horas>> de internação sem uma única droga dirigida à doença."),
+    quadro(HIPOTESES, {
+        "urologico": ("derrubada", "Cilindros hemáticos: o sangue vem do glomérulo"),
+        "lepto": ("derrubada", "Curso de oito semanas, sem exposição"),
+        "lupus": ("derrubada", "Complemento normal, FAN e anti-DNA não reagentes"),
+        "crio": ("derrubada", "C4 normal e crioglobulinas negativas em tubo aquecido"),
+        "endocardite": ("derrubada", "Hemoculturas estéreis, sem sopro novo"),
+    }, titulo="Cinco linhas caem no mesmo instante", passo_a_passo=False),
+    # O comentário é sobre o método do próprio grupo, não sobre o paciente:
+    # é fala de quem conduz, não linha de slide. Vai para a nota, que a tela
+    # não mostra e o PDF imprime.
+    p("As imagens e o lavado daquele pedido em bloco são os que seguem."),
+    nota("O que se perdeu no caminho",
+        p("Seis hipóteses caíram juntas e nenhuma foi discutida. Pedir em "
+          "bloco apaga a sequência em que o raciocínio se constrói: a turma "
+          "recebe a lista já podada e não sabe dizer qual exame podou o quê. "
+          "Peça que reconstruam — qual dos nove derrubou o lúpus, qual "
+          "derrubou a endocardite — e a conta do bloco aparece sozinha.")),
+    ident="b_painel_2", segue="tomografia_de_torax", densidade="xd"),
+    efeito(horas=+2, creatinina=+0.2))
+
+B_IMAGEM_2 = custa(narrativa("O caso · ramo da imagem", "Voltando à urina, com atraso",
+    p("Depois da broncoscopia, a urina foi examinada, e resolveu em quatro "
+      "minutos o que nove horas de imagem não resolveram: hemácias "
+      "dismórficas em 62% do campo e cilindros hemáticos numerosos. "
+      "Complemento, FAN, anti-DNA e crioglobulinas foram pedidos junto e "
+      "voltaram negativos; as hemoculturas, estéreis. O "
+      "ANCA e o anti-membrana basal glomerular só foram solicitados agora, e "
+      "é por eles que o caso passa a esperar, com <<creatinina>> e <<horas>> "
+      "de relógio."),
+    quadro(HIPOTESES, {
+        "urologico": ("derrubada", "Cilindros hemáticos: o sangue vem do glomérulo"),
+        "lepto": ("derrubada", "Curso de oito semanas, sem exposição"),
+        "lupus": ("derrubada", "Complemento normal, FAN e anti-DNA não reagentes"),
+        "crio": ("derrubada", "C4 normal e crioglobulinas negativas em tubo aquecido"),
+        "endocardite": ("derrubada", "Hemoculturas estéreis, sem sopro novo"),
+    }, titulo="O que a urina fez em quatro minutos", passo_a_passo=False),
+    p("A tomografia e o lavado que abriram esta rota são os que seguem."),
+    nota("Antes de avançar",
+        p("A investigação começou pelo órgão que chamava atenção, não pelo que "
+          "decidia. O pedido das sorologias, que leva dias, saiu com quinze "
+          "horas de atraso — e é esse atraso que vai aparecer na biópsia.")),
+    ident="b_imagem_2", segue="tomografia_de_torax", densidade="xd"),
+    efeito(horas=+6, creatinina=+0.3))

@@ -15,49 +15,20 @@ from motor.conteudo import (
     painel, passo, revelar, rotulo, seta, sinais, tabela,
 )
 from motor.desenhos import (
-    capilar_compartilhado, crescente_glomerular, hip, linha_do_tempo,
+    capilar_compartilhado, crescente_glomerular, linha_do_tempo,
     mapa_do_corpo, marco, padroes_imunofluorescencia, quadro,
 )
 from motor.slides import bloco, capa, discussao, momento, narrativa, tela
 
-# ─────────────────────────── o diferencial ───────────────────────────
-#
-# A lista que o grupo levanta depois do exame físico, e que cada dado novo
-# poda. `exige` diz o que TERIA de ser verdade para o candidato ser o
-# diagnóstico — não o que este paciente tem. É a diferença entre o método do
-# discussant e apontar o dedo: escrever "púrpura palpável e mononeurite
-# múltipla" na linha da vasculite ANCA entrega o caso antes do primeiro exame.
-
-HIPOTESES = [
-    hip("urologico", "Sangramento urinário com pneumopatia à parte",
-        "Hemácias isomórficas, sem cilindros — e duas doenças independentes"),
-    hip("anca", "Vasculite de pequeno vaso associada ao ANCA",
-        "ANCA reagente e glomerulonefrite sem depósitos imunes na biópsia"),
-    hip("mbg", "Doença anti-membrana basal glomerular",
-        "Anti-MBG reagente e depósito linear ao longo da membrana basal"),
-    hip("lupus", "Lúpus eritematoso sistêmico",
-        "FAN e anti-DNA reagentes, complemento consumido, depósitos granulosos"),
-    hip("crio", "Crioglobulinemia mista",
-        "Crioglobulinas positivas e C4 desproporcionalmente baixo"),
-    hip("endocardite", "Endocardite infecciosa",
-        "Hemocultura positiva e vegetação ao ecocardiograma"),
-    hip("infeccao", "Infecção pulmonar grave com lesão renal aguda",
-        "Um foco infeccioso identificado, e o rim acompanhando a sepse"),
-    hip("lepto", "Leptospirose na forma pulmonar hemorrágica",
-        "Exposição a água de enchente ou a roedor, e sorologia ou PCR "
-        "reagente — no Ceará, entra na lista por epidemiologia"),
-    hip("droga", "Vasculite induzida por droga",
-        "Hidralazina, propiltiouracila, minociclina ou levamisol em uso"),
-]
-
 from motor.arvore import estado
 from .arvore import (
-    B_CEDO, B_CFX, B_ESPERA, B_IMAGEM, B_PAINEL, B_RESGATE, B_RTX,
-    B_SO_DIALISE, F, N0, N1, N2A, N2B, N3A, N3B, N3C, N3D,
+    B_CEDO, B_CFX, B_ESPERA, B_IMAGEM, B_IMAGEM_2, B_PAINEL, B_PAINEL_2,
+    B_RESGATE, B_RTX, B_SO_DIALISE, F, N0, N1, N2A, N2B, N3A, N3B, N3C, N3D,
 )
 from .banco import BANCO
+from .hipoteses import HIPOTESES
 from .perguntas import (
-    P1, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12,
+    P1, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14,
 )
 
 TITULO = "Homem de 63 anos com hemoptise, púrpura e queda de função renal"
@@ -75,9 +46,10 @@ SLIDES = [
         "Homem de 63 anos com hemoptise, púrpura e queda de função renal",
         "Sintomas nasais, articulares, pulmonares e renais ao longo de oito "
         "semanas.",
-        "**16 blocos de caso · 12 perguntas · 110 a 130 minutos** O caso avança "
-        "em blocos de informação nova. As perguntas são curtas e servem para "
-        "abrir discussão, não para testar memória.",
+        "**4 decisões · 8 desfechos · 90 a 110 minutos** O caso não corre em "
+        "linha reta: o que o grupo pedir e o que decidir mudam o que as telas "
+        "seguintes mostram, e o paciente que chega ao fim é outro. "
+        "{{M abre o mapa da árvore; V volta ao nó anterior.}}",
         "Caso autoral, construído para ensino. O paciente é ficcional. As "
         "imagens são ilustrativas, de repositórios de licença aberta, e não "
         "pertencem a este paciente. Créditos no slide final.",
@@ -242,8 +214,11 @@ SLIDES = [
         ident="quadro_1",
     ),
     N0,
-    B_PAINEL,
-    B_IMAGEM,
+    # Cada rota da investigação corre inteira aqui, na ordem em que o grupo a
+    # pediu, e só depois desemboca no resultado imunológico. O ramo A não passa
+    # por nada disto: ele salta direto para os exames da admissão.
+    B_PAINEL, *P13, B_PAINEL_2,
+    B_IMAGEM, *P14, B_IMAGEM_2,
     tela("O caso · bloco 3", "Exames da admissão",
         cols(
             [
@@ -560,7 +535,8 @@ SLIDES = [
     P10,
     momento("Terceira parte",
         "O resultado que estava pendente",
-        "As sorologias foram pedidas na primeira hora. Voltaram agora.",
+        "O painel imunológico voltou. Quanto tempo ele levou depende de "
+        "quando foi pedido.",
         ident="p3_resultado"),
     tela("O caso · bloco 7", "Painel imunológico",
         cols(
@@ -848,7 +824,7 @@ SLIDES = [
                             "alternados. Recomendação de grau B, apoiada em "
                             "estudo observacional, não em ensaio"],
                     ["Ajuste de dose", "Ciclofosfamida reduzida pela idade e pela função "
-                            "renal", "Com 63 anos e creatinina de 3,8, a dose plena "
+                            "renal", "Com 63 anos e creatinina de <<creatinina>>, a dose plena "
                             "produz neutropenia previsível"],
                 ], tamanho="sm"),
             ],
@@ -897,7 +873,7 @@ SLIDES = [
               "justificando com redução absoluta de doença renal terminal em "
               "doze meses de 4,6% na faixa entre 3,4 e 5,7 — cerca de vinte e "
               "dois pacientes tratados para evitar um rim terminal. Este "
-              "paciente, com 3,8, preenche o gatilho."),
+              "paciente, com <<creatinina>>, preenche o gatilho."),
             tipo="pausa"),
         densidade="dense",
         ident="plasmaferese",
@@ -906,8 +882,8 @@ SLIDES = [
         cols(
             [
                 p("Anti-MBG não reagente: não há a sobreposição que **impõe** "
-                  "plasmaférese. Creatinina de 3,8 mg/dL e hemorragia alveolar "
-                  "com saturação de 88%: dois dos três gatilhos que mandam "
+                  "plasmaférese. Creatinina de <<creatinina>> e hemorragia alveolar "
+                  "com saturação de <<spo2>>: dois dos três gatilhos que mandam "
                   "**considerar**."),
                 p("Foram feitas três sessões, com albumina como reposição, em "
                   "dias alternados, junto da indução — e não no lugar dela. A "

@@ -312,8 +312,8 @@ def rodar(caminho: Path) -> int:
                     pintarEstado();
                 }""")
 
-            def percorrer(escolhas):
-                pg.evaluate("irPara('n1')")
+            def percorrer(escolhas, de="n0"):
+                pg.evaluate(f"irPara({de!r})")
                 pg.wait_for_timeout(120)
                 for _ in range(30):
                     cls = pg.evaluate("document.querySelector('.slide.on').className")
@@ -377,20 +377,63 @@ def rodar(caminho: Path) -> int:
             pg.keyboard.press("m")
             pg.wait_for_timeout(150)
 
-            # todo caminho leva a um desfecho, e caminhos diferentes a desfechos
-            # diferentes: é a única prova de que a árvore não reconverge
+            # Três rotas de investigação × três decisões de conduta = 24
+            # travessias. Percorrer todas é a única prova de que nenhuma
+            # combinação encalha num slide sem saída.
             fins = {}
-            for esc in ([1, 1, 1], [1, 1, 2], [1, 2, 1], [1, 2, 2],
-                        [2, 1, 1], [2, 1, 2], [2, 2, 1], [2, 2, 2]):
-                zerar()
-                fins["".join(map(str, esc))] = percorrer(list(esc))
-            t.checa("todo caminho chega a um desfecho",
+            for a in (1, 2, 3):
+                for b in (1, 2):
+                    for c in (1, 2):
+                        for d in (1, 2):
+                            zerar()
+                            fins[f"{a}{b}{c}{d}"] = percorrer([a, b, c, d])
+            t.checa("toda travessia chega a um desfecho",
                     all(v.startswith("s-f_") for v in fins.values()),
                     ", ".join(f"{k}→{v}" for k, v in fins.items() if not v.startswith("s-f_"))
-                    or f"{len(fins)} caminhos")
-            t.checa("caminhos diferentes levam a desfechos diferentes",
-                    len(set(fins.values())) == len(fins),
-                    f"{len(set(fins.values()))} desfechos distintos em {len(fins)} caminhos")
+                    or f"{len(fins)} travessias")
+            # o desfecho é decidido pela conduta, não pela investigação: as três
+            # rotas do nó 0 chegam ao mesmo fim se a conduta for a mesma
+            porconduta = {}
+            for k, v in fins.items():
+                porconduta.setdefault(k[1:], set()).add(v)
+            t.checa("condutas diferentes levam a desfechos diferentes",
+                    len(porconduta) == 8
+                    and len({next(iter(x)) for x in porconduta.values()}) == 8
+                    and all(len(x) == 1 for x in porconduta.values()),
+                    f"{len({next(iter(x)) for x in porconduta.values()})} desfechos "
+                    f"distintos em {len(porconduta)} condutas")
+
+            # e a investigação não é enfeite: as três rotas chegam ao mesmo
+            # ponto do caso com relógio e função renal diferentes
+            chegadas = {}
+            for a in (1, 2, 3):
+                zerar()
+                pg.evaluate("irPara('n0')")
+                pg.wait_for_timeout(120)
+                pg.click(f".slide.on .ramos li:nth-child({a})")
+                pg.wait_for_timeout(180)
+                pg.click("#seguir")
+                pg.wait_for_timeout(180)
+                for _ in range(20):
+                    if pg.evaluate("document.querySelector('.slide.on').id") == "s-p3_resultado":
+                        break
+                    pg.keyboard.press("a")
+                    pg.wait_for_timeout(60)
+                    pg.keyboard.press("ArrowRight")
+                    pg.wait_for_timeout(150)
+                e = pg.evaluate("JSON.parse(JSON.stringify(EST))")
+                chegadas[a] = (e["horas"], e["creatinina"])
+            t.checa("a investigação escolhida muda o paciente que chega ao diagnóstico",
+                    len(set(chegadas.values())) == 3,
+                    " · ".join(f"rota {k}: {h:.0f}h Cr {c}"
+                               for k, (h, c) in chegadas.items()))
+            # o número escrito na prosa acompanha a rota, em vez de mentir
+            t.checa("os valores dentro da prosa seguem o caminho",
+                    pg.evaluate("""() => {
+                        const e = document.querySelector('.ev[data-campo=creatinina]');
+                        return !!e && e.textContent.trim()
+                               === EST.creatinina.toFixed(1).replace('.', ',') + ' mg/dL';
+                    }"""))
             zerar()
             pg.evaluate("show(0)")
             pg.wait_for_timeout(120)

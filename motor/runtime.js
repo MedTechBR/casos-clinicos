@@ -119,6 +119,7 @@ function show(n, fim){
   bar.style.width = ((i + 1) / S.length * 100) + '%';
   location.hash = i + 1;
   herdarVotos(S[i]);
+  if (typeof cobrarBloco === 'function') cobrarBloco(S[i]);
   if (editando) ligarEdicao();
 }
 

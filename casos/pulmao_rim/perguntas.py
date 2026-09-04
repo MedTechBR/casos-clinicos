@@ -464,3 +464,120 @@ P12 = pergunta(
     titulo_resposta="O mimetizador que estava na lista desde o começo",
     ordem=[2, 1, 0, 3],
 )
+
+
+# ─────────────── perguntas de ramo ───────────────
+#
+# Estas duas não existem no tronco: cada uma pertence a um caminho que o grupo
+# escolheu no nó da investigação, e discute o preço daquela escolha. Um grupo
+# que pediu certo nunca as vê — e é justamente por isso que elas existem.
+
+P13 = pergunta(
+    13,
+    "Trinta e quatro horas depois, os nove exames pedidos em bloco voltaram "
+    "juntos e a creatinina passou de 3,8 para <<creatinina>> mg/dL. Que exame "
+    "de bancada, disponível desde a admissão e ausente daquele pedido, teria "
+    "podado a lista ainda na primeira hora?",
+    [
+        alt(
+            "Sedimento urinário examinado em urina fresca, com pesquisa de "
+            "dismorfismo eritrocitário e de cilindros",
+            "Fica pronto em minutos, custa quase nada e é o único exame do "
+            "conjunto que localiza o sangramento. Cilindro hemático só se "
+            "forma no túbulo, a partir de hemácias que atravessaram o "
+            "glomérulo: encontrá-lo põe a lesão dentro do glomérulo e derruba "
+            "de uma vez a hipótese de sangramento urológico com pneumopatia à "
+            "parte. Nenhum dos nove exames pedidos fazia isso.",
+            certa=True,
+        ),
+        alt(
+            "Desidrogenase láctica e haptoglobina, para caracterizar hemólise "
+            "como causa da anemia",
+            "A anemia deste paciente tem duas explicações já visíveis — o "
+            "sangue que está no alvéolo e oito semanas de doença sistêmica. "
+            "Caracterizar hemólise seria útil se houvesse esquizócitos ou "
+            "plaquetopenia, e não separaria nenhuma das linhas da lista.",
+        ),
+        alt(
+            "Proteinúria de vinte e quatro horas, para quantificar a "
+            "intensidade da lesão glomerular",
+            "Quantifica o dano e não o localiza, e a coleta consome o dia "
+            "inteiro. Numa glomerulonefrite que evolui em horas, medir a "
+            "proteinúria de ontem para decidir a conduta de hoje é chegar "
+            "atrasado à própria pergunta.",
+        ),
+        alt(
+            "Ureia e eletrólitos seriados de seis em seis horas, para "
+            "acompanhar a velocidade da queda de função",
+            "Acompanhar a velocidade é obrigatório e não substitui saber a "
+            "causa. Uma curva de creatinina em ascensão é compatível com "
+            "todas as linhas ainda de pé, e o tempo gasto observando a curva "
+            "foi exatamente o que custou 1,4 mg/dL.",
+        ),
+        alt(
+            "Radiografia de tórax em ortostatismo, mais rápida e mais barata "
+            "que a tomografia que foi pedida",
+            "Já havia sido feita na admissão, e o infiltrado bilateral que "
+            "ela mostrou é o que motivou o resto. Repeti-la em posição "
+            "diferente não distingue hemorragia de edema nem de infecção, e o "
+            "pulmão nunca foi a dúvida deste caso.",
+        ),
+    ],
+    ordem=[0, 1, 2, 3, 4],
+    titulo_resposta="O exame que faltava custava menos que todos os outros",
+    ident="p_painel",
+)
+
+P14 = pergunta(
+    14,
+    "A tomografia mostrou vidro fosco difuso e bilateral e a broncoscopia "
+    "confirmou hemorragia alveolar, nove horas depois da admissão. Que efeito "
+    "esse par de exames tem sobre a lista de hipóteses levantada pelo grupo?",
+    [
+        alt(
+            "Descarta o sangramento urinário com pneumopatia à parte, porque "
+            "agora está provado que o pulmão está doente",
+            "O pulmão doente não diz nada sobre a origem da hematúria. As "
+            "duas doenças independentes continuam sendo uma explicação "
+            "possível enquanto ninguém tiver olhado a urina — e é a urina, "
+            "não o pulmão, que derruba essa linha.",
+        ),
+        alt(
+            "Descarta infecção pulmonar grave, porque o lavado voltou "
+            "hemorrágico em vez de purulento",
+            "Hemorragia alveolar e infecção convivem, e algumas infecções "
+            "cursam justamente com sangramento — leptospirose, influenza, "
+            "aspergilose invasiva. O que exclui infecção é a cultura do "
+            "lavado, que ainda não voltou, e não o aspecto do líquido.",
+        ),
+        alt(
+            "Descarta a doença anti-membrana basal glomerular, que só produz "
+            "hemorragia alveolar em fumantes",
+            "O tabagismo aumenta o acometimento pulmonar na doença anti-MBG e "
+            "não é condição para ele. Este paciente, aliás, é ex-tabagista de "
+            "trinta anos-maço. Nenhuma hipótese se descarta por imagem.",
+        ),
+        alt(
+            "Confirma vasculite de pequeno vaso, porque o vidro fosco difuso "
+            "e bilateral é o padrão da capilarite alveolar",
+            "A capilarite alveolar produz vidro fosco difuso, e o vidro fosco "
+            "difuso não é produzido só por ela. Ler a imagem de trás para "
+            "frente — do padrão para a doença — é o erro que a tomografia "
+            "mais convida a cometer numa sala escura.",
+        ),
+        alt(
+            "Nenhum: as duas confirmam o sangramento que a hemoptise e as "
+            "crepitações já indicavam, e são compatíveis com todas as linhas "
+            "ainda de pé",
+            "Nove horas e um contraste depois, a lista continua inteira. O "
+            "par tomografia-broncoscopia documenta a hemorragia alveolar com "
+            "precisão e não a atribui a ninguém: é exame de extensão, não de "
+            "causa. A pergunta que decide a conduta continua sendo onde o "
+            "sangue do rim está passando.",
+            certa=True,
+        ),
+    ],
+    ordem=[1, 2, 3, 0, 4],
+    titulo_resposta="Exame de extensão não é exame de causa",
+    ident="p_imagem",
+)

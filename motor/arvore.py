@@ -80,6 +80,18 @@ def ramo(chave: str, texto_: str, vai_para: str, porque: str,
             "efeito": efeito_ or efeito(), "rotulo": rotulo}
 
 
+def custa(slide: dict, efeito_: dict) -> dict:
+    """Marca um bloco com o preço que a passagem por ele cobra do paciente.
+
+    O quarto gatilho do estado. Nem toda deterioração vem de uma escolha
+    errada: um ramo em que a investigação demora dois dias cobra do rim
+    enquanto o grupo apenas assiste, e o número na barra tem de mostrar isso
+    sem que ninguém tenha clicado em nada. O efeito é aplicado uma vez, na
+    primeira vez que o bloco aparece — voltar ao slide não cobra de novo.
+    """
+    return dict(slide, custo=efeito_)
+
+
 def no(ident: str, kicker: str, titulo: str, pergunta: str, ramos,
        contexto=(), densidade="dense") -> dict:
     """Um nó de decisão. De 2 a 3 ramos, que não reconvergem."""

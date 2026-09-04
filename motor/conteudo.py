@@ -17,6 +17,10 @@ _MARCA = re.compile(r"==(.+?)==")
 _DISCRETO = re.compile(r"\{\{(.+?)\}\}")
 _DIA = re.compile(r"\[\[(.+?)\]\]")
 _ITALICO = re.compile(r"//(?!/)(.+?)//")
+# valor do estado do paciente, preenchido em tempo de execução: numa árvore
+# que não reconverge, a mesma frase encontra creatininas diferentes conforme
+# o caminho, e número escrito à mão na prosa mente em dois dos três ramos
+_ESTADO = re.compile(r"<<(\w+)>>")
 
 
 def texto(t: str) -> str:
@@ -28,6 +32,7 @@ def texto(t: str) -> str:
         ==assim==   marca-texto
         {{assim}}   discreto, para o valor anterior entre parênteses
         [[assim]]   etiqueta temporal dentro da prosa
+        <<campo>>   valor atual do estado do paciente (creatinina, horas…)
         //assim//   itálico — só nome científico e título de periódico
 
     Itálico, listas e títulos em markdown não são reconhecidos de propósito,
@@ -40,6 +45,7 @@ def texto(t: str) -> str:
     t = _DISCRETO.sub(r'<span class="mut">\1</span>', t)
     t = _DIA.sub(r'<span class="day">\1</span>', t)
     t = _ITALICO.sub(r"<i>\1</i>", t)
+    t = _ESTADO.sub(r'<span class="ev" data-campo="\1"></span>', t)
     return t
 
 

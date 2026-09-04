@@ -28,32 +28,8 @@ function aplicar(ef, sinal){
     const i = EST.sinalizadores.indexOf(f);
     if (i >= 0) EST.sinalizadores.splice(i, 1);
   });
-  /* ─────────── o exame pedido consome tempo, e o rim sente ───────────
-   O terceiro gatilho do estado: cada exame pedido na gaveta adianta o
-   relógio pelo tempo que ele leva de verdade. Pedir sedimento custa meia
-   hora; pedir sorologia custa dois dias, e é por isso que o caso não pode
-   esperar por ela. Pedir tudo "por via das dúvidas" tem preço. */
-const CUSTO_HORA = {
-  'Urina': 0.5, 'Gasometria': 0.3, 'Hemograma': 0.5, 'Bioquímica': 0.5,
-  'Coagulação': 0.5, 'Inflamação': 1, 'Microbiologia': 48, 'Sorologia': 24,
-  'Imunologia': 48, 'Imagem': 3, 'Procedimento': 6,
-  'Anatomia patológica': 72, 'Neurofisiologia': 12,
-};
-
-function custoDoExame(e){
-  const h = CUSTO_HORA[e.c];
-  if (!h) return;
-  EST.horas = Math.round((EST.horas + h) * 10) / 10;
-  // a função renal acompanha o relógio enquanto a doença não é tratada
-  if (!EST.sinalizadores.includes('imunossupressao') && h >= 12){
-    EST.creatinina = Math.round((EST.creatinina + h / 24 * 0.6) * 10) / 10;
-  }
+  // toda mudança de estado repinta: a barra e os números na prosa saem daqui
   pintarEstado();
-  aviso('pedido registrado — ' + (h < 1 ? Math.round(h * 60) + ' min' : h + ' h')
-        + ' no relógio do caso');
-}
-
-pintarEstado();
 }
 
 /* ─────────────────────── a barra de prontuário ─────────────────────── */
@@ -72,6 +48,22 @@ function pintarEstado(){
     '<span class="ef">' + (SINAIS[f] || f) + '</span>').join('');
   barra.innerHTML = campos + flags;
   barra.classList.toggle('on', true);
+  pintarValoresNaProsa();
+}
+
+/* A prosa também tem de dizer a verdade do caminho. Num caso que ramifica,
+   "creatinina de 3,8 mg/dL" escrito à mão fica errado em dois dos três ramos:
+   quem gastou trinta e quatro horas chega ao mesmo slide com 5,2. Os <<campos>>
+   escritos no fonte viram estes vãos, preenchidos a cada mudança de estado. */
+function pintarValoresNaProsa(){
+  document.querySelectorAll('.ev[data-campo]').forEach(e => {
+    const k = e.dataset.campo, c = CAMPOS[k];
+    if (!c || EST[k] === undefined) return;
+    // vírgula decimal: é prontuário em português, e "3.8" numa frase corrida
+    // é o tipo de detalhe que denuncia texto gerado
+    e.textContent = EST[k].toFixed(c.casas).replace('.', ',') + c.unidade;
+    e.classList.toggle('mudou', EST[k] !== EST0[k]);
+  });
 }
 const SINAIS = JSON.parse(document.getElementById('sinais').textContent);
 
@@ -119,32 +111,7 @@ function voltarAoNo(){
     return;
   }
   EST = JSON.parse(JSON.stringify(p.antes));
-  /* ─────────── o exame pedido consome tempo, e o rim sente ───────────
-   O terceiro gatilho do estado: cada exame pedido na gaveta adianta o
-   relógio pelo tempo que ele leva de verdade. Pedir sedimento custa meia
-   hora; pedir sorologia custa dois dias, e é por isso que o caso não pode
-   esperar por ela. Pedir tudo "por via das dúvidas" tem preço. */
-const CUSTO_HORA = {
-  'Urina': 0.5, 'Gasometria': 0.3, 'Hemograma': 0.5, 'Bioquímica': 0.5,
-  'Coagulação': 0.5, 'Inflamação': 1, 'Microbiologia': 48, 'Sorologia': 24,
-  'Imunologia': 48, 'Imagem': 3, 'Procedimento': 6,
-  'Anatomia patológica': 72, 'Neurofisiologia': 12,
-};
-
-function custoDoExame(e){
-  const h = CUSTO_HORA[e.c];
-  if (!h) return;
-  EST.horas = Math.round((EST.horas + h) * 10) / 10;
-  // a função renal acompanha o relógio enquanto a doença não é tratada
-  if (!EST.sinalizadores.includes('imunossupressao') && h >= 12){
-    EST.creatinina = Math.round((EST.creatinina + h / 24 * 0.6) * 10) / 10;
-  }
   pintarEstado();
-  aviso('pedido registrado — ' + (h < 1 ? Math.round(h * 60) + ' min' : h + ' h')
-        + ' no relógio do caso');
-}
-
-pintarEstado();
   const s = slidePorId(p.de);
   const ul = s.querySelector('.ramos');
   ul.classList.remove('decidido');
@@ -163,12 +130,78 @@ function aviso(t){
   a._t = setTimeout(() => a.classList.remove('on'), 2200);
 }
 
+/* ─────────── o preço de atravessar um bloco ───────────
+   Nem toda piora vem de um clique. Um ramo que passa dois dias esperando
+   sorologia cobra do rim enquanto o grupo assiste; o número tem de andar
+   sozinho. Cobrado uma vez por bloco: rever o slide não cobra de novo. */
+const cobrados = new Set();
+
+function cobrarBloco(s){
+  if (!s || !s.dataset.custo) return;
+  const k = idDoSlide(s);
+  if (cobrados.has(k)) return;
+  cobrados.add(k);
+  aplicar(JSON.parse(s.dataset.custo), +1);
+}
+
 /* ─────────────────────── mapa da árvore ─────────────────────── */
+
+/* O que ainda está ao alcance.
+
+   O baralho tem oito nós, e quatro deles são o mesmo momento — o quinto dia —
+   em ramos diferentes: só um pode acontecer. Listar os oito lado a lado sugere
+   à turma que todos estão em jogo, o que é falso depois da primeira decisão.
+   Estas três funções andam pelo grafo de verdade (data-vai do ramo, data-segue
+   do bloco, vizinho do DOM quando não há nenhum dos dois) e dizem o que ainda
+   é possível. O resto o mapa mostra apagado: a escolha fechou aquela porta, e
+   ver a porta fechada é metade da lição. */
+
+function proximoBloco(s){
+  const k = s.dataset.segue;
+  if (k) return slidePorId(k);
+  return S[S.indexOf(s) + 1] || null;
+}
+
+function ateOProximoNo(s){
+  for (let n = 0; s && n < 80; n++){
+    if (s.classList.contains('no') || s.classList.contains('fim')) return s;
+    s = proximoBloco(s);
+  }
+  return null;
+}
+
+function aindaAoAlcance(){
+  let raiz = cur();
+  if (!raiz.classList.contains('no') && !raiz.classList.contains('fim'))
+    raiz = ateOProximoNo(raiz);
+  const decidido = raiz && raiz.classList.contains('no')
+    && raiz.querySelector('.ramos.decidido');
+  const fila = [];
+  if (decidido){
+    const esc = raiz.querySelector('.rm.escolhido');
+    fila.push(raiz, esc ? ateOProximoNo(slidePorId(esc.dataset.vai)) : null);
+  } else {
+    fila.push(raiz);
+  }
+  const vistos = new Set();
+  while (fila.length){
+    const s = fila.shift();
+    if (!s || vistos.has(s)) continue;
+    vistos.add(s);
+    if (s.classList.contains('no'))
+      s.querySelectorAll('.rm').forEach(
+        r => fila.push(ateOProximoNo(slidePorId(r.dataset.vai))));
+  }
+  // o que já foi percorrido continua no mapa: é o histórico da sessão
+  caminho.forEach(c => { const n = slidePorId(c.de); if (n) vistos.add(n); });
+  return vistos;
+}
 
 const mapa = document.getElementById('mapa');
 function pintarMapa(){
   const nos = [...document.querySelectorAll('.slide.no')];
   const atual = cur();
+  const vivos = aindaAoAlcance();
   const linhas = nos.map(n => {
     const k = idDoSlide(n);
     const passo = caminho.find(c => c.de === k);
@@ -179,15 +212,22 @@ function pintarMapa(){
         + r.querySelector('.tt').textContent + '</span>';
     }).join('');
     return '<div class="mn' + (n === atual ? ' aqui' : '')
-      + (passo ? ' feito' : '') + '" data-ir="' + k + '">'
+      + (passo ? ' feito' : '') + (vivos.has(n) ? '' : ' fora') + '" data-ir="' + k + '">'
       + '<b>' + t + '</b><div class="mrs">' + ramos + '</div></div>';
   }).join('');
-  const fins = [...document.querySelectorAll('.slide.fim')].map(f =>
+  const todos = [...document.querySelectorAll('.slide.fim')];
+  const fins = todos.map(f =>
     '<span class="mf ' + [...f.classList].find(c => c.startsWith('q-'))
-    + (f === atual ? ' aqui' : '') + '" data-ir="' + idDoSlide(f) + '">'
+    + (f === atual ? ' aqui' : '') + (vivos.has(f) ? '' : ' fora')
+    + '" data-ir="' + idDoSlide(f) + '">'
     + f.querySelector('h2').textContent + '</span>').join('');
+  const vivosFim = todos.filter(f => vivos.has(f)).length;
+  const rotulo = vivosFim === todos.length
+    ? 'Desfechos possíveis'
+    : 'Desfechos ainda possíveis {{' + vivosFim + ' de ' + todos.length + '}}';
   mapa.innerHTML = '<div class="mt">Onde estamos</div>' + linhas
-    + '<div class="mt">Desfechos possíveis</div><div class="mfs">' + fins + '</div>'
+    + '<div class="mt">' + rotulo.replace('{{', '<i>').replace('}}', '</i>')
+    + '</div><div class="mfs">' + fins + '</div>'
     + '<div class="mh">clique para pular · V volta ao nó anterior · M fecha</div>';
 }
 function abrirMapa(v){
