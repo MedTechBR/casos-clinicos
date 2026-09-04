@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+saida/*.pdf
+saida/revisao/
+.DS_Store

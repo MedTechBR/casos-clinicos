@@ -1,0 +1,974 @@
+[
+ {
+  "n": "Sedimento urinário",
+  "s": [
+   "eas",
+   "urina",
+   "tipo",
+   "1",
+   "sumario",
+   "de",
+   "urina",
+   "urina",
+   "rotina",
+   "sedimento",
+   "síndrome pulmão-rim"
+  ],
+  "c": "Urina",
+  "r": "<b>Hemácias dismórficas 40%</b> · <b>cilindros hemáticos presentes</b> · cilindros granulosos · leucócitos 8/campo · sem bacteriúria",
+  "ref": "sem hemácias dismórficas, sem cilindros",
+  "a": 1
+ },
+ {
+  "n": "Proteinúria de 24 horas",
+  "s": [
+   "proteinuria",
+   "proteinuria 24h"
+  ],
+  "c": "Urina",
+  "r": "2,4 g/24 h",
+  "ref": "abaixo de 0,15 g/24 h",
+  "a": 1
+ },
+ {
+  "n": "Relação proteína/creatinina urinária",
+  "s": [
+   "relacao proteina creatinina",
+   "pcr urinaria",
+   "upcr"
+  ],
+  "c": "Urina",
+  "r": "2,1 mg/mg",
+  "ref": "abaixo de 0,2 mg/mg",
+  "a": 1
+ },
+ {
+  "n": "Hematúria",
+  "s": [
+   "hematuria",
+   "sangue na urina"
+  ],
+  "c": "Urina",
+  "r": "++++ · 4+ na fita",
+  "ref": "ausente",
+  "a": 1
+ },
+ {
+  "n": "Eosinofilúria",
+  "s": [
+   "eosinofiluria",
+   "eosinofilos na urina"
+  ],
+  "c": "Urina",
+  "r": "Ausente",
+  "ref": "ausente",
+  "a": 0
+ },
+ {
+  "n": "Urocultura",
+  "s": [
+   "urocultura",
+   "cultura de urina"
+  ],
+  "c": "Microbiologia",
+  "r": "Negativa",
+  "ref": "negativa",
+  "a": 0
+ },
+ {
+  "n": "Creatinina",
+  "s": [
+   "creatinina",
+   "função renal"
+  ],
+  "c": "Bioquímica",
+  "r": "Admissão 3,8 mg/dL · há 2 meses 1,0 mg/dL · 5º dia 4,6 mg/dL",
+  "ref": "até 1,3 mg/dL",
+  "a": 1
+ },
+ {
+  "n": "Ureia",
+  "s": [
+   "ureia",
+   "função renal"
+  ],
+  "c": "Bioquímica",
+  "r": "128 mg/dL",
+  "ref": "até 45 mg/dL",
+  "a": 1
+ },
+ {
+  "n": "Taxa de filtração glomerular estimada",
+  "s": [
+   "tfg",
+   "clearance",
+   "egfr",
+   "ckd-epi",
+   "função renal"
+  ],
+  "c": "Bioquímica",
+  "r": "16 mL/min/1,73 m²",
+  "ref": "acima de 90 mL/min/1,73 m²",
+  "a": 1
+ },
+ {
+  "n": "Potássio",
+  "s": [
+   "potassio",
+   "k",
+   "eletrólitos"
+  ],
+  "c": "Bioquímica",
+  "r": "5,4 mEq/L",
+  "ref": "3,5 a 5,0 mEq/L",
+  "a": 1
+ },
+ {
+  "n": "Sódio",
+  "s": [
+   "sodio",
+   "na",
+   "eletrólitos"
+  ],
+  "c": "Bioquímica",
+  "r": "136 mEq/L",
+  "ref": "135 a 145 mEq/L",
+  "a": 0
+ },
+ {
+  "n": "Cálcio",
+  "s": [
+   "calcio",
+   "eletrólitos"
+  ],
+  "c": "Bioquímica",
+  "r": "8,6 mg/dL",
+  "ref": "8,5 a 10,2 mg/dL",
+  "a": 0
+ },
+ {
+  "n": "Fósforo",
+  "s": [
+   "fosforo",
+   "fosfato",
+   "eletrólitos"
+  ],
+  "c": "Bioquímica",
+  "r": "5,2 mg/dL",
+  "ref": "2,5 a 4,5 mg/dL",
+  "a": 1
+ },
+ {
+  "n": "Bicarbonato",
+  "s": [
+   "bicarbonato",
+   "hco3",
+   "gasometria"
+  ],
+  "c": "Gasometria",
+  "r": "17 mEq/L",
+  "ref": "22 a 26 mEq/L",
+  "a": 1
+ },
+ {
+  "n": "pH arterial",
+  "s": [
+   "ph",
+   "gasometria",
+   "gasometria"
+  ],
+  "c": "Gasometria",
+  "r": "7,30",
+  "ref": "7,35 a 7,45",
+  "a": 1
+ },
+ {
+  "n": "pO2",
+  "s": [
+   "po2",
+   "gasometria"
+  ],
+  "c": "Gasometria",
+  "r": "56 mmHg em ar ambiente",
+  "ref": "80 a 100 mmHg",
+  "a": 1
+ },
+ {
+  "n": "pCO2",
+  "s": [
+   "pco2",
+   "gasometria"
+  ],
+  "c": "Gasometria",
+  "r": "32 mmHg",
+  "ref": "35 a 45 mmHg",
+  "a": 1
+ },
+ {
+  "n": "Relação PaO2/FiO2",
+  "s": [
+   "pafi",
+   "p/f",
+   "gasometria"
+  ],
+  "c": "Gasometria",
+  "r": "186",
+  "ref": "acima de 300",
+  "a": 1
+ },
+ {
+  "n": "Lactato",
+  "s": [
+   "lactato",
+   "gasometria"
+  ],
+  "c": "Gasometria",
+  "r": "1,6 mmol/L",
+  "ref": "até 2,0 mmol/L",
+  "a": 0
+ },
+ {
+  "n": "Saturação de O2",
+  "s": [
+   "saturacao",
+   "spo2",
+   "gasometria"
+  ],
+  "c": "Gasometria",
+  "r": "88% em ar ambiente · 94% com cateter a 4 L/min",
+  "ref": "acima de 94%",
+  "a": 1
+ },
+ {
+  "n": "Hemoglobina",
+  "s": [
+   "hb",
+   "hemoglobina",
+   "hemograma"
+  ],
+  "c": "Hemograma",
+  "r": "Admissão 7,8 g/dL · há 2 meses 13,9 g/dL · 5º dia 6,9 g/dL",
+  "ref": "13,5 a 17,5 g/dL",
+  "a": 1
+ },
+ {
+  "n": "Hematócrito",
+  "s": [
+   "ht",
+   "hematocrito",
+   "hemograma"
+  ],
+  "c": "Hemograma",
+  "r": "23,6%",
+  "ref": "41 a 53%",
+  "a": 1
+ },
+ {
+  "n": "VCM",
+  "s": [
+   "vcm",
+   "hemograma"
+  ],
+  "c": "Hemograma",
+  "r": "88 fL",
+  "ref": "80 a 100 fL",
+  "a": 0
+ },
+ {
+  "n": "Reticulócitos",
+  "s": [
+   "reticulocitos",
+   "hemograma"
+  ],
+  "c": "Hemograma",
+  "r": "2,1%",
+  "ref": "0,5 a 2,0%",
+  "a": 1
+ },
+ {
+  "n": "Leucócitos",
+  "s": [
+   "leucocitos",
+   "leucograma",
+   "hemograma"
+  ],
+  "c": "Hemograma",
+  "r": "14.200/mm³",
+  "ref": "4.000 a 11.000/mm³",
+  "a": 1
+ },
+ {
+  "n": "Neutrófilos",
+  "s": [
+   "neutrofilos",
+   "hemograma"
+  ],
+  "c": "Hemograma",
+  "r": "11.800/mm³",
+  "ref": "1.800 a 7.000/mm³",
+  "a": 1
+ },
+ {
+  "n": "Eosinófilos",
+  "s": [
+   "eosinofilos",
+   "hemograma"
+  ],
+  "c": "Hemograma",
+  "r": "320/mm³ (2,3%)",
+  "ref": "50 a 500/mm³",
+  "a": 0
+ },
+ {
+  "n": "Linfócitos",
+  "s": [
+   "linfocitos",
+   "hemograma"
+  ],
+  "c": "Hemograma",
+  "r": "1.400/mm³",
+  "ref": "1.000 a 4.000/mm³",
+  "a": 0
+ },
+ {
+  "n": "Plaquetas",
+  "s": [
+   "plaquetas",
+   "hemograma",
+   "coagulograma"
+  ],
+  "c": "Hemograma",
+  "r": "468.000/mm³",
+  "ref": "150.000 a 450.000/mm³",
+  "a": 1
+ },
+ {
+  "n": "Esfregaço de sangue periférico",
+  "s": [
+   "esfregaco",
+   "hematoscopia",
+   "lamina",
+   "hemograma"
+  ],
+  "c": "Hemograma",
+  "r": "Sem esquizócitos · sem blastos · anisocitose discreta",
+  "ref": "—",
+  "a": 0
+ },
+ {
+  "n": "Coombs direto",
+  "s": [
+   "coombs"
+  ],
+  "c": "Imunologia",
+  "r": "Negativo",
+  "ref": "negativo",
+  "a": 0
+ },
+ {
+  "n": "Proteína C reativa",
+  "s": [
+   "pcr",
+   "proteina c reativa",
+   "provas de atividade inflamatória"
+  ],
+  "c": "Inflamação",
+  "r": "186 mg/L",
+  "ref": "até 5 mg/L",
+  "a": 1
+ },
+ {
+  "n": "VHS",
+  "s": [
+   "vhs",
+   "hemossedimentacao",
+   "provas de atividade inflamatória"
+  ],
+  "c": "Inflamação",
+  "r": "98 mm/h",
+  "ref": "até 20 mm/h",
+  "a": 1
+ },
+ {
+  "n": "Procalcitonina",
+  "s": [
+   "procalcitonina",
+   "pct",
+   "provas de atividade inflamatória"
+  ],
+  "c": "Inflamação",
+  "r": "0,4 ng/mL · 5º dia 3,1 ng/mL",
+  "ref": "abaixo de 0,5 ng/mL",
+  "a": 1
+ },
+ {
+  "n": "Ferritina",
+  "s": [
+   "ferritina",
+   "provas de atividade inflamatória"
+  ],
+  "c": "Inflamação",
+  "r": "640 ng/mL",
+  "ref": "30 a 400 ng/mL",
+  "a": 1
+ },
+ {
+  "n": "Albumina",
+  "s": [
+   "albumina"
+  ],
+  "c": "Bioquímica",
+  "r": "2,9 g/dL",
+  "ref": "3,5 a 5,2 g/dL",
+  "a": 1
+ },
+ {
+  "n": "TAP / INR",
+  "s": [
+   "inr",
+   "tap",
+   "coagulograma"
+  ],
+  "c": "Coagulação",
+  "r": "INR 1,1",
+  "ref": "até 1,2",
+  "a": 0
+ },
+ {
+  "n": "TTPa",
+  "s": [
+   "ttpa",
+   "coagulograma"
+  ],
+  "c": "Coagulação",
+  "r": "Normal",
+  "ref": "relação até 1,25",
+  "a": 0
+ },
+ {
+  "n": "Fibrinogênio",
+  "s": [
+   "fibrinogenio",
+   "coagulograma"
+  ],
+  "c": "Coagulação",
+  "r": "542 mg/dL",
+  "ref": "200 a 400 mg/dL",
+  "a": 1
+ },
+ {
+  "n": "D-dímero",
+  "s": [
+   "d dimero",
+   "coagulograma"
+  ],
+  "c": "Coagulação",
+  "r": "1.840 ng/mL",
+  "ref": "até 500 ng/mL",
+  "a": 1
+ },
+ {
+  "n": "ANCA por imunofluorescência indireta",
+  "s": [
+   "anca",
+   "imunofluorescencia anca",
+   "ifi anca",
+   "p-anca",
+   "c-anca",
+   "painel de vasculite",
+   "síndrome pulmão-rim"
+  ],
+  "c": "Imunologia",
+  "r": "<b>Padrão perinuclear (p-ANCA), título 1:640</b>",
+  "ref": "não reagente",
+  "a": 1
+ },
+ {
+  "n": "Anti-mieloperoxidase",
+  "s": [
+   "anti-mpo",
+   "mpo",
+   "antimieloperoxidase",
+   "painel de vasculite"
+  ],
+  "c": "Imunologia",
+  "r": "<b>148 U/mL</b>",
+  "ref": "até 20 U/mL",
+  "a": 1
+ },
+ {
+  "n": "Anti-proteinase 3",
+  "s": [
+   "anti-pr3",
+   "pr3",
+   "antiproteinase",
+   "painel de vasculite"
+  ],
+  "c": "Imunologia",
+  "r": "Não reagente (3 U/mL)",
+  "ref": "até 20 U/mL",
+  "a": 0
+ },
+ {
+  "n": "Anticorpo anti-membrana basal glomerular",
+  "s": [
+   "anti-mbg",
+   "anti-gbm",
+   "goodpasture",
+   "mbg",
+   "painel de vasculite",
+   "síndrome pulmão-rim"
+  ],
+  "c": "Imunologia",
+  "r": "<b>Não reagente</b>",
+  "ref": "não reagente",
+  "a": 0
+ },
+ {
+  "n": "Complemento C3",
+  "s": [
+   "c3",
+   "complemento",
+   "painel de vasculite"
+  ],
+  "c": "Imunologia",
+  "r": "112 mg/dL",
+  "ref": "90 a 180 mg/dL",
+  "a": 0
+ },
+ {
+  "n": "Complemento C4",
+  "s": [
+   "c4",
+   "painel de vasculite"
+  ],
+  "c": "Imunologia",
+  "r": "28 mg/dL",
+  "ref": "10 a 40 mg/dL",
+  "a": 0
+ },
+ {
+  "n": "FAN",
+  "s": [
+   "fan",
+   "antinuclear",
+   "painel de vasculite"
+  ],
+  "c": "Imunologia",
+  "r": "Não reagente",
+  "ref": "não reagente",
+  "a": 0
+ },
+ {
+  "n": "Anti-DNA nativo",
+  "s": [
+   "anti-dna",
+   "dna nativo",
+   "anti-dsdna",
+   "painel de vasculite"
+  ],
+  "c": "Imunologia",
+  "r": "Não reagente",
+  "ref": "não reagente",
+  "a": 0
+ },
+ {
+  "n": "Anti-ENA",
+  "s": [
+   "ena",
+   "anti-ena",
+   "ssa",
+   "ssb",
+   "sm",
+   "rnp"
+  ],
+  "c": "Imunologia",
+  "r": "Não reagente para Sm, RNP, SSA e SSB",
+  "ref": "não reagente",
+  "a": 0
+ },
+ {
+  "n": "Crioglobulinas",
+  "s": [
+   "crioglobulinas",
+   "crioglobulina",
+   "painel de vasculite"
+  ],
+  "c": "Imunologia",
+  "r": "Negativas — coleta em tubo aquecido a 37 °C e transporte aquecido",
+  "ref": "negativas",
+  "a": 0
+ },
+ {
+  "n": "Fator reumatoide",
+  "s": [
+   "fator reumatoide",
+   "fr"
+  ],
+  "c": "Imunologia",
+  "r": "18 UI/mL",
+  "ref": "até 20 UI/mL",
+  "a": 0
+ },
+ {
+  "n": "Anticorpos antifosfolípides",
+  "s": [
+   "antifosfolipide",
+   "anticardiolipina",
+   "anticoagulante lupico",
+   "beta 2",
+   "painel de vasculite"
+  ],
+  "c": "Imunologia",
+  "r": "Anticardiolipina, anti-beta-2-glicoproteína I e anticoagulante lúpico não reagentes",
+  "ref": "não reagentes",
+  "a": 0
+ },
+ {
+  "n": "Eletroforese de proteínas",
+  "s": [
+   "eletroforese",
+   "proteinograma"
+  ],
+  "c": "Imunologia",
+  "r": "Sem pico monoclonal · hipoalbuminemia · gama policlonal discretamente elevada",
+  "ref": "sem pico monoclonal",
+  "a": 0
+ },
+ {
+  "n": "Imunoglobulinas séricas",
+  "s": [
+   "imunoglobulinas",
+   "igg",
+   "iga",
+   "igm"
+  ],
+  "c": "Imunologia",
+  "r": "IgG 1.180 · IgA 240 · IgM 96 mg/dL",
+  "ref": "IgG 700 a 1.600 mg/dL",
+  "a": 0
+ },
+ {
+  "n": "Hemocultura",
+  "s": [
+   "hemocultura",
+   "cultura de sangue"
+  ],
+  "c": "Microbiologia",
+  "r": "Admissão: 3 pares negativos em 5 dias · 5º dia: <b>Staphylococcus aureus</b> em 2 de 2 pares, sensível a oxacilina",
+  "ref": "negativa",
+  "a": 1
+ },
+ {
+  "n": "Cultura do lavado broncoalveolar",
+  "s": [
+   "cultura do lba",
+   "cultura lavado"
+  ],
+  "c": "Microbiologia",
+  "r": "Admissão negativa para bactérias, fungos e micobactérias",
+  "ref": "negativa",
+  "a": 0
+ },
+ {
+  "n": "Pesquisa de Pneumocystis no lavado",
+  "s": [
+   "pneumocystis",
+   "pcp",
+   "jirovecii"
+  ],
+  "c": "Microbiologia",
+  "r": "Não detectado",
+  "ref": "não detectado",
+  "a": 0
+ },
+ {
+  "n": "Baciloscopia e teste molecular para tuberculose",
+  "s": [
+   "bk",
+   "baciloscopia",
+   "trm",
+   "genexpert",
+   "tb"
+  ],
+  "c": "Microbiologia",
+  "r": "Baciloscopia negativa · MTB não detectado · cultura negativa em 8 semanas",
+  "ref": "negativos",
+  "a": 0
+ },
+ {
+  "n": "Galactomanana e beta-D-glucana",
+  "s": [
+   "galactomanana",
+   "beta d glucana",
+   "aspergillus"
+  ],
+  "c": "Microbiologia",
+  "r": "Não reagentes",
+  "ref": "não reagentes",
+  "a": 0
+ },
+ {
+  "n": "Anti-HIV",
+  "s": [
+   "hiv",
+   "anti hiv",
+   "sorologias virais"
+  ],
+  "c": "Sorologia",
+  "r": "Não reagente",
+  "ref": "não reagente",
+  "a": 0
+ },
+ {
+  "n": "HBsAg e anti-HBc",
+  "s": [
+   "hbsag",
+   "hepatite b",
+   "anti hbc",
+   "sorologias virais"
+  ],
+  "c": "Sorologia",
+  "r": "Não reagentes",
+  "ref": "não reagentes",
+  "a": 0
+ },
+ {
+  "n": "Anti-HCV",
+  "s": [
+   "anti hcv",
+   "hepatite c",
+   "sorologias virais"
+  ],
+  "c": "Sorologia",
+  "r": "Não reagente",
+  "ref": "não reagente",
+  "a": 0
+ },
+ {
+  "n": "Sorologia para sífilis",
+  "s": [
+   "vdrl",
+   "sifilis"
+  ],
+  "c": "Sorologia",
+  "r": "Não reagente",
+  "ref": "não reagente",
+  "a": 0
+ },
+ {
+  "n": "Tomografia de tórax",
+  "s": [
+   "tc torax",
+   "tomografia de torax",
+   "síndrome pulmão-rim"
+  ],
+  "c": "Imagem",
+  "r": "<b>Opacidades em vidro fosco difusas e bilaterais</b>, confluentes em alguns lobos · sem nódulo escavado · sem massa · sem linfonodomegalia · sem derrame pleural",
+  "ref": "—",
+  "a": 1
+ },
+ {
+  "n": "Radiografia de tórax",
+  "s": [
+   "rx torax",
+   "raio x de torax"
+  ],
+  "c": "Imagem",
+  "r": "Opacidades alveolares bilaterais e simétricas · área cardíaca normal · sem derrame",
+  "ref": "—",
+  "a": 1
+ },
+ {
+  "n": "Tomografia de seios da face",
+  "s": [
+   "tc seios da face",
+   "seios paranasais",
+   "sinusite"
+  ],
+  "c": "Imagem",
+  "r": "Espessamento mucoso discreto em seios maxilares · <b>sem erosão óssea, sem massa, sem destruição septal</b>",
+  "ref": "—",
+  "a": 0
+ },
+ {
+  "n": "Ultrassonografia de rins e vias urinárias",
+  "s": [
+   "usg rins",
+   "ultrassom renal",
+   "ecografia renal"
+  ],
+  "c": "Imagem",
+  "r": "Rins de dimensões normais (11,2 e 11,0 cm) · <b>relação córtico-medular preservada</b> · sem hidronefrose · sem cálculo",
+  "ref": "—",
+  "a": 0
+ },
+ {
+  "n": "Ecocardiograma transtorácico",
+  "s": [
+   "eco",
+   "ecocardiograma"
+  ],
+  "c": "Imagem",
+  "r": "Sem vegetações · fração de ejeção 61% · sem derrame pericárdico · pressão sistólica de artéria pulmonar 34 mmHg",
+  "ref": "—",
+  "a": 0
+ },
+ {
+  "n": "Angiotomografia de tórax",
+  "s": [
+   "angiotc",
+   "angiotomografia",
+   "tep",
+   "embolia pulmonar"
+  ],
+  "c": "Imagem",
+  "r": "Sem falha de enchimento nas artérias pulmonares",
+  "ref": "—",
+  "a": 0
+ },
+ {
+  "n": "Angiografia renal",
+  "s": [
+   "angiografia renal",
+   "arteriografia"
+  ],
+  "c": "Imagem",
+  "r": "Não realizada",
+  "ref": "—",
+  "a": 0
+ },
+ {
+  "n": "PET-CT",
+  "s": [
+   "pet",
+   "pet ct"
+  ],
+  "c": "Imagem",
+  "r": "Não realizado",
+  "ref": "—",
+  "a": 0
+ },
+ {
+  "n": "Biópsia renal — microscopia óptica",
+  "s": [
+   "biopsia renal",
+   "biopsia do rim",
+   "microscopia optica",
+   "biópsia renal"
+  ],
+  "c": "Anatomia patológica",
+  "r": "24 glomérulos · <b>crescentes celulares em 15 deles (62%)</b> · necrose fibrinoide segmentar · sem esclerose global significativa · fibrose intersticial em 10% do córtex",
+  "ref": "—",
+  "a": 1
+ },
+ {
+  "n": "Biópsia renal — imunofluorescência",
+  "s": [
+   "imunofluorescencia renal",
+   "if renal",
+   "pauci-imune",
+   "síndrome pulmão-rim",
+   "biópsia renal"
+  ],
+  "c": "Anatomia patológica",
+  "r": "<b>Ausência de depósitos significativos de IgG, IgA, IgM, C3 e C1q</b> — padrão pauci-imune · <b>sem depósito linear</b> ao longo da membrana basal",
+  "ref": "—",
+  "a": 1
+ },
+ {
+  "n": "Biópsia renal — classificação de Berden",
+  "s": [
+   "berden",
+   "classificacao histologica",
+   "biópsia renal"
+  ],
+  "c": "Anatomia patológica",
+  "r": "<b>Classe crescêntica</b> (mais de 50% dos glomérulos com crescentes celulares)",
+  "ref": "—",
+  "a": 1
+ },
+ {
+  "n": "Lavado broncoalveolar",
+  "s": [
+   "lba",
+   "lavado broncoalveolar",
+   "broncoscopia",
+   "síndrome pulmão-rim"
+  ],
+  "c": "Procedimento",
+  "r": "<b>Alíquotas sequencialmente mais hemorrágicas</b> · <b>hemossiderófagos em 34% dos macrófagos</b> · culturas negativas",
+  "ref": "hemossiderófagos abaixo de 20%",
+  "a": 1
+ },
+ {
+  "n": "Biópsia de pele da lesão purpúrica",
+  "s": [
+   "biopsia de pele",
+   "biopsia cutanea",
+   "purpura"
+  ],
+  "c": "Anatomia patológica",
+  "r": "Não realizada",
+  "ref": "—",
+  "a": 0
+ },
+ {
+  "n": "Biópsia de nervo sural",
+  "s": [
+   "biopsia de nervo",
+   "sural"
+  ],
+  "c": "Procedimento",
+  "r": "Não realizada",
+  "ref": "—",
+  "a": 0
+ },
+ {
+  "n": "Biópsia pulmonar",
+  "s": [
+   "biopsia pulmonar",
+   "biopsia de pulmao"
+  ],
+  "c": "Procedimento",
+  "r": "Não realizada",
+  "ref": "—",
+  "a": 0
+ },
+ {
+  "n": "Eletroneuromiografia",
+  "s": [
+   "enmg",
+   "eletroneuromiografia",
+   "emg",
+   "conducao nervosa"
+  ],
+  "c": "Neurofisiologia",
+  "r": "<b>Mononeuropatia múltipla</b> de padrão axonal · comprometimento assimétrico do fibular comum direito e do ulnar esquerdo · potenciais sensitivos reduzidos nos mesmos territórios",
+  "ref": "—",
+  "a": 1
+ },
+ {
+  "n": "Espirometria com DLCO",
+  "s": [
+   "espirometria",
+   "dlco",
+   "difusao"
+  ],
+  "c": "Neurofisiologia",
+  "r": "Não realizada — paciente hipoxêmico e dispneico",
+  "ref": "—",
+  "a": 0
+ },
+ {
+  "n": "Eletrocardiograma",
+  "s": [
+   "ecg",
+   "eletrocardiograma"
+  ],
+  "c": "Imagem",
+  "r": "Ritmo sinusal, FC 104 bpm · sem alteração isquêmica · sem sinal de hipercalemia",
+  "ref": "—",
+  "a": 0
+ }
+]
