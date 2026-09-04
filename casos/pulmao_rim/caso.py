@@ -26,9 +26,9 @@ from .arvore import (
     B_RESGATE, B_RTX, B_SO_DIALISE, F, N0, N1, N2A, N2B, N3A, N3B, N3C, N3D,
 )
 from .banco import BANCO
-from .hipoteses import HIPOTESES
+from .hipoteses import DENTRO, HIPOTESES, RIM, SISTEMICO, TORAX
 from .perguntas import (
-    P1, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14,
+    P1, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15,
 )
 
 TITULO = "Homem de 63 anos com hemoptise, púrpura e queda de função renal"
@@ -194,31 +194,50 @@ SLIDES = [
         ident="parede_compartilhada",
     ),
     momento("Segunda parte",
-        "Diagnóstico diferencial",
-        "A partir daqui o caso para de contar e começa a testar. A lista que o "
-        "grupo levantar agora é a que vai sendo podada, um resultado por vez.",
+        "De que síndromes se trata",
+        "Ainda não é hora de nomear doença. Antes disso há duas perguntas mais "
+        "baratas e mais difíceis: de onde vem o sangue, e o que amarra oito "
+        "semanas de sintomas em quatro territórios.",
         ident="p2_diferencial"),
-    discussao("O que pode fazer as duas coisas",
-        p("Hemorragia alveolar com glomerulonefrite é uma lista curta, e a "
-          "turma consegue levantá-la em voz alta antes de qualquer resultado. "
-          "A coluna da direita não diz o que este paciente tem: diz o que "
-          "**teria de ser verdade** para cada candidato ser o diagnóstico. É "
-          "essa coluna que a investigação vai testar, uma linha por vez."),
-        quadro(HIPOTESES, titulo="Levantado pelo grupo, ao fim do exame físico"),
+    discussao("De onde vem o sangue",
+        p("Sangue que sai pela boca pode vir do nariz, do brônquio, do alvéolo "
+          "ou do capilar pulmonar, e cada origem manda pedir um exame "
+          "diferente. Este paciente tem crostas hemáticas aderidas ao septo e "
+          "epistaxe quase diária: a hipótese mais banal da lista é também a "
+          "que a história sustenta melhor. A coluna do meio não diz o que ele "
+          "tem — diz o que **teria de ser verdade** para cada linha ser a "
+          "resposta."),
+        quadro(TORAX, {
+            "congestao": ("derrubada",
+                          "Sem estase jugular, terceira bulha ou edema; "
+                          "ausculta cardíaca normal"),
+        }, titulo="Levantado pelo grupo, ao fim do exame físico",
+           novos=["congestao"]),
         nota("Como conduzir",
-            p("Não mostre o quadro pronto. Peça as hipóteses à turma primeiro e "
-              "escreva no quadro branco; só então revele esta tela, e compare. "
-              "O que a turma esqueceu costuma ser mais instrutivo do que o que "
-              "ela lembrou — em geral esquecem a endocardite e a droga.")),
+            p("Não mostre a lista pronta. Peça as origens à turma primeiro — "
+              "nariz, brônquio, alvéolo — e escreva no quadro branco. Quem "
+              "responde “vasculite” está pulando um degrau: vasculite é "
+              "explicação, não topografia.")),
         densidade="xd",
-        ident="quadro_1",
+        ident="sind_torax",
     ),
-    N0,
-    # Cada rota da investigação corre inteira aqui, na ordem em que o grupo a
-    # pediu, e só depois desemboca no resultado imunológico. O ramo A não passa
-    # por nada disto: ele salta direto para os exames da admissão.
-    B_PAINEL, *P13, B_PAINEL_2,
-    B_IMAGEM, *P14, B_IMAGEM_2,
+    discussao("O que amarra oito semanas",
+        p("Febre vespertina, perda de 6 kg, artralgia migratória, púrpura "
+          "palpável e mononeurite múltipla, instalados em oito semanas. A "
+          "pergunta é se existe um mecanismo único ou se são coisas "
+          "independentes num paciente de 63 anos — e, se for único, de que "
+          "natureza."),
+        quadro(SISTEMICO,
+               titulo="Levantado pelo grupo, ao fim do exame físico"),
+        nota("Como conduzir",
+            p("Pergunte o que a turma esqueceu. Em geral esquecem a neoplasia "
+              "oculta e a droga — e a droga importa aqui porque ele usa "
+              "losartana, que não causa isto, e a pergunta certa é o que mais "
+              "ele toma, incluindo o que não foi prescrito.")),
+        densidade="xd",
+        ident="sind_sistemica",
+    ),
+    *P15,
     tela("O caso · bloco 3", "Exames da admissão",
         cols(
             [
@@ -268,11 +287,36 @@ SLIDES = [
                            "acima de 300", "critico"),
                     exame("Albumina", "2,9 g/dL",
                            "3,5 a 5,2", "alterado"),
+                    exame("Ultrassom renal",
+                           "Rins de 11,2 e 11,0 cm, sem hidronefrose",
+                           "sem dilatação"),
                 ]),
             ],
         ),
         ident="exames_admissao",
     ),
+    discussao("Topografia da lesão renal",
+        p("A creatinina era de 1,0 mg/dL há dois meses e está em 3,8 agora. "
+          "Isso diz que o rim parou e não diz em que compartimento — e as "
+          "condutas dos cinco compartimentos são incompatíveis entre si. Um "
+          "exame de bancada responde a pergunta; nenhum exame de sangue "
+          "responde."),
+        quadro(RIM,
+               titulo="A terceira pergunta em aberto, com o rim já dentro do caso"),
+        nota("Como conduzir",
+            p("Pergunte que exame decide entre as cinco linhas antes de "
+              "mostrar a próxima tela. Se a turma responder “biópsia”, "
+              "pergunte o que ela faria se a biópsia levasse três dias — que "
+              "é o que ela leva.")),
+        densidade="xd",
+        ident="sind_rim",
+    ),
+    N0,
+    # Cada rota da investigação corre inteira aqui, na ordem em que o grupo a
+    # pediu, e só depois desemboca no resultado imunológico. O ramo A não passa
+    # por nada disto: ele salta direto para os exames da admissão.
+    B_PAINEL, *P13, B_PAINEL_2,
+    B_IMAGEM, *P14, B_IMAGEM_2,
     tela("O caso · bloco 4", "Sedimento urinário",
         cols(
             [
@@ -348,51 +392,37 @@ SLIDES = [
         ),
         densidade="dense",
     ),
-    discussao("A primeira linha cai",
-        p("O sedimento não nomeou nenhuma doença. Ele fez outra coisa, que vem "
-          "antes: eliminou a possibilidade de que houvesse duas doenças "
-          "independentes, uma no pulmão e outra na bexiga. A partir daqui o "
-          "caso tem um mecanismo só, e é glomerular."),
-        quadro(HIPOTESES, {
-            "urologico": ("derrubada",
-                          "Hemácias dismórficas em 40% e cilindros hemáticos: "
-                          "o sangue atravessou o glomérulo"),
-            "lepto": ("derrubada",
-                      "Oito semanas de curso, sem exposição a enchente ou "
-                      "roedor: a forma pulmonar hemorrágica se instala em dias, "
-                      "não em meses"),
-        }, titulo="Depois do sedimento urinário",
-           novos=["urologico", "lepto"]),
+    discussao("Topografia da lesão renal",
+        p("O sedimento não nomeou nenhuma doença. Ele fez o que vem antes: "
+          "localizou a lesão dentro do néfron. Creatinina de 3,8 mg/dL diz que "
+          "o rim parou de funcionar e não diz em que compartimento — e as "
+          "condutas dos cinco compartimentos são incompatíveis entre si."),
+        quadro(RIM, {
+            "glomerular": ("confirmada",
+                           "Hemácias dismórficas em 40% e cilindros hemáticos, "
+                           "com proteinúria de 2,4 g em 24 horas"),
+            "pre_renal": ("derrubada",
+                          "Sedimento com cilindros: hipoperfusão dá sedimento "
+                          "limpo, e nenhum volume corrige um glomérulo"),
+            "nta": ("derrubada",
+                    "Cilindro hemático não se forma na necrose tubular; os "
+                    "granulosos aqui acompanham a lesão glomerular"),
+            "nia": ("derrubada",
+                    "Oito leucócitos por campo, sem cilindro leucocitário, "
+                    "sem eosinofilúria e sem droga nova"),
+            "obstrutiva": ("derrubada",
+                           "Rins de tamanho preservado, sem dilatação "
+                           "pielocalicial à ultrassonografia"),
+        }, titulo="Depois do sedimento urinário", passo_a_passo=False),
+        nota("Antes de avançar",
+            p("Vale dizer em voz alta o que este quadro NÃO fez: ele não "
+              "aproximou o caso de nenhum diagnóstico. Trocou uma pergunta "
+              "grande — “por que o rim parou?” — por uma menor e respondível, "
+              "que é “o que agride este glomérulo?”. É assim que se estreita.")),
         densidade="xd",
-        ident="quadro_2",
+        ident="rim_fechado",
     ),
     P4,
-    discussao("O complemento poda a lista",
-        p("Complemento normal não é resultado sem graça: é uma das bifurcações "
-          "mais baratas da investigação da glomerulonefrite. Ele separa as "
-          "causas que consomem complemento das que não consomem, e derruba "
-          "três linhas de uma vez."),
-        quadro(HIPOTESES, {
-            "urologico": ("derrubada", "Sedimento glomerular"),
-            "lepto": ("derrubada", "Curso de oito semanas, sem exposição"),
-            "lupus": ("derrubada",
-                      "C3 e C4 normais, FAN e anti-DNA não reagentes"),
-            "crio": ("derrubada",
-                     "C4 de 28 mg/dL: a crioglobulinemia consome C4 de forma "
-                     "desproporcional"),
-            "endocardite": ("enfraquecida",
-                            "Complemento normal ou baixo; hemoculturas em "
-                            "andamento, sem sopro novo"),
-        }, titulo="Depois do complemento e do painel de autoanticorpos",
-           novos=["lupus", "crio", "endocardite"]),
-        nota("Antes de avançar",
-            p("Pergunte quem sobrou e por quê. Três candidatos em pé, e nenhum "
-              "deles foi testado ainda — as sorologias específicas ainda não "
-              "voltaram. É este o momento de decidir se a imunossupressão "
-              "espera o resultado.")),
-        densidade="xd",
-        ident="quadro_3",
-    ),
     bloco("O caso · bloco 5", "Tomografia de tórax",
         cols(
             [
@@ -508,32 +538,138 @@ SLIDES = [
         densidade="dense",
         ident="lavado_achado",
     ),
-    discussao("O que sobra antes do resultado",
-        p("O lavado provou hemorragia alveolar e não cresceu nada. As três "
-          "linhas que sobram não podem ser separadas por mais nenhum exame "
-          "barato: daqui em diante, quem decide é a sorologia e a biópsia."),
-        quadro(HIPOTESES, {
-            "urologico": ("derrubada", "Sedimento glomerular"),
-            "lepto": ("derrubada", "Curso de oito semanas, sem exposição"),
-            "lupus": ("derrubada", "Complemento normal, FAN não reagente"),
-            "crio": ("derrubada", "C4 normal"),
-            "endocardite": ("enfraquecida",
-                            "Três pares de hemocultura negativos em cinco dias, "
-                            "ecocardiograma sem vegetação"),
-            "infeccao": ("enfraquecida",
-                         "Lavado sem bactéria, fungo, micobactéria ou "
-                         "Pneumocystis"),
-        }, titulo="Depois do lavado broncoalveolar",
-           novos=["endocardite", "infeccao"]),
-        nota("Antes de avançar",
-            p("Este é o momento de fazer a pergunta que o caso não fez até "
-              "aqui: começar a imunossupressão hoje, ou esperar o laudo? "
-              "Deixe a turma se dividir antes de virar a tela.")),
+    discussao("A primeira síndrome se fecha",
+        p("O lavado resolveu a pergunta com que o caso começou. O sangue não "
+          "vem do nariz nem de um brônquio: vem do alvéolo, difusamente, e há "
+          "pelo menos dois dias. E nada cresceu."),
+        quadro(TORAX, {
+            "hemorragia": ("confirmada",
+                           "Alíquotas progressivamente hemorrágicas e "
+                           "hemossiderófagos em 34% dos macrófagos"),
+            "via_aerea": ("derrubada",
+                          "Sem lesão endobrônquica, sem sangramento de sítio "
+                          "único e com o parênquima difusamente acometido"),
+            "pneumonia": ("derrubada",
+                          "Culturas do lavado e hemoculturas negativas, "
+                          "procalcitonina de 0,4 ng/mL"),
+            "tuberculose": ("derrubada",
+                            "Baciloscopia e teste molecular negativos no "
+                            "lavado"),
+            "neoplasia": ("derrubada",
+                          "Sem massa, nódulo ou lesão endobrônquica"),
+            "tep": ("derrubada",
+                    "Sem falha de enchimento e sem opacidade de base pleural"),
+            "congestao": ("derrubada",
+                          "Sem estase jugular, terceira bulha ou edema; "
+                          "ausculta cardíaca normal"),
+        }, titulo="Depois da tomografia e do lavado broncoalveolar",
+           novos=["hemorragia", "via_aerea", "pneumonia", "tuberculose",
+                  "neoplasia", "tep"]),
         densidade="xd",
-        ident="quadro_4",
+        ident="torax_fechado",
+    ),
+    discussao("O que o complemento separa",
+        p("Complemento normal não é resultado sem graça: é uma das "
+          "bifurcações mais baratas da investigação da glomerulonefrite. Ele "
+          "divide as causas em dois grupos que quase não se misturam — as que "
+          "consomem complemento e as que não consomem — e a divisão vale "
+          "independentemente de qual doença esteja por trás."),
+        cols(
+            [
+                h3("Consomem complemento"),
+                lista([
+                     "Lúpus eritematoso sistêmico, com C3 e C4 baixos.",
+                     "Crioglobulinemia mista, com C4 desproporcionalmente "
+                     "baixo em relação ao C3.",
+                     "Glomerulonefrite pós-infecciosa e endocardite, com C3 "
+                     "baixo e C4 preservado.",
+                     "Glomerulopatia por C3, com C3 baixo persistente.",
+                    ]),
+            ],
+            [
+                h3("Não consomem"),
+                lista([
+                     "Vasculites de pequeno vaso associadas ao ANCA.",
+                     "Doença anti-membrana basal glomerular.",
+                     "Vasculite por IgA e nefropatia por IgA.",
+                    ]),
+                box("O que este resultado faz, e o que não faz",
+                    p("C3 de 112 e C4 de 28 mg/dL, com FAN e anti-DNA não "
+                      "reagentes, empurram o caso inteiro para a coluna da "
+                      "direita. Nenhuma doença foi nomeada, e nenhuma foi "
+                      "testada: o que mudou foi a probabilidade a priori de "
+                      "dois grupos inteiros.")),
+            ],
+        ),
+        densidade="xd",
+        ident="complemento",
+    ),
+    discussao("A segunda síndrome se fecha",
+        p("Do lado sistêmico, o mesmo movimento. Nenhum foco, nenhum agente, "
+          "nenhum autoanticorpo de conectivopatia, nenhuma droga que explique. "
+          "Sobra o mecanismo que o exame físico já sugeria e que nenhum exame "
+          "ainda testou."),
+        quadro(SISTEMICO, {
+            "vasculite_sist": ("confirmada",
+                               "Capilar alveolar e capilar glomerular "
+                               "acometidos ao mesmo tempo, com pele e nervo "
+                               "periférico juntos"),
+            "infeccao_arrastada": ("derrubada",
+                                   "Lavado e hemoculturas estéreis, sem foco "
+                                   "à tomografia"),
+            "endocardite": ("derrubada",
+                            "Três pares de hemocultura negativos em cinco "
+                            "dias, ecocardiograma sem vegetação"),
+            "conectivopatia": ("derrubada",
+                               "FAN e anti-DNA não reagentes, complemento "
+                               "normal"),
+            "droga_sist": ("enfraquecida",
+                           "Losartana não tem esse perfil; a lista das que "
+                           "têm precisa ser perguntada de novo, e nominalmente"),
+        }, titulo="Depois do complemento, das culturas e do ecocardiograma",
+           novos=["vasculite_sist", "infeccao_arrastada", "endocardite",
+                  "conectivopatia", "droga_sist"]),
+        densidade="xd",
+        ident="sist_fechado",
+    ),
+    momento("Terceira parte",
+        "As duas síndromes se encontram",
+        "Hemorragia alveolar de um lado, glomerulonefrite rapidamente "
+        "progressiva do outro, no mesmo paciente e ao mesmo tempo. Só agora a "
+        "palavra pulmão-rim significa alguma coisa — e só agora a lista de "
+        "doenças cabe na tela.",
+        ident="p_encontro"),
+    discussao("O que faz as duas coisas ao mesmo tempo",
+        p("Esta lista é curta, e a turma consegue levantá-la em voz alta. Ela "
+          "não podia ter sido feita duas horas atrás: fazer o diferencial de "
+          "síndrome pulmão-rim antes de provar hemorragia alveolar e "
+          "glomerulonefrite é responder a uma pergunta que ainda não tinha "
+          "sido feita."),
+        quadro(HIPOTESES, {
+            "lepto": ("derrubada",
+                      "Oito semanas de curso, sem exposição a enchente ou "
+                      "roedor: a forma pulmonar hemorrágica se instala em "
+                      "dias, não em meses"),
+            "lupus": ("derrubada",
+                      "C3 e C4 normais, FAN e anti-DNA não reagentes"),
+            "crio": ("derrubada",
+                     "C4 de 28 mg/dL: a crioglobulinemia consome C4 de forma "
+                     "desproporcional"),
+            "endocardite": ("derrubada",
+                            "Hemoculturas negativas, ecocardiograma sem "
+                            "vegetação"),
+        }, titulo="O que o caminho até aqui já derrubou",
+           novos=["lepto", "lupus", "crio", "endocardite"]),
+        nota("Antes de avançar",
+            p("Quatro linhas de pé, e nenhuma delas foi testada — as "
+              "sorologias específicas ainda não voltaram. É este o momento de "
+              "decidir se a imunossupressão espera o resultado. Deixe a turma "
+              "se dividir antes de virar a tela.")),
+        densidade="xd",
+        ident="pulmao_rim",
     ),
     P10,
-    momento("Terceira parte",
+    momento("Quarta parte",
         "O resultado que estava pendente",
         "O painel imunológico voltou. Quanto tempo ele levou depende de "
         "quando foi pedido.",
@@ -587,20 +723,18 @@ SLIDES = [
         densidade="xd",
     ),
     P11,
-    discussao("Sobra uma",
+    discussao("Sobram duas",
         p("O p-ANCA em 1:640 com anti-MPO de 148 U/mL, o anti-MBG não reagente "
-          "e a lista de medicações limpa fecham a poda começada no exame "
-          "físico. O nome só aparece agora, e aparece como resultado do "
-          "percurso — não como ponto de partida."),
+          "e a lista de medicações limpa reduzem a lista a duas linhas — e o "
+          "painel imunológico não sabe separá-las, porque a vasculite por IgA "
+          "não tem sorologia. Quem decide é o tecido."),
         quadro(HIPOTESES, {
-            "urologico": ("derrubada", "Sedimento glomerular"),
             "lepto": ("derrubada", "Curso de oito semanas, sem exposição"),
             "lupus": ("derrubada", "Complemento normal, FAN não reagente"),
             "crio": ("derrubada", "C4 normal, crioglobulinas negativas"),
             "endocardite": ("derrubada",
                             "Hemoculturas negativas, ecocardiograma sem "
                             "vegetação"),
-            "infeccao": ("derrubada", "Lavado estéril"),
             "mbg": ("derrubada", "Anti-MBG não reagente"),
             "droga": ("derrubada",
                       "Em uso apenas de losartana e sinvastatina; nenhuma das "
@@ -610,6 +744,12 @@ SLIDES = [
                      "se é pauci-imune"),
         }, titulo="Depois do painel imunológico",
            novos=["mbg", "droga", "anca"]),
+        nota("Antes de avançar",
+            p("Pergunte por que a vasculite por IgA continua de pé. Púrpura "
+              "palpável, artralgia e glomerulonefrite com complemento normal "
+              "descrevem os dois candidatos igualmente bem, e não existe "
+              "exame de sangue que a confirme. A imunofluorescência da "
+              "biópsia é o único árbitro — e é a próxima tela.")),
         densidade="xd",
         ident="quadro_5",
     ),
@@ -799,8 +939,39 @@ SLIDES = [
         densidade="dense",
         ident="armadilhas_classificacao",
     ),
+    discussao("O fenótipo desta vasculite",
+        p("O funil chegou ao último nível, e ele não fecha inteiramente. "
+          "Vasculite associada ao ANCA está estabelecida; qual delas é uma "
+          "questão de fenótipo, e o fenótipo deste paciente tem uma peça "
+          "ambígua — crostas e anosmia são doença de via aérea superior, mas "
+          "não a doença destrutiva da granulomatose."),
+        quadro(DENTRO, {
+            "mpa": ("confirmada",
+                    "Anti-MPO em título alto, capilarite alveolar, "
+                    "glomerulonefrite pauci-imune, sem granuloma e sem lesão "
+                    "destrutiva de via aérea"),
+            "egpa": ("derrubada",
+                     "Sem asma e com 320 eosinófilos/mm³"),
+            "renal_limitada": ("derrubada",
+                               "Pulmão, pele e nervo periférico acometidos"),
+            "droga_anca": ("derrubada",
+                           "Nenhuma das quatro drogas implicadas em uso"),
+            "gpa": ("enfraquecida",
+                    "Sintomas nasais existem, mas sem perfuração, sela ou "
+                    "nódulo escavado; anti-PR3 não reagente"),
+        }, titulo="Depois da biópsia e da revisão do fenótipo",
+           passo_a_passo=False),
+        nota("Antes de avançar",
+            p("Diga à turma que a linha enfraquecida vai ficar enfraquecida. "
+              "O tratamento de indução das duas é o mesmo, e a distinção só "
+              "muda a conversa sobre risco de recidiva e duração da "
+              "manutenção. Nem todo caso termina com uma linha só — terminar "
+              "com duas e saber o que cada uma implicaria também é resposta.")),
+        densidade="xd",
+        ident="dentro_anca",
+    ),
     P7,
-    momento("Quarta parte",
+    momento("Quinta parte",
         "Tratamento",
         "O diagnóstico está fechado. A partir daqui as perguntas deixam de ser "
         "sobre o que o paciente tem e passam a ser sobre o que fazer com ele.",
@@ -910,7 +1081,7 @@ SLIDES = [
         densidade="dense",
         ident="plasmaferese_paciente",
     ),
-    momento("Quinta parte",
+    momento("Sexta parte",
         "A partir daqui, quem decide é você",
         "O caso deixa de correr em linha reta. A conduta escolhida e o tempo "
         "gasto levam este paciente por caminhos que não se reencontram. "

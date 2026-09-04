@@ -348,9 +348,9 @@ P9 = pergunta(
 
 P10 = pergunta(
     10,
-    "O lavado está estéril, o ANCA foi pedido e não voltou, e a creatinina "
-    "subiu de 3,4 para 3,8 em vinte e quatro horas. Começa a imunossupressão "
-    "hoje?",
+    "O lavado está estéril, as sorologias específicas não voltaram e a "
+    "creatinina segue subindo — está em <<creatinina>>, com <<horas>> de "
+    "internação. Começa a imunossupressão hoje?",
     [
         alt(
             "Não: sem sorologia e sem biópsia, tratar é tratar às cegas",
@@ -580,4 +580,59 @@ P14 = pergunta(
     ordem=[1, 2, 3, 0, 4],
     titulo_resposta="Exame de extensão não é exame de causa",
     ident="p_imagem",
+)
+
+
+# ─────────────── pergunta sindrômica ───────────────
+#
+# Vem antes de qualquer lista de doenças, e não menciona nenhuma. O que ela
+# cobra é o passo que costuma ser pulado: dizer de onde vem o sangue antes de
+# dizer por quê.
+
+P15 = pergunta(
+    15,
+    "Hemoptise de cerca de 50 mL em duas ocasiões, crepitações finas difusas, "
+    "saturação de 88% em ar ambiente e hemoglobina de 7,8 g/dL, que era 13,9 "
+    "g/dL há dois meses. Que achado desse conjunto mais restringe a origem do "
+    "sangramento?",
+    [
+        alt(
+            "A queda de 6,1 g/dL na hemoglobina, desproporcional ao volume "
+            "que foi expectorado",
+            "O paciente expectorou cerca de 100 mL, que não derrubam a "
+            "hemoglobina em 6 g/dL. O sangue que falta está retido em algum "
+            "compartimento, e no pulmão o compartimento que retém sangue sem "
+            "devolvê-lo pela boca é o alvéolo. É essa desproporção — e não a "
+            "hemoptise — que desloca a origem do brônquio para o espaço "
+            "aéreo distal.",
+            certa=True,
+        ),
+        alt(
+            "O volume expectorado, que classifica a hemoptise como não maciça",
+            "A classificação por volume decide a urgência da via aérea e a "
+            "necessidade de embolização; não diz de onde o sangue vem. "
+            "Hemoptise não maciça é compatível com todas as origens.",
+        ),
+        alt(
+            "As crepitações finas difusas nos dois hemitórax",
+            "Crepitação fina difusa acompanha ocupação alveolar de qualquer "
+            "natureza — sangue, água, pus ou fibrose. Localiza o processo no "
+            "parênquima e não distingue o que o preenche.",
+        ),
+        alt(
+            "A saturação de 88% em ar ambiente, com resposta ao cateter nasal",
+            "Mede a gravidade da troca gasosa e a fração de shunt. Um alvéolo "
+            "cheio de sangue e um alvéolo cheio de secreção purulenta "
+            "produzem a mesma dessaturação.",
+        ),
+        alt(
+            "A ausência de febre alta e de expectoração purulenta",
+            "Argumenta contra pneumonia bacteriana típica e não exclui "
+            "infecção — este paciente, aliás, tem 37,8 °C e PCR de 186 mg/L. "
+            "Afastar uma causa não localiza a origem do sangramento.",
+        ),
+    ],
+    ordem=[1, 2, 0, 3, 4],
+    titulo_resposta="A hemoglobina que sumiu diz onde o sangue ficou",
+    ident="p_origem",
 )

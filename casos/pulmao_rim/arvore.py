@@ -14,7 +14,7 @@ from motor.conteudo import box, nota, p
 from motor.desenhos import quadro
 from motor.slides import narrativa
 
-from .hipoteses import HIPOTESES
+from .hipoteses import RIM
 
 # ═══════════════════════ NÓ 1 — a primeira hora ═══════════════════════
 
@@ -178,11 +178,12 @@ B_CFX = narrativa("O caso · ramo A2", "Quinto dia, sob ciclofosfamida",
       "mais grave do que o esperado para o quinto dia."),
     p("Febre de 39,2 °C com calafrio e hipotensão que respondeu a volume. "
       "Procalcitonina de 5,8 ng/mL."),
-    box("A dose não ajustada aparece aqui",
-        p("Com filtração de 17 mL/min/1,73 m², a dose plena produziu "
-          "exposição muito acima da pretendida. A neutropenia de 210 "
-          "neutrófilos não é a esperada do quinto dia: é a da dose errada."),
-        tipo="alerta"),
+    nota("Antes de avançar",
+        p("A tela não diz por que a neutropenia é tão precoce — pergunte. Com "
+          "filtração de 17 mL/min/1,73 m², a dose plena produziu exposição "
+          "muito acima da pretendida, e 210 neutrófilos no quinto dia não são "
+          "os do esquema: são os da dose. A turma tem de chegar nisso antes "
+          "de escolher a conduta.")),
     ident="b_cfx", segue="n3b", densidade=None)
 
 B_RESGATE = narrativa("O caso · ramo B1", "Quinto dia, já em diálise",
@@ -204,11 +205,12 @@ B_SO_DIALISE = narrativa("O caso · ramo B2", "Quinto dia, intubado",
     p("A biópsia renal foi adiada pela instabilidade. No quinto dia, febre de "
       "38,8 °C com 700 neutrófilos, e infiltrado que piorou de forma "
       "assimétrica à direita."),
-    box("Duas doenças agora",
-        p("A vasculite continua ativa e há uma segunda pergunta em cima dela: "
-          "pneumonia associada à ventilação. As duas pedem condutas opostas, "
-          "e agora não há como decidir por exclusão."),
-        tipo="alerta"),
+    nota("Antes de avançar",
+        p("Deixe o infiltrado assimétrico no ar antes de comentar. Vasculite "
+          "em atividade e pneumonia associada à ventilação explicam o mesmo "
+          "quadro, pedem condutas opostas, e a assimetria é a única pista na "
+          "tela. Se ninguém a mencionar, a decisão seguinte vai ser tomada "
+          "sem ela.")),
     ident="b_so_dialise", segue="n3d", densidade=None)
 
 # ═══════════════════════ NÓ 3 — o quinto dia ═══════════════════════
@@ -479,9 +481,9 @@ N0 = no(
     "este caso mostra — e o que não.",
     [
         ramo("beira_do_leito",
-             "Sedimento urinário em urina fresca, gasometria e hemograma, "
-             "agora; sorologias e imagem na sequência",
-             vai_para="exames_admissao",
+             "Sedimento urinário em urina fresca agora, com as sorologias "
+             "no mesmo pedido; imagem na sequência",
+             vai_para="sedimento_urinario",
              rotulo="o que fica pronto em minutos",
              efeito_=efeito(horas=+1),
              porque="O sedimento separa sangramento glomerular de urológico "
@@ -518,17 +520,14 @@ B_PAINEL = narrativa("O caso · ramo do painel", "Trinta e quatro horas depois",
       "pendentes."),
     p("Nesse intervalo a creatinina subiu de 3,8 para 5,2 mg/dL e a saturação "
       "caiu para 85%. Ninguém olhou a urina."),
-    box("O que não foi pedido",
-        p("O sedimento urinário custava quase nada e ficava pronto em minutos, "
-          "e era o único exame do pedido que separava sangramento glomerular "
-          "de urológico. Sem ele, a primeira linha da lista continua em pé — e "
-          "as trinta e quatro horas foram gastas confirmando o que a "
-          "radiografia e a ausculta já diziam."),
-        tipo="alerta"),
+    # A caixa que ficava aqui dizia à turma o que ela tinha deixado de pedir.
+    # Entregar a leitura na tela é o oposto de fazê-la: a tela narra o que
+    # aconteceu, e quem conduz decide se e quando aponta.
     nota("Antes de avançar",
-        p("Pergunte à turma qual exame do pedido mudou alguma conduta. "
-          "Nenhum mudou. Pedir tudo de uma vez parece cauteloso e é o oposto: "
-          "adia a decisão pelo tempo do exame mais lento.")),
+        p("Pergunte qual dos exames pedidos mudou alguma conduta, e espere. "
+          "Depois pergunte o que ficou de fora. Pedir tudo de uma vez parece "
+          "cauteloso e é o oposto: adia a decisão pelo tempo do exame mais "
+          "lento do pedido.")),
     ident="b_painel")
 
 B_IMAGEM = narrativa("O caso · ramo da imagem", "Nove horas depois",
@@ -539,17 +538,11 @@ B_IMAGEM = narrativa("O caso · ramo da imagem", "Nove horas depois",
       "evolução."),
     p("A creatinina subiu para 4,2 mg/dL. O contraste da tomografia não ajudou "
       "nisso."),
-    box("Confirmou o que já se sabia",
-        p("Hemoptise de 50 mL com crepitações difusas e anemia já dizia "
-          "hemorragia alveolar. A imagem tornou o achado inequívoco e não "
-          "distinguiu nenhuma das oito linhas da lista entre si — todas cursam "
-          "com vidro fosco difuso."),
-        tipo="erro"),
     nota("Antes de avançar",
-        p("O rim sangra calado e o pulmão sangra visível. É por isso que a "
-          "hemoptise puxa a investigação para o tórax, e é por isso que a "
-          "urina é o exame esquecido. Pergunte quem, na sala, teria pedido "
-          "primeiro o sedimento.")),
+        p("Peça à turma que releia a lista do tórax com estes dois exames na "
+          "mão e diga quantas linhas caíram. O rim sangra calado e o pulmão "
+          "sangra visível: é por isso que a hemoptise puxa a investigação para "
+          "o tórax, e é por isso que a urina é o exame esquecido.")),
     ident="b_imagem")
 
 
@@ -572,13 +565,17 @@ B_PAINEL_2 = custa(narrativa("O caso · ramo do painel", "A lista, podada de uma
       "pé: a cultura do lavado ainda não voltou. A creatinina está em "
       "<<creatinina>> e o paciente completou <<horas>> de internação sem uma "
       "única droga dirigida à doença."),
-    quadro(HIPOTESES, {
-        "urologico": ("derrubada", "Cilindros hemáticos: o sangue vem do glomérulo"),
-        "lepto": ("derrubada", "Curso de oito semanas, sem exposição"),
-        "lupus": ("derrubada", "Complemento normal, FAN e anti-DNA não reagentes"),
-        "crio": ("derrubada", "C4 normal e crioglobulinas negativas em tubo aquecido"),
-        "endocardite": ("derrubada", "Hemoculturas estéreis, sem sopro novo"),
-    }, titulo="Cinco linhas caem no mesmo instante", passo_a_passo=False),
+    quadro(RIM, {
+        "glomerular": ("confirmada",
+                       "Hemácias dismórficas em 62% e cilindros hemáticos"),
+        "pre_renal": ("derrubada", "Sedimento com cilindros, e nenhum volume "
+                                   "corrige um glomérulo"),
+        "nta": ("derrubada", "Cilindro hemático não se forma na necrose tubular"),
+        "nia": ("derrubada", "Sem cilindro leucocitário e sem droga nova"),
+        "obstrutiva": ("derrubada", "Sem dilatação pielocalicial à "
+                                    "ultrassonografia"),
+    }, titulo="A pergunta renal, respondida com trinta e seis horas de atraso",
+       passo_a_passo=False),
     # O comentário é sobre o método do próprio grupo, não sobre o paciente:
     # é fala de quem conduz, não linha de slide. Vai para a nota, que a tela
     # não mostra e o PDF imprime.
@@ -601,12 +598,15 @@ B_IMAGEM_2 = custa(narrativa("O caso · ramo da imagem", "Voltando à urina, com
       "ANCA e o anti-membrana basal glomerular só foram solicitados agora, e "
       "é por eles que o caso passa a esperar, com <<creatinina>> e <<horas>> "
       "de relógio."),
-    quadro(HIPOTESES, {
-        "urologico": ("derrubada", "Cilindros hemáticos: o sangue vem do glomérulo"),
-        "lepto": ("derrubada", "Curso de oito semanas, sem exposição"),
-        "lupus": ("derrubada", "Complemento normal, FAN e anti-DNA não reagentes"),
-        "crio": ("derrubada", "C4 normal e crioglobulinas negativas em tubo aquecido"),
-        "endocardite": ("derrubada", "Hemoculturas estéreis, sem sopro novo"),
+    quadro(RIM, {
+        "glomerular": ("confirmada",
+                       "Hemácias dismórficas em 62% e cilindros hemáticos"),
+        "pre_renal": ("derrubada", "Sedimento com cilindros, e nenhum volume "
+                                   "corrige um glomérulo"),
+        "nta": ("derrubada", "Cilindro hemático não se forma na necrose tubular"),
+        "nia": ("derrubada", "Sem cilindro leucocitário e sem droga nova"),
+        "obstrutiva": ("derrubada", "Sem dilatação pielocalicial à "
+                                    "ultrassonografia"),
     }, titulo="O que a urina fez em quatro minutos", passo_a_passo=False),
     p("A tomografia e o lavado que abriram esta rota são os que seguem."),
     nota("Antes de avançar",
