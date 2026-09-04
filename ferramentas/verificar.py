@@ -238,6 +238,75 @@ def v_gabarito(h, r):
              f"correta mais longa em {mais_longa}")
 
 
+def v_contas(h, r):
+    """Confere a aritmética dos números que o caso publica.
+
+    O caso trazia pH 7,30 com bicarbonato 17 e pCO2 32, que Henderson-Hasselbalch
+    devolve como 7,35; PaO2/FiO2 de 186 com PaO2 56 em ar ambiente, que dá 267;
+    e TFG de 16 para creatinina 3,8 aos 63 anos, que por CKD-EPI 2021 dá 17.
+    Nenhum deles seria pego olhando: só fazendo a conta.
+
+    Lê o banco de exames, não os slides: é ele que tem a gasometria completa, e
+    `v_banco` já garante que os dois concordam.
+    """
+    import math
+
+    banco = json.loads(re.search(r'id="banco"[^>]*>(.*?)</script>', h, re.S).group(1))
+    porname = {e["n"].lower(): _texto(e["r"]) for e in banco}
+
+    def val(nome, pad=r"(\d+(?:,\d+)?)"):
+        t = porname.get(nome.lower())
+        if not t:
+            return None
+        m = re.search(pad, t)
+        return float(m.group(1).replace(",", ".")) if m else None
+
+    erros, feitas, faltando = [], [], []
+
+    ph, hco3, pco2 = val("pH arterial"), val("Bicarbonato"), val("pCO2")
+    if None in (ph, hco3, pco2):
+        faltando.append("gasometria")
+    else:
+        calc = 6.1 + math.log10(hco3 / (0.03 * pco2))
+        feitas.append(f"pH {calc:.2f}")
+        if abs(calc - ph) > 0.025:
+            erros.append(f"gasometria: HCO3 {hco3:.0f} com pCO2 {pco2:.0f} dá pH "
+                         f"{calc:.2f}, o banco diz {ph:.2f}")
+        alvo = 1.5 * hco3 + 8
+        if not (alvo - 2.5 <= pco2 <= alvo + 2.5):
+            erros.append(f"compensação: para HCO3 {hco3:.0f}, Winters prevê pCO2 de "
+                         f"{alvo - 2:.0f} a {alvo + 2:.0f}; o banco diz {pco2:.0f}")
+
+    pao2, pf = val("pO2"), val("Relação PaO2/FiO2")
+    if None in (pao2, pf):
+        faltando.append("relação P/F")
+    else:
+        calc = pao2 / 0.21
+        feitas.append(f"P/F {calc:.0f}")
+        if abs(calc - pf) > 6:
+            erros.append(f"relação P/F: PaO2 {pao2:.0f} em ar ambiente dá {calc:.0f}, "
+                         f"o banco diz {pf:.0f}")
+
+    cr = val("Creatinina", r"Admissão (\d+(?:,\d+)?)")
+    tfg = val("Taxa de filtração glomerular estimada")
+    m = re.search(r"[Hh]omem de (\d\d) anos", _texto(" ".join(slides(h))))
+    idade = float(m.group(1)) if m else None
+    if None in (cr, tfg, idade):
+        faltando.append("filtração glomerular")
+    else:
+        # CKD-EPI 2021, homem, sem coeficiente de raça
+        calc = (142 * (min(cr / 0.9, 1) ** -0.302) * (max(cr / 0.9, 1) ** -1.200)
+                * (0.9938 ** idade))
+        feitas.append(f"TFG {calc:.0f}")
+        if abs(calc - tfg) > 1.5:
+            erros.append(f"CKD-EPI 2021: creatinina {cr} aos {idade:.0f} anos dá "
+                         f"{calc:.0f} mL/min/1,73 m², o banco diz {tfg:.0f}")
+
+    if faltando:
+        erros.append("não consegui aferir: " + ", ".join(faltando))
+    r.add("as contas fecham", not erros, " · ".join(erros) or " · ".join(feitas))
+
+
 def v_arvore(h, r):
     """Todo destino aponta para um bloco que existe; todo bloco é alcançável."""
     ids = set(re.findall(r'<section class="[^"]*" id="s-([^"]+)"', h))
@@ -415,6 +484,7 @@ def main(caminho=None):
     v_banco(h, r)
     v_sem_spoiler(h, r)
     v_gabarito(h, r)
+    v_contas(h, r)
     v_arvore(h, r)
     v_creditos(h, r)
     v_creditos_batem(h, r)

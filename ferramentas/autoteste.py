@@ -79,6 +79,13 @@ CASOS = [
                          h),
     ),
     (
+        "as contas fecham",
+        V.v_contas,
+        # devolve o bicarbonato ao valor que tornava o trio impossível:
+        # com HCO3 17 e pCO2 32, Henderson-Hasselbalch dá 7,35, não 7,29
+        lambda h: h.replace("15 mEq/L", "17 mEq/L"),
+    ),
+    (
         "créditos batem com as figuras",
         V.v_creditos_batem,
         lambda h: _quebra(h, "<li>Imunofluorescência p-ANCA: Simon Caulton",
