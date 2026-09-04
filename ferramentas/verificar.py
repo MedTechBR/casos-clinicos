@@ -181,6 +181,63 @@ def _norm(t):
     return re.sub(r"[^a-z0-9 ]+", " ", t)
 
 
+def v_gabarito(h, r):
+    """Higiene do banco de itens: o formato não pode entregar a resposta.
+
+    Três assinaturas de banco gerado automaticamente, todas mensuráveis:
+    a letra correta se concentra em duas ou três posições; a correta é a
+    alternativa mais longa muito acima do acaso; e o mesmo par se repete nas
+    perguntas de dupla resposta. Aluno que percebe qualquer uma delas passa a
+    marcar pelo formato, e o banco deixa de medir raciocínio.
+    """
+    import statistics
+    from collections import Counter
+
+    letras, mais_longa, pares, detalhe = [], 0, [], []
+    total = 0
+    for s in slides(h):
+        if 'class="slide ans' not in s:
+            continue
+        alts = [(m.group(1), m.group(2), _texto(m.group(3))) for m in re.finditer(
+            r'<li class="(ok|no)"><span class="k">([A-E])</span>.*?'
+            r'<div class="tt">(.*?)</div>', s, re.S)]
+        if not alts:
+            continue
+        total += 1
+        certas = [a for a in alts if a[0] == "ok"]
+        erradas = [a for a in alts if a[0] == "no"]
+        letras += [a[1] for a in certas]
+        if len(certas) == 2:
+            pares.append(tuple(sorted(a[1] for a in certas)))
+        mc = statistics.mean(len(a[2]) for a in certas)
+        me = statistics.mean(len(a[2]) for a in erradas)
+        if mc > me * 1.25:
+            mais_longa += 1
+            detalhe.append(f"P{total}: correta {mc:.0f} car x distratores {me:.0f}")
+
+    if not total:
+        r.add("higiene do gabarito", True, "sem perguntas")
+        return
+
+    c = Counter(letras)
+    faltando = [x for x in "ABCDE" if x not in c]
+    erros = []
+    if len(faltando) > 1:
+        erros.append(f"letras que nunca são corretas: {', '.join(faltando)}")
+    if c and max(c.values()) > max(2, len(letras) * 0.45):
+        erros.append(f"letra concentrada: {dict(sorted(c.items()))}")
+    # acaso, para 5 alternativas com 1 correta, é ~28% das perguntas
+    if mais_longa > max(2, total * 0.45):
+        erros.append(f"correta é a mais longa em {mais_longa} de {total} "
+                     f"(acaso ~{total * 0.28:.0f}) — {'; '.join(detalhe[:3])}")
+    if len(pares) > 1 and len(set(pares)) == 1:
+        erros.append(f"todas as perguntas de dupla resposta usam o par "
+                     f"{pares[0][0]} e {pares[0][1]}")
+    r.add("higiene do gabarito", not erros, " · ".join(erros)
+          or f"{total} perguntas · letras {dict(sorted(c.items()))} · "
+             f"correta mais longa em {mais_longa}")
+
+
 def v_arvore(h, r):
     """Todo destino aponta para um bloco que existe; todo bloco é alcançável."""
     ids = set(re.findall(r'<section class="[^"]*" id="s-([^"]+)"', h))
@@ -357,6 +414,7 @@ def main(caminho=None):
     v_markdown(h, r)
     v_banco(h, r)
     v_sem_spoiler(h, r)
+    v_gabarito(h, r)
     v_arvore(h, r)
     v_creditos(h, r)
     v_creditos_batem(h, r)

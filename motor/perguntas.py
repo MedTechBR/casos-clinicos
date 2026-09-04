@@ -41,11 +41,24 @@ def pergunta(
     titulo_resposta: str = "",
     duas_colunas: bool = False,
     ident: str = None,
+    ordem=None,
 ) -> list:
     """Devolve o par [slide de pergunta, slide de resposta].
 
     `escolhas` é quantas o grupo pode marcar; por omissão, o número de corretas.
+
+    `ordem` permuta as alternativas na exibição. O autor as escreve na ordem
+    lógica em que pensou; a ordem na tela é outra decisão, e existe para que a
+    letra correta não se concentre. Banco em que A e E nunca são corretas é
+    assinatura de geração automática: numa sala de vinte internos alguém diz
+    isso em voz alta antes da quinta pergunta e a turma passa a marcar pelo
+    formato. `ferramentas/verificar.py::v_gabarito` mede a distribuição.
     """
+    if ordem is not None:
+        if sorted(ordem) != list(range(len(alternativas))):
+            raise ValueError(f"pergunta {n}: ordem inválida {ordem} para "
+                             f"{len(alternativas)} alternativas")
+        alternativas = [alternativas[k] for k in ordem]
     if not 4 <= len(alternativas) <= 5:
         raise ValueError(f"pergunta {n}: use 4 ou 5 alternativas, não {len(alternativas)}")
     certas = [a for a in alternativas if a["certa"]]

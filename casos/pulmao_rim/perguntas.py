@@ -17,7 +17,7 @@ P1 = pergunta(
     "Que estrutura anatômica é compartilhada pelos territórios acometidos?",
     [
         alt(
-            "A drenagem linfática regional",
+            "A drenagem linfática regional que os conecta",
             "Pulmão e rim drenam para cadeias linfáticas distintas, e a "
             "pele e o nervo periférico não compartilham nenhuma delas.",
         ),
@@ -28,12 +28,12 @@ P1 = pergunta(
             "glomerulonefrite nem capilarite alveolar.",
         ),
         alt(
-            "A mesma origem embriológica",
+            "A mesma origem embriológica dos epitélios",
             "Pulmão e rim têm origens embriológicas diferentes. A "
             "coincidência aqui é funcional, não embriológica.",
         ),
         alt(
-            "Vasos de pequeno calibre: capilar, arteríola e vênula",
+            "Os vasos de pequeno calibre",
             "O capilar glomerular e o capilar alveolar têm a mesma "
             "arquitetura básica: parede finíssima apoiada em membrana "
             "basal, submetida a pressão. Uma agressão a esse "
@@ -41,11 +41,12 @@ P1 = pergunta(
             "também na pele e no vasa nervorum.", certa=True,
         ),
         alt(
-            "A inervação autonômica comum",
+            "A inervação autonômica que compartilham",
             "A inervação não explica lesão tecidual simultânea em quatro "
             "territórios.",
         ),
     ],
+    ordem=[0, 1, 2, 4, 3],
 )
 
 P2 = pergunta(
@@ -54,14 +55,13 @@ P2 = pergunta(
     "a sua conduta ainda nesta hora?",
     [
         alt(
-            "Espirometria com difusão de monóxido de carbono",
+            "Espirometria com medida da difusão de monóxido de carbono",
             "A difusão aumenta na hemorragia alveolar e é um dado elegante. Um "
             "paciente com saturação de 88% e dispneia em repouso não consegue "
             "executar a manobra, e o resultado não chegaria nesta hora.",
         ),
         alt(
-            "Sedimento urinário em urina fresca, com pesquisa de dismorfismo "
-            "eritrocitário e de cilindros",
+            "Sedimento urinário com pesquisa de dismorfismo e de cilindros",
             "É o único exame desta lista que fica pronto em minutos, custa "
             "quase nada e responde à pergunta que separa dois mundos: o "
             "sangramento vem do glomérulo ou do trato urinário? Depende de "
@@ -69,24 +69,25 @@ P2 = pergunta(
             certa=True,
         ),
         alt(
-            "Angiotomografia de tórax para tromboembolismo pulmonar",
+            "Angiotomografia de tórax em busca de tromboembolismo pulmonar",
             "A hemoptise levanta a suspeita, mas o quadro tem oito semanas, "
             "cursa com anemia e o infiltrado é difuso e bilateral. Não é "
             "apresentação embólica, e o contraste custa caro num rim que já "
             "está caindo.",
         ),
         alt(
-            "Painel sorológico completo de doenças autoimunes",
+            "Painel sorológico completo para doenças autoimunes",
             "As sorologias serão pedidas, e algumas delas decidirão o "
             "tratamento — mas nenhuma volta nesta hora. Pedir tudo de uma vez "
             "não é a mesma coisa que saber o que fazer enquanto se espera.",
         ),
         alt(
-            "Ecocardiograma transtorácico",
+            "Ecocardiograma transtorácico com janela para vegetação",
             "Faz falta mais adiante, quando for preciso julgar uma das "
             "hipóteses da lista. Não muda nada nos próximos sessenta minutos.",
         ),
     ],
+    ordem=[1, 0, 2, 3, 4],
 )
 
 P3 = pergunta(
@@ -118,6 +119,7 @@ P3 = pergunta(
             "molecular, não pelo cilindro.",
         ),
     ],
+    ordem=[0, 1, 3, 2],
 )
 
 P4 = pergunta(
@@ -150,6 +152,7 @@ P4 = pergunta(
             "marcante.", certa=True,
         ),
     ],
+    ordem=[0, 3, 1, 2],
 )
 
 P5 = pergunta(
@@ -183,6 +186,7 @@ P5 = pergunta(
             "inflamação de qualquer causa.",
         ),
     ],
+    ordem=[0, 2, 1, 4, 3],
 )
 
 P6 = pergunta(
@@ -191,19 +195,18 @@ P6 = pergunta(
     "imunofluorescência acrescenta?",
     [
         alt(
-            "Quantifica a fibrose intersticial e a cronicidade",
+            "Quantifica a fibrose intersticial e o grau de cronicidade",
             "Isso se avalia na microscopia óptica, com colorações para "
             "tecido conjuntivo.",
         ),
         alt(
-            "Define a classe histológica de Berden",
+            "Define a classe histológica de Berden pelo padrão glomerular",
             "A classificação de Berden é morfológica, e se estabelece "
             "contando glomérulos normais, com crescentes e escleróticos "
             "na microscopia óptica.",
         ),
         alt(
-            "Separa a doença pauci-imune da anti-membrana basal e das "
-            "mediadas por imunocomplexos",
+            "Separa os três mecanismos possíveis de lesão glomerular",
             "As três produzem crescentes idênticos na óptica. A "
             "imunofluorescência mostra ausência de depósitos na "
             "pauci-imune, depósito linear ao longo da membrana basal na "
@@ -211,11 +214,12 @@ P6 = pergunta(
             "imunocomplexos.", certa=True,
         ),
         alt(
-            "Estima a probabilidade de recuperação da função renal",
+            "Estima a probabilidade de recuperar a função renal com tratamento",
             "Quem estima isso é a proporção entre lesão ativa e lesão "
             "crônica, também na microscopia óptica.",
         ),
     ],
+    ordem=[2, 0, 1, 3],
 )
 
 P7 = pergunta(
@@ -251,6 +255,7 @@ P7 = pergunta(
             "produção.",
         ),
     ],
+    ordem=[0, 1, 2, 3, 4],
 )
 
 P8 = pergunta(
@@ -282,6 +287,7 @@ P8 = pergunta(
             "indicação não é clara.",
         ),
     ],
+    ordem=[0, 2, 1, 3],
 )
 
 P9 = pergunta(
@@ -314,4 +320,5 @@ P9 = pergunta(
             "colhidas antes, mas a primeira dose não espera o resultado.", certa=True,
         ),
     ],
+    ordem=[0, 1, 2, 3],
 )

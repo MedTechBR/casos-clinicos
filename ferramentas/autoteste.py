@@ -71,6 +71,14 @@ CASOS = [
                                      "<p>O sangramento é glomerular.</p>"),
     ),
     (
+        "higiene do gabarito",
+        V.v_gabarito,
+        # devolve todos os gabaritos para a letra D, como no banco original
+        lambda h: re.sub(r'<li class="(ok|no)"><span class="k">[A-E]</span>',
+                         lambda m: f'<li class="{m.group(1)}"><span class="k">D</span>',
+                         h),
+    ),
+    (
         "créditos batem com as figuras",
         V.v_creditos_batem,
         lambda h: _quebra(h, "<li>Imunofluorescência p-ANCA: Simon Caulton",
