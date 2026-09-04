@@ -260,35 +260,43 @@ P7 = pergunta(
 
 P8 = pergunta(
     8,
-    "Em qual situação a plasmaférese permanece claramente indicada?",
+    "Anti-MBG não reagente, creatinina de 3,8 mg/dL e hemorragia alveolar com "
+    "saturação de 88%. Qual dessas situações **impõe** plasmaférese, e não "
+    "apenas a considerar?",
     [
         alt(
-            "Todo paciente com glomerulonefrite crescêntica",
-            "Indicação indiscriminada foi justamente o que o PEXIVAS "
-            "derrubou.",
+            "Toda glomerulonefrite crescêntica, pela gravidade da lesão",
+            "Indicação indiscriminada foi justamente o que o PEXIVAS derrubou: "
+            "704 pacientes, sem redução do desfecho composto de morte ou "
+            "doença renal terminal (28,4% contra 31,0%).",
         ),
         alt(
-            "Doença anti-membrana basal glomerular concomitante",
-            "Na doença anti-MBG a plasmaférese segue indicada de forma "
-            "inequívoca, e a dupla positividade com ANCA ocorre em "
-            "parcela não desprezível dos pacientes. É o motivo de o "
-            "anti-MBG ser pedido junto com o ANCA.", certa=True,
+            "Creatinina acima de 3,4 mg/dL, como a deste paciente",
+            "É gatilho para **considerar**, e o limiar não desapareceu: ele "
+            "baixou. O KDIGO de 2021 falava em 5,7 mg/dL; o de 2024 desceu "
+            "para 3,4. Este paciente preenche — mas preencher um gatilho de "
+            "'considerar' não é o mesmo que ter indicação imposta.",
         ),
         alt(
-            "Creatinina acima de 3 mg/dL",
-            "Era a prática antes de 2020. O PEXIVAS, com mais de "
-            "setecentos pacientes, não encontrou redução de morte ou de "
-            "doença renal terminal com o uso guiado por creatinina.",
+            "Hemorragia alveolar difusa com hipoxemia",
+            "Também é gatilho para considerar, e é onde as sociedades "
+            "divergem de verdade: o KDIGO 2024 manda considerar, o ACR/VF "
+            "2021 recomenda condicionalmente contra o acréscimo de rotina. "
+            "Divergência não é desatualização de um dos lados.",
         ),
         alt(
-            "Hemorragia alveolar com hipoxemia",
-            "Continua sendo considerada caso a caso, e muitos serviços a "
-            "indicam. Mas o benefício não foi demonstrado, e por isso a "
-            "indicação não é clara.",
+            "Sobreposição com doença anti-membrana basal glomerular",
+            "É a única das quatro em que a diretriz diz **acrescentar**, e não "
+            "considerar. Neste paciente o anti-MBG veio não reagente, de modo "
+            "que ela não se aplica — e é por isso que o anti-MBG é pedido "
+            "junto com o ANCA, e não depois dele.",
+            certa=True,
         ),
     ],
-    ordem=[0, 2, 1, 3],
+    titulo_resposta="Considerar não é o mesmo que acrescentar",
+    ordem=[1, 3, 0, 2],
 )
+
 
 P9 = pergunta(
     9,

@@ -767,26 +767,70 @@ SLIDES = [
         densidade="dense",
     ),
     P8,
-    discussao("Plasmaférese na vasculite ANCA",
-        p("Durante décadas, creatinina elevada ou hemorragia alveolar "
-          "indicavam plasmaférese quase automaticamente. O PEXIVAS, com 704 "
-          "pacientes, não encontrou redução de morte ou de doença renal "
-          "terminal com o uso amplo, e a conduta foi reorganizada."),
-        tabela(["Situação", "Onde a conduta está hoje"], [
-            ["Creatinina elevada, isoladamente", "Deixou de ser indicação automática"],
-            ["Hemorragia alveolar com hipoxemia", "Ainda considerada caso a caso. O benefício não foi "
-                    "demonstrado, e a decisão é individual"],
-            ["Doença anti-membrana basal glomerular concomitante", "Indicação inequívoca. A dupla positividade com ANCA "
-                    "ocorre em parcela não desprezível dos pacientes"],
-            ["Doença refratária à indução", "Considerada como terapia de resgate"],
-            ["Escolha do fluido de reposição", "Plasma fresco congelado se houver sangramento ativo ou "
-                    "biópsia recente; albumina nas demais situações"],
-        ], tamanho="sm"),
-        box("O que a plasmaférese faz",
-            p("Ela retira o anticorpo circulante. Não interrompe a produção. "
-              "Sem imunossupressão concomitante, o título retorna em poucos "
-              "dias.")),
+    discussao("O que o PEXIVAS derrubou, e o que não",
+        p("O PEXIVAS randomizou 704 pacientes com filtração abaixo de 50 "
+          "mL/min/1,73 m² ou hemorragia pulmonar difusa e não encontrou "
+          "benefício no desfecho composto de morte ou doença renal terminal: "
+          "28,4% contra 31,0%. O que ele derrubou foi a indicação ampla e "
+          "automática. O que ele **não** mostrou é que a plasmaférese não "
+          "serve para ninguém — o desfecho era composto e dominado pela "
+          "mortalidade."),
+        p("A meta-análise posterior separou os componentes, e é aí que a "
+          "decisão muda de natureza: sem efeito sobre mortalidade, com "
+          "**redução** de doença renal terminal em doze meses e com "
+          "**aumento** de infecção grave. Deixou de ser uma pergunta sobre "
+          "sobrevida e virou uma troca explícita entre rim e infecção."),
+        box("Onde as três sociedades concordam, e onde não",
+            tabela(["", "Creatinina alta", "Hemorragia alveolar com hipoxemia",
+                    "Sobreposição anti-MBG"], [
+                ["KDIGO 2024", "Considerar acima de 3,4 mg/dL",
+                 "Considerar", "**Acrescentar**"],
+                ["EULAR 2022", "Considerar acima de 3,4 mg/dL",
+                 "Não de rotina", "Acrescentar"],
+                ["ACR/VF 2021", "Condicionalmente contra o acréscimo de rotina",
+                 "Condicionalmente contra", "Aconselhável"],
+            ], tamanho="sm")),
+        box("O limiar de creatinina não sumiu: baixou",
+            p("O KDIGO de 2021 falava em 5,7 mg/dL. O de 2024 desceu para 3,4, "
+              "justificando com redução absoluta de doença renal terminal em "
+              "doze meses de 4,6% na faixa entre 3,4 e 5,7 — cerca de vinte e "
+              "dois pacientes tratados para evitar um rim terminal. Este "
+              "paciente, com 3,8, preenche o gatilho."),
+            tipo="pausa"),
         densidade="dense",
+        ident="plasmaferese",
+    ),
+    discussao("A conduta neste paciente",
+        cols(
+            [
+                p("Anti-MBG não reagente: não há a sobreposição que **impõe** "
+                  "plasmaférese. Creatinina de 3,8 mg/dL e hemorragia alveolar "
+                  "com saturação de 88%: dois dos três gatilhos que mandam "
+                  "**considerar**."),
+                p("Foram feitas três sessões, com albumina como reposição, em "
+                  "dias alternados, junto da indução — e não no lugar dela. A "
+                  "plasmaférese retira o anticorpo circulante e não interrompe "
+                  "a produção: sem imunossupressão concomitante o título volta "
+                  "em poucos dias."),
+            ],
+            [
+                box("O que dizer à turma",
+                    p("Um residente que aprende “o PEXIVAS acabou com a "
+                      "plasmaférese” aprendeu errado. O certo é: o PEXIVAS "
+                      "acabou com a plasmaférese indiscriminada e mostrou que "
+                      "ela não salva vidas. O ganho é renal, o custo é "
+                      "infeccioso, e o cálculo é feito paciente a paciente."),
+                    tipo="regra"),
+                nota("Antes de avançar",
+                    p("Pergunte quem indicaria, e peça o motivo antes do voto. "
+                      "A divergência entre nefrologia e reumatologia na "
+                      "hemorragia alveolar é real e recente — quem responder "
+                      "“depende do serviço” está mais certo do que quem "
+                      "responder sim ou não.")),
+            ],
+        ),
+        densidade="dense",
+        ident="plasmaferese_paciente",
     ),
     momento("Quinta parte",
         "A complicação",
@@ -798,8 +842,8 @@ SLIDES = [
                 p("O paciente recebeu pulso de metilprednisolona por três "
                   "dias, primeira dose de ciclofosfamida com ajuste para a "
                   "função renal, sulfametoxazol-trimetoprima profilático e "
-                  "três sessões de plasmaférese com reposição de plasma "
-                  "fresco congelado. Ao terceiro dia a hemoptise havia "
+                  "três sessões de plasmaférese. Ao terceiro dia a "
+                  "hemoptise havia "
                   "cessado e a saturação subira para 94% com cateter nasal."),
                 passo(p("Na manhã do quinto dia surgiu febre de 38,9 °C com "
                         "calafrio. Tornou-se taquipneico e passou a "
@@ -928,9 +972,11 @@ SLIDES = [
                      "hemossiderófagos acima de 20%.",
                      "As culturas negativas do lavado são o que autoriza a "
                      "imunossupressão.",
-                     "Creatinina elevada isoladamente deixou de indicar "
-                     "plasmaférese. A doença anti-MBG concomitante continua "
-                     "indicando.",
+                     "Plasmaférese: a sobreposição anti-MBG é a única "
+                     "situação em que a diretriz manda acrescentar. "
+                     "Creatinina acima de 3,4 mg/dL e hemorragia alveolar com "
+                     "hipoxemia mandam considerar — e é aí que as sociedades "
+                     "divergem.",
                      "Toda piora durante a indução admite duas leituras "
                      "opostas. A neutropenia febril decide a favor da "
                      "infecção.",
