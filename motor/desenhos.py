@@ -182,55 +182,53 @@ def mapa_do_corpo(territorios, altura: int = 350, passo_a_passo: bool = True) ->
 def capilar_compartilhado(altura: int = 300) -> str:
     """Por que pulmão e rim caem juntos: a mesma parede, nos dois órgãos.
 
-    À esquerda o capilar glomerular com a cápsula de Bowman; à direita o capilar
-    alveolar com o espaço aéreo. No meio, a parede que os dois têm em comum.
+    À esquerda o tufo glomerular dentro da cápsula de Bowman; à direita o
+    alvéolo com o capilar correndo na parede. O traço vermelho é a estrutura
+    que os dois compartilham, e é o que a doença agride.
     """
-    def rotulo(x, y, t, anc="middle", cor=None):
+    def rot(x, y, t, cor=None, tam=12, peso=600):
         return (
-            f'<text x="{x}" y="{y}" text-anchor="{anc}" font-size="11.5" '
-            f'font-family="Helvetica Neue,Arial,sans-serif" font-weight="600" '
-            f'letter-spacing=".4" fill="{cor or TRACO}">{t}</text>'
+            f'<text x="{x}" y="{y}" text-anchor="middle" font-size="{tam}" '
+            f'font-family="Helvetica Neue,Arial,sans-serif" font-weight="{peso}" '
+            f'letter-spacing=".3" fill="{cor or TRACO}">{t}</text>'
         )
 
-    svg = f"""<svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg">
+    svg = f"""<svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg">
+  <!-- glomérulo -->
   <g fill="none" stroke="{TRACO}" stroke-width="1.5">
-    <!-- glomérulo: cápsula de Bowman -->
-    <circle cx="150" cy="150" r="92"/>
-    <!-- alças capilares -->
-    <path d="M104 150 C104 112 132 96 152 112 C172 128 168 158 146 166
-             C124 174 104 168 104 150 Z"/>
-    <path d="M196 150 C196 112 168 96 148 112"/>
-    <path d="M120 186 C142 200 176 196 190 176"/>
-    <!-- polo vascular -->
-    <path d="M58 150 L104 150 M58 132 L100 140"/>
+    <circle cx="160" cy="168" r="86"/>
+    <ellipse cx="137.8" cy="134.4" rx="37" ry="14" transform="rotate(-62 137.8 134.4)"/><ellipse cx="152.6" cy="148.4" rx="37" ry="14" transform="rotate(-31 152.6 148.4)"/><ellipse cx="158.0" cy="168.0" rx="37" ry="14" transform="rotate(0 158.0 168.0)"/><ellipse cx="152.6" cy="187.6" rx="37" ry="14" transform="rotate(31 152.6 187.6)"/><ellipse cx="137.8" cy="201.6" rx="37" ry="14" transform="rotate(62 137.8 201.6)"/>
+    <path d="M40 152 L120 168 M40 190 L120 168"/>
+    <circle cx="120" cy="168" r="3" fill="{TRACO}"/>
   </g>
+
+  <!-- alvéolo -->
   <g fill="none" stroke="{TRACO}" stroke-width="1.5">
-    <!-- alvéolo -->
-    <circle cx="470" cy="150" r="92"/>
-    <!-- capilar percorrendo a parede -->
-    <path d="M400 96 C440 118 500 118 540 96"/>
-    <path d="M400 112 C440 134 500 134 540 112"/>
-    <!-- via aérea -->
-    <path d="M470 58 L470 20 M470 20 L442 4 M470 20 L498 4"/>
+    <circle cx="480" cy="168" r="86"/>
+    <path d="M480 82 L480 40 M480 40 L452 22 M480 40 L508 22"/>
+    <path d="M404 122 C444 148 516 148 556 122"/>
+    <path d="M404 138 C444 164 516 164 556 138"/>
   </g>
 
-  <!-- a parede compartilhada, em destaque -->
-  <g stroke="{MARCA}" stroke-width="3.4" fill="none" stroke-linecap="round">
-    <path d="M104 150 C104 112 132 96 152 112"/>
-    <path d="M400 104 C440 126 500 126 540 104"/>
+  <!-- a parede que os dois compartilham -->
+  <g stroke="{MARCA}" stroke-width="4" fill="none" stroke-linecap="round">
+    <path d="M121.0 168 A37 14 0 0 1 195.0 168"/>
+    <path d="M404 130 C444 156 516 156 556 130"/>
   </g>
 
-  <!-- chave central -->
-  <g fill="none" stroke="{MARCA}" stroke-width="1.2" stroke-dasharray="4 4">
-    <path d="M186 118 C260 84 340 84 412 106"/>
+  <!-- chave entre os dois -->
+  <g fill="none" stroke="{MARCA}" stroke-width="1.1" stroke-dasharray="4 4">
+    <path d="M150 104 C210 66 380 66 428 104"/>
   </g>
-  {rotulo(300, 74, "mesma parede", "middle", MARCA)}
-  {rotulo(300, 88, "capilar · membrana basal · endotélio", "middle", FINO)}
+  {rot(300, 48, "a mesma parede", MARCA, 13.5, 700)}
+  {rot(300, 64, "endotélio sobre membrana basal, sob pressão", FINO, 11, 500)}
 
-  {rotulo(150, 268, "Capilar glomerular", "middle")}
-  {rotulo(150, 284, "cápsula de Bowman", "middle", FINO)}
-  {rotulo(470, 268, "Capilar alveolar", "middle")}
-  {rotulo(470, 284, "espaço aéreo", "middle", FINO)}
+  {rot(46, 142, "aferente", FINO, 10, 500)}
+  {rot(46, 204, "eferente", FINO, 10, 500)}
+  {rot(160, 286, "Capilar glomerular", None, 12.5)}
+  {rot(160, 302, "dentro da cápsula de Bowman", FINO, 11, 400)}
+  {rot(480, 286, "Capilar alveolar", None, 12.5)}
+  {rot(480, 302, "na parede do espaço aéreo", FINO, 11, 400)}
 </svg>"""
     return _fig_desenho(
         svg,
