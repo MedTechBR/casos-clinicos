@@ -35,6 +35,7 @@ function abrir(el){
   }
   el.classList.add('on');
   if (el.tagName === 'svg'){ const f = el.closest('figure'); if (f) f.classList.add('on'); }
+  espelhar(el, true);
 }
 function fechar(el){
   if (el.tagName === 'TABLE'){
@@ -43,6 +44,15 @@ function fechar(el){
   }
   el.classList.remove('on');
   if (el.tagName === 'svg'){ const f = el.closest('figure'); if (f) f.classList.remove('on'); }
+  espelhar(el, false);
+}
+/* Território no desenho e linha na legenda acendem juntos, seja qual for o
+   lado por onde a revelação passou. */
+function espelhar(el, v){
+  const k = el.dataset && el.dataset.terr;
+  if (!k) return;
+  const m = el.closest('.mapa');
+  if (m) m.querySelectorAll('[data-terr="' + k + '"]').forEach(x => x.classList.toggle('on', v));
 }
 function pintar(){
   const k = S.indexOf(cur()); if (k >= 0) i = k;
@@ -327,6 +337,19 @@ document.addEventListener('click', e => {
   if (sv){
     const o = sv.querySelector('svg.ov.rvov');
     if (o && !o.classList.contains('on')){ abrir(o); pintar(); e.stopPropagation(); return; }
+  }
+  /* mapa de territórios: desenho e legenda são o mesmo botão */
+  const lt = e.target.closest('.lt');
+  const tg = e.target.closest('.terr');
+  const alvoT = lt || tg;
+  if (alvoT){
+    const chave = alvoT.dataset.terr, mapa = alvoT.closest('.mapa');
+    const ligado = alvoT.classList.contains('on');
+    mapa.querySelectorAll('[data-terr="' + chave + '"]')
+        .forEach(x => x.classList.toggle('on', !ligado));
+    pintar();
+    e.stopPropagation();
+    return;
   }
   const li = e.target.closest('.alts li');
   if (li){ if (!editando) marcar(li); return; }

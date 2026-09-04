@@ -95,6 +95,7 @@ def v_markdown(h, r):
     corpo = h[h.find("<body>") : h.find("<script")]
     # base64 de imagem contém // e _ à vontade; não é texto do slide
     corpo = re.sub(r"data:[^;]+;base64,[A-Za-z0-9+/=]+", " ", corpo)
+    corpo = re.sub(r"\bhttps?://\S+", " ", corpo)  # xmlns de SVG não é markdown
     achados = []
     for pad, nome in [(r"\*\*", "**"), (r"(?<![\w(])\*(?=\w)", "*"),
                       (r"(?<![\w/])_(?=\w)", "_"), (r"(?<!\{)\{\{", "{{"),

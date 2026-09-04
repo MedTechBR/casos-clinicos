@@ -59,7 +59,7 @@ def momento(passo: str, titulo: str, lede: str = "", ident=None) -> dict:
     return _slide(tipo="momento", classes=["mom"], corpo=corpo, ident=ident, titulo=titulo)
 
 
-def _generico(tipo, base, kicker, titulo, conteudo, densidade, ident):
+def _generico(tipo, base, kicker, titulo, conteudo, densidade, ident, centro=False):
     corpo = (
         (f'<div class="kicker">{texto(kicker)}</div>\n' if kicker else "")
         + f"<h2>{texto(titulo)}</h2>\n"
@@ -67,7 +67,7 @@ def _generico(tipo, base, kicker, titulo, conteudo, densidade, ident):
     )
     return _slide(
         tipo=tipo,
-        classes=[base, _dens(densidade)],
+        classes=[base, _dens(densidade), "centro" if centro else ""],
         corpo=corpo,
         ident=ident,
         titulo=titulo,
@@ -75,23 +75,30 @@ def _generico(tipo, base, kicker, titulo, conteudo, densidade, ident):
     )
 
 
-def narrativa(kicker: str, titulo: str, *conteudo: str, densidade=None, ident=None) -> dict:
+def narrativa(kicker: str, titulo: str, *conteudo: str, densidade=None, ident=None,
+              centro: bool = False) -> dict:
     """Prosa longa: história, exame físico, evolução. Corpo em corpo maior."""
-    return _generico("narrativa", "narr", kicker, titulo, conteudo, densidade, ident)
+    return _generico("narrativa", "narr", kicker, titulo, conteudo,
+                     densidade, ident, centro)
 
 
-def tela(kicker: str, titulo: str, *conteudo: str, densidade=None, ident=None) -> dict:
+def tela(kicker: str, titulo: str, *conteudo: str, densidade=None, ident=None,
+         centro: bool = False) -> dict:
     """Tela de sistema: painéis de resultado sobre fundo de prontuário."""
-    return _generico("tela", "screen", kicker, titulo, conteudo, densidade, ident)
+    return _generico("tela", "screen", kicker, titulo, conteudo,
+                     densidade, ident, centro)
 
 
-def bloco(kicker: str, titulo: str, *conteudo: str, densidade=None, ident=None) -> dict:
+def bloco(kicker: str, titulo: str, *conteudo: str, densidade=None, ident=None,
+          centro: bool = False) -> dict:
     """Bloco comum: imagem com laudo, tabela, síntese, anexo."""
-    return _generico("bloco", "", kicker, titulo, conteudo, densidade, ident)
+    return _generico("bloco", "", kicker, titulo, conteudo,
+                     densidade, ident, centro)
 
 
-def discussao(titulo: str, *conteudo: str, densidade="dense", ident=None) -> dict:
+def discussao(titulo: str, *conteudo: str, densidade="dense", ident=None,
+              centro: bool = False) -> dict:
     # prefixo próprio: uma discussão costuma ter o mesmo título do bloco que
     # comenta ("Sedimento urinário"), e os identificadores não podem colidir.
     return _generico("discussao", "", "Discussão", titulo, conteudo, densidade,
-                     ident or "d_" + _id(titulo))
+                     ident or "d_" + _id(titulo), centro)

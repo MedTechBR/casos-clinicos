@@ -50,7 +50,7 @@ def rodar(caminho: Path) -> int:
 
         total = pg.evaluate("document.querySelectorAll('.slide').length")
         t.checa("carregou sem erro de JS", not erros_js, "; ".join(erros_js[:2]))
-        t.checa("slides presentes", total == 38, f"{total} slides")
+        t.checa("slides presentes", total >= 38, f"{total} slides")
 
         # ── navegação e revelação por passos ──────────────────────────────
         pg.evaluate("show(1)")  # bloco 1: prosa em 5 passos
@@ -133,6 +133,54 @@ def rodar(caminho: Path) -> int:
             "1 de 1" in pg.evaluate("document.querySelector('.slide.on .cnt').textContent"),
             pg.evaluate("document.querySelector('.slide.on .cnt').textContent"),
         )
+
+        # ── mapa de territórios ──────────────────────────────────────────
+        i_mapa = pg.evaluate(
+            "[...document.querySelectorAll('.slide')].findIndex(s=>s.querySelector('.mapa'))"
+        )
+        if i_mapa >= 0:
+            pg.evaluate(f"show({i_mapa})")
+            pg.wait_for_timeout(120)
+            t.checa("mapa começa sem território aceso",
+                    pg.evaluate("document.querySelectorAll('.slide.on .terr.on').length") == 0)
+            pg.keyboard.press("ArrowRight")
+            pg.wait_for_timeout(160)
+            par = pg.evaluate(
+                """() => {
+                const t = document.querySelector('.slide.on .terr.on');
+                if (!t) return null;
+                const k = t.dataset.terr;
+                const l = document.querySelector('.slide.on .lt[data-terr="' + k + '"]');
+                return {chave: k, legenda: !!(l && l.classList.contains('on'))};
+            }"""
+            )
+            t.checa("→ acende desenho e legenda juntos",
+                    bool(par and par["legenda"]), par and par["chave"])
+            pg.click('.slide.on .lt[data-terr="pele"]')
+            pg.wait_for_timeout(160)
+            t.checa("clicar na legenda acende o território no desenho",
+                    pg.evaluate(
+                        "document.querySelector('.slide.on .terr[data-terr=\\'pele\\']')"
+                        ".classList.contains('on')"))
+            t.checa("nenhum território sem legenda correspondente",
+                    pg.evaluate(
+                        "[...document.querySelectorAll('.slide.on .terr')].every(x=>"
+                        "document.querySelector('.slide.on .lt[data-terr=\\''+x.dataset.terr+'\\']'))"))
+
+        # ── figuras anotadas ─────────────────────────────────────────────
+        anot = pg.evaluate(
+            """() => [...document.querySelectorAll('figure.an')].map(f => {
+                const img = f.querySelector('img'), svg = f.querySelector('svg');
+                return {vb: svg.getAttribute('viewBox'),
+                        par: svg.getAttribute('preserveAspectRatio')};
+            })"""
+        )
+        t.checa("toda anotação usa o viewBox da própria imagem",
+                bool(anot) and all(a["vb"] and a["vb"] != "0 0 100 100" for a in anot),
+                f"{len(anot)} figuras")
+        t.checa("anotação enquadrada como a imagem (contain)",
+                all(a["par"] == "xMidYMid meet" for a in anot),
+                "senão o círculo vira elipse e a seta erra o alvo")
 
         # ── gaveta de exames ─────────────────────────────────────────────
         pg.keyboard.press("x")

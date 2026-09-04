@@ -210,6 +210,11 @@ def circulo(x: float, y: float, r: float, rotulo: str = "") -> dict:
     return {"tipo": "circulo", "x": x, "y": y, "r": r, "rotulo": rotulo}
 
 
+def rotulo(x: float, y: float, t: str) -> dict:
+    """Só texto sobre a imagem — para nomear o plano ou a região, sem apontar."""
+    return {"tipo": "rotulo", "x": x, "y": y, "rotulo": t}
+
+
 def figura_anotada(
     arquivo: str,
     legenda: str,
@@ -220,47 +225,64 @@ def figura_anotada(
 ) -> str:
     """Figura com sobreposição SVG revelada ao clique.
 
-    As marcas são declaradas em coordenadas relativas (0 a 100) para que a
-    anotação continue certa qualquer que seja a altura de renderização.
-    `ferramentas/tirar.py --anotadas` renderiza a figura com a sobreposição
-    aberta, que é a única forma de conferir se a seta bate com o achado.
+    As marcas são declaradas em porcentagem da imagem (0 a 100 nos dois eixos),
+    e o build as converte para as coordenadas reais do arquivo. O SVG usa o
+    viewBox do próprio arquivo com `preserveAspectRatio="xMidYMid meet"`, que é
+    exatamente o enquadramento do `object-fit: contain` da imagem: sem isso a
+    sobreposição cobre a moldura em vez da figura, o círculo vira elipse e a
+    seta aponta para o lugar errado.
+
+    `ferramentas/grade.py` desenha a grade de coordenadas sobre a imagem, e
+    `ferramentas/tirar.py --anotadas` renderiza a figura já anotada. As duas
+    coisas são para olhar antes de entregar — seta que não bate com o achado é
+    pior do que nenhuma seta.
     """
     partes = []
     for m in marcas:
         if m["tipo"] == "seta":
             partes.append(
-                f'<line x1="{m["x1"]}" y1="{m["y1"]}" x2="{m["x2"]}" y2="{m["y2"]}" '
-                'stroke="#ffd166" stroke-width="1.1" marker-end="url(#pta)"/>'
+                f'<line x1="@@X:{m["x1"]}@@" y1="@@Y:{m["y1"]}@@" '
+                f'x2="@@X:{m["x2"]}@@" y2="@@Y:{m["y2"]}@@" '
+                'stroke="#ffc655" stroke-width="@@W:0.45@@" '
+                'marker-end="url(#pta)"/>'
             )
             if m["rotulo"]:
-                partes.append(
-                    f'<text x="{m["x1"]}" y="{m["y1"] - 1.6}" fill="#ffd166" '
-                    'font-size="3.2" font-weight="700" text-anchor="middle">'
-                    f'{texto(m["rotulo"])}</text>'
-                )
+                partes.append(_rotulo_svg(m["x1"], m["y1"], m["rotulo"], desloca=-1.6))
+        elif m["tipo"] == "rotulo":
+            partes.append(_rotulo_svg(m["x"], m["y"], m["rotulo"], desloca=0))
         elif m["tipo"] == "circulo":
             partes.append(
-                f'<circle cx="{m["x"]}" cy="{m["y"]}" r="{m["r"]}" fill="none" '
-                'stroke="#ffd166" stroke-width="1.1"/>'
+                f'<circle cx="@@X:{m["x"]}@@" cy="@@Y:{m["y"]}@@" '
+                f'r="@@R:{m["r"]}@@" fill="none" stroke="#ffc655" '
+                'stroke-width="@@W:0.45@@"/>'
             )
             if m["rotulo"]:
-                partes.append(
-                    f'<text x="{m["x"]}" y="{m["y"] - m["r"] - 1.4}" fill="#ffd166" '
-                    'font-size="3.2" font-weight="700" text-anchor="middle">'
-                    f'{texto(m["rotulo"])}</text>'
-                )
+                partes.append(_rotulo_svg(m["x"], m["y"] - m["r"], m["rotulo"], desloca=-1.4))
     defs = (
-        '<defs><marker id="pta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" '
-        'markerHeight="5" orient="auto-start-reverse">'
-        '<path d="M0 0 L10 5 L0 10 z" fill="#ffd166"/></marker></defs>'
+        '<defs><marker id="pta" viewBox="0 0 10 10" refX="9" refY="5" '
+        'markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">'
+        '<path d="M0 0 L10 5 L0 10 z" fill="#ffc655"/></marker></defs>'
     )
     capin = f'<span class="capin"> {texto(legenda_anotada)}</span>' if legenda_anotada else ""
     return (
         f'<figure class="an" style="--fh:{altura}px" '
         f'data-img="{_html.escape(arquivo, quote=True)}"><div class="ib">'
-        f"<img alt=\"\" src=\"@@IMG:{arquivo}@@\"/>"
-        f'<svg class="ov rvov" viewBox="0 0 100 100" preserveAspectRatio="none">'
+        f'<img alt="" src="@@IMG:{arquivo}@@"/>'
+        f'<svg class="ov rvov" viewBox="@@VIEWBOX:{arquivo}@@" '
+        f'preserveAspectRatio="xMidYMid meet">'
         f'{defs}{"".join(partes)}</svg></div>'
         f"<figcaption>{texto(legenda)}{capin}"
         f'<span class="cred">{texto(credito)}</span></figcaption></figure>'
+    )
+
+
+def _rotulo_svg(x, y, t, desloca=-1.6) -> str:
+    """Rótulo da anotação: fundo sólido atrás do texto, porque imagem médica
+    tem branco e preto no mesmo quadro e texto solto some num dos dois."""
+    return (
+        f'<g transform="translate(@@X:{x}@@,@@Y:{y + desloca}@@)">'
+        f'<text x="0" y="0" text-anchor="middle" fill="#ffc655" '
+        f'font-family="Helvetica Neue,Arial,sans-serif" font-weight="700" '
+        f'font-size="@@F:2.6@@" paint-order="stroke" stroke="#000" '
+        f'stroke-width="@@W:0.9@@" stroke-linejoin="round">{texto(t)}</text></g>'
     )

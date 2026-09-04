@@ -12,6 +12,8 @@ import mimetypes
 import re
 from pathlib import Path
 
+from .imagens import dimensoes
+
 MOTOR = Path(__file__).parent
 
 
@@ -79,6 +81,42 @@ def montar(*, titulo, slug, rodape, slides, banco, img_dir: Path, css=None, js=N
         return cache[nome]
 
     corpo = re.sub(r"@@IMG:([^@]+)@@", troca, corpo)
+
+    # Anotação: as marcas são escritas em porcentagem da imagem e viram
+    # coordenada real aqui, onde o build conhece o arquivo. O viewBox é o da
+    # própria imagem, para a sobreposição casar com o object-fit: contain.
+    dim: dict[str, tuple[int, int]] = {}
+
+    def _dim(nome):
+        if nome not in dim:
+            dim[nome] = dimensoes(img_dir / nome)
+        return dim[nome]
+
+    def anotar(secao: str) -> str:
+        def uma(m):
+            nome = m.group(1)
+            w, h = _dim(nome)
+            return f"0 0 {w} {h}"
+
+        secao = re.sub(r"@@VIEWBOX:([^@]+)@@", uma, secao)
+        for fig in re.findall(r'<figure class="an"[^>]*data-img="([^"]+)"', secao):
+            w, h = _dim(fig)
+            menor = min(w, h)
+            i = secao.index(f'data-img="{fig}"')
+            j = secao.index("</figure>", i)
+            trecho = secao[i:j]
+            trecho = re.sub(r"@@X:([-\d.]+)@@", lambda m: f"{float(m.group(1)) / 100 * w:.1f}", trecho)
+            trecho = re.sub(r"@@Y:([-\d.]+)@@", lambda m: f"{float(m.group(1)) / 100 * h:.1f}", trecho)
+            trecho = re.sub(r"@@R:([-\d.]+)@@", lambda m: f"{float(m.group(1)) / 100 * menor:.1f}", trecho)
+            trecho = re.sub(r"@@W:([-\d.]+)@@", lambda m: f"{float(m.group(1)) / 100 * menor:.2f}", trecho)
+            trecho = re.sub(r"@@F:([-\d.]+)@@", lambda m: f"{float(m.group(1)) / 100 * menor:.1f}", trecho)
+            secao = secao[:i] + trecho + secao[j:]
+        return secao
+
+    corpo = anotar(corpo)
+    sobrou = re.findall(r"@@[A-Z]+:[^@]+@@", corpo)
+    if sobrou:
+        raise ValueError(f"marcador não resolvido no build: {sorted(set(sobrou))[:3]}")
 
     miniaturas = "".join(
         f'<div class="t" data-n="{n}"><span class="n">{n:02d}</span>'

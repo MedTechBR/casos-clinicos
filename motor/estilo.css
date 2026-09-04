@@ -1,306 +1,645 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Casos clínicos interativos — folha de estilo
+
+   Referência: um periódico clínico bem impresso. Serifada para a prosa,
+   sem serifa para o dado. Régua e entrelinha no lugar de cartão e sombra.
+   Sem gradiente decorativo, sem canto arredondado flutuante, sem emoji.
+
+   Projetada para datashow ruim: tinta quase preta sobre papel quente,
+   nada de cinza-claro sobre branco, régua de 1px só onde separa de fato.
+   ═══════════════════════════════════════════════════════════════════════ */
 
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--ink:#1c1b19;--paper:#faf9f6;--red:#8c2f22;--blue:#26485e;--green:#2f5d3a;
---amber:#8a5a1f;--line:#d8d4cc;--mut:#6a675f;--soft:#f2f0ec}
-html,body{height:100%;background:#15140f;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
-color:var(--ink);overflow:hidden}
+
+:root{
+  /* tinta */
+  --tinta:#15130e;          /* corpo de texto — contraste 15:1 no papel  */
+  --tinta2:#4b463b;         /* secundário, ainda legível projetado       */
+  --tinta3:#7d766a;         /* crédito, rodapé — o mais claro permitido  */
+  --papel:#faf8f2;
+  --papel2:#f1ece0;         /* faixa, cabeçalho de tabela                */
+  --linha:#d6cfbe;
+  --linha2:#b9b09a;
+
+  /* acentos — um vermelho editorial e um azul de dado clínico */
+  --sangue:#8e2b1b;
+  --sangue2:#c25b45;
+  --clinico:#1b3c51;
+  --alterado:#9a4a12;       /* valor fora da referência                  */
+  --grave:#8e2b1b;          /* valor crítico                            */
+  --certo:#2c5340;
+
+  /* fundo escuro das imagens médicas */
+  --escuro:#141317;
+  --escuro2:#242229;
+  --sobre-escuro:#e8e3d8;
+  --sobre-escuro2:#9b968c;
+
+  --serifa:"Iowan Old Style","Charter","Palatino Linotype",Palatino,
+           "Book Antiqua",Georgia,"Times New Roman",serif;
+  --sans:"Helvetica Neue","Segoe UI",Roboto,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+
+html,body{height:100%;background:#0d0c0a;color:var(--tinta);
+  font-family:var(--serifa);overflow:hidden;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
 #wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
 #stage{width:1280px;height:720px;position:relative;transform-origin:center center;
-background:var(--paper);box-shadow:0 10px 60px rgba(0,0,0,.6);overflow:hidden}
-.slide{position:absolute;inset:0;padding:44px 56px 58px;display:none;flex-direction:column;
-animation:fade .22s ease}
+  background:var(--papel);overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,.5),0 24px 90px rgba(0,0,0,.55)}
+
+/* ─────────────────────────── o slide ─────────────────────────── */
+
+.slide{position:absolute;inset:0;padding:46px 68px 56px;display:none;
+  flex-direction:column;animation:entra .32s cubic-bezier(.2,.7,.3,1)}
 .slide.on{display:flex}
-@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-h1{font-size:52px;line-height:1.06;letter-spacing:-1.4px;font-weight:800}
-h2{font-size:39px;line-height:1.12;letter-spacing:-.6px;margin-bottom:14px;font-weight:800}
-h3{font-size:20px;color:var(--blue);margin:12px 0 6px;font-weight:800;
-letter-spacing:.2px}
-p{font-size:21px;line-height:1.46;margin-bottom:9px}
-ul,ol{margin:0 0 11px 22px;font-size:21px;line-height:1.42}
-li{margin-bottom:5px}
-b{font-weight:750}
-mark{background:#fdf0d5;padding:0 3px;font-weight:700;color:inherit}
-.mut{color:var(--mut)}
- .kicker{font-size:13.5px;letter-spacing:2.6px;text-transform:uppercase;color:var(--red);
-font-weight:800;margin-bottom:12px}
-.body{flex:1;overflow:auto;padding-right:6px}
-.body::-webkit-scrollbar{width:6px}.body::-webkit-scrollbar-thumb{background:#cfcabf;border-radius:3px}
-table{width:100%;border-collapse:collapse;margin:7px 0 11px;font-size:17.5px}
-th{background:var(--soft);text-align:left;padding:7px 10px;border:1px solid var(--line);
-font-size:13px;text-transform:uppercase;letter-spacing:.6px;font-weight:800}
-td{padding:7px 10px;border:1px solid var(--line);vertical-align:top;line-height:1.34}
-tbody tr:nth-child(even) td{background:#fbfaf8}
-table.sm{font-size:16px}table.sm td,table.sm th{padding:6px 9px}
-table.xs{font-size:14.5px}table.xs td,table.xs th{padding:5px 8px}
-.cols{display:flex;gap:22px}.cols>div{flex:1;min-width:0}
-.box{border-left:4px solid var(--line);padding:11px 15px;margin:9px 0;background:#f7f6f3;border-radius:0 5px 5px 0}
-.box .bt{display:block;font-size:13.5px;text-transform:uppercase;letter-spacing:1.1px;
-font-weight:800;margin-bottom:6px}
-.box p:last-child,.box ul:last-child,.box ol:last-child,.box table:last-child{margin-bottom:0}
-.box.pause{background:#eef3f6;border-color:var(--blue)}.box.pause .bt{color:var(--blue)}
-.box.err{background:#fdf3e6;border-color:var(--amber)}.box.err .bt{color:var(--amber)}
-.box.rule{background:#eef4ef;border-color:var(--green)}.box.rule .bt{color:var(--green)}
-.box.red{background:#fbeeec;border-color:var(--red)}.box.red .bt{color:var(--red)}
-.box.grey{background:#f4f3f0;border-color:#a8a49a}.box.grey .bt{color:var(--mut)}
-/* capa */
-.cover{background:linear-gradient(150deg,#1e1b16 0%,#3a2019 55%,#6b2a1d 100%);color:#fff;
-justify-content:center;padding:0 92px}
-.cover h1{font-size:78px;color:#fff;margin-bottom:6px}
-.cover .kicker{color:#e8a08e}
-.cover .sub{font-size:23px;color:#e6ddd2;line-height:1.4;margin:14px 0 30px;max-width:820px}
-.cover .meta{border-top:1px solid rgba(255,255,255,.28);padding-top:16px;font-size:15px;
-color:#cfc4b6;max-width:820px;line-height:1.6}
-.cover .meta b{color:#fff}
-/* divisor de momento */
-.mom{background:var(--red);color:#fff;justify-content:center;padding:0 92px}
-.mom .step{font-size:13px;letter-spacing:3px;text-transform:uppercase;opacity:.8;margin-bottom:14px;font-weight:700}
-.mom h1{color:#fff;font-size:62px;max-width:960px}
-.mom .lede{font-size:20px;color:#f3ded9;margin-top:18px;max-width:840px;line-height:1.45}
-/* tela clinica */
-.screen .body{background:#f4f2ed;border:1px solid var(--line);border-radius:7px;padding:20px 24px}
-.vitals{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
-.vitals span{background:#fff;border:1px solid var(--line);border-radius:20px;padding:6px 15px;
-font-size:17px;font-weight:600}
-.vitals span b{color:var(--red)}
-/* pergunta */
-.q{background:#fdfcfa;justify-content:center}
-.q .qn{font-size:12px;letter-spacing:2.4px;text-transform:uppercase;color:var(--red);font-weight:800}
-.q h2{font-size:41px;margin:8px 0 20px}
-.alts{list-style:none;margin:0;display:flex;flex-direction:column;gap:9px}
-.alts li{border:1.5px solid var(--line);border-radius:7px;padding:14px 18px;font-size:21px;
-cursor:pointer;display:flex;gap:13px;align-items:flex-start;transition:.13s;background:#fff;margin:0}
-.alts li:hover{border-color:#b9857a;background:#fdf8f6}
-.alts li.sel{border-color:var(--red);background:#fbeeec;box-shadow:0 0 0 2px rgba(140,47,34,.13)}
-.alts .k{font-weight:800;color:var(--red);min-width:19px}
-/* resposta */
-.ans .tag{align-self:flex-start;display:inline-block;background:var(--green);color:#fff;font-size:11.5px;font-weight:800;
-letter-spacing:1.8px;text-transform:uppercase;padding:5px 12px;border-radius:4px;margin-bottom:11px}
-.ans h2{color:var(--green);font-size:36px}
-/* figuras */
-figure{margin:6px 0 8px;text-align:center}
-figure img{max-width:100%;height:var(--fh);object-fit:contain;border:1px solid var(--line);
-border-radius:5px;background:#fff}
-figcaption{font-size:15px;color:var(--mut);margin-top:7px;line-height:1.4;text-align:left}
-.cred{display:block;font-size:12px;color:#8f8b82;margin-top:2px}
-.figrow{display:flex;gap:18px}.figrow figure{flex:1;margin:0}
-/* rodape */
-.foot{position:absolute;left:56px;right:56px;bottom:18px;display:flex;justify-content:space-between;
-align-items:center;font-size:11.5px;color:#8f8b82;letter-spacing:.4px}
-.cover .foot,.mom .foot{color:rgba(255,255,255,.55)}
-.bar{position:absolute;left:0;bottom:0;height:4px;background:var(--red);transition:width .2s}
-.dense .body p,.dense .body ul,.dense .body ol{font-size:15px;line-height:1.4}
-.dense .body h3{font-size:15.5px;margin:9px 0 5px}
-.dense .box{padding:9px 12px;margin:7px 0}
-.dense .box .bt{font-size:11px;margin-bottom:5px}
-.dense .cols{gap:18px}
-#help{transition:opacity .5s;position:fixed;right:16px;bottom:14px;color:#7a736a;font-size:11.5px;letter-spacing:.5px;
-font-family:ui-monospace,Menlo,monospace}
-#grid{position:fixed;inset:0;background:#15140f;display:none;overflow:auto;padding:26px;z-index:9}
-#grid.on{display:block}
-#grid .g{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
-#grid .t{background:var(--paper);border-radius:5px;padding:10px;font-size:10.5px;cursor:pointer;
-height:96px;overflow:hidden;line-height:1.3;border:2px solid transparent}
-#grid .t:hover{border-color:var(--red)}
-#grid .t .n{color:var(--red);font-weight:800;font-size:9px;letter-spacing:1px}
-#grid .t b{display:block;margin-top:3px;font-size:11.5px;line-height:1.25}
-@media print{
- @page{size:1280px 720px;margin:0}
- html,body{overflow:visible!important;background:#fff;height:auto}
- #wrap{position:static!important;display:block}
- #help,#grid,.bar{display:none!important}
- #stage{width:1280px!important;height:auto!important;transform:none!important;box-shadow:none;
-  overflow:visible!important;position:static!important}
- .slide{display:flex!important;position:relative!important;inset:auto!important;
-  width:1280px;height:720px;page-break-after:always;break-after:page;animation:none}
- .slide:last-child{page-break-after:auto}
- .body{overflow:visible!important}
+@keyframes entra{
+  from{opacity:0;transform:translateY(10px) scale(.996)}
+  to{opacity:1;transform:none}
 }
 
-.qhint{font-size:14px;color:#8a8780;letter-spacing:.4px;margin-bottom:9px;text-transform:uppercase}
-.alts.multi li{border-radius:4px}
-/* feedback verde / vermelho */
-.alts.fb li{cursor:default;align-items:flex-start;padding:9px 14px;gap:11px;position:relative}
-.alts.fb li:hover{background:#fff}
-.alts.fb .ft{flex:1;min-width:0}
-.alts.fb .tt{font-size:19px;line-height:1.32;margin-bottom:2px}
-.alts.fb .wy{font-size:16.5px;line-height:1.36;color:#5a5750}
-.alts.fb .mk{font-size:19px;font-weight:800;line-height:1;margin-top:1px}
-.alts.fb li.ok{border-color:#2f5d3a;background:#eef4ef;box-shadow:inset 3px 0 0 #2f5d3a}
-.alts.fb li.ok:hover{background:#eef4ef}
-.alts.fb li.ok .k,.alts.fb li.ok .mk{color:#2f5d3a}
-.alts.fb li.ok .tt{font-weight:700;color:#20452a}
-.alts.fb li.no{border-color:#d9b7b1;background:#fbf2f0;box-shadow:inset 3px 0 0 #a8402f}
-.alts.fb li.no:hover{background:#fbf2f0}
-.alts.fb li.no .k,.alts.fb li.no .mk{color:#a8402f}
-.alts.fb li.no .tt{color:#6b625f}
-.dense .alts.fb li{padding:7px 12px}
-.dense .alts.fb .tt{font-size:17.5px}
-.dense .alts.fb .wy{font-size:15.5px}
-/* figura anotada */
-figure.an{margin:4px 0 6px}
-figure.an .ib{position:relative;display:inline-block;max-width:100%;line-height:0}
-figure.an .ib img{height:var(--fh);max-width:100%;object-fit:contain;border:1px solid var(--line);
-border-radius:5px;background:#000;display:block}
-figure.an .ib svg.ov{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-figure.an .ib svg.dz{height:var(--fh);max-width:100%;display:block;border:1px solid var(--line);
-border-radius:5px;background:#fdfcfa}
-/* narrativa */
-.narr .body{font-size:23px;line-height:1.6}
-.narr .body p{margin-bottom:11px}
-.narr.dense .body{font-size:20.5px;line-height:1.54}
-.narr.dense .body p{margin-bottom:9px}
-.narr.xd .body{font-size:18px;line-height:1.48}
+/* ─────────────────────────── tipografia ─────────────────────────── */
+
+h1{font-family:var(--serifa);font-size:54px;line-height:1.04;
+  letter-spacing:-.9px;font-weight:600;color:var(--tinta)}
+
+h2{font-family:var(--serifa);font-size:40px;line-height:1.08;
+  letter-spacing:-.5px;font-weight:600;margin-bottom:16px;color:var(--tinta)}
+
+h3{font-family:var(--sans);font-size:13px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;color:var(--clinico);
+  margin:18px 0 7px;padding-bottom:5px;border-bottom:1px solid var(--linha)}
+
+p{font-size:21px;line-height:1.52;margin-bottom:11px;max-width:66ch}
+
+/* Negrito é raro: só onde o olho precisa parar. */
+b,strong{font-weight:600;color:#000}
+i,em{font-style:italic}
+mark{background:linear-gradient(transparent 62%,#f3dfa0 62%);
+  padding:0 1px;font-weight:inherit;color:inherit}
+.mut{color:var(--tinta3);font-size:.86em}
+
+ul,ol{margin:0 0 12px 0;font-size:20px;line-height:1.46;list-style:none;
+  max-width:66ch}
+ol{counter-reset:it}
+li{margin-bottom:7px;padding-left:22px;position:relative}
+ul>li::before{content:"";position:absolute;left:3px;top:.62em;
+  width:6px;height:1.5px;background:var(--linha2)}
+ol>li{counter-increment:it}
+ol>li::before{content:counter(it);position:absolute;left:0;top:.06em;
+  font-family:var(--sans);font-size:12px;font-weight:700;color:var(--sangue)}
+
+/* Etiqueta da seção: pequena, sem serifa, com um selo vermelho.
+   O vermelho aparece pouco — é o que o faz significar alguma coisa. */
+.kicker{font-family:var(--sans);font-size:11.5px;letter-spacing:2.4px;
+  text-transform:uppercase;color:var(--tinta2);font-weight:700;
+  margin-bottom:11px;display:flex;align-items:center;gap:9px}
+.kicker::before{content:"";width:16px;height:3px;background:var(--sangue);flex:none}
+
+.body{flex:1;overflow:hidden;min-height:0;padding-right:2px}
+/* Slide de pouco conteúdo: o corpo ocupa o eixo vertical em vez de deixar
+   metade da tela vazia embaixo. */
+.centro .body{display:flex;flex-direction:column;justify-content:center}
+
+/* ─────────────────────────── rodapé e progresso ─────────────────────────── */
+
+.foot{position:absolute;left:68px;right:68px;bottom:20px;display:flex;
+  justify-content:space-between;align-items:baseline;
+  font-family:var(--sans);font-size:10.5px;letter-spacing:.9px;
+  color:var(--tinta3);text-transform:uppercase}
+.foot span:last-child{font-variant-numeric:tabular-nums;letter-spacing:1.4px}
+.cover .foot,.mom .foot{color:rgba(255,255,255,.42)}
+
+.bar{position:absolute;left:0;bottom:0;height:2px;background:var(--sangue);
+  transition:width .34s cubic-bezier(.2,.7,.3,1);z-index:6}
+
+/* ─────────────────────────── capa ─────────────────────────── */
+
+.cover{background:var(--escuro);color:var(--sobre-escuro);
+  justify-content:center;padding:0 84px;overflow:hidden}
+.cover::before{ /* filete duplo, não gradiente decorativo */
+  content:"";position:absolute;left:84px;right:84px;top:66px;height:3px;
+  background:var(--sangue)}
+.cover::after{
+  content:"";position:absolute;left:84px;right:84px;top:72px;height:1px;
+  background:rgba(255,255,255,.16)}
+.cover .kicker{color:var(--sangue2)}
+.cover .kicker::before{background:var(--sangue2)}
+.cover h1{font-size:66px;color:#fff;margin-bottom:4px;letter-spacing:-1.2px;
+  max-width:19ch;line-height:1.02}
+.cover .sub{font-size:22px;color:var(--sobre-escuro2);line-height:1.44;
+  margin:18px 0 32px;max-width:56ch;font-style:italic}
+.cover .meta{border-top:1px solid rgba(255,255,255,.18);padding-top:16px;
+  font-family:var(--sans);font-size:13px;color:var(--sobre-escuro2);
+  max-width:70ch;line-height:1.68}
+.cover .meta b{color:#fff;font-weight:600}
+
+/* ─────────────────────────── divisor de fase ─────────────────────────── */
+
+.mom{background:var(--escuro);color:#fff;justify-content:center;padding:0 84px}
+.mom .step{font-family:var(--sans);font-size:11.5px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--sangue2);margin-bottom:16px;font-weight:700}
+.mom h1{color:#fff;font-size:58px;max-width:20ch}
+.mom .lede{font-size:20px;color:var(--sobre-escuro2);margin-top:20px;
+  max-width:56ch;line-height:1.48;font-style:italic}
+
+/* ─────────────────────────── prosa longa ─────────────────────────── */
+
+.narr .body{font-size:22px;line-height:1.58}
+.narr .body p{margin-bottom:13px;max-width:70ch}
+.narr .body p.lead::first-letter{float:left;font-size:58px;line-height:.82;
+  font-weight:600;padding:5px 10px 0 0;color:var(--sangue)}
+.narr.dense .body{font-size:19.5px;line-height:1.5}
+.narr.dense .body p{margin-bottom:10px}
+.narr.xd .body{font-size:17.5px;line-height:1.44}
 .narr.xd .body p{margin-bottom:8px}
-.narr .body p.lead::first-letter{float:left;font-size:52px;line-height:.86;font-weight:800;
-padding:3px 8px 0 0;color:var(--red)}
-.day{display:inline-block;background:var(--blue);color:#fff;font-size:13px;font-weight:800;
-letter-spacing:1.4px;text-transform:uppercase;padding:3px 9px;border-radius:3px;margin:2px 8px 4px 0;
-vertical-align:2px}
 
-/* nota do apresentador: fora da tela, presente no PDF impresso */
-.pnote{display:none}
-@media print{
- .pnote{display:block;background:#fbfaf8;border:1px dashed #b9b4aa;border-left:4px solid #8a8780;
-  border-radius:0 5px 5px 0;padding:9px 13px;margin:9px 0}
- .pnote .bt{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:1.4px;
-  font-weight:800;color:#8a8780;margin-bottom:5px}
- .pnote .bt::before{content:"Nota do apresentador \00b7  "}
-}
-/* painel de dados do caso */
-.lab{width:100%;border-collapse:collapse;font-size:17px}
-.lab th{background:var(--soft);text-align:left;padding:6px 10px;border:1px solid var(--line);
- font-size:12.5px;text-transform:uppercase;letter-spacing:.6px;font-weight:800}
-.lab td{padding:6px 10px;border:1px solid var(--line);vertical-align:top}
-.lab td.v{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
-.lab td.r{color:#8a8780;font-size:14.5px;white-space:nowrap}
-.lab tr.alt td{background:#fdf3e6}
-.lab tr.alt td.v{color:#8a5a1f}
-.lab tr.crit td{background:#fbeeec}
-.lab tr.crit td.v{color:#8c2f22}
-.cap{font-size:13px;letter-spacing:1.6px;text-transform:uppercase;font-weight:800;
- color:var(--mut);margin:2px 0 6px}
-.xd .body p,.xd .body ul,.xd .body ol{font-size:16px;line-height:1.32}
-.xd .body h3{font-size:16px;margin:7px 0 4px}
-.xd .box{padding:8px 11px;margin:6px 0}
-.xd .box .bt{font-size:12px;margin-bottom:4px}
-.xd table{font-size:15px}.xd table td,.xd table th{padding:5px 8px}
-.xd table.sm{font-size:13px}.xd table.sm td,.xd table.sm th{padding:3.5px 6px}
-.xd table.xs{font-size:12.5px}.xd table.xs td,.xd table.xs th{padding:3.5px 6px}
-.xd .lab{font-size:14.5px}.xd .lab td,.xd .lab th{padding:4px 7px}
-.xd .lab td.r{font-size:13px}
-.xd .cols{gap:16px}
-.xd .alts.fb li{padding:6px 11px;gap:9px}
-.xd .alts.fb .tt{font-size:16.5px;line-height:1.26}
-.xd .alts.fb .wy{font-size:14.5px;line-height:1.3}
-.xd .alts.fb .mk{font-size:17px}
-.xd .alts.fb .k{font-size:17px}
-.xd .vitals span{font-size:15px;padding:5px 12px}
-.xd figcaption{font-size:13px}
-.alts.duas{display:grid;grid-template-columns:1fr 1fr;grid-auto-flow:column;
- gap:8px 18px;align-content:start}
-.alts.duas li{margin:0}
-.alts.fb.duas li{padding:8px 12px}
-.alts.fb.duas .tt{font-size:17px;line-height:1.24}
-.alts.fb.duas .wy{font-size:15px;line-height:1.3}
-.xd .alts.fb.duas .tt{font-size:16px;line-height:1.22}
-.xd .alts.fb.duas .wy{font-size:14px;line-height:1.28}
-.qhint .cnt{display:inline-block;margin-left:12px;font-size:13.5px;font-weight:800;
- letter-spacing:.4px;color:var(--blue);background:#e8eff3;border-radius:20px;padding:2px 11px;
- text-transform:none}
-.qhint .cnt.cheio{background:#f5e6e3;color:var(--red)}
-.alts.multi li.sel .k::after{content:" \2713";color:var(--red)}
-.aliq{background:#f5f2ea;border:1px solid #e0d9c8;border-left:4px solid #8a5a1f;border-radius:0 5px 5px 0}
+/* marcador temporal dentro da frase */
+.day{display:inline-block;font-family:var(--sans);font-size:11px;font-weight:700;
+  letter-spacing:1.3px;text-transform:uppercase;color:var(--sangue);
+  border-bottom:2px solid var(--sangue);padding-bottom:1px;margin-right:6px;
+  vertical-align:1px}
 
-/* ─────── revelação por clique ─────── */
-.rv{margin:7px 0}
-.rv-ph{display:flex;align-items:center;gap:11px;cursor:pointer;user-select:none;
- border:1.5px dashed #c2bbaa;border-radius:7px;padding:12px 16px;background:#fbfaf7;
- transition:background .15s,border-color .15s,transform .1s}
-.rv-ph:hover{background:#f2eee4;border-color:#9c9282}
-.rv-ph:active{transform:scale(.995)}
-.rv-ic{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
- border-radius:50%;background:var(--blue);color:#fff;font-size:16px;font-weight:800;flex:none;
- line-height:1}
-.rv-lb{font-size:14.5px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;color:#7b7364}
-.rv-in{display:none}
-.rv.on>.rv-in{display:block;animation:rvin .3s ease}
-.rv.on>.rv-ph{display:none}
-@keyframes rvin{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
-.pv{display:none}
-.pv.on{display:block;animation:rvin .3s ease}
-svg.ov.rvov{opacity:0;transition:opacity .45s ease}
+/* ─────────────────────────── colunas ─────────────────────────── */
+
+/* Assimétrica de propósito: a coluna principal respira, a lateral comenta.
+   Grade uniforme em duas metades é um dos tiques que denunciam template. */
+.cols{display:grid;grid-template-columns:1.42fr 1fr;gap:32px;align-items:start}
+.cols>div{min-width:0}
+.cols.iguais{grid-template-columns:1fr 1fr;gap:30px}
+.cols.tres{grid-template-columns:1fr 1fr 1fr;gap:24px}
+.cols.espelho{grid-template-columns:1fr 1.42fr}
+
+/* ─────────────────────────── nota lateral ─────────────────────────── */
+
+/* Sem cartão: uma régua no alto, um rótulo pequeno e o texto. */
+.box{border-top:2px solid var(--linha2);padding:9px 0 0;margin:16px 0}
+.box:first-child{margin-top:0}
+.box .bt{display:block;font-family:var(--sans);font-size:11px;
+  text-transform:uppercase;letter-spacing:1.6px;font-weight:700;
+  color:var(--tinta2);margin-bottom:7px}
+.box p,.box li{font-size:17px;line-height:1.46;max-width:none}
+.box p:last-child,.box ul:last-child,.box ol:last-child,
+.box table:last-child{margin-bottom:0}
+
+.box.pause{border-top-color:var(--clinico)}
+.box.pause .bt{color:var(--clinico)}
+.box.err{border-top-color:var(--alterado)}
+.box.err .bt{color:var(--alterado)}
+.box.rule{border-top-color:var(--certo)}
+.box.rule .bt{color:var(--certo)}
+.box.red{border-top-color:var(--sangue)}
+.box.red .bt{color:var(--sangue)}
+.box.grey{border-top-color:var(--linha2)}
+
+/* a única caixa com fundo: destaque real, e mesmo assim de canto vivo */
+.box.aliq{background:var(--papel2);border-top:2px solid var(--alterado);
+  padding:11px 15px 12px;margin:14px 0}
+
+/* ─────────────────────────── tabelas ─────────────────────────── */
+
+table{width:100%;border-collapse:collapse;margin:8px 0 14px;font-family:var(--sans);
+  font-size:16.5px}
+th{background:none;text-align:left;padding:0 10px 6px 0;
+  border-bottom:2px solid var(--tinta);font-size:10.5px;text-transform:uppercase;
+  letter-spacing:1.3px;font-weight:700;color:var(--tinta2)}
+td{padding:7px 10px 7px 0;border-bottom:1px solid var(--linha);vertical-align:top;
+  line-height:1.36}
+tbody tr:last-child td{border-bottom:1px solid var(--linha2)}
+table.sm{font-size:15px}table.sm td,table.sm th{padding:5px 8px 5px 0}
+table.xs{font-size:13.5px}table.xs td,table.xs th{padding:4px 7px 4px 0}
+
+/* painel laboratorial */
+.lab{width:100%;border-collapse:collapse;font-family:var(--sans);font-size:16.5px}
+.lab th{padding:0 8px 5px 0;border-bottom:2px solid var(--tinta);
+  font-size:10px;letter-spacing:1.3px}
+.lab td{padding:6px 8px 6px 0;border-bottom:1px solid var(--linha);
+  vertical-align:baseline}
+.lab td:first-child{width:47%}
+.lab td.v{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap;
+  color:var(--tinta)}
+.lab td.r{color:var(--tinta3);font-size:13.5px;white-space:nowrap;text-align:right}
+.lab tr.alt td.v{color:var(--alterado)}
+.lab tr.crit td.v{color:var(--grave);font-weight:700}
+/* a marca do fora-da-referência é um filete na margem, não um fundo colorido */
+.lab tr.alt td:first-child{box-shadow:inset 3px 0 0 var(--alterado);padding-left:11px}
+.lab tr.crit td:first-child{box-shadow:inset 3px 0 0 var(--grave);padding-left:11px}
+
+.cap{font-family:var(--sans);font-size:10.5px;letter-spacing:1.7px;
+  text-transform:uppercase;font-weight:700;color:var(--tinta2);
+  margin:16px 0 5px;display:flex;align-items:center;gap:8px}
+.cap:first-child{margin-top:0}
+.cap::after{content:"";flex:1;height:1px;background:var(--linha)}
+
+/* tela de sistema — sem moldura de cartão, só a faixa de papel */
+.screen .body{background:transparent;border:none;padding:0}
+
+/* sinais vitais */
+.vitals{display:flex;flex-wrap:wrap;gap:0;margin:12px 0 14px;
+  border-top:1px solid var(--linha);border-bottom:1px solid var(--linha)}
+.vitals span{font-family:var(--sans);font-size:16px;font-weight:500;
+  padding:9px 18px 9px 0;margin-right:18px;color:var(--tinta2);
+  font-variant-numeric:tabular-nums}
+.vitals span b{color:var(--grave);font-weight:700}
+
+/* ─────────────────────────── figuras ─────────────────────────── */
+
+/* Imagem médica em fundo escuro: é como ela é lida no negatoscópio, e num
+   datashow fraco o escuro segura o contraste que o branco perde. */
+figure{margin:0 0 12px;background:var(--escuro);padding:14px 14px 0;
+  position:relative}
+figure img{max-width:100%;height:var(--fh);object-fit:contain;display:block;
+  margin:0 auto;background:#000}
+figcaption{font-family:var(--sans);font-size:12.5px;color:var(--sobre-escuro2);
+  line-height:1.44;text-align:left;padding:10px 2px 12px;
+  border-top:1px solid rgba(255,255,255,.1);margin-top:12px}
+.cred{display:block;font-size:10.5px;color:#6f6a62;margin-top:3px;
+  letter-spacing:.3px}
+.figrow{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.figrow figure{margin:0}
+
+/* figura anotada: a sobreposição entra depois, com um respiro */
+figure.an .ib{position:relative;display:block;line-height:0}
+figure.an .ib img{height:var(--fh)}
+figure.an .ib svg.ov{position:absolute;inset:0;width:100%;height:100%;
+  pointer-events:none}
+svg.ov.rvov{opacity:0;transition:opacity .5s ease}
 svg.ov.rvov.on{opacity:1}
-figcaption .capin{display:none}
+figcaption .capin{display:none;color:#ffd08a}
 figure.an.on figcaption .capin{display:inline}
+/* dica de que há o que revelar */
+figure.an::after{content:"clique para anotar";position:absolute;right:14px;top:14px;
+  font-family:var(--sans);font-size:9.5px;letter-spacing:1.4px;
+  text-transform:uppercase;color:rgba(255,255,255,.4);
+  border:1px solid rgba(255,255,255,.2);padding:3px 8px;transition:opacity .3s}
+figure.an.on::after{opacity:0}
+figure.an{cursor:pointer}
+
+/* desenho autoral: fundo claro, é esquema e não fotografia */
+figure.dz{background:var(--papel2);padding:12px 12px 0}
+figure.dz svg{display:block;width:100%;height:var(--fh)}
+figure.dz figcaption{color:var(--tinta2);border-top-color:var(--linha)}
+figure.dz .cred{color:var(--tinta3)}
+
+/* ─────────────────────────── pergunta ─────────────────────────── */
+
+.q{justify-content:center}
+.q .qn{font-family:var(--sans);font-size:11px;letter-spacing:2.6px;
+  text-transform:uppercase;color:var(--sangue);font-weight:700}
+.q h2{font-size:37px;margin:10px 0 6px;max-width:26ch;line-height:1.14}
+.qhint{font-family:var(--sans);font-size:11.5px;color:var(--tinta3);
+  letter-spacing:1.4px;margin:0 0 16px;text-transform:uppercase}
+.qhint b{color:var(--tinta2);font-weight:700}
+.qhint .cnt{display:inline-block;margin-left:12px;font-size:11.5px;font-weight:700;
+  letter-spacing:1.1px;color:var(--clinico);border-bottom:1.5px solid var(--clinico);
+  padding-bottom:1px;transition:color .2s,border-color .2s}
+.qhint .cnt.cheio{color:var(--sangue);border-color:var(--sangue)}
+
+/* Alternativa: linha de lista, não cartão. O estado marcado é uma régua
+   grossa na margem e a tinta cheia — sem preenchimento colorido. */
+.alts{list-style:none;margin:0;max-width:none;display:flex;flex-direction:column;
+  gap:0;border-top:1px solid var(--linha)}
+.alts li{border:none;border-bottom:1px solid var(--linha);padding:13px 14px 13px 0;
+  font-size:20px;cursor:pointer;display:flex;gap:15px;align-items:baseline;
+  background:none;margin:0;color:var(--tinta2);
+  transition:color .16s,box-shadow .16s,padding-left .16s;position:relative}
+.alts li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:0;
+  background:var(--sangue);transition:width .16s}
+.alts li:hover{color:var(--tinta)}
+.alts li:hover::before{width:2px}
+.alts li.sel{color:var(--tinta);padding-left:16px;font-weight:500}
+.alts li.sel::before{width:4px}
+.alts .k{font-family:var(--sans);font-weight:700;color:var(--tinta3);
+  min-width:17px;font-size:14px;letter-spacing:.6px;transition:color .16s}
+.alts li:hover .k,.alts li.sel .k{color:var(--sangue)}
+.alts.multi li.sel .k::after{content:"·";margin-left:3px}
+.alts.duas{display:grid;grid-template-columns:1fr 1fr;grid-auto-flow:column;
+  gap:0 34px;align-content:start;border-top:none}
+.alts.duas li{border-top:1px solid var(--linha);border-bottom:none}
+
+/* ─────────────────────────── resposta ─────────────────────────── */
+
+.ans .body{display:flex;flex-direction:column;justify-content:center}
+.ans .tag{align-self:flex-start;font-family:var(--sans);font-size:10.5px;
+  font-weight:700;letter-spacing:2.2px;text-transform:uppercase;
+  color:var(--tinta2);padding:0 0 5px;border-bottom:2px solid var(--sangue);
+  margin-bottom:12px}
+.ans h2{color:var(--tinta);font-size:34px;letter-spacing:-.2px}
+.ans h2::before{content:"Alternativa ";font-family:var(--sans);font-size:14px;
+  font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--tinta3);display:block;margin-bottom:2px}
+
+/* Certo e errado em sinal sóbrio: régua na margem e peso de tinta.
+   Nada de verde e vermelho saturados de quiz. */
+.alts.fb{border-top:1px solid var(--linha)}
+.alts.fb li{cursor:default;align-items:flex-start;padding:10px 0 10px 14px;gap:13px}
+.alts.fb li:hover{color:inherit}
+.alts.fb li::before{width:3px;background:var(--linha)}
+.alts.fb li:hover::before{width:3px}
+.alts.fb .ft{flex:1;min-width:0}
+.alts.fb .tt{font-size:18.5px;line-height:1.34;margin-bottom:3px}
+.alts.fb .wy{font-size:16px;line-height:1.42;color:var(--tinta2);
+  font-family:var(--serifa)}
+.alts.fb .mk{font-family:var(--sans);font-size:15px;font-weight:700;line-height:1;
+  margin-top:4px}
+.alts.fb li.ok{color:var(--tinta)}
+.alts.fb li.ok::before{width:4px;background:var(--certo)}
+.alts.fb li.ok .k,.alts.fb li.ok .mk{color:var(--certo)}
+.alts.fb li.ok .tt{font-weight:600}
+.alts.fb li.no{color:var(--tinta3)}
+.alts.fb li.no .k,.alts.fb li.no .mk{color:var(--linha2)}
+.alts.fb li.no .tt{color:var(--tinta2)}
+.alts.fb li.no .wy{color:var(--tinta3)}
+.alts.fb.duas li{padding:8px 0 8px 12px}
+.alts.fb.duas .tt{font-size:16.5px;line-height:1.26}
+.alts.fb.duas .wy{font-size:14.5px;line-height:1.32}
+
+/* ─────────────────────────── revelação ─────────────────────────── */
+
+.rv{margin:12px 0}
+/* Uma linha à espera, como um trecho ainda não impresso. */
+.rv-ph{display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none;
+  border:none;border-top:2px solid var(--linha2);
+  border-bottom:1px solid var(--linha);padding:10px 2px;background:none;
+  transition:border-color .18s}
+.rv-ph:hover{border-top-color:var(--sangue)}
+.rv-ic{display:inline-flex;align-items:center;justify-content:center;
+  width:21px;height:21px;border:1.5px solid var(--sangue);color:var(--sangue);
+  font-family:var(--sans);font-size:13px;font-weight:700;flex:none;line-height:1;
+  transition:background .18s,color .18s}
+.rv-ph:hover .rv-ic{background:var(--sangue);color:#fff}
+.rv-lb{font-family:var(--sans);font-size:11.5px;font-weight:700;letter-spacing:1.9px;
+  text-transform:uppercase;color:var(--tinta2)}
+.rv-ph:hover .rv-lb{color:var(--sangue)}
+.rv-in{display:none}
+.rv.on>.rv-in{display:block;animation:sobe .38s cubic-bezier(.2,.7,.3,1)}
+.rv.on>.rv-ph{display:none}
+.pv{display:none}
+.pv.on{display:block;animation:sobe .38s cubic-bezier(.2,.7,.3,1)}
+@keyframes sobe{
+  from{opacity:0;transform:translateY(9px)}
+  to{opacity:1;transform:none}
+}
+
+/* laudo revelado: destacado como citação de documento */
+.rv-in>p:first-child{border-left:3px solid var(--sangue);padding-left:16px;
+  font-style:italic;color:var(--tinta)}
+
+/* tabela velada */
 table.oc tbody tr.hid{cursor:pointer}
 table.oc tbody tr.hid .vv{display:none}
 table.oc tbody tr .dots{display:none}
-table.oc tbody tr.hid .dots{display:inline;color:#c8c1b2;letter-spacing:3px;font-weight:700}
-table.oc tbody tr.hid:hover td{background:#f2eee4}
-table.oc tbody tr:not(.hid) .vv{animation:rvin .25s ease;display:inline}
+table.oc tbody tr.hid .dots{display:inline;color:var(--linha2);letter-spacing:2px;
+  font-weight:400}
+table.oc tbody tr.hid:hover td{background:var(--papel2)}
+table.oc tbody tr.hid:hover td:first-child{color:var(--sangue)}
+table.oc tbody tr:not(.hid) .vv{animation:sobe .3s ease;display:inline}
+
 /* contador de etapas */
-#etapas{position:absolute;right:56px;bottom:38px;display:none;gap:6px;align-items:center;z-index:5}
+#etapas{position:absolute;right:68px;bottom:38px;display:none;gap:5px;
+  align-items:center;z-index:5}
 #etapas.on{display:flex}
-#etapas i{width:8px;height:8px;border-radius:50%;background:#dcd6c9;display:block;
- box-shadow:inset 0 0 0 1px rgba(0,0,0,.07);transition:background .2s}
-#etapas i.f{background:var(--red)}
-.cover #etapas i,.mom #etapas i{background:rgba(255,255,255,.3)}
-/* ─────── gaveta de exames ─────── */
-#gav{position:fixed;top:0;right:0;bottom:0;width:520px;background:#faf9f6;z-index:60;
- box-shadow:-14px 0 50px rgba(0,0,0,.45);transform:translateX(102%);transition:transform .28s ease;
- display:flex;flex-direction:column;font-size:15px;color:var(--ink)}
-#gav.on{transform:none}
-#gav .gh{padding:18px 22px 14px;border-bottom:1px solid var(--line);background:#fff}
-#gav .gt{font-size:12px;letter-spacing:2.4px;text-transform:uppercase;color:var(--red);
- font-weight:800;margin-bottom:9px}
-#gav .gsub{font-size:13.5px;color:var(--mut);line-height:1.45;margin-bottom:12px}
-#gav input#q{width:100%;font:inherit;font-size:19px;padding:11px 14px;border:1.5px solid #c9c2b3;
- border-radius:7px;background:#fff;outline:none}
-#gav input#q:focus{border-color:var(--blue)}
-#gav .gb{flex:1;overflow:auto;padding:14px 22px 26px}
-#gav .gb::-webkit-scrollbar{width:7px}#gav .gb::-webkit-scrollbar-thumb{background:#cfcabf;border-radius:4px}
-.sug{padding:9px 12px;border-radius:6px;cursor:pointer;display:flex;justify-content:space-between;
- gap:10px;align-items:baseline}
-.sug:hover,.sug.k{background:#eaf0f4}
-.sug b{font-weight:700}
-.sug span{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.7px;flex:none}
-.card{border:1px solid var(--line);border-radius:9px;background:#fff;padding:16px 18px;margin-bottom:14px}
-.card .cn{font-size:19px;font-weight:800;line-height:1.25;margin-bottom:3px}
-.card .cc{font-size:11.5px;text-transform:uppercase;letter-spacing:1.4px;color:var(--mut);
- font-weight:800;margin-bottom:11px}
-.card .cr{font-size:23px;font-weight:800;line-height:1.3;margin-bottom:5px}
-.card .cf{font-size:13.5px;color:var(--mut);margin-bottom:10px}
-.card .cr.alt{color:var(--red)}
-.card .cf b{font-size:11px;text-transform:uppercase;letter-spacing:1.3px;font-weight:800;
- color:#a29a8c;margin-right:5px}
-.hist{margin-top:6px;border-top:1px solid var(--line);padding-top:12px}
-.hist .ht{font-size:11.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut);
- font-weight:800;margin-bottom:8px}
-.hist ol{margin:0 0 0 20px;font-size:14px;line-height:1.6}
-.vazio{color:var(--mut);font-size:14.5px;line-height:1.55;padding:8px 2px}
-#gavb{position:fixed;right:16px;top:14px;z-index:50;background:var(--blue);color:#fff;
- border:none;border-radius:22px;padding:9px 18px;font:inherit;font-size:13px;font-weight:700;
- letter-spacing:.6px;cursor:pointer;opacity:.5;transition:opacity .2s}
-#gavb:hover{opacity:1}
-/* ─────── modo de edição ─────── */
-#edt{position:fixed;top:0;left:0;right:0;z-index:70;background:#8c2f22;color:#fff;
- display:none;align-items:center;gap:16px;padding:9px 18px;font-size:13.5px;letter-spacing:.3px}
-#edt.on{display:flex}
-#edt b{font-weight:800;letter-spacing:1.4px;text-transform:uppercase;font-size:11.5px}
-#edt .sp{flex:1}
-#edt button{font:inherit;font-size:13px;font-weight:700;border:1px solid rgba(255,255,255,.5);
- background:transparent;color:#fff;border-radius:5px;padding:5px 13px;cursor:pointer}
-#edt button:hover{background:rgba(255,255,255,.16)}
-body.editando #stage{outline:3px solid #8c2f22;outline-offset:3px}
-body.editando .slide.on [contenteditable]:focus{outline:2px solid #d08a7c;outline-offset:2px;
- background:#fffdf7}
-/* ─────── impressão: nada fica escondido ─────── */
+#etapas i{width:14px;height:2px;background:var(--linha2);display:block;
+  transition:background .22s,width .22s}
+#etapas i.f{background:var(--sangue);width:14px}
+.cover #etapas i,.mom #etapas i{background:rgba(255,255,255,.25)}
+.cover #etapas i.f,.mom #etapas i.f{background:var(--sangue2)}
+
+/* ─────────────────────────── linha do tempo ─────────────────────────── */
+
+.tl{margin:16px 0 10px;position:relative;padding-left:0}
+.tl::before{content:"";position:absolute;left:0;right:0;top:11px;height:2px;
+  background:var(--linha)}
+.tl .marcos{display:grid;gap:0;position:relative}
+.tl .m{position:relative;padding:30px 16px 0 0}
+.tl .m::before{content:"";position:absolute;left:0;top:5px;width:13px;height:13px;
+  border-radius:50%;background:var(--papel);border:2.5px solid var(--linha2);
+  transition:border-color .3s,background .3s;z-index:2}
+.tl .m .qd{font-family:var(--sans);font-size:10.5px;font-weight:700;
+  letter-spacing:1.4px;text-transform:uppercase;color:var(--tinta3);
+  margin-bottom:5px;transition:color .3s}
+.tl .m .oq{font-size:16px;line-height:1.38;color:var(--tinta2);max-width:26ch}
+.tl .m.on::before{border-color:var(--sangue);background:var(--sangue)}
+.tl .m.on .qd{color:var(--sangue)}
+.tl .m.on .oq{color:var(--tinta)}
+.tl .m.agora::before{box-shadow:0 0 0 4px rgba(142,43,27,.18)}
+
+/* ─────────────────────────── mapa de territórios ─────────────────────────── */
+
+.mapa{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center}
+.mapa .fig{position:relative}
+.mapa svg{display:block;height:var(--mh,340px);width:auto}
+/* O território e o marco de linha do tempo são passos de revelação, mas não
+   podem sumir do layout enquanto esperam: senão a figura salta a cada passo.
+   Ficam sempre no lugar e revelam por opacidade. */
+.mapa .terr.pv,.tl .m.pv{display:block;animation:none}
+.mapa .terr{cursor:pointer}
+.mapa .terr .marca{opacity:0;transition:opacity .4s}
+.mapa .terr.on .marca{opacity:1}
+.mapa .terr .halo{opacity:0;transition:opacity .4s}
+.mapa .terr.on .halo{opacity:1}
+.mapa .legenda{display:flex;flex-direction:column;gap:0}
+.mapa .lt{border-top:1px solid var(--linha);padding:10px 0 10px 15px;
+  position:relative;cursor:pointer;transition:color .2s}
+.mapa .lt::before{content:"";position:absolute;left:0;top:0;bottom:0;width:0;
+  background:var(--sangue);transition:width .2s}
+.mapa .lt .nm{font-family:var(--sans);font-size:11px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;color:var(--tinta3);
+  margin-bottom:3px;transition:color .2s}
+.mapa .lt .ds{font-size:16.5px;line-height:1.36;color:var(--tinta3);
+  transition:color .2s}
+.mapa .lt.on::before{width:3px}
+.mapa .lt.on .nm{color:var(--sangue)}
+.mapa .lt.on .ds{color:var(--tinta)}
+.mapa .lt:hover .ds{color:var(--tinta2)}
+
+/* ─────────────────────────── comparação lado a lado ─────────────────────────── */
+
+.comp{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:14px 0;
+  border-top:2px solid var(--tinta)}
+.comp>div{padding:12px 20px 12px 0}
+.comp>div+div{border-left:1px solid var(--linha);padding-left:24px}
+.comp .ct{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.6px;
+  text-transform:uppercase;color:var(--sangue);margin-bottom:8px}
+.comp p,.comp li{font-size:17px;line-height:1.44}
+
+/* ─────────────────────────── densidades ─────────────────────────── */
+
+.dense .body p,.dense .body ul,.dense .body ol{font-size:17px;line-height:1.44}
+.dense .body h3{font-size:12px;margin:13px 0 6px}
+.dense .box{margin:12px 0}
+.dense .box p,.dense .box li{font-size:15.5px;line-height:1.4}
+.dense .box .bt{font-size:10.5px;margin-bottom:5px}
+.dense .cols{gap:26px}
+.dense .alts.fb li{padding:8px 0 8px 12px}
+.dense .alts.fb .tt{font-size:17px}
+.dense .alts.fb .wy{font-size:15px}
+.dense table{font-size:15px}
+.dense .lab{font-size:15.5px}
+.dense .lab td{padding:5px 8px 5px 0}
+
+.xd .body p,.xd .body ul,.xd .body ol{font-size:15px;line-height:1.38}
+.xd .body h3{font-size:11px;margin:10px 0 5px}
+.xd .box{margin:9px 0}
+.xd .box p,.xd .box li{font-size:14px;line-height:1.36}
+.xd .box .bt{font-size:10px;margin-bottom:4px}
+.xd .cols{gap:22px}
+.xd table{font-size:13.5px}.xd table td,.xd table th{padding:4px 7px 4px 0}
+.xd table.sm{font-size:12.5px}
+.xd table.xs{font-size:12px}
+.xd .lab{font-size:13.5px}.xd .lab td{padding:4px 6px 4px 0}
+.xd .lab td.r{font-size:12px}
+.xd .alts.fb li{padding:6px 0 6px 11px}
+.xd .alts.fb .tt{font-size:15.5px;line-height:1.26}
+.xd .alts.fb .wy{font-size:13.5px;line-height:1.3}
+.xd .vitals span{font-size:14px;padding:6px 14px 6px 0}
+.xd figcaption{font-size:11.5px;padding:7px 2px 9px}
+.xd .cap{font-size:9.5px;margin:11px 0 4px}
+.xd h2{font-size:34px;margin-bottom:11px}
+.xd .mapa .lt .ds{font-size:14.5px}
+.xd .tl .m .oq{font-size:14px}
+
+/* ─────────────────────────── nota do apresentador ─────────────────────────── */
+
+.pnote{display:none}
 @media print{
- .rv-in{display:block!important}.rv-ph{display:none!important}
- .pv{display:block!important}
- svg.ov.rvov{opacity:1!important}
- figcaption .capin{display:inline!important}
- table.oc tbody tr .vv{display:inline!important}
- table.oc tbody tr .dots{display:none!important}
- #gav,#gavb,#edt,#etapas{display:none!important}
+  .pnote{display:block;border-top:1px dashed var(--linha2);
+    border-bottom:1px dashed var(--linha2);padding:9px 0;margin:12px 0;
+    background:none}
+  .pnote .bt{display:block;font-family:var(--sans);font-size:9.5px;
+    text-transform:uppercase;letter-spacing:1.6px;font-weight:700;
+    color:var(--tinta3);margin-bottom:5px}
+  .pnote .bt::before{content:"Nota do apresentador · "}
+  .pnote p{font-size:15px;line-height:1.42;color:var(--tinta2)}
+}
+
+/* ─────────────────────────── ajuda ─────────────────────────── */
+
+#help{transition:opacity .5s;position:fixed;right:18px;bottom:15px;
+  color:#6d675d;font-size:10.5px;letter-spacing:1.1px;font-family:var(--mono);
+  text-transform:uppercase}
+
+/* ─────────────────────────── visão geral ─────────────────────────── */
+
+#grid{position:fixed;inset:0;background:#0d0c0a;display:none;overflow:auto;
+  padding:34px 40px;z-index:9}
+#grid.on{display:block}
+#grid .g{display:grid;grid-template-columns:repeat(6,1fr);gap:13px;
+  max-width:1400px;margin:0 auto}
+#grid .t{background:var(--papel);padding:11px 12px;font-family:var(--sans);
+  font-size:10px;cursor:pointer;height:88px;overflow:hidden;line-height:1.3;
+  border:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+  transition:transform .14s,box-shadow .14s;position:relative}
+#grid .t:hover{transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(0,0,0,.5),inset 0 0 0 2px var(--sangue)}
+#grid .t .n{color:var(--sangue);font-weight:700;font-size:9px;letter-spacing:1.4px;
+  font-variant-numeric:tabular-nums}
+#grid .t b{display:block;margin-top:4px;font-size:11px;line-height:1.28;
+  font-weight:600;color:var(--tinta);font-family:var(--serifa)}
+
+/* ─────────────────────────── gaveta de exames ─────────────────────────── */
+
+#gav{position:fixed;top:0;right:0;bottom:0;width:520px;background:var(--papel);
+  z-index:60;box-shadow:-1px 0 0 var(--linha2),-18px 0 60px rgba(0,0,0,.4);
+  transform:translateX(102%);transition:transform .3s cubic-bezier(.2,.7,.3,1);
+  display:flex;flex-direction:column;font-size:15px;color:var(--tinta);
+  font-family:var(--sans)}
+#gav.on{transform:none}
+#gav .gh{padding:22px 26px 16px;border-bottom:2px solid var(--tinta)}
+#gav .gt{font-size:11px;letter-spacing:2.6px;text-transform:uppercase;
+  color:var(--sangue);font-weight:700;margin-bottom:10px}
+#gav .gsub{font-size:12.5px;color:var(--tinta2);line-height:1.5;margin-bottom:14px}
+#gav input#q{width:100%;font-family:var(--serifa);font-size:20px;padding:10px 0;
+  border:none;border-bottom:2px solid var(--linha2);background:none;outline:none;
+  color:var(--tinta);transition:border-color .18s}
+#gav input#q:focus{border-bottom-color:var(--sangue)}
+#gav input#q::placeholder{color:var(--tinta3);font-style:italic}
+#gav .gb{flex:1;overflow:auto;padding:16px 26px 30px}
+#gav .gb::-webkit-scrollbar{width:6px}
+#gav .gb::-webkit-scrollbar-thumb{background:var(--linha2)}
+
+.sug{padding:9px 0;border-bottom:1px solid var(--linha);cursor:pointer;
+  display:flex;justify-content:space-between;gap:10px;align-items:baseline;
+  transition:padding-left .16s,color .16s}
+.sug:hover,.sug.k{padding-left:8px;color:var(--sangue)}
+.sug b{font-weight:600;font-size:15px}
+.sug span{font-size:10px;color:var(--tinta3);text-transform:uppercase;
+  letter-spacing:1.2px;flex:none}
+
+.card{border:none;border-top:3px solid var(--tinta);padding:14px 0 16px;
+  margin-bottom:18px}
+.card .cn{font-family:var(--serifa);font-size:21px;font-weight:600;line-height:1.22;
+  margin-bottom:3px}
+.card .cc{font-size:10px;text-transform:uppercase;letter-spacing:1.6px;
+  color:var(--tinta3);font-weight:700;margin-bottom:14px}
+.card .cr{font-size:24px;font-weight:600;line-height:1.32;margin-bottom:7px;
+  font-variant-numeric:tabular-nums;color:var(--tinta)}
+.card .cr.alt{color:var(--grave)}
+.card .cf{font-size:13px;color:var(--tinta2);padding-top:8px;
+  border-top:1px solid var(--linha)}
+.card .cf b{font-size:9.5px;text-transform:uppercase;letter-spacing:1.5px;
+  font-weight:700;color:var(--tinta3);margin-right:7px}
+
+.hist{margin-top:20px;border-top:1px solid var(--linha);padding-top:14px}
+.hist .ht{font-size:10px;letter-spacing:1.8px;text-transform:uppercase;
+  color:var(--tinta3);font-weight:700;margin-bottom:9px}
+.hist ol{margin:0;font-size:13.5px;line-height:1.6;list-style:none}
+.hist li{padding-left:16px;margin-bottom:2px;color:var(--tinta2)}
+.hist ol>li::before{content:"·";color:var(--linha2);left:4px;font-size:14px}
+.vazio{color:var(--tinta2);font-size:14px;line-height:1.6;padding:6px 0}
+.vazio b{color:var(--tinta)}
+
+#gavb{position:fixed;right:18px;top:16px;z-index:50;background:none;
+  color:var(--sobre-escuro2);border:1px solid rgba(255,255,255,.22);
+  padding:8px 16px;font-family:var(--sans);font-size:10.5px;font-weight:700;
+  letter-spacing:1.6px;text-transform:uppercase;cursor:pointer;opacity:.45;
+  transition:opacity .2s,background .2s,color .2s}
+#gavb:hover{opacity:1;background:var(--sangue);color:#fff;border-color:var(--sangue)}
+
+/* ─────────────────────────── modo de edição ─────────────────────────── */
+
+#edt{position:fixed;top:0;left:0;right:0;z-index:70;background:var(--sangue);
+  color:#fff;display:none;align-items:center;gap:16px;padding:10px 20px;
+  font-family:var(--sans);font-size:13px}
+#edt.on{display:flex}
+#edt b{font-weight:700;letter-spacing:1.6px;text-transform:uppercase;font-size:11px}
+#edt .sp{flex:1}
+#edt button{font-family:var(--sans);font-size:12px;font-weight:600;
+  border:1px solid rgba(255,255,255,.45);background:none;color:#fff;
+  padding:5px 14px;cursor:pointer;letter-spacing:.4px}
+#edt button:hover{background:rgba(255,255,255,.16)}
+body.editando #stage{outline:3px solid var(--sangue);outline-offset:4px}
+body.editando .slide.on [contenteditable]:focus{outline:2px solid var(--sangue2);
+  outline-offset:3px;background:#fffdf5}
+
+/* ─────────────────────────── impressão ─────────────────────────── */
+
+@media print{
+  @page{size:1280px 720px;margin:0}
+  html,body{overflow:visible!important;background:#fff;height:auto}
+  #wrap{position:static!important;display:block}
+  #help,#grid,.bar,#gav,#gavb,#edt,#etapas{display:none!important}
+  #stage{width:1280px!important;height:auto!important;transform:none!important;
+    box-shadow:none;overflow:visible!important;position:static!important}
+  .slide{display:flex!important;position:relative!important;inset:auto!important;
+    width:1280px;height:720px;page-break-after:always;break-after:page;
+    animation:none}
+  .slide:last-child{page-break-after:auto}
+  .body{overflow:visible!important}
+  .rv-in{display:block!important}.rv-ph{display:none!important}
+  .pv{display:block!important}
+  svg.ov.rvov{opacity:1!important}
+  figure.an::after{display:none!important}
+  figcaption .capin{display:inline!important}
+  table.oc tbody tr .vv{display:inline!important}
+  table.oc tbody tr .dots{display:none!important}
+  .tl .m::before{border-color:var(--sangue)!important;background:var(--sangue)!important}
+  .tl .m .qd{color:var(--sangue)!important}
+  .tl .m .oq{color:var(--tinta)!important}
+  .mapa .terr .marca,.mapa .terr .halo{opacity:1!important}
+  .mapa .lt .nm{color:var(--sangue)!important}
+  .mapa .lt .ds{color:var(--tinta)!important}
+  .mapa .lt::before{width:3px!important}
 }

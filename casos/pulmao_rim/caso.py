@@ -11,8 +11,12 @@ Títulos são substantivos simples, sem efeito.
 from pathlib import Path
 
 from motor.conteudo import (
-    box, cap, cols, exame, figura, h3, lista, nota, p, painel, passo,
-    revelar, sinais, tabela,
+    box, cap, circulo, cols, exame, figura, figura_anotada, h3, lista, nota, p,
+    painel, passo, revelar, rotulo, seta, sinais, tabela,
+)
+from motor.desenhos import (
+    capilar_compartilhado, comparacao, crescente_glomerular, linha_do_tempo,
+    mapa_do_corpo, marco, padroes_imunofluorescencia,
 )
 from motor.slides import bloco, capa, discussao, narrativa, tela
 
@@ -70,7 +74,33 @@ SLIDES = [
                 "ocupacional. As únicas medicações em uso eram losartana e "
                 "sinvastatina. Não usava hidralazina, propiltiouracila ou "
                 "minociclina.")),
-        densidade="dense",
+        densidade="xd",
+    ),
+    bloco("O caso · bloco 1", "Curso de oito semanas",
+        linha_do_tempo([
+            marco("8 semanas antes",
+                  "Rinorreia purulenta, crostas nasais, epistaxe quase diária. "
+                  "Perda do olfato. Dois cursos de antibiótico, sem melhora."),
+            marco("5 semanas antes",
+                  "Artralgia migratória, febre vespertina, sudorese noturna, "
+                  "perda de 6 kg. Cansaço aos esforços habituais."),
+            marco("2 semanas antes",
+                  "Tosse seca que passa a ter raias de sangue. Radiografia de "
+                  "tórax lida como normal; alta com antitussígeno."),
+            marco("10 dias antes",
+                  "Passa a arrastar o pé direito — queixa que ele não menciona."),
+            marco("3 dias antes",
+                  "Dispneia em repouso. Cerca de 50 mL de sangue vivo em duas "
+                  "ocasiões.", agora=True),
+        ]),
+        box("O que a régua mostra",
+            p("A doença não começou no pulmão. Começou na via aérea superior, "
+              "passou pelas articulações e pelo estado geral, e só nas duas "
+              "últimas semanas chegou ao alvéolo. Oito semanas é tempo demais "
+              "para infecção aguda e tempo de menos para doença crônica "
+              "estabelecida."),
+            tipo="pausa"),
+        centro=True,
     ),
     narrativa("O caso · bloco 2", "Exame físico",
         p("Ao exame, a temperatura era de 37,8 °C, a pressão arterial de "
@@ -104,6 +134,28 @@ SLIDES = [
             p("Antes de mostrar a pergunta, peça à turma que nomeie os "
               "territórios acometidos. São quatro: via aérea superior, "
               "pulmão, pele e nervo periférico. O rim ainda não apareceu.")),
+        densidade="xd",
+    ),
+    bloco("O caso · síntese do exame", "Territórios acometidos",
+        mapa_do_corpo([
+            ("via_aerea",
+             "Crostas hemáticas aderidas ao septo, mucosa friável, anosmia. "
+             "Sem perfuração septal e sem deformidade em sela."),
+            ("pulmao",
+             "Crepitações finas difusas nos dois hemitórax, saturação de 88% "
+             "em ar ambiente, hemoptise."),
+            ("pele",
+             "Púrpura palpável na face anterior das pernas e no dorso dos pés, "
+             "algumas lesões com centro escurecido."),
+            ("nervo",
+             "Pé caído à direita e déficit ulnar à esquerda. Assimétrico, sem "
+             "nível medular e sem raiz única: mononeurite múltipla."),
+        ], altura=344),
+        nota("Antes de avançar",
+            p("Revele um território por vez e peça à turma que nomeie o "
+              "seguinte antes de mostrar. São quatro. O rim ainda não "
+              "apareceu — e é justamente o que a próxima pergunta persegue.")),
+        densidade="dense",
     ),
     P1,
     discussao("Síndrome pulmão-rim",
@@ -261,9 +313,21 @@ SLIDES = [
     bloco("O caso · bloco 5", "Tomografia de tórax",
         cols(
             [
-                figura("tc_torax_vidro_fosco.jpg",
+                figura_anotada("tc_torax_vidro_fosco.jpg",
                     "Cortes axiais, coronal e sagital. Imagem ilustrativa.",
-                    "Hellerhoff · Wikimedia Commons · CC BY-SA 4.0", altura=330),
+                    "Hellerhoff · Wikimedia Commons · CC BY-SA 4.0",
+                    [
+                        rotulo(19, 4, "axial"),
+                        rotulo(67, 4, "coronal"),
+                        rotulo(70, 54, "sagital"),
+                        circulo(12, 13, 4),
+                        circulo(57, 22, 6, "atenuação em vidro fosco"),
+                    ],
+                    altura=318,
+                    legenda_anotada="Os círculos marcam áreas representativas "
+                                    "do padrão, difuso e bilateral nos três "
+                                    "planos. Não há nódulo escavado, massa, "
+                                    "derrame nem cardiomegalia."),
                 revelar("Laudo do radiologista",
                     p("“Opacidades em vidro fosco difusas e bilaterais, "
                       "confluentes em alguns lobos. Ausência de nódulo "
@@ -285,6 +349,7 @@ SLIDES = [
                       "de imunossuprimir.")),
             ],
         ),
+        densidade="dense",
     ),
     tela("O caso · bloco 6", "Broncoscopia com lavado broncoalveolar",
         cols(
@@ -356,9 +421,15 @@ SLIDES = [
                 ]),
             ],
             [
-                figura("panca_imunofluorescencia.jpg",
+                figura_anotada("panca_imunofluorescencia.jpg",
                     "Padrão p-ANCA. Imagem ilustrativa.",
-                    "Simon Caulton · Wikimedia Commons · CC BY-SA 3.0", altura=250),
+                    "Simon Caulton · Wikimedia Commons · CC BY-SA 3.0",
+                    [
+                        circulo(29.5, 30, 4),
+                        seta(40, 44, 32, 33, "fluorescência acompanhando os lóbulos do núcleo"),
+                    ],
+                    altura=240,
+                    legenda_anotada="Cada aglomerado é um neutrófilo fixado em etanol. A fluorescência se concentra junto aos lóbulos nucleares, e não difusa pelo citoplasma."),
                 revelar("O que a lâmina mostra",
                     p("Imunofluorescência indireta sobre neutrófilos fixados "
                       "em etanol, com conjugado marcado por fluoresceína. A "
@@ -375,9 +446,18 @@ SLIDES = [
     bloco("O caso · bloco 8", "Biópsia renal percutânea",
         cols(
             [
-                figura("biopsia_renal_crescente.jpg",
-                    "Hematoxilina-eosina, grande aumento. Imagem ilustrativa.",
-                    "Nephron · Wikimedia Commons · CC BY-SA 3.0", altura=330),
+                figura_anotada("biopsia_renal_crescente.jpg",
+                    "Córtex renal, grande aumento. Imagem ilustrativa.",
+                    "Nephron · Wikimedia Commons · CC BY-SA 3.0",
+                    [
+                        circulo(30, 45, 12, "glomérulo"),
+                        seta(90, 52, 79, 60, "túbulos e interstício"),
+                    ],
+                    altura=266,
+                    legenda_anotada="Glomérulos e compartimento "
+                                    "tubulointersticial. A crescente deste "
+                                    "paciente está no esquema abaixo, onde a "
+                                    "morfologia é inequívoca."),
                 revelar("Laudo do patologista",
                     p("“Vinte e quatro glomérulos amostrados, com crescentes "
                       "celulares em quinze deles, o que corresponde a 62%, e "
@@ -390,13 +470,10 @@ SLIDES = [
                       "linear ao longo da membrana basal glomerular.”")),
             ],
             [
-                box("Classificação de Berden",
-                    p("Com mais da metade dos glomérulos ocupados por "
-                      "crescentes celulares, a biópsia é de classe "
-                      "crescêntica. É a classe com maior potencial de "
-                      "recuperação da função renal sob tratamento, porque "
-                      "crescente celular é lesão ativa. Esclerose não "
-                      "responde.")),
+                box("Classe crescêntica",
+                    p("Mais da metade dos glomérulos ocupados por crescentes "
+                      "celulares. Guarde o número: ele volta na conversa sobre "
+                      "prognóstico renal.")),
                 box("Eletroneuromiografia, do mesmo dia",
                     p("Mononeuropatia múltipla de padrão axonal, com "
                       "comprometimento assimétrico do nervo fibular comum à "
@@ -404,7 +481,34 @@ SLIDES = [
                       "potenciais sensitivos nos mesmos territórios.")),
             ],
         ),
+        densidade="xd",
+    ),
+    bloco("O caso · bloco 8", "Crescente celular",
+        cols(
+            [crescente_glomerular(altura=248)],
+            [
+                box("O que a crescente é",
+                    p("Proliferação de células no espaço de Bowman, em resposta "
+                      "à ruptura da parede capilar. Ela ocupa o espaço, comprime "
+                      "o tufo e interrompe a filtração daquele glomérulo. É a "
+                      "lesão que explica queda de função renal em dias, e não "
+                      "em meses.")),
+                box("Por que a classe importa",
+                    p("Crescente **celular** é lesão ativa, e lesão ativa "
+                      "responde a imunossupressão. Crescente fibrosa e "
+                      "esclerose global não respondem: são cicatriz. A "
+                      "proporção entre uma coisa e outra é o que a "
+                      "classificação de Berden mede, e é de onde vem a "
+                      "estimativa de recuperação da função renal.")),
+                nota("Antes de avançar",
+                    p("Pergunte quantos por cento de crescentes eles esperam "
+                      "encontrar antes de revelar o laudo. A turma costuma "
+                      "subestimar — e a distância entre o palpite e os 62% é "
+                      "o que fixa a noção de urgência.")),
+            ],
+        ),
         densidade="dense",
+        ident="crescente_celular",
     ),
     P6,
     discussao("Classificação das vasculites associadas ao ANCA",
@@ -692,7 +796,7 @@ SLIDES = [
                     ]),
             ],
         ),
-        densidade="dense",
+        densidade="xd",
     ),
     bloco("Fontes e créditos", "Fontes, créditos e licenças",
         cols(
