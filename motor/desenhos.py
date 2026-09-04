@@ -10,6 +10,8 @@ as mesmas classes de revelação do motor, então o `→` e o clique já funcion
 
 from __future__ import annotations
 
+import math
+
 from .conteudo import texto
 
 TRACO = "#2a2620"
@@ -179,6 +181,25 @@ def mapa_do_corpo(territorios, altura: int = 350, passo_a_passo: bool = True) ->
 # ═══════════════════════ capilar glomerular × alveolar ═══════════════════════
 
 
+def _tufo(escala: float = 1.0, angulos=(-62, -31, 0, 31, 62)) -> str:
+    """Alças capilares em roseta, radiando do polo vascular na origem (0,0).
+
+    Desenhar o tufo como emaranhado de curvas vira borrão projetado. Alças
+    distintas, radiando de um ponto, é como o glomérulo é esquematizado — e
+    deixa claro o que a crescente comprime.
+    """
+    partes = []
+    for a in angulos:
+        r = math.radians(a)
+        d, rx, ry = 38 * escala, 37 * escala, 14 * escala
+        cx, cy = d * math.cos(r), d * math.sin(r)
+        partes.append(
+            f'<ellipse cx="{cx:.1f}" cy="{cy:.1f}" rx="{rx:.1f}" ry="{ry:.1f}" '
+            f'transform="rotate({a} {cx:.1f} {cy:.1f})"/>'
+        )
+    return "".join(partes)
+
+
 def capilar_compartilhado(altura: int = 300) -> str:
     """Por que pulmão e rim caem juntos: a mesma parede, nos dois órgãos.
 
@@ -197,7 +218,7 @@ def capilar_compartilhado(altura: int = 300) -> str:
   <!-- glomérulo -->
   <g fill="none" stroke="{TRACO}" stroke-width="1.5">
     <circle cx="160" cy="168" r="86"/>
-    <ellipse cx="137.8" cy="134.4" rx="37" ry="14" transform="rotate(-62 137.8 134.4)"/><ellipse cx="152.6" cy="148.4" rx="37" ry="14" transform="rotate(-31 152.6 148.4)"/><ellipse cx="158.0" cy="168.0" rx="37" ry="14" transform="rotate(0 158.0 168.0)"/><ellipse cx="152.6" cy="187.6" rx="37" ry="14" transform="rotate(31 152.6 187.6)"/><ellipse cx="137.8" cy="201.6" rx="37" ry="14" transform="rotate(62 137.8 201.6)"/>
+    <g transform="translate(120,168)">{_tufo()}</g>
     <path d="M40 152 L120 168 M40 190 L120 168"/>
     <circle cx="120" cy="168" r="3" fill="{TRACO}"/>
   </g>
@@ -244,38 +265,40 @@ def capilar_compartilhado(altura: int = 300) -> str:
 
 def crescente_glomerular(altura: int = 280) -> str:
     """Glomérulo normal ao lado de glomérulo com crescente celular."""
-    def rotulo(x, y, t, cor=None, tam=11.5, peso=600):
+    def rot(x, y, t, cor=None, tam=12, peso=600):
         return (
             f'<text x="{x}" y="{y}" text-anchor="middle" font-size="{tam}" '
             f'font-family="Helvetica Neue,Arial,sans-serif" font-weight="{peso}" '
             f'fill="{cor or TRACO}">{t}</text>'
         )
 
-    tufo = ('<path d="M-34 0 C-34 -26 -12 -38 4 -26 C20 -14 16 8 -2 14 '
-            'C-20 20 -34 16 -34 0 Z"/>'
-            '<path d="M36 -2 C36 -26 14 -38 -2 -26"/>'
-            '<path d="M-18 26 C4 38 30 32 40 16"/>')
-    svg = f"""<svg viewBox="0 0 560 280" xmlns="http://www.w3.org/2000/svg">
-  <g transform="translate(140,124)">
-    <circle r="86" fill="none" stroke="{TRACO}" stroke-width="1.5"/>
-    <g fill="none" stroke="{TRACO}" stroke-width="1.5">{tufo}</g>
-    <path d="M-118 0 L-86 0" fill="none" stroke="{TRACO}" stroke-width="1.5"/>
-  </g>
-  <g transform="translate(420,124)">
-    <circle r="86" fill="none" stroke="{TRACO}" stroke-width="1.5"/>
-    <!-- tufo comprimido -->
-    <g fill="none" stroke="{TRACO}" stroke-width="1.5" transform="translate(6,16) scale(.82)">
-      {tufo}
+    svg = f"""<svg viewBox="0 0 580 300" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(146,140)">
+    <circle r="88" fill="none" stroke="{TRACO}" stroke-width="1.5"/>
+    <g transform="translate(-46,0)" fill="none" stroke="{TRACO}" stroke-width="1.4">
+      {_tufo(1.05)}
     </g>
-    <!-- a crescente: proliferação no espaço de Bowman -->
-    <path d="M-86 0 A86 86 0 0 1 62 -60 L44 -40 A62 62 0 0 0 -62 0 Z"
-          fill="{MARCA}" opacity=".82"/>
-    <path d="M-118 0 L-86 0" fill="none" stroke="{TRACO}" stroke-width="1.5"/>
+    <path d="M-122 0 L-88 0" fill="none" stroke="{TRACO}" stroke-width="1.5"/>
+    <circle cx="-46" cy="0" r="3" fill="{TRACO}"/>
   </g>
-  {rotulo(140, 240, "Glomérulo normal")}
-  {rotulo(140, 256, "tufo livre no espaço de Bowman", FINO, 11, 400)}
-  {rotulo(420, 240, "Crescente celular")}
-  {rotulo(420, 256, "proliferação que comprime o tufo", FINO, 11, 400)}
+
+  <g transform="translate(434,140)">
+    <circle r="88" fill="none" stroke="{TRACO}" stroke-width="1.5"/>
+    <!-- a crescente ocupa o espaço de Bowman, longe do polo vascular -->
+    <path d="M-88 0 A88 88 0 0 1 62 -62 L40 -40 A57 57 0 0 0 -57 0 Z"
+          fill="{MARCA}" fill-opacity=".85"/>
+    <!-- o tufo, comprimido, sobra menor e empurrado para baixo -->
+    <g transform="translate(-44,18)" fill="none" stroke="{TRACO}" stroke-width="1.4">
+      {_tufo(0.74, (-38, -12, 15, 42))}
+    </g>
+    <path d="M-122 0 L-88 0" fill="none" stroke="{TRACO}" stroke-width="1.5"/>
+    <circle cx="-44" cy="18" r="3" fill="{TRACO}"/>
+  </g>
+
+  {rot(146, 262, "Glomérulo normal", None, 12.5)}
+  {rot(146, 280, "tufo livre no espaço de Bowman", FINO, 11, 400)}
+  {rot(434, 262, "Crescente celular", None, 12.5)}
+  {rot(434, 280, "proliferação que comprime o tufo", FINO, 11, 400)}
 </svg>"""
     return _fig_desenho(
         svg,
