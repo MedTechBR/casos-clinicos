@@ -50,10 +50,19 @@ nenhuma.
 | `→` `espaço` | revela o próximo passo; no fim do slide, avança |
 | `←` | volta um passo; no início, volta um slide |
 | `A` / `Z` | revela tudo / esconde tudo do slide |
+| `1` a `5` | conta os votos da turma na alternativa · `Shift`+número tira um |
+| `C` | zera a votação |
+| `Q` | pula para a próxima pergunta · `Shift+Q` volta para a anterior |
+| `T` | cronômetro da sessão |
 | `X` | gaveta de exames |
 | `O` | visão geral em miniaturas |
 | `E` | modo de edição · `Ctrl+S` baixa o HTML editado |
 | `F` | tela cheia |
+
+A votação é por levantamento de mão: você conta e digita. Não precisa de
+servidor, de celular nem de internet. O resultado acompanha para o slide de
+resposta, e a barra da alternativa certa fica verde-escura — a turma vê no que
+apostou antes de saber a resposta.
 
 ## Regras que não se discutem
 

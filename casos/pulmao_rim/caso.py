@@ -33,7 +33,7 @@ SLIDES = [
         "Homem de 63 anos com hemoptise, púrpura e queda de função renal",
         "Sintomas nasais, articulares, pulmonares e renais ao longo de oito "
         "semanas.",
-        "**10 blocos de caso · 9 perguntas · 80 a 100 minutos** O caso avança "
+        "**13 blocos de caso · 9 perguntas · 90 a 110 minutos** O caso avança "
         "em blocos de informação nova. As perguntas são curtas e servem para "
         "abrir discussão, não para testar memória.",
         "Caso autoral, construído para ensino. O paciente é ficcional. As "
@@ -158,13 +158,32 @@ SLIDES = [
         densidade="dense",
     ),
     P1,
+    discussao("A parede compartilhada",
+        cols(
+            [capilar_compartilhado(altura=252)],
+            [
+                p("O capilar glomerular e o capilar alveolar têm a mesma "
+                  "arquitetura: endotélio finíssimo apoiado em membrana basal, "
+                  "submetido a pressão, e responsável por filtrar de um lado e "
+                  "trocar gás do outro."),
+                p("Uma agressão dirigida a esse compartimento aparece nos dois "
+                  "órgãos ao mesmo tempo — e também na pele e no vasa nervorum, "
+                  "que são feitos do mesmo material. É por isso que os quatro "
+                  "territórios do exame físico e o rim caem juntos."),
+                nota("Antes de avançar",
+                    p("Pergunte por que o fígado e o baço não entram nessa "
+                      "lista. A resposta é a arquitetura do leito: sinusoide "
+                      "fenestrado não se comporta como capilar de barreira.")),
+            ],
+        ),
+        densidade="dense",
+        centro=True,
+        ident="parede_compartilhada",
+    ),
     discussao("Síndrome pulmão-rim",
-        p("O capilar glomerular e o capilar alveolar têm a mesma arquitetura: "
-          "uma parede finíssima apoiada em membrana basal, submetida a "
-          "pressão e responsável por filtrar ou por trocar gás. Uma agressão "
-          "dirigida a esse compartimento aparece nos dois órgãos ao mesmo "
-          "tempo. Por isso a lista de causas de hemorragia alveolar associada "
-          "a glomerulonefrite é curta."),
+        p("A lista de causas de hemorragia alveolar associada a "
+          "glomerulonefrite é curta, e cada uma delas deixa uma marca "
+          "própria fora do pulmão e do rim."),
         tabela(["Causa", "Mecanismo", "Complemento", "Achado que costuma acompanhar"], [
             ["Vasculite associada ao ANCA", "Vasculite necrosante pauci-imune de pequeno vaso", "Normal", "Púrpura palpável, mononeurite múltipla, via aérea superior"],
             ["Doença anti-membrana basal glomerular", "Anticorpo contra o colágeno tipo IV", "Normal", "Acometimento restrito a pulmão e rim"],
@@ -511,6 +530,28 @@ SLIDES = [
         ident="crescente_celular",
     ),
     P6,
+    discussao("Os três padrões da imunofluorescência",
+        cols(
+            [padroes_imunofluorescencia(altura=214)],
+            [
+                p("A imunofluorescência da biópsia renal não gradua a lesão: "
+                  "ela separa mecanismos. Depósito **linear** ao longo da "
+                  "membrana basal é anticorpo contra o colágeno tipo IV. "
+                  "Depósito **granular** é imunocomplexo. **Ausência** de "
+                  "depósito é o padrão pauci-imune da vasculite associada ao "
+                  "ANCA."),
+                box("Pauci-imune não é exame negativo",
+                    p("É o achado que fecha o diagnóstico. Quando o laudo diz "
+                      "que não há depósitos significativos, ele está afirmando "
+                      "alguma coisa, não deixando de afirmar. Vale insistir "
+                      "nisso com a turma: a ausência aqui tem valor "
+                      "diagnóstico positivo.")),
+            ],
+        ),
+        densidade="dense",
+        centro=True,
+        ident="padroes_if",
+    ),
     discussao("Classificação das vasculites associadas ao ANCA",
         p("Duas classificações convivem: uma clínica, pelo fenótipo, e outra "
           "sorológica, pelo antígeno reconhecido. Elas concordam na maioria "

@@ -319,6 +319,26 @@ figure.dz .cred{color:var(--tinta3)}
   gap:0 34px;align-content:start;border-top:none}
 .alts.duas li{border-top:1px solid var(--linha);border-bottom:none}
 
+/* votação da turma: barra sob a alternativa, sem cor de gráfico */
+.voto{position:absolute;left:0;right:0;bottom:0;height:3px;display:block;
+  pointer-events:none}
+.voto i{position:absolute;left:0;bottom:0;height:3px;width:0;
+  background:var(--clinico);transition:width .35s cubic-bezier(.2,.7,.3,1)}
+.voto em{position:absolute;right:0;bottom:6px;font-family:var(--sans);
+  font-size:11.5px;font-weight:700;font-style:normal;letter-spacing:.6px;
+  color:var(--clinico);font-variant-numeric:tabular-nums}
+.alts.votando li{padding-bottom:18px}
+/* o percentual fica na margem direita: sem esta reserva ele encavala na
+   justificativa da alternativa */
+.alts.votando .wy,.alts.votando li>span:last-of-type{padding-right:76px}
+.alts.fb .voto i{background:var(--linha2)}
+.alts.fb li.ok .voto i{background:var(--certo)}
+
+/* cronômetro da sessão */
+#cron{position:fixed;left:18px;bottom:15px;display:none;font-family:var(--mono);
+  font-size:12px;letter-spacing:1.6px;color:#6d675d;font-variant-numeric:tabular-nums}
+#cron.on{display:block}
+
 /* ─────────────────────────── resposta ─────────────────────────── */
 
 .ans .body{display:flex;flex-direction:column;justify-content:center}

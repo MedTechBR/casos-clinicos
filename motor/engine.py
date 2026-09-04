@@ -125,8 +125,9 @@ def montar(*, titulo, slug, rodape, slides, banco, img_dir: Path, css=None, js=N
     )
 
     ajuda = (
-        "&larr; &rarr; revelar e navegar &nbsp;·&nbsp; X pedir exame &nbsp;·&nbsp; "
-        "E editar &nbsp;·&nbsp; O visão geral &nbsp;·&nbsp; F tela cheia"
+        "&larr; &rarr; revelar &nbsp;·&nbsp; 1-5 votar &nbsp;·&nbsp; C limpar "
+        "&nbsp;·&nbsp; Q pergunta &nbsp;·&nbsp; X exame &nbsp;·&nbsp; T tempo "
+        "&nbsp;·&nbsp; O visão geral &nbsp;·&nbsp; E editar &nbsp;·&nbsp; F tela cheia"
     )
     barra_edicao = (
         '<div id="edt"><b>Modo de edição</b><span>clique em qualquer texto do slide e '
@@ -154,6 +155,7 @@ def montar(*, titulo, slug, rodape, slides, banco, img_dir: Path, css=None, js=N
         f'<div id="etapas" data-runtime></div></div></div>'
         f'<div id="grid"><div class="g">{miniaturas}</div></div>'
         f"{gaveta}"
+        f'<div id="cron" data-runtime></div>'
         f'<div id="help">{ajuda}</div>'
         f"<script type=\"application/json\" id=\"banco\" data-slug=\"{slug}\">"
         f"{json.dumps(banco, ensure_ascii=False).replace(chr(60) + chr(47), chr(60) + chr(92) + chr(47))}</script>"

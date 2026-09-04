@@ -134,6 +134,53 @@ def rodar(caminho: Path) -> int:
             pg.evaluate("document.querySelector('.slide.on .cnt').textContent"),
         )
 
+        # ── votação da turma ─────────────────────────────────────────────
+        pg.evaluate(f"show({i_q})")
+        pg.wait_for_timeout(120)
+        for tecla, n in [("1", 7), ("2", 3), ("4", 11), ("5", 2)]:
+            for _ in range(n):
+                pg.keyboard.press(tecla)
+        pg.wait_for_timeout(400)
+        votos = pg.evaluate(
+            "[...document.querySelectorAll('.slide.on .alts li')].map(l=>+l.dataset.votos||0)")
+        t.checa("1-5 registram voto por alternativa", votos == [7, 3, 0, 11, 2], str(votos))
+        t.checa("barra de votação aparece",
+                pg.evaluate("document.querySelectorAll('.slide.on .voto i').length") == 5)
+        pct = pg.evaluate(
+            "[...document.querySelectorAll('.slide.on .voto em')].map(e=>e.textContent)")
+        t.checa("percentual soma 100", "48%" in pct[3] and "30%" in pct[0], " / ".join(pct))
+        pg.keyboard.press("!")
+        pg.wait_for_timeout(200)
+        t.checa("Shift+número tira um voto",
+                pg.evaluate("+document.querySelector('.slide.on .alts li').dataset.votos") == 6)
+        pg.evaluate(f"show({i_q + 1})")
+        pg.wait_for_timeout(250)
+        t.checa("a votação acompanha para o slide de resposta",
+                pg.evaluate(
+                    "[...document.querySelectorAll('.slide.on .alts li')].map(l=>+l.dataset.votos||0)")
+                == [6, 3, 0, 11, 2])
+        pg.keyboard.press("c")
+        pg.wait_for_timeout(200)
+        t.checa("C zera a votação dos dois slides",
+                pg.evaluate("[...document.querySelectorAll('.alts li')].every(l=>!l.dataset.votos)"))
+
+        # ── cronômetro e salto entre perguntas ───────────────────────────
+        pg.keyboard.press("t")
+        pg.wait_for_timeout(1200)
+        t.checa("T liga o cronômetro",
+                ":" in pg.evaluate("document.getElementById('cron').textContent"),
+                pg.evaluate("document.getElementById('cron').textContent"))
+        pg.keyboard.press("t")
+        pg.wait_for_timeout(200)
+        t.checa("T desliga o cronômetro",
+                not pg.evaluate("document.getElementById('cron').classList.contains('on')"))
+        pg.evaluate("show(0)")
+        pg.keyboard.press("q")
+        pg.wait_for_timeout(200)
+        t.checa("Q pula para a próxima pergunta",
+                pg.evaluate("document.querySelector('.slide.on').classList.contains('q')"),
+                "slide " + str(pg.evaluate("document.querySelector('.slide.on').dataset.n")))
+
         # ── mapa de territórios ──────────────────────────────────────────
         i_mapa = pg.evaluate(
             "[...document.querySelectorAll('.slide')].findIndex(s=>s.querySelector('.mapa'))"

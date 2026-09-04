@@ -81,6 +81,7 @@ function show(n, fim){
   pintar();
   bar.style.width = ((i + 1) / S.length * 100) + '%';
   location.hash = i + 1;
+  herdarVotos(S[i]);
   if (editando) ligarEdicao();
 }
 
@@ -298,6 +299,85 @@ function marcar(li){
   if (c) c.textContent = m + ' de ' + max + ' marcada' + (max === 1 ? '' : 's');
 }
 
+/* ─────────────── votação da turma, por levantamento de mão ───────────────
+   Sem servidor e sem celular: o professor conta as mãos e digita o número.
+   As teclas 1 a 5 somam um voto na alternativa; Shift+número tira um.
+   A barra aparece sob cada alternativa, e some junto com a marcação no
+   Ctrl+S — é estado de sessão, não conteúdo. */
+function votar(k, delta){
+  const ul = cur().querySelector('.alts');
+  if (!ul) return;
+  const li = ul.querySelectorAll('li')[k];
+  if (!li) return;
+  const n = Math.max(0, (+li.dataset.votos || 0) + delta);
+  li.dataset.votos = n;
+  pintarVotos(ul);
+}
+function pintarVotos(ul){
+  const itens = [...ul.querySelectorAll('li')];
+  const votos = itens.map(l => +l.dataset.votos || 0);
+  const total = votos.reduce((a, b) => a + b, 0);
+  ul.classList.toggle('votando', total > 0);
+  itens.forEach((l, k) => {
+    let b = l.querySelector('.voto');
+    if (!b){
+      b = document.createElement('span');
+      b.className = 'voto';
+      b.setAttribute('data-runtime', 'attr');
+      b.innerHTML = '<i></i><em></em>';
+      l.appendChild(b);
+    }
+    const pct = total ? Math.round(votos[k] / total * 100) : 0;
+    b.querySelector('i').style.width = pct + '%';
+    b.querySelector('em').textContent = votos[k] ? votos[k] + ' · ' + pct + '%' : '';
+  });
+}
+function limparVotos(){
+  const ul = cur().querySelector('.alts');
+  if (!ul) return;
+  ul.querySelectorAll('li').forEach(l => { delete l.dataset.votos; });
+  pintarVotos(ul);
+  const par = irmaDaPergunta(cur());
+  if (par) par.querySelectorAll('li').forEach(l => { delete l.dataset.votos; });
+}
+/* O slide de resposta vem logo depois do de pergunta e tem as alternativas na
+   mesma ordem. Levar a votação para lá é o desfecho da votação: a turma vê em
+   que alternativa ela apostou antes de saber a resposta. */
+function irmaDaPergunta(s){
+  const k = S.indexOf(s);
+  if (k < 0) return null;
+  const viz = s.classList.contains('q') ? S[k + 1]
+            : s.classList.contains('ans') ? S[k - 1] : null;
+  return viz ? viz.querySelector('.alts') : null;
+}
+function herdarVotos(s){
+  if (!s.classList.contains('ans')) return;
+  const de = irmaDaPergunta(s), para = s.querySelector('.alts');
+  if (!de || !para) return;
+  const v = [...de.querySelectorAll('li')].map(l => +l.dataset.votos || 0);
+  if (!v.some(Boolean)) return;
+  [...para.querySelectorAll('li')].forEach((l, k) => { l.dataset.votos = v[k] || 0; });
+  pintarVotos(para);
+}
+
+/* ─────────────────────── cronômetro da sessão ─────────────────────── */
+let t0 = null, tint = null;
+const cron = document.getElementById('cron');
+function relogio(){
+  if (t0 === null){
+    t0 = performance.now();
+    cron.classList.add('on');
+    tint = setInterval(() => {
+      const s = Math.floor((performance.now() - t0) / 1000);
+      cron.textContent = String(Math.floor(s / 60)).padStart(2, '0') + ':'
+                       + String(s % 60).padStart(2, '0');
+    }, 500);
+  } else {
+    clearInterval(tint); tint = null; t0 = null;
+    cron.classList.remove('on'); cron.textContent = '';
+  }
+}
+
 /* ───────────────────────── entrada ───────────────────────── */
 addEventListener('keydown', e => {
   if (e.target === q) return;
@@ -312,6 +392,21 @@ addEventListener('keydown', e => {
     return;
   }
   if (e.key === 'x' || e.key === 'X'){ abrirGaveta(true); e.preventDefault(); return; }
+  if (e.key >= '1' && e.key <= '5'){ votar(+e.key - 1, 1); e.preventDefault(); return; }
+  if (['!', '@', '#', '$', '%'].includes(e.key)){
+    votar('!@#$%'.indexOf(e.key), -1); e.preventDefault(); return;
+  }
+  if (e.key === 'c' || e.key === 'C'){ limparVotos(); e.preventDefault(); return; }
+  if (e.key === 't' || e.key === 'T'){ relogio(); e.preventDefault(); return; }
+  if (e.key === 'q' || e.key === 'Q'){
+    /* pula para a próxima pergunta: em sala, a turma pede para voltar a uma
+       pergunta o tempo todo, e procurar slide a slide come a discussão. */
+    const qs = S.map((s, k) => s.classList.contains('q') ? k : -1).filter(k => k >= 0);
+    const alvo = e.shiftKey ? [...qs].reverse().find(k => k < i) : qs.find(k => k > i);
+    if (alvo !== undefined) show(alvo);
+    e.preventDefault();
+    return;
+  }
   if (e.key === 'e' || e.key === 'E'){ modoEdicao(!editando); e.preventDefault(); return; }
   if (e.key === 'a' || e.key === 'A'){ tudo(true); return; }
   if (e.key === 'z' || e.key === 'Z'){ tudo(false); return; }
