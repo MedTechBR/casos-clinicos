@@ -58,3 +58,53 @@ if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     tirar(RAIZ / "saida" / "pulmao-rim.html", [int(a) for a in args] or None,
           "--passos" in sys.argv)
+
+
+def folha_de_contato(caminho: Path, dest: Path = None, colunas: int = 5):
+    """Uma folha só com todos os slides, para olhar o conjunto de uma vez.
+
+    Revisar slide a slide esconde problema de ritmo: três slides densos
+    seguidos, ou quatro slides quase vazios, só aparecem no conjunto.
+    """
+    from playwright.sync_api import sync_playwright
+
+    dest = dest or DEST / "contato.png"
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    with sync_playwright() as pw:
+        b = pw.chromium.launch()
+        pg = b.new_page(viewport={"width": 1280, "height": 720})
+        pg.goto(caminho.resolve().as_uri())
+        pg.wait_for_timeout(400)
+        n = pg.evaluate("document.querySelectorAll('.slide').length")
+        pg.evaluate(
+            """(cols) => {
+            document.querySelectorAll('#help,#gavb,#gav,.bar,#etapas').forEach(e=>e.remove());
+            document.querySelectorAll('.slide').forEach(s => {
+                s.classList.add('on');
+                s.querySelectorAll('.rv,.pv,svg.ov.rvov,.terr,.tl .m').forEach(e=>e.classList.add('on'));
+                s.querySelectorAll('figure.an').forEach(e=>e.classList.add('on'));
+                s.querySelectorAll('table.oc tbody tr').forEach(r=>r.classList.remove('hid'));
+                s.style.cssText = 'position:relative;inset:auto;width:1280px;height:720px;'
+                                + 'outline:1px solid #333;flex:none';
+            });
+            const st = document.getElementById('stage');
+            st.style.cssText = 'width:auto;height:auto;transform:none;zoom:.235;'
+                             + 'display:grid;box-shadow:none;'
+                             + 'grid-template-columns:repeat(' + cols + ',1280px);gap:90px';
+            const w = document.getElementById('wrap');
+            w.style.cssText = 'position:static;display:block;background:#0d0c0a;padding:18px';
+            document.body.style.cssText = 'overflow:visible;background:#0d0c0a;height:auto';
+            document.documentElement.style.cssText = 'overflow:visible;height:auto';
+        }""",
+            colunas,
+        )
+        pg.wait_for_timeout(900)
+        # o palco escalado não empurra o layout: a caixa que o navegador
+        # enxerga é a do tamanho original. Fixamos a viewport pela conta.
+        larg = int(colunas * (1280 + 90) * 0.235) + 40
+        pg.set_viewport_size({"width": max(600, larg), "height": 900})
+        pg.wait_for_timeout(700)
+        pg.screenshot(path=str(dest), full_page=True)
+        b.close()
+    print(f"folha de contato: {dest.relative_to(RAIZ)}  ({n} slides)")
+    return dest

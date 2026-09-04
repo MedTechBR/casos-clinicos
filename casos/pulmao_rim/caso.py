@@ -880,10 +880,12 @@ SLIDES = [
                      "3.0.",
                      "Imunofluorescência p-ANCA: Simon Caulton · Wikimedia "
                      "Commons · CC BY-SA 3.0.",
-                     "Radiografia de tórax: CDC / D. Loren Ketai · PHIL · "
-                     "domínio público.",
-                     "Histologia de vasculite: Nephron · Wikimedia Commons · "
-                     "CC BY-SA 3.0.",
+                    ]),
+                h3("Desenhos"),
+                lista([
+                     "Mapa de territórios, parede capilar compartilhada, "
+                     "crescente glomerular e padrões de imunofluorescência: "
+                     "esquemas autorais em SVG, desenhados para este caso.",
                     ]),
                 box("Sobre este material",
                     p("Caso autoral, construído para ensino de internos e "

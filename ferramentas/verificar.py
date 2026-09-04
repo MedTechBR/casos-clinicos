@@ -150,6 +150,35 @@ def v_creditos(h, r):
           f"figuras sem crédito: {sem}" if sem else f"{len(figs)} figuras com crédito")
 
 
+def v_creditos_batem(h, r):
+    """O slide de créditos não pode citar imagem que não está no arquivo.
+
+    Creditar figura ausente é afirmação sem respaldo como qualquer outra, e é o
+    tipo de coisa que sobrevive quando um slide é cortado e o crédito fica.
+    """
+    autores = set()
+    for f in re.findall(r"<figure.*?</figure>", h, re.S):
+        m = re.search(r'class="cred">(.*?)</span>', f, re.S)
+        if m:
+            autores.add(_texto(m.group(1)).split("·")[0].strip().lower())
+    autores.discard("esquema autoral, desenhado para este caso.")
+    creditos = ""
+    for s in slides(h):
+        if "Fontes" in s and "créditos" in s:
+            creditos = _texto(s).lower()
+    if not creditos:
+        r.add("créditos batem com as figuras", True, "sem slide de créditos")
+        return
+    # cada crédito de imagem listado tem que corresponder a alguma figura
+    listados = re.findall(r"([A-Za-zÀ-ÿ ]+):\s*([A-Za-zÀ-ÿ.\- ]+?)\s*·", creditos)
+    sobrando = [f"{o.strip()} ({a.strip()})" for o, a in listados
+                if a.strip().lower() not in autores
+                and "wikimedia" not in o and "commons" not in o]
+    r.add("créditos batem com as figuras", not sobrando,
+          f"creditado mas ausente do arquivo: {sobrando}" if sobrando
+          else f"{len(autores)} autores creditados, todos presentes")
+
+
 # ───────────────────────── verificação com navegador ─────────────────────────
 
 
@@ -201,6 +230,7 @@ def main(caminho=None):
     v_banco(h, r)
     v_arvore(h, r)
     v_creditos(h, r)
+    v_creditos_batem(h, r)
     v_transbordo(caminho, r, capturar=RAIZ / "saida" / "revisao")
     print(f"\n{len(r.itens)} verificações · {len(r.falhas)} falha(s)\n")
     return 1 if r.falhas else 0
