@@ -110,9 +110,15 @@ def no(ident: str, kicker: str, titulo: str, pergunta: str, ramos,
         + f'<div class="wy" hidden>{texto(r["porque"])}</div></div></li>'
         for i, r in enumerate(ramos)
     )
+    # A frase que enquadra a decisão vinha sendo aceita e descartada: o slide
+    # saía com título, opções e nenhuma situação. É ela que diz onde o paciente
+    # está e o que ainda não se sabe, e sem ela a escolha fica no vazio.
+    if not pergunta.strip():
+        raise ValueError(f"nó {ident!r} sem a situação que enquadra a decisão")
     corpo = (
         f'<div class="kicker">{texto(kicker)}</div>\n<h2>{texto(titulo)}</h2>\n'
         f'<div class="body">{"".join(contexto)}'
+        f'<p class="sit">{texto(pergunta)}</p>'
         f'<div class="qhint">Decisão — a escolha muda o rumo do caso, '
         f'e não há volta automática</div>'
         f'<ul class="ramos">{itens}</ul></div>'

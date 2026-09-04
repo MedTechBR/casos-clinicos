@@ -148,6 +148,7 @@ def montar(*, titulo, slug, rodape, slides, banco, img_dir: Path, css=None,
         "&larr; &rarr; revelar &nbsp;·&nbsp; 1-5 votar &nbsp;·&nbsp; C limpar "
         "&nbsp;·&nbsp; Q pergunta &nbsp;·&nbsp; X exame &nbsp;·&nbsp; N nota "
         "&nbsp;·&nbsp; B apagar &nbsp;·&nbsp; T tempo &nbsp;·&nbsp; O visão geral "
+        "&nbsp;·&nbsp; M mapa &nbsp;·&nbsp; V volta ao nó "
         "&nbsp;·&nbsp; E editar &nbsp;·&nbsp; F tela cheia"
     )
     barra_edicao = (

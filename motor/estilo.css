@@ -670,7 +670,17 @@ body.ramificado .cover #est,body.ramificado .mom #est{display:none}
 /* O nó de decisão: as condutas são escolhas, não alternativas de prova */
 .no .qhint{color:var(--sangue);font-style:italic;font-family:var(--serifa);
   font-size:15px;letter-spacing:0;text-transform:none;margin:2px 0 10px}
-.ramos{list-style:none;margin:0;border-top:1px solid var(--linha)}
+/* A situação que enquadra a decisão: onde o paciente está, e o que ainda não
+   se sabe. Vem antes das opções e é a única prosa corrida do slide. */
+.no .sit{font-size:20px;line-height:1.5;color:var(--tinta2);max-width:86ch;
+  margin-bottom:14px}
+.no.dense .sit{font-size:18.5px;margin-bottom:11px}
+.no.xd .sit{font-size:17px;line-height:1.44;margin-bottom:9px}
+/* 66ch é a medida da prosa corrida e não serve a uma lista de condutas
+   paralelas: sobrava metade do palco vazia à direita num datashow de sala. */
+.ramos{list-style:none;margin:0;border-top:1px solid var(--linha);
+  max-width:none}
+.ramos .tt,.ramos .wy{max-width:88ch}
 .ramos li{border-bottom:1px solid var(--linha);padding:13px 14px 13px 0;
   display:flex;gap:15px;align-items:baseline;cursor:pointer;position:relative;
   transition:color .16s,padding-left .16s}
@@ -718,18 +728,21 @@ body.ramificado .cover #est,body.ramificado .mom #est{display:none}
   color:var(--sobre-escuro2);margin:0 0 14px;padding-bottom:8px;
   border-bottom:1px solid rgba(255,255,255,.14)}
 #mapa .mt:not(:first-child){margin-top:30px}
-.mn{padding:12px 0 14px 16px;border-left:2px solid rgba(255,255,255,.16);
-  margin-bottom:10px;cursor:pointer}
+/* Título à esquerda, condutas à direita: empilhado, o mapa passava da altura
+   da tela já no terceiro nó e a turma nunca via os desfechos. */
+.mn{padding:10px 0 11px 16px;border-left:2px solid rgba(255,255,255,.16);
+  margin-bottom:7px;cursor:pointer;display:grid;
+  grid-template-columns:23ch 1fr;gap:20px;align-items:start}
 .mn.feito{border-left-color:var(--sangue2)}
 .mn.aqui{border-left-color:#fff}
-.mn b{display:block;font-family:var(--serifa);font-size:19px;font-weight:600;
-  color:#fff;margin-bottom:8px}
-.mn.aqui b::after{content:" — você está aqui";font-family:var(--sans);
-  font-size:11px;letter-spacing:1.4px;text-transform:uppercase;
-  color:var(--sangue2);font-weight:700}
+.mn b{display:block;font-family:var(--serifa);font-size:18px;font-weight:600;
+  color:#fff;line-height:1.22}
+.mn.aqui b::after{content:"você está aqui";display:block;
+  font-family:var(--sans);font-size:10px;letter-spacing:1.4px;
+  text-transform:uppercase;color:var(--sangue2);font-weight:700;margin-top:4px}
 .mrs{display:flex;flex-wrap:wrap;gap:8px}
 .mr{font-size:12.5px;line-height:1.3;color:var(--sobre-escuro2);
-  border:1px solid rgba(255,255,255,.18);padding:5px 11px;max-width:34ch}
+  border:1px solid rgba(255,255,255,.18);padding:5px 11px;max-width:40ch;flex:1}
 .mr.esc{color:#fff;border-color:var(--sangue2);background:rgba(194,91,69,.18)}
 .mfs{display:flex;flex-wrap:wrap;gap:9px}
 .mf{font-size:12.5px;padding:6px 12px;cursor:pointer;
@@ -742,16 +755,21 @@ body.ramificado .cover #est,body.ramificado .mom #est{display:none}
 /* Fora de alcance: a escolha já fechou esta porta. Apagado, e não riscado
    nem colorido — o mapa continua sendo um mapa, não um placar. */
 .mn.fora,.mf.fora{opacity:.3}
+/* Porta fechada continua no mapa, mas sem as condutas: a decisão que a fechou
+   já foi tomada, e listar o que havia atrás dela só ocupa a tela. */
 .mn.fora{cursor:default}
+.mn.fora .mrs{display:none}
 #mapa .mt i{font-style:normal;font-size:12px;letter-spacing:1.2px;
   text-transform:uppercase;color:#7a736a;margin-left:10px}
 #mapa .mh{margin-top:30px;font-size:11.5px;letter-spacing:1.2px;
   text-transform:uppercase;color:#7a736a}
 
 @media print{
-  #est{display:flex!important;position:relative;padding:6px 0 6px;
-    background:none;border-bottom:1px solid var(--linha)}
-  #mapa,#seguir{display:none!important}
+  /* A barra de estado é um só elemento e só sabe um valor: impressa, saía
+     numa página solta no fim com o número da admissão, valendo para nenhum
+     dos ramos. No papel quem carrega o estado é a prosa de cada bloco, já
+     carimbada com o caminho que chega até ele. */
+  #est,#mapa,#seguir,#aviso,#cron{display:none!important}
   .ramos .wy{display:block!important}
   .ramos li{opacity:1!important}
 }
@@ -867,7 +885,10 @@ body.editando .slide.on [contenteditable]:focus{outline:2px solid var(--sangue2)
   .slide{display:flex!important;position:relative!important;inset:auto!important;
     width:1280px;height:720px;page-break-after:always;break-after:page;
     animation:none}
-  .slide:last-child{page-break-after:auto}
+  /* :last-child não pega o último slide — depois dele ainda vêm a barra de
+     progresso e as bolinhas de etapa dentro do palco. O resultado era uma
+     página em branco no fim de todo PDF. */
+  section.slide:last-of-type{page-break-after:auto;break-after:auto}
   .body{overflow:visible!important}
   .rv-in{display:block!important}.rv-ph{display:none!important}
   .pv{display:block!important}

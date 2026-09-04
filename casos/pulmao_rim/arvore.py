@@ -476,7 +476,7 @@ F = [
 N0 = no(
     "n0", "Decisão · a investigação", "Que exames você pede agora",
     "A lista está levantada e nada foi pedido. O que você pedir decide o que "
-    "este caso vai mostrar — e o que não vai.",
+    "este caso mostra — e o que não.",
     [
         ramo("beira_do_leito",
              "Sedimento urinário em urina fresca, gasometria e hemograma, "
@@ -568,10 +568,10 @@ B_PAINEL_2 = custa(narrativa("O caso · ramo do painel", "A lista, podada de uma
     p("O sedimento urinário foi enfim examinado, em urina fresca: hemácias "
       "dismórficas em 62% do campo e cilindros hemáticos numerosos. "
       "Complemento normal, FAN e anti-DNA não reagentes, crioglobulinas "
-      "negativas em tubo aquecido, hemoculturas e culturas do lavado "
-      "hemoculturas estéreis. A infecção segue de pé: a cultura do lavado ainda "
-      "não voltou. A creatinina está em <<creatinina>> e o paciente completou "
-      "<<horas>> de internação sem uma única droga dirigida à doença."),
+      "negativas em tubo aquecido, hemoculturas estéreis. A infecção segue de "
+      "pé: a cultura do lavado ainda não voltou. A creatinina está em "
+      "<<creatinina>> e o paciente completou <<horas>> de internação sem uma "
+      "única droga dirigida à doença."),
     quadro(HIPOTESES, {
         "urologico": ("derrubada", "Cilindros hemáticos: o sangue vem do glomérulo"),
         "lepto": ("derrubada", "Curso de oito semanas, sem exposição"),

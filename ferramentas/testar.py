@@ -304,6 +304,7 @@ def rodar(caminho: Path) -> int:
                 pg.evaluate("""() => {
                     EST = JSON.parse(JSON.stringify(EST0));
                     caminho.length = 0;
+                    cobrados.length = 0;
                     document.querySelectorAll('.ramos').forEach(u => {
                         u.classList.remove('decidido');
                         u.querySelectorAll('li').forEach(l => l.classList.remove('escolhido'));
@@ -315,7 +316,9 @@ def rodar(caminho: Path) -> int:
             def percorrer(escolhas, de="n0"):
                 pg.evaluate(f"irPara({de!r})")
                 pg.wait_for_timeout(120)
-                for _ in range(30):
+                # a travessia mais longa (rota da beira do leito) passa de
+                # trinta blocos: o teto precisa caber no caminho inteiro
+                for _ in range(90):
                     cls = pg.evaluate("document.querySelector('.slide.on').className")
                     sid = pg.evaluate("document.querySelector('.slide.on').id")
                     if "fim" in cls.split():
@@ -381,12 +384,16 @@ def rodar(caminho: Path) -> int:
             # travessias. Percorrer todas é a única prova de que nenhuma
             # combinação encalha num slide sem saída.
             fins = {}
-            for a in (1, 2, 3):
-                for b in (1, 2):
-                    for c in (1, 2):
-                        for d in (1, 2):
+            # nomes longos de propósito: `b` e `c` aqui dentro sombreavam o
+            # navegador e a página do escopo de fora, e a falha só aparecia no
+            # b.close() do fim, depois de todos os testes passarem
+            for inv in (1, 2, 3):
+                for hora1 in (1, 2):
+                    for inducao in (1, 2):
+                        for dia5 in (1, 2):
                             zerar()
-                            fins[f"{a}{b}{c}{d}"] = percorrer([a, b, c, d])
+                            fins[f"{inv}{hora1}{inducao}{dia5}"] = percorrer(
+                                [inv, hora1, inducao, dia5])
             t.checa("toda travessia chega a um desfecho",
                     all(v.startswith("s-f_") for v in fins.values()),
                     ", ".join(f"{k}→{v}" for k, v in fins.items() if not v.startswith("s-f_"))
@@ -406,11 +413,11 @@ def rodar(caminho: Path) -> int:
             # e a investigação não é enfeite: as três rotas chegam ao mesmo
             # ponto do caso com relógio e função renal diferentes
             chegadas = {}
-            for a in (1, 2, 3):
+            for inv in (1, 2, 3):
                 zerar()
                 pg.evaluate("irPara('n0')")
                 pg.wait_for_timeout(120)
-                pg.click(f".slide.on .ramos li:nth-child({a})")
+                pg.click(f".slide.on .ramos li:nth-child({inv})")
                 pg.wait_for_timeout(180)
                 pg.click("#seguir")
                 pg.wait_for_timeout(180)
@@ -421,8 +428,8 @@ def rodar(caminho: Path) -> int:
                     pg.wait_for_timeout(60)
                     pg.keyboard.press("ArrowRight")
                     pg.wait_for_timeout(150)
-                e = pg.evaluate("JSON.parse(JSON.stringify(EST))")
-                chegadas[a] = (e["horas"], e["creatinina"])
+                ch = pg.evaluate("JSON.parse(JSON.stringify(EST))")
+                chegadas[inv] = (ch["horas"], ch["creatinina"])
             t.checa("a investigação escolhida muda o paciente que chega ao diagnóstico",
                     len(set(chegadas.values())) == 3,
                     " · ".join(f"rota {k}: {h:.0f}h Cr {c}"

@@ -76,7 +76,8 @@ function escolher(li){
   const s = li.closest('.slide');
 
   caminho.push({ de: idDoSlide(s), ramo: li.dataset.ramo, efeito: ef,
-                 antes: JSON.parse(JSON.stringify(EST)) });
+                 antes: JSON.parse(JSON.stringify(EST)),
+                 cobradosAte: cobrados.length });
   aplicar(ef, +1);
 
   ul.classList.add('decidido');
@@ -111,6 +112,9 @@ function voltarAoNo(){
     return;
   }
   EST = JSON.parse(JSON.stringify(p.antes));
+  // o estado voltou ao que era antes da escolha; os blocos atravessados depois
+  // dela deixam de estar pagos, para que a segunda passagem cobre de novo
+  cobrados.length = p.cobradosAte;
   pintarEstado();
   const s = slidePorId(p.de);
   const ul = s.querySelector('.ramos');
@@ -134,13 +138,13 @@ function aviso(t){
    Nem toda piora vem de um clique. Um ramo que passa dois dias esperando
    sorologia cobra do rim enquanto o grupo assiste; o número tem de andar
    sozinho. Cobrado uma vez por bloco: rever o slide não cobra de novo. */
-const cobrados = new Set();
+const cobrados = [];
 
 function cobrarBloco(s){
   if (!s || !s.dataset.custo) return;
   const k = idDoSlide(s);
-  if (cobrados.has(k)) return;
-  cobrados.add(k);
+  if (cobrados.includes(k)) return;
+  cobrados.push(k);
   aplicar(JSON.parse(s.dataset.custo), +1);
 }
 
