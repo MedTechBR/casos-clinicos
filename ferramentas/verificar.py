@@ -216,7 +216,9 @@ def v_transbordo(caminho: Path, r, capturar: Path | None = None):
         for i in range(n):
             pg.evaluate(f"show({i})")
             pg.keyboard.press("a")  # revela tudo: o slide no seu pior caso
-            pg.wait_for_timeout(60)
+            # a revelação anima por .38s; medir no meio da transição acusa
+            # transbordo de poucos pixels que não existe
+            pg.wait_for_timeout(430)
             info = pg.evaluate(
                 """() => {
                 const s = document.querySelector('.slide.on');
@@ -227,6 +229,22 @@ def v_transbordo(caminho: Path, r, capturar: Path | None = None):
                         ssh: s.scrollHeight, sch: s.clientHeight};
             }"""
             )
+            # o linter só olhava para baixo: a tabela estourava a coluna e o
+            # overflow:hidden comia a referência do exame sem ninguém notar
+            fora = pg.evaluate(
+                """() => {
+                const s = document.querySelector('.slide.on');
+                const b = s.querySelector('.body') || s;
+                const bb = b.getBoundingClientRect();
+                return [...b.querySelectorAll('*')].filter(e => {
+                    const r = e.getBoundingClientRect();
+                    return r.width > 0 && (r.right > bb.right + 1 || r.left < bb.left - 1);
+                }).map(e => e.tagName + (e.className ? '.' + e.className : '')).slice(0, 2);
+            }"""
+            )
+            if fora:
+                erros.append(f"slide {info['n']} “{info['titulo']}” vaza na "
+                             f"horizontal: {', '.join(fora)}")
             excesso = max(info["sh"] - info["ch"], info["ssh"] - info["sch"])
             if excesso > 1:
                 erros.append(f"slide {info['n']} “{info['titulo']}” transborda {excesso}px")
@@ -237,6 +255,52 @@ def v_transbordo(caminho: Path, r, capturar: Path | None = None):
                     )
         b.close()
     r.add(f"transbordo (todos os {n} slides, tudo revelado)", not erros, " · ".join(erros))
+
+
+def v_velado_nao_vaza(caminho: Path, r):
+    """Linha velada não pode entregar o resultado antes da revelação.
+
+    O filete que marca o valor fora da referência era pintado também na linha
+    ainda oculta: dava para ler de longe quais analitos estavam alterados sem
+    revelar nenhum, o que anula o exercício de julgar valor por valor.
+    """
+    from playwright.sync_api import sync_playwright
+
+    erros = []
+    with sync_playwright() as pw:
+        b = pw.chromium.launch()
+        pg = b.new_page(viewport={"width": 1400, "height": 820})
+        pg.goto(caminho.resolve().as_uri())
+        pg.wait_for_timeout(300)
+        n = pg.evaluate("document.querySelectorAll('.slide').length")
+        for i in range(n):
+            pg.evaluate(f"show({i})")
+            pg.wait_for_timeout(30)
+            v = pg.evaluate(
+                """() => {
+                const s = document.querySelector('.slide.on');
+                const hid = [...s.querySelectorAll('table.oc tr.hid')];
+                const marcadas = hid.filter(t => {
+                    const td = t.querySelector('td');
+                    if (!td) return false;
+                    const e = getComputedStyle(td);
+                    return e.boxShadow !== 'none' || e.backgroundColor !== 'rgba(0, 0, 0, 0)';
+                });
+                const visiveis = hid.filter(t => {
+                    const vv = t.querySelector('.vv');
+                    return vv && getComputedStyle(vv).display !== 'none';
+                });
+                return {n: s.dataset.n, total: hid.length,
+                        marcadas: marcadas.length, visiveis: visiveis.length};
+            }"""
+            )
+            if v["marcadas"]:
+                erros.append(f"slide {v['n']}: {v['marcadas']} de {v['total']} linhas "
+                             f"veladas já mostram a marca de alterado")
+            if v["visiveis"]:
+                erros.append(f"slide {v['n']}: {v['visiveis']} valores velados visíveis")
+        b.close()
+    r.add("linha velada não entrega o resultado", not erros, " · ".join(erros))
 
 
 def main(caminho=None):
@@ -252,6 +316,7 @@ def main(caminho=None):
     v_creditos(h, r)
     v_creditos_batem(h, r)
     v_transbordo(caminho, r, capturar=RAIZ / "saida" / "revisao")
+    v_velado_nao_vaza(caminho, r)
     print(f"\n{len(r.itens)} verificações · {len(r.falhas)} falha(s)\n")
     return 1 if r.falhas else 0
 

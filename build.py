@@ -17,6 +17,7 @@ def main(nome="pulmao_rim"):
     build(caso, destino)
     kb = destino.stat().st_size / 1024
     print(f"{destino.relative_to(RAIZ)}  ·  {len(caso.SLIDES)} entradas  ·  {kb:,.0f} KB")
+    sys.stdout.flush()
     return destino
 
 

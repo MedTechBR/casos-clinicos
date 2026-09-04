@@ -81,3 +81,14 @@ sistema informa. Um analito por entrada.
 
 **O slide é canônico.** Se o slide mostra creatinina 3,8, a gaveta não mostra
 outra coisa. `verificar.py` confere.
+
+**A régua decide o corpo da fonte, não o autor.** `densidade.py` mede a ocupação
+da área útil com tudo revelado e trabalha nos dois sentidos: slide que
+transborda aperta, slide que ocupa menos de 58% folga. Slide após slide
+preenchido pela metade, sempre com o mesmo corpo, é o que faz um baralho
+parecer template.
+
+**Rótulo é voz editorial, não versalete espaçado.** O baralho tinha 19
+seletores em maiúscula com entreletra — o delator mais forte de template.
+Ficaram três, todos de cromo do sistema (ajuda, gaveta, botão). Etiqueta de
+seção, rótulo de caixa e legenda são serifadas em itálico, caixa de frase.

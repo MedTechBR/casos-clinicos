@@ -15,11 +15,11 @@
   /* tinta */
   --tinta:#15130e;          /* corpo de texto — contraste 15:1 no papel  */
   --tinta2:#4b463b;         /* secundário, ainda legível projetado       */
-  --tinta3:#7d766a;         /* crédito, rodapé — o mais claro permitido  */
+  --tinta3:#6a6357;     /* usado como texto de leitura, não só crédito */         /* crédito, rodapé — o mais claro permitido  */
   --papel:#faf8f2;
   --papel2:#f1ece0;         /* faixa, cabeçalho de tabela                */
-  --linha:#d6cfbe;
-  --linha2:#b9b09a;
+  --linha:#c3baa4;      /* 1,46:1 antes: sumia projetado */
+  --linha2:#8f8570;
 
   /* acentos — um vermelho editorial e um azul de dado clínico */
   --sangue:#8e2b1b;
@@ -52,7 +52,7 @@ html,body{height:100%;background:#0d0c0a;color:var(--tinta);
 
 /* ─────────────────────────── o slide ─────────────────────────── */
 
-.slide{position:absolute;inset:0;padding:46px 68px 56px;display:none;
+.slide{position:absolute;inset:0;padding:44px 56px 54px;display:none;
   flex-direction:column;animation:entra .32s cubic-bezier(.2,.7,.3,1)}
 .slide.on{display:flex}
 @keyframes entra{
@@ -65,12 +65,17 @@ html,body{height:100%;background:#0d0c0a;color:var(--tinta);
 h1{font-family:var(--serifa);font-size:54px;line-height:1.04;
   letter-spacing:-.9px;font-weight:600;color:var(--tinta)}
 
-h2{font-family:var(--serifa);font-size:40px;line-height:1.08;
-  letter-spacing:-.5px;font-weight:600;margin-bottom:16px;color:var(--tinta)}
+h2{font-family:var(--serifa);font-size:40px;line-height:1.06;
+  letter-spacing:-.5px;font-weight:600;margin-bottom:18px;color:var(--tinta)}
+/* Título curto respira grande, título longo recua — é o que a página impressa
+   faz, e é o oposto do corpo único aplicado a tudo. */
+.t-gg h2{font-size:56px;letter-spacing:-1.2px;line-height:1.0;margin-bottom:22px}
+.t-g h2{font-size:46px;letter-spacing:-.8px}
+.t-p h2{font-size:33px;letter-spacing:-.3px;line-height:1.12;max-width:24ch}
 
-h3{font-family:var(--sans);font-size:13px;font-weight:700;
-  letter-spacing:1.5px;text-transform:uppercase;color:var(--clinico);
-  margin:18px 0 7px;padding-bottom:5px;border-bottom:1px solid var(--linha)}
+h3{font-family:var(--serifa);font-size:19px;font-weight:600;letter-spacing:-.1px;
+  color:var(--tinta);margin:20px 0 8px;padding-bottom:6px;
+  border-bottom:1px solid var(--linha2)}
 
 p{font-size:21px;line-height:1.52;margin-bottom:11px;max-width:66ch}
 
@@ -93,10 +98,11 @@ ol>li::before{content:counter(it);position:absolute;left:0;top:.06em;
 
 /* Etiqueta da seção: pequena, sem serifa, com um selo vermelho.
    O vermelho aparece pouco — é o que o faz significar alguma coisa. */
-.kicker{font-family:var(--sans);font-size:11.5px;letter-spacing:2.4px;
-  text-transform:uppercase;color:var(--tinta2);font-weight:700;
-  margin-bottom:11px;display:flex;align-items:center;gap:9px}
-.kicker::before{content:"";width:16px;height:3px;background:var(--sangue);flex:none}
+/* Etiqueta de seção em voz editorial: serifada, itálica, caixa de frase.
+   O traço vermelho antes de cada uma, repetido em 43 slides idênticos, era o
+   delator mais forte de template. */
+.kicker{font-family:var(--serifa);font-size:16px;letter-spacing:0;
+  font-style:italic;color:var(--tinta3);font-weight:400;margin-bottom:6px}
 
 .body{flex:1;overflow:hidden;min-height:0;padding-right:2px}
 /* Slide de pouco conteúdo: o corpo ocupa o eixo vertical em vez de deixar
@@ -105,11 +111,12 @@ ol>li::before{content:counter(it);position:absolute;left:0;top:.06em;
 
 /* ─────────────────────────── rodapé e progresso ─────────────────────────── */
 
-.foot{position:absolute;left:68px;right:68px;bottom:20px;display:flex;
+.foot{position:absolute;left:56px;right:56px;bottom:20px;display:flex;
   justify-content:space-between;align-items:baseline;
-  font-family:var(--sans);font-size:10.5px;letter-spacing:.9px;
-  color:var(--tinta3);text-transform:uppercase}
-.foot span:last-child{font-variant-numeric:tabular-nums;letter-spacing:1.4px}
+  font-family:var(--serifa);font-size:12.5px;letter-spacing:0;font-style:italic;
+  color:var(--tinta3)}
+.foot span:last-child{font-variant-numeric:tabular-nums;font-style:normal;
+  letter-spacing:.6px}
 .cover .foot,.mom .foot{color:rgba(255,255,255,.42)}
 
 .bar{position:absolute;left:0;bottom:0;height:2px;background:var(--sangue);
@@ -147,13 +154,36 @@ ol>li::before{content:counter(it);position:absolute;left:0;top:.06em;
 
 /* ─────────────────────────── prosa longa ─────────────────────────── */
 
-.narr .body{font-size:22px;line-height:1.58}
-.narr .body p{margin-bottom:13px;max-width:70ch}
+/* Prosa longa em duas colunas com filete, como na página impressa. Uma coluna
+   estreita boiando num campo vazio à direita é o que faz o slide parecer
+   template; e a medida de leitura fica na faixa certa em vez de esticar.
+   column-fill:auto enche a primeira coluna antes de passar para a segunda, o
+   que faz a revelação passo a passo escorrer na ordem em que se lê. */
+/* balanceado, não column-fill:auto: com auto o texto cabia inteiro na primeira
+   coluna e a segunda ficava vazia. Balanceado, cada passo revelado redistribui
+   parágrafos inteiros — a página vai se enchendo, que é o efeito desejado. */
+.narr .body{font-size:21px;line-height:1.56;columns:2;column-gap:44px;
+  column-rule:1px solid var(--linha);orphans:2;widows:2;
+  /* o corpo abraça o texto: com flex:1 o filete descia por meia tela vazia.
+     Sem max-height:100% — 100% é a altura do slide inteiro, não desconta
+     kicker e título, e a régua acusava transbordo onde não havia. */
+  flex:0 1 auto;min-height:0}
+.narr .body p{margin-bottom:13px;max-width:none;
+  -webkit-column-break-inside:avoid;break-inside:avoid-column}
+/* a margem do último parágrafo entrava no scrollHeight e a régua acusava
+   6px de transbordo num slide que cabia folgado */
+.body>*:last-child{margin-bottom:0}
+.body>*:last-child>p:last-child,.body>*:last-child>ul:last-child,
+.body>*:last-child>ol:last-child,.body p:last-child{margin-bottom:0}
+.narr .body .pv{break-inside:avoid-column}
+/* uma coluna quando o slide tem pouco texto ou traz painel ao lado */
+.narr.uma .body{columns:1;column-rule:none;height:auto}
+.narr.uma .body p{max-width:68ch}
 .narr .body p.lead::first-letter{float:left;font-size:58px;line-height:.82;
   font-weight:600;padding:5px 10px 0 0;color:var(--sangue)}
-.narr.dense .body{font-size:19.5px;line-height:1.5}
+.narr.dense .body{font-size:19px;line-height:1.5}
 .narr.dense .body p{margin-bottom:10px}
-.narr.xd .body{font-size:17.5px;line-height:1.44}
+.narr.xd .body{font-size:17px;line-height:1.44}
 .narr.xd .body p{margin-bottom:8px}
 
 /* marcador temporal dentro da frase */
@@ -177,9 +207,9 @@ ol>li::before{content:counter(it);position:absolute;left:0;top:.06em;
 /* Sem cartão: uma régua no alto, um rótulo pequeno e o texto. */
 .box{border-top:2px solid var(--linha2);padding:9px 0 0;margin:16px 0}
 .box:first-child{margin-top:0}
-.box .bt{display:block;font-family:var(--sans);font-size:11px;
-  text-transform:uppercase;letter-spacing:1.6px;font-weight:700;
-  color:var(--tinta2);margin-bottom:7px}
+.box .bt{display:block;font-family:var(--serifa);font-size:16px;
+  font-style:italic;letter-spacing:0;font-weight:600;
+  color:var(--tinta2);margin-bottom:6px}
 .box p,.box li{font-size:17px;line-height:1.46;max-width:none}
 .box p:last-child,.box ul:last-child,.box ol:last-child,
 .box table:last-child{margin-bottom:0}
@@ -217,19 +247,31 @@ table.xs{font-size:13.5px}table.xs td,table.xs th{padding:4px 7px 4px 0}
   font-size:10px;letter-spacing:1.3px}
 .lab td{padding:6px 8px 6px 0;border-bottom:1px solid var(--linha);
   vertical-align:baseline}
-.lab td:first-child{width:47%}
-.lab td.v{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap;
-  color:var(--tinta)}
-.lab td.r{color:var(--tinta3);font-size:13.5px;white-space:nowrap;text-align:right}
+/* a tabela nunca pode ser mais larga que a coluna que a contém: com
+   table-layout:auto o conteúdo empurra e o overflow:hidden do slide corta */
+.lab{table-layout:fixed;width:100%}
+.lab td:first-child,.lab th:first-child{width:46%}
+.lab td.v,.lab th:nth-child(2){width:30%}
+.lab td,.lab th{overflow-wrap:anywhere}
+.lab td.v{font-variant-numeric:tabular-nums;font-weight:600;color:var(--tinta);
+  line-height:1.3}
+/* sem nowrap: a coluna de referência estourava a caixa e o overflow:hidden do
+   slide comia justamente o dado de que o aluno precisa para julgar o valor
+   ("REFERÊ", "4.00"). Ela quebra em duas linhas e cabe. */
+.lab td.r{color:var(--tinta2);font-size:13px;text-align:right;line-height:1.28}
 .lab tr.alt td.v{color:var(--alterado)}
 .lab tr.crit td.v{color:var(--grave);font-weight:700}
-/* a marca do fora-da-referência é um filete na margem, não um fundo colorido */
-.lab tr.alt td:first-child{box-shadow:inset 3px 0 0 var(--alterado);padding-left:11px}
-.lab tr.crit td:first-child{box-shadow:inset 3px 0 0 var(--grave);padding-left:11px}
+/* A marca do fora-da-referência é um filete na margem — e só aparece DEPOIS
+   da revelação. Pintá-la na linha velada entrega de longe quais analitos estão
+   alterados e anula o exercício de julgar valor por valor. */
+.lab tr.alt:not(.hid) td:first-child{box-shadow:inset 3px 0 0 var(--alterado)}
+.lab tr.crit:not(.hid) td:first-child{box-shadow:inset 3px 0 0 var(--grave)}
+.lab tr.alt td:first-child,.lab tr.crit td:first-child{padding-left:11px}
+.lab tr.alt.hid td.v,.lab tr.crit.hid td.v{color:var(--tinta)}
 
-.cap{font-family:var(--sans);font-size:10.5px;letter-spacing:1.7px;
-  text-transform:uppercase;font-weight:700;color:var(--tinta2);
-  margin:16px 0 5px;display:flex;align-items:center;gap:8px}
+.cap{font-family:var(--serifa);font-size:15.5px;letter-spacing:0;font-style:italic;
+  font-weight:600;color:var(--tinta2);margin:18px 0 6px;
+  display:flex;align-items:baseline;gap:10px}
 .cap:first-child{margin-top:0}
 .cap::after{content:"";flex:1;height:1px;background:var(--linha)}
 
@@ -286,8 +328,8 @@ figure.dz .cred{color:var(--tinta3)}
 /* ─────────────────────────── pergunta ─────────────────────────── */
 
 .q{justify-content:center}
-.q .qn{font-family:var(--sans);font-size:11px;letter-spacing:2.6px;
-  text-transform:uppercase;color:var(--sangue);font-weight:700}
+.q .qn{font-family:var(--serifa);font-size:16px;letter-spacing:0;font-style:italic;
+  color:var(--sangue);font-weight:400}
 .q h2{font-size:37px;margin:10px 0 6px;max-width:26ch;line-height:1.14}
 .qhint{font-family:var(--sans);font-size:11.5px;color:var(--tinta3);
   letter-spacing:1.4px;margin:0 0 16px;text-transform:uppercase}
@@ -342,14 +384,13 @@ figure.dz .cred{color:var(--tinta3)}
 /* ─────────────────────────── resposta ─────────────────────────── */
 
 .ans .body{display:flex;flex-direction:column;justify-content:center}
-.ans .tag{align-self:flex-start;font-family:var(--sans);font-size:10.5px;
-  font-weight:700;letter-spacing:2.2px;text-transform:uppercase;
-  color:var(--tinta2);padding:0 0 5px;border-bottom:2px solid var(--sangue);
-  margin-bottom:12px}
+.ans .tag{align-self:flex-start;font-family:var(--serifa);font-size:16px;
+  font-weight:400;letter-spacing:0;font-style:italic;color:var(--tinta3);
+  padding:0 0 4px;border-bottom:1px solid var(--linha2);margin-bottom:10px}
 .ans h2{color:var(--tinta);font-size:34px;letter-spacing:-.2px}
-.ans h2::before{content:"Alternativa ";font-family:var(--sans);font-size:14px;
-  font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  color:var(--tinta3);display:block;margin-bottom:2px}
+.ans h2::before{content:"Alternativa ";font-family:var(--serifa);font-size:20px;
+  font-weight:400;font-style:italic;letter-spacing:0;color:var(--tinta3);
+  display:inline;margin-right:6px}
 
 /* Certo e errado em sinal sóbrio: régua na margem e peso de tinta.
    Nada de verde e vermelho saturados de quiz. */
@@ -390,8 +431,8 @@ figure.dz .cred{color:var(--tinta3)}
   font-family:var(--sans);font-size:13px;font-weight:700;flex:none;line-height:1;
   transition:background .18s,color .18s}
 .rv-ph:hover .rv-ic{background:var(--sangue);color:#fff}
-.rv-lb{font-family:var(--sans);font-size:11.5px;font-weight:700;letter-spacing:1.9px;
-  text-transform:uppercase;color:var(--tinta2)}
+.rv-lb{font-family:var(--serifa);font-size:17px;font-weight:600;letter-spacing:0;
+  font-style:italic;color:var(--tinta2)}
 .rv-ph:hover .rv-lb{color:var(--sangue)}
 .rv-in{display:none}
 .rv.on>.rv-in{display:block;animation:sobe .38s cubic-bezier(.2,.7,.3,1)}
@@ -418,11 +459,13 @@ table.oc tbody tr.hid:hover td:first-child{color:var(--sangue)}
 table.oc tbody tr:not(.hid) .vv{animation:sobe .3s ease;display:inline}
 
 /* contador de etapas */
-#etapas{position:absolute;right:68px;bottom:38px;display:none;gap:5px;
+#etapas{position:absolute;right:56px;bottom:40px;display:none;gap:5px;
   align-items:center;z-index:5}
 #etapas.on{display:flex}
-#etapas i{width:14px;height:2px;background:var(--linha2);display:block;
-  transition:background .22s,width .22s}
+/* o traço do que FALTA revelar precisa ser visível: a 1,41:1 o professor via
+   só o que já passou */
+#etapas i{width:15px;height:3px;background:var(--linha2);display:block;
+  transition:background .22s}
 #etapas i.f{background:var(--sangue);width:14px}
 .cover #etapas i,.mom #etapas i{background:rgba(255,255,255,.25)}
 .cover #etapas i.f,.mom #etapas i.f{background:var(--sangue2)}
@@ -437,9 +480,8 @@ table.oc tbody tr:not(.hid) .vv{animation:sobe .3s ease;display:inline}
 .tl .m::before{content:"";position:absolute;left:0;top:5px;width:13px;height:13px;
   border-radius:50%;background:var(--papel);border:2.5px solid var(--linha2);
   transition:border-color .3s,background .3s;z-index:2}
-.tl .m .qd{font-family:var(--sans);font-size:10.5px;font-weight:700;
-  letter-spacing:1.4px;text-transform:uppercase;color:var(--tinta3);
-  margin-bottom:5px;transition:color .3s}
+.tl .m .qd{font-family:var(--serifa);font-size:15.5px;font-weight:600;
+  letter-spacing:-.1px;color:var(--tinta3);margin-bottom:4px;transition:color .3s}
 .tl .m .oq{font-size:16px;line-height:1.38;color:var(--tinta2);max-width:26ch}
 .tl .m.on::before{border-color:var(--sangue);background:var(--sangue)}
 .tl .m.on .qd{color:var(--sangue)}
@@ -465,9 +507,8 @@ table.oc tbody tr:not(.hid) .vv{animation:sobe .3s ease;display:inline}
   position:relative;cursor:pointer;transition:color .2s}
 .mapa .lt::before{content:"";position:absolute;left:0;top:0;bottom:0;width:0;
   background:var(--sangue);transition:width .2s}
-.mapa .lt .nm{font-family:var(--sans);font-size:11px;font-weight:700;
-  letter-spacing:1.5px;text-transform:uppercase;color:var(--tinta3);
-  margin-bottom:3px;transition:color .2s}
+.mapa .lt .nm{font-family:var(--serifa);font-size:16px;font-weight:600;
+  letter-spacing:-.1px;color:var(--tinta3);margin-bottom:2px;transition:color .2s}
 .mapa .lt .ds{font-size:16.5px;line-height:1.36;color:var(--tinta3);
   transition:color .2s}
 .mapa .lt.on::before{width:3px}
@@ -481,8 +522,8 @@ table.oc tbody tr:not(.hid) .vv{animation:sobe .3s ease;display:inline}
   border-top:2px solid var(--tinta)}
 .comp>div{padding:12px 20px 12px 0}
 .comp>div+div{border-left:1px solid var(--linha);padding-left:24px}
-.comp .ct{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.6px;
-  text-transform:uppercase;color:var(--sangue);margin-bottom:8px}
+.comp .ct{font-family:var(--serifa);font-size:17px;font-weight:600;letter-spacing:-.1px;
+  font-style:italic;color:var(--sangue);margin-bottom:8px}
 .comp p,.comp li{font-size:17px;line-height:1.44}
 
 /* ─────────────────────────── densidades ─────────────────────────── */

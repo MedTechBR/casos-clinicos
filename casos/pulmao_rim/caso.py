@@ -74,7 +74,7 @@ SLIDES = [
                 "ocupacional. As únicas medicações em uso eram losartana e "
                 "sinvastatina. Não usava hidralazina, propiltiouracila ou "
                 "minociclina.")),
-        densidade="xd",
+        densidade="dense",
     ),
     bloco("O caso · bloco 1", "Curso de oito semanas",
         linha_do_tempo([
@@ -134,7 +134,7 @@ SLIDES = [
             p("Antes de mostrar a pergunta, peça à turma que nomeie os "
               "territórios acometidos. São quatro: via aérea superior, "
               "pulmão, pele e nervo periférico. O rim ainda não apareceu.")),
-        densidade="xd",
+        densidade="dense",
     ),
     bloco("O caso · síntese do exame", "Territórios acometidos",
         mapa_do_corpo([

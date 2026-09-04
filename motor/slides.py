@@ -59,6 +59,23 @@ def momento(passo: str, titulo: str, lede: str = "", ident=None) -> dict:
     return _slide(tipo="momento", classes=["mom"], corpo=corpo, ident=ident, titulo=titulo)
 
 
+def _grau_do_titulo(t: str) -> str:
+    """O corpo do título segue o comprimento dele.
+
+    Corpo único aplicado a todos os títulos é o que faz um baralho parecer
+    template. Na página impressa, título curto ocupa a largura e respira;
+    título longo recua para caber sem quebrar em quatro linhas.
+    """
+    n = len(t)
+    if n <= 17:
+        return "t-gg"
+    if n <= 26:
+        return "t-g"
+    if n >= 42:
+        return "t-p"
+    return ""
+
+
 def _generico(tipo, base, kicker, titulo, conteudo, densidade, ident, centro=False):
     corpo = (
         (f'<div class="kicker">{texto(kicker)}</div>\n' if kicker else "")
@@ -67,7 +84,8 @@ def _generico(tipo, base, kicker, titulo, conteudo, densidade, ident, centro=Fal
     )
     return _slide(
         tipo=tipo,
-        classes=[base, _dens(densidade), "centro" if centro else ""],
+        classes=[base, _dens(densidade), "centro" if centro else "",
+                 _grau_do_titulo(titulo)],
         corpo=corpo,
         ident=ident,
         titulo=titulo,
