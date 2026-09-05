@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import base64
 import json
+import datetime
 import mimetypes
 import re
 from pathlib import Path
@@ -424,8 +425,12 @@ def montar(caso) -> str:
             return [resolver(x) for x in v]
         return v
 
+    # O arquivo tem megabytes e o navegador o guarda por horas: sem carimbo,
+    # não há como saber, olhando a tela, se o que está aberto é a versão nova.
+    carimbo = datetime.datetime.now().strftime("%d/%m %H:%M")
     dados = {
-        "caso": {"titulo": caso.TITULO, "rodape": caso.RODAPE,
+        "caso": {"titulo": caso.TITULO,
+                 "rodape": caso.RODAPE + " · versão de " + carimbo,
                  "sistemas": SISTEMAS},
         "etapas": resolver(caso.ETAPAS),
         "banco": {e["n"]: e for e in caso.BANCO},
