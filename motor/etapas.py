@@ -100,6 +100,26 @@ def grade(*blocos, colunas=2) -> str:
             + "".join(f"<div>{b}</div>" for b in blocos) + "</div>")
 
 
+def vitais(*pares) -> str:
+    """Os sinais vitais num quadro à parte, e não diluídos na prosa.
+
+    A convenção do //New England// é narrá-los em frase. Numa peça projetada
+    isso não funciona: ninguém volta a um parágrafo para conferir a frequência
+    respiratória enquanto discute o caso em pé.
+    """
+    return '<div class="vit">' + "".join(
+        f'<div{" class=alt" if alterado else ""}><b>{texto(valor)}</b>'
+        f"<span>{texto(rotulo)}</span></div>"
+        for rotulo, valor, alterado in pares) + "</div>"
+
+
+def topicos(*pares) -> str:
+    """O exame físico por aparelho, como se escreve no prontuário."""
+    return '<div class="tops">' + "".join(
+        f'<div><b>{texto(rotulo)}</b><p>{texto(corpo_)}</p></div>'
+        for rotulo, corpo_ in pares) + "</div>"
+
+
 def quadro(titulo, *blocos, sistema="geral") -> str:
     return (f'<div class="qd q-{_s(sistema)}"><b>{texto(titulo)}</b>'
             f'{"".join(blocos)}</div>')

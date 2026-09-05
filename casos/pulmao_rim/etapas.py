@@ -31,6 +31,7 @@ from motor.desenhos import anotada, corpo, seta
 from motor.etapas import (
     alt, balanco, bifurcacao, caminho, capa, consequencia, desfecho, grade,
     grupo, lamina, op, p, pagina, pedido, pergunta, quadro, resultados, tabela,
+    topicos, vitais,
 )
 
 from .banco import BANCO  # noqa: F401  — a gaveta de exames é a mesma
@@ -63,6 +64,8 @@ TC = "tc_torax_vidro_fosco.jpg"
 RX = "rx_torax_alveolar.jpg"
 US = "us_rim.jpg"
 EAS = "sedimento_cilindro.jpg"
+RX_NORMAL = "rx_torax_normal.jpg"
+TC_SEIOS = "tc_seios_face.jpg"
 BIOPSIA = "biopsia_renal_cortex.jpg"
 CRESCENTE = "glomerulo_crescente.jpg"
 IF = "panca_imunofluorescencia.jpg"
@@ -227,7 +230,7 @@ ETAPAS = [
                 op("Creatinina",
                    resultado="1,4 mg/dL {{(1,0 há dois meses)}}",
                    referencia="até 1,3 mg/dL", alterado=True),
-                op("Sedimento urinário", "urina fresca",
+                op("Sedimento urinário",
                    resultado="Proteinúria 1+ · **hemácias 12 por campo** · "
                              "sem cilindros · sem bacteriúria",
                    referencia="sem hemácias, sem proteinúria", alterado=True),
@@ -247,18 +250,33 @@ ETAPAS = [
     resultados("res_amb", "O que voltou do ambulatório",
         "Os exames que você pediu", "ex_amb",
         introducao="Só o que foi marcado. Estamos oito semanas depois do "
-                   "início e seis semanas antes da internação.",
+                   "início e seis semanas antes da internação. Clique na "
+                   "imagem para ampliar; o laudo abre no botão.",
         fundo=CENA,
+        laminas={
+            "Radiografia de tórax": lamina(RX_NORMAL,
+                "Radiografia de tórax, póstero-anterior",
+                "Imagem ilustrativa de licença aberta; não pertence a este "
+                "paciente.",
+                "Mikael Häggström · Wikimedia Commons · CC0"),
+            "Tomografia de seios da face": lamina(TC_SEIOS,
+                "Tomografia de seios da face, plano coronal",
+                "Imagem ilustrativa de licença aberta; não pertence a este "
+                "paciente.",
+                "Mikael Häggström · Wikimedia Commons · CC BY 4.0"),
+        },
     ),
 
     pergunta("p2", "Pergunta 3",
-        "Creatinina de 1,4 mg/dL hoje; era 1,0 mg/dL há dois meses. **Quais "
-        "três** afirmações essa comparação autoriza?",
+        "Creatinina de 1,4 mg/dL hoje — referência do laboratório até 1,3 — e "
+        "1,0 mg/dL há dois meses. **Quais três** afirmações essa comparação "
+        "autoriza?",
         [
-            alt("O valor está dentro da referência e mesmo assim é anormal "
-                "para ele",
-                "A referência é populacional. O paciente é a própria "
-                "referência dele, e ele saiu de 1,0.", certa=True),
+            alt("Está pouco acima da referência e muito acima do que era dele",
+                "1,4 contra um teto de 1,3 é um laudo que quase não chama "
+                "atenção. Contra os 1,0 dele, é outra coisa: a referência é "
+                "populacional, e o paciente é a referência dele mesmo.",
+                certa=True),
             alt("A lesão está no glomérulo",
                 "Nada aqui localiza o compartimento. Creatinina não distingue "
                 "pré-renal, glomerular, tubular ou obstrutivo — quem faz isso "
@@ -309,38 +327,70 @@ ETAPAS = [
     ),
 
     pagina("exame", "Exame físico", "O que o exame mostrou",
-        p("Ao exame, a temperatura era de 37,8 °C, a pressão arterial de "
-          "148/92 mmHg, a frequência cardíaca de 104 batimentos por minuto e a "
-          "frequência respiratória de 28 incursões por minuto. A saturação de "
-          "oxigênio era de 88% enquanto o paciente respirava ar ambiente, e "
-          "subiu para 94% com cateter nasal a 4 litros por minuto. **Pesava "
-          "78 kg e media 1,72 m** — eram 84 kg dois meses antes."),
-        p("Estava dispneico, preferindo permanecer sentado, completando apenas "
-          "frases curtas, com palidez cutâneo-mucosa acentuada."),
-        corpo([
-            ("via", "Crostas hemáticas aderidas ao septo em ambas as narinas, "
-                    "mucosa friável. Sem perfuração septal, deformidade em "
-                    "sela ou massa."),
-            ("pulmao", "Crepitações finas difusas nos dois hemitórax, sem "
-                       "sibilos e sem atrito pleural. Ausculta cardíaca "
-                       "normal, sem sopro, sem estase jugular e sem edema."),
-            ("rim", "Sem massa palpável e sem dor à punho-percussão. No exame "
-                    "físico o rim aparece só pela pressão de 148/92 mmHg."),
-            ("pele", "Lesões purpúricas palpáveis na face anterior das pernas "
-                     "e no dorso dos pés, algumas com centro escurecido, que "
-                     "não desaparecem à digitopressão. Sem lesão em polpa "
-                     "digital, sem hemorragia subungueal."),
-            ("nervo", "Pé caído à direita, com força 2/5 para dorsiflexão, e "
-                      "déficit sensitivo ulnar à esquerda. Assimétrico, sem "
-                      "nível medular e sem raiz única."),
-        ], altura=316),
+        vitais(
+            ("Temperatura", "37,8 °C", True),
+            ("Pressão arterial", "148/92", True),
+            ("Frequência cardíaca", "104", True),
+            ("Frequência respiratória", "28", True),
+            ("SpO₂ em ar ambiente", "88%", True),
+            ("Peso", "78 kg", False),
+            ("Altura", "1,72 m", False),
+        ),
+        grade(
+            topicos(
+                ("Estado geral",
+                 "Dispneico, prefere permanecer sentado, completa apenas "
+                 "frases curtas. **Palidez cutâneo-mucosa acentuada.** Lúcido "
+                 "e orientado. Pesava 84 kg há dois meses."),
+                ("Cabeça e pescoço",
+                 "Crostas hemáticas aderidas ao septo em ambas as narinas, "
+                 "mucosa friável que sangra ao toque. Sem perfuração septal, "
+                 "deformidade em sela ou massa. Orofaringe sem lesões. Sem "
+                 "linfonodomegalia."),
+                ("Cardiovascular",
+                 "Bulhas rítmicas em dois tempos, sem sopros. Sem estase "
+                 "jugular a 45°. Pulsos periféricos amplos e simétricos, "
+                 "enchimento capilar de 2 segundos."),
+                ("Respiratório",
+                 "Crepitações finas difusas nos dois hemitórax, da base ao "
+                 "terço médio. Sem sibilos e sem atrito pleural. Expansibilidade "
+                 "simétrica, sem tiragem."),
+            ),
+            topicos(
+                ("Abdome",
+                 "Plano, flácido, indolor, sem massas ou visceromegalias. "
+                 "Ruídos hidroaéreos presentes. Punho-percussão lombar "
+                 "indolor bilateralmente."),
+                ("Membros inferiores",
+                 "**Sem edema.** Sem empastamento de panturrilha, sem sinais "
+                 "de trombose. Pulsos pediosos e tibiais posteriores "
+                 "palpáveis."),
+                ("Pele",
+                 "Lesões arredondadas, elevadas e purpúricas na face anterior "
+                 "de ambas as pernas e no dorso dos pés, algumas com centro "
+                 "escurecido, **que não desaparecem à digitopressão**. Sem "
+                 "lesão em polpa digital, sem hemorragia subungueal."),
+                ("Neurológico",
+                 "Força 2/5 para dorsiflexão do pé **direito**, com pé caído à "
+                 "marcha. Hipoestesia em território ulnar à **esquerda**. "
+                 "Assimétrico, sem nível sensitivo e sem distribuição de raiz "
+                 "única. Reflexo aquileu direito abolido, demais presentes e "
+                 "simétricos."),
+            ),
+            corpo([
+                ("via", ""), ("pulmao", ""), ("rim", ""),
+                ("pele", ""), ("nervo", ""),
+            ], altura=290, so_marcas=True),
+            colunas=3,
+        ),
         fundo=CENA,
         so_kicker=True,
     ),
 
     pergunta("p3", "Pergunta 4",
-        "Primeiras duas horas de pronto-socorro, com hipótese de pneumonia "
-        "grave. **Quais três** condutas?",
+        "Primeiras duas horas de pronto-socorro. A hipótese de trabalho é "
+        "pneumonia grave, e a creatinina está em 3,8 mg/dL. **Quais três** "
+        "condutas?",
         [
             alt("Sedimento urinário em urina fresca",
                 "É o exame mais barato do caso e o único que localiza a lesão "
@@ -387,12 +437,11 @@ ETAPAS = [
                    resultado="3,8 mg/dL {{(1,4 há seis semanas)}}",
                    referencia="até 1,3 mg/dL", alterado=True),
                 op("Taxa de filtração glomerular estimada",
-                   "CKD-EPI 2021 — decide a dose de vários esquemas",
                    resultado="17 mL/min/1,73 m²",
                    referencia="acima de 90 mL/min/1,73 m²", alterado=True),
                 op("Potássio", resultado="5,4 mEq/L",
                    referencia="3,5 a 5,0 mEq/L", alterado=True),
-                op("Sedimento urinário", "urina fresca, dismorfismo e cilindros"),
+                op("Sedimento urinário"),
                 op("Ultrassonografia de rins e vias urinárias"),
             ]),
             grupo("Sangue e gasometria", "sangue", [
@@ -415,11 +464,9 @@ ETAPAS = [
                 op("Angiotomografia de tórax"),
             ]),
             grupo("Infecção", "geral", [
-                op("Hemocultura", "três pares, antes do antibiótico",
+                op("Hemocultura",
                    resultado="Em andamento — coletada antes da primeira dose",
                    referencia="negativa"),
-                op("Urocultura"),
-                op("Anti-HIV"),
                 op("HBsAg e anti-HBc"),
             ]),
         ],
@@ -596,25 +643,47 @@ ETAPAS = [
 
     pedido("ex_mec", "Pergunta 7",
         "O que você pede agora?",
-        "Duas perguntas em aberto: **de onde vem o sangue do pulmão** e **em "
-        "que compartimento do rim está a lesão** — e ainda é preciso fechar a "
-        "conta com a infecção. **Seis vagas.**",
+        "Origem do sangramento alveolar, compartimento da lesão renal e "
+        "mecanismo. **Seis vagas.**",
         [
+            grupo("Autoanticorpos", "sangue", [
+                op("ANCA por imunofluorescência indireta"),
+                op("Anti-mieloperoxidase"),
+                op("Anti-proteinase 3"),
+                op("Anticorpo anti-membrana basal glomerular"),
+                op("Anti-DNA nativo"),
+                op("Anti-ENA"),
+                op("Fator reumatoide"),
+            ]),
+            grupo("Complemento e proteínas", "nervo", [
+                op("Complemento C3"),
+                op("Complemento C4"),
+                op("Crioglobulinas"),
+                op("Eletroforese de proteínas"),
+                op("Imunoglobulinas séricas"),
+            ]),
+            grupo("Sorologias", "via", [
+                op("Anti-HCV"),
+                op("Sorologia para sífilis"),
+                op("Anti-HIV"),
+                op("HBsAg e anti-HBc"),
+            ]),
+            grupo("Sangue, outros", "pele", [
+                op("Ferritina"),
+                op("VHS"),
+                op("D-dímero"),
+                op("Coombs direto"),
+                op("Anticorpos antifosfolípides"),
+            ]),
             grupo("Via aérea", "pulmao", [
-                op("Lavado broncoalveolar",
-                   "aspecto sequencial das alíquotas e contagem de macrófagos"),
+                op("Lavado broncoalveolar"),
                 op("Cultura do lavado broncoalveolar"),
                 op("Pesquisa de Pneumocystis no lavado"),
                 op("Baciloscopia e teste molecular para tuberculose"),
+                op("Galactomanana e beta-D-glucana"),
             ]),
-            grupo("Tecido renal", "rim", [
-                # Uma agulha, um laudo: microscopia óptica, imunofluorescência
-                # e classificação saem do mesmo fragmento. Oferecê-las como
-                # três itens marcáveis cobrava três vagas por um exame só, e
-                # tornava a revisão do fim aritmeticamente inalcançável.
+            grupo("Tecido", "rim", [
                 op("Biópsia renal",
-                   "microscopia óptica, imunofluorescência e classificação, "
-                   "do mesmo fragmento",
                    exige=["Sedimento urinário",
                           "Ultrassonografia de rins e vias urinárias"],
                    porque="a nefrologia não punciona um rim sem sedimento que "
@@ -631,22 +700,18 @@ ETAPAS = [
                    referencia="sem proliferação extracapilar, sem depósitos",
                    alterado=True),
             ]),
-            grupo("Imunologia", "via", [
-                op("ANCA por imunofluorescência indireta",
-                   "padrão e título, sobre neutrófilos fixados"),
-                op("Anti-mieloperoxidase"),
-                op("Anti-proteinase 3"),
-                op("Anticorpo anti-membrana basal glomerular"),
-                op("Complemento C3"),
-                op("Crioglobulinas", "coleta em tubo aquecido"),
-                op("FAN"),
-                op("Anti-DNA nativo"),
+            grupo("Urina", "geral", [
+                op("Sedimento urinário"),
+                op("Proteinúria de 24 horas"),
+                op("Relação proteína/creatinina urinária"),
+                op("Eosinofilúria"),
+                op("Urocultura"),
             ]),
-            grupo("Outros", "geral", [
-                op("Sedimento urinário", "se ainda não foi pedido"),
-                op("Complemento C4"),
-                op("Eletroneuromiografia"),
+            grupo("Imagem e outros", "geral", [
+                op("Ultrassonografia de rins e vias urinárias"),
                 op("Tomografia de seios da face"),
+                op("Ecocardiograma transtorácico"),
+                op("Eletroneuromiografia"),
             ]),
         ],
         fundo=BIOPSIA, banco=BANCO, limite=6,
@@ -656,6 +721,11 @@ ETAPAS = [
         introducao="De novo, só o que foi marcado.",
         fundo=BIOPSIA,
         laminas={
+            "Tomografia de seios da face": lamina(TC_SEIOS,
+                "Tomografia de seios da face, plano coronal",
+                "Imagem ilustrativa de licença aberta; não pertence a este "
+                "paciente.",
+                "Mikael Häggström · Wikimedia Commons · CC BY 4.0"),
             "ANCA por imunofluorescência indireta": lamina(IF,
                 "Imunofluorescência indireta sobre neutrófilos",
                 "A fluorescência acompanha o contorno dos lóbulos do núcleo e "
@@ -955,11 +1025,10 @@ ETAPAS = [
 
     pagina("t_rituximabe", "A prescrição", "O que foi prescrito — caminho A",
         grade(
-            p("**Rituximabe 375 mg/m² por via endovenosa, uma vez por semana, "
-              "quatro doses.** Superfície corporal de 1,91 m² pela fórmula de "
-              "Mosteller com 78 kg e 1,72 m: **716 mg** por dose. Sem correção "
-              "para a função renal — o anticorpo monoclonal não é depurado "
-              "pelo rim.")
+            p("**Rituximabe 375 mg/m², uma vez por semana, quatro doses.** "
+              "Superfície corporal de 1,93 m² por Mosteller, com 78 kg e "
+              "1,72 m: **725 mg** por dose. Sem correção para a função renal — "
+              "o anticorpo monoclonal não é depurado pelo rim.")
             + quadro("O que este caminho pede de vigilância",
                 p("Pré-medicação com anti-histamínico, paracetamol e o próprio "
                   "glicocorticoide, pela reação infusional da primeira dose. "
@@ -1456,27 +1525,26 @@ ETAPAS = [
     pagina("procedencia", "Procedência e créditos", "Procedência",
         grade(
             quadro("O caso",
-                p("**Autoral, curso simulado.** O paciente é ficcional e "
-                  "nenhum ramo deste caso é o curso real de uma pessoa: cada "
-                  "desfecho é inferência fisiológica escrita para ensino, e "
-                  "não extração de artigo. Os números foram desenhados para "
-                  "fechar entre si — gasometria por Henderson-Hasselbalch, "
-                  "filtração por CKD-EPI 2021, relação PaO₂/FiO₂ calculada."),
+                p("**Autoral, curso simulado.** Paciente ficcional; nenhum "
+                  "ramo é o curso real de uma pessoa. Os números fecham entre "
+                  "si — Henderson-Hasselbalch, CKD-EPI 2021, PaO₂/FiO₂ "
+                  "calculada."),
                 sistema="geral")
             + quadro("As cenas do paciente",
                 p("**Ilustração gerada por inteligência artificial** a partir "
                   "da descrição clínica deste caso. Não retrata pessoa real."),
                 sistema="geral"),
             quadro("As imagens médicas",
-                p("Reais, ilustrativas, de repositórios de licença aberta, e "
-                  "**não pertencem a este paciente**. Radiografia de tórax: "
+                p("Reais, ilustrativas, de licença aberta, e **não pertencem "
+                  "a este paciente**. Radiografia de tórax: "
                   "Samir, Wikimedia Commons, CC BY-SA 3.0. Tomografia: "
                   "Hellerhoff, Wikimedia Commons, CC BY-SA 4.0. Ultrassom "
                   "renal: Hansen, Nielsen e Ewertsen, CC BY 4.0. Sedimento "
                   "urinário: Rian Kabir, CC BY 2.0. Glomérulo e córtex renal: "
                   "Nephron, CC BY-SA 3.0. Imunofluorescência: Simon Caulton, "
-                  "CC BY-SA 3.0. As setas sobre a fotomicrografia são leitura "
-                  "editorial deste caso."),
+                  "CC BY-SA 3.0. Radiografia normal e tomografia de seios: "
+                  "Mikael Häggström, CC0 e CC BY 4.0. As setas sobre a "
+                  "fotomicrografia são leitura editorial deste caso."),
                 sistema="pulmao"),
             quadro("As diretrizes citadas",
                 p("PEXIVAS //(N Engl J Med. 2020;382:622-31)// para troca "
@@ -1491,7 +1559,7 @@ ETAPAS = [
                   "Bajema //(Clin Nephrol. 1997;48:16-21)// para o granuloma "
                   "renal; ACR/EULAR 2022 para os critérios de classificação."),
                 sistema="rim"),
-            colunas=2,
+            colunas=4,
         ),
         fundo=CENA, so_kicker=True,
     ),

@@ -18,6 +18,9 @@
 
 :root{
   --eixo:88px;
+  /* Uma só altura de topo e uma só de rodapé, para toda a peça. */
+  --teto:clamp(78px,10vh,102px);
+  --rodape:clamp(88px,11vh,104px);
   --preto:#08090b; --carvao:#0f1216; --grafite:#171b21; --linha:#414a57;
   --linha2:#5b6672;
   --gelo:#eef2f6; --nevoa:#a8b2be; --fumaca:#8d97a4; --sombra:#737d8a;
@@ -125,11 +128,16 @@ body{background:var(--preto);color:var(--gelo);font-family:var(--sans);
    viewport o `76ch` sempre vencia e a peça parava de crescer — 766 px de
    coluna numa tela de 2560. Agora a coluna cresce com a tela e o teto é de
    medida de linha, não de pixel. */
-.plano{position:absolute;left:var(--eixo);top:50%;
-  transform:translateY(-50%);width:clamp(34ch,42vw,64ch);
-  max-height:min(82vh,calc(100vh - 164px));overflow:auto;padding-right:10px}
-.plano.centro{left:var(--eixo);transform:translateY(-50%);
-  width:clamp(48ch,64vw,88ch)}
+/* `.plano` era centrado verticalmente e `.folha` ancorada no topo: o primeiro
+   elemento de cada página caía em quinze alturas diferentes, com salto médio
+   de 63 px e máximo de 131 px ao virar a folha. Numa peça folha-a-folha o
+   título dançava na projeção a cada avanço. Agora as duas começam na mesma
+   linha. */
+.plano{position:absolute;left:var(--eixo);top:var(--teto);
+  width:clamp(34ch,42vw,64ch);
+  max-height:calc(100vh - var(--teto) - var(--rodape));
+  overflow:auto;padding-right:10px}
+.plano.centro{left:var(--eixo);width:clamp(48ch,64vw,88ch)}
 /* três colunas não cabem em 76ch: a página da prescrição pede a tela toda */
 .plano.centro:has(.grade.c3){width:min(120ch,calc(100vw - 2 * var(--eixo)))}
 .plano::-webkit-scrollbar{width:3px}
@@ -163,10 +171,10 @@ h3{font-family:var(--sans);font-size:11px;letter-spacing:1.9px;
   text-transform:uppercase;color:var(--nevoa);font-weight:800;
   margin:22px 0 10px}
 
-p{font-family:var(--serifa);font-size:clamp(15.5px,.4vw + 1.25vh,18.5px);
-  line-height:1.5;color:#c3ccd6;margin-bottom:clamp(8px,1.3vh,13px)}
+p{font-family:var(--serifa);font-size:clamp(17px,.42vw + 1.42vh,21.5px);
+  line-height:1.52;color:#c8d1da;margin-bottom:clamp(9px,1.4vh,15px)}
 p:last-child{margin-bottom:0}
-p.lede{font-size:clamp(17px,.5vw + 1.4vh,21px);line-height:1.48;color:#d4dce4}
+p.lede{font-size:clamp(19px,.5vw + 1.6vh,24px);line-height:1.45;color:#dbe2e9}
 b,strong{color:var(--gelo);font-weight:600}
 em,i{font-style:italic}
 ul,ol{margin:0 0 14px 20px;font-family:var(--serifa);font-size:17.5px;
@@ -219,7 +227,7 @@ li{margin-bottom:7px}
   background:linear-gradient(90deg,rgba(255,255,255,.04),transparent 70%)}
 .qd>b{display:block;font-family:var(--sans);font-size:10.5px;letter-spacing:1.8px;
   text-transform:uppercase;font-weight:800;margin-bottom:8px;color:var(--nevoa)}
-.qd p{font-size:clamp(14px,.35vw + 1.05vh,16.5px);line-height:1.45}
+.qd p{font-size:clamp(15.5px,.38vw + 1.25vh,19px);line-height:1.48}
 .q-via{border-left-color:var(--via)} .q-via>b{color:var(--via)}
 .q-pulmao{border-left-color:var(--pulmao)} .q-pulmao>b{color:var(--pulmao)}
 .q-rim{border-left-color:var(--rim)} .q-rim>b{color:var(--rim)}
@@ -234,7 +242,7 @@ li{margin-bottom:7px}
 .tb th{text-align:left;font-size:12px;letter-spacing:1.3px;
   text-transform:uppercase;color:var(--fumaca);font-weight:800;
   padding:0 14px 8px 0;border-bottom:1px solid var(--linha2)}
-.tb td{padding:clamp(6px,1.1vh,10px) 14px clamp(6px,1.1vh,10px) 0;
+.tb td{padding:clamp(7px,1.25vh,12px) 16px clamp(7px,1.25vh,12px) 0;
   border-bottom:1px solid var(--linha);
   color:#b6c0cb;line-height:1.42;vertical-align:top}
 
@@ -255,27 +263,28 @@ li{margin-bottom:7px}
 /* ───────────────────────── pedido de exames ───────────────────────── */
 
 .folha{position:absolute;inset:0;
-  padding:clamp(72px,9.5vh,88px) var(--eixo) clamp(84px,10.5vh,96px);display:flex;
+  padding:var(--teto) var(--eixo) var(--rodape);display:flex;
   flex-direction:column;transform-style:preserve-3d}
 .folha h2{max-width:24ch;margin-bottom:8px}
-.folha .sub{font-family:var(--sans);font-size:clamp(12.5px,1.6vh,14.5px);
+.folha .sub{font-family:var(--sans);font-size:clamp(14px,1.8vh,16.5px);
   color:var(--nevoa);margin-bottom:clamp(13px,2.6vh,26px);max-width:70ch;
   line-height:1.5}
 
-.grupos{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
+.grupos{display:grid;grid-template-columns:repeat(auto-fill,minmax(236px,1fr));
+  gap:clamp(10px,1.1vw,16px);
   align-content:start;transform-style:preserve-3d;overflow:auto;flex:1;
   padding-bottom:4px}
 .grupos::-webkit-scrollbar{height:3px}
 .grupos::-webkit-scrollbar-thumb{background:var(--linha2)}
 .gr{border:1px solid var(--linha);
-  padding:clamp(10px,1.8vh,16px) clamp(11px,1.1vw,16px) clamp(5px,.9vh,8px);
+  padding:clamp(9px,1.5vh,14px) clamp(10px,1vw,14px) clamp(4px,.8vh,7px);
   background:rgba(255,255,255,.035);
   transition:transform .24s cubic-bezier(.2,.7,.3,1),box-shadow .24s;
   transform-style:preserve-3d;align-self:start}
 .gr:hover{transform:translateZ(24px) translateY(-3px);box-shadow:var(--fundo2)}
-.gr>b{display:flex;align-items:center;gap:9px;font-size:10.5px;
-  letter-spacing:1.8px;text-transform:uppercase;font-weight:800;
-  margin-bottom:clamp(7px,1.4vh,13px);color:var(--nevoa)}
+.gr>b{display:flex;align-items:center;gap:8px;font-size:10.5px;
+  letter-spacing:1.7px;text-transform:uppercase;font-weight:800;
+  margin-bottom:clamp(6px,1.1vh,10px);color:var(--nevoa)}
 .gr>b i{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
 .gr.g-via>b{color:var(--via)} .gr.g-via>b i{background:var(--via)}
 .gr.g-via{border-top:2px solid var(--via)}
@@ -291,7 +300,7 @@ li{margin-bottom:7px}
 .gr.g-sangue{border-top:2px solid var(--sangue)}
 .gr.g-geral{border-top:2px solid var(--geral)}
 
-.it{display:flex;gap:11px;align-items:flex-start;padding:clamp(5px,1vh,10px) 0;
+.it{display:flex;gap:11px;align-items:flex-start;padding:clamp(5px,.85vh,9px) 0;
   border-top:1px solid rgba(255,255,255,.06);cursor:pointer;user-select:none}
 .it:first-of-type{border-top:none}
 .cx{width:17px;height:17px;border:1.5px solid var(--fumaca);flex:0 0 auto;
@@ -303,8 +312,8 @@ li{margin-bottom:7px}
   transform:rotate(42deg)}
 /* Marcado não é certo. O verde de acerto dizia as duas coisas na mesma peça,
    e na tela do pedido de exames ele parecia aprovar a escolha. */
-.it .n{font-family:var(--serifa);font-size:clamp(13.5px,1.72vh,16px);
-  line-height:1.24;color:#cdd5de}
+.it .n{font-family:var(--serifa);font-size:clamp(15px,1.95vh,18.5px);
+  line-height:1.26;color:#d2dae2}
 .it.on .n{color:var(--gelo)}
 .it .d{display:block;font-family:var(--sans);
   font-size:clamp(10px,1.25vh,11.5px);color:var(--fumaca);margin-top:3px;
@@ -344,10 +353,11 @@ li{margin-bottom:7px}
 .rc>b{display:block;font-family:var(--sans);font-size:13px;font-weight:700;
   letter-spacing:.2px;margin-bottom:6px;color:var(--gelo)}
 .rc.alt>b{color:var(--alerta)}
-.rc .v{font-family:var(--sans);font-size:17px;line-height:1.45;color:var(--gelo)}
+.rc .v{font-family:var(--sans);font-size:clamp(17px,2.1vh,20px);
+  line-height:1.42;color:var(--gelo)}
 .rc .v b{color:var(--gelo)}
 .rc .v .ln{display:block;padding-left:13px;position:relative;
-  font-size:15px;line-height:1.36;margin-bottom:3px}
+  font-size:clamp(15px,1.85vh,17.5px);line-height:1.38;margin-bottom:4px}
 .rc .v .ln::before{content:"";position:absolute;left:0;top:.62em;width:5px;
   height:1px;background:var(--linha2)}
 .rc .rf{display:block;font-size:11px;color:var(--sombra);margin-top:6px;
@@ -373,15 +383,20 @@ li{margin-bottom:7px}
    tudo aqui é medido em altura de tela: o enunciado, o intervalo entre as
    alternativas e o corpo de cada uma encolhem juntos quando a tela é baixa. */
 .folha.q{padding-top:clamp(74px,9vh,96px);padding-bottom:clamp(84px,10vh,96px)}
-.enun{font-family:var(--serifa);font-size:clamp(18px,.9vw + 1.35vh,30px);
+.enun{font-family:var(--serifa);font-size:clamp(21px,1vw + 1.6vh,34px);
   line-height:1.24;font-weight:600;max-width:46ch;margin-bottom:6px}
 .qdica{font-family:var(--sans);font-size:11.5px;letter-spacing:1.5px;
   text-transform:uppercase;color:var(--fumaca);
   margin-bottom:clamp(10px,1.8vh,22px)}
+/* Antes de confirmar, rolar é proibido: quem não vê as dez alternativas ao
+   mesmo tempo não consegue comparar. Depois de confirmar, os comentários são
+   texto sequencial e podem rolar — e é o que permite que eles tenham corpo de
+   leitura em vez dos 9,8 px a que estavam reduzidos. */
 .alts{list-style:none;margin:0;display:flex;flex-direction:column;
   gap:clamp(7px,1.1vh,15px);
-  max-width:118ch;overflow:auto;flex:1;transform-style:preserve-3d;
+  max-width:126ch;overflow:hidden;flex:1;transform-style:preserve-3d;
   padding-bottom:4px}
+.alts.feita{overflow:auto;padding-right:8px}
 .alts::-webkit-scrollbar{width:3px}
 .alts::-webkit-scrollbar-thumb{background:var(--linha2)}
 .alts li{display:grid;grid-template-columns:30px minmax(0,1fr);
@@ -394,17 +409,17 @@ li{margin-bottom:7px}
   box-shadow:var(--fundo1)}
 .alts .k{font-family:var(--sans);font-size:13px;font-weight:800;
   color:var(--fumaca);letter-spacing:1px;padding-top:2px}
-.alts .tx{font-family:var(--serifa);font-size:clamp(15px,.4vw + 1.25vh,21px);
-  line-height:1.3;color:#cdd5de}
+.alts .tx{font-family:var(--serifa);font-size:clamp(17px,.42vw + 1.4vh,23px);
+  line-height:1.28;color:#d2dae2}
 /* Depois de confirmar, o comentário vai para uma TERCEIRA coluna, ao lado da
    alternativa, em vez de crescer por baixo dela. Empilhado, cinco comentários
    dobravam a altura da lista e devolviam a rolagem que a pergunta acabou de
    perder. */
 .alts .cm{display:none;font-family:var(--sans);
-  font-size:clamp(10.5px,.22vw + .85vh,13px);line-height:1.35;
+  font-size:clamp(14px,.3vw + 1.15vh,17px);line-height:1.45;
   color:var(--nevoa)}
 .alts.feita li{grid-template-columns:30px minmax(0,1fr) minmax(0,1.02fr)}
-.alts.feita .tx{font-size:clamp(13.5px,.32vw + 1.05vh,18px)}
+.alts.feita .tx{font-size:clamp(16px,.4vw + 1.3vh,21px)}
 .alts.feita li{padding-block:clamp(7px,1.1vh,15px)}
 .alts.feita{gap:clamp(6px,.9vh,12px)}
 .alts.feita .cm{padding-left:clamp(12px,1.2vw,20px);
@@ -455,10 +470,10 @@ li{margin-bottom:7px}
   box-shadow:var(--fundo2)}
 .cam .l{font-family:var(--sans);font-size:11px;font-weight:800;
   letter-spacing:1.8px;color:var(--marca);margin-bottom:5px;display:block}
-.cam .r{font-family:var(--serifa);font-size:clamp(16px,.5vw + 1.4vh,22px);
+.cam .r{font-family:var(--serifa);font-size:clamp(18px,.5vw + 1.55vh,24px);
   line-height:1.26;color:var(--gelo);display:block}
 .cam .c{display:none;font-family:var(--sans);
-  font-size:clamp(11px,.25vw + .95vh,13.5px);line-height:1.45;
+  font-size:clamp(14px,.28vw + 1.15vh,16.5px);line-height:1.5;
   color:var(--nevoa);margin-top:clamp(7px,1.2vh,12px);
   padding-top:clamp(7px,1.2vh,12px);border-top:1px solid var(--linha)}
 .cams.feita .cam{cursor:default}
@@ -580,15 +595,16 @@ li{margin-bottom:7px}
 /* ─────────────────── blocos lado a lado ─────────────────── */
 
 /* Altura é o recurso escasso de uma peça que não rola. */
-.grade{display:grid;gap:clamp(10px,1.4vw,18px);align-items:start;
-  margin-top:clamp(8px,1.2vh,14px)}
+.grade{display:grid;gap:clamp(9px,1.2vw,16px);align-items:start;
+  margin-top:clamp(6px,1vh,12px)}
 .grade.c2{grid-template-columns:repeat(2,minmax(0,1fr))}
 /* quando a primeira coluna é a figura, ela manda: microscopia lida em meia
    coluna de 370 px é decoração, não evidência */
 .grade.c2:has(>div>.anot:first-child){grid-template-columns:1.3fr 1fr}
 .grade.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .grade>div>*:first-child{margin-top:0}
-.grade .qd{margin:0}
+.grade .qd{margin:0 0 clamp(4px,.7vh,8px)}
+.grade>div>.qd:last-child{margin-bottom:0}
 .grade .anot{margin:0}
 @media (max-width:900px){.grade.c2,.grade.c3{grid-template-columns:1fr}}
 
@@ -698,7 +714,7 @@ li{margin-bottom:7px}
 .cn .pr{display:block;font-family:var(--sans);font-size:11px;font-weight:800;
   letter-spacing:1.4px;text-transform:uppercase;color:var(--alerta);
   margin-bottom:7px}
-.cn p{font-size:clamp(12px,.26vw + .92vh,14.5px);line-height:1.4}
+.cn p{font-size:clamp(13.5px,.28vw + 1.05vh,16px);line-height:1.44}
 .placar .grave b{color:var(--alerta)}
 .placar .grave span{color:var(--alerta)}
 
@@ -708,15 +724,15 @@ li{margin-bottom:7px}
 .alts.muitas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
   align-content:start;gap:clamp(6px,.9vh,12px) clamp(10px,1.2vw,18px)}
 .alts.muitas li{grid-template-columns:26px minmax(0,1fr)}
-.alts.muitas .tx{font-size:clamp(13.5px,.3vw + 1.05vh,17px)}
+.alts.muitas .tx{font-size:clamp(15.5px,.36vw + 1.25vh,20px)}
 .alts.muitas.feita li{grid-template-columns:26px minmax(0,1fr)}
 .alts.muitas.feita .cm{grid-column:2;padding-left:0;border-left:none;
-  margin-top:5px;padding-top:5px;border-top:1px solid var(--linha);
-  font-size:clamp(9.8px,.18vw + .78vh,11.8px);line-height:1.32}
+  margin-top:7px;padding-top:7px;border-top:1px solid var(--linha);
+  font-size:clamp(13.5px,.28vw + 1.1vh,16px);line-height:1.44}
 .alts.muitas.feita li{padding-block:clamp(6px,.85vh,11px)}
 .alts.muitas.feita{gap:clamp(5px,.7vh,9px) clamp(10px,1.2vw,18px)}
-.alts.muitas.feita .tx{font-size:clamp(12.5px,.26vw + .95vh,15.5px);
-  line-height:1.24}
+.alts.muitas.feita .tx{font-size:clamp(15.5px,.36vw + 1.25vh,20px);
+  line-height:1.26}
 @media (max-width:900px){.alts.muitas{grid-template-columns:1fr}}
 
 /* Enunciado curto e dez alternativas: o cabeçalho cede altura para a lista. */
@@ -738,3 +754,38 @@ li{margin-bottom:7px}
 .placar.obito span{text-transform:none;letter-spacing:0;font-weight:400;
   font-family:var(--serifa);font-size:clamp(14px,1.7vh,17px);color:#c3ccd6;
   line-height:1.45;max-width:80ch;margin-top:10px}
+
+/* ───────────────── sinais vitais e exame por aparelho ───────────────── */
+
+/* Os vitais num quadro, e não diluídos na prosa: ninguém volta a um parágrafo
+   para conferir a frequência respiratória discutindo o caso em pé. */
+.vit{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));
+  border-top:1px solid var(--linha);border-bottom:1px solid var(--linha);
+  margin:clamp(8px,1.4vh,16px) 0 clamp(12px,2vh,20px)}
+.vit>div{padding:clamp(9px,1.5vh,14px) 18px clamp(9px,1.5vh,14px) 0;
+  border-right:1px solid var(--linha)}
+.vit>div:last-child{border-right:none}
+.vit>div>b{display:block;font-family:var(--sans);font-size:clamp(18px,2.4vh,23px);
+  font-weight:700;line-height:1;color:var(--gelo);
+  font-variant-numeric:tabular-nums}
+.vit>div.alt>b{color:var(--alerta)}
+.vit span{display:block;font-size:9.5px;letter-spacing:1.6px;
+  text-transform:uppercase;color:var(--fumaca);margin-top:7px;font-weight:700}
+
+.tops{display:flex;flex-direction:column}
+.tops>div{padding:clamp(7px,1.2vh,11px) 0;border-top:1px solid var(--linha)}
+.tops>div:first-child{border-top:none;padding-top:0}
+/* Só o RÓTULO do aparelho leva o tratamento de maiúsculas. `b` solto pegava
+   também o negrito de dentro da prosa, e "palidez cutâneo-mucosa acentuada"
+   virava um cabeçalho no meio do parágrafo. */
+.tops>div>b{display:block;font-family:var(--sans);font-size:10.5px;
+  letter-spacing:1.9px;text-transform:uppercase;font-weight:800;
+  color:var(--nevoa);margin-bottom:5px}
+.tops p b{color:var(--gelo);font-weight:600}
+.tops p{font-size:clamp(15px,.35vw + 1.2vh,18px);line-height:1.44;
+  margin-bottom:0}
+
+/* o boneco só com os marcadores, quando o achado está na lista ao lado */
+.corpo.curto{grid-template-columns:auto auto;gap:clamp(14px,1.8vw,24px)}
+.corpo.curto .lt{grid-template-columns:20px auto;padding:clamp(4px,.8vh,7px) 0}
+.corpo.curto .lt .nm{margin-bottom:0;white-space:nowrap}

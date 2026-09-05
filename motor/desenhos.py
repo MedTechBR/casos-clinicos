@@ -503,7 +503,7 @@ _DE_SISTEMA = {"via": "via_aerea", "pulmao": "pulmao", "rim": "rim",
                "pele": "pele", "nervo": "nervo"}
 
 
-def corpo(territorios, *, altura: int = 340) -> str:
+def corpo(territorios, *, altura: int = 340, so_marcas: bool = False) -> str:
     """O boneco do paciente, com os territórios acometidos acesos.
 
     `territorios` é uma lista de (sistema, achado). O número no desenho e o
@@ -531,7 +531,8 @@ def corpo(territorios, *, altura: int = 340) -> str:
         legenda.append(
             f'<div class="lt t-{sis}"><b>{k + 1}</b><div>'
             f'<span class="nm">{texto(t["nome"])}</span>'
-            f'<span class="ds">{texto(achado)}</span></div></div>'
+            + ("" if so_marcas else f'<span class="ds">{texto(achado)}</span>')
+            + "</div></div>"
         )
     svg = (
         '<svg viewBox="0 0 310 438" xmlns="http://www.w3.org/2000/svg">'
@@ -539,7 +540,8 @@ def corpo(territorios, *, altura: int = 340) -> str:
         f'stroke-width="1.6" stroke-linejoin="round"/>'
         f'{"".join(marcas)}</svg>'
     )
-    return (f'<div class="corpo" style="--ch:{altura}px">{svg}'
+    cls = "corpo curto" if so_marcas else "corpo"
+    return (f'<div class="{cls}" style="--ch:{altura}px">{svg}'
             f'<div class="lg">{"".join(legenda)}</div></div>')
 
 
