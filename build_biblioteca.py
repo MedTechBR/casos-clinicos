@@ -17,7 +17,7 @@ CASOS = [
          subtitulo="Oito semanas de doença, quatro territórios acometidos, e um "
                    "paciente que já foi tratado duas vezes como outra coisa.",
          especialidade="Clínica médica · Nefrologia · Pneumologia",
-         minutos=50, decisoes=11, desfechos=3, nivel="os dois", cor="vermelho",
+         minutos=55, decisoes=12, desfechos=4, nivel="os dois", cor="vermelho",
          capa="cena_admissao.jpg", arquivo="pulmao-rim.html"),
 
     # Os cinco abaixo estão no plano e ainda não existem. Aparecem porque uma

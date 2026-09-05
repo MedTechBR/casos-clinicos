@@ -351,11 +351,18 @@ const DESENHO = {
       if (!im)
         return '<article class="rc' + (x.a ? ' alt' : '') + '"><b>' + n + '</b>'
           + laudo + '</article>';
+      /* A legenda descritiva É o laudo. Deixá-la sob a figura enquanto um
+         botão promete "ver o laudo" é entregar a leitura e cobrar o clique
+         por nada: quem olhava a radiografia já lia "opacidades alveolares
+         bilaterais predominando nos campos médios" antes de descrever coisa
+         alguma. Sob a figura fica só o crédito; a descrição e o valor saem
+         juntos, no clique. */
       const aberto = laudos.has(n);
       return '<article class="rc' + (x.a ? ' alt' : '') + '"><b>' + n + '</b>'
         + '<figure><img src="' + IMG(im.img) + '" alt="' + n + '">'
-        + '<figcaption>' + im.lg + ' · ' + im.cr + '</figcaption></figure>'
-        + (aberto ? laudo
+        + '<figcaption class="soc">' + im.cr + '</figcaption></figure>'
+        + (aberto
+            ? laudo + '<div class="leglaudo">' + im.lg + '</div>'
             : '<button class="verlaudo" data-laudo="' + esc(n) + '">'
               + 'Ver o laudo</button>')
         + '</article>';
@@ -422,25 +429,32 @@ const DESENHO = {
   /* O balanço: o que a condução custou, item a item, com o contrafactual ao
      lado. É a única tela do caso que só existe por causa do que VOCÊ fez. */
   balanco: e => {
-    const disparadas = e.cons.filter(c => {
-      if (c.q.sem) return !c.q.sem.some(n => jaPedido(n));
-      if (c.q.escolheu) return escolhas[c.q.escolheu[0]] === c.q.escolheu[1];
+    const bateu = q => {
+      if (q.sem) return !q.sem.some(n => jaPedido(n));
+      if (q.escolheu) return escolhas[q.escolheu[0]] === q.escolheu[1];
+      if (q.escolheu_todos)
+        return q.escolheu_todos.every(([k, v]) => escolhas[k] === v);
       return false;
-    });
+    };
+    const disparadas = e.cons.filter(c => bateu(c.q));
+    const morreu = e.obito && bateu(e.obito);
     const dias = e.bd + disparadas.reduce((s, c) => s + c.d, 0);
     const tfg = e.bt - disparadas.reduce((s, c) => s + c.t, 0);
     return fundoDe(e) + '<div class="veu tudo"></div><div class="folha">'
       + '<div class="marca"><i></i><span>' + e.kicker + '</span></div>'
       + '<h2>' + e.tt + '</h2>' + e.corpo
       + '<div class="bal">'
-      + '<div class="placar">'
+      + (morreu
+        ? '<div class="placar obito"><div class="cheio"><b>Óbito</b><span>'
+          + e.obitotx + '</span></div></div>'
+        : '<div class="placar">'
       +   '<div><b>' + dias + '</b><span>dias de internação</span></div>'
       +   '<div' + (tfg <= 15 ? ' class="grave"' : '') + '><b>' + tfg
       +     '</b><span>mL/min/1,73 m² na alta'
       +     (tfg <= 15 ? ' · saiu em diálise' : '') + '</span></div>'
       +   '<div class="ideal"><b>' + e.bd + ' · ' + e.bt + '</b>'
       +     '<span>o melhor percurso possível</span></div>'
-      + '</div>'
+      + '</div>')
       + (disparadas.length
           ? '<div class="cons">' + disparadas.map(c =>
               '<div class="cn"><b>' + c.tt + '</b>'

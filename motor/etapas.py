@@ -351,8 +351,8 @@ def consequencia(*, chave, titulo, quando, porque, dias=0, tfg=0) -> dict:
     de filtração na alta. São inferência autoral, como todo o resto do caso —
     e é por isso que cada um vem com o `porque` que o sustenta.
     """
-    if set(quando) - {"sem", "escolheu"}:
-        raise ValueError("quando: use {'sem': [...]} ou {'escolheu': [id, n]}")
+    if set(quando) - {"sem", "escolheu", "escolheu_todos"}:
+        raise ValueError("quando: use 'sem', 'escolheu' ou 'escolheu_todos'")
     if dias == 0 and tfg == 0:
         raise ValueError(f"consequência {chave!r} sem preço não é consequência")
     return {"k": chave, "tt": texto(titulo), "q": quando, "pq": texto(porque),
@@ -360,12 +360,18 @@ def consequencia(*, chave, titulo, quando, porque, dias=0, tfg=0) -> dict:
 
 
 def balanco(ident, kicker, titulo, *blocos, base_dias, base_tfg,
-            base_creatinina, consequencias, fundo="", nota="") -> dict:
-    """A última tela: o que aconteceu, o que teria acontecido, e a diferença."""
+            base_creatinina, consequencias, fundo="", nota="",
+            obito_se=None, obito_texto="") -> dict:
+    """A última tela: o que aconteceu, o que teria acontecido, e a diferença.
+
+    `obito_se` é a combinação de escolhas que mata o paciente — e num caso que
+    tem óbito, contar dias de internação e mililitros de filtração seria
+    obsceno. O placar troca de conteúdo.
+    """
     return _pag("balanco", ident, kicker=texto(kicker), tt=texto(titulo),
                 corpo="".join(blocos), bd=base_dias, bt=base_tfg,
                 bc=texto(base_creatinina), cons=consequencias, fundo=fundo,
-                nota=texto(nota))
+                nota=texto(nota), obito=obito_se, obitotx=texto(obito_texto))
 
 
 def desfecho(ident, titulo, *blocos, qualidade, porque, fundo="",

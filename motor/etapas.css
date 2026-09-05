@@ -724,3 +724,17 @@ li{margin-bottom:7px}
   margin-bottom:4px}
 .folha.q.densa .qdica{margin-bottom:clamp(7px,1.1vh,14px)}
 .folha.q.densa .marca{margin-bottom:clamp(8px,1.4vh,14px)}
+
+/* Sob a figura, só o crédito. A descrição vem no clique, com o valor. */
+.rc figcaption.soc{padding:7px 16px 9px;font-size:10.5px;color:var(--sombra)}
+.leglaudo{margin-top:9px;padding-top:9px;border-top:1px solid var(--linha);
+  font-family:var(--sans);font-size:11.5px;line-height:1.45;color:var(--fumaca)}
+
+/* Num caso que termina em óbito, contar dias de internação seria obsceno. */
+.placar.obito{grid-template-columns:1fr;border-color:var(--alerta)}
+.placar.obito .cheio{border-right:none;padding-right:0}
+.placar.obito b{color:var(--alerta);font-family:var(--serifa);
+  font-size:clamp(28px,4vh,42px);font-weight:600;letter-spacing:-.5px}
+.placar.obito span{text-transform:none;letter-spacing:0;font-weight:400;
+  font-family:var(--serifa);font-size:clamp(14px,1.7vh,17px);color:#c3ccd6;
+  line-height:1.45;max-width:80ch;margin-top:10px}
