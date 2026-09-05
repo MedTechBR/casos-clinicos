@@ -34,6 +34,11 @@ const laudos = new Set();     // exames com imagem cujo laudo já foi revelado
 const POR_FOLHA = 9;
 
 const porId = k => ETAPAS.findIndex(e => e.k === k);
+/* Tudo o que já foi pedido em qualquer rodada, para os pré-requisitos e para
+   as consequências do fim. */
+function jaPedido(nome){
+  return Object.values(marcados).some(c => c.has(nome));
+}
 const etapa = () => ETAPAS[i];
 
 /* ─────────────────────────── navegação ─────────────────────────── */
@@ -298,12 +303,20 @@ const DESENHO = {
     + '<h2>' + e.tt + '</h2><p class="sub">' + e.enunciado + '</p>'
     + '<div class="grupos">' + e.grupos.map(g =>
         '<div class="gr g-' + g.s + '"><b><i></i>' + g.n + '</b>'
-        + g.o.map(o =>
-            '<label class="it' + (temMarcado(e.k, o.e) ? ' on' : '') + '" '
-            + 'data-ex="' + esc(o.e) + '"><span class="cx"></span>'
-            + '<span class="n">' + o.e
-            + (o.d ? '<span class="d">' + o.d + '</span>' : '') + '</span></label>'
-          ).join('') + '</div>').join('')
+        + g.o.map(o => {
+            /* Um exame com pré-requisito continua VISÍVEL e fica travado, com
+               o motivo escrito. Esconder ensinaria que ele não existe; o que
+               se quer ensinar é que ele ainda não se justifica. */
+            const falta = (o.ex || []).filter(x => !jaPedido(x));
+            const trava = falta.length > 0;
+            return '<label class="it' + (temMarcado(e.k, o.e) ? ' on' : '')
+              + (trava ? ' trava' : '') + '" data-ex="' + esc(o.e) + '">'
+              + '<span class="cx"></span><span class="n">' + o.e
+              + (o.d ? '<span class="d">' + o.d + '</span>' : '')
+              + (trava ? '<span class="d trv">' + o.pq + ' — falta: '
+                  + falta.join(', ') + '</span>' : '')
+              + '</span></label>';
+          }).join('') + '</div>').join('')
     + '</div><div class="conta" id="conta"></div></div>',
 
   // Sem manchete: o rótulo já diz "o que voltou", e o primeiro cartão vira o
@@ -358,12 +371,16 @@ const DESENHO = {
 
   pergunta: e => {
     const r = respostas[e.k] || {marcadas: [], feita: false};
-    return fundoDe(e) + '<div class="veu tudo"></div><div class="folha q">'
+    return fundoDe(e) + '<div class="veu tudo"></div>'
+      + '<div class="folha q' + (e.alts.length > 6 ? ' densa' : '') + '">'
       + '<div class="marca"><i></i><span>' + e.kicker + '</span></div>'
       + '<p class="enun">' + e.enunciado + '</p>'
       + '<div class="qdica">' + (r.feita ? e.tr
-          : 'selecione ' + (e.escolhas === 1 ? 'uma' : 'duas')) + '</div>'
-      + '<ul class="alts' + (r.feita ? ' feita' : '') + '">'
+          : (e.escolhas === 1 ? 'selecione uma'
+             : 'selecione ' + e.escolhas + ' · marcadas ' + r.marcadas.length))
+      + '</div>'
+      + '<ul class="alts' + (r.feita ? ' feita' : '')
+          + (e.alts.length > 6 ? ' muitas' : '') + '">'
       + e.alts.map((a, k) =>
           '<li data-k="' + k + '" class="' + (a.ok ? 'certa' : 'errada')
           + (r.marcadas.includes(k) ? ' marcada' : '') + '">'
@@ -400,6 +417,41 @@ const DESENHO = {
             + 'outras nos outros dois.</span></div>'
           : '')
       + '</div>';
+  },
+
+  /* O balanço: o que a condução custou, item a item, com o contrafactual ao
+     lado. É a única tela do caso que só existe por causa do que VOCÊ fez. */
+  balanco: e => {
+    const disparadas = e.cons.filter(c => {
+      if (c.q.sem) return !c.q.sem.some(n => jaPedido(n));
+      if (c.q.escolheu) return escolhas[c.q.escolheu[0]] === c.q.escolheu[1];
+      return false;
+    });
+    const dias = e.bd + disparadas.reduce((s, c) => s + c.d, 0);
+    const tfg = e.bt - disparadas.reduce((s, c) => s + c.t, 0);
+    return fundoDe(e) + '<div class="veu tudo"></div><div class="folha">'
+      + '<div class="marca"><i></i><span>' + e.kicker + '</span></div>'
+      + '<h2>' + e.tt + '</h2>' + e.corpo
+      + '<div class="bal">'
+      + '<div class="placar">'
+      +   '<div><b>' + dias + '</b><span>dias de internação</span></div>'
+      +   '<div' + (tfg <= 15 ? ' class="grave"' : '') + '><b>' + tfg
+      +     '</b><span>mL/min/1,73 m² na alta'
+      +     (tfg <= 15 ? ' · saiu em diálise' : '') + '</span></div>'
+      +   '<div class="ideal"><b>' + e.bd + ' · ' + e.bt + '</b>'
+      +     '<span>o melhor percurso possível</span></div>'
+      + '</div>'
+      + (disparadas.length
+          ? '<div class="cons">' + disparadas.map(c =>
+              '<div class="cn"><b>' + c.tt + '</b>'
+              + '<span class="pr">' + (c.d ? '+' + c.d + ' dias' : '')
+              + (c.d && c.t ? ' · ' : '') + (c.t ? '−' + c.t + ' mL/min' : '')
+              + '</span><p>' + c.pq + '</p></div>').join('') + '</div>'
+          : '<div class="cons"><div class="cn limpo"><b>Nenhuma decisão desta '
+            + 'condução cobrou preço.</b><p>Você chegou ao melhor percurso que '
+            + 'este caso permite. É raro, e não é sorte: as decisões que '
+            + 'custam caro aqui são todas das primeiras 72 horas.</p></div></div>')
+      + '</div></div>';
   },
 
   desfecho: e =>
@@ -440,6 +492,7 @@ function ligar(e){
     };
     document.querySelectorAll('.it[data-ex]').forEach(l => {
       l.onclick = () => {
+        if (l.classList.contains('trava')) return;
         const n = l.dataset.ex;
         if (conj.has(n)) conj.delete(n);
         else if (cheio()) return;          // o teto não empurra: ele segura

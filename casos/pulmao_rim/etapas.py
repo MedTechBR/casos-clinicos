@@ -29,8 +29,8 @@ from pathlib import Path
 
 from motor.desenhos import anotada, corpo, seta
 from motor.etapas import (
-    alt, bifurcacao, caminho, capa, desfecho, grade, grupo, lamina, op, p,
-    pagina, pedido, pergunta, quadro, resultados, tabela,
+    alt, balanco, bifurcacao, caminho, capa, consequencia, desfecho, grade,
+    grupo, lamina, op, p, pagina, pedido, pergunta, quadro, resultados, tabela,
 )
 
 from .banco import BANCO  # noqa: F401  — a gaveta de exames é a mesma
@@ -532,6 +532,11 @@ ETAPAS = [
                 op("Biópsia renal",
                    "microscopia óptica, imunofluorescência e classificação, "
                    "do mesmo fragmento",
+                   exige=["Sedimento urinário",
+                          "Ultrassonografia de rins e vias urinárias"],
+                   porque="a nefrologia não punciona um rim sem sedimento que "
+                          "localize a lesão e sem imagem que confirme dois "
+                          "rins, tamanho e ausência de obstrução",
                    resultado="**Microscopia óptica:** 24 glomérulos · "
                              "crescentes celulares em 15 deles (62%) · necrose "
                              "fibrinoide segmentar · sem esclerose global "
@@ -601,35 +606,45 @@ ETAPAS = [
         fundo=TC,
     ),
 
-    pergunta("p5", "Pergunta 8 · enquadramento sindrômico",
-        "Sangramento alveolar e glomerulonefrite no mesmo paciente e no mesmo "
-        "mês. Como se chama esse arranjo?",
+    pergunta("p5", "Pergunta 8 · o diferencial da síndrome",
+        "Hemorragia alveolar difusa e glomerulonefrite, no mesmo paciente e no "
+        "mesmo mês. **Quais cinco** das condições abaixo produzem esse par?",
         [
-            alt("Pneumonia grave com necrose tubular aguda",
-                "É a leitura que os cinco dias de antibiótico já testaram. "
-                "Necrose tubular dá cilindro granuloso pigmentado, não "
-                "hematúria dismórfica — e não põe sangue dentro do alvéolo."),
-            alt("Síndrome cardiorrenal tipo 1",
-                "Exigiria disfunção cardíaca aguda como motor, e o "
-                "ecocardiograma é normal. Congestão não produz hemoptise "
-                "recorrente com queda de hemoglobina."),
-            alt("Síndrome pulmão-rim",
-                "É o nome do arranjo, deliberadamente mais abstrato que "
-                "qualquer diagnóstico: hemorragia alveolar difusa mais "
-                "glomerulonefrite, sem dizer por quê. Subir um nível antes de "
-                "descer para nomes de doença é o que organiza o diferencial.",
+            alt("Vasculite de pequenos vasos associada ao ANCA",
+                "Acomete capilar alveolar e capilar glomerular pelo mesmo "
+                "mecanismo. É a causa mais frequente da síndrome em adultos.",
                 certa=True),
-            alt("Sepse com disfunção de múltiplos órgãos",
-                "Foi tratada, e a trajetória não fecha: cinco dias de "
-                "antibiótico adequado, culturas negativas, procalcitonina de "
-                "0,4 e piora progressiva. Sepse também não faz hematúria "
-                "dismórfica."),
-            alt("Tromboembolismo com nefropatia por contraste",
-                "Infarto pulmonar dá dor pleurítica e opacidade focal, e a "
-                "angiotomografia não mostrou falha de enchimento. E a "
-                "creatinina já subia seis semanas antes do contraste."),
+            alt("Leptospirose ictero-hemorrágica",
+                "**O distrator mais honesto da lista.** Faz hemorragia "
+                "alveolar e insuficiência renal, mas a lesão renal é "
+                "tubulointersticial: não dá cilindro hemático."),
+            alt("Doença anti-membrana basal glomerular",
+                "Anticorpo contra o colágeno tipo IV, que existe no alvéolo e "
+                "no glomérulo. A mais urgente das cinco.", certa=True),
+            alt("Púrpura trombocitopênica trombótica",
+                "Lesa rim e pulmão por microtrombo, não por sangramento "
+                "alveolar. Exigiria esquizócitos e plaquetopenia."),
+            alt("Lúpus eritematoso sistêmico",
+                "Nefrite proliferativa e, numa minoria, hemorragia alveolar — "
+                "a apresentação lúpica de maior mortalidade.", certa=True),
+            alt("Tromboembolismo pulmonar com nefropatia por contraste",
+                "Dois órgãos por duas vias. Mas infarto pulmonar não sangra "
+                "difusamente, e o contraste viria depois do exame."),
+            alt("Crioglobulinemia mista",
+                "Imunocomplexo no vaso de pequeno calibre: glomerulonefrite "
+                "membranoproliferativa e capilarite. Consome C4.", certa=True),
+            alt("Pneumonia comunitária grave com necrose tubular aguda",
+                "A hipótese com que toda equipe começa. Não fecha no "
+                "sedimento: necrose tubular não dá hemácia dismórfica."),
+            alt("Endocardite infecciosa",
+                "Glomerulonefrite por imunocomplexo mais embolia séptica. É "
+                "ela que contraindica a imunossupressão das outras quatro.",
+                certa=True),
+            alt("Síndrome cardiorrenal tipo 1",
+                "Congestão dá infiltrado bilateral, não hemoptise com queda "
+                "de hemoglobina. Exigiria disfunção cardíaca aguda."),
         ],
-        titulo_resposta="Nomear a síndrome antes de nomear a doença",
+        titulo_resposta="Cinco mecanismos, e um deles proíbe o tratamento dos outros quatro",
         fundo=TC,
     ),
 
@@ -1076,11 +1091,10 @@ ETAPAS = [
 
     # ═══════════════════════ desfechos ═══════════════════════
 
-    desfecho("d_rituximabe", "Alta no vigésimo primeiro dia, sem diálise",
+    desfecho("d_rituximabe", "Alta sem diálise",
         p("A creatinina, que havia chegado a 4,6 mg/dL, caiu de forma "
-          "sustentada e estava em **1,9 mg/dL** na alta, com diurese "
-          "recuperada e sem necessidade de diálise em nenhum momento. A "
-          "saturação estava em 96% em ar ambiente."),
+          "sustentada e a diurese se recuperou, **sem necessidade de diálise "
+          "em nenhum momento**. Saiu em ar ambiente, com saturação de 96%."),
         p("Segue em manutenção programada com rituximabe, com consulta e "
           "exames agendados, e com o pé caído em reabilitação — a mononeurite "
           "é o achado que mais demora a melhorar, quando melhora."),
@@ -1093,10 +1107,11 @@ ETAPAS = [
                "deprimida pela segunda droga.",
         fundo=CENA),
 
-    desfecho("d_cfx_ajustada", "Alta no vigésimo sexto dia, sem diálise",
-        p("A creatinina estabilizou em **2,3 mg/dL** e a diurese se recuperou. "
-          "O hemograma foi vigiado duas vezes por semana durante a bacteremia "
-          "e o nadir do segundo pulso foi de 1.600 neutrófilos."),
+    desfecho("d_cfx_ajustada", "Alta sem diálise, com vigilância semanal",
+        p("A creatinina estabilizou acima do valor do caminho A e a diurese se "
+          "recuperou, sem diálise. O hemograma foi vigiado duas vezes por "
+          "semana durante a bacteremia e o nadir do segundo pulso foi de "
+          "1.600 neutrófilos."),
         p("Completou catorze dias de oxacilina e os três primeiros pulsos de "
           "ciclofosfamida sem nova intercorrência infecciosa."),
         qualidade="melhor", fecho="tres_caminhos",
@@ -1108,15 +1123,14 @@ ETAPAS = [
                "menos; a conta da dose, não.",
         fundo=CENA),
 
-    desfecho("d_cfx_plena", "Alta no trigésimo quarto dia, após a terapia intensiva",
+    desfecho("d_cfx_plena", "Alta após a terapia intensiva",
         p("A vasculite respondeu como nos outros dois caminhos: a hemoptise "
-          "cessou no terceiro dia e a creatinina caiu para **2,6 mg/dL**. O "
-          "que mudou foi o resto. Foram treze dias de terapia intensiva, "
-          "noradrenalina por quatro deles, antibiótico de amplo espectro, "
-          "antifúngico empírico e fator estimulador de colônias."),
-        p("Saiu andando, com creatinina de 2,6 e uma internação de 34 dias. "
-          "Nenhuma das três decisões que fizeram a diferença tinha a ver com "
-          "o diagnóstico."),
+          "cessou no terceiro dia e a creatinina caiu. O que mudou foi o "
+          "resto. Foram treze dias de terapia intensiva, noradrenalina por "
+          "quatro deles, antibiótico de amplo espectro, antifúngico empírico "
+          "e fator estimulador de colônias."),
+        p("Saiu andando. Nenhuma das decisões que fizeram a diferença tinha a "
+          "ver com o diagnóstico."),
         qualidade="pior", fecho="tres_caminhos",
         porque="Com filtração glomerular de 17 mL/min/1,73 m², a dose plena "
                "produziu exposição bem acima da pretendida — os metabólitos "
@@ -1140,13 +1154,13 @@ ETAPAS = [
                 "Neutrófilos no 10º dia", "Desfecho"], [
             ["A · Rituximabe 375 mg/m² semanal",
              "Nenhuma correção para a filtração",
-             "4.100", "Alta no 21º dia · creatinina 1,9"],
+             "4.100", "Alta mais precoce · melhor função residual"],
             ["B · Ciclofosfamida 10 mg/kg",
              "15 − 2,5 (idade) − 2,5 (creatinina)",
-             "1.400", "Alta no 26º dia · creatinina 2,3"],
+             "1.400", "Cinco dias a mais · função um degrau abaixo"],
             ["C · Ciclofosfamida 15 mg/kg",
              "Nenhuma — e é esse o ponto",
-             "210", "Alta no 34º dia · 13 dias de terapia intensiva"],
+             "210", "Treze dias a mais · terapia intensiva"],
         ]),
         quadro("O que a comparação mostra",
             p("**A vasculite respondeu nos três.** A bacteremia de cateter "
@@ -1156,6 +1170,86 @@ ETAPAS = [
               "subtração de duas parcelas, feita ou não feita antes de "
               "prescrever."),
             sistema="geral"),
+        fundo=CENA,
+    ),
+
+    balanco("balanco", "O balanço da sua condução",
+        "O que estas decisões custaram",
+        p("O desfecho descreve o curso da droga que você escolheu. Este quadro "
+          "acrescenta o que as **decisões de investigação** custaram — e o "
+          "compara com o melhor percurso que este caso permite."),
+        p("Os números são inferência autoral, coerente com a fisiologia do "
+          "caso, e não medida de coorte. Cada linha traz o motivo que a "
+          "sustenta."),
+        base_dias=21, base_tfg=39, base_creatinina="1,9 mg/dL",
+        consequencias=[
+            consequencia(
+                chave="sem_hemocultura",
+                titulo="Imunossuprimiu sem cultura colhida antes do antibiótico",
+                quando={"sem": ["Hemocultura"]}, dias=4, tfg=5,
+                porque="A cultura negativa é o documento que autoriza o "
+                       "corticoide, e ela só vale se for anterior à primeira "
+                       "dose. Sem ela, o antibiótico empírico se estende — e "
+                       "cefalosporina de amplo espectro por mais de uma semana, "
+                       "sem foco, num idoso internado e imunossuprimido, é a "
+                       "origem mais comum de colite por //Clostridioides "
+                       "difficile// na enfermaria."),
+            consequencia(
+                chave="sem_lba",
+                titulo="Tratou o infiltrado sem provar de que ele é feito",
+                quando={"sem": ["Lavado broncoalveolar"]}, dias=3, tfg=0,
+                porque="Sem alíquotas progressivamente hemorrágicas e sem "
+                       "hemossiderófagos, a hemorragia alveolar fica sendo "
+                       "inferência aritmética. Vidro fosco bilateral é "
+                       "compatível com sangue, água, pus, células e proteína, "
+                       "e o tratamento das cinco coisas é diferente."),
+            consequencia(
+                chave="sem_cultura_lba",
+                titulo="Nenhuma cultura do próprio pulmão",
+                quando={"sem": ["Cultura do lavado broncoalveolar"]},
+                dias=2, tfg=0,
+                porque="É a cultura negativa do pulmão que autoriza tratar o "
+                       "infiltrado como imune. Sem ela, a decisão de "
+                       "imunossuprimir carrega uma pergunta infecciosa aberta "
+                       "sobre o órgão que está falhando."),
+            consequencia(
+                chave="sem_sedimento",
+                titulo="A lesão renal nunca foi localizada",
+                quando={"sem": ["Sedimento urinário"]}, dias=2, tfg=6,
+                porque="Sem hemácia dismórfica e sem cilindro hemático, a "
+                       "creatinina que sobe é tratada como pré-renal ou "
+                       "necrose tubular, e o tratamento certo atrasa. "
+                       "Crescente celular vira fibrosa no intervalo, e o que "
+                       "virou não volta."),
+            consequencia(
+                chave="sem_tecido_nem_anticorpo",
+                titulo="Tratou sem excluir a doença anti-membrana basal",
+                quando={"sem": ["Biópsia renal",
+                                "Anticorpo anti-membrana basal glomerular"]},
+                dias=0, tfg=8,
+                porque="A doença anti-MBG faz exatamente esta síndrome, perde "
+                       "função renal em dias e o tratamento dela inclui troca "
+                       "plasmática, que na vasculite ANCA é discutível. Sem o "
+                       "tecido e sem o anticorpo, você tratou a doença mais "
+                       "provável — e a mais provável não é a única."),
+            consequencia(
+                chave="cfx_ajustada",
+                titulo="Escolheu ciclofosfamida, com a conta feita",
+                quando={"escolheu": ["b1", 1]}, dias=5, tfg=8,
+                porque="Tão eficaz quanto o rituximabe na indução, e o nadir de "
+                       "1.400 neutrófilos ficou onde a dose corrigida prevê. "
+                       "Custa mais vigilância e mais dias — e o preço é da "
+                       "droga, não de um erro seu."),
+            consequencia(
+                chave="cfx_plena",
+                titulo="Escolheu ciclofosfamida sem a correção de dose",
+                quando={"escolheu": ["b1", 2]}, dias=13, tfg=12,
+                porque="Os metabólitos ativos saem por via renal, e com "
+                       "filtração de 17 mL/min a exposição de 15 mg/kg é bem "
+                       "maior do que a pretendida. A vasculite respondeu igual "
+                       "nos três caminhos; o que mudou foi a medula, e a "
+                       "bacteremia encontrou 210 neutrófilos em vez de 1.400."),
+        ],
         fundo=CENA,
     ),
 

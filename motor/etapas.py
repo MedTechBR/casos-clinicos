@@ -183,7 +183,7 @@ def pagina(ident, kicker, titulo, *blocos, fundo="", lamina_=None,
 
 
 def op(exame, detalhe="", *, resultado=None, referencia=None,
-       alterado=None) -> dict:
+       alterado=None, exige=None, porque="") -> dict:
     """Uma linha marcável. `exame` é o nome exato no banco do caso.
 
     `resultado` sobrepõe o valor do banco. É necessário porque o banco foi
@@ -192,6 +192,15 @@ def op(exame, detalhe="", *, resultado=None, referencia=None,
     daquela etapa, e não o desfecho de uma complicação futura.
     """
     o = {"e": exame, "d": texto(detalhe)}
+    if exige:
+        # A biópsia renal aparecia no painel antes de existir um sedimento.
+        # Nenhum nefrologista punciona um rim assim, e oferecer o exame
+        # decisivo cedo demais encerra o caso antes da hora: o grupo pula o
+        # raciocínio e vai direto ao tecido. Com `exige`, a linha continua
+        # visível — para que se veja o que existe — mas só destrava quando o
+        # que a justifica já foi pedido.
+        o["ex"] = list(exige)
+        o["pq"] = texto(porque or "depende de exame que ainda não foi pedido")
     if resultado is not None:
         o["r"] = texto(resultado)
         o["ref"] = texto(referencia) if referencia is not None else "—"
@@ -280,11 +289,22 @@ def alt(txt, porque, *, certa=False) -> dict:
 
 def pergunta(ident, kicker, enunciado, alternativas, *, fundo="",
              titulo_resposta="", nota="", segue="") -> dict:
+    """A pergunta do //New England// é, na maioria das vezes, de MÚLTIPLA
+    seleção a partir de uma lista longa: "quais três são as causas mais
+    prováveis", "quais sete diagnósticos considerar". Ler as 333 perguntas dos
+    71 casos interativos deixou isso claro — 104 delas começam com "Quais".
+
+    A diferença não é cosmética. Numa lista de nove diagnósticos plausíveis,
+    dos quais quatro contam, não existe a alternativa obviamente sensata que
+    denuncia a resposta: é preciso incluir E excluir, e o distrator é sempre
+    uma doença que um bom clínico consideraria."""
     certas = [a for a in alternativas if a["ok"]]
-    if not 1 <= len(certas) <= 2:
-        raise ValueError(f"pergunta {ident!r}: use 1 ou 2 corretas")
-    if not 4 <= len(alternativas) <= 5:
-        raise ValueError(f"pergunta {ident!r}: use 4 ou 5 alternativas")
+    if not 1 <= len(certas) <= 5:
+        raise ValueError(f"pergunta {ident!r}: use de 1 a 5 corretas")
+    if not 4 <= len(alternativas) <= 10:
+        raise ValueError(f"pergunta {ident!r}: use de 4 a 10 alternativas")
+    if len(certas) == len(alternativas):
+        raise ValueError(f"pergunta {ident!r}: todas corretas não é pergunta")
     if not titulo_resposta.strip():
         raise ValueError(f"pergunta {ident!r}: sem título de resposta")
     return _pag("pergunta", ident, kicker=texto(kicker),
@@ -306,6 +326,44 @@ def bifurcacao(ident, kicker, titulo, enunciado, caminhos, *, fundo="",
         raise ValueError(f"bifurcação {ident!r}: use 2 ou 3 caminhos")
     return _pag("bifurcacao", ident, kicker=texto(kicker), tt=texto(titulo),
                 enunciado=texto(enunciado), caminhos=caminhos, fundo=fundo,
+                nota=texto(nota))
+
+
+# ─────────────────── o que cada decisão custou ───────────────────
+
+
+def consequencia(*, chave, titulo, quando, porque, dias=0, tfg=0) -> dict:
+    """Uma consequência rastreável de uma decisão — não um comentário.
+
+    Conduzir o caso ao vivo mostrou que o que ensina não é o desfecho: é a
+    **distância entre o desfecho que se teve e o que se teria**. Antibiótico
+    antes da cultura não faz mal no dia em que é dado; faz mal no oitavo, e
+    numa peça de botão isso nunca chega ao aluno porque o desfecho é o mesmo
+    para todo mundo.
+
+    `quando` é declarativo e só tem duas formas, de propósito:
+
+        {"sem": ["Hemocultura"]}      dispara se NENHUM da lista foi pedido
+        {"escolheu": ["b1", 2]}       dispara se a bifurcação foi por ali
+
+    `dias` e `tfg` são o preço: dias a mais de internação e mililitros a menos
+    de filtração na alta. São inferência autoral, como todo o resto do caso —
+    e é por isso que cada um vem com o `porque` que o sustenta.
+    """
+    if set(quando) - {"sem", "escolheu"}:
+        raise ValueError("quando: use {'sem': [...]} ou {'escolheu': [id, n]}")
+    if dias == 0 and tfg == 0:
+        raise ValueError(f"consequência {chave!r} sem preço não é consequência")
+    return {"k": chave, "tt": texto(titulo), "q": quando, "pq": texto(porque),
+            "d": dias, "t": tfg}
+
+
+def balanco(ident, kicker, titulo, *blocos, base_dias, base_tfg,
+            base_creatinina, consequencias, fundo="", nota="") -> dict:
+    """A última tela: o que aconteceu, o que teria acontecido, e a diferença."""
+    return _pag("balanco", ident, kicker=texto(kicker), tt=texto(titulo),
+                corpo="".join(blocos), bd=base_dias, bt=base_tfg,
+                bc=texto(base_creatinina), cons=consequencias, fundo=fundo,
                 nota=texto(nota))
 
 

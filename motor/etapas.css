@@ -666,3 +666,61 @@ li{margin-bottom:7px}
 .verlaudo:hover{border-color:var(--gelo);color:var(--gelo);
   background:rgba(255,255,255,.05)}
 .rc figure{margin:12px -16px 0;background:#000}
+
+/* O exame que ainda não se justifica: visível, travado, e com o motivo. */
+.it.trava{cursor:not-allowed}
+.it.trava .n{color:#6f767f}
+.it.trava .cx{border-color:#3c434b;background:repeating-linear-gradient(
+  -45deg,transparent 0 3px,rgba(255,255,255,.07) 3px 6px)}
+.it.trava .trv{color:var(--atencao);margin-top:4px;font-style:italic}
+
+/* ───────────────────── o balanço da condução ───────────────────── */
+
+.bal{margin-top:clamp(10px,1.6vh,18px);display:flex;flex-direction:column;
+  min-height:0;flex:1}
+.placar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  border-top:1px solid var(--linha);border-bottom:1px solid var(--linha)}
+.placar>div{padding:clamp(11px,1.8vh,18px) 22px clamp(11px,1.8vh,18px) 0;
+  border-right:1px solid var(--linha)}
+.placar>div:last-child{border-right:none}
+.placar b{display:block;font-size:clamp(24px,3.4vh,34px);font-weight:700;
+  line-height:1;font-variant-numeric:tabular-nums;color:var(--gelo)}
+.placar span{display:block;font-size:10.5px;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--fumaca);margin-top:7px;font-weight:700}
+.placar .ideal b{color:var(--certo)}
+.cons{margin-top:clamp(10px,1.6vh,18px);display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:clamp(9px,1.3vh,16px);overflow:auto;min-height:0}
+.cn{border-left:3px solid var(--alerta);padding:12px 0 12px 16px}
+.cn.limpo{border-left-color:var(--certo)}
+.cn>b{display:block;font-family:var(--sans);font-size:12.5px;font-weight:700;
+  color:var(--gelo);margin-bottom:5px;line-height:1.35}
+.cn .pr{display:block;font-family:var(--sans);font-size:11px;font-weight:800;
+  letter-spacing:1.4px;text-transform:uppercase;color:var(--alerta);
+  margin-bottom:7px}
+.cn p{font-size:clamp(12px,.26vw + .92vh,14.5px);line-height:1.4}
+.placar .grave b{color:var(--alerta)}
+.placar .grave span{color:var(--alerta)}
+
+/* A pergunta de múltipla seleção do New England tem oito, nove, dez itens —
+   e cada item é o nome de uma doença, não uma frase. Em coluna única ela não
+   cabe; em duas, sobra espaço. */
+.alts.muitas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  align-content:start;gap:clamp(6px,.9vh,12px) clamp(10px,1.2vw,18px)}
+.alts.muitas li{grid-template-columns:26px minmax(0,1fr)}
+.alts.muitas .tx{font-size:clamp(13.5px,.3vw + 1.05vh,17px)}
+.alts.muitas.feita li{grid-template-columns:26px minmax(0,1fr)}
+.alts.muitas.feita .cm{grid-column:2;padding-left:0;border-left:none;
+  margin-top:5px;padding-top:5px;border-top:1px solid var(--linha);
+  font-size:clamp(9.8px,.18vw + .78vh,11.8px);line-height:1.32}
+.alts.muitas.feita li{padding-block:clamp(6px,.85vh,11px)}
+.alts.muitas.feita{gap:clamp(5px,.7vh,9px) clamp(10px,1.2vw,18px)}
+.alts.muitas.feita .tx{font-size:clamp(12.5px,.26vw + .95vh,15.5px);
+  line-height:1.24}
+@media (max-width:900px){.alts.muitas{grid-template-columns:1fr}}
+
+/* Enunciado curto e dez alternativas: o cabeçalho cede altura para a lista. */
+.folha.q.densa .enun{font-size:clamp(17px,.75vw + 1.1vh,26px);max-width:64ch;
+  margin-bottom:4px}
+.folha.q.densa .qdica{margin-bottom:clamp(7px,1.1vh,14px)}
+.folha.q.densa .marca{margin-bottom:clamp(8px,1.4vh,14px)}
