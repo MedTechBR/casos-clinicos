@@ -44,7 +44,17 @@ from .banco import BANCO  # noqa: F401  — a gaveta de exames é a mesma
 #
 # O que trouxe este paciente ao pronto-socorro foi falta de ar e sangue no
 # escarro. A púrpura apareceu no exame físico; a creatinina, no laboratório.
-TITULO = "Homem de 63 anos com dispneia progressiva e hemoptise"
+# O título descritivo da CPC — idade, sexo e dois a quatro achados — resolvia o
+# vazamento e ainda dizia demais: "dispneia e hemoptise" já entrega o órgão.
+#
+# A série interativa permite o título evocativo, e é o único lugar em que o
+# //New England// permite. O documento de referência avisa que em português
+# isso descamba para efeito barato, e a saída é a mesma dos bons originais
+# (//Painful Purple Toes//, //A Sleeping Giant//): o título nomeia uma coisa
+# LITERAL do caso e só ganha o segundo sentido no fim. Aqui, a hemoglobina que
+# desapareceu sem que ninguém visse sangue sair — que é a virada — e, no
+# fecho, o preço que não apareceu em lugar nenhum até a última tela.
+TITULO = "O sangue que não saiu"
 RODAPE = "Caso interativo · curso simulado"
 IMG = Path(__file__).parent / "img"
 

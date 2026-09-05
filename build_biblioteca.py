@@ -13,10 +13,13 @@ from motor.biblioteca import caso, montar  # noqa: E402
 
 CASOS = [
     caso(slug="pulmao_rim",
-         titulo="Homem de 63 anos com dispneia progressiva e hemoptise",
-         subtitulo="Oito semanas de doença tratada duas vezes como outra "
-                   "coisa, e uma piora que começou três dias antes da "
-                   "internação.",
+         titulo="O sangue que não saiu",
+         # O cartão precisa deixar você escolher o caso sem entregar o
+         # diagnóstico ao aluno: o subtítulo diz de quem se trata e o que
+         # aconteceu, em sinais e sintomas.
+         subtitulo="Homem de 63 anos, oito semanas de doença tratada duas "
+                   "vezes como outra coisa, e uma piora que começou três "
+                   "dias antes da internação.",
          # "Nefrologia · Pneumologia" no cartão entrega a síndrome antes de o
          # aluno abrir o caso, do mesmo jeito que o título entregava.
          especialidade="Clínica médica · Emergência",
