@@ -510,9 +510,8 @@ P13 = pergunta(
             "Ureia e eletrólitos seriados de seis em seis horas, para "
             "acompanhar a velocidade da queda de função",
             "Acompanhar a velocidade é obrigatório e não substitui saber a "
-            "causa. Uma curva de creatinina em ascensão é compatível com "
-            "todas as linhas ainda de pé, e o tempo gasto observando a curva "
-            "foi exatamente o que custou 1,4 mg/dL.",
+            "causa. A curva em ascensão é compatível com todas as linhas de "
+            "pé, e o tempo gasto observando-a custou 1,4 mg/dL.",
         ),
         alt(
             "Radiografia de tórax em ortostatismo, mais rápida e mais barata "
