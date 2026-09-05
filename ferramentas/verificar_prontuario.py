@@ -100,6 +100,15 @@ def v_sinalizadores_mortos(c, r):
           ", ".join(mortos) or f"{len(acesos)} acesos")
 
 
+def v_pede(c, r):
+    """Conduta que diz colher tem de colher exame que existe."""
+    nomes = {e["n"] for e in c.BANCO}
+    erros = [f"{a['k']}: pede {n}, que não existe na gaveta"
+             for a in c.ACOES for n in a.get("pede", []) if n not in nomes]
+    r.add("toda conduta que colhe, colhe exame que existe", not erros,
+          " · ".join(erros))
+
+
 def v_gatilhos(c, r):
     """Gatilho apontando para exame que não existe na gaveta nunca dispara."""
     nomes = {e["n"] for e in c.BANCO}
@@ -164,6 +173,37 @@ def v_desfechos(c, r):
           " · ".join(erros) or f"{len(c.DESFECHOS)} desfechos")
 
 
+def v_decisoes(c, r):
+    """Caminho que aponta para ação inexistente é caminho que não faz nada."""
+    chaves = {a["k"] for a in c.ACOES}
+    erros = []
+    vistas = set()
+    for d in getattr(c, "DECISOES", []):
+        if d["k"] in vistas:
+            erros.append(f"decisão repetida: {d['k']}")
+        vistas.add(d["k"])
+        if not d["q"].strip():
+            erros.append(f"{d['k']}: sem pergunta")
+        for cam in d["caminhos"]:
+            fora = [k for k in cam["faz"] if k not in chaves]
+            if fora:
+                erros.append(f"{d['k']}: caminho aponta para {', '.join(fora)}")
+            if not cam["porque"].strip():
+                erros.append(f"{d['k']}: caminho sem justificativa")
+    r.add("todo caminho de decisão executa ação existente", not erros,
+          " · ".join(erros) or f"{len(getattr(c, 'DECISOES', []))} decisões")
+
+
+def v_aliquotas(c, r):
+    """A história tem de ser contada; alíquota vazia é silêncio."""
+    erros = [f"alíquota {i + 1} sem texto" for i, a in
+             enumerate(getattr(c, "ABERTURA", [])) if not a["p"]]
+    if not getattr(c, "ABERTURA", []):
+        erros.append("nenhuma alíquota: a história voltou a ser menu")
+    r.add("a história chega em alíquotas", not erros,
+          " · ".join(erros) or f"{len(getattr(c, 'ABERTURA', []))} alíquotas")
+
+
 def v_markdown(c, r):
     """A marcação mínima tem de ter sido convertida; asterisco cru é erro."""
     alvo = RAIZ / "saida" / f"{c.SLUG}-prontuario.html"
@@ -180,7 +220,7 @@ def v_markdown(c, r):
 # tem de produzir. É a prova de que a física do caso não é decorativa.
 ROTEIROS = [
     ("beira do leito, tratou cedo", "melhor", [
-        ("acao", "hda"), ("acao", "medicacoes"), ("acao", "respiratorio"),
+        ("acao", "medicacoes"), ("acao", "respiratorio"),
         ("exame", "Sedimento urinário"), ("esperar", 45),
         ("exame", "ANCA por imunofluorescência indireta"),
         ("exame", "Anticorpo anti-membrana basal glomerular"),
@@ -191,17 +231,17 @@ ROTEIROS = [
         ("esperar", 2880), ("esperar", 4320),
     ]),
     ("esperou a sorologia para tratar", "medio", [
-        ("acao", "hda"), ("exame", "ANCA por imunofluorescência indireta"),
+        ("acao", "medicacoes"), ("exame", "ANCA por imunofluorescência indireta"),
         ("esperar", 2880), ("acao", "pulso"), ("acao", "rituximabe"),
         ("acao", "pjp"), ("esperar", 4320),
     ]),
     ("só observou", "pior", [
-        ("acao", "hda"), ("acao", "respiratorio"),
+        ("acao", "respiratorio"), ("acao", "pele"),
         ("esperar", 1440), ("esperar", 1440), ("esperar", 1440),
         ("esperar", 1440), ("esperar", 1440),
     ]),
     ("ciclofosfamida em dose plena, sem profilaxia", "medio", [
-        ("acao", "hda"), ("exame", "Sedimento urinário"),
+        ("acao", "medicacoes"), ("exame", "Sedimento urinário"),
         ("exame", "ANCA por imunofluorescência indireta"),
         ("acao", "culturas"), ("acao", "oxigenio"), ("acao", "pulso"),
         ("acao", "cfx_plena"),
@@ -282,13 +322,64 @@ def dinamicas(c, r):
 
         # nada do que não foi pedido pode aparecer no registro
         pg.evaluate("() => comecar()")
-        pg.evaluate("() => { fazer(ACOES.find(a=>a.k==='hda')); avancar(4320); }")
+        pg.evaluate("() => { fazer(ACOES.find(a=>a.k==='medicacoes')); avancar(4320); }")
         vazou = pg.evaluate("""() => {
             const nomes = REG.filter(e => e.t === 'resultado').map(e => e.tt);
             return nomes.filter(n => !pedidos.includes(n));
         }""")
         r.add("nada aparece no registro sem ter sido pedido", not vazou,
               ", ".join(vazou) or "três dias de espera, zero resultado espontâneo")
+
+        # o interpretador é a única porta de entrada do grupo: se ele erra, a
+        # condução erra. As frases abaixo são as que se ouvem na enfermaria.
+        FRASES = [
+            ("peço o sedimento urinário", "pedido", "Sedimento urinário"),
+            ("quero ver a urina", "pedido", "Sedimento urinário"),
+            ("solicito tomografia de tórax", "pedido", "Tomografia de tórax"),
+            ("colher hemocultura", "acao", "culturas"),
+            ("peço ANCA", "pedido", "ANCA por imunofluorescência indireta"),
+            ("ausculto o tórax", "acao", "respiratorio"),
+            ("examino a pele", "acao", "pele"),
+            ("faço o exame neurológico", "acao", "neuro"),
+            ("pergunto que remédios ele toma", "acao", "medicacoes"),
+            ("investigo exposição a enchente", "acao", "exposicoes"),
+            ("inicio pulso de metilprednisolona", "acao", "pulso"),
+            ("prescrevo rituximabe", "acao", "rituximabe"),
+            ("começo bactrim", "acao", "pjp"),
+            ("intubo o paciente", "acao", "intubar"),
+            ("indico hemodiálise", "acao", "dialise"),
+            ("dou oxigênio no cateter nasal", "acao", "oxigenio"),
+        ]
+        pg.evaluate("() => comecar()")
+        falhas = []
+        for frase, tipo, esperado in FRASES:
+            achou = pg.evaluate("""(f) => {
+                let verbo = null;
+                const p1 = SEM_ACENTO(f).split(/\\s+/)[0];
+                Object.keys(VERBOS).forEach(v => { if (VERBOS[v].test(p1)) verbo = v; });
+                const notas = INDICE
+                  .map(i => ({i: i, p: pontuar(f, i) * peso(verbo, i.tipo)}))
+                  .filter(x => x.p > 0).sort((a, b) => b.p - a.p);
+                if (!notas.length) return null;
+                const i = notas[0].i;
+                return {tipo: i.tipo === 'pedido' ? 'pedido' : 'acao',
+                        alvo: i.tipo === 'pedido' ? i.alvo.n : i.alvo.k,
+                        p: notas[0].p};
+            }""", frase)
+            if not achou or achou["alvo"] != esperado:
+                falhas.append(f"“{frase}” → "
+                              f"{achou['alvo'] if achou else 'nada'}, "
+                              f"esperava {esperado}")
+        r.add("o interpretador entende como se fala na enfermaria", not falhas,
+              " · ".join(falhas) or f"{len(FRASES)} frases")
+
+        # e é honesto quando não entende, em vez de escolher qualquer coisa
+        pg.evaluate("() => comecar()")
+        pg.evaluate("() => interpretar('peço ressonância de crânio')")
+        recusou = pg.evaluate(
+            "() => document.getElementById('resp').classList.contains('erro')")
+        r.add("o interpretador recusa o que não existe, em vez de adivinhar",
+              recusou)
 
         r.add("nenhuma condução gera erro de JavaScript", not erros,
               " · ".join(erros[:4]))
@@ -300,7 +391,8 @@ def main(caso="pulmao_rim"):
     print(f"\nverificando {c.SLUG}-prontuario.html\n")
     r = Placar()
     for f in (v_acoes, v_sinalizadores, v_sinalizadores_mortos, v_gatilhos,
-              v_imagens, v_revisao, v_espera, v_desfechos, v_markdown):
+              v_imagens, v_revisao, v_espera, v_desfechos, v_decisoes, v_pede,
+              v_aliquotas, v_markdown):
         f(c, r)
     dinamicas(c, r)
     print(f"\n{r.total} verificações · {r.falhas} falha(s)")

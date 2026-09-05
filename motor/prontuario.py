@@ -78,7 +78,7 @@ def paciente(*, identificacao, leito, admissao, queixa, estado, resumo) -> dict:
 
 
 def _acao(tipo, chave, rotulo, *, minutos, texto_, grupo="", exige=(), liga=(),
-          uma_vez=True, detalhe="", perigo="") -> dict:
+          uma_vez=True, detalhe="", perigo="", sin=()) -> dict:
     """Uma coisa que se pode fazer. `texto_` é o que ela escreve no prontuário.
 
     `exige` são sinalizadores que precisam estar ligados para a ação existir —
@@ -88,11 +88,11 @@ def _acao(tipo, chave, rotulo, *, minutos, texto_, grupo="", exige=(), liga=(),
     return {"t": tipo, "k": chave, "r": texto(rotulo), "min": minutos,
             "x": texto(texto_), "g": texto(grupo), "exige": list(exige),
             "liga": list(liga), "uma": 1 if uma_vez else 0,
-            "d": texto(detalhe), "p": texto(perigo)}
+            "d": texto(detalhe), "p": texto(perigo), "s": list(sin)}
 
 
 def perguntar(chave, rotulo, resposta, *, minutos=4, grupo="Anamnese",
-              liga=(), detalhe="") -> dict:
+              liga=(), detalhe="", sin=()) -> dict:
     """Uma pergunta da anamnese. A resposta só existe se alguém perguntar.
 
     É aqui que mora metade da lição: a revisão da lista de medicamentos, a
@@ -100,19 +100,20 @@ def perguntar(chave, rotulo, resposta, *, minutos=4, grupo="Anamnese",
     quem não pergunta não sabe, e o prontuário registra que não perguntou.
     """
     return _acao("anamnese", chave, rotulo, minutos=minutos, texto_=resposta,
-                 grupo=grupo, liga=liga, detalhe=detalhe)
+                 grupo=grupo, liga=liga, detalhe=detalhe, sin=sin)
 
 
 def examinar(chave, rotulo, achado, *, minutos=3, grupo="Exame físico",
-             liga=(), detalhe="") -> dict:
+             liga=(), detalhe="", sin=()) -> dict:
     """Uma manobra do exame físico, com o que ela mostra."""
     return _acao("exame", chave, rotulo, minutos=minutos, texto_=achado,
-                 grupo=grupo, liga=liga, detalhe=detalhe)
+                 grupo=grupo, liga=liga, detalhe=detalhe, sin=sin)
 
 
 def prescrever(chave, rotulo, registro, *, minutos=20, grupo="Conduta",
                efeito=None, exige=(), liga=(), uma_vez=True, detalhe="",
-               perigo="", perigo_sem=(), perigo_liga=()) -> dict:
+               perigo="", perigo_sem=(), perigo_liga=(), sin=(),
+               pede=()) -> dict:
     """Uma conduta. `efeito` é a mudança imediata no estado; a mudança lenta
     vem da tabela de evolução, que passa a valer pelos sinalizadores ligados.
 
@@ -124,13 +125,16 @@ def prescrever(chave, rotulo, registro, *, minutos=20, grupo="Conduta",
         raise ValueError(f"conduta {chave!r}: perigo sem a condição que o dispara")
     a = _acao("conduta", chave, rotulo, minutos=minutos, texto_=registro,
               grupo=grupo, exige=exige, liga=liga, uma_vez=uma_vez,
-              detalhe=detalhe, perigo=perigo)
+              detalhe=detalhe, perigo=perigo, sin=sin)
     a["ef"] = efeito or {}
     # o preço de fazer fora de hora: só cobra se o sinalizador que protegeria
     # a conduta não estiver ligado, e o texto entra no prontuário depois do
     # fato — avisar antes do clique seria decidir pelo grupo
     a["ps"] = list(perigo_sem)
     a["pl"] = list(perigo_liga)
+    # exames que a própria conduta solicita: "colher três pares de hemocultura"
+    # tem de colocar a hemocultura na fila, não só acender um sinalizador
+    a["pede"] = list(pede)
     return a
 
 
@@ -161,6 +165,51 @@ ESPERA = {
     "Anatomia patológica": 4320,
     "Neurofisiologia": 720,
 }
+
+
+# ─────────────────────────── a abertura, em alíquotas ───────────────────────
+#
+# A história não é um menu de perguntas. Ela é contada — em pedaços, no ritmo
+# de quem escuta, como no //Case Records//. O que continua sendo pergunta é o
+# que o paciente não conta espontaneamente: os medicamentos que ele não
+# considera medicamento, a exposição que ele não relaciona com nada.
+
+
+def aliquota(titulo, *paragrafos, minutos=0) -> dict:
+    return {"tt": texto(titulo), "p": [texto(x) for x in paragrafos],
+            "min": minutos}
+
+
+# ─────────────────────────── pontos de decisão ───────────────────────────
+#
+# Não são todas as condutas listadas o tempo todo numa lateral — isso é prova
+# de múltipla escolha com doze alternativas à vista. São dois ou três caminhos
+# concretos, oferecidos no momento em que o caso realmente exige uma decisão, e
+# a linha de comando continua aberta para quem quiser fazer outra coisa.
+
+
+def caminho(rotulo, *, faz=(), espera=0, porque="") -> dict:
+    """Um caminho é um atalho por dentro da mesma máquina: ele executa ações
+    que já existem. Não há regra escondida atrás dele."""
+    if not faz and not espera:
+        raise ValueError(f"caminho {rotulo!r} não faz nada")
+    return {"r": texto(rotulo), "faz": list(faz), "esp": espera,
+            "porque": texto(porque)}
+
+
+def decisao(chave, pergunta, caminhos, *, quando, contexto="",
+            volta_em=None) -> dict:
+    """Aparece quando as condições passam a valer.
+
+    `volta_em` são as horas depois das quais a mesma decisão pode reaparecer se
+    a situação persistir. Uma saturação que segue caindo depois de "reavaliar em
+    uma hora" tem de voltar a perguntar; uma escolha de indução, não.
+    """
+    if not 2 <= len(caminhos) <= 4:
+        raise ValueError(f"decisão {chave!r}: use de 2 a 4 caminhos")
+    return {"k": chave, "q": texto(pergunta), "c": texto(contexto),
+            "quando": list(quando), "caminhos": caminhos,
+            "volta": volta_em}
 
 
 # ─────────────────────────── a evolução ───────────────────────────
@@ -267,6 +316,8 @@ def dados_do_caso(caso) -> str:
     """Serializa tudo o que o motor precisa saber sobre este caso."""
     blocos = {
         "paciente": caso.PACIENTE,
+        "abertura": getattr(caso, "ABERTURA", []),
+        "decisoes": getattr(caso, "DECISOES", []),
         "campos": CAMPOS,
         "sinais": SINAIS,
         "acoes": caso.ACOES,
@@ -305,9 +356,18 @@ def montar(caso) -> str:
         f"<title>{caso.TITULO}</title>\n"
         f"<style>\n{css}\n</style>\n</head>\n<body>\n"
         "<header id=\"topo\">"
-        "<div id=\"pac\"></div><div id=\"hora\"></div><div id=\"vitais\"></div>"
-        "</header>\n"
-        "<div id=\"corpo\"><nav id=\"acoes\"></nav><main id=\"reg\"></main></div>\n"
+        "<div id=\"pac\"></div><div id=\"hora\"></div>"
+        "<div id=\"vitais\"></div></header>\n"
+        "<div id=\"flags\"></div>\n"
+        "<main id=\"reg\"></main>\n"
+        "<div id=\"barra\"><div id=\"resp\"></div>"
+        "<div class=\"cmd-linha\">"
+        "<label for=\"cmd\">O que você faz agora?</label>"
+        "<input id=\"cmd\" autocomplete=\"off\" spellcheck=\"false\" "
+        "placeholder=\"peço o sedimento · ausculto o tórax · aguardo seis horas\">"
+        "<button id=\"ajuda\" title=\"exemplos\">?</button>"
+        "<button id=\"encerrar\">encerrar</button>"
+        "</div></div>\n"
         "<div id=\"modal\"></div>\n"
         f"{dados_do_caso(caso)}\n"
         f"<script>\n{js}\n</script>\n</body>\n</html>\n"

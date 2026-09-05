@@ -53,8 +53,14 @@ function relogio(min){
 function desde(min){
   const h = min / 60;
   if (h < 1) return Math.round(min) + ' min';
-  if (h < 48) return (h < 10 ? h.toFixed(1) : Math.round(h)) + ' h';
-  return Math.round(h / 24) + ' dias';
+  if (h < 48){
+    // "1.0 h" é saída de máquina; no prontuário se escreve uma hora
+    const n = h < 10 ? Math.round(h * 10) / 10 : Math.round(h);
+    if (n === 1) return 'uma hora';
+    return String(n).replace('.', ',') + ' h';
+  }
+  const d = Math.round(h / 24);
+  return d === 1 ? 'um dia' : d + ' dias';
 }
 
 /* ─────────────────────────── a doença anda ───────────────────────────
@@ -193,6 +199,11 @@ function fazer(a){
     if (EST[c] !== undefined) EST[c] = Math.round((EST[c] + a.ef[c]) * 100) / 100;
   });
   a.liga.forEach(ligar);
+  // a conduta que diz colher, colhe: o exame entra na fila com o tempo dele
+  (a.pede || []).forEach(n => {
+    const e = BANCO.find(x => x.n === n);
+    if (e && !pedidos.includes(n)) pedir(e);
+  });
   // o preço de fazer fora de hora entra como nota do próprio prontuário,
   // depois do fato: avisar antes do clique seria decidir pelo grupo
   if (a.p && a.ps.length && a.ps.some(s => !tem(s))){
@@ -247,9 +258,21 @@ function encerrar(forcado){
   mostrarDesfecho();
 }
 
-/* ══════════════════════════ a tela ══════════════════════════ */
+/* ══════════════════════════ a tela ══════════════════════════
+
+   Coluna única, como um prontuário de papel. Nada de lateral com o cardápio
+   de condutas à vista: uma lista de doze condutas é uma prova de múltipla
+   escolha com doze alternativas, e o grupo escolhe pela lista em vez de
+   pensar. O que existe aqui é uma linha em branco — "o que você faz agora?" —
+   e, nos momentos em que o caso realmente exige uma decisão, dois ou três
+   caminhos concretos oferecidos dentro do próprio registro. */
 
 const $ = s => document.querySelector(s);
+const ABERTURA = D('abertura'), DECISOES = D('decisoes');
+
+let aliquota = 0, decididas = [], decisaoAberta = null, ambiguidade = null;
+
+/* ─────────────────────────── cabeçalho ─────────────────────────── */
 
 function pintarCabecalho(){
   $('#pac').innerHTML = '<b>' + PAC.id + '</b><span>' + PAC.leito + '</span>';
@@ -263,121 +286,287 @@ function pintarCabecalho(){
     return '<span class="v' + (dif ? (pior ? ' pior' : ' melhor') : '') + '">'
       + '<i>' + c.rotulo + '</i>' + v.toFixed(c.casas).replace('.', ',') + c.unidade
       + (dif ? '<u>' + (v > base ? '▲' : '▼') + '</u>' : '') + '</span>';
-  }).join('') + EST.sinalizadores.filter(s => SINAIS[s])
-      .map(s => '<span class="f">' + SINAIS[s] + '</span>').join('');
+  }).join('');
+  const fl = EST.sinalizadores.filter(s => SINAIS[s]);
+  $('#flags').innerHTML = fl.map(s => '<span class="f">' + SINAIS[s] + '</span>').join('');
+  $('#flags').classList.toggle('on', fl.length > 0);
 }
 
-const ICONE = {admissao: '', anamnese: 'perguntou', exame: 'examinou',
-  pedido: 'pediu', resultado: 'resultado', conduta: 'prescreveu',
-  evolucao: 'evolução', tempo: 'aguardou', alerta: 'atenção'};
+/* ─────────────────────────── registro ─────────────────────────── */
+
+const RUBRICA = {anamnese: 'anamnese', exame: 'exame físico', pedido: 'solicitado',
+  resultado: 'resultado', conduta: 'conduta', evolucao: 'evolução',
+  tempo: '', alerta: 'observação', decisao: 'decisão'};
 
 function pintarRegistro(){
   const alvo = $('#reg');
   alvo.innerHTML = REG.map(e =>
     '<article class="e e-' + e.t + (e.alterado ? ' alt' : '') + '">'
     + '<div class="eh"><time>' + relogio(e.h) + '</time>'
-    + (ICONE[e.t] ? '<em>' + ICONE[e.t] + '</em>' : '')
-    + '<h3>' + e.tt + '</h3></div>'
+    + (RUBRICA[e.t] ? '<em>' + RUBRICA[e.t] + '</em>' : '')
+    + (e.tt ? '<h3>' + e.tt + '</h3>' : '') + '</div>'
     + (e.x ? '<div class="ex">' + e.x + '</div>' : '') + '</article>').join('')
-    + (PEND.length ? '<div class="pend"><b>Aguardando resultado</b>'
-        + PEND.map(p => '<span>' + p.n + ' <i>' + relogio(p.pronto) + '</i></span>').join('')
-        + '</div>' : '');
+    + blocoPendentes() + blocoDecisao() + blocoAliquota();
   alvo.scrollTop = alvo.scrollHeight;
 }
 
-function pintar(){ pintarCabecalho(); pintarRegistro(); pintarAcoes(); }
+function blocoPendentes(){
+  if (!PEND.length) return '';
+  return '<div class="pend"><b>Aguardando resultado</b>'
+    + PEND.map(p => '<span>' + p.n + ' <i>' + relogio(p.pronto) + '</i></span>').join('')
+    + '</div>';
+}
 
-/* ─────────────────────────── as ações ─────────────────────────── */
+/* A história chega em alíquotas, no ritmo de quem escuta — não como um menu de
+   perguntas. O que continua sendo pergunta é só o que o paciente não conta por
+   conta própria. */
+function blocoAliquota(){
+  if (encerrado || decisaoAberta || aliquota >= ABERTURA.length) return '';
+  return '<div class="mais"><button onclick="proximaAliquota()">continuar a '
+    + 'história &rarr;</button><i>ou faça alguma coisa: a linha de baixo está '
+    + 'aberta o tempo todo</i></div>';
+}
 
-const GRUPOS = ['Anamnese', 'Exame físico', 'Conduta'];
+function proximaAliquota(){
+  const a = ABERTURA[aliquota++];
+  if (!a) return;
+  if (a.min) avancar(a.min);
+  registrar('anamnese', a.tt, a.p.map(x => '<p>' + x + '</p>').join(''));
+  pintar();
+}
 
-function pintarAcoes(){
-  if (encerrado){
-    $('#acoes').innerHTML = '<div class="fim-nota">Caso encerrado. '
-      + '<button onclick="comecarDeNovo()">Conduzir de novo</button></div>';
+/* ─────────────────────────── decisões ─────────────────────────── */
+
+/* Uma decisão volta quando a situação que a criou persiste. `decididas` guarda
+   até quando ela fica calada — infinito para a escolha que não se refaz, e o
+   `volta_em` do caso para a que se refaz enquanto o número não melhora. */
+function decisaoPendente(){
+  return DECISOES.find(d => {
+    const j = decididas.find(x => x.k === d.k);
+    if (j && EST.horas < j.ate) return false;
+    return d.quando.every(bate);
+  });
+}
+
+function blocoDecisao(){
+  const d = decisaoAberta;
+  if (!d || encerrado) return '';
+  return '<div class="dec"><div class="dk">O caso pede uma decisão</div>'
+    + (d.c ? '<p class="dc">' + d.c + '</p>' : '')
+    + '<h3>' + d.q + '</h3><div class="dcs">'
+    + d.caminhos.map((c, i) => '<button data-c="' + i + '">'
+        + '<span class="l">' + String.fromCharCode(65 + i) + '</span>'
+        + '<span class="r">' + c.r + '</span></button>').join('')
+    + '</div><div class="dh">ou ignore os caminhos e escreva a sua conduta na '
+    + 'linha de baixo</div></div>';
+}
+
+function escolherCaminho(i){
+  const d = decisaoAberta;
+  if (!d) return;
+  const c = d.caminhos[i];
+  const antiga = decididas.find(x => x.k === d.k);
+  const ate = d.volta ? EST.horas + d.volta : Infinity;
+  if (antiga) antiga.ate = ate; else decididas.push({k: d.k, ate: ate});
+  decisaoAberta = null;
+  registrar('decisao', d.q, '<b>' + c.r + '</b>'
+    + (c.porque ? '<p class="pq">' + c.porque + '</p>' : ''));
+  c.faz.forEach(k => {
+    const a = ACOES.find(x => x.k === k);
+    if (a && disponivel(a)) fazer(a);
+  });
+  if (c.esp) avancar(c.esp, 'Aguardou ' + desde(c.esp) + '.');
+  pintar();
+}
+
+function abrirDecisaoSeHouver(){
+  if (decisaoAberta || encerrado) return;
+  const d = decisaoPendente();
+  if (d) decisaoAberta = d;
+}
+
+/* ══════════════════ a linha de comando ══════════════════
+
+   Uma linha em branco, e o grupo escreve o que faria. Não há menu para
+   percorrer com os olhos, e é essa a diferença: quem escreve "peço o
+   sedimento" pensou no sedimento; quem clica na terceira linha da lista
+   reconheceu a terceira linha da lista.
+
+   O casamento é por dicionário — nome, sinônimos, categoria — e é honesto
+   quando não entende: diz que não entendeu, e diz o que dá para fazer. */
+
+const SEM_ACENTO = t => t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const VAZIAS = new Set(['de','do','da','dos','das','o','a','os','as','e','em',
+  'no','na','um','uma','para','pra','por','com','ao','à','que','se','ja','já']);
+const VERBOS = {
+  pedir: /^(ped|pec|solicit|colh|requisit|manda|quero)/,
+  examinar: /^(exam|ausculta|inspecion|palp|percut|avali|olha|ve[jr])/,
+  perguntar: /^(pergunt|questio|indag|interrog|investig)/,
+  prescrever: /^(prescrev|inici|comec|come|administr|dou|da[rn]|faz|instal|intub|dialis|transfund)/,
+};
+
+function fichas(t){
+  return SEM_ACENTO(t).replace(/[^a-z0-9\s]/g, ' ').split(/\s+/)
+    .filter(w => w.length > 2 && !VAZIAS.has(w));
+}
+
+/* O índice é montado uma vez: tudo o que se pode fazer ou pedir, com os nomes
+   por que se pode chamar cada coisa. */
+const INDICE = [];
+function montarIndice(){
+  INDICE.length = 0;
+  ACOES.forEach(a => INDICE.push({
+    tipo: a.t, alvo: a, rotulo: a.r,
+    nome: new Set(fichas(a.r)),
+    fichas: new Set(fichas(a.r + ' ' + (a.s || []).join(' ')))}));
+  BANCO.forEach(e => INDICE.push({
+    tipo: 'pedido', alvo: e, rotulo: e.n,
+    nome: new Set(fichas(e.n)),
+    fichas: new Set(fichas(e.n + ' ' + (e.s || []).join(' ')))}));
+}
+
+function casa(w, conjunto){
+  if (conjunto.has(w)) return 1;
+  // prefixo de cinco letras cobre plural e flexão sem casar por acaso
+  for (const g of conjunto)
+    if (g.length > 4 && w.length > 4 && (g.startsWith(w.slice(0, 5))
+        || w.startsWith(g.slice(0, 5)))) return 0.75;
+  return 0;
+}
+
+/* Três parcelas, e a ordem delas foi decidida por erro observado:
+
+   · o que a pessoa escreveu está no NOME da coisa — vale mais, porque foi
+     assim que "quero ver a urina" passava para "Hematúria", cujo sinônimo
+     citava urina, em vez de "Sedimento urinário", cujo nome cita;
+   · está no nome ou num sinônimo;
+   · quanto do item foi coberto — a menor das três, senão item de nome curto
+     ganha de item de nome preciso só por ser curto. */
+function pontuar(entrada, item){
+  const f = fichas(entrada);
+  if (!f.length) return 0;
+  let nome = 0, todas = 0;
+  f.forEach(w => {
+    nome += casa(w, item.nome);
+    todas += casa(w, item.fichas);
+  });
+  if (!todas) return 0;
+  return (nome / f.length) * 0.44
+       + (todas / f.length) * 0.38
+       + (todas / item.fichas.size) * 0.18;
+}
+
+const TEMPO = /(aguard|esper|passa|deixa)\w*\s*(?:por\s*|mais\s*|ate\s*)?([a-z0-9]+)?\s*(minuto|min|hora|h\b|dia|d\b)?/;
+/* Ninguém escreve "aguardo 2 horas": escreve "aguardo duas horas". */
+const NUMERO = {um: 1, uma: 1, dois: 2, duas: 2, tres: 3, quatro: 4, cinco: 5,
+  seis: 6, sete: 7, oito: 8, nove: 9, dez: 10, doze: 12, quinze: 15,
+  vinte: 20, trinta: 30, meia: 0.5, meio: 0.5};
+
+function interpretar(entrada){
+  const t = entrada.trim();
+  if (!t) return;
+
+  // "aguardar seis horas", "espero um dia", "aguardar"
+  const st = SEM_ACENTO(t);
+  const mt = st.match(TEMPO);
+  if (mt && fichas(t).length <= 5){
+    // "aguardo até o próximo resultado" espera o que está na fila
+    if (/proxim|result|ficar pronto|sair/.test(st) && PEND.length){
+      const falta = Math.max(5, Math.min.apply(null, PEND.map(p => p.pronto))
+                                 - EST.horas * 60);
+      responder('Aguardou ' + desde(falta) + ', até o próximo resultado.', 'ok');
+      avancar(falta, 'Aguardou até o próximo resultado.');
+      pintar();
+      return;
+    }
+    const bruto = mt[2] || '';
+    const n = /^\d+$/.test(bruto) ? +bruto : (NUMERO[bruto] || 1);
+    const u = mt[3] || 'hora';
+    const min = /min/.test(u) ? n : /dia|^d$/.test(u) ? n * 1440 : n * 60;
+    responder('Aguardou ' + desde(min) + '.', 'ok');
+    avancar(min, 'Aguardou ' + desde(min) + '.');
+    pintar();
     return;
   }
-  const porGrupo = {};
-  ACOES.filter(disponivel).forEach(a => {
-    (porGrupo[a.g] = porGrupo[a.g] || []).push(a);
-  });
-  let h = '<button class="grande" onclick="abrirExames()">Pedir exame</button>'
-        + '<button class="grande" onclick="abrirEspera()">Aguardar</button>';
-  GRUPOS.forEach(g => {
-    if (!porGrupo[g]) return;
-    h += '<div class="grupo"><b>' + g + '</b>'
-      + porGrupo[g].map(a => '<button class="a" data-k="' + a.k + '">'
-          + a.r + (a.d ? '<i>' + a.d + '</i>' : '') + '</button>').join('')
-      + '</div>';
-  });
-  h += '<div class="grupo fecha"><button class="a enc" onclick="encerrar()">'
-     + 'Encerrar o caso<i>calcula o desfecho a partir do estado atual</i>'
-     + '</button></div>';
-  $('#acoes').innerHTML = h;
-  $('#acoes').querySelectorAll('button.a[data-k]').forEach(b => {
-    b.onclick = () => fazer(ACOES.find(a => a.k === b.dataset.k));
-  });
-}
 
-/* ─────────────────────────── a gaveta de exames ─────────────────────────── */
+  let verbo = null;
+  const primeira = SEM_ACENTO(t).split(/\s+/)[0];
+  Object.keys(VERBOS).forEach(v => { if (VERBOS[v].test(primeira)) verbo = v; });
 
-const semAcento = t => t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  const notas = INDICE
+    .filter(i => !(i.tipo !== 'pedido' && !disponivel(i.alvo)))
+    .filter(i => !(i.tipo === 'pedido' && pedidos.includes(i.alvo.n)))
+    .map(i => ({i: i, p: pontuar(t, i) * peso(verbo, i.tipo)}))
+    .filter(x => x.p > 0)
+    .sort((a, b) => b.p - a.p);
 
-function abrirExames(){
-  abrirModal('Pedir exame',
-    '<input id="busca" placeholder="digite o nome do exame" autocomplete="off">'
-    + '<div class="dica">O resultado entra no prontuário quando ficar pronto. '
-    + 'Cada categoria tem o seu tempo, e o relógio do caso é o mesmo do paciente.</div>'
-    + '<div id="lista"></div>');
-  const inp = $('#busca');
-  inp.oninput = () => listarExames(inp.value);
-  listarExames('');
-  inp.focus();
-}
-
-function listarExames(q){
-  const t = semAcento(q.trim());
-  const achados = BANCO.filter(e => !t || semAcento(e.n).includes(t)
-      || (e.s || []).some(x => semAcento(x).includes(t)));
-  const jaPedido = n => pedidos.includes(n);
-  $('#lista').innerHTML = achados.slice(0, 40).map((e, i) => {
-    const esp = ESPERA[e.c] !== undefined ? ESPERA[e.c] : 120;
-    return '<button class="ex-i" data-i="' + BANCO.indexOf(e) + '"'
-      + (jaPedido(e.n) ? ' disabled' : '') + '>'
-      + '<span class="n">' + e.n + '</span>'
-      + '<span class="c">' + (e.c || '—') + '</span>'
-      + '<span class="t">' + (jaPedido(e.n) ? 'já pedido' : desde(esp)) + '</span>'
-      + '</button>';
-  }).join('') || '<div class="vazio">Nenhum exame com esse nome neste serviço.</div>';
-  $('#lista').querySelectorAll('button[data-i]').forEach(b => {
-    b.onclick = () => { pedir(BANCO[+b.dataset.i]); fecharModal(); };
-  });
-}
-
-/* ─────────────────────────── esperar ─────────────────────────── */
-
-function abrirEspera(){
-  const prox = PEND.length ? Math.min.apply(null, PEND.map(p => p.pronto)) : null;
-  const opcoes = [[60, 'Uma hora'], [360, 'Seis horas'], [720, 'Doze horas'],
-                  [1440, 'Um dia']];
-  let h = '<div class="dica">O tempo é o único recurso que não se recupera. '
-        + 'Enquanto a doença não é tratada, ele custa néfron.</div>';
-  if (prox !== null){
-    const falta = Math.max(5, prox - EST.horas * 60);
-    h += '<button class="esp" data-m="' + falta + '">Até o próximo resultado'
-       + '<i>' + desde(falta) + '</i></button>';
+  if (!notas.length || notas[0].p < 0.34){ naoEntendi(t); return; }
+  // dois candidatos muito próximos: perguntar é mais honesto que adivinhar
+  if (notas.length > 1 && notas[1].p > notas[0].p * 0.86){
+    ambiguidade = notas.slice(0, 4).map(x => x.i);
+    responder('', 'ambiguo');
+    return;
   }
-  h += opcoes.map(o => '<button class="esp" data-m="' + o[0] + '">' + o[1]
-       + '</button>').join('');
-  abrirModal('Aguardar', h);
-  document.querySelectorAll('button.esp').forEach(b => {
-    b.onclick = () => {
-      const m = +b.dataset.m;
-      fecharModal();
-      avancar(m, 'Aguardou ' + desde(m) + '.');
-      pintar();
-    };
-  });
+  executar(notas[0].i);
+}
+
+/* O verbo escrito não decide sozinho, mas desempata: "peço tomografia" e
+   "examino o tórax" são coisas diferentes com as mesmas palavras. */
+function peso(verbo, tipo){
+  if (!verbo) return 1;
+  if (verbo === 'pedir') return tipo === 'pedido' ? 1.25 : 0.75;
+  if (verbo === 'examinar') return tipo === 'exame' ? 1.3 : 0.8;
+  if (verbo === 'perguntar') return tipo === 'anamnese' ? 1.3 : 0.8;
+  if (verbo === 'prescrever') return tipo === 'conduta' ? 1.3 : 0.8;
+  return 1;
+}
+
+function executar(item){
+  ambiguidade = null;
+  if (item.tipo === 'pedido'){ pedir(item.alvo); responder('Pedido: ' + item.rotulo, 'ok'); }
+  else { fazer(item.alvo); responder(item.rotulo, 'ok'); }
+  pintar();
+}
+
+function naoEntendi(t){
+  ambiguidade = null;
+  responder('Não encontrei isso neste serviço. Você pode pedir um exame pelo '
+    + 'nome, examinar um sistema, perguntar alguma coisa ao paciente, '
+    + 'prescrever uma conduta, ou aguardar um tempo.', 'erro');
+}
+
+function responder(msg, tipo){
+  const r = $('#resp');
+  if (tipo === 'ambiguo'){
+    r.className = 'amb on';
+    r.innerHTML = '<b>Qual deles?</b>'
+      + ambiguidade.map((i, k) => '<button data-amb="' + k + '">'
+          + i.rotulo + '</button>').join('');
+  } else {
+    r.className = tipo + ' on';
+    r.innerHTML = msg;
+    clearTimeout(r._t);
+    r._t = setTimeout(() => r.classList.remove('on'), tipo === 'erro' ? 7000 : 2600);
+  }
+}
+
+/* ─────────────────────────── ajuda, sem cardápio ───────────────────────────
+   Para o grupo que trava. Mostra CATEGORIAS e exemplos de frase, nunca a lista
+   de condutas — dar a lista é dar a resposta. */
+
+function abrirAjuda(){
+  const cat = {};
+  BANCO.forEach(e => { cat[e.c] = (cat[e.c] || 0) + 1; });
+  abrirModal('O que dá para fazer', '<div class="dica">Escreva na linha de '
+    + 'baixo, com as suas palavras. Alguns exemplos:</div>'
+    + '<ul class="ex-frases">'
+    + ['peço o sedimento urinário', 'ausculto o tórax',
+       'pergunto que medicamentos ele usa', 'inicio pulso de metilprednisolona',
+       'aguardo seis horas', 'peço tomografia de tórax'
+      ].map(x => '<li>' + x + '</li>').join('')
+    + '</ul><div class="dica">A gaveta do serviço tem '
+    + Object.keys(cat).sort().map(c => '<b>' + cat[c] + '</b> em ' + c).join(', ')
+    + '. Pergunte pelo nome do exame, não pela categoria.</div>');
 }
 
 /* ─────────────────────────── modal ─────────────────────────── */
@@ -390,25 +579,22 @@ function abrirModal(titulo, corpo){
 }
 function fecharModal(){ $('#modal').classList.remove('on'); $('#modal').innerHTML = ''; }
 
-/* ─────────────────────────── o desfecho e a revisão ─────────────────────── */
+/* ─────────────────────────── desfecho e revisão ─────────────────────── */
 
 function mostrarDesfecho(){
   const d = encerrado;
-  // um item da revisão está satisfeito pelo exame pedido, pela ação feita ou
-  // pelo sinalizador que ela acende — colher hemocultura é uma conduta, e não
-  // faria sentido cobrá-la como exame não pedido
   const naoPedidos = REVISAO.filter(r => !pedidos.includes(r.chave)
       && !feitos.includes(r.chave) && !(r.sinalizador && tem(r.sinalizador)));
-  const h = '<div class="fim q-' + d.q + '">'
+  abrirModal('Fim da condução', '<div class="fim q-' + d.q + '">'
     + '<div class="fk">Desfecho</div><h2>' + d.t + '</h2>'
     + d.p.map(x => '<p>' + x + '</p>').join('')
     + '<div class="porque"><b>Por quê</b><p>' + d.porque + '</p></div>'
     + '<div class="linha"><b>A condução, em números</b>'
     + '<span>' + desde(EST.horas * 60) + ' de internação</span>'
     + '<span>' + pedidos.length + ' exames pedidos</span>'
-    + '<span>' + feitos.length + ' ações registradas</span>'
+    + '<span>' + feitos.length + ' ações</span>'
     + Object.keys(CAMPOS).map(k => '<span>' + CAMPOS[k].rotulo + ' '
-        + EST0()[k].toFixed(CAMPOS[k].casas).replace('.', ',') + ' → '
+        + EST0()[k].toFixed(CAMPOS[k].casas).replace('.', ',') + ' &rarr; '
         + EST[k].toFixed(CAMPOS[k].casas).replace('.', ',') + '</span>').join('')
     + '</div>'
     + (naoPedidos.length
@@ -416,19 +602,48 @@ function mostrarDesfecho(){
           + naoPedidos.map(r => '<div><span>' + r.rotulo + '</span><p>' + r.porque
               + '</p></div>').join('') + '</div>'
         : '<div class="faltou ok"><b>Nada essencial ficou de fora.</b></div>')
-    + '</div>';
-  abrirModal('Fim da condução', h);
+    + '<button class="denovo" onclick="comecarDeNovo()">Conduzir de novo</button>'
+    + '</div>');
 }
 
 function comecarDeNovo(){ fecharModal(); comecar(); }
 
-/* ─────────────────────────── atalhos ─────────────────────────── */
+/* ─────────────────────────── pintura e eventos ─────────────────────── */
 
-addEventListener('keydown', e => {
-  if (e.target.tagName === 'INPUT') { if (e.key === 'Escape') fecharModal(); return; }
-  if (e.key === 'Escape') fecharModal();
-  else if (e.key === 'x' || e.key === 'X') abrirExames();
-  else if (e.key === 't' || e.key === 'T') abrirEspera();
+function pintar(){
+  abrirDecisaoSeHouver();
+  pintarCabecalho();
+  pintarRegistro();
+  $('#barra').classList.toggle('off', !!encerrado);
+}
+
+document.addEventListener('click', e => {
+  const c = e.target.closest('[data-c]');
+  if (c){ escolherCaminho(+c.dataset.c); return; }
+  const a = e.target.closest('[data-amb]');
+  if (a){ executar(ambiguidade[+a.dataset.amb]); return; }
 });
 
+addEventListener('keydown', e => {
+  if (e.key === 'Escape'){ fecharModal(); return; }
+  if (e.target.id === 'cmd') return;
+  if (e.key === '?' ) { abrirAjuda(); e.preventDefault(); }
+  else if (e.key !== 'Tab') $('#cmd').focus();
+});
+
+function ligarBarra(){
+  const cmd = $('#cmd');
+  cmd.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    const v = cmd.value;
+    cmd.value = '';
+    interpretar(v);
+  });
+  $('#ajuda').onclick = abrirAjuda;
+  $('#encerrar').onclick = () => encerrar();
+  cmd.focus();
+}
+
+montarIndice();
+ligarBarra();
 comecar();
