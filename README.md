@@ -1,5 +1,7 @@
 # Casos clínicos interativos
 
+**No ar:** <https://medtechbr.github.io/casos-clinicos/>
+
 Casos no modelo dos *Case Records of the Massachusetts General Hospital*, para
 sessão clínica com internos e residentes. O caso avança em blocos de informação
 nova, o grupo discute, e o diagnóstico só aparece depois do raciocínio.
