@@ -30,6 +30,7 @@ let historia = [0];           // pilha de etapas visitadas, para voltar
    nunca: seis exames entram numa folha com folga. A paginação fica como rede
    de segurança para um caso futuro que peça mais. */
 const folhaDe = {};           // ident da etapa de resultados -> folha atual
+const laudos = new Set();     // exames com imagem cujo laudo já foi revelado
 const POR_FOLHA = 9;
 
 const porId = k => ETAPAS.findIndex(e => e.k === k);
@@ -326,12 +327,24 @@ const DESENHO = {
       const valor = partes.length > 1
         ? partes.map(t => '<span class="ln">' + t + '</span>').join('')
         : x.r;
-      return '<article class="rc' + (x.a ? ' alt' : '') + '"><b>' + n + '</b>'
-        + '<div class="v">' + valor
+      /* Quando o exame tem imagem, a imagem vem SOZINHA e o laudo fica atrás
+         de um botão. Colar o laudo na figura tira do grupo o passo que mais
+         ensina em imagem, que é descrever antes de ler o que outro escreveu —
+         e é invariante declarada do formato: laudo se revela, não se
+         renderiza junto. */
+      const laudo = '<div class="v">' + valor
         + (x.ref && x.ref !== '—' ? '<span class="rf">referência: ' + x.ref
-            + '</span>' : '') + '</div>'
-        + (im ? '<figure><img src="' + IMG(im.img) + '" alt="' + n + '">'
-            + '<figcaption>' + im.lg + ' · ' + im.cr + '</figcaption></figure>' : '')
+            + '</span>' : '') + '</div>';
+      if (!im)
+        return '<article class="rc' + (x.a ? ' alt' : '') + '"><b>' + n + '</b>'
+          + laudo + '</article>';
+      const aberto = laudos.has(n);
+      return '<article class="rc' + (x.a ? ' alt' : '') + '"><b>' + n + '</b>'
+        + '<figure><img src="' + IMG(im.img) + '" alt="' + n + '">'
+        + '<figcaption>' + im.lg + ' · ' + im.cr + '</figcaption></figure>'
+        + (aberto ? laudo
+            : '<button class="verlaudo" data-laudo="' + esc(n) + '">'
+              + 'Ver o laudo</button>')
         + '</article>';
     }).join('');
     return fundoDe(e) + '<div class="veu tudo"></div><div class="folha">'
@@ -438,6 +451,12 @@ function ligar(e){
     contar();
   }
 
+  if (e.t === 'resultados'){
+    document.querySelectorAll('.verlaudo').forEach(b => {
+      b.onclick = () => { laudos.add(b.dataset.laudo); pintar(); };
+    });
+  }
+
   if (e.t === 'pergunta'){
     const r = respostas[e.k] || (respostas[e.k] = {marcadas: [], feita: false});
     if (r.feita) return;
@@ -513,6 +532,7 @@ function recomecar(){
   Object.keys(marcados).forEach(k => delete marcados[k]);
   Object.keys(respostas).forEach(k => delete respostas[k]);
   Object.keys(escolhas).forEach(k => delete escolhas[k]);
+  laudos.clear();
   pintar();
 }
 

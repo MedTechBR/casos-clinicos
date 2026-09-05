@@ -104,7 +104,7 @@ ETAPAS = [
 
     # ══════════════ ATO I — as oito semanas que ninguém fechou ══════════════
 
-    pagina("abertura", "Oito semanas antes", "Como começou",
+    pagina("abertura", "Oito semanas antes", "O primeiro atendimento",
         p("Um homem de 63 anos, ex-tabagista, estava em seu estado habitual de "
           "saúde até oito semanas antes desta admissão, quando surgiu secreção "
           "nasal purulenta persistente, com crostas em ambas as narinas e "
@@ -147,7 +147,7 @@ ETAPAS = [
         fundo=CENA,
     ),
 
-    pagina("evolucao_a", "Cinco semanas antes", "O que se somou depois",
+    pagina("evolucao_a", "Cinco semanas antes", "Os sintomas que se somaram",
         p("Três semanas depois do início dos sintomas nasais, surgiram dores "
           "articulares que mudavam de lugar — punhos numa semana, tornozelos "
           "na outra — sem edema, calor ou rigidez matinal prolongada."),
@@ -254,7 +254,7 @@ ETAPAS = [
 
     # ══════════════ ATO II — a deterioração, e a leitura de infecção ═════════
 
-    pagina("evolucao_b", "Duas semanas antes", "A tosse",
+    pagina("evolucao_b", "Duas semanas antes", "O atendimento na emergência",
         p("Quatro semanas depois da consulta ambulatorial, iniciou tosse seca "
           "que em poucos dias passou a ter raias de sangue no escarro. "
           "Procurou uma emergência, onde foi feita radiografia de tórax, lida "
@@ -271,7 +271,7 @@ ETAPAS = [
         fundo=CENA,
     ),
 
-    pagina("evolucao_c", "Na última semana", "O que a esposa notou",
+    pagina("evolucao_c", "Na última semana", "Os sete dias antes da internação",
         p("Nos sete dias que antecederam a internação, a esposa notou que a "
           "urina dele estava escura, cor de refrigerante, e que ele deixou de "
           "levantar à noite para urinar, o que fazia duas vezes por noite há "
@@ -427,7 +427,7 @@ ETAPAS = [
         },
     ),
 
-    pagina("leitura_infeccao", "Discussão", "A leitura que a equipe fez",
+    pagina("leitura_infeccao", "Discussão", "A hipótese com que a equipe começou",
         p("Com febre, infiltrado bilateral, proteína C reativa de 186 mg/L e "
           "insuficiência respiratória, a equipe assumiu pneumonia grave com "
           "lesão renal aguda de causa mista — sepse e hipoperfusão — e iniciou "
@@ -460,7 +460,7 @@ ETAPAS = [
 
     # ══════════════════════ ATO III — a virada ══════════════════════
 
-    pagina("dia2", "Segundo dia de internação", "Sob antibiótico, ele piorou",
+    pagina("dia2", "Segundo dia de internação", "A evolução das últimas 36 horas",
         p("Trinta e seis horas depois da primeira dose, a saturação caiu para "
           "89% com cateter nasal a 4 L/min e foi preciso subir para máscara "
           "com reservatório a 10 L/min. A frequência respiratória subiu para "
@@ -579,7 +579,7 @@ ETAPAS = [
         },
     ),
 
-    pagina("virada", "Quinto dia de internação", "As culturas voltaram",
+    pagina("virada", "Quinto dia de internação", "O que voltou das culturas",
         p("**As três hemoculturas colhidas antes do antibiótico vieram "
           "negativas em cinco dias.** A urocultura é negativa. O antibiótico "
           "está no quinto dia e ele não melhorou: continua em máscara com "
@@ -633,7 +633,7 @@ ETAPAS = [
         fundo=TC,
     ),
 
-    pagina("diferencial", "Discussão", "Quatro mecanismos, não uma lista",
+    pagina("diferencial", "Discussão", "O diferencial da síndrome pulmão-rim",
         p("Síndrome pulmão-rim não é diagnóstico: é um endereço com pelo menos "
           "quatro inquilinos. Agrupar por **mecanismo** — e não por nome de "
           "doença — é o que permite podar com o dado que já se tem."),
@@ -673,7 +673,7 @@ ETAPAS = [
 
     # ─────────────── rota A: o tecido e o anticorpo foram pedidos ───────────
 
-    pagina("crescente", "Discussão", "O que a biópsia mostrou",
+    pagina("crescente", "Discussão", "A biópsia renal",
         grade(
             anotada(IMG / CRESCENTE,
                 seta((795, 285), (612, 66), "Tufo capilar", curva=14),
@@ -740,7 +740,7 @@ ETAPAS = [
         fundo=BIOPSIA,
     ),
 
-    pagina("fenotipo", "Discussão", "Onde a lista para",
+    pagina("fenotipo", "Discussão", "Poliangeíte microscópica ou granulomatose",
         p("Vasculite de pequenos vasos associada ao ANCA está estabelecida: "
           "tecido pauci-imune e anticorpo circulante. **Qual delas** é uma "
           "questão de fenótipo — e o fenótipo deste paciente tem uma peça "
@@ -941,7 +941,7 @@ ETAPAS = [
         fundo=CENA, segue="dia3",
     ),
 
-    pagina("dia3", "Terceiro dia de indução", "A vasculite respondeu",
+    pagina("dia3", "Terceiro dia de indução", "A evolução",
         p("Setenta e duas horas depois do primeiro pulso de "
           "metilprednisolona, a hemoptise cessou. A necessidade de oxigênio "
           "caiu de máscara com reservatório para cateter nasal a 3 L/min, com "
@@ -961,7 +961,7 @@ ETAPAS = [
         fundo=CENA,
     ),
 
-    pagina("dia5", "Quinto dia de indução", "A febre",
+    pagina("dia5", "Quinto dia de indução", "A madrugada do quinto dia",
         p("Na madrugada do quinto dia, temperatura de **38,9 °C**, com "
           "calafrio. A pressão arterial caiu para 92/54 mmHg e respondeu a 500 "
           "mL de cristaloide. A frequência cardíaca é de 118 e a saturação, "
@@ -1007,7 +1007,7 @@ ETAPAS = [
         fundo=CENA,
     ),
 
-    pagina("dia10", "Décimo dia de indução", "O que o hemograma mostrou",
+    pagina("dia10", "Décimo dia de indução", "As hemoculturas e o cateter",
         p("As hemoculturas pareadas, do cateter e de veia periférica, vieram "
           "positivas para **//Staphylococcus aureus// sensível a oxacilina**, "
           "com tempo diferencial de positivação compatível com origem no "
@@ -1023,7 +1023,7 @@ ETAPAS = [
 
     # ─────────────── o décimo dia, um por caminho ───────────────
 
-    pagina("d10_rituximabe", "Décimo dia · caminho A", "Sob rituximabe",
+    pagina("d10_rituximabe", "Décimo dia · caminho A", "O hemograma do décimo dia",
         p("O hemograma do décimo dia mostra **6.400 leucócitos com 4.100 "
           "neutrófilos** — sem citopenia. O rituximabe depleta linfócito B e "
           "não produz nadir de neutrófilos: a bacteremia veio do cateter e do "
@@ -1039,7 +1039,7 @@ ETAPAS = [
         fundo=CENA, segue="d_rituximabe",
     ),
 
-    pagina("d10_cfx_ajustada", "Décimo dia · caminho B", "Sob ciclofosfamida ajustada",
+    pagina("d10_cfx_ajustada", "Décimo dia · caminho B", "O hemograma do décimo dia",
         p("O hemograma do décimo dia, no nadir esperado do pulso, mostra "
           "**2.900 leucócitos com 1.400 neutrófilos**. É citopenia leve, "
           "dentro do previsto para 10 mg/kg, e não muda a conduta: o "
@@ -1056,7 +1056,7 @@ ETAPAS = [
         fundo=CENA, segue="d_cfx_ajustada",
     ),
 
-    pagina("d10_cfx_plena", "Décimo dia · caminho C", "Sob ciclofosfamida em dose plena",
+    pagina("d10_cfx_plena", "Décimo dia · caminho C", "O hemograma do décimo dia",
         p("O hemograma do décimo dia mostra **900 leucócitos com 210 "
           "neutrófilos**. A febre, que havia cedido com a oxacilina, voltou a "
           "39,4 °C, agora com hipotensão que exigiu noradrenalina, e ele foi "
