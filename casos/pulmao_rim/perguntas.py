@@ -474,10 +474,9 @@ P12 = pergunta(
 
 P13 = pergunta(
     13,
-    "Trinta e quatro horas depois, os nove exames pedidos em bloco voltaram "
-    "juntos e a creatinina passou de 3,8 para <<creatinina>> mg/dL. Que exame "
-    "de bancada, disponível desde a admissão e ausente daquele pedido, teria "
-    "podado a lista ainda na primeira hora?",
+    "Os nove exames pedidos em bloco voltaram juntos e a creatinina está em "
+    "<<creatinina>>. Que exame de bancada, disponível desde a admissão e "
+    "ausente daquele pedido, teria podado a lista na primeira hora?",
     [
         alt(
             "Sedimento urinário examinado em urina fresca, com pesquisa de "
@@ -516,10 +515,9 @@ P13 = pergunta(
         alt(
             "Radiografia de tórax em ortostatismo, mais rápida e mais barata "
             "que a tomografia que foi pedida",
-            "Já havia sido feita na admissão, e o infiltrado bilateral que "
-            "ela mostrou é o que motivou o resto. Repeti-la em posição "
-            "diferente não distingue hemorragia de edema nem de infecção, e o "
-            "pulmão nunca foi a dúvida deste caso.",
+            "Já foi feita na admissão, e o infiltrado bilateral que ela "
+            "mostrou é o que motivou o resto. Repeti-la não distingue "
+            "hemorragia de edema nem de infecção.",
         ),
     ],
     ordem=[0, 1, 2, 3, 4],
