@@ -66,6 +66,8 @@ US = "us_rim.jpg"
 EAS = "sedimento_cilindro.jpg"
 RX_NORMAL = "rx_torax_normal.jpg"
 TC_SEIOS = "tc_seios_face.jpg"
+ECO = "eco_4camaras.jpg"
+ESFREGACO = "esfregaco_sangue.jpg"
 BIOPSIA = "biopsia_renal_cortex.jpg"
 CRESCENTE = "glomerulo_crescente.jpg"
 IF = "panca_imunofluorescencia.jpg"
@@ -76,41 +78,32 @@ IF = "panca_imunofluorescencia.jpg"
 def _esquema_comum():
     """Tudo o que não muda com a escolha da segunda droga, em dois pares."""
     glicocorticoide = quadro("O glicocorticoide, igual nos três caminhos",
-        p("Metilprednisolona 500 mg por via endovenosa ao dia por três dias, "
-          "seguida de prednisona por via oral. O PEXIVAS (2020) comparou o "
-          "desmame padrão com um **desmame reduzido**, que chega a cerca de "
-          "60% da dose acumulada do braço padrão em seis meses: a eficácia foi "
-          "não-inferior e as infecções graves em um ano caíram. A dose inicial "
-          "do PEXIVAS é por faixa de peso — **acima de 75 kg, 75 mg/dia**, que "
-          "é a faixa dos 78 kg dele."),
+        p("Metilprednisolona 500 mg/dia por três dias, depois prednisona — "
+          "**75 mg/dia** pela faixa de peso acima de 75 kg. O PEXIVAS (2020) "
+          "mostrou que o **desmame reduzido**, que chega a cerca de 60% da "
+          "dose acumulada em seis meses, é não-inferior e derruba as infecções "
+          "graves em um ano."),
         sistema="geral")
     plasma = quadro("Troca plasmática: uma decisão em disputa",
-        p("O PEXIVAS randomizou troca plasmática em 704 pacientes com vasculite "
-          "ANCA grave e **não** mostrou redução de morte ou de doença renal em "
-          "estágio terminal. Mas as diretrizes não a abandonaram: a EULAR de "
-          "2022 diz que ela **pode ser considerada** com creatinina acima de "
-          "300 µmol/L por glomerulonefrite ativa — e ele está em **336 "
-          "µmol/L** —, e a KDIGO mantém a hemorragia alveolar com hipoxemia "
-          "entre as situações em que se considera. Ou seja: neste paciente ela "
-          "é **discutível**, não descartada. Quem indicar não está errado; "
+        p("O PEXIVAS não mostrou redução de morte ou de doença renal terminal "
+          "em 704 pacientes. Mas a EULAR de 2022 diz que ela **pode ser "
+          "considerada** acima de 300 µmol/L — ele está em **336** — e a KDIGO "
+          "mantém a hemorragia alveolar com hipoxemia na lista. Aqui ela é "
+          "**discutível**, não descartada: quem indicar não está errado, e "
           "quem não indicar também não."),
         sistema="sangue")
     avacopan = quadro("Avacopan, e por que ele não entra aqui",
-        p("O ADVOCATE (2021) mostrou não-inferioridade na remissão em 26 "
-          "semanas e **superioridade na remissão sustentada em 52**, com menos "
-          "toxicidade de glicocorticoide. É adjuvante, não substituto da "
-          "indução. O limite deste paciente não é a evidência: é a "
-          "disponibilidade — conferir a oferta no serviço antes de escrever no "
-          "plano o que não se pode entregar."),
+        p("O ADVOCATE (2021) mostrou **superioridade na remissão sustentada em "
+          "52 semanas**, poupando glicocorticoide. É adjuvante, não substituto "
+          "da indução — e o limite aqui não é a evidência, é a "
+          "disponibilidade."),
         sistema="geral")
     cerco = quadro("Antes da primeira dose, e depois dela",
         p("Antes: sorologias de hepatite B e C e HIV, e a cultura que autoriza "
-          "imunossuprimir. Depois: sulfametoxazol-trimetoprima como profilaxia "
-          "para //Pneumocystis//, **em dose reduzida pela filtração** — 400/80 "
-          "mg três vezes por semana em vez do comprimido diário, porque com "
-          "17 mL/min a exposição sobe e o trimetoprim ainda empurra potássio e "
-          "creatinina num paciente que chegou com 5,4 mEq/L. Cálcio e vitamina "
-          "D pelo corticoide, e hemograma semanal."),
+          "imunossuprimir. Depois: sulfametoxazol-trimetoprima **400/80 mg "
+          "três vezes por semana** — dose reduzida pela filtração de 17, "
+          "porque o trimetoprim ainda empurra potássio num paciente que chegou "
+          "com 5,4. Cálcio, vitamina D e hemograma semanal."),
         sistema="pulmao")
     return glicocorticoide + plasma, avacopan + cerco
 
@@ -225,6 +218,14 @@ ETAPAS = [
                    referencia="até 5 mg/L", alterado=True),
                 op("VHS", resultado="88 mm/h", referencia="até 20 mm/h",
                    alterado=True),
+                op("Ferritina", resultado="410 ng/mL",
+                   referencia="30 a 400 ng/mL", alterado=True),
+                op("Albumina", resultado="3,6 g/dL", referencia="3,5 a 5,2 g/dL"),
+                op("Glicemia de jejum", resultado="94 mg/dL",
+                   referencia="até 99 mg/dL"),
+                op("TSH", resultado="2,1 mUI/L", referencia="0,4 a 4,0 mUI/L"),
+                op("Eosinófilos", resultado="280/mm³ (2,9%)",
+                   referencia="50 a 500/mm³"),
             ]),
             grupo("Rim e urina", "rim", [
                 op("Creatinina",
@@ -237,11 +238,23 @@ ETAPAS = [
                 op("Relação proteína/creatinina urinária",
                    resultado="0,6 mg/mg", referencia="abaixo de 0,2 mg/mg",
                    alterado=True),
+                op("Ureia", resultado="46 mg/dL", referencia="até 45 mg/dL",
+                   alterado=True),
+                op("Potássio", resultado="4,4 mEq/L",
+                   referencia="3,5 a 5,0 mEq/L"),
+                op("Ácido úrico", resultado="6,8 mg/dL",
+                   referencia="até 7,0 mg/dL"),
             ]),
             grupo("Imagem", "pulmao", [
                 op("Radiografia de tórax",
                    resultado="Sem alterações", referencia="normal"),
                 op("Tomografia de seios da face"),
+                op("Ultrassonografia de rins e vias urinárias"),
+                op("Eletrocardiograma"),
+                op("Espirometria",
+                   resultado="Capacidade vital forçada 88% do previsto · "
+                             "VEF1/CVF 0,79 · sem resposta a broncodilatador",
+                   referencia="normal"),
             ]),
         ],
         fundo=CENA, banco=BANCO, limite=4,
@@ -340,27 +353,24 @@ ETAPAS = [
             topicos(
                 ("Estado geral",
                  "Dispneico, prefere permanecer sentado, completa apenas "
-                 "frases curtas. **Palidez cutâneo-mucosa acentuada.** Lúcido "
-                 "e orientado. Pesava 84 kg há dois meses."),
+                 "frases curtas. **Palidez cutâneo-mucosa acentuada.** Pesava "
+                 "84 kg há dois meses."),
                 ("Cabeça e pescoço",
                  "Crostas hemáticas aderidas ao septo em ambas as narinas, "
                  "mucosa friável que sangra ao toque. Sem perfuração septal, "
                  "deformidade em sela ou massa. Orofaringe sem lesões. Sem "
                  "linfonodomegalia."),
                 ("Cardiovascular",
-                 "Bulhas rítmicas em dois tempos, sem sopros. Sem estase "
-                 "jugular a 45°. Pulsos periféricos amplos e simétricos, "
-                 "enchimento capilar de 2 segundos."),
+                 "Bulhas rítmicas, sem sopros. **Sem estase jugular a 45°.** "
+                 "Pulsos amplos e simétricos."),
                 ("Respiratório",
                  "Crepitações finas difusas nos dois hemitórax, da base ao "
-                 "terço médio. Sem sibilos e sem atrito pleural. Expansibilidade "
-                 "simétrica, sem tiragem."),
+                 "terço médio. Sem sibilos e sem atrito pleural."),
             ),
             topicos(
                 ("Abdome",
-                 "Plano, flácido, indolor, sem massas ou visceromegalias. "
-                 "Ruídos hidroaéreos presentes. Punho-percussão lombar "
-                 "indolor bilateralmente."),
+                 "Flácido, indolor, sem massas ou visceromegalias. "
+                 "Punho-percussão lombar indolor."),
                 ("Membros inferiores",
                  "**Sem edema.** Sem empastamento de panturrilha, sem sinais "
                  "de trombose. Pulsos pediosos e tibiais posteriores "
@@ -371,11 +381,10 @@ ETAPAS = [
                  "escurecido, **que não desaparecem à digitopressão**. Sem "
                  "lesão em polpa digital, sem hemorragia subungueal."),
                 ("Neurológico",
-                 "Força 2/5 para dorsiflexão do pé **direito**, com pé caído à "
-                 "marcha. Hipoestesia em território ulnar à **esquerda**. "
-                 "Assimétrico, sem nível sensitivo e sem distribuição de raiz "
-                 "única. Reflexo aquileu direito abolido, demais presentes e "
-                 "simétricos."),
+                 "Força 2/5 para dorsiflexão do pé **direito**, com pé caído "
+                 "à marcha. Hipoestesia ulnar à **esquerda**. Assimétrico, sem "
+                 "nível sensitivo e sem raiz única. Reflexo aquileu direito "
+                 "abolido."),
             ),
             corpo([
                 ("via", ""), ("pulmao", ""), ("rim", ""),
@@ -456,18 +465,34 @@ ETAPAS = [
                    referencia="até 5 mg/L", alterado=True),
                 op("Procalcitonina", resultado="0,4 ng/mL",
                    referencia="abaixo de 0,5 ng/mL"),
+                op("Neutrófilos", resultado="11.800/mm³",
+                   referencia="1.800 a 7.000/mm³", alterado=True),
+                op("Plaquetas", resultado="468.000/mm³",
+                   referencia="150.000 a 450.000/mm³", alterado=True),
+                op("Esfregaço de sangue periférico"),
+                op("Lactato"),
+                op("Bicarbonato"),
+                op("Albumina", resultado="2,9 g/dL",
+                   referencia="3,5 a 5,2 g/dL", alterado=True),
+                op("TAP / INR"),
+                op("D-dímero"),
             ]),
             grupo("Imagem do tórax", "pulmao", [
                 op("Radiografia de tórax"),
                 op("Tomografia de tórax"),
                 op("Ecocardiograma transtorácico"),
                 op("Angiotomografia de tórax"),
+                op("Eletrocardiograma"),
             ]),
             grupo("Infecção", "geral", [
                 op("Hemocultura",
                    resultado="Em andamento — coletada antes da primeira dose",
                    referencia="negativa"),
+                op("Urocultura"),
+                op("Anti-HIV"),
                 op("HBsAg e anti-HBc"),
+                op("Anti-HCV"),
+                op("Baciloscopia e teste molecular para tuberculose"),
             ]),
         ],
         fundo=TC, banco=BANCO, limite=6,
@@ -500,6 +525,16 @@ ETAPAS = [
                 "**** seio renal — e a linha pontilhada é o cursor de medida "
                 "dele, sem valor associado.",
                 "Hansen, Nielsen e Ewertsen · Wikimedia Commons · CC BY 4.0"),
+            "Ecocardiograma transtorácico": lamina(ECO,
+                "Ecocardiograma transtorácico, quatro câmaras",
+                "Imagem ilustrativa de licença aberta; não pertence a este "
+                "paciente.",
+                "Wikimedia Commons · domínio público"),
+            "Esfregaço de sangue periférico": lamina(ESFREGACO,
+                "Esfregaço de sangue periférico",
+                "Coloração de Wright. Imagem ilustrativa de licença aberta; "
+                "não pertence a este paciente.",
+                "Ajay Kumar Chaurasiya · Wikimedia Commons · CC BY-SA 4.0"),
             "Sedimento urinário": lamina(EAS, "Sedimento urinário",
                 "Cilindro urinário: estrutura alongada, de bordas paralelas, "
                 "que é o molde do lúmen do túbulo. Imagem ilustrativa, em "
@@ -726,6 +761,16 @@ ETAPAS = [
                 "Imagem ilustrativa de licença aberta; não pertence a este "
                 "paciente.",
                 "Mikael Häggström · Wikimedia Commons · CC BY 4.0"),
+            "Biópsia renal": lamina(BIOPSIA,
+                "Biópsia renal, córtex em pequeno aumento",
+                "Coloração de PAS: glomérulos, túbulos e interstício. Imagem "
+                "ilustrativa de licença aberta; a morfologia da crescente "
+                "aparece na página seguinte, em grande aumento.",
+                "Nephron · Wikimedia Commons · CC BY-SA 3.0"),
+            "Sedimento urinário": lamina(EAS, "Sedimento urinário",
+                "Cilindro urinário em preparação corada. Imagem ilustrativa "
+                "de licença aberta.",
+                "Rian Kabir · Wikimedia Commons · CC BY 2.0"),
             "ANCA por imunofluorescência indireta": lamina(IF,
                 "Imunofluorescência indireta sobre neutrófilos",
                 "A fluorescência acompanha o contorno dos lóbulos do núcleo e "
@@ -841,11 +886,9 @@ ETAPAS = [
                         "do autor da imagem. Lâmina ilustrativa, de "
                         "repositório aberto; não pertence a este paciente.",
                 credito="Nephron · Wikimedia Commons · CC BY-SA 3.0"),
-            p("O laudo descreve **crescentes celulares em 15 dos 24 "
-              "glomérulos**, com necrose fibrinoide segmentar, e "
-              "imunofluorescência **sem depósitos significativos**. A figura "
-              "ao lado é de outro paciente, no aumento em que a morfologia "
-              "aparece.")
+            p("**Crescentes celulares em 15 dos 24 glomérulos**, com necrose "
+              "fibrinoide segmentar, e imunofluorescência **sem depósitos "
+              "significativos**.")
             + quadro("O que é uma crescente, e por que a palavra celular importa",
                 p("Crescente é proliferação de células **fora do tufo**, dentro "
                   "do espaço de Bowman: epitélio parietal, monócitos e fibrina "
@@ -1024,57 +1067,53 @@ ETAPAS = [
     ),
 
     pagina("t_rituximabe", "A prescrição", "O que foi prescrito — caminho A",
-        grade(
-            p("**Rituximabe 375 mg/m², uma vez por semana, quatro doses.** "
-              "Superfície corporal de 1,93 m² por Mosteller, com 78 kg e "
-              "1,72 m: **725 mg** por dose. Sem correção para a função renal — "
-              "o anticorpo monoclonal não é depurado pelo rim.")
-            + quadro("O que este caminho pede de vigilância",
-                p("Pré-medicação com anti-histamínico, paracetamol e o próprio "
-                  "glicocorticoide, pela reação infusional da primeira dose. "
-                  "Rastrear hepatite B **antes** — o anti-HBc isolado reativa "
-                  "sob rituximabe, e a reativação é grave. Imunoglobulinas "
-                  "séricas na linha de base, porque a hipogamaglobulinemia "
-                  "tardia é o efeito dos ciclos seguintes, não deste."),
-                sistema="sangue"),
-            *_esquema_comum(), colunas=3,
-        ),
-        fundo=CENA, segue="dia3",
+        p("**Rituximabe 375 mg/m², uma vez por semana, quatro doses.** "
+          "Superfície corporal de 1,93 m² por Mosteller, com 78 kg e "
+          "1,72 m: **725 mg** por dose. Sem correção para a função renal — "
+          "o anticorpo monoclonal não é depurado pelo rim.")
+        + quadro("O que este caminho pede de vigilância",
+            p("Pré-medicação com anti-histamínico, paracetamol e o próprio "
+              "glicocorticoide, pela reação infusional da primeira dose. "
+              "Rastrear hepatite B **antes** — o anti-HBc isolado reativa "
+              "sob rituximabe, e a reativação é grave. Imunoglobulinas "
+              "séricas na linha de base, porque a hipogamaglobulinemia "
+              "tardia é o efeito dos ciclos seguintes, não deste."),
+            sistema="sangue"),
+        fundo=CENA, segue="esquema",
     ),
 
     pagina("t_cfx_ajustada", "A prescrição", "O que foi prescrito — caminho B",
-        grade(
-            p("**Ciclofosfamida endovenosa em pulso, 10 mg/kg.** A conta do "
-              "CYCLOPS por extenso: 15 mg/kg de base; −2,5 mg/kg por idade "
-              "entre 60 e 70 anos; −2,5 mg/kg por creatinina entre 300 e 500 "
-              "µmol/L — os 3,8 mg/dL da admissão são **336 µmol/L**. Restam "
-              "**10 mg/kg**. Com 78 kg, **780 mg** por pulso, abaixo do teto "
-              "de 1,2 g. Pulsos nas semanas 0, 2 e 4, depois a cada três "
-              "semanas.")
-            + quadro("O que este caminho pede de vigilância",
-                p("Mesna e hidratação em cada pulso, pela cistite hemorrágica "
-                  "da acroleína. Hemograma no sétimo e no décimo dia de cada "
-                  "pulso, que é onde cai o nadir; se os neutrófilos ficarem "
-                  "abaixo de 1.000/mm³, o pulso seguinte desce mais um "
-                  "degrau. E a conversa sobre fertilidade antes da primeira "
-                  "dose — que neste paciente, de 63 anos, pesa menos, mas não "
-                  "se pula por isso."),
-                sistema="sangue"),
-            *_esquema_comum(), colunas=3,
-        ),
-        fundo=CENA, segue="dia3",
+        p("**Ciclofosfamida endovenosa em pulso, 10 mg/kg.** A conta do "
+          "CYCLOPS por extenso: 15 mg/kg de base; −2,5 mg/kg por idade "
+          "entre 60 e 70 anos; −2,5 mg/kg por creatinina entre 300 e 500 "
+          "µmol/L — os 3,8 mg/dL da admissão são **336 µmol/L**. Restam "
+          "**10 mg/kg**. Com 78 kg, **780 mg** por pulso, abaixo do teto "
+          "de 1,2 g. Pulsos nas semanas 0, 2 e 4, depois a cada três "
+          "semanas.")
+        + quadro("O que este caminho pede de vigilância",
+            p("Mesna e hidratação em cada pulso, pela cistite hemorrágica "
+              "da acroleína. Hemograma no sétimo e no décimo dia de cada "
+              "pulso, que é onde cai o nadir; se os neutrófilos ficarem "
+              "abaixo de 1.000/mm³, o pulso seguinte desce mais um "
+              "degrau. E a conversa sobre fertilidade antes da primeira "
+              "dose — que neste paciente, de 63 anos, pesa menos, mas não "
+              "se pula por isso."),
+            sistema="sangue"),
+        fundo=CENA, segue="esquema",
     ),
 
     pagina("t_cfx_plena", "A prescrição", "O que foi prescrito — caminho C",
-        grade(
-            p("**Ciclofosfamida endovenosa em pulso, 15 mg/kg.** Com 78 kg, "
-              "**1,17 g** por pulso. A dose de indução dos ensaios, sem as "
-              "duas subtrações — nem a da idade entre 60 e 70 anos, nem a da "
-              "creatinina entre 300 e 500 µmol/L. Os metabólitos ativos são "
-              "eliminados por via renal, e com filtração de 17 mL/min a área "
-              "sob a curva de 1,17 g não é a de 1,17 g."),
-            *_esquema_comum(), colunas=3,
-        ),
+        p("**Ciclofosfamida endovenosa em pulso, 15 mg/kg.** Com 78 kg, "
+          "**1,17 g** por pulso. A dose de indução dos ensaios, sem as "
+          "duas subtrações — nem a da idade entre 60 e 70 anos, nem a da "
+          "creatinina entre 300 e 500 µmol/L. Os metabólitos ativos são "
+          "eliminados por via renal, e com filtração de 17 mL/min a área "
+          "sob a curva de 1,17 g não é a de 1,17 g."),
+        fundo=CENA, segue="esquema",
+    ),
+
+    pagina("esquema", "A prescrição", "O que é igual nos três caminhos",
+        grade(*_esquema_comum(), colunas=2),
         fundo=CENA, segue="dia3",
     ),
 
@@ -1446,9 +1485,8 @@ ETAPAS = [
     ),
 
     pagina("lacuna", "O que fica sem explicação", "A lacuna",
-        p("Um caso bem conduzido quase sempre deixa alguma coisa por explicar, "
-          "e dizer isso em voz alta é parte do ensino. Três achados deste "
-          "paciente continuam incômodos depois do diagnóstico fechado."),
+        p("Três achados deste paciente continuam sem explicação depois do "
+          "diagnóstico fechado."),
         quadro("Os sintomas nasais",
             p("Crostas hemáticas, epistaxe diária e anosmia por oito semanas "
               "descrevem doença de via aérea superior, que é o território "
@@ -1482,9 +1520,8 @@ ETAPAS = [
 
     pagina("retrospectiva", "Onde dava para ter chegado antes",
         "A retrospectiva",
-        p("O diagnóstico foi feito no quinto dia de internação, com biópsia e "
-          "sorologia. A pergunta útil é outra: em que momento, antes disso, a "
-          "informação já estava disponível — e o que impediu que fosse usada."),
+        p("Em que momento, antes do quinto dia, a informação já estava "
+          "disponível — e o que impediu que fosse usada."),
         tabela(["Quando", "O que estava à mão", "O que aconteceu"], [
             ["Oito e quatro semanas antes",
              "Rinossinusite que não respondeu a **dois** cursos de antibiótico, "
@@ -1525,10 +1562,8 @@ ETAPAS = [
     pagina("procedencia", "Procedência e créditos", "Procedência",
         grade(
             quadro("O caso",
-                p("**Autoral, curso simulado.** Paciente ficcional; nenhum "
-                  "ramo é o curso real de uma pessoa. Os números fecham entre "
-                  "si — Henderson-Hasselbalch, CKD-EPI 2021, PaO₂/FiO₂ "
-                  "calculada."),
+                p("**Autoral, curso simulado.** Paciente ficcional. Os "
+                  "números fecham entre si."),
                 sistema="geral")
             + quadro("As cenas do paciente",
                 p("**Ilustração gerada por inteligência artificial** a partir "

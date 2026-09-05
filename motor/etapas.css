@@ -171,10 +171,10 @@ h3{font-family:var(--sans);font-size:11px;letter-spacing:1.9px;
   text-transform:uppercase;color:var(--nevoa);font-weight:800;
   margin:22px 0 10px}
 
-p{font-family:var(--serifa);font-size:clamp(17px,.42vw + 1.42vh,21.5px);
+p{font-family:var(--serifa);font-size:clamp(18.5px,.46vw + 1.58vh,24px);
   line-height:1.52;color:#c8d1da;margin-bottom:clamp(9px,1.4vh,15px)}
 p:last-child{margin-bottom:0}
-p.lede{font-size:clamp(19px,.5vw + 1.6vh,24px);line-height:1.45;color:#dbe2e9}
+p.lede{font-size:clamp(21px,.55vw + 1.78vh,27px);line-height:1.45;color:#dbe2e9}
 b,strong{color:var(--gelo);font-weight:600}
 em,i{font-style:italic}
 ul,ol{margin:0 0 14px 20px;font-family:var(--serifa);font-size:17.5px;
@@ -227,7 +227,7 @@ li{margin-bottom:7px}
   background:linear-gradient(90deg,rgba(255,255,255,.04),transparent 70%)}
 .qd>b{display:block;font-family:var(--sans);font-size:10.5px;letter-spacing:1.8px;
   text-transform:uppercase;font-weight:800;margin-bottom:8px;color:var(--nevoa)}
-.qd p{font-size:clamp(15.5px,.38vw + 1.25vh,19px);line-height:1.48}
+.qd p{font-size:clamp(17px,.42vw + 1.4vh,21px);line-height:1.5}
 .q-via{border-left-color:var(--via)} .q-via>b{color:var(--via)}
 .q-pulmao{border-left-color:var(--pulmao)} .q-pulmao>b{color:var(--pulmao)}
 .q-rim{border-left-color:var(--rim)} .q-rim>b{color:var(--rim)}
@@ -242,7 +242,8 @@ li{margin-bottom:7px}
 .tb th{text-align:left;font-size:12px;letter-spacing:1.3px;
   text-transform:uppercase;color:var(--fumaca);font-weight:800;
   padding:0 14px 8px 0;border-bottom:1px solid var(--linha2)}
-.tb td{padding:clamp(7px,1.25vh,12px) 16px clamp(7px,1.25vh,12px) 0;
+.tb td{font-size:clamp(15px,1.85vh,18px);
+  padding:clamp(7px,1.25vh,12px) 16px clamp(7px,1.25vh,12px) 0;
   border-bottom:1px solid var(--linha);
   color:#b6c0cb;line-height:1.42;vertical-align:top}
 
@@ -266,14 +267,18 @@ li{margin-bottom:7px}
   padding:var(--teto) var(--eixo) var(--rodape);display:flex;
   flex-direction:column;transform-style:preserve-3d}
 .folha h2{max-width:24ch;margin-bottom:8px}
-.folha .sub{font-family:var(--sans);font-size:clamp(14px,1.8vh,16.5px);
+.folha .sub{font-family:var(--sans);font-size:clamp(15.5px,2vh,18.5px);
   color:var(--nevoa);margin-bottom:clamp(13px,2.6vh,26px);max-width:70ch;
   line-height:1.5}
 
-.grupos{display:grid;grid-template-columns:repeat(auto-fill,minmax(236px,1fr));
+/* Catálogo de 30 exames com corpo de leitura não cabe em tela baixa, e a
+   troca certa é rolar o catálogo, não encolher a letra. O contador fica preso
+   embaixo, para não sumir com a rolagem. */
+.grupos{display:grid;grid-template-columns:repeat(auto-fill,minmax(244px,1fr));
   gap:clamp(10px,1.1vw,16px);
   align-content:start;transform-style:preserve-3d;overflow:auto;flex:1;
-  padding-bottom:4px}
+  padding-bottom:10px;
+  mask-image:linear-gradient(#000 calc(100% - 26px),transparent)}
 .grupos::-webkit-scrollbar{height:3px}
 .grupos::-webkit-scrollbar-thumb{background:var(--linha2)}
 .gr{border:1px solid var(--linha);
@@ -312,7 +317,7 @@ li{margin-bottom:7px}
   transform:rotate(42deg)}
 /* Marcado não é certo. O verde de acerto dizia as duas coisas na mesma peça,
    e na tela do pedido de exames ele parecia aprovar a escolha. */
-.it .n{font-family:var(--serifa);font-size:clamp(15px,1.95vh,18.5px);
+.it .n{font-family:var(--serifa);font-size:clamp(16.5px,2.15vh,20.5px);
   line-height:1.26;color:#d2dae2}
 .it.on .n{color:var(--gelo)}
 .it .d{display:block;font-family:var(--sans);
@@ -353,11 +358,11 @@ li{margin-bottom:7px}
 .rc>b{display:block;font-family:var(--sans);font-size:13px;font-weight:700;
   letter-spacing:.2px;margin-bottom:6px;color:var(--gelo)}
 .rc.alt>b{color:var(--alerta)}
-.rc .v{font-family:var(--sans);font-size:clamp(17px,2.1vh,20px);
+.rc .v{font-family:var(--sans);font-size:clamp(18.5px,2.3vh,22px);
   line-height:1.42;color:var(--gelo)}
 .rc .v b{color:var(--gelo)}
 .rc .v .ln{display:block;padding-left:13px;position:relative;
-  font-size:clamp(15px,1.85vh,17.5px);line-height:1.38;margin-bottom:4px}
+  font-size:clamp(16.5px,2.05vh,19.5px);line-height:1.4;margin-bottom:5px}
 .rc .v .ln::before{content:"";position:absolute;left:0;top:.62em;width:5px;
   height:1px;background:var(--linha2)}
 .rc .rf{display:block;font-size:11px;color:var(--sombra);margin-top:6px;
@@ -383,7 +388,7 @@ li{margin-bottom:7px}
    tudo aqui é medido em altura de tela: o enunciado, o intervalo entre as
    alternativas e o corpo de cada uma encolhem juntos quando a tela é baixa. */
 .folha.q{padding-top:clamp(74px,9vh,96px);padding-bottom:clamp(84px,10vh,96px)}
-.enun{font-family:var(--serifa);font-size:clamp(21px,1vw + 1.6vh,34px);
+.enun{font-family:var(--serifa);font-size:clamp(23px,1.1vw + 1.78vh,38px);
   line-height:1.24;font-weight:600;max-width:46ch;margin-bottom:6px}
 .qdica{font-family:var(--sans);font-size:11.5px;letter-spacing:1.5px;
   text-transform:uppercase;color:var(--fumaca);
@@ -409,17 +414,17 @@ li{margin-bottom:7px}
   box-shadow:var(--fundo1)}
 .alts .k{font-family:var(--sans);font-size:13px;font-weight:800;
   color:var(--fumaca);letter-spacing:1px;padding-top:2px}
-.alts .tx{font-family:var(--serifa);font-size:clamp(17px,.42vw + 1.4vh,23px);
+.alts .tx{font-family:var(--serifa);font-size:clamp(18.5px,.46vw + 1.55vh,25px);
   line-height:1.28;color:#d2dae2}
 /* Depois de confirmar, o comentário vai para uma TERCEIRA coluna, ao lado da
    alternativa, em vez de crescer por baixo dela. Empilhado, cinco comentários
    dobravam a altura da lista e devolviam a rolagem que a pergunta acabou de
    perder. */
 .alts .cm{display:none;font-family:var(--sans);
-  font-size:clamp(14px,.3vw + 1.15vh,17px);line-height:1.45;
+  font-size:clamp(15.5px,.33vw + 1.28vh,19px);line-height:1.46;
   color:var(--nevoa)}
 .alts.feita li{grid-template-columns:30px minmax(0,1fr) minmax(0,1.02fr)}
-.alts.feita .tx{font-size:clamp(16px,.4vw + 1.3vh,21px)}
+.alts.feita .tx{font-size:clamp(17.5px,.44vw + 1.45vh,23px)}
 .alts.feita li{padding-block:clamp(7px,1.1vh,15px)}
 .alts.feita{gap:clamp(6px,.9vh,12px)}
 .alts.feita .cm{padding-left:clamp(12px,1.2vw,20px);
@@ -470,10 +475,10 @@ li{margin-bottom:7px}
   box-shadow:var(--fundo2)}
 .cam .l{font-family:var(--sans);font-size:11px;font-weight:800;
   letter-spacing:1.8px;color:var(--marca);margin-bottom:5px;display:block}
-.cam .r{font-family:var(--serifa);font-size:clamp(18px,.5vw + 1.55vh,24px);
+.cam .r{font-family:var(--serifa);font-size:clamp(19.5px,.54vw + 1.7vh,26px);
   line-height:1.26;color:var(--gelo);display:block}
 .cam .c{display:none;font-family:var(--sans);
-  font-size:clamp(14px,.28vw + 1.15vh,16.5px);line-height:1.5;
+  font-size:clamp(15.5px,.31vw + 1.28vh,18.5px);line-height:1.5;
   color:var(--nevoa);margin-top:clamp(7px,1.2vh,12px);
   padding-top:clamp(7px,1.2vh,12px);border-top:1px solid var(--linha)}
 .cams.feita .cam{cursor:default}
@@ -714,7 +719,7 @@ li{margin-bottom:7px}
 .cn .pr{display:block;font-family:var(--sans);font-size:11px;font-weight:800;
   letter-spacing:1.4px;text-transform:uppercase;color:var(--alerta);
   margin-bottom:7px}
-.cn p{font-size:clamp(13.5px,.28vw + 1.05vh,16px);line-height:1.44}
+.cn p{font-size:clamp(15px,.31vw + 1.18vh,18px);line-height:1.46}
 .placar .grave b{color:var(--alerta)}
 .placar .grave span{color:var(--alerta)}
 
@@ -724,14 +729,14 @@ li{margin-bottom:7px}
 .alts.muitas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
   align-content:start;gap:clamp(6px,.9vh,12px) clamp(10px,1.2vw,18px)}
 .alts.muitas li{grid-template-columns:26px minmax(0,1fr)}
-.alts.muitas .tx{font-size:clamp(15.5px,.36vw + 1.25vh,20px)}
+.alts.muitas .tx{font-size:clamp(17px,.4vw + 1.4vh,22px)}
 .alts.muitas.feita li{grid-template-columns:26px minmax(0,1fr)}
 .alts.muitas.feita .cm{grid-column:2;padding-left:0;border-left:none;
   margin-top:7px;padding-top:7px;border-top:1px solid var(--linha);
-  font-size:clamp(13.5px,.28vw + 1.1vh,16px);line-height:1.44}
+  font-size:clamp(15px,.31vw + 1.24vh,18px);line-height:1.45}
 .alts.muitas.feita li{padding-block:clamp(6px,.85vh,11px)}
 .alts.muitas.feita{gap:clamp(5px,.7vh,9px) clamp(10px,1.2vw,18px)}
-.alts.muitas.feita .tx{font-size:clamp(15.5px,.36vw + 1.25vh,20px);
+.alts.muitas.feita .tx{font-size:clamp(17px,.4vw + 1.4vh,22px);
   line-height:1.26}
 @media (max-width:900px){.alts.muitas{grid-template-columns:1fr}}
 
@@ -765,7 +770,7 @@ li{margin-bottom:7px}
 .vit>div{padding:clamp(9px,1.5vh,14px) 18px clamp(9px,1.5vh,14px) 0;
   border-right:1px solid var(--linha)}
 .vit>div:last-child{border-right:none}
-.vit>div>b{display:block;font-family:var(--sans);font-size:clamp(18px,2.4vh,23px);
+.vit>div>b{display:block;font-family:var(--sans);font-size:clamp(20px,2.6vh,26px);
   font-weight:700;line-height:1;color:var(--gelo);
   font-variant-numeric:tabular-nums}
 .vit>div.alt>b{color:var(--alerta)}
@@ -782,7 +787,7 @@ li{margin-bottom:7px}
   letter-spacing:1.9px;text-transform:uppercase;font-weight:800;
   color:var(--nevoa);margin-bottom:5px}
 .tops p b{color:var(--gelo);font-weight:600}
-.tops p{font-size:clamp(15px,.35vw + 1.2vh,18px);line-height:1.44;
+.tops p{font-size:clamp(16.5px,.39vw + 1.35vh,20.5px);line-height:1.46;
   margin-bottom:0}
 
 /* o boneco só com os marcadores, quando o achado está na lista ao lado */
