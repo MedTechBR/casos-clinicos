@@ -480,3 +480,122 @@ def quadro(hipoteses, estado=None, passo_a_passo: bool = True,
         )
     cab = f'<div class="qt">{texto(titulo)}</div>' if titulo else ""
     return f'<div class="quadro">{cab}{"".join(linhas)}</div>'
+
+
+# ═══════════════ figuras da direção Atlas (fundo escuro) ═══════════════
+
+# Os desenhos acima nasceram para papel claro: silhueta branca, traço quase
+# preto. No chão escuro do caso em etapas eles somem. O que vem abaixo é a
+# mesma anatomia repintada para o escuro — e, principalmente, a ferramenta que
+# põe seta e rótulo sobre FOTOGRAFIA de licença aberta, que é o que ensina
+# melhor que esquema autoral quando a imagem real existe.
+
+# do vocabulário de sistemas do motor de etapas para as chaves daqui
+_DE_SISTEMA = {"via": "via_aerea", "pulmao": "pulmao", "rim": "rim",
+               "pele": "pele", "nervo": "nervo"}
+
+
+def corpo(territorios, *, altura: int = 340) -> str:
+    """O boneco do paciente, com os territórios acometidos acesos.
+
+    `territorios` é uma lista de (sistema, achado). O número no desenho e o
+    número na legenda são o mesmo, e cada um herda a cor do seu sistema — a
+    mesma cor que aquele território tem em toda a peça.
+    """
+    marcas, legenda = [], []
+    for k, (sis, achado) in enumerate(territorios):
+        chave = _DE_SISTEMA.get(sis)
+        if chave is None:
+            raise ValueError(f"sistema sem desenho no corpo: {sis!r}")
+        t = TERRITORIOS[chave]
+        nx, ny = t["num"]
+        cor = f"var(--{sis})"
+        marcas.append(
+            f'<g class="tr t-{sis}">'
+            f'<g fill="{cor}" fill-opacity=".26" stroke="{cor}" '
+            f'stroke-width="1.9" stroke-linejoin="round">{t["marca"]}</g>'
+            f'<circle cx="{nx}" cy="{ny}" r="9.5" fill="{cor}"/>'
+            f'<text x="{nx}" y="{ny + 3.9}" text-anchor="middle" fill="#0b0e12" '
+            f'font-size="11.5" font-weight="700" '
+            f'font-family="-apple-system,Helvetica Neue,Arial,sans-serif">'
+            f"{k + 1}</text></g>"
+        )
+        legenda.append(
+            f'<div class="lt t-{sis}"><b>{k + 1}</b><div>'
+            f'<span class="nm">{texto(t["nome"])}</span>'
+            f'<span class="ds">{texto(achado)}</span></div></div>'
+        )
+    svg = (
+        '<svg viewBox="0 0 310 438" xmlns="http://www.w3.org/2000/svg">'
+        f'<path d="{_silhueta()}" fill="#161b22" stroke="#5b6672" '
+        f'stroke-width="1.6" stroke-linejoin="round"/>'
+        f'{"".join(marcas)}</svg>'
+    )
+    return (f'<div class="corpo" style="--ch:{altura}px">{svg}'
+            f'<div class="lg">{"".join(legenda)}</div></div>')
+
+
+# ─────────────────── fotografia com seta e rótulo ───────────────────
+
+
+def seta(alvo, rotulo, texto_, *, curva: float = 0) -> dict:
+    """Uma seta: parte do rótulo e aponta para o alvo.
+
+    Coordenadas em milésimos da largura da imagem — x de 0 a 1000, y de 0 até
+    a altura proporcional. Pensar em ‰ da largura deixa a anotação
+    independente do tamanho do arquivo: trocar a foto por uma maior não move
+    as setas.
+    """
+    return {"a": alvo, "r": rotulo, "t": texto(texto_), "c": curva}
+
+
+def anotada(arquivo, largura, altura, *setas, legenda="", credito="",
+            titulo="", moldura: int = 0) -> str:
+    """A foto de licença aberta com as setas que explicam o que olhar.
+
+    Substitui o esquema autoral onde existe imagem real: o esquema ensina a
+    forma idealizada, e a forma idealizada é justamente a que não aparece na
+    lâmina do hospital. A seta resolve o problema que fazia o esquema
+    necessário — dizer QUAL das estruturas da foto é a que interessa.
+    """
+    h = round(1000 * altura / largura, 1)
+    partes = []
+    for s in setas:
+        (ax, ay), (rx, ry) = s["a"], s["r"]
+        # ponto de controle deslocado na perpendicular: seta reta sobre
+        # textura biológica some, seta curva se lê como anotação
+        mx, my = (ax + rx) / 2, (ay + ry) / 2
+        dx, dy = ax - rx, ay - ry
+        n = max((dx * dx + dy * dy) ** 0.5, 1e-6)
+        cx, cy = mx - dy / n * s["c"], my + dx / n * s["c"]
+        # a ponta para pouco antes do alvo: o suficiente para não cobrir a
+        # estrutura, não tanto que aponte para o vizinho dela
+        t = 0.965
+        px = (1 - t) ** 2 * rx + 2 * (1 - t) * t * cx + t * t * ax
+        py = (1 - t) ** 2 * ry + 2 * (1 - t) * t * cy + t * t * ay
+        ang = math.degrees(math.atan2(ay - py, ax - px))
+        d = f"M{rx:.1f} {ry:.1f} Q{cx:.1f} {cy:.1f} {px:.1f} {py:.1f}"
+        anc = "start" if rx <= ax else "end"
+        partes.append(
+            # dois traços sobre o mesmo caminho: o escuro largo abre espaço na
+            # textura, o claro fino é a seta que se lê
+            f'<path class="fio halo" d="{d}"/><path class="fio luz" d="{d}"/>'
+            f'<path class="ponta" d="M0 0 L-19 8 L-19 -8 Z" '
+            f'transform="translate({px:.1f} {py:.1f}) rotate({ang:.1f})"/>'
+            f'<text class="rot" x="{rx:.1f}" y="{ry:.1f}" text-anchor="{anc}" '
+            f'dy="-7">{s["t"]}</text>'
+        )
+    fig = (
+        f'<figure class="anot{" mold" if moldura else ""}">'
+        f'<svg viewBox="0 0 1000 {h}" xmlns="http://www.w3.org/2000/svg">'
+        f'<image data-img="{arquivo}" x="0" y="0" width="1000" height="{h}" '
+        f'preserveAspectRatio="xMidYMid slice"/>'
+        f'<g class="an">{"".join(partes)}</g></svg>'
+    )
+    if titulo or legenda or credito:
+        fig += ('<figcaption>'
+                + (f"<b>{texto(titulo)}</b>" if titulo else "")
+                + texto(legenda)
+                + (f'<span class="cr">{texto(credito)}</span>' if credito else "")
+                + "</figcaption>")
+    return fig + "</figure>"

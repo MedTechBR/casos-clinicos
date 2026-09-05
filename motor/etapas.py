@@ -27,6 +27,7 @@ from __future__ import annotations
 import base64
 import json
 import mimetypes
+import re
 from pathlib import Path
 
 from .conteudo import texto
@@ -87,6 +88,17 @@ def territorios(*itens, colunas=1) -> str:
         for sis, nome, achado in itens) + "</div>"
 
 
+def grade(*blocos, colunas=2) -> str:
+    """Põe blocos lado a lado em vez de empilhados.
+
+    Numa peça que não rola, altura é o recurso escasso. Quatro quadros de
+    prescrição empilhados passavam 400 px da tela; em duas colunas, cabem —
+    e passam a ser comparáveis com o olho, que é como se lê uma prescrição.
+    """
+    return (f'<div class="grade c{colunas}">'
+            + "".join(f"<div>{b}</div>" for b in blocos) + "</div>")
+
+
 def quadro(titulo, *blocos, sistema="geral") -> str:
     return (f'<div class="qd q-{_s(sistema)}"><b>{texto(titulo)}</b>'
             f'{"".join(blocos)}</div>')
@@ -122,7 +134,7 @@ def capa(titulo, lede, *, fundo, lamina_=None, numeros_="", territorios_="",
 
 
 def pagina(ident, kicker, titulo, *blocos, fundo="", lamina_=None,
-           nota="", sistema="geral", so_kicker=False) -> dict:
+           nota="", sistema="geral", so_kicker=False, segue="") -> dict:
     """`so_kicker` promove o rótulo a título e descarta a manchete.
 
     Serve às telas em que o rótulo longo diz mais que o título curto — "onde
@@ -132,7 +144,7 @@ def pagina(ident, kicker, titulo, *blocos, fundo="", lamina_=None,
     return _pag("pagina", ident, kicker=texto(kicker), tt=texto(titulo),
                 corpo="".join(blocos), fundo=fundo, lamina=lamina_,
                 nota=texto(nota), sis=_s(sistema),
-                so_kicker=1 if so_kicker else 0)
+                so_kicker=1 if so_kicker else 0, segue=segue)
 
 
 # ─────────────────────────── o pedido de exames ───────────────────────────
@@ -160,8 +172,14 @@ def grupo(nome, sistema, opcoes) -> dict:
 
 
 def pedido(ident, kicker, titulo, enunciado, grupos, *, fundo="",
-           nota="", banco=None) -> dict:
-    """Marcação múltipla, sem limite e sem sugestão."""
+           nota="", banco=None, limite=0) -> dict:
+    """Marcação múltipla, sem sugestão — e com teto.
+
+    O teto não é economia: é o que transforma a tela numa decisão. Sem ele a
+    jogada dominante é marcar tudo, e quem marca tudo recebe o diagnóstico
+    pronto na virada da folha sem ter escolhido nada. Com teto, deixar um exame
+    de fora passa a custar — que é exatamente o custo da beira do leito.
+    """
     vistos = set()
     for g in grupos:
         for o in g["o"]:
@@ -182,21 +200,46 @@ def pedido(ident, kicker, titulo, enunciado, grupos, *, fundo="",
             raise ValueError(
                 f"pedido {ident!r}: rótulo sem entrada no banco e sem "
                 f"resultado próprio — devolveria nada: {', '.join(orfaos)}")
+        # Oferecer um exame que devolve "não realizada" é pior do que não
+        # oferecer: o grupo gasta uma das suas vagas para receber a informação
+        # de que a vaga foi desperdiçada. Ou o exame tem resultado, ou não é
+        # marcável.
+        por_nome = {e["n"]: e for e in banco}
+        vazios = sorted(o["e"] for g in grupos for o in g["o"]
+                        if "r" not in o
+                        and "não realiza" in por_nome.get(o["e"], {})
+                        .get("r", "").lower())
+        if vazios:
+            raise ValueError(
+                f"pedido {ident!r}: exame marcável que devolve 'não realizada' "
+                f"— tire do painel ou dê um resultado: {', '.join(vazios)}")
+    if limite and limite > sum(len(g["o"]) for g in grupos):
+        raise ValueError(f"pedido {ident!r}: teto maior que o próprio painel")
     return _pag("pedido", ident, kicker=texto(kicker), tt=texto(titulo),
                 enunciado=texto(enunciado), grupos=grupos, fundo=fundo,
-                nota=texto(nota), sobre=sobre)
+                nota=texto(nota), sobre=sobre, limite=limite)
 
 
 def resultados(ident, kicker, titulo, de, *, fundo="", introducao="",
-               nota="", laminas=None) -> dict:
+               nota="", laminas=None, rota=None) -> dict:
     """Devolve os exames marcados no pedido `de` — e só eles.
 
     `laminas` associa nome de exame à imagem que ele devolve: quem pede a
     tomografia recebe a tomografia, e quem não pede não vê nada.
+
+    `rota` leva a promessa até o fim: se as provas que a etapa exigia não foram
+    pedidas, o caso não segue para a página que as discute — segue para outra,
+    que trata de conduzir sem elas. É a única ramificação do caso que não é
+    escolha de conduta, e é a que mais ensina.
     """
+    if rota is not None:
+        if set(rota) != {"pediu", "entao", "senao"}:
+            raise ValueError("rota: use pediu=[...], entao=..., senao=...")
+        if not rota["pediu"]:
+            raise ValueError("rota sem exame exigido não ramifica nada")
     return _pag("resultados", ident, kicker=texto(kicker), tt=texto(titulo),
                 de=de, fundo=fundo, intro=texto(introducao), nota=texto(nota),
-                laminas=laminas or {})
+                laminas=laminas or {}, rota=rota)
 
 
 # ─────────────────────────── perguntas ───────────────────────────
@@ -209,7 +252,7 @@ def alt(txt, porque, *, certa=False) -> dict:
 
 
 def pergunta(ident, kicker, enunciado, alternativas, *, fundo="",
-             titulo_resposta="", nota="") -> dict:
+             titulo_resposta="", nota="", segue="") -> dict:
     certas = [a for a in alternativas if a["ok"]]
     if not 1 <= len(certas) <= 2:
         raise ValueError(f"pergunta {ident!r}: use 1 ou 2 corretas")
@@ -220,7 +263,7 @@ def pergunta(ident, kicker, enunciado, alternativas, *, fundo="",
     return _pag("pergunta", ident, kicker=texto(kicker),
                 enunciado=texto(enunciado), alts=alternativas,
                 escolhas=len(certas), fundo=fundo,
-                tr=texto(titulo_resposta), nota=texto(nota))
+                tr=texto(titulo_resposta), nota=texto(nota), segue=segue)
 
 
 def caminho(rotulo, vai_para, porque, *, rotulo_curto="") -> dict:
@@ -304,6 +347,22 @@ def montar(caso) -> str:
         "revisao": [dict(r, rotulo=texto(r["rotulo"]), porque=texto(r["porque"]))
                     for r in getattr(caso, "REVISAO", [])],
     }
+    # Figura anotada e boneco chegam como HTML pronto, e o nome do arquivo
+    # viaja dentro do atributo `data-img` — fora do alcance do `resolver`, que
+    # só olha as chaves "fundo" e "img". Sem esta varredura a foto da crescente
+    # saía do build sem endereço nenhum e a página abria com um vazio.
+    def _varrer(v):
+        if isinstance(v, str):
+            for nome in re.findall(r'data-img="([^"]+)"', v):
+                embutir(nome)
+        elif isinstance(v, dict):
+            for x in v.values():
+                _varrer(x)
+        elif isinstance(v, (list, tuple)):
+            for x in v:
+                _varrer(x)
+
+    _varrer(dados)
     dados["imgs"] = cache          # cada imagem uma vez só, no fim
 
     return (

@@ -25,11 +25,12 @@ const marcados = {};          // ident do pedido -> Set de nomes de exame
 const respostas = {};         // ident da pergunta -> {marcadas:[], feita:bool}
 const escolhas = {};          // ident da bifurcação -> índice do caminho
 let historia = [0];           // pilha de etapas visitadas, para voltar
-/* Numa peça página a página, rolar é trapaça. Quando o grupo pede muitos
-   exames, os cartões não cabem numa folha — então a folha vira duas, e o
-   avançar percorre as folhas antes de sair da etapa. */
+/* Numa peça página a página, rolar é trapaça. A folha vira duas só se os
+   cartões não couberem — e desde que o pedido passou a ter teto, não cabem
+   nunca: seis exames entram numa folha com folga. A paginação fica como rede
+   de segurança para um caso futuro que peça mais. */
 const folhaDe = {};           // ident da etapa de resultados -> folha atual
-const POR_FOLHA = 8;
+const POR_FOLHA = 9;
 
 const porId = k => ETAPAS.findIndex(e => e.k === k);
 const etapa = () => ETAPAS[i];
@@ -70,6 +71,20 @@ function adiante(){
     const f = folhaDe[e.k] || 0;
     if (f + 1 < folhas){ folhaDe[e.k] = f + 1; pintar(); return; }
   }
+  /* A rota é a ramificação de verdade: quem não pediu a prova não recebe a
+     página que a discute. Sem isto, a peça perguntava "que exames você pede?" e
+     depois seguia contando o resultado de exames que ninguém pediu — que é
+     exatamente o vício que este formato existe para não ter. */
+  if (e.rota){
+    const pedidos = new Set();
+    Object.values(marcados).forEach(c => c.forEach(n => pedidos.add(n)));
+    const tem = e.rota.pediu.every(n => pedidos.has(n));
+    irPara(tem ? e.rota.entao : e.rota.senao);
+    return;
+  }
+  // `segue` deixa a ordem do arquivo de ser a única costura entre as páginas:
+  // é o que permite três trilhas de tratamento convivendo na mesma lista
+  if (e.segue){ irPara(e.segue); return; }
   if (i + 1 >= ETAPAS.length){ mostrarRevisao(); return; }
   ir(i + 1);
 }
@@ -103,28 +118,58 @@ function podeAdiante(){
 const PASSOS = ETAPAS.map((e, n) => ({e: e, n: n}))
   .filter(x => ['pedido', 'pergunta', 'bifurcacao'].includes(x.e.t));
 
-/* O trilho mostra TODAS as etapas, uma marca cada, colorida pelo tipo — e um
-   contador explícito. É assim que o formato antigo do New England fazia, e a
-   diferença é real: dá para ver quantas páginas faltam e onde estão as
+/* Desde que o caso ramifica, a lista de etapas deixou de ser o caminho: ela
+   contém as páginas das DUAS rotas, e contar 27 num percurso de 19 é mentir
+   para quem olha o trilho. Esta função percorre o caso a partir do estado
+   atual e devolve só as páginas que este percurso vai ver. */
+function rotaAtual(){
+  const seq = [], visto = new Set();
+  const pedidos = new Set();
+  Object.values(marcados).forEach(c => c.forEach(x => pedidos.add(x)));
+  let n = 0;
+  while (n >= 0 && n < ETAPAS.length && !visto.has(n)){
+    visto.add(n); seq.push(n);
+    const e = ETAPAS[n];
+    if (e.t === 'bifurcacao'){
+      const esc = escolhas[e.k];
+      n = porId(e.caminhos[esc === undefined ? 0 : esc].vai);
+    } else if (e.t === 'desfecho'){
+      n = e.fecho ? porId(e.fecho) : -1;
+    } else if (e.rota){
+      n = porId(e.rota.pediu.every(x => pedidos.has(x))
+                ? e.rota.entao : e.rota.senao);
+    } else if (e.segue){
+      n = porId(e.segue);
+    } else n = n + 1;
+  }
+  return seq;
+}
+
+/* O trilho mostra as etapas do percurso, uma marca cada, colorida pelo tipo —
+   e um contador explícito. É assim que o formato antigo do New England fazia,
+   e a diferença é real: dá para ver quantas páginas faltam e onde estão as
    perguntas antes de chegar nelas. */
 function pintarTrilho(){
+  const seq = rotaAtual();
+  const aqui = Math.max(seq.indexOf(i), 0);
   $('#trilho').innerHTML =
     '<span class="tt">' + CASO.titulo + '</span>'
-    + '<span class="cnt">' + (i + 1) + ' / ' + ETAPAS.length + '</span>'
-    + '<span class="marcas">' + ETAPAS.map((e, k) =>
+    + '<span class="cnt">' + (aqui + 1) + ' / ' + seq.length + '</span>'
+    + '<span class="marcas">' + seq.map(n => ETAPAS[n]).map((e, k) =>
         // o título só aparece no que já foi percorrido: com o mouse parado
         // sobre uma marca à frente, o trilho entregava os desfechos — inclusive
         // qual deles é o ruim — antes de a bifurcação ser feita
-        '<i class="m-' + e.t + (k < i ? ' feita' : k === i ? ' aqui' : '')
-        + '" data-n="' + k + '"'
-        + (k < i ? ' title="' + (e.tt || e.kicker || '').replace(/"/g, '') + '"' : '')
+        '<i class="m-' + e.t + (k < aqui ? ' feita' : k === aqui ? ' aqui' : '')
+        + '" data-n="' + seq[k] + '"'
+        + (k < aqui ? ' title="' + (e.tt || e.kicker || '').replace(/"/g, '') + '"' : '')
         + '></i>'
       ).join('') + '</span>';
   // andar para trás pelo trilho é livre; para a frente, não — o caso não pula
   // uma decisão que ainda não foi tomada
+  const vistos = new Set(historia);
   $('#trilho').querySelectorAll('.marcas i').forEach(m => {
     const n = +m.dataset.n;
-    if (n < i) m.onclick = () => ir(n);
+    if (vistos.has(n) && n !== i) m.onclick = () => ir(n);
   });
 }
 
@@ -152,9 +197,21 @@ const laminaDe = l => !l ? '' :
   + '<figcaption class="cap"><b>' + l.tt + '</b>' + l.lg
   + '<span class="cr">' + l.cr + '</span></figcaption></figure>';
 
+/* Figura anotada e boneco vêm do caso como HTML pronto, montado antes de
+   existir data: URI. Cada um deixa o nome do arquivo em `data-img` e o
+   endereço é resolvido aqui, contra a mesma tabela de imagens. */
+function resolverImagens(){
+  document.querySelectorAll('[data-img]').forEach(el => {
+    const u = IMG(el.dataset.img);
+    if (el.tagName.toLowerCase() === 'image') el.setAttribute('href', u);
+    else el.setAttribute('src', u);
+  });
+}
+
 function pintar(){
   const e = etapa();
   $('#palco').innerHTML = '<section class="tela on">' + DESENHO[e.t](e) + '</section>';
+  resolverImagens();
   ligar(e);
   pintarTrilho();
   pintarPe();
@@ -213,8 +270,15 @@ const DESENHO = {
       const x = sobre[n] || BANCO[n];
       if (!x) return '';
       const im = e.laminas[n];
+      /* O laudo do sedimento tem cinco achados separados por ponto médio, e
+         num parágrafo corrido o cilindro hemático — que é o achado — passava
+         no meio da frase. Cada parte vira uma linha. */
+      const partes = x.r.split(' · ');
+      const valor = partes.length > 1
+        ? partes.map(t => '<span class="ln">' + t + '</span>').join('')
+        : x.r;
       return '<article class="rc' + (x.a ? ' alt' : '') + '"><b>' + n + '</b>'
-        + '<div class="v">' + x.r
+        + '<div class="v">' + valor
         + (x.ref && x.ref !== '—' ? '<span class="rf">referência: ' + x.ref
             + '</span>' : '') + '</div>'
         + (im ? '<figure><img src="' + IMG(im.img) + '" alt="' + n + '">'
@@ -242,8 +306,8 @@ const DESENHO = {
           '<li data-k="' + k + '" class="' + (a.ok ? 'certa' : 'errada')
           + (r.marcadas.includes(k) ? ' marcada' : '') + '">'
           + '<span class="k">' + String.fromCharCode(65 + k) + '</span>'
-          + '<span><span class="tx">' + a.t + '</span>'
-          + '<span class="cm">' + a.c + '</span></span></li>').join('')
+          + '<span class="tx">' + a.t + '</span>'
+          + '<span class="cm">' + a.c + '</span></li>').join('')
       + '</ul>'
       + (r.feita ? '' : '<button class="conf" id="conf"'
           + (r.marcadas.length >= e.escolhas ? '' : ' disabled') + '>'
@@ -262,7 +326,18 @@ const DESENHO = {
           + '<span class="l">' + String.fromCharCode(65 + k) + '</span>'
           + '<span class="r">' + c.r + '</span>'
           + '<span class="c">' + c.c + '</span></div>').join('')
-      + '</div></div>';
+      + '</div>'
+      /* Sem isto, a ramificação era invisível: as três justificativas abriam,
+         o caso seguia, e nada na tela dizia que o rumo tinha mudado. */
+      + (esc !== undefined
+          ? '<div class="forca">' + e.caminhos.map((c, k) =>
+              '<i class="' + (esc === k ? 'on' : '') + '"></i>').join('')
+            + '<span>Daqui em diante o caso segue pelo caminho '
+            + String.fromCharCode(65 + esc) + '. As próximas páginas — '
+            + 'a prescrição, a evolução e o desfecho — são as dele, e são '
+            + 'outras nos outros dois.</span></div>'
+          : '')
+      + '</div>';
   },
 
   desfecho: e =>
@@ -282,17 +357,32 @@ const temMarcado = (k, n) => (marcados[k] || new Set()).has(n);
 function ligar(e){
   if (e.t === 'pedido'){
     const conj = marcados[e.k] || (marcados[e.k] = new Set());
+    /* O teto é o que faz a pergunta ser uma pergunta. Sem ele, marcar tudo é
+       sempre a jogada dominante — e um grupo que marca tudo não decidiu nada,
+       além de encerrar a investigação na primeira tela. */
+    const teto = e.limite || 0;
+    const cheio = () => teto && conj.size >= teto;
     const contar = () => {
-      $('#conta').innerHTML = '<b>' + conj.size + '</b> '
+      const faltam = teto ? teto - conj.size : 0;
+      $('#conta').innerHTML = '<b>' + conj.size
+        + (teto ? ' de ' + teto : '') + '</b> '
         + (conj.size === 1 ? 'exame marcado' : 'exames marcados')
-        + ' · nada é obrigatório, e nada é sugerido';
+        + (teto
+            ? (faltam > 0
+                ? ' · ainda cabe' + (faltam === 1 ? ' 1' : 'm ' + faltam)
+                : ' · o teto desta rodada está completo — desmarque para trocar')
+            : ' · nada é obrigatório, e nada é sugerido');
+      document.querySelectorAll('.it[data-ex]').forEach(l =>
+        l.classList.toggle('bloq', cheio() && !conj.has(l.dataset.ex)));
       pintarPe();
     };
     document.querySelectorAll('.it[data-ex]').forEach(l => {
       l.onclick = () => {
         const n = l.dataset.ex;
-        if (conj.has(n)) conj.delete(n); else conj.add(n);
-        l.classList.toggle('on');
+        if (conj.has(n)) conj.delete(n);
+        else if (cheio()) return;          // o teto não empurra: ele segura
+        else conj.add(n);
+        l.classList.toggle('on', conj.has(n));
         contar();
       };
     });
@@ -349,8 +439,11 @@ function mostrarRevisao(){
     + '<div class="veu tudo"></div><div class="folha">'
     + '<div class="marca"><i></i><span>Revisão</span></div>'
     + '<h2>O que ficou para trás</h2>'
-    + '<p class="sub">' + acertos + ' de ' + total + ' perguntas com a resposta '
-    + 'inteiramente certa · ' + pediu.size + ' exames pedidos ao longo do caso.</p>'
+    + '<p class="sub">' + acertos + ' de ' + total + ' perguntas de escolha com '
+    + 'a resposta inteiramente certa · ' + Object.keys(marcados).length
+    + ' rodadas de exames, ' + pediu.size + ' pedidos ao todo · '
+    + Object.keys(escolhas).length + ' bifurcação de conduta. '
+    + 'São as seis decisões do caso.</p>'
     + '<div class="rev">' + (faltou.length
         ? faltou.map(r => '<div class="li"><b>' + r.rotulo + '</b><p>'
             + r.porque + '</p></div>').join('')
