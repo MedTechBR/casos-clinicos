@@ -22,7 +22,7 @@ VAZIAS = {"img", "br", "hr", "input", "meta", "link"}
 IMAGENS = {
     496816: "tc_torax_vidro_fosco.jpg",
     105376: "panca_imunofluorescencia.jpg",
-    433992: "biopsia_renal_crescente.jpg",
+    433992: "biopsia_renal_cortex.jpg",
 }
 
 

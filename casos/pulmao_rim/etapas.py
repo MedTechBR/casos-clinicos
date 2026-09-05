@@ -14,6 +14,7 @@ CKD-EPI 2021, e a relação PaO₂/FiO₂ calculada, não estimada.
 
 from pathlib import Path
 
+from motor.desenhos import crescente_glomerular
 from motor.etapas import (
     alt, bifurcacao, caminho, capa, desfecho, grupo, lamina, lista, numeros, op,
     p, pagina, pedido, pergunta, quadro, resultados, tabela, territorios,
@@ -28,7 +29,9 @@ IMG = Path(__file__).parent / "img"
 
 CENA = "cena_admissao.jpg"
 TC = "tc_torax_vidro_fosco.jpg"
-BIOPSIA = "biopsia_renal_crescente.jpg"
+# a foto mostra córtex renal; a crescente vive no esquema autoral,
+# porque não é identificável com segurança neste plano
+BIOPSIA = "biopsia_renal_cortex.jpg"
 IF = "panca_imunofluorescencia.jpg"
 
 
@@ -59,8 +62,10 @@ ETAPAS = [
                  "ficcional e nenhum ramo deste caso é o curso real de uma "
                  "pessoa: cada desfecho é inferência fisiológica, escrita para "
                  "ensino, e não extração de artigo. Os números foram "
-                 "desenhados para fechar entre si. As imagens de tomografia e "
-                 "de anatomia patológica são ilustrativas, de repositórios de "
+                 "desenhados para fechar entre si. As cenas do paciente são "
+                 "ilustrações geradas por inteligência artificial a partir da "
+                 "descrição clínica. As imagens de tomografia e de anatomia "
+                 "patológica são reais, ilustrativas, de repositórios de "
                  "licença aberta, e não pertencem a este paciente. Créditos ao "
                  "pé de cada figura.",
     ),
@@ -88,7 +93,7 @@ ETAPAS = [
         lamina_=lamina(CENA, "Na admissão",
             "Sentado, dispneico, completando apenas frases curtas. Púrpura "
             "palpável nas pernas e no dorso dos pés.",
-            "Ilustração autoral, gerada para este caso. Paciente ficcional."),
+            "Ilustração gerada por inteligência artificial para este caso, a partir da descrição clínica. Paciente ficcional."),
     ),
 
     pagina("antecedentes", "Apresentação", "O que se sabia dele",
@@ -227,9 +232,19 @@ ETAPAS = [
         introducao="Só o que foi marcado. O que não foi pedido não está aqui — "
                    "nem agora, nem depois.",
         fundo=TC,
-        laminas={"Tomografia de tórax": lamina(TC, "Tomografia de tórax",
-            "Cortes axiais, coronal e sagital. Imagem ilustrativa.",
-            "Hellerhoff · Wikimedia Commons · CC BY-SA 4.0")},
+        laminas={
+            "Tomografia de tórax": lamina(TC, "Tomografia de tórax",
+                "Montagem em janela de pulmão: três cortes axiais, um coronal "
+                "e um sagital. Imagem ilustrativa. Janela de mediastino não "
+                "incluída — linfonodo mediastinal não é avaliável aqui.",
+                "Hellerhoff · Wikimedia Commons · CC BY-SA 4.0"),
+            # a imunofluorescência indireta produz PADRÃO e título, não um
+            # número em U/mL: ela pertence a este exame, não ao anti-MPO
+            "ANCA por imunofluorescência indireta": lamina(IF,
+                "Imunofluorescência indireta sobre neutrófilos",
+                "Neutrófilos fixados em etanol. Imagem ilustrativa.",
+                "Simon Caulton · Wikimedia Commons · CC BY-SA 3.0"),
+        },
     ),
 
     # ═══════════════════════ pergunta 3 ═══════════════════════
@@ -330,16 +345,38 @@ ETAPAS = [
     resultados("res2", "O que voltou", "A segunda rodada", "ex2",
         introducao="De novo, só o que foi marcado.",
         fundo=BIOPSIA,
-        laminas={
-            "Biópsia renal — microscopia óptica": lamina(BIOPSIA,
-                "Biópsia renal, microscopia óptica",
-                "Córtex renal, grande aumento. Imagem ilustrativa.",
-                "Nephron · Wikimedia Commons · CC BY-SA 3.0"),
-            "Anti-mieloperoxidase": lamina(IF,
-                "Imunofluorescência indireta",
-                "Neutrófilos fixados em etanol. Imagem ilustrativa.",
-                "Simon Caulton · Wikimedia Commons · CC BY-SA 3.0"),
-        },
+        # Nenhuma lâmina aqui. A fotomicrografia disponível mostra o córtex —
+        # glomérulos, túbulos, interstício — e não a crescente que o laudo
+        # conta. Pendurá-la no cartão do resultado ensinaria a ler no tecido um
+        # achado que não está no plano. Ela ilustra a página seguinte, que é de
+        # discussão do compartimento, e a morfologia da crescente vem em
+        # esquema autoral.
+    ),
+
+    pagina("crescente", "Discussão", "O que é uma crescente",
+        p("A fotomicrografia da página anterior mostra o compartimento — "
+          "córtex, glomérulos, túbulos, interstício. A morfologia que o laudo "
+          "descreve não é identificável com segurança naquele plano, e por "
+          "isso ela vem aqui, em esquema."),
+        crescente_glomerular(altura=286),
+        p("Crescente é proliferação de células no **espaço de Bowman**, fora "
+          "do tufo: células epiteliais parietais, monócitos e fibrina que "
+          "escaparam por uma ruptura da parede capilar. Ela comprime o tufo "
+          "para um lado e obstrui a saída do filtrado."),
+        quadro("Por que a palavra celular importa",
+            p("Crescente **celular** é tecido inflamado, e tecido inflamado "
+              "responde a imunossupressão. Crescente **fibrosa** é cicatriz, e "
+              "cicatriz não responde a tratamento nenhum. A transição de uma "
+              "para a outra leva dias — e é a única razão pela qual a demora, "
+              "neste caso, custa função renal em vez de custar apenas tempo."),
+            sistema="rim"),
+        fundo=BIOPSIA,
+        lamina_=lamina(BIOPSIA, "Biópsia renal, microscopia óptica",
+            "Córtex renal em coloração de PAS: glomérulos, túbulos e "
+            "interstício. Imagem ilustrativa, de repositório aberto; não "
+            "pertence a este paciente e não demonstra a crescente descrita no "
+            "laudo — para essa morfologia, o esquema ao lado.",
+            "Nephron · Wikimedia Commons · CC BY-SA 3.0"),
     ),
 
     # ═══════════════════════ pergunta 5 ═══════════════════════
@@ -373,7 +410,7 @@ ETAPAS = [
                 "é o oposto do que ela produz."),
         ],
         titulo_resposta="Pauci-imune não é exame negativo",
-        fundo=IF,
+        fundo=BIOPSIA,
     ),
 
     pagina("fenotipo", "Discussão", "Onde a lista para",

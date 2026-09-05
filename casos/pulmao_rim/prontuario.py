@@ -485,7 +485,7 @@ IMAGENS = {
                 "repositório aberto; não pertence a este paciente.",
         credito="Hellerhoff · Wikimedia Commons · CC BY-SA 4.0"),
     "Biópsia renal — microscopia óptica": dict(
-        arquivo="biopsia_renal_crescente.jpg",
+        arquivo="biopsia_renal_cortex.jpg",
         legenda="Córtex renal, grande aumento. Imagem ilustrativa, de "
                 "repositório aberto; não pertence a este paciente.",
         credito="Nephron · Wikimedia Commons · CC BY-SA 3.0"),

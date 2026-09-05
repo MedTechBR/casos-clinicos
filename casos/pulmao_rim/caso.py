@@ -772,7 +772,7 @@ SLIDES = [
     bloco("O caso · bloco 8", "Biópsia renal percutânea",
         cols(
             [
-                figura_anotada("biopsia_renal_crescente.jpg",
+                figura_anotada("biopsia_renal_cortex.jpg",
                     "Córtex renal, grande aumento. Imagem ilustrativa.",
                     "Nephron · Wikimedia Commons · CC BY-SA 3.0",
                     [

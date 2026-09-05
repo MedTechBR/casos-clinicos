@@ -1,0 +1,71 @@
+[
+  {
+    "arquivo": "biopsia_renal_cortex.jpg",
+    "caminho": "/Users/matheusparente/Documents/Claude/casos-clinicos/casos/pulmao_rim/img/biopsia_renal_cortex.jpg",
+    "titulo": "Biópsia renal, microscopia óptica",
+    "legenda": "Córtex renal em coloração de PAS: glomérulos, túbulos e interstício. Imagem ilustrativa, de repositório aberto; não pertence a este paciente e não demonstra a crescente descrita no laudo — para essa morfologia, o esquema ao lado.",
+    "credito": "Nephron · Wikimedia Commons · CC BY-SA 3.0",
+    "aparece_em": [
+      "duas_sindromes (fundo)",
+      "ex2 (fundo)",
+      "res2 (fundo)",
+      "crescente (fundo)",
+      "crescente",
+      "p3 (fundo)"
+    ],
+    "afirmacoes": []
+  },
+  {
+    "arquivo": "cena_admissao.jpg",
+    "caminho": "/Users/matheusparente/Documents/Claude/casos-clinicos/casos/pulmao_rim/img/cena_admissao.jpg",
+    "titulo": "Na admissão",
+    "legenda": "Sentado, dispneico, completando apenas frases curtas. Púrpura palpável nas pernas e no dorso dos pés.",
+    "credito": "Ilustração gerada por inteligência artificial para este caso, a partir da descrição clínica. Paciente ficcional.",
+    "aparece_em": [
+      "capa (fundo)",
+      "apresentacao (fundo)",
+      "apresentacao",
+      "antecedentes (fundo)",
+      "exame (fundo)",
+      "p1 (fundo)",
+      "parede (fundo)",
+      "b1 (fundo)",
+      "d_rituximabe (fundo)",
+      "d_cfx_ajustada (fundo)",
+      "d_cfx_plena (fundo)",
+      "lacuna (fundo)",
+      "retrospectiva (fundo)"
+    ],
+    "afirmacoes": []
+  },
+  {
+    "arquivo": "panca_imunofluorescencia.jpg",
+    "caminho": "/Users/matheusparente/Documents/Claude/casos-clinicos/casos/pulmao_rim/img/panca_imunofluorescencia.jpg",
+    "titulo": "Imunofluorescência indireta sobre neutrófilos",
+    "legenda": "Neutrófilos fixados em etanol. Imagem ilustrativa.",
+    "credito": "Simon Caulton · Wikimedia Commons · CC BY-SA 3.0",
+    "aparece_em": [
+      "res1 · ANCA por imunofluorescência indireta",
+      "fenotipo (fundo)"
+    ],
+    "afirmacoes": [
+      "Padrão perinuclear (p-ANCA), título 1:640"
+    ]
+  },
+  {
+    "arquivo": "tc_torax_vidro_fosco.jpg",
+    "caminho": "/Users/matheusparente/Documents/Claude/casos-clinicos/casos/pulmao_rim/img/tc_torax_vidro_fosco.jpg",
+    "titulo": "Tomografia de tórax",
+    "legenda": "Montagem em janela de pulmão: três cortes axiais, um coronal e um sagital. Imagem ilustrativa. Janela de mediastino não incluída — linfonodo mediastinal não é avaliável aqui.",
+    "credito": "Hellerhoff · Wikimedia Commons · CC BY-SA 4.0",
+    "aparece_em": [
+      "ex1 (fundo)",
+      "res1 (fundo)",
+      "res1 · Tomografia de tórax",
+      "p2 (fundo)"
+    ],
+    "afirmacoes": [
+      "Opacidades em vidro fosco difusas e bilaterais , confluentes em alguns lobos · sem nódulo escavado · sem massa · sem linfonodomegalia · sem derrame pleural"
+    ]
+  }
+]
