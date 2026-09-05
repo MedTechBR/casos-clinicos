@@ -22,6 +22,11 @@ const marcados = {};          // ident do pedido -> Set de nomes de exame
 const respostas = {};         // ident da pergunta -> {marcadas:[], feita:bool}
 const escolhas = {};          // ident da bifurcação -> índice do caminho
 let historia = [0];           // pilha de etapas visitadas, para voltar
+/* Numa peça página a página, rolar é trapaça. Quando o grupo pede muitos
+   exames, os cartões não cabem numa folha — então a folha vira duas, e o
+   avançar percorre as folhas antes de sair da etapa. */
+const folhaDe = {};           // ident da etapa de resultados -> folha atual
+const POR_FOLHA = 8;
 
 const porId = k => ETAPAS.findIndex(e => e.k === k);
 const etapa = () => ETAPAS[i];
@@ -30,6 +35,7 @@ const etapa = () => ETAPAS[i];
 
 function ir(n, empilhar){
   if (n < 0 || n >= ETAPAS.length) return;
+  if (ETAPAS[n].t === 'resultados') folhaDe[ETAPAS[n].k] = 0;
   if (empilhar !== false) historia.push(n);
   i = n;
   pintar();
@@ -55,11 +61,21 @@ function adiante(){
     if (e.fecho) irPara(e.fecho); else mostrarRevisao();
     return;
   }
+  if (e.t === 'resultados'){
+    const n = (marcados[e.de] || new Set()).size;
+    const folhas = Math.max(1, Math.ceil(n / POR_FOLHA));
+    const f = folhaDe[e.k] || 0;
+    if (f + 1 < folhas){ folhaDe[e.k] = f + 1; pintar(); return; }
+  }
   if (i + 1 >= ETAPAS.length){ mostrarRevisao(); return; }
   ir(i + 1);
 }
 
 function atras(){
+  const e = etapa();
+  if (e.t === 'resultados' && (folhaDe[e.k] || 0) > 0){
+    folhaDe[e.k] -= 1; pintar(); return;
+  }
   if (historia.length < 2) return;
   historia.pop();
   i = historia[historia.length - 1];
@@ -93,8 +109,13 @@ function pintarTrilho(){
     '<span class="tt">' + CASO.titulo + '</span>'
     + '<span class="cnt">' + (i + 1) + ' / ' + ETAPAS.length + '</span>'
     + '<span class="marcas">' + ETAPAS.map((e, k) =>
+        // o título só aparece no que já foi percorrido: com o mouse parado
+        // sobre uma marca à frente, o trilho entregava os desfechos — inclusive
+        // qual deles é o ruim — antes de a bifurcação ser feita
         '<i class="m-' + e.t + (k < i ? ' feita' : k === i ? ' aqui' : '')
-        + '" data-n="' + k + '" title="' + (e.tt || e.kicker || '') + '"></i>'
+        + '" data-n="' + k + '"'
+        + (k < i ? ' title="' + (e.tt || e.kicker || '').replace(/"/g, '') + '"' : '')
+        + '></i>'
       ).join('') + '</span>';
   // andar para trás pelo trilho é livre; para a frente, não — o caso não pula
   // uma decisão que ainda não foi tomada
@@ -147,11 +168,17 @@ const DESENHO = {
     + (e.ressalva ? '<div class="ress">' + e.ressalva + '</div>' : '')
     + '</div>' + laminaDe(e.lamina),
 
+  /* Quando o rótulo é mais informativo que a manchete — "onde dava para ter
+     chegado antes" contra "a retrospectiva" — quem sobe a título é o rótulo, e
+     a manchete curta sai. O caso declara isso com `so_kicker`. */
   pagina: e =>
     fundoDe(e) + '<div class="veu ' + (e.lamina ? 'esq' : 'tudo') + '"></div>'
     + '<div class="plano' + (e.lamina ? '' : ' centro') + '">'
-    + '<div class="marca"><i></i><span>' + e.kicker + '</span></div>'
-    + '<h2>' + e.tt + '</h2>' + e.corpo + '</div>'
+    + (e.so_kicker
+        ? '<h2 class="do-kicker">' + e.kicker + '</h2>'
+        : '<div class="marca"><i></i><span>' + e.kicker + '</span></div>'
+          + '<h2>' + e.tt + '</h2>')
+    + e.corpo + '</div>'
     + laminaDe(e.lamina),
 
   pedido: e =>
@@ -169,8 +196,13 @@ const DESENHO = {
           ).join('') + '</div>').join('')
     + '</div><div class="conta" id="conta"></div></div>',
 
+  // Sem manchete: o rótulo já diz "o que voltou", e o primeiro cartão vira o
+  // topo visual. Ganha noventa pixels e a tela começa no dado.
   resultados: e => {
-    const pedidos = [...(marcados[e.de] || [])];
+    const todos = [...(marcados[e.de] || [])];
+    const folhas = Math.max(1, Math.ceil(todos.length / POR_FOLHA));
+    const f = Math.min(folhaDe[e.k] || 0, folhas - 1);
+    const pedidos = todos.slice(f * POR_FOLHA, (f + 1) * POR_FOLHA);
     const sobre = (ETAPAS[porId(e.de)] || {}).sobre || {};
     const cartas = pedidos.map(n => {
       // o resultado que o caso declarou vence o do banco: o banco foi escrito
@@ -187,9 +219,9 @@ const DESENHO = {
         + '</article>';
     }).join('');
     return fundoDe(e) + '<div class="veu tudo"></div><div class="folha">'
-      + '<div class="marca"><i></i><span>' + e.kicker + '</span></div>'
-      + '<h2>' + e.tt + '</h2>'
-      + (e.intro ? '<p class="sub">' + e.intro + '</p>' : '')
+      + '<div class="marca larga"><i></i><span>' + e.kicker
+      + (folhas > 1 ? ' · folha ' + (f + 1) + ' de ' + folhas : '') + '</span>'
+      + (e.intro ? '<b class="sub-in">' + e.intro + '</b>' : '') + '</div>'
       + '<div class="res">' + (cartas
           || '<div class="vazio">Você não pediu nenhum exame nesta etapa. O caso '
              + 'segue com o que se sabe do leito.</div>') + '</div></div>';

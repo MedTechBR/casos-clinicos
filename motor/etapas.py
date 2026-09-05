@@ -122,10 +122,17 @@ def capa(titulo, lede, *, fundo, lamina_=None, numeros_="", territorios_="",
 
 
 def pagina(ident, kicker, titulo, *blocos, fundo="", lamina_=None,
-           nota="", sistema="geral") -> dict:
+           nota="", sistema="geral", so_kicker=False) -> dict:
+    """`so_kicker` promove o rótulo a título e descarta a manchete.
+
+    Serve às telas em que o rótulo longo diz mais que o título curto — "onde
+    dava para ter chegado antes" contra "a retrospectiva". Ter os dois é o que
+    faz onze telas parecerem a mesma máquina de quatro compartimentos.
+    """
     return _pag("pagina", ident, kicker=texto(kicker), tt=texto(titulo),
                 corpo="".join(blocos), fundo=fundo, lamina=lamina_,
-                nota=texto(nota), sis=_s(sistema))
+                nota=texto(nota), sis=_s(sistema),
+                so_kicker=1 if so_kicker else 0)
 
 
 # ─────────────────────────── o pedido de exames ───────────────────────────
@@ -153,7 +160,7 @@ def grupo(nome, sistema, opcoes) -> dict:
 
 
 def pedido(ident, kicker, titulo, enunciado, grupos, *, fundo="",
-           nota="") -> dict:
+           nota="", banco=None) -> dict:
     """Marcação múltipla, sem limite e sem sugestão."""
     vistos = set()
     for g in grupos:
@@ -163,6 +170,18 @@ def pedido(ident, kicker, titulo, enunciado, grupos, *, fundo="",
             vistos.add(o["e"])
     sobre = {o["e"]: {"n": o["e"], "r": o["r"], "ref": o["ref"], "a": o["a"]}
              for g in grupos for o in g["o"] if "r" in o}
+    # Um rótulo que não existe no banco e não traz resultado próprio é marcável,
+    # soma no contador, e devolve NADA na página seguinte — sem erro e sem
+    # aviso. O caso chegava a dizer "você não pediu nenhum exame" para quem
+    # tinha marcado quatro. Isso passa a explodir no build.
+    if banco is not None:
+        nomes = {e["n"] for e in banco}
+        orfaos = sorted(o["e"] for g in grupos for o in g["o"]
+                        if o["e"] not in nomes and "r" not in o)
+        if orfaos:
+            raise ValueError(
+                f"pedido {ident!r}: rótulo sem entrada no banco e sem "
+                f"resultado próprio — devolveria nada: {', '.join(orfaos)}")
     return _pag("pedido", ident, kicker=texto(kicker), tt=texto(titulo),
                 enunciado=texto(enunciado), grupos=grupos, fundo=fundo,
                 nota=texto(nota), sobre=sobre)

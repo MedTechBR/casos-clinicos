@@ -24,7 +24,7 @@ from .banco import BANCO  # noqa: F401  — a gaveta de exames é a mesma
 
 TITULO = ("Homem de 63 anos com hemoptise, púrpura e queda da "
           "função renal")
-RODAPE = "Caso interativo · síndrome pulmão-rim"
+RODAPE = "Caso interativo · curso simulado"
 IMG = Path(__file__).parent / "img"
 
 CENA = "cena_admissao.jpg"
@@ -54,7 +54,7 @@ ETAPAS = [
             ("via", "Via aérea superior", "Crostas no septo, epistaxe, anosmia"),
             ("pulmao", "Pulmão", "Hemoptise e crepitações difusas"),
             ("rim", "Rim", "Creatinina 3,8 — era 1,0 há dois meses"),
-            ("pele", "Pele", "Púrpura palpável nas pernas e nos pés"),
+            ("pele", "Pele", "Lesões elevadas nas pernas e no dorso dos pés"),
             ("nervo", "Nervo periférico", "Pé caído à direita, déficit ulnar"),
             colunas=2,
         ),
@@ -89,10 +89,14 @@ ETAPAS = [
         p("**Duas semanas antes**, iniciou tosse seca que em poucos dias passou "
           "a ter raias de sangue. Procurou uma emergência, onde a radiografia "
           "de tórax foi lida como normal, e recebeu alta com antitussígeno."),
+        p("**Na última semana**, a esposa notou que a urina dele estava escura, "
+          "e que ele passou a levantar menos vezes à noite. Ele não deu "
+          "importância e não procurou atendimento por isso."),
         fundo=CENA,
         lamina_=lamina(CENA, "Na admissão",
-            "Sentado, dispneico, completando apenas frases curtas. Púrpura "
-            "palpável nas pernas e no dorso dos pés.",
+            "Sentado, dispneico, completando apenas frases curtas. Lesões "
+            "arredondadas e elevadas na face anterior das pernas e no dorso "
+            "dos pés.",
             "Ilustração gerada por inteligência artificial para este caso, a partir da descrição clínica. Paciente ficcional."),
     ),
 
@@ -137,7 +141,8 @@ ETAPAS = [
              "sem nível medular e sem raiz única."),
         ),
         fundo=CENA,
-    ),
+    
+        so_kicker=True,),
 
     # ═══════════════════════ pergunta 1 ═══════════════════════
 
@@ -151,9 +156,11 @@ ETAPAS = [
                 "periférico não compartilha nenhuma delas. Linfa não explica "
                 "lesão simultânea nesses quatro sítios."),
             alt("O território de uma única artéria de médio calibre",
-                "Vasculites de médio calibre, como a poliarterite nodosa, "
-                "produzem aneurismas e infartos segmentares. Elas não causam "
-                "capilarite alveolar nem glomerulonefrite."),
+                "Vasos de médio calibre, quando acometidos, produzem aneurismas "
+                "e infartos segmentares — território de outra família de "
+                "doenças. Eles não são o leito onde a troca gasosa e a "
+                "filtração acontecem, e por isso a lesão deles não aparece "
+                "simultaneamente no alvéolo e no glomérulo."),
             alt("Os vasos de pequeno calibre",
                 "O capilar alveolar, o capilar glomerular, a vênula pós-capilar "
                 "da derme e o vasa nervorum têm a mesma arquitetura básica: "
@@ -173,13 +180,14 @@ ETAPAS = [
     ),
 
     pagina("parede", "Discussão", "A parede compartilhada",
-        p("O capilar glomerular e o capilar alveolar têm a mesma arquitetura: "
-          "endotélio finíssimo apoiado em membrana basal, submetido a pressão, "
-          "e responsável por filtrar de um lado e trocar gás do outro."),
-        p("Uma agressão dirigida a esse compartimento aparece nos dois órgãos "
-          "ao mesmo tempo — e também na pele e no vasa nervorum, que são feitos "
-          "do mesmo material. É por isso que os quatro territórios do exame "
-          "físico e o rim caem juntos."),
+        p("A resposta da pergunta anterior tem uma consequência que vale "
+          "explicitar: se o alvo é o compartimento, e não o órgão, então a "
+          "lista de órgãos em risco é previsível — e é a lista dos leitos "
+          "construídos como barreira fina sob pressão."),
+        p("Isso permite uma pergunta de beira de leito: **que territórios ainda "
+          "não foram examinados neste paciente e pertencem a essa mesma "
+          "lista?** Olho, intestino e sistema nervoso central entram nela, e "
+          "nenhum dos três foi avaliado até aqui."),
         quadro("Onde isso não vale",
             p("Fígado e baço não entram nessa lista, e a razão é a arquitetura "
               "do leito: sinusoide fenestrado não se comporta como capilar de "
@@ -197,25 +205,42 @@ ETAPAS = [
             grupo("Bancada, minutos", "rim", [
                 op("Sedimento urinário", "urina fresca, dismorfismo e cilindros"),
                 op("Proteinúria de 24 horas"),
-                op("Creatinina"),
-                op("Potássio"),
+                op("Creatinina",
+                   resultado="3,8 mg/dL {{(1,0 há dois meses)}}",
+                   referencia="até 1,3 mg/dL", alterado=True),
+                op("Taxa de filtração glomerular estimada",
+                   "CKD-EPI 2021 — decide a dose de vários esquemas",
+                   resultado="17 mL/min/1,73 m²",
+                   referencia="acima de 90 mL/min/1,73 m²", alterado=True),
+                op("Potássio", resultado="5,4 mEq/L",
+                   referencia="3,5 a 5,0 mEq/L", alterado=True),
                 op("Ultrassonografia de rins e vias urinárias"),
             ]),
             grupo("Sangue e gasometria", "sangue", [
-                op("Hemograma"),
-                op("Gasometria arterial"),
-                op("Proteína C reativa"),
-                op("Desidrogenase láctica"),
+                op("Hemoglobina", resultado="7,8 g/dL {{(13,9 há dois meses)}}",
+                   referencia="13,5 a 17,5 g/dL", alterado=True),
+                op("Leucócitos", resultado="14.200/mm³",
+                   referencia="4.000 a 11.000/mm³", alterado=True),
+                op("Reticulócitos", resultado="2,1%",
+                   referencia="0,5 a 2,0%", alterado=True),
+                op("pH arterial", resultado="7,29",
+                   referencia="7,35 a 7,45", alterado=True),
+                op("Relação PaO2/FiO2", resultado="267",
+                   referencia="acima de 300 · corte de SDRA exige PEEP ≥ 5",
+                   alterado=True),
+                op("Proteína C reativa", resultado="186 mg/L",
+                   referencia="até 5 mg/L", alterado=True),
                 op("Esfregaço de sangue periférico"),
             ]),
             grupo("Imagem do tórax", "pulmao", [
                 op("Radiografia de tórax"),
                 op("Tomografia de tórax"),
                 op("Ecocardiograma transtorácico"),
-                op("Angiotomografia de artérias pulmonares"),
+                op("Angiotomografia de tórax"),
             ]),
             grupo("Imunologia e microbiologia", "via", [
-                op("ANCA por imunofluorescência indireta", "leva dois dias"),
+                op("ANCA por imunofluorescência indireta",
+                   "padrão e título, por imunofluorescência sobre neutrófilos"),
                 op("Anticorpo anti-membrana basal glomerular"),
                 op("Complemento C3"),
                 op("FAN"),
@@ -225,7 +250,7 @@ ETAPAS = [
                    referencia="negativa"),
             ]),
         ],
-        fundo=TC,
+        fundo=TC, banco=BANCO,
     ),
 
     resultados("res1", "O que voltou", "Os exames que você pediu", "ex1",
@@ -289,16 +314,16 @@ ETAPAS = [
           "sumiu do hematócrito aponta para o alvéolo. Do lado do rim, "
           "creatinina que sai de 1,0 e chega a 3,8 em dois meses é lesão em "
           "curso, e o compartimento em que ela está ainda não foi determinado."),
-        tabela(["A pergunta", "O que a responde"], [
+        tabela(["A pergunta em aberto", "O exame que a decidiria"], [
             ["De onde vem o sangue do pulmão?",
-             "Lavado broncoalveolar: alíquotas progressivamente hemorrágicas, "
-             "hemossiderófagos acima de 20% dos macrófagos"],
-            ["Em que compartimento está a lesão renal?",
-             "Sedimento urinário em urina fresca: hemácia dismórfica e cilindro "
-             "hemático põem a lesão dentro do glomérulo"],
-            ["Existe um mecanismo único?",
-             "A simultaneidade em quatro territórios, e a ausência de outra "
-             "explicação que os una"],
+             "Lavado broncoalveolar — o aspecto sequencial das alíquotas e a "
+             "contagem de hemossiderófagos"],
+            ["Em que compartimento do néfron está a lesão?",
+             "Sedimento urinário em urina fresca — dismorfismo eritrocitário e "
+             "cilindros"],
+            ["O mecanismo é imune, e de que tipo?",
+             "Imunofluorescência do tecido renal — depósito linear, granular, "
+             "ou ausência de depósito"],
         ]),
         quadro("O que ainda não se pode dizer",
             p("A expressão síndrome pulmão-rim só significa alguma coisa depois "
@@ -335,11 +360,11 @@ ETAPAS = [
             grupo("Outros", "geral", [
                 op("Complemento C4"),
                 op("Anti-HIV"),
-                op("HBsAg"),
+                op("HBsAg e anti-HBc"),
                 op("Tomografia de seios da face"),
             ]),
         ],
-        fundo=BIOPSIA,
+        fundo=BIOPSIA, banco=BANCO,
     ),
 
     resultados("res2", "O que voltou", "A segunda rodada", "ex2",
@@ -354,7 +379,7 @@ ETAPAS = [
     ),
 
     pagina("crescente", "Discussão", "O que é uma crescente",
-        p("A fotomicrografia da página anterior mostra o compartimento — "
+        p("A fotomicrografia ao lado mostra o compartimento — "
           "córtex, glomérulos, túbulos, interstício. A morfologia que o laudo "
           "descreve não é identificável com segurança naquele plano, e por "
           "isso ela vem aqui, em esquema."),
@@ -364,11 +389,12 @@ ETAPAS = [
           "escaparam por uma ruptura da parede capilar. Ela comprime o tufo "
           "para um lado e obstrui a saída do filtrado."),
         quadro("Por que a palavra celular importa",
-            p("Crescente **celular** é tecido inflamado, e tecido inflamado "
-              "responde a imunossupressão. Crescente **fibrosa** é cicatriz, e "
-              "cicatriz não responde a tratamento nenhum. A transição de uma "
-              "para a outra leva dias — e é a única razão pela qual a demora, "
-              "neste caso, custa função renal em vez de custar apenas tempo."),
+            p("Celular quer dizer que as células ainda estão vivas e "
+              "proliferando; fibrosa quer dizer que foram substituídas por "
+              "colágeno. A transição leva dias, não semanas, e ela é "
+              "unidirecional. É por isso que a proporção de crescentes ainda "
+              "celulares na biópsia — 62% neste paciente — é o número que mais "
+              "prediz o que vai sobrar de rim."),
             sistema="rim"),
         fundo=BIOPSIA,
         lamina_=lamina(BIOPSIA, "Biópsia renal, microscopia óptica",
@@ -450,17 +476,22 @@ ETAPAS = [
             caminho("Rituximabe 375 mg/m² por semana, quatro doses",
                     "d_rituximabe",
                     "Não exige ajuste para a função renal, poupa gônada e tem "
-                    "eficácia equivalente à ciclofosfamida na indução — o "
-                    "RAVE mostrou não-inferioridade, e superioridade na doença "
-                    "recidivante. Com filtração de 17 mL/min e 63 anos, é o "
-                    "esquema que não depende de acertar uma correção de dose."),
+                    "eficácia equivalente à ciclofosfamida na indução. O RAVE "
+                    "mostrou não-inferioridade e superioridade na doença "
+                    "recidivante — mas **excluiu creatinina acima de 4,0 "
+                    "mg/dL**, e este paciente está no limite dessa faixa. Para "
+                    "filtração como a dele a referência é o RITUXVAS, menor, "
+                    "com filtração média de 18 mL/min, que também não mostrou "
+                    "diferença. A vantagem prática aqui é não depender de "
+                    "acertar uma correção de dose."),
             caminho("Ciclofosfamida endovenosa com dose reduzida pela idade e "
                     "pela função renal", "d_cfx_ajustada",
-                    "É a escolha correta quando se opta pela ciclofosfamida: a "
-                    "bula pede redução acima de 60 anos e abaixo de "
-                    "30 mL/min/1,73 m², e essa redução é justamente a que mais "
-                    "se esquece de fazer. Funciona, e cobra vigilância "
-                    "hematológica semanal."),
+                    "A redução vem do esquema do CYCLOPS, adotado pela EULAR: "
+                    "**15 mg/kg menos 2,5 mg/kg por idade acima de 60 anos, e "
+                    "menos 2,5 mg/kg por creatinina entre 300 e 500 µmol/L — "
+                    "10 mg/kg, com teto de 1,2 g por pulso.** É a conta que "
+                    "mais se esquece de fazer, e é toda a diferença entre este "
+                    "caminho e o seguinte. Cobra hemograma semanal e mesna."),
             caminho("Ciclofosfamida endovenosa em dose plena, 15 mg/kg",
                     "d_cfx_plena",
                     "A dose plena com filtração de 17 mL/min produz exposição "
@@ -478,9 +509,12 @@ ETAPAS = [
           "ar ambiente na primeira semana. A creatinina, que havia chegado a "
           "4,1 mg/dL, caiu de forma sustentada e estava em 1,9 mg/dL na alta, "
           "com diurese recuperada."),
-        p("Recebeu sulfametoxazol-trimetoprima 400/80 mg por dia como "
-          "profilaxia para //Pneumocystis//, e segue em manutenção programada "
-          "com rituximabe, com consulta e exames já agendados."),
+        p("Recebeu sulfametoxazol-trimetoprima como profilaxia para "
+          "//Pneumocystis//, em **400/80 mg três vezes por semana** — a dose "
+          "diária plena não cabe com filtração de 17 mL/min, e o trimetoprim "
+          "sobe potássio e creatinina num paciente que chegou com 5,4 mEq/L. "
+          "Segue em manutenção programada com rituximabe, com consulta e "
+          "exames já agendados."),
         qualidade="melhor", fecho="lacuna",
         porque="O tratamento entrou enquanto a crescente ainda era celular. "
                "Crescente celular é tecido inflamado e responde; crescente "
@@ -496,7 +530,7 @@ ETAPAS = [
           "esperado para a dose corrigida."),
         p("Recebeu profilaxia para //Pneumocystis// e completou o curso de "
           "indução sem intercorrência infecciosa."),
-        qualidade="medio", fecho="lacuna",
+        qualidade="melhor", fecho="lacuna",
         porque="A ciclofosfamida com dose corrigida pela idade e pela filtração "
                "é tão eficaz quanto o rituximabe na indução. Custa mais "
                "vigilância — hemograma semanal, ajuste a cada ciclo, "
@@ -506,26 +540,27 @@ ETAPAS = [
 
     desfecho("d_cfx_plena", "Alta no trigésimo quarto dia, após a terapia intensiva",
         p("A vasculite respondeu: a hemoptise cessou no quarto dia e a "
-          "creatinina caiu para 2,6 mg/dL. No quinto dia, porém, o hemograma "
-          "mostrou 900 leucócitos com 210 neutrófilos, e veio febre de 39,2 °C "
-          "com calafrio e hipotensão que respondeu a volume."),
-        p("Neutropenia febril, mais precoce e mais grave do que o esperado para "
-          "o esquema. Foram treze dias de antibiótico de amplo espectro, fator "
-          "estimulador de colônias e suporte em terapia intensiva antes de "
-          "recuperar."),
+          "creatinina caiu para 2,6 mg/dL. No décimo dia, no nadir esperado "
+          "para o esquema, o hemograma mostrou 900 leucócitos com **210 "
+          "neutrófilos**, e veio febre de 39,2 °C com calafrio e hipotensão "
+          "que respondeu a volume."),
+        p("Neutropenia febril muito mais profunda do que a esperada — o nadir "
+          "de um pulso ajustado fica em torno de 1.500 neutrófilos. Foram "
+          "treze dias de antibiótico de amplo espectro, fator estimulador de "
+          "colônias e suporte em terapia intensiva antes de recuperar."),
         qualidade="pior", fecho="lacuna",
         porque="Com filtração glomerular de 17 mL/min/1,73 m², a dose plena "
                "produziu exposição muito acima da pretendida — o metabólito "
-               "ativo da ciclofosfamida é eliminado por via renal. A causa de "
-               "morte precoce na vasculite ANCA tratada é a infecção, não a "
-               "vasculite, e ela vem da dose, da profilaxia que não foi "
-               "prescrita e da imunossupressão mantida enquanto a febre corria.",
+               "ativo da ciclofosfamida é eliminado por via renal, e a conta do "
+               "CYCLOPS teria pedido 10 mg/kg. A causa de morte precoce na "
+               "vasculite associada ao ANCA tratada é a infecção, não a "
+               "vasculite. Aqui ela veio da dose, e só da dose: foi a única "
+               "coisa que esta decisão mudou.",
         fundo=CENA),
 
     # ═══════════════ o fecho, igual para os três ramos ═══════════════
 
-    pagina("lacuna", "Fecho · o que fica sem explicação",
-        "A lacuna",
+    pagina("lacuna", "O que fica sem explicação", "A lacuna",
         p("Um caso bem conduzido quase sempre deixa alguma coisa por explicar, "
           "e dizer isso em voz alta é parte do ensino. Três achados deste "
           "paciente continuam incômodos depois do diagnóstico fechado."),
@@ -539,13 +574,15 @@ ETAPAS = [
               "fenótipo sobreposto não está errado, e a literatura não fecha "
               "essa fronteira."),
             sistema="via"),
-        quadro("A anemia",
-            p("Hemoglobina de 13,9 para 7,8 g/dL em dois meses é mais queda do "
-              "que a hemorragia alveolar sozinha costuma produzir. Doença "
-              "inflamatória de oito semanas explica parte, e a hemodiluição "
-              "explica outra parte — mas a soma continua não fechando com "
-              "conforto, e não há hemólise nem sangramento digestivo neste "
-              "paciente."),
+        quadro("A resposta medular",
+            p("A queda de hemoglobina localiza o sangue no alvéolo, e isso a "
+              "Pergunta 3 já estabeleceu. O que fica sem explicação é a "
+              "resposta a ela: reticulócitos de 2,1% num hematócrito de 23,6% "
+              "dão índice reticulocitário em torno de 1,0 — medula que não "
+              "está repondo o que se perde. Doença inflamatória de oito "
+              "semanas e deficiência de eritropoetina na lesão renal aguda "
+              "explicam boa parte, e nenhuma das duas foi medida neste "
+              "paciente. Fica como hipótese, não como fato."),
             sistema="sangue"),
         quadro("A artralgia migratória",
             p("Compatível com a doença e inespecífica: acompanha vasculite, "
@@ -554,9 +591,10 @@ ETAPAS = [
               "pista."),
             sistema="geral"),
         fundo=CENA,
-    ),
+    
+        so_kicker=True,),
 
-    pagina("retrospectiva", "Fecho · onde dava para ter chegado antes",
+    pagina("retrospectiva", "Onde dava para ter chegado antes",
         "A retrospectiva",
         p("O diagnóstico foi feito no hospital, com sorologia e biópsia. A "
           "pergunta útil é outra: em que momento, antes disso, a informação já "
@@ -565,8 +603,8 @@ ETAPAS = [
             ["Oito semanas antes",
              "Rinossinusite que não respondeu a dois cursos de antibiótico, "
              "com crostas e epistaxe diária",
-             "Tratada uma terceira vez como infecção. Sinusite que não cede a "
-             "antibiótico é um dado, não um fracasso de adesão"],
+             "Mantida como infecção depois de dois cursos sem resposta. Sinusite "
+             "que não cede a antibiótico é um dado, não um fracasso de adesão"],
             ["Duas semanas antes",
              "Radiografia de tórax de um paciente com hemoptise",
              "Lida como normal. A radiografia é pouco sensível para hemorragia "
@@ -589,7 +627,8 @@ ETAPAS = [
               "não respondeu ao tratamento correto."),
             sistema="geral"),
         fundo=CENA,
-    ),
+    
+        so_kicker=True,),
 ]
 
 

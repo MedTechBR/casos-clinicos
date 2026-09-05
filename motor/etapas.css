@@ -17,12 +17,17 @@
 *{box-sizing:border-box;margin:0;padding:0}
 
 :root{
-  --preto:#08090b; --carvao:#0f1216; --grafite:#171b21; --linha:#272d36;
-  --linha2:#3a424e;
-  --gelo:#eef2f6; --nevoa:#98a3b1; --fumaca:#626d7a; --sombra:#3d4550;
+  --eixo:88px;
+  --preto:#08090b; --carvao:#0f1216; --grafite:#171b21; --linha:#414a57;
+  --linha2:#5b6672;
+  --gelo:#eef2f6; --nevoa:#a8b2be; --fumaca:#8d97a4; --sombra:#737d8a;
 
-  --via:#c2455e; --pulmao:#3f9fc4; --rim:#cf7a3e; --pele:#c9a53f;
-  --nervo:#8878d6; --sangue:#b8455c; --geral:#7f8b99;
+  /* Vermelho é a cor da marca — do filete do kicker, do botão de avançar, da
+   marca do trilho em que se está agora. Nenhum território o reivindica, e
+   nenhum par de territórios fica abaixo de ΔE 25. */
+  --via:#4fb3a6; --pulmao:#3f9fc4; --rim:#cf7a3e; --pele:#c9a53f;
+  --nervo:#8878d6; --sangue:#c25fa8; --geral:#93a0ae;
+  --marca:#c2455e;
 
   --alerta:#e0574d; --certo:#43b585; --atencao:#d3a03c;
 
@@ -58,7 +63,7 @@ body{background:var(--preto);color:var(--gelo);font-family:var(--sans);
 #trilho .marcas i.feita.m-pedido,#trilho .marcas i.feita.m-pergunta{
   background:var(--pulmao);opacity:.55}
 #trilho .marcas i.feita:hover{transform:scaleY(2)}
-#trilho .marcas i.aqui{background:var(--via);transform:scaleY(2)}
+#trilho .marcas i.aqui{background:var(--marca);transform:scaleY(2)}
 
 /* ───────────────────────── o pé ───────────────────────── */
 
@@ -72,7 +77,7 @@ body{background:var(--preto);color:var(--gelo);font-family:var(--sans);
   text-transform:uppercase;border:1px solid var(--linha2);background:none;
   color:var(--nevoa);padding:13px 22px;cursor:pointer;transition:.2s}
 .bt:hover{color:var(--gelo);border-color:var(--nevoa)}
-.bt.forte{background:var(--via);border-color:var(--via);color:#fff}
+.bt.forte{background:var(--marca);border-color:var(--marca);color:#fff}
 .bt.forte:hover{background:#d4506c;border-color:#d4506c}
 .bt[disabled]{opacity:.28;cursor:default}
 .bt[disabled]:hover{color:var(--nevoa);border-color:var(--linha2)}
@@ -100,22 +105,33 @@ body{background:var(--preto);color:var(--gelo);font-family:var(--sans);
 
 /* ───────────────────────── plano de conteúdo ───────────────────────── */
 
-.plano{position:absolute;left:5.5vw;top:50%;
-  transform:translateY(-50%) translateZ(70px);width:min(58ch,46vw);
-  max-height:76vh;overflow:auto;padding-right:10px}
-.plano.centro{left:50%;transform:translate(-50%,-50%) translateZ(70px);
-  width:min(76ch,80vw);max-height:80vh}
+/* Sem translateZ no que carrega texto: a perspectiva ampliava o plano por
+   1,0458 e a mesma font-size saía em corpos diferentes conforme a tela. A
+   profundidade fica para o fundo e para os cartões, que não têm prosa. */
+.plano{position:absolute;left:var(--eixo);top:50%;
+  transform:translateY(-50%);width:min(58ch,44vw);
+  max-height:78vh;overflow:auto;padding-right:10px}
+.plano.centro{left:var(--eixo);transform:translateY(-50%);
+  width:min(76ch,72vw);max-height:82vh}
 .plano::-webkit-scrollbar{width:3px}
 .plano::-webkit-scrollbar-thumb{background:var(--linha2)}
 
 .marca{display:flex;align-items:center;gap:11px;margin-bottom:20px}
-.marca i{width:26px;height:2px;display:block;background:var(--via)}
+.marca.larga{margin-bottom:22px;flex-wrap:wrap}
+.marca .sub-in{font-family:var(--sans);font-size:13.5px;font-weight:400;
+  color:var(--nevoa);letter-spacing:0;text-transform:none;flex-basis:100%;
+  margin-top:8px;max-width:78ch;line-height:1.5}
+/* o rótulo promovido a título: mantém a marca vermelha e o corpo do h2 */
+h2.do-kicker{position:relative;padding-left:38px;margin-bottom:20px}
+h2.do-kicker::before{content:"";position:absolute;left:0;top:.62em;width:26px;
+  height:2px;background:var(--marca)}
+.marca i{width:26px;height:2px;display:block;background:var(--marca)}
 .marca span{font-size:10.5px;letter-spacing:2.6px;text-transform:uppercase;
   color:var(--nevoa);font-weight:700}
 
 h1{font-family:var(--serifa);font-size:clamp(32px,3.4vw,52px);line-height:1.05;
   font-weight:600;letter-spacing:-.6px;margin-bottom:18px}
-h1 em{font-style:normal;color:var(--via)}
+h1 em{font-style:normal;color:var(--marca)}
 h2{font-family:var(--serifa);font-size:clamp(26px,2.5vw,38px);line-height:1.12;
   font-weight:600;letter-spacing:-.3px;margin-bottom:16px}
 h3{font-family:var(--sans);font-size:11px;letter-spacing:1.9px;
@@ -140,7 +156,7 @@ li{margin-bottom:7px}
 .nums div:last-child{border-right:none;margin-right:0}
 .nums b{display:block;font-size:27px;font-weight:700;line-height:1;
   font-variant-numeric:tabular-nums}
-.nums span{display:block;font-size:9.5px;letter-spacing:1.7px;
+.nums span{display:block;font-size:12px;letter-spacing:1.4px;
   text-transform:uppercase;color:var(--fumaca);margin-top:6px}
 .n-via b{color:var(--via)} .n-pulmao b{color:var(--pulmao)}
 .n-rim b{color:var(--rim)} .n-pele b{color:var(--pele)}
@@ -184,7 +200,7 @@ li{margin-bottom:7px}
 /* tabela */
 .tb{width:100%;border-collapse:collapse;margin:16px 0;font-family:var(--sans);
   font-size:13.5px}
-.tb th{text-align:left;font-size:9.5px;letter-spacing:1.6px;
+.tb th{text-align:left;font-size:12px;letter-spacing:1.3px;
   text-transform:uppercase;color:var(--fumaca);font-weight:800;
   padding:0 14px 8px 0;border-bottom:1px solid var(--linha2)}
 .tb td{padding:10px 14px 10px 0;border-bottom:1px solid var(--linha);
@@ -206,7 +222,7 @@ li{margin-bottom:7px}
 
 /* ───────────────────────── pedido de exames ───────────────────────── */
 
-.folha{position:absolute;inset:0;padding:88px 5.5vw 96px;display:flex;
+.folha{position:absolute;inset:0;padding:88px var(--eixo) 96px;display:flex;
   flex-direction:column;transform-style:preserve-3d}
 .folha h2{max-width:24ch;margin-bottom:8px}
 .folha .sub{font-family:var(--sans);font-size:14.5px;color:var(--nevoa);
@@ -218,7 +234,7 @@ li{margin-bottom:7px}
 .grupos::-webkit-scrollbar{height:3px}
 .grupos::-webkit-scrollbar-thumb{background:var(--linha2)}
 .gr{border:1px solid var(--linha);padding:16px 16px 8px;
-  background:linear-gradient(158deg,rgba(255,255,255,.05),rgba(255,255,255,.012));
+  background:rgba(255,255,255,.035);
   transition:transform .24s cubic-bezier(.2,.7,.3,1),box-shadow .24s;
   transform-style:preserve-3d;align-self:start}
 .gr:hover{transform:translateZ(24px) translateY(-3px);
@@ -262,9 +278,10 @@ li{margin-bottom:7px}
 
 /* ───────────────────────── resultados ───────────────────────── */
 
-.res{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
-  gap:16px;align-content:start;align-items:start;overflow:auto;flex:1;
-  transform-style:preserve-3d;padding-bottom:4px}
+/* sem overflow: numa peça página a página, o que não cabe vira outra folha */
+.res{display:grid;grid-template-columns:repeat(4,1fr);
+  gap:16px;align-content:start;align-items:start;flex:1;
+  transform-style:preserve-3d}
 .res::-webkit-scrollbar{width:3px}
 .res::-webkit-scrollbar-thumb{background:var(--linha2)}
 .rc{border:1px solid var(--linha);border-left:2px solid var(--linha2);
@@ -275,12 +292,16 @@ li{margin-bottom:7px}
 .rc>b{display:block;font-family:var(--sans);font-size:13px;font-weight:700;
   letter-spacing:.2px;margin-bottom:6px;color:var(--gelo)}
 .rc.alt>b{color:var(--alerta)}
-.rc .v{font-family:var(--sans);font-size:14.5px;line-height:1.5;color:#c3ccd6}
+.rc .v{font-family:var(--sans);font-size:17px;line-height:1.45;color:var(--gelo)}
 .rc .v b{color:var(--gelo)}
 .rc .rf{display:block;font-size:11px;color:var(--sombra);margin-top:6px;
   letter-spacing:.2px}
 .rc figure{margin:12px -16px -14px;background:#000}
-.rc figure img{width:100%;height:230px;object-fit:cover;display:block}
+/* Medido: a foto tinha brilho médio 196 e o achado clínico ao lado, 56. Numa
+   sala escura o olho vai para o mais claro — ia para uma imagem ilustrativa
+   do Wikimedia enquanto o professor falava do título do ANCA. */
+.rc figure img{width:100%;height:150px;object-fit:cover;display:block;
+  filter:brightness(.55) contrast(1.1) saturate(.8)}
 .rc figcaption{padding:10px 16px 12px;font-size:11px;line-height:1.45;
   color:var(--fumaca)}
 .vazio{font-family:var(--serifa);font-size:19px;color:var(--nevoa);
@@ -293,20 +314,20 @@ li{margin-bottom:7px}
   font-weight:600;max-width:34ch;margin-bottom:8px}
 .qdica{font-family:var(--sans);font-size:12px;letter-spacing:1.5px;
   text-transform:uppercase;color:var(--fumaca);margin-bottom:24px}
-.alts{list-style:none;margin:0;display:flex;flex-direction:column;gap:10px;
+.alts{list-style:none;margin:0;display:flex;flex-direction:column;gap:16px;
   max-width:100ch;overflow:auto;flex:1;transform-style:preserve-3d;
   padding-bottom:4px}
 .alts::-webkit-scrollbar{width:3px}
 .alts::-webkit-scrollbar-thumb{background:var(--linha2)}
-.alts li{display:grid;grid-template-columns:34px 1fr;gap:14px;align-items:start;
-  border:1px solid var(--linha);padding:15px 18px;cursor:pointer;
-  background:linear-gradient(160deg,rgba(255,255,255,.04),rgba(255,255,255,.01));
+.alts li{display:grid;grid-template-columns:34px 1fr;gap:16px;align-items:start;
+  border:1px solid var(--linha);padding:22px 26px;cursor:pointer;
+  background:rgba(255,255,255,.035);
   transition:transform .2s cubic-bezier(.2,.7,.3,1),box-shadow .2s,border-color .2s}
 .alts li:hover{transform:translateZ(18px);border-color:var(--linha2);
   box-shadow:0 18px 34px rgba(0,0,0,.42)}
 .alts .k{font-family:var(--sans);font-size:13px;font-weight:800;
   color:var(--fumaca);letter-spacing:1px;padding-top:2px}
-.alts .tx{font-family:var(--serifa);font-size:17.5px;line-height:1.36;
+.alts .tx{font-family:var(--serifa);font-size:21px;line-height:1.34;
   color:#cdd5de}
 .alts .cm{display:none;font-family:var(--sans);font-size:13.5px;line-height:1.5;
   color:var(--nevoa);margin-top:9px;padding-top:9px;
@@ -327,7 +348,7 @@ li{margin-bottom:7px}
    resposta. Enquanto não se confirma, dá para trocar de alternativa. */
 .conf{align-self:flex-start;margin-top:18px;font-family:var(--sans);
   font-size:12.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
-  background:var(--via);border:1px solid var(--via);color:#fff;
+  background:var(--marca);border:1px solid var(--marca);color:#fff;
   padding:13px 26px;cursor:pointer;transition:.2s}
 .conf:hover{background:#d4506c;border-color:#d4506c}
 .conf[disabled]{background:none;border-color:var(--linha2);color:var(--fumaca);
@@ -344,14 +365,14 @@ li{margin-bottom:7px}
 
 .cams{display:grid;gap:16px;align-content:start;flex:1;
   transform-style:preserve-3d;overflow:auto;max-width:110ch}
-.cam{border:1px solid var(--linha);border-left:3px solid var(--via);
+.cam{border:1px solid var(--linha);border-left:3px solid var(--marca);
   padding:20px 24px;cursor:pointer;
-  background:linear-gradient(150deg,rgba(255,255,255,.05),rgba(255,255,255,.012));
+  background:rgba(255,255,255,.035);
   transition:transform .24s cubic-bezier(.2,.7,.3,1),box-shadow .24s}
 .cam:hover{transform:translateZ(30px) translateX(5px);
   box-shadow:0 30px 56px rgba(0,0,0,.55)}
 .cam .l{font-family:var(--sans);font-size:11px;font-weight:800;
-  letter-spacing:1.8px;color:var(--via);margin-bottom:8px;display:block}
+  letter-spacing:1.8px;color:var(--marca);margin-bottom:8px;display:block}
 .cam .r{font-family:var(--serifa);font-size:22px;line-height:1.3;
   color:var(--gelo);display:block}
 .cam .c{display:none;font-family:var(--sans);font-size:13.5px;line-height:1.55;
@@ -367,9 +388,9 @@ li{margin-bottom:7px}
 
 /* ───────────────────────── desfecho ───────────────────────── */
 
-.fim{position:absolute;inset:0;padding:96px 5.5vw 96px;display:flex;
+.fim{position:absolute;inset:0;padding:96px var(--eixo) 96px;display:flex;
   flex-direction:column;justify-content:center;transform-style:preserve-3d}
-.fim .caixa{max-width:78ch;transform:translateZ(60px)}
+.fim .caixa{max-width:78ch}
 .ress{font-family:var(--sans);font-size:11px;line-height:1.5;color:var(--sombra);
   margin-top:20px;padding-top:14px;border-top:1px solid var(--linha);max-width:62ch}
 .fim h1{border-bottom:4px solid var(--linha2);padding-bottom:20px;
