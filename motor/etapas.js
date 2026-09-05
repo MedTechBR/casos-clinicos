@@ -51,7 +51,11 @@ function adiante(){
     irPara(e.caminhos[esc].vai);
     return;
   }
-  if (e.t === 'desfecho'){ mostrarRevisao(); return; }
+  if (e.t === 'desfecho'){
+    if (e.fecho) irPara(e.fecho); else mostrarRevisao();
+    return;
+  }
+  if (i + 1 >= ETAPAS.length){ mostrarRevisao(); return; }
   ir(i + 1);
 }
 
@@ -80,13 +84,24 @@ function podeAdiante(){
 const PASSOS = ETAPAS.map((e, n) => ({e: e, n: n}))
   .filter(x => ['pedido', 'pergunta', 'bifurcacao'].includes(x.e.t));
 
+/* O trilho mostra TODAS as etapas, uma marca cada, colorida pelo tipo — e um
+   contador explícito. É assim que o formato antigo do New England fazia, e a
+   diferença é real: dá para ver quantas páginas faltam e onde estão as
+   perguntas antes de chegar nelas. */
 function pintarTrilho(){
-  const atual = PASSOS.filter(x => x.n <= i).length;
   $('#trilho').innerHTML =
     '<span class="tt">' + CASO.titulo + '</span>'
-    + '<span class="marcas">' + PASSOS.map((x, k) =>
-        '<i class="' + (x.n < i ? 'feita' : x.n === i ? 'aqui' : '') + '"></i>'
+    + '<span class="cnt">' + (i + 1) + ' / ' + ETAPAS.length + '</span>'
+    + '<span class="marcas">' + ETAPAS.map((e, k) =>
+        '<i class="m-' + e.t + (k < i ? ' feita' : k === i ? ' aqui' : '')
+        + '" data-n="' + k + '" title="' + (e.tt || e.kicker || '') + '"></i>'
       ).join('') + '</span>';
+  // andar para trás pelo trilho é livre; para a frente, não — o caso não pula
+  // uma decisão que ainda não foi tomada
+  $('#trilho').querySelectorAll('.marcas i').forEach(m => {
+    const n = +m.dataset.n;
+    if (n < i) m.onclick = () => ir(n);
+  });
 }
 
 function pintarPe(){
@@ -194,7 +209,11 @@ const DESENHO = {
           + '<span class="k">' + String.fromCharCode(65 + k) + '</span>'
           + '<span><span class="tx">' + a.t + '</span>'
           + '<span class="cm">' + a.c + '</span></span></li>').join('')
-      + '</ul></div>';
+      + '</ul>'
+      + (r.feita ? '' : '<button class="conf" id="conf"'
+          + (r.marcadas.length >= e.escolhas ? '' : ' disabled') + '>'
+          + 'Confirmar resposta</button>')
+      + '</div>';
   },
 
   bifurcacao: e => {
@@ -251,16 +270,20 @@ function ligar(e){
     document.querySelectorAll('.alts li').forEach(li => {
       li.onclick = () => {
         const k = +li.dataset.k;
-        if (r.marcadas.includes(k)) return;
-        r.marcadas.push(k);
-        li.classList.add('marcada');
-        // a resposta se revela quando o grupo gastou as escolhas que tinha
-        if (r.marcadas.length >= e.escolhas){
-          r.feita = true;
-          pintar();
-        }
+        const j = r.marcadas.indexOf(k);
+        // marcar e desmarcar até confirmar: a escolha não é irreversível
+        // enquanto o grupo ainda está discutindo
+        if (j >= 0) r.marcadas.splice(j, 1);
+        else if (r.marcadas.length < e.escolhas) r.marcadas.push(k);
+        else { r.marcadas.shift(); r.marcadas.push(k); }
+        document.querySelectorAll('.alts li').forEach((x, n) =>
+          x.classList.toggle('marcada', r.marcadas.includes(n)));
+        const b = $('#conf');
+        if (b) b.disabled = r.marcadas.length < e.escolhas;
       };
     });
+    const conf = $('#conf');
+    if (conf) conf.onclick = () => { r.feita = true; pintar(); };
   }
 
   if (e.t === 'bifurcacao'){

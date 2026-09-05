@@ -221,14 +221,21 @@ def bifurcacao(ident, kicker, titulo, enunciado, caminhos, *, fundo="",
 
 
 def desfecho(ident, titulo, *blocos, qualidade, porque, fundo="",
-             kicker="Desfecho") -> dict:
+             kicker="Desfecho", fecho="") -> dict:
+    """`fecho` é a página para onde o caso vai depois do desfecho.
+
+    Os passos que o documento de referência chama de INCERTEZA e RETROSPECTIVA
+    — o que ficou sem explicação, e onde dava para ter chegado antes — são os
+    dois que quase toda imitação esquece, e são justamente os que transformam o
+    material em ensino de raciocínio. Eles vêm depois do desfecho, iguais para
+    os três ramos, porque a lição não muda com a escolha."""
     if qualidade not in ("melhor", "medio", "pior"):
         raise ValueError("qualidade: 'melhor', 'medio' ou 'pior'")
     if not porque.strip():
         raise ValueError(f"desfecho {ident!r} sem explicação fisiológica")
     return _pag("desfecho", ident, kicker=texto(kicker), tt=texto(titulo),
                 corpo="".join(blocos), q=qualidade, porque=texto(porque),
-                fundo=fundo)
+                fundo=fundo, fecho=fecho)
 
 
 # ─────────────────────────── montagem ───────────────────────────

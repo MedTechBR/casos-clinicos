@@ -43,11 +43,22 @@ body{background:var(--preto);color:var(--gelo);font-family:var(--sans);
   background:linear-gradient(var(--preto) 40%,transparent)}
 #trilho .tt{font-size:10.5px;letter-spacing:2.6px;text-transform:uppercase;
   color:var(--fumaca);font-weight:700;white-space:nowrap}
-#trilho .marcas{display:flex;gap:5px;margin-left:auto}
-#trilho .marcas i{width:26px;height:3px;background:var(--linha);display:block;
-  transition:background .3s}
-#trilho .marcas i.feita{background:var(--linha2)}
-#trilho .marcas i.aqui{background:var(--via)}
+#trilho .cnt{font-family:var(--sans);font-size:11.5px;font-weight:700;
+  color:var(--nevoa);font-variant-numeric:tabular-nums;letter-spacing:.5px;
+  margin-left:auto;white-space:nowrap}
+#trilho .marcas{display:flex;gap:3px}
+/* Uma marca por etapa, colorida pelo tipo: dá para ver quantas páginas faltam
+   e onde caem as perguntas antes de chegar nelas. */
+#trilho .marcas i{width:15px;height:4px;background:var(--linha);display:block;
+  transition:background .25s,transform .25s}
+#trilho .marcas i.m-pedido,#trilho .marcas i.m-pergunta{background:#3b4552}
+#trilho .marcas i.m-bifurcacao{background:#4d3a44}
+#trilho .marcas i.m-desfecho{background:#4a3b34}
+#trilho .marcas i.feita{background:var(--linha2);cursor:pointer}
+#trilho .marcas i.feita.m-pedido,#trilho .marcas i.feita.m-pergunta{
+  background:var(--pulmao);opacity:.55}
+#trilho .marcas i.feita:hover{transform:scaleY(2)}
+#trilho .marcas i.aqui{background:var(--via);transform:scaleY(2)}
 
 /* ───────────────────────── o pé ───────────────────────── */
 
@@ -91,9 +102,9 @@ body{background:var(--preto);color:var(--gelo);font-family:var(--sans);
 
 .plano{position:absolute;left:5.5vw;top:50%;
   transform:translateY(-50%) translateZ(70px);width:min(58ch,46vw);
-  max-height:74vh;overflow:auto;padding-right:10px}
+  max-height:76vh;overflow:auto;padding-right:10px}
 .plano.centro{left:50%;transform:translate(-50%,-50%) translateZ(70px);
-  width:min(72ch,80vw)}
+  width:min(76ch,80vw);max-height:80vh}
 .plano::-webkit-scrollbar{width:3px}
 .plano::-webkit-scrollbar-thumb{background:var(--linha2)}
 
@@ -312,6 +323,18 @@ li{margin-bottom:7px}
 .alts.feita li.errada.marcada .k{color:var(--alerta)}
 .alts.feita li.errada.marcada .k::after{content:" ✕"}
 .alts.feita li.errada:not(.marcada){opacity:.62}
+/* Confirmar é um gesto à parte: marcar ainda é discussão, confirmar é a
+   resposta. Enquanto não se confirma, dá para trocar de alternativa. */
+.conf{align-self:flex-start;margin-top:18px;font-family:var(--sans);
+  font-size:12.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  background:var(--via);border:1px solid var(--via);color:#fff;
+  padding:13px 26px;cursor:pointer;transition:.2s}
+.conf:hover{background:#d4506c;border-color:#d4506c}
+.conf[disabled]{background:none;border-color:var(--linha2);color:var(--fumaca);
+  cursor:default}
+.alts li.marcada:not(.feita){border-color:var(--nevoa)}
+.alts:not(.feita) li.marcada{border-color:var(--gelo);
+  background:linear-gradient(160deg,rgba(255,255,255,.1),rgba(255,255,255,.03))}
 .resposta{display:none;font-family:var(--serifa);font-size:20px;
   color:var(--gelo);margin:0 0 18px;padding-left:16px;
   border-left:3px solid var(--certo)}

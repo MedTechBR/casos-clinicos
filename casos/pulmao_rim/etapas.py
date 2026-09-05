@@ -21,7 +21,8 @@ from motor.etapas import (
 
 from .banco import BANCO  # noqa: F401  — a gaveta de exames é a mesma
 
-TITULO = "O sangue dos dois lados"
+TITULO = ("Homem de 63 anos com hemoptise, púrpura e queda da "
+          "função renal")
 RODAPE = "Caso interativo · síndrome pulmão-rim"
 IMG = Path(__file__).parent / "img"
 
@@ -36,10 +37,10 @@ ETAPAS = [
     # ═══════════════════════════ abertura ═══════════════════════════
 
     capa(
-        "O sangue dos dois lados",
-        "Homem de 63 anos, oito semanas de doença, e duas hemorragias que "
-        "ninguém tinha ligado uma à outra.",
-        kicker="Caso interativo · 6 decisões",
+        "Homem de 63 anos com hemoptise, púrpura e queda da função renal",
+        "Oito semanas de doença, quatro territórios acometidos, e um paciente "
+        "que já foi tratado duas vezes como outra coisa.",
+        kicker="Caso interativo · 6 decisões · curso simulado",
         fundo=CENA,
         numeros_=numeros(
             ("3,8", "creatinina mg/dL", "rim"),
@@ -54,10 +55,14 @@ ETAPAS = [
             ("nervo", "Nervo periférico", "Pé caído à direita, déficit ulnar"),
             colunas=2,
         ),
-        ressalva="Paciente ficcional, construído para ensino. As imagens de "
-                 "tomografia e de anatomia patológica são ilustrativas, de "
-                 "repositórios de licença aberta, e não pertencem a este "
-                 "paciente. Créditos ao pé de cada figura.",
+        ressalva="**Procedência: autoral, curso simulado.** O paciente é "
+                 "ficcional e nenhum ramo deste caso é o curso real de uma "
+                 "pessoa: cada desfecho é inferência fisiológica, escrita para "
+                 "ensino, e não extração de artigo. Os números foram "
+                 "desenhados para fechar entre si. As imagens de tomografia e "
+                 "de anatomia patológica são ilustrativas, de repositórios de "
+                 "licença aberta, e não pertencem a este paciente. Créditos ao "
+                 "pé de cada figura.",
     ),
 
     # ═══════════════════════ apresentação ═══════════════════════
@@ -131,7 +136,7 @@ ETAPAS = [
 
     # ═══════════════════════ pergunta 1 ═══════════════════════
 
-    pergunta("p1", "Pergunta 1 de 6",
+    pergunta("p1", "Pergunta 1 · enquadramento sindrômico",
         "Quatro territórios acometidos ao mesmo tempo — via aérea superior, "
         "pulmão, pele e nervo periférico — em oito semanas. Que estrutura "
         "anatômica é compartilhada por eles?",
@@ -180,7 +185,7 @@ ETAPAS = [
 
     # ═══════════════════════ pergunta 2 — o pedido ═══════════════════════
 
-    pedido("ex1", "Pergunta 2 de 6", "Que exames você pede agora?",
+    pedido("ex1", "Pergunta 2 · próximo exame, com hipótese", "Que exames você pede agora?",
         "Marque o que quiser. Na página seguinte volta o que você pediu — e só "
         "isso. Nada é obrigatório e nada é sugerido.",
         [
@@ -229,7 +234,7 @@ ETAPAS = [
 
     # ═══════════════════════ pergunta 3 ═══════════════════════
 
-    pergunta("p2", "Pergunta 3 de 6",
+    pergunta("p2", "Pergunta 3 · interpretação de um dado isolado",
         "Hemoptise de cerca de 50 mL em duas ocasiões, crepitações finas "
         "difusas, saturação de 88% e hemoglobina de 7,8 g/dL — que era 13,9 "
         "g/dL há dois meses. Que achado desse conjunto mais restringe a origem "
@@ -291,7 +296,7 @@ ETAPAS = [
 
     # ═══════════════════════ pergunta 4 — segundo pedido ═══════════════════
 
-    pedido("ex2", "Pergunta 4 de 6", "E agora, o que você pede?",
+    pedido("ex2", "Pergunta 4 · próximo exame, com hipótese", "E agora, o que você pede?",
         "As duas perguntas em aberto são a origem do sangramento alveolar e o "
         "compartimento da lesão renal. Marque o que for testá-las.",
         [
@@ -339,7 +344,7 @@ ETAPAS = [
 
     # ═══════════════════════ pergunta 5 ═══════════════════════
 
-    pergunta("p3", "Pergunta 5 de 6",
+    pergunta("p3", "Pergunta 5 · leitura de um achado de tecido",
         "A imunofluorescência da biópsia renal não mostra depósito imune "
         "significativo. Que valor esse achado tem?",
         [
@@ -400,7 +405,7 @@ ETAPAS = [
 
     # ═══════════════════════ pergunta 6 — a bifurcação ═══════════════════
 
-    bifurcacao("b1", "Pergunta 6 de 6", "Com que esquema você induz a remissão?",
+    bifurcacao("b1", "Pergunta 6 · limite de uma terapia", "Com que esquema você induz a remissão?",
         "Filtração glomerular estimada de 17 mL/min/1,73 m² por CKD-EPI 2021, "
         "63 anos, hemorragia alveolar em curso. O glicocorticoide é comum aos "
         "três caminhos; a segunda droga é a decisão.",
@@ -439,7 +444,7 @@ ETAPAS = [
         p("Recebeu sulfametoxazol-trimetoprima 400/80 mg por dia como "
           "profilaxia para //Pneumocystis//, e segue em manutenção programada "
           "com rituximabe, com consulta e exames já agendados."),
-        qualidade="melhor",
+        qualidade="melhor", fecho="lacuna",
         porque="O tratamento entrou enquanto a crescente ainda era celular. "
                "Crescente celular é tecido inflamado e responde; crescente "
                "fibrosa é cicatriz e não responde. Com filtração de "
@@ -454,7 +459,7 @@ ETAPAS = [
           "esperado para a dose corrigida."),
         p("Recebeu profilaxia para //Pneumocystis// e completou o curso de "
           "indução sem intercorrência infecciosa."),
-        qualidade="medio",
+        qualidade="medio", fecho="lacuna",
         porque="A ciclofosfamida com dose corrigida pela idade e pela filtração "
                "é tão eficaz quanto o rituximabe na indução. Custa mais "
                "vigilância — hemograma semanal, ajuste a cada ciclo, "
@@ -471,7 +476,7 @@ ETAPAS = [
           "o esquema. Foram treze dias de antibiótico de amplo espectro, fator "
           "estimulador de colônias e suporte em terapia intensiva antes de "
           "recuperar."),
-        qualidade="pior",
+        qualidade="pior", fecho="lacuna",
         porque="Com filtração glomerular de 17 mL/min/1,73 m², a dose plena "
                "produziu exposição muito acima da pretendida — o metabólito "
                "ativo da ciclofosfamida é eliminado por via renal. A causa de "
@@ -479,6 +484,75 @@ ETAPAS = [
                "vasculite, e ela vem da dose, da profilaxia que não foi "
                "prescrita e da imunossupressão mantida enquanto a febre corria.",
         fundo=CENA),
+
+    # ═══════════════ o fecho, igual para os três ramos ═══════════════
+
+    pagina("lacuna", "Fecho · o que fica sem explicação",
+        "A lacuna",
+        p("Um caso bem conduzido quase sempre deixa alguma coisa por explicar, "
+          "e dizer isso em voz alta é parte do ensino. Três achados deste "
+          "paciente continuam incômodos depois do diagnóstico fechado."),
+        quadro("Os sintomas nasais",
+            p("Crostas hemáticas, epistaxe diária e anosmia por oito semanas "
+              "descrevem doença de via aérea superior, que é o território "
+              "próprio da granulomatose com poliangeíte — e o anticorpo dele é "
+              "anti-mieloperoxidase, não anti-proteinase 3. A poliangeíte "
+              "microscópica pode acometer a via aérea superior de forma leve, "
+              "e é a leitura que sustentamos; mas quem disser que este é um "
+              "fenótipo sobreposto não está errado, e a literatura não fecha "
+              "essa fronteira."),
+            sistema="via"),
+        quadro("A anemia",
+            p("Hemoglobina de 13,9 para 7,8 g/dL em dois meses é mais queda do "
+              "que a hemorragia alveolar sozinha costuma produzir. Doença "
+              "inflamatória de oito semanas explica parte, e a hemodiluição "
+              "explica outra parte — mas a soma continua não fechando com "
+              "conforto, e não há hemólise nem sangramento digestivo neste "
+              "paciente."),
+            sistema="sangue"),
+        quadro("A artralgia migratória",
+            p("Compatível com a doença e inespecífica: acompanha vasculite, "
+              "infecção arrastada e doença do tecido conjuntivo com a mesma "
+              "facilidade. Entra na história como ruído honesto, não como "
+              "pista."),
+            sistema="geral"),
+        fundo=CENA,
+    ),
+
+    pagina("retrospectiva", "Fecho · onde dava para ter chegado antes",
+        "A retrospectiva",
+        p("O diagnóstico foi feito no hospital, com sorologia e biópsia. A "
+          "pergunta útil é outra: em que momento, antes disso, a informação já "
+          "estava disponível — e o que impediu que fosse usada."),
+        tabela(["Quando", "O que estava à mão", "O que aconteceu"], [
+            ["Oito semanas antes",
+             "Rinossinusite que não respondeu a dois cursos de antibiótico, "
+             "com crostas e epistaxe diária",
+             "Tratada uma terceira vez como infecção. Sinusite que não cede a "
+             "antibiótico é um dado, não um fracasso de adesão"],
+            ["Duas semanas antes",
+             "Radiografia de tórax de um paciente com hemoptise",
+             "Lida como normal. A radiografia é pouco sensível para hemorragia "
+             "alveolar precoce, e um laudo normal não encerra a investigação "
+             "de quem escarra sangue"],
+            ["Uma semana antes",
+             "Urina escura, referida pela esposa",
+             "Não foi perguntada nem examinada. Um sedimento naquele momento "
+             "teria custado quase nada e mudado o rumo"],
+            ["Dois meses antes",
+             "Creatinina de 1,0 mg/dL em exame de rotina",
+             "Guardada. Só virou informação quando alguém comparou — e é a "
+             "comparação, não o valor, que faz o diagnóstico de lesão aguda"],
+        ]),
+        quadro("O viés que operou aqui",
+            p("Fechamento precoce: a primeira explicação plausível foi mantida "
+              "por oito semanas, e cada sintoma novo foi encaixado nela ou "
+              "tratado como evento separado. O que quebra esse viés não é "
+              "conhecimento raro — é a pergunta de por que a doença anterior "
+              "não respondeu ao tratamento correto."),
+            sistema="geral"),
+        fundo=CENA,
+    ),
 ]
 
 
