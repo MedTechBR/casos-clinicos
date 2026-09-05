@@ -1,100 +1,105 @@
-/* A BIBLIOTECA — a outra metade da linguagem.
+/* A BIBLIOTECA — a mesma linguagem das apresentações.
 
-   O caso é escuro e cinematográfico; a biblioteca é clara, de papel, e
-   pertence à família de aplicativos que já existe. Como num aplicativo de
-   streaming: prateleira clara, reprodutor escuro.
+   Ela era clara, de papel, pela ideia de "prateleira clara, reprodutor
+   escuro". Na prática abrir a biblioteca e abrir um caso pareciam dois
+   produtos diferentes, e o corte de luz entre as duas telas era um solavanco.
+   Agora a prateleira usa o mesmo chão preto, a mesma serifa, o mesmo filete
+   vermelho de marca e a mesma régua de maiúsculas espaçadas do caso.
 
-   Nada aqui é decorativo. Sem gradiente de fundo, sem sombra difusa, sem
-   emoji, sem ícone genérico. O que dá cor à tela é a ilustração de cada caso e
-   o filete da especialidade — que é a mesma cor do sistema dominante daquele
-   caso lá dentro. */
+   A cor forte de cada cartão é a do território dominante daquele caso — a
+   mesma que o aluno vai reencontrar lá dentro. */
 
 *{box-sizing:border-box;margin:0;padding:0}
 
 :root{
-  --papel:#faf9f6; --papel2:#f2f0ea; --tinta:#15181c; --tinta2:#3d444d;
-  --tinta3:#6b7480; --linha:#e2ded4; --linha2:#cdc7b9;
+  --preto:#08090b; --carvao:#0f1216; --grafite:#171b21;
+  --linha:#414a57; --linha2:#5b6672;
+  --gelo:#eef2f6; --nevoa:#a8b2be; --fumaca:#8d97a4; --sombra:#737d8a;
   --marca:#c2455e;
+  --fundo1:0 18px 34px rgba(0,0,0,.44);
+  --fundo2:0 30px 58px rgba(0,0,0,.55);
+  --eixo:clamp(22px,5vw,88px);
   --serifa:"Iowan Old Style",Charter,"Palatino Linotype",Palatino,
            "Book Antiqua",Georgia,serif;
   --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,"Helvetica Neue",
          Arial,sans-serif;
-  --raio:14px;
 }
 
 html{-webkit-text-size-adjust:100%}
-body{background:var(--papel);color:var(--tinta);font-family:var(--sans);
-  min-height:100%;padding:0 clamp(20px,5vw,72px) 72px}
+body{background:var(--preto);color:var(--gelo);font-family:var(--sans);
+  min-height:100%;padding:0 var(--eixo) clamp(40px,7vh,80px)}
 
 /* ───────────────────────── cabeçalho ───────────────────────── */
 
-#topo{max-width:1360px;margin:0 auto;padding:clamp(38px,7vh,74px) 0
-  clamp(24px,4vh,40px)}
-.chapeu{display:flex;align-items:center;gap:11px;margin-bottom:18px}
+#topo{max-width:1440px;margin:0 auto;
+  padding:clamp(40px,8vh,88px) 0 clamp(26px,4.5vh,44px)}
+.chapeu{display:flex;align-items:center;gap:11px;margin-bottom:20px}
 .chapeu i{width:26px;height:2px;background:var(--marca);display:block}
 .chapeu span{font-size:10.5px;letter-spacing:2.6px;text-transform:uppercase;
-  color:var(--tinta3);font-weight:700}
-#topo h1{font-family:var(--serifa);font-size:clamp(30px,3.2vw,46px);
-  line-height:1.08;font-weight:600;letter-spacing:-.5px;max-width:20ch}
-#topo p{font-family:var(--serifa);font-size:clamp(16px,1.3vw,19px);
-  line-height:1.55;color:var(--tinta2);max-width:62ch;margin-top:14px}
+  color:var(--nevoa);font-weight:700}
+#topo h1{font-family:var(--serifa);font-size:clamp(30px,1.9vw + 2.2vh,54px);
+  line-height:1.06;font-weight:600;letter-spacing:-.6px;max-width:18ch}
+#topo p{font-family:var(--serifa);font-size:clamp(16px,.4vw + 1.1vh,19px);
+  line-height:1.5;color:#c3ccd6;max-width:62ch;margin-top:16px}
 
 /* ───────────────────────── a prateleira ───────────────────────── */
 
-#grade{max-width:1360px;margin:0 auto;display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-  gap:clamp(16px,2vw,26px);align-items:start}
+#grade{max-width:1440px;margin:0 auto;display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(304px,1fr));
+  gap:clamp(14px,1.6vw,24px);align-items:start}
 
-.cs{display:flex;flex-direction:column;background:#fff;
-  border:1px solid var(--linha);border-radius:var(--raio);overflow:hidden;
-  text-decoration:none;color:inherit;position:relative;
-  transition:border-color .18s,transform .18s cubic-bezier(.2,.7,.3,1)}
-a.cs:hover{border-color:var(--linha2);transform:translateY(-3px)}
+.cs{display:flex;flex-direction:column;background:rgba(255,255,255,.035);
+  border:1px solid var(--linha);overflow:hidden;text-decoration:none;
+  color:inherit;position:relative;
+  transition:border-color .2s,transform .2s cubic-bezier(.2,.7,.3,1),
+             box-shadow .2s}
+a.cs:hover{border-color:var(--linha2);transform:translateY(-3px);
+  box-shadow:var(--fundo1)}
 a.cs:focus-visible{outline:2px solid var(--marca);outline-offset:3px}
 
-.cs .capa{aspect-ratio:4/3;background:#0f1216 center/cover no-repeat;
-  border-bottom:1px solid var(--linha);position:relative}
-/* O filete de cor é a única cor forte do cartão, e é a do território dominante
-   do caso — a mesma que o aluno vai reencontrar lá dentro. */
-.cs .capa::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;
-  background:var(--cor)}
-.cs .corpo{padding:clamp(15px,1.6vw,20px);display:flex;flex-direction:column;
+/* A ilustração entra escurecida, como o chão de tela do caso: ela é textura
+   aqui e vira imagem lá dentro. */
+.cs .capa{aspect-ratio:16/10;background:#0b0e12 center/cover no-repeat;
+  border-bottom:1px solid var(--linha);position:relative;
+  filter:brightness(.72) saturate(.88);transition:filter .25s}
+a.cs:hover .capa{filter:brightness(.92) saturate(.96)}
+.cs .capa::before{content:"";position:absolute;inset:0;
+  background:linear-gradient(transparent 45%,rgba(8,9,11,.85))}
+.cs .capa::after{content:"";position:absolute;left:0;right:0;bottom:0;
+  height:3px;background:var(--cor)}
+
+.cs .corpo{padding:clamp(15px,1.5vw,20px);display:flex;flex-direction:column;
   flex:1}
 .cs .esp{font-size:10px;letter-spacing:1.9px;text-transform:uppercase;
-  font-weight:800;color:var(--cor);margin-bottom:8px}
-.cs h2{font-family:var(--serifa);font-size:19.5px;line-height:1.25;
-  font-weight:600;letter-spacing:-.2px}
-.cs .sub{font-family:var(--serifa);font-size:15px;line-height:1.45;
-  color:var(--tinta2);margin-top:8px;flex:1}
-.cs .pe{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:16px;
+  font-weight:800;color:var(--cor);margin-bottom:9px}
+.cs h2{font-family:var(--serifa);font-size:20px;line-height:1.22;
+  font-weight:600;letter-spacing:-.2px;color:var(--gelo)}
+.cs .sub{font-family:var(--serifa);font-size:15px;line-height:1.42;
+  color:#b6c0cb;margin-top:9px;flex:1}
+.cs .pe{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:17px;
   padding-top:13px;border-top:1px solid var(--linha)}
-.cs .pe span{font-size:12px;color:var(--tinta3);display:flex;align-items:center;
-  gap:6px;white-space:nowrap}
-.cs .pe b{color:var(--tinta);font-weight:600;font-variant-numeric:tabular-nums}
-.cs .pe svg{width:14px;height:14px;flex:0 0 auto;stroke:var(--tinta3);
+.cs .pe span{font-size:12px;color:var(--fumaca);display:flex;
+  align-items:center;gap:6px;white-space:nowrap}
+.cs .pe b{color:var(--gelo);font-weight:600;font-variant-numeric:tabular-nums}
+.cs .pe svg{width:14px;height:14px;flex:0 0 auto;stroke:var(--fumaca);
   stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
 
-/* Em preparo: o cartão continua legível, mas não é um link e diz por quê. */
-.cs.preparo{background:var(--papel2);cursor:default}
-.cs.preparo .capa{background:var(--papel2);border-bottom-color:var(--linha)}
-.cs.preparo .capa::after{background:var(--linha2)}
-.cs.preparo h2,.cs.preparo .esp{color:var(--tinta3)}
-.cs.preparo .sub{color:var(--tinta3)}
-.faixa{position:absolute;top:12px;left:12px;background:var(--papel);
-  border:1px solid var(--linha2);border-radius:999px;padding:5px 12px;
-  font-size:10px;letter-spacing:1.6px;text-transform:uppercase;font-weight:800;
-  color:var(--tinta3)}
+/* Em preparo: continua legível e diz por que não abre. Sem `opacity` — ela
+   levava o texto a 2:1 de contraste na medição do caso. */
+.cs.preparo{background:rgba(255,255,255,.014);cursor:default}
+.cs.preparo .capa{background:#0d1014;filter:none}
+.cs.preparo .capa::after{background:var(--linha)}
+.cs.preparo h2{color:#9aa3ae}
+.cs.preparo .esp{color:var(--sombra)}
+.cs.preparo .sub{color:#8d97a4}
+.faixa{position:absolute;top:13px;left:13px;background:rgba(8,9,11,.82);
+  border:1px solid var(--linha);padding:5px 12px;font-size:10px;
+  letter-spacing:1.8px;text-transform:uppercase;font-weight:800;
+  color:var(--nevoa)}
 
 /* ───────────────────────── rodapé ───────────────────────── */
 
-#rodape{max-width:1360px;margin:clamp(40px,7vh,72px) auto 0;
-  padding-top:24px;border-top:1px solid var(--linha);
-  font-size:12.5px;line-height:1.6;color:var(--tinta3);max-width:76ch}
-#rodape b{color:var(--tinta2);font-weight:600}
-
-@media (prefers-color-scheme:dark){
-  /* A biblioteca é clara por decisão de projeto — é o contraste com o caso
-     escuro que organiza as duas telas. No escuro do sistema, ela só perde o
-     branco puro do papel. */
-  :root{--papel:#f4f2ec;--papel2:#eae7df}
-}
+#rodape{max-width:78ch;margin:clamp(40px,7vh,76px) auto 0;padding-top:26px;
+  border-top:1px solid var(--linha);font-size:12.5px;line-height:1.6;
+  color:var(--sombra)}
+#rodape b{color:var(--nevoa);font-weight:600}

@@ -29,8 +29,8 @@ from pathlib import Path
 
 from motor.desenhos import anotada, corpo, seta
 from motor.etapas import (
-    alt, bifurcacao, caminho, capa, desfecho, grade, grupo, lamina, numeros,
-    op, p, pagina, pedido, pergunta, quadro, resultados, tabela, territorios,
+    alt, bifurcacao, caminho, capa, desfecho, grade, grupo, lamina, op, p,
+    pagina, pedido, pergunta, quadro, resultados, tabela,
 )
 
 from .banco import BANCO  # noqa: F401  — a gaveta de exames é a mesma
@@ -114,54 +114,36 @@ ETAPAS = [
           "quatro semanas depois e recebeu amoxicilina-clavulanato por catorze "
           "dias, com adesão confirmada pela esposa. **Também não melhorou.** "
           "Nesse período deixou de sentir cheiro."),
+        # Sem lâmina aqui: o fundo desta página JÁ é a mesma ilustração, e
+        # pendurar uma cópia dela num quadro ao lado é ruído, não figura.
         fundo=CENA,
-        lamina_=lamina(CENA, "O paciente",
-            "A ilustração o mostra na admissão, oito semanas depois deste "
-            "primeiro atendimento.",
-            "Ilustração gerada por inteligência artificial para este caso, a partir da descrição clínica. Paciente ficcional."),
     ),
 
-    pergunta("p1", "Pergunta 1 · o valor de um tratamento que falhou",
-        "Rinossinusite com crostas e epistaxe diária que não respondeu a dois "
-        "cursos de antibiótico adequados, com adesão confirmada. Qual é a "
-        "leitura mais defensável neste momento?",
+    pergunta("p1", "Pergunta 1 · o tratamento que falhou",
+        "Duas rinossinusites tratadas com o antibiótico correto, sem resposta. "
+        "O que isso muda?",
         [
-            alt("Falha por resistência bacteriana; um terceiro curso, mais "
-                "largo, é a conduta",
-                "É o caminho que este paciente de fato percorreu, e é o que "
-                "consumiu oito semanas. Resistência acontece, mas duas falhas "
-                "seguidas com adesão confirmada deslocam a probabilidade para "
-                "fora da hipótese que está sendo tratada — e um terceiro curso "
-                "adia a pergunta em vez de respondê-la."),
-            alt("A ausência de resposta a dois tratamentos corretos é, ela "
-                "própria, um dado clínico, e obriga a rever o diagnóstico "
-                "antes de repetir a conduta",
-                "É o movimento que quebra o fechamento precoce. Não nomeia "
-                "ainda nenhuma doença — só reconhece que a hipótese em uso "
-                "deixou de explicar o paciente. Doença de mucosa nasal que "
-                "não cede a antibiótico entra numa lista curta que inclui "
-                "causa inflamatória, granulomatosa, neoplásica e por "
-                "substância inalada.", certa=True),
-            alt("Sinusite crônica é diagnóstico clínico e a investigação por "
-                "imagem não muda a conduta",
-                "Verdadeiro para a rinossinusite crônica comum, e é por isso "
-                "que a frase é perigosa: ela se aplica ao diagnóstico que "
-                "acabou de falhar duas vezes. A regra de não investigar vale "
-                "enquanto a hipótese está de pé."),
-            alt("Crostas e epistaxe diária sugerem uso abusivo de "
-                "vasoconstritor nasal; a conduta é suspender",
-                "É uma causa real de crosta e sangramento, e vale perguntar. "
-                "Mas ela não explica a perda de olfato progressiva nem a "
-                "ausência de resposta a antibiótico — que é o achado que está "
-                "sobre a mesa."),
-            alt("O quadro é alérgico; anti-histamínico e corticoide tópico "
-                "resolvem",
-                "Rinite alérgica dá prurido, espirros e secreção clara, não "
-                "crosta hemática e epistaxe diária. E corticoide tópico antes "
-                "de saber o que se está tratando pode melhorar o sintoma sem "
-                "tocar na causa."),
+            alt("Nada — é resistência bacteriana",
+                "Resistência acontece, mas duas falhas seguidas com adesão "
+                "confirmada deslocam a probabilidade para fora da hipótese que "
+                "está sendo tratada."),
+            alt("Indica uso abusivo de vasoconstritor nasal",
+                "Causa real de crosta e sangramento, e vale perguntar. Não "
+                "explica a perda progressiva de olfato."),
+            alt("Confirma rinite alérgica",
+                "Rinite alérgica dá prurido, espirro e secreção clara — não "
+                "crosta hemática com epistaxe diária."),
+            alt("Obriga a rever o diagnóstico",
+                "É o movimento que quebra o fechamento precoce: a hipótese em "
+                "uso deixou de explicar o paciente. Mucosa nasal que não cede "
+                "a antibiótico entra numa lista curta — inflamatória, "
+                "granulomatosa, neoplásica, por substância inalada.",
+                certa=True),
+            alt("Pede um terceiro curso, mais largo",
+                "É o caminho que este paciente percorreu, e consumiu oito "
+                "semanas. Adia a pergunta em vez de respondê-la."),
         ],
-        titulo_resposta="Não responder ao tratamento correto é um dado, não um fracasso de adesão",
+        titulo_resposta="Não responder ao tratamento correto é um dado",
         fundo=CENA,
     ),
 
@@ -243,44 +225,30 @@ ETAPAS = [
     ),
 
     pergunta("p2", "Pergunta 3 · interpretação de um dado isolado",
-        "A creatinina do ambulatório é 1,4 mg/dL. A faixa de referência do "
-        "laboratório vai até 1,3. A creatinina dele, dois meses antes, era "
-        "1,0 mg/dL. O que esse par de valores permite afirmar?",
+        "Creatinina de 1,4 mg/dL hoje; era 1,0 mg/dL há dois meses. O que esse "
+        "par permite afirmar?",
         [
-            alt("Nada de relevante: 1,4 é uma alteração mínima e pode ser "
-                "variação de hidratação ou de massa muscular",
-                "É a leitura que o laudo induz, porque o laboratório imprime "
-                "1,4 quase colado à referência. Mas a referência é populacional "
-                "e o paciente é a própria referência dele: 1,0 para 1,4 é "
-                "**40% de aumento**, e a relação entre creatinina e filtração "
-                "não é linear."),
-            alt("Houve perda de cerca de um terço da filtração glomerular em "
-                "dois meses, e isso caracteriza lesão renal em curso",
-                "É a conta que quase nunca se faz. Por CKD-EPI 2021, um homem "
-                "de 63 anos sai de cerca de 80 para cerca de 53 mL/min/1,73 m² "
-                "com essa mudança. Nada aqui diz **onde** está a lesão — mas a "
-                "trajetória, e não o valor, já a estabelece como aguda ou "
-                "subaguda, e portanto investigável.", certa=True),
-            alt("Trata-se de doença renal crônica estágio 2, e o seguimento "
-                "ambulatorial semestral é a conduta",
-                "Doença renal crônica exige alteração mantida por mais de três "
-                "meses. Aqui há dois valores separados por dois meses, com "
-                "diferença entre eles: por definição, isto é o oposto de "
-                "crônico."),
-            alt("A hematúria do sedimento explica a creatinina, por obstrução "
-                "de via urinária por coágulos",
-                "Obstrução por coágulo exige sangramento macroscópico volumoso "
-                "e costuma doer. Doze hemácias por campo não obstruem nada — e "
-                "a associação de hematúria com queda de filtração aponta para "
-                "o néfron, não para a via de saída."),
-            alt("O achado é esperado pelo uso de losartana e a conduta é "
-                "suspendê-la",
-                "Bloqueador do receptor de angiotensina eleva a creatinina em "
-                "torno de 20 a 30% nas primeiras semanas — e ele usa losartana "
-                "**há dez anos**, com creatinina 1,0 dois meses atrás. O tempo "
+            alt("Variação de hidratação ou de massa muscular",
+                "É a leitura que o laudo induz, porque 1,4 sai quase colado à "
+                "referência. Mas a referência é populacional, e o paciente é a "
+                "referência dele."),
+            alt("Doença renal crônica estágio 2",
+                "Crônico exige alteração mantida por mais de três meses. Aqui "
+                "há dois valores separados por dois meses, diferentes entre "
+                "si: é o oposto de crônico."),
+            alt("Perda de um terço da filtração em dois meses",
+                "Por CKD-EPI 2021, um homem de 63 anos sai de cerca de 80 para "
+                "cerca de 53 mL/min/1,73 m². A trajetória, e não o valor, "
+                "estabelece a lesão como aguda.", certa=True),
+            alt("Efeito esperado da losartana",
+                "Bloqueador do receptor eleva a creatinina em 20 a 30% nas "
+                "primeiras semanas — e ele usa losartana há dez anos. O tempo "
                 "não fecha."),
+            alt("Obstrução da via urinária por coágulos",
+                "Obstrução por coágulo exige sangramento macroscópico volumoso "
+                "e costuma doer. Doze hemácias por campo não obstruem nada."),
         ],
-        titulo_resposta="É a comparação, não o valor, que faz o diagnóstico de lesão aguda",
+        titulo_resposta="É a comparação, não o valor",
         fundo=CENA,
     ),
 
@@ -346,47 +314,32 @@ ETAPAS = [
     ),
 
     pergunta("p3", "Pergunta 4 · conduta imediata",
-        "Ele está no pronto-socorro há quarenta minutos: febre de 37,8 °C, "
-        "frequência respiratória de 28, saturação de 88% em ar ambiente, "
-        "infiltrado bilateral provável e creatinina que subiu. A leitura da "
-        "equipe é pneumonia grave com lesão renal aguda. Qual é a primeira "
-        "conduta?",
+        "Quarenta minutos de pronto-socorro, com hipótese de pneumonia grave. "
+        "Qual a ordem?",
         [
-            alt("Antibiótico empírico de amplo espectro imediatamente; as "
-                "culturas podem ser colhidas depois, se ele não melhorar",
-                "Antecipar o antibiótico salva vidas na sepse, e é por isso "
-                "que este erro é tão comum: ele vem de uma regra correta. Mas "
-                "**cultura colhida depois da primeira dose deixa de valer**, e "
-                "num paciente que talvez precise de imunossupressão em poucos "
-                "dias, a cultura negativa é exatamente o documento que "
-                "autoriza imunossuprimir. Perder esse documento custa caro."),
-            alt("Colher hemoculturas e as demais culturas e, em seguida, "
-                "iniciar o antibiótico empírico sem esperar resultado",
-                "É a ordem certa, e a distância entre as duas condutas é de "
-                "minutos, não de horas. A suspeita de infecção grave é "
-                "legítima com estes dados e o antibiótico entra; o que não "
-                "pode é entrar antes do material que vai julgá-lo. Vale "
-                "também para o lavado broncoalveolar, se ele for feito.",
+            alt("Antibiótico agora; culturas depois, se não melhorar",
+                "Vem de uma regra correta — antecipar o antibiótico salva vida "
+                "na sepse. Mas cultura colhida depois da primeira dose deixa "
+                "de valer, e é ela que vai autorizar imunossuprimir daqui a "
+                "poucos dias."),
+            alt("Tomografia antes de qualquer antibiótico",
+                "Inverte a ordem de risco com saturação de 88%. A tomografia "
+                "descreve o padrão; ela não exclui infecção."),
+            alt("Corticoide em dose imunossupressora",
+                "A decisão mais perigosa da lista — e ela vai reaparecer no "
+                "caso com outro nome. Imunossuprimir com culturas em andamento "
+                "transforma endocardite em desfecho que não se recupera."),
+            alt("Hemodiálise de urgência",
+                "Nenhuma indicação de urgência está presente: sem hipercalemia "
+                "com repercussão, sem acidose refratária, sem congestão, sem "
+                "sintoma urêmico. Creatinina alta sozinha não indica."),
+            alt("Culturas e, em seguida, antibiótico empírico",
+                "A distância entre as duas condutas é de minutos. A suspeita "
+                "de infecção grave é legítima e o antibiótico entra; o que não "
+                "pode é entrar antes do material que vai julgá-lo.",
                 certa=True),
-            alt("Suspender qualquer antibiótico até a tomografia de tórax "
-                "definir o padrão",
-                "Esperar imagem para tratar suspeita de infecção grave com "
-                "saturação de 88% inverte a ordem de risco. A tomografia "
-                "descreve o padrão; ela não exclui infecção, e o tempo até ela "
-                "é tempo de bacteremia não tratada, se for isso."),
-            alt("Iniciar corticoide em dose imunossupressora, pela suspeita de "
-                "doença inflamatória",
-                "É a decisão mais perigosa da lista, e ela vai reaparecer no "
-                "caso com outro nome. Imunossuprimir antes de afastar infecção, "
-                "com culturas em andamento, transforma pneumonia grave e "
-                "endocardite em desfechos que não se recuperam."),
-            alt("Solicitar hemodiálise de urgência pela lesão renal aguda",
-                "Nenhuma das indicações de diálise de urgência está presente: "
-                "não há hipercalemia com repercussão no eletrocardiograma, "
-                "acidose refratária, congestão que não responde, nem sintoma "
-                "urêmico. Creatinina alta, sozinha, não é indicação."),
         ],
-        titulo_resposta="A ordem é cultura, depois antibiótico — e a distância entre as duas é de minutos",
+        titulo_resposta="Cultura, depois antibiótico — e a distância é de minutos",
         fundo=TC,
     ),
 
@@ -529,47 +482,30 @@ ETAPAS = [
     ),
 
     pergunta("p4", "Pergunta 6 · deterioração sob tratamento",
-        "Segundo dia de antibiótico adequado para pneumonia comunitária grave, "
-        "e ele piorou: mais oxigênio, mais hemoptise e queda de mais 0,9 g/dL "
-        "na hemoglobina. Qual conclusão esse conjunto autoriza?",
+        "Piorou sob antibiótico adequado, e a hemoglobina caiu de novo. Onde "
+        "está o sangue que falta?",
         [
-            alt("O antibiótico é insuficiente; escalonar para carbapenêmico e "
-                "cobrir germe resistente",
-                "É a reação mais comum, e às vezes é certa — mas 36 horas é "
-                "cedo para declarar falha de antibiótico numa pneumonia "
-                "comunitária, e escalonar não explica a hemoglobina. Um "
-                "antibiótico mais largo não retém sangue no alvéolo."),
-            alt("Trata-se de sangramento alveolar: a queda de hemoglobina "
-                "desproporcional ao volume expectorado localiza o sangue "
-                "dentro do espaço aéreo distal",
-                "É a conclusão que a aritmética da página anterior obriga. O "
-                "alvéolo é o compartimento pulmonar capaz de reter grande "
-                "volume de sangue sem devolvê-lo pela boca: o sangue fica no "
-                "espaço aéreo, é fagocitado por macrófagos, e a hemoglobina "
-                "cai sem hemorragia visível. **É esse achado, e não a "
-                "hemoptise, que desloca a origem do brônquio para o alvéolo** "
-                "— e sangramento alveolar difuso não é complicação de "
-                "pneumonia comunitária tratada.", certa=True),
-            alt("A piora é do edema agudo de pulmão por sobrecarga: ele "
-                "recebeu volume e está em lesão renal aguda",
-                "Sobrecarga é a armadilha honesta desta página, e precisa ser "
-                "afastada à beira do leito: contra ela pesam a ausência de "
-                "estase jugular, de terceira bulha e de edema, e o "
-                "ecocardiograma sem disfunção. E, sobretudo, sobrecarga "
-                "hídrica não consome 0,9 g/dL de hemoglobina — ela dilui, o "
-                "que é diferente, e não em 36 horas."),
-            alt("É hemorragia digestiva alta com aspiração; a conduta é "
-                "endoscopia",
-                "Explicaria a anemia, mas não o infiltrado bilateral simétrico "
-                "nem a ausência de melena ou hematêmese em um paciente "
-                "internado e observado. Aspiração produz infiltrado dependente "
-                "da gravidade, não difuso."),
-            alt("A queda de hemoglobina é hemodiluição pela hidratação "
-                "recebida no pronto-socorro",
-                "Diluição é real e costuma explicar quedas de 0,5 a 1,0 g/dL "
-                "após ressuscitação volumosa. Mas ele recebeu volume "
-                "restrito, está oligúrico, e a queda total desde o "
-                "ambulatório é de 4,3 g/dL. Diluição não faz isso."),
+            alt("No trato digestivo",
+                "Explicaria a anemia, não o infiltrado bilateral simétrico — e "
+                "não houve melena nem hematêmese num paciente internado e "
+                "observado."),
+            alt("No alvéolo",
+                "É o compartimento pulmonar capaz de reter grande volume sem "
+                "devolvê-lo pela boca: o sangue fica no espaço aéreo, é "
+                "fagocitado, e a hemoglobina cai sem hemorragia visível. E "
+                "hemorragia alveolar difusa não é complicação de pneumonia "
+                "comunitária tratada.", certa=True),
+            alt("Em lugar nenhum — é hemodiluição",
+                "Diluição explica quedas de 0,5 a 1,0 g/dL após ressuscitação "
+                "volumosa. Ele recebeu volume restrito, está oligúrico, e a "
+                "queda total é de 4,3 g/dL."),
+            alt("Perdido pela urina",
+                "Hematúria glomerular é microscópica: são miligramas de "
+                "hemoglobina por dia, não gramas. Nenhuma glomerulonefrite "
+                "sangra o suficiente para anemiar."),
+            alt("Não há sangue perdido — é anemia inflamatória",
+                "Anemia de doença inflamatória existe aqui e explica parte da "
+                "queda ambulatorial. Ela não cai 0,9 g/dL em 36 horas."),
         ],
         titulo_resposta="A hemoglobina que sumiu diz onde o sangue ficou",
         fundo=TC,
@@ -666,41 +602,32 @@ ETAPAS = [
     ),
 
     pergunta("p5", "Pergunta 8 · enquadramento sindrômico",
-        "Sangramento no espaço aéreo distal e lesão renal em curso, com "
-        "sedimento alterado, no mesmo paciente e no mesmo mês. Antes de "
-        "nomear qualquer doença: como se chama este arranjo?",
+        "Sangramento alveolar e glomerulonefrite no mesmo paciente e no mesmo "
+        "mês. Como se chama esse arranjo?",
         [
-            alt("Pneumonia grave com necrose tubular aguda secundária",
-                "É a leitura que o caso vinha usando e que os cinco dias de "
-                "antibiótico já testaram. Necrose tubular dá sedimento com "
-                "cilindros granulosos pigmentados e epitelial, não hematúria "
-                "com dismorfismo — e não explica sangue dentro do alvéolo."),
-            alt("Síndrome pulmão-rim",
-                "É o nome do arranjo, e ele é deliberadamente mais abstrato "
-                "que qualquer diagnóstico: hemorragia alveolar difusa mais "
-                "glomerulonefrite, sem dizer por quê. Subir um nível de "
-                "abstração antes de descer para nomes de doença é o movimento "
-                "que organiza o diferencial — e a lista dessa síndrome tem "
-                "pelo menos quatro mecanismos distintos, que a próxima página "
-                "separa.", certa=True),
-            alt("Síndrome cardiorrenal tipo 1, por baixo débito",
+            alt("Pneumonia grave com necrose tubular aguda",
+                "É a leitura que os cinco dias de antibiótico já testaram. "
+                "Necrose tubular dá cilindro granuloso pigmentado, não "
+                "hematúria dismórfica — e não põe sangue dentro do alvéolo."),
+            alt("Síndrome cardiorrenal tipo 1",
                 "Exigiria disfunção cardíaca aguda como motor, e o "
-                "ecocardiograma é normal, sem estase jugular e sem edema. "
-                "Além disso, congestão pulmonar não produz hemoptise "
+                "ecocardiograma é normal. Congestão não produz hemoptise "
                 "recorrente com queda de hemoglobina."),
-            alt("Sepse de foco pulmonar com disfunção de múltiplos órgãos",
-                "Sepse é possível e foi tratada; o que não fecha é a "
-                "trajetória. Cinco dias de antibiótico adequado, culturas "
-                "negativas, procalcitonina de 0,4 e piora progressiva "
-                "descrevem outra coisa. E disfunção orgânica da sepse não "
-                "produz hematúria dismórfica."),
-            alt("Tromboembolismo pulmonar com infarto e lesão renal por "
-                "contraste",
-                "Infarto pulmonar dá dor pleurítica e opacidade periférica "
-                "focal, não infiltrado difuso bilateral, e a angiotomografia "
-                "não mostrou falha de enchimento. Nefropatia por contraste, "
-                "além disso, viria depois do exame — e a creatinina já subia "
-                "seis semanas antes."),
+            alt("Síndrome pulmão-rim",
+                "É o nome do arranjo, deliberadamente mais abstrato que "
+                "qualquer diagnóstico: hemorragia alveolar difusa mais "
+                "glomerulonefrite, sem dizer por quê. Subir um nível antes de "
+                "descer para nomes de doença é o que organiza o diferencial.",
+                certa=True),
+            alt("Sepse com disfunção de múltiplos órgãos",
+                "Foi tratada, e a trajetória não fecha: cinco dias de "
+                "antibiótico adequado, culturas negativas, procalcitonina de "
+                "0,4 e piora progressiva. Sepse também não faz hematúria "
+                "dismórfica."),
+            alt("Tromboembolismo com nefropatia por contraste",
+                "Infarto pulmonar dá dor pleurítica e opacidade focal, e a "
+                "angiotomografia não mostrou falha de enchimento. E a "
+                "creatinina já subia seis semanas antes do contraste."),
         ],
         titulo_resposta="Nomear a síndrome antes de nomear a doença",
         fundo=TC,
@@ -784,40 +711,30 @@ ETAPAS = [
     ),
 
     pergunta("p6", "Pergunta 9 · leitura de um achado de tecido",
-        "A imunofluorescência da biópsia renal não mostra depósito imune "
-        "significativo. Que valor esse achado tem?",
+        "A imunofluorescência da biópsia renal não mostra depósito imune. O "
+        "que ela afirma?",
         [
-            alt("Nenhum: é um exame negativo, e o diagnóstico terá de vir de "
-                "outro lugar",
-                "É o erro mais comum diante deste laudo, e ele vem de uma "
-                "leitura razoável: a maioria dos exames negativos não afirma "
-                "nada. Aqui, a ausência de depósito **é** o achado — ela "
-                "elimina de uma vez os dois outros mecanismos da tabela "
-                "anterior."),
-            alt("Afasta glomerulonefrite e obriga a rever o sedimento",
-                "A glomerulonefrite está estabelecida pela microscopia óptica, "
-                "que mostra proliferação extracapilar. A imunofluorescência "
-                "não gradua a lesão nem confirma que ela existe: ela separa "
-                "mecanismos entre lesões que já existem."),
-            alt("Indica lúpus com nefrite de classe silenciosa",
+            alt("Padrão pauci-imune",
+                "A imunofluorescência separa três mecanismos, e só três: "
+                "depósito linear é anticorpo contra o colágeno tipo IV; "
+                "granular é imunocomplexo; ausência é pauci-imune, das "
+                "vasculites associadas ao ANCA.", certa=True),
+            alt("Nada — é um exame negativo",
+                "É o erro mais comum diante deste laudo, e vem de uma leitura "
+                "razoável: a maioria dos exames negativos não afirma nada. "
+                "Aqui a ausência é o achado."),
+            alt("Afasta glomerulonefrite",
+                "A glomerulonefrite está estabelecida pela microscopia óptica. "
+                "A imunofluorescência não confirma que a lesão existe: ela "
+                "separa mecanismos entre lesões que já existem."),
+            alt("Nefrite lúpica de classe silenciosa",
                 "A nefrite lúpica é doença por imunocomplexo, e a "
-                "imunofluorescência dela é exuberante — o chamado //full "
-                "house//, com IgG, IgA, IgM, C3 e C1q. Ausência de depósito é "
-                "o oposto do que ela produz."),
-            alt("É o padrão que caracteriza as vasculites de pequenos vasos "
-                "associadas ao ANCA, e tem valor diagnóstico positivo",
-                "A imunofluorescência do tecido renal separa três mecanismos, "
-                "e só três: depósito **linear** ao longo da membrana basal é "
-                "anticorpo contra o colágeno tipo IV; depósito **granular** é "
-                "imunocomplexo; **ausência** de depósito é o padrão "
-                "pauci-imune. Quando o laudo diz que não há depósitos "
-                "significativos, ele está afirmando alguma coisa — e é a "
-                "terceira categoria da tabela.", certa=True),
-            alt("Sugere doença anti-membrana basal glomerular em fase inicial",
-                "A doença anti-MBG tem depósito linear e contínuo de IgG ao "
-                "longo da membrana basal **desde o começo** — é o mecanismo, "
-                "não a fase. Não existe anti-MBG com imunofluorescência "
-                "limpa."),
+                "imunofluorescência dela é exuberante — o //full house//, com "
+                "IgG, IgA, IgM, C3 e C1q."),
+            alt("Doença anti-membrana basal em fase inicial",
+                "A doença anti-MBG tem depósito linear e contínuo desde o "
+                "começo — é o mecanismo, não a fase. Não existe anti-MBG com "
+                "imunofluorescência limpa."),
         ],
         titulo_resposta="Exame sem depósito não é exame negativo",
         fundo=BIOPSIA,
@@ -891,46 +808,32 @@ ETAPAS = [
     ),
 
     pergunta("p6b", "Pergunta 9 · o limite do que se pode afirmar",
-        "Sem a imunofluorescência do tecido e sem o anticorpo circulante, o "
-        "paciente segue com hemorragia alveolar e creatinina de 4,6 mg/dL, no "
-        "quinto dia de antibiótico sem resposta. Qual é a conduta defensável?",
+        "Sem o tecido e sem o anticorpo, com creatinina de 4,6 e alvéolo "
+        "sangrando. O que fazer hoje?",
         [
-            alt("Aguardar a estabilização clínica antes de qualquer decisão "
-                "imunossupressora",
-                "É a resposta que parece prudente e é a que custa o rim. "
-                "Crescente celular vira fibrosa ao longo de semanas, e "
-                "crescente fibrosa não responde a nada. Esperar, aqui, não é "
-                "neutro: é escolher a alternativa irreversível."),
-            alt("Colher agora as duas provas que faltam e iniciar o "
-                "glicocorticoide sem esperar o resultado",
-                "É o que se faz, e a ordem importa: o glicocorticoide não "
-                "apaga o padrão da imunofluorescência nem o título do "
-                "anticorpo, então, **colhido o material**, ele pode entrar. O "
-                "que não pode entrar antes das provas e das culturas é a "
-                "segunda droga, e é essa ordem que a pressa costuma inverter.",
-                certa=True),
-            alt("Iniciar ciclofosfamida empiricamente, pela gravidade",
+            alt("Aguardar a estabilização clínica",
+                "Parece prudente e custa o rim. Crescente celular vira fibrosa "
+                "ao longo de semanas, e fibrosa não responde a nada. Esperar "
+                "aqui é escolher a alternativa irreversível."),
+            alt("Ciclofosfamida empírica, pela gravidade",
                 "A gravidade justifica a pressa, não a escolha da segunda "
-                "droga sem diagnóstico. Imunossupressão profunda com o "
-                "mecanismo indefinido troca uma incerteza por um risco: se a "
-                "explicação for infecciosa não cultivada, o desfecho não se "
-                "recupera."),
-            alt("Tratar como pneumonia grave por germe resistente e escalonar "
-                "o antibiótico",
-                "É a leitura que já foi feita três vezes com este paciente — "
-                "duas no ambulatório e uma na admissão — e não respondeu "
-                "nenhuma delas. Repetir a hipótese que falhou é o próprio viés "
-                "que o caso está descrevendo."),
-            alt("Indicar troca plasmática empírica, que cobre as duas "
-                "possibilidades",
-                "Cobre a hipótese anti-membrana basal e, na vasculite ANCA, "
-                "não mostrou reduzir morte nem doença renal terminal no "
-                "PEXIVAS. Tratamento que cobre tudo é tratamento que não "
-                "decidiu nada, e a troca plasmática tem custo próprio: "
-                "cateter, coagulopatia e depleção de imunoglobulina."),
+                "droga sem diagnóstico. Se a explicação for infecciosa não "
+                "cultivada, o desfecho não se recupera."),
+            alt("Escalonar o antibiótico",
+                "É a leitura já feita três vezes com este paciente — duas no "
+                "ambulatório, uma na admissão — e não respondeu nenhuma. "
+                "Repetir a hipótese que falhou é o viés que o caso descreve."),
+            alt("Colher as duas provas e iniciar o glicocorticoide",
+                "O glicocorticoide não apaga o padrão da imunofluorescência "
+                "nem o título do anticorpo: colhido o material, ele pode "
+                "entrar. O que não pode entrar antes das provas é a segunda "
+                "droga.", certa=True),
+            alt("Troca plasmática empírica",
+                "Cobre a hipótese anti-MBG e, na vasculite ANCA, não reduziu "
+                "morte nem doença renal terminal no PEXIVAS. E tem custo "
+                "próprio: cateter, coagulopatia, depleção de imunoglobulina."),
         ],
-        titulo_resposta="Colher e começar o corticoide não são a mesma decisão "
-                        "que imunossuprimir a fundo",
+        titulo_resposta="Colher e começar o corticoide não é imunossuprimir a fundo",
         fundo=BIOPSIA, segue="b1",
     ),
 
@@ -1073,51 +976,34 @@ ETAPAS = [
     ),
 
     pergunta("p7", "Pergunta 11 · falha, complicação ou segunda doença",
-        "Quinto dia de indução, febre de 38,9 °C com calafrio e hipotensão que "
-        "respondeu a volume, sem nova hemoptise, com procalcitonina que subiu "
-        "de 0,4 para 3,1 ng/mL e um cateter central com sítio inflamado. Qual "
-        "é a leitura e a conduta?",
+        "Quinto dia de indução: febre com calafrio, procalcitonina de 0,4 para "
+        "3,1, cateter com sítio inflamado. O que é?",
         [
-            alt("Falha do esquema de indução: intensificar a imunossupressão e "
-                "acrescentar troca plasmática",
-                "É a leitura que o pânico sugere e a que mata. Contra ela "
-                "pesam três coisas objetivas: a hemoptise cessou, o infiltrado "
-                "não piorou, e a procalcitonina subiu — e procalcitonina é o "
-                "marcador que separa razoavelmente inflamação estéril de "
-                "infecção bacteriana. Recidiva de vasculite no quinto dia de "
-                "corticoide em dose plena é rara."),
-            alt("Infecção associada ao cateter: retirar o cateter, colher "
-                "hemoculturas pareadas e iniciar antibiótico com cobertura "
-                "para //Staphylococcus aureus//",
-                "É a leitura que os dados sustentam. **A causa de morte "
-                "precoce na vasculite ANCA tratada é a infecção, não a "
-                "vasculite** — o risco maior nas primeiras semanas vem do "
-                "tratamento, não da doença. Sítio de inserção inflamado, "
-                "calafrio, procalcitonina em ascensão e órgão-alvo estável "
-                "compõem um quadro de bacteremia de cateter, e o "
-                "//S. aureus// é o agente que mais mata nessa situação. "
-                "Retirar o cateter faz parte do tratamento, não da "
-                "investigação.", certa=True),
-            alt("Febre do próprio glicocorticoide ou reação infusional tardia; "
-                "observar por 24 horas",
-                "Glicocorticoide em dose alta tipicamente **abaixa** a "
-                "temperatura e mascara febre; atribuir a ele um pico de 38,9 "
-                "com calafrio e hipotensão é inverter a farmacologia. Reação "
-                "infusional ao rituximabe ocorre durante ou logo após a "
-                "infusão, não no quinto dia."),
-            alt("Suspender toda a imunossupressão até esclarecer a febre",
-                "Meio-termo que parece prudente e cobra caro: a vasculite "
-                "acabou de ser controlada e a crescente ainda é celular. "
-                "Tratar a infecção **e** manter a indução é possível — e é o "
-                "que se faz. Suspender tudo troca um risco por dois."),
-            alt("Pneumonia associada à ventilação; iniciar antibiótico de "
-                "amplo espectro para germe hospitalar",
-                "Ele nunca foi intubado — está em cateter nasal. E o "
-                "infiltrado não piorou. A hipótese certa é infecção de "
-                "corrente sanguínea; a porta de entrada está visível no "
+            alt("Falha da indução",
+                "É a leitura que o pânico sugere e a que mata. A hemoptise "
+                "cessou, o infiltrado não piorou, e a procalcitonina subiu — "
+                "ela separa razoavelmente inflamação estéril de infecção "
+                "bacteriana."),
+            alt("Infecção de corrente sanguínea pelo cateter",
+                "**A causa de morte precoce na vasculite ANCA tratada é a "
+                "infecção, não a vasculite.** Sítio inflamado, calafrio, "
+                "procalcitonina em alta e órgão-alvo estável compõem "
+                "bacteremia de cateter — e retirar o cateter faz parte do "
+                "tratamento, não da investigação.", certa=True),
+            alt("Febre do próprio glicocorticoide",
+                "Corticoide em dose alta abaixa a temperatura e mascara febre; "
+                "atribuir a ele um pico de 38,9 com calafrio e hipotensão é "
+                "inverter a farmacologia."),
+            alt("Pneumonia associada à ventilação",
+                "Ele nunca foi intubado — está em cateter nasal — e o "
+                "infiltrado não piorou. A porta de entrada está visível no "
                 "pescoço dele."),
+            alt("Recidiva da hemorragia alveolar",
+                "Recidiva no quinto dia de corticoide em dose plena é rara, e "
+                "ela viria com hemoptise e queda de hemoglobina. Nenhuma das "
+                "duas aconteceu."),
         ],
-        titulo_resposta="Nas primeiras semanas, o que mata é o tratamento, não a doença",
+        titulo_resposta="Nas primeiras semanas, o que mata é o tratamento",
         fundo=CENA,
     ),
 
