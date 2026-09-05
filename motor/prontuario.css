@@ -1,0 +1,206 @@
+/* O prontuário. Não é slide: é uma tela de trabalho projetada.
+
+   A tipografia é a mesma do baralho — serifa para prosa clínica, sem serifa
+   para dado e para o que é sistema. O que muda é a arquitetura: cabeçalho de
+   leito fixo no alto, ações à esquerda, registro corrido à direita. Nada de
+   cartão flutuante e nada de sombra difusa: o que separa as coisas aqui é
+   filete e espaço, como num impresso hospitalar bem feito. */
+
+:root{
+  --papel:#faf8f3; --papel2:#f2efe6; --papel3:#eae6da;
+  --tinta:#16130f; --tinta2:#3f3a33; --tinta3:#7a7268;
+  --linha:#ddd7c8; --linha2:#c3bcab;
+  --sangue:#8f3a2a; --sangue2:#b8543c;
+  --grave:#9c2b1c; --certo:#3f6b46; --alerta:#8a6516;
+  --serifa:"Iowan Old Style","Charter","Palatino Linotype",Palatino,
+           "Book Antiqua",Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--papel);color:var(--tinta);
+  font-family:var(--serifa);display:flex;flex-direction:column;overflow:hidden}
+
+/* ─────────────────────── cabeçalho do leito ─────────────────────── */
+
+#topo{flex:0 0 auto;background:var(--papel2);
+  border-bottom:1px solid var(--linha2);
+  display:flex;align-items:center;gap:34px;padding:11px 26px}
+#pac b{display:block;font-family:var(--serifa);font-size:19px;font-weight:600;
+  line-height:1.15}
+#pac span{display:block;font-family:var(--sans);font-size:11.5px;
+  color:var(--tinta3);letter-spacing:.3px;margin-top:2px}
+#hora{font-family:var(--sans);border-left:1px solid var(--linha2);
+  padding-left:26px;min-width:150px}
+#hora b{display:block;font-size:19px;font-weight:600;font-variant-numeric:tabular-nums}
+#hora span{display:block;font-size:11.5px;color:var(--tinta3);margin-top:2px}
+#vitais{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 26px;
+  font-family:var(--sans);font-size:14px}
+.v{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.v i{font-style:normal;font-weight:400;color:var(--tinta3);font-size:11px;
+  letter-spacing:.4px;margin-right:6px}
+.v u{text-decoration:none;margin-left:4px;font-size:10px}
+.v.pior{color:var(--grave)} .v.melhor{color:var(--certo)}
+.f{font-family:var(--sans);font-size:11px;color:var(--tinta2);
+  border:1px solid var(--linha2);padding:2px 9px;letter-spacing:.3px;
+  white-space:nowrap}
+
+/* ─────────────────────── corpo ─────────────────────── */
+
+#corpo{flex:1 1 auto;display:grid;grid-template-columns:302px 1fr;min-height:0}
+
+#acoes{border-right:1px solid var(--linha);background:var(--papel2);
+  overflow:auto;padding:16px 16px 40px}
+#acoes .grande{display:block;width:100%;text-align:left;margin-bottom:8px;
+  font-family:var(--sans);font-size:14px;font-weight:600;color:#fff;
+  background:var(--sangue);border:none;padding:11px 14px;cursor:pointer;
+  letter-spacing:.2px}
+#acoes .grande:hover{background:var(--sangue2)}
+#acoes .grande:nth-of-type(2){background:var(--tinta2)}
+#acoes .grande:nth-of-type(2):hover{background:var(--tinta)}
+.grupo{margin-top:22px}
+.grupo>b{display:block;font-family:var(--sans);font-size:10.5px;
+  letter-spacing:1.6px;text-transform:uppercase;color:var(--tinta3);
+  padding-bottom:6px;border-bottom:1px solid var(--linha2);margin-bottom:4px}
+button.a{display:block;width:100%;text-align:left;background:none;border:none;
+  border-bottom:1px solid var(--linha);padding:9px 4px 9px 0;cursor:pointer;
+  font-family:var(--serifa);font-size:15px;line-height:1.28;color:var(--tinta)}
+button.a:hover{color:var(--sangue);padding-left:5px}
+button.a i{display:block;font-family:var(--sans);font-style:normal;
+  font-size:11px;color:var(--tinta3);margin-top:3px;line-height:1.3}
+.fecha{margin-top:30px}
+button.a.enc{color:var(--tinta3);border-bottom:none}
+button.a.enc:hover{color:var(--sangue)}
+.fim-nota{font-family:var(--sans);font-size:13px;color:var(--tinta2);
+  line-height:1.5}
+.fim-nota button{margin-top:10px;font-family:var(--sans);font-size:13px;
+  background:var(--sangue);color:#fff;border:none;padding:9px 14px;cursor:pointer}
+
+/* ─────────────────────── o registro ─────────────────────── */
+
+#reg{overflow:auto;padding:22px 34px 60px;scroll-behavior:smooth}
+.e{max-width:74ch;padding:0 0 15px 96px;position:relative;margin-bottom:15px;
+  border-bottom:1px solid var(--linha)}
+.e:last-of-type{border-bottom:none}
+.eh{display:flex;align-items:baseline;gap:10px;margin-bottom:5px}
+.eh time{position:absolute;left:0;top:1px;font-family:var(--sans);
+  font-size:12px;color:var(--tinta3);font-variant-numeric:tabular-nums;
+  letter-spacing:.2px}
+.eh em{font-family:var(--sans);font-style:normal;font-size:10px;
+  letter-spacing:1.4px;text-transform:uppercase;color:var(--tinta3)}
+.eh h3{margin:0;font-family:var(--serifa);font-size:19px;font-weight:600;
+  line-height:1.2}
+.ex{font-size:17px;line-height:1.52;color:var(--tinta2);max-width:70ch}
+.ex .ref{display:block;font-family:var(--sans);font-size:11.5px;
+  color:var(--tinta3);margin-top:4px}
+.e-resultado .eh h3{font-family:var(--sans);font-size:15px;font-weight:700;
+  letter-spacing:.2px}
+.e-resultado .ex{font-family:var(--sans);font-size:15px;line-height:1.5}
+.e-resultado.alt .eh h3{color:var(--grave)}
+.e-pedido{opacity:.72}
+.e-pedido .eh h3{font-family:var(--sans);font-size:14px;font-weight:600}
+.e-pedido .ex{font-family:var(--sans);font-size:13px}
+.e-tempo{border-bottom:none;padding-bottom:4px;margin-bottom:4px}
+.e-tempo .eh h3{font-family:var(--sans);font-size:13px;font-weight:400;
+  color:var(--tinta3)}
+.e-conduta{border-left:3px solid var(--sangue);padding-left:96px;
+  margin-left:-3px}
+.e-conduta .eh h3{color:var(--sangue)}
+.e-evolucao .eh h3{font-style:italic}
+.e-alerta .ex{color:var(--grave)}
+
+.pend{margin-top:8px;padding:12px 0 0;border-top:1px dashed var(--linha2);
+  font-family:var(--sans);font-size:12.5px;color:var(--tinta3);max-width:74ch}
+.pend b{display:block;font-size:10.5px;letter-spacing:1.5px;
+  text-transform:uppercase;margin-bottom:6px}
+.pend span{display:inline-block;margin:0 18px 4px 0}
+.pend i{font-style:normal;color:var(--tinta2);
+  font-variant-numeric:tabular-nums}
+
+/* ─────────────────────── modal ─────────────────────── */
+
+#modal{position:fixed;inset:0;background:rgba(22,19,15,.5);display:none;
+  align-items:flex-start;justify-content:center;padding:56px 20px;z-index:40}
+#modal.on{display:flex}
+.cx{background:var(--papel);width:min(880px,100%);max-height:100%;
+  display:flex;flex-direction:column;border:1px solid var(--linha2)}
+.ch{display:flex;align-items:center;justify-content:space-between;
+  padding:16px 24px;border-bottom:1px solid var(--linha)}
+.ch h2{margin:0;font-family:var(--serifa);font-size:24px;font-weight:600}
+.ch button{font-family:var(--sans);font-size:11px;letter-spacing:1.4px;
+  text-transform:uppercase;background:none;border:none;color:var(--tinta3);
+  cursor:pointer}
+.ch button:hover{color:var(--sangue)}
+.cc{overflow:auto;padding:20px 24px 28px}
+.dica{font-family:var(--sans);font-size:12.5px;color:var(--tinta3);
+  line-height:1.5;margin:0 0 14px;max-width:70ch}
+#busca{width:100%;font-family:var(--sans);font-size:17px;padding:11px 13px;
+  border:1px solid var(--linha2);background:#fff;margin-bottom:12px}
+#busca:focus{outline:none;border-color:var(--sangue)}
+#lista{display:flex;flex-direction:column}
+button.ex-i{display:grid;grid-template-columns:1fr 150px 90px;gap:14px;
+  text-align:left;background:none;border:none;
+  border-bottom:1px solid var(--linha);padding:9px 2px;cursor:pointer;
+  align-items:baseline}
+button.ex-i:hover{background:var(--papel2)}
+button.ex-i[disabled]{opacity:.4;cursor:default}
+.ex-i .n{font-family:var(--serifa);font-size:16px;color:var(--tinta)}
+.ex-i .c,.ex-i .t{font-family:var(--sans);font-size:11.5px;color:var(--tinta3);
+  letter-spacing:.3px}
+.ex-i .t{text-align:right;font-variant-numeric:tabular-nums}
+.vazio{font-family:var(--sans);font-size:13px;color:var(--tinta3);padding:14px 0}
+button.esp{display:block;width:100%;text-align:left;background:none;
+  border:none;border-bottom:1px solid var(--linha);padding:12px 2px;
+  cursor:pointer;font-family:var(--serifa);font-size:17px;color:var(--tinta)}
+button.esp:hover{color:var(--sangue)}
+button.esp i{font-style:normal;font-family:var(--sans);font-size:12px;
+  color:var(--tinta3);margin-left:10px}
+
+/* ─────────────────────── desfecho ─────────────────────── */
+
+.fim .fk{font-family:var(--sans);font-size:10.5px;letter-spacing:1.8px;
+  text-transform:uppercase;color:var(--tinta3);margin-bottom:6px}
+.fim h2{margin:0 0 14px;font-family:var(--serifa);font-size:34px;
+  font-weight:600;line-height:1.1;border-bottom:3px solid var(--linha2);
+  padding-bottom:12px}
+.fim.q-melhor h2{border-bottom-color:var(--certo)}
+.fim.q-medio h2{border-bottom-color:var(--alerta)}
+.fim.q-pior h2{border-bottom-color:var(--grave)}
+.fim p{font-size:18px;line-height:1.55;color:var(--tinta2);max-width:72ch;
+  margin:0 0 12px}
+.porque{margin:18px 0;padding:14px 0;border-top:1px solid var(--linha);
+  border-bottom:1px solid var(--linha)}
+.porque b{display:block;font-family:var(--sans);font-size:10.5px;
+  letter-spacing:1.6px;text-transform:uppercase;color:var(--tinta3);
+  margin-bottom:6px}
+.linha{font-family:var(--sans);font-size:12.5px;color:var(--tinta2);
+  margin-bottom:18px}
+.linha b{display:block;font-size:10.5px;letter-spacing:1.6px;
+  text-transform:uppercase;color:var(--tinta3);margin-bottom:7px}
+.linha span{display:inline-block;margin:0 20px 5px 0;
+  font-variant-numeric:tabular-nums}
+.faltou b{display:block;font-family:var(--sans);font-size:10.5px;
+  letter-spacing:1.6px;text-transform:uppercase;color:var(--tinta3);
+  margin-bottom:8px}
+.faltou>div{padding:9px 0;border-bottom:1px solid var(--linha)}
+.faltou span{font-family:var(--serifa);font-size:17px;display:block}
+.faltou p{font-family:var(--sans);font-size:13px;color:var(--tinta3);
+  margin:3px 0 0;line-height:1.45;max-width:76ch}
+.faltou.ok b{color:var(--certo)}
+
+/* ─────────────────────── projetor ─────────────────────── */
+
+@media (max-width:1180px){
+  #corpo{grid-template-columns:260px 1fr}
+  #reg{padding:18px 22px 50px}
+  .e{padding-left:84px}
+}
+
+/* Imagem médica em fundo escuro: é como ela é lida no negatoscópio, e num
+   datashow fraco o escuro segura o contraste que o branco perde. */
+.ex figure{margin:12px 0 0;background:#14120f;padding:12px 12px 0;max-width:62ch}
+.ex figure img{display:block;width:100%;max-height:360px;object-fit:contain}
+.ex figcaption{font-family:var(--sans);font-size:11.5px;line-height:1.45;
+  color:#a49a8c;padding:9px 0 11px}
+.ex figcaption .cr{display:block;color:#6d6459;font-size:10.5px;margin-top:3px}
