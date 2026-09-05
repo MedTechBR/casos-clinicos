@@ -13,10 +13,13 @@ from motor.biblioteca import caso, montar  # noqa: E402
 
 CASOS = [
     caso(slug="pulmao_rim",
-         titulo="Homem de 63 anos com hemoptise, púrpura e queda da função renal",
-         subtitulo="Oito semanas de doença, quatro territórios acometidos, e um "
-                   "paciente que já foi tratado duas vezes como outra coisa.",
-         especialidade="Clínica médica · Nefrologia · Pneumologia",
+         titulo="Homem de 63 anos com dispneia progressiva e hemoptise",
+         subtitulo="Oito semanas de doença tratada duas vezes como outra "
+                   "coisa, e uma piora que começou três dias antes da "
+                   "internação.",
+         # "Nefrologia · Pneumologia" no cartão entrega a síndrome antes de o
+         # aluno abrir o caso, do mesmo jeito que o título entregava.
+         especialidade="Clínica médica · Emergência",
          minutos=55, decisoes=12, desfechos=4, nivel="os dois", cor="vermelho",
          capa="cena_admissao.jpg", arquivo="pulmao-rim.html"),
 

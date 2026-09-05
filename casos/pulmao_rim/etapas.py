@@ -35,8 +35,16 @@ from motor.etapas import (
 
 from .banco import BANCO  # noqa: F401  — a gaveta de exames é a mesma
 
-TITULO = ("Homem de 63 anos com hemoptise, púrpura e queda da "
-          "função renal")
+# O título anterior — "hemoptise, púrpura e queda da função renal" — era a
+# tríade inteira. Quem conhece o padrão lia síndrome pulmão-rim por vasculite
+# antes da primeira página, e o título fica no topo das 55 telas: vazava em
+# todas. Além disso "queda da função renal" é resultado de exame, e a regra da
+# CPC é que o título traga sintomas e sinais da APRESENTAÇÃO — nunca um
+# diagnóstico, nunca um exame que entregue o caso.
+#
+# O que trouxe este paciente ao pronto-socorro foi falta de ar e sangue no
+# escarro. A púrpura apareceu no exame físico; a creatinina, no laboratório.
+TITULO = "Homem de 63 anos com dispneia progressiva e hemoptise"
 RODAPE = "Caso interativo · curso simulado"
 IMG = Path(__file__).parent / "img"
 
