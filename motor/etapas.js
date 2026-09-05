@@ -12,6 +12,9 @@
 const DADOS = JSON.parse(document.getElementById('dados').textContent);
 const CASO = DADOS.caso, ETAPAS = DADOS.etapas, BANCO = DADOS.banco;
 const REVISAO = DADOS.revisao;
+/* As imagens viajam numa tabela à parte, uma vez cada: a etapa guarda
+   só o nome do arquivo. */
+const IMG = n => (DADOS.imgs || {})[n] || n || '';
 
 const $ = s => document.querySelector(s);
 
@@ -141,11 +144,11 @@ function pintarPe(){
 /* ─────────────────────────── desenho das etapas ─────────────────────────── */
 
 const fundoDe = e => e.fundo
-  ? '<div class="fundo" style="background-image:url(' + e.fundo + ')"></div>'
+  ? '<div class="fundo" style="background-image:url(' + IMG(e.fundo) + ')"></div>'
   : '<div class="fundo" style="background:#0d1014"></div>';
 
 const laminaDe = l => !l ? '' :
-  '<figure class="lamina"><img src="' + l.img + '" alt="' + l.tt + '">'
+  '<figure class="lamina"><img src="' + IMG(l.img) + '" alt="' + l.tt + '">'
   + '<figcaption class="cap"><b>' + l.tt + '</b>' + l.lg
   + '<span class="cr">' + l.cr + '</span></figcaption></figure>';
 
@@ -214,7 +217,7 @@ const DESENHO = {
         + '<div class="v">' + x.r
         + (x.ref && x.ref !== '—' ? '<span class="rf">referência: ' + x.ref
             + '</span>' : '') + '</div>'
-        + (im ? '<figure><img src="' + im.img + '" alt="' + n + '">'
+        + (im ? '<figure><img src="' + IMG(im.img) + '" alt="' + n + '">'
             + '<figcaption>' + im.lg + ' · ' + im.cr + '</figcaption></figure>' : '')
         + '</article>';
     }).join('');

@@ -278,9 +278,19 @@ def montar(caso) -> str:
         return cache[nome]
 
     def resolver(v):
-        """Troca todo nome de arquivo por um data: URI, onde quer que esteja."""
+        """Anota que a imagem é usada, mas deixa o NOME no lugar do arquivo.
+
+        Inlinear o data: URI aqui custava caro: a cena de admissão é o fundo de
+        quase todas as etapas, e cada ocorrência carregava uma cópia inteira do
+        base64 — o mesmo quarto de megabyte, vinte vezes. O arquivo saía com
+        8 MB de imagem repetida. Agora cada imagem viaja uma vez, numa tabela,
+        e a etapa guarda só a chave.
+        """
         if isinstance(v, dict):
-            return {k: (embutir(x) if k in ("fundo", "img") and x else resolver(x))
+            for k, x in v.items():
+                if k in ("fundo", "img") and x:
+                    embutir(x)
+            return {k: (x if k in ("fundo", "img") and x else resolver(x))
                     for k, x in v.items()}
         if isinstance(v, list):
             return [resolver(x) for x in v]
@@ -294,6 +304,7 @@ def montar(caso) -> str:
         "revisao": [dict(r, rotulo=texto(r["rotulo"]), porque=texto(r["porque"]))
                     for r in getattr(caso, "REVISAO", [])],
     }
+    dados["imgs"] = cache          # cada imagem uma vez só, no fim
 
     return (
         '<!doctype html>\n<html lang="pt-BR">\n<head>\n<meta charset="utf-8">\n'
