@@ -125,26 +125,58 @@ def _pag(tipo, ident, **extra):
     return dict({"t": tipo, "k": ident}, **extra)
 
 
-def capa(titulo, lede, *, fundo, lamina_=None, numeros_="", territorios_="",
-         kicker="", ressalva="") -> dict:
-    return _pag("capa", "capa", tt=texto(titulo), lede=texto(lede),
-                fundo=fundo, lamina=lamina_, nums=numeros_,
-                terrs=territorios_, kicker=texto(kicker),
-                ressalva=texto(ressalva))
+def capa(titulo, *, fundo, kicker="", selo="", procedencia="") -> dict:
+    """A capa é título e imagem. Só.
+
+    Ela trazia três números grandes — creatinina, saturação, hemoglobina — e a
+    lista dos territórios acometidos. Isso é o resumo do caso impresso na porta
+    de entrada: entrega de graça, na primeira tela, dados que o caso depois vai
+    cobrar uma das seis vagas do painel de exames para devolver. E ninguém
+    conduz um paciente lendo o desfecho da triagem antes de entrar no quarto.
+
+    A procedência não some: ela vai inteira para a última tela, onde não
+    atrapalha o raciocínio de ninguém.
+    """
+    return _pag("capa", "capa", tt=texto(titulo), fundo=fundo,
+                kicker=texto(kicker), selo=texto(selo),
+                proc=texto(procedencia))
+
+
+def _rota(rota):
+    """A ramificação pelo que foi PEDIDO, validada no build."""
+    if rota is None:
+        return None
+    if set(rota) != {"pediu", "entao", "senao"}:
+        raise ValueError("rota: use pediu=[...], entao=..., senao=...")
+    if not rota["pediu"]:
+        raise ValueError("rota sem exame exigido não ramifica nada")
+    return rota
 
 
 def pagina(ident, kicker, titulo, *blocos, fundo="", lamina_=None,
-           nota="", sistema="geral", so_kicker=False, segue="") -> dict:
+           nota="", sistema="geral", so_kicker=False, segue="",
+           conforme=None, rota=None) -> dict:
     """`so_kicker` promove o rótulo a título e descarta a manchete.
+
+    `conforme=("b1", ["a", "b", "c"])` faz a página seguinte depender do
+    caminho escolhido numa bifurcação anterior. É o que permite ter uma
+    evolução compartilhada — a febre do quinto dia é a mesma nos três — e um
+    hemograma que só depois se separa, sem triplicar a página inteira.
 
     Serve às telas em que o rótulo longo diz mais que o título curto — "onde
     dava para ter chegado antes" contra "a retrospectiva". Ter os dois é o que
     faz onze telas parecerem a mesma máquina de quatro compartimentos.
     """
+    if conforme is not None:
+        de, para = conforme
+        if not isinstance(para, (list, tuple)) or len(para) < 2:
+            raise ValueError("conforme: (ident_da_bifurcacao, [destinos])")
+        conforme = {"de": de, "para": list(para)}
     return _pag("pagina", ident, kicker=texto(kicker), tt=texto(titulo),
                 corpo="".join(blocos), fundo=fundo, lamina=lamina_,
                 nota=texto(nota), sis=_s(sistema),
-                so_kicker=1 if so_kicker else 0, segue=segue)
+                so_kicker=1 if so_kicker else 0, segue=segue,
+                conforme=conforme, rota=_rota(rota))
 
 
 # ─────────────────────────── o pedido de exames ───────────────────────────
@@ -232,14 +264,9 @@ def resultados(ident, kicker, titulo, de, *, fundo="", introducao="",
     que trata de conduzir sem elas. É a única ramificação do caso que não é
     escolha de conduta, e é a que mais ensina.
     """
-    if rota is not None:
-        if set(rota) != {"pediu", "entao", "senao"}:
-            raise ValueError("rota: use pediu=[...], entao=..., senao=...")
-        if not rota["pediu"]:
-            raise ValueError("rota sem exame exigido não ramifica nada")
     return _pag("resultados", ident, kicker=texto(kicker), tt=texto(titulo),
                 de=de, fundo=fundo, intro=texto(introducao), nota=texto(nota),
-                laminas=laminas or {}, rota=rota)
+                laminas=laminas or {}, rota=_rota(rota))
 
 
 # ─────────────────────────── perguntas ───────────────────────────

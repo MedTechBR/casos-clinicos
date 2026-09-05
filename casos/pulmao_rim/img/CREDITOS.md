@@ -8,14 +8,15 @@
 | `glomerulo_crescente.jpg` | Glomérulo com crescente celular, PAS, grande aumento | Nephron | Wikimedia Commons | CC BY-SA 3.0 |
 | `rx_torax_alveolar.jpg` | Radiografia de tórax, opacidades alveolares bilaterais | Samir | Wikimedia Commons | CC BY-SA 3.0 |
 | `us_rim.jpg` | Ultrassonografia de rim adulto normal | Hansen, Nielsen e Ewertsen | Wikimedia Commons | CC BY 4.0 |
-| `sedimento_cilindro_hematico.jpg` | Cilindro celular em sedimento urinário | Rian Kabir | Wikimedia Commons | CC BY 2.0 |
+| `sedimento_cilindro.jpg` | Cilindro celular em sedimento urinário | Rian Kabir | Wikimedia Commons | CC BY 2.0 |
 
-> **Correção de 03/09/2026.** A legenda anterior afirmava "hematoxilina-eosina,
-> crescente celular". A coloração da imagem é de padrão PAS, não H&E, e não é
-> possível identificar com segurança uma crescente neste plano. Ambas as
-> afirmações foram removidas: a foto agora mostra o que dá para nomear
-> (glomérulo, túbulos, interstício) e a morfologia da crescente ficou no
-> esquema autoral, onde é inequívoca.
+> **Correção de 03/09/2026, sobre `biopsia_renal_cortex.jpg`.** A legenda dela
+> afirmava "hematoxilina-eosina, crescente celular". A coloração é de padrão
+> PAS, não H&E, e não é possível identificar com segurança uma crescente
+> naquele plano, de menor aumento. As duas afirmações saíram: a foto passou a
+> mostrar o que dá para nomear — glomérulos, túbulos, interstício. A morfologia
+> da crescente ficou primeiro num esquema autoral e, desde 05/09/2026, em
+> `glomerulo_crescente.jpg`, que é de grande aumento e sustenta a afirmação.
 
 Todas ilustrativas. Nenhuma pertence ao paciente do caso, que é ficcional.
 O crédito e a licença aparecem na legenda de cada figura e no slide final.
@@ -33,11 +34,11 @@ o caso afirma.
 
 ## biopsia_renal_cortex.jpg
 
-Renomeada em 04/09/2026, de `biopsia_renal_cortex.jpg`. O nome antigo
+Renomeada em 04/09/2026, **de `biopsia_renal_crescente.jpg`**. O nome antigo
 afirmava um achado que a foto não sustenta, e reintroduzia a afirmação errada
 em todo lugar onde o caminho do arquivo aparecia. Os dois auditores rejeitaram
-o vínculo entre esta foto e o laudo das crescentes; a morfologia da crescente
-voltou para o esquema autoral em SVG.
+o vínculo entre esta foto e o laudo das crescentes. Hoje ela é só o fundo das
+páginas de discussão do rim.
 
 
 ## As quatro imagens novas de 05/09/2026
@@ -59,6 +60,27 @@ uma ressalva.
 imagem não pode discutir com o dado do paciente. Os asteriscos que restam são
 do autor da fonte e estão decodificados na legenda.
 
-`sedimento_cilindro_hematico.jpg` está identificada na fonte como cilindro
-hemático; a legenda do caso diz "cilindro celular", que é o que a fotografia
-sustenta sem depender do título do arquivo.
+`sedimento_cilindro.jpg` está identificada **na fonte** como cilindro hemático.
+Ampliada ao máximo, não se resolvem hemácias individuais, e por isso a legenda
+do caso diz apenas "cilindro urinário" — o piso que a fotografia sustenta sem
+depender do título do arquivo. Pelo mesmo motivo o arquivo foi renomeado em
+05/09/2026, de `sedimento_cilindro_hematico.jpg`: nome de arquivo é uma
+afirmação que viaja em todo caminho, log e commit.
+
+
+## O que a auditoria de duas vias decidiu em 05/09/2026
+
+Os dois auditores independentes **rejeitaram** `rx_torax_alveolar.jpg` pelo
+mesmo motivo, encontrado separadamente: havia texto de interface gravado dentro
+do arquivo — um `?` na tarja superior e o resto de um `Comments:` no rodapé,
+sobras da página de onde a imagem foi capturada. O arquivo foi rebaixado da
+fonte e recortado em 5% no topo e 8,5% na base. As demais foram aceitas pelos
+dois.
+
+Sobre as setas da fotomicrografia, os dois calcularam a ponta real de cada
+seta pela curva de Bézier — e não pelo alvo declarado — e confirmaram cápsula e
+crescente. Os dois pediram o mesmo conserto na seta do tufo, que caía sobre
+matriz sem alça capilar reconhecível, e um deles apontou o glomérulo
+globalmente esclerosado do canto inferior esquerdo como distrator. As duas
+coisas foram feitas: a seta do tufo mudou de alvo e o esclerosado ganhou seta
+própria, dizendo que não é crescente.

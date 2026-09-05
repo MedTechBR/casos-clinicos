@@ -11,6 +11,7 @@ as mesmas classes de revelação do motor, então o `→` e o clique já funcion
 from __future__ import annotations
 
 import math
+from pathlib import Path
 
 from .conteudo import texto
 
@@ -76,20 +77,23 @@ TERRITORIOS = {
     "via_aerea": dict(
         nome="Via aérea superior",
         marca=(
-            # região médio-facial: seios e fossas nasais, sem virar rosto
-            '<path d="M150 30 C138 30 133 40 134 51 C135 60 141 68 150 68 '
-            'C159 68 165 60 166 51 C167 40 162 30 150 30 Z"/>'
-            '<path d="M150 44 L150 62" stroke-width="1.2" fill="none"/>'
+            # Só a pirâmide nasal. A marca cobria o crânio inteiro e a legenda
+            # dizia "crostas no septo": escala errada em cerca de sete vezes.
+            '<path d="M150 40 C144 40 141 47 141 54 C141 60 145 63 150 63 '
+            'C155 63 159 60 159 54 C159 47 156 40 150 40 Z"/>'
+            '<path d="M150 45 L150 61" stroke-width="1.1" fill="none"/>'
         ),
-        num=(190, 40),
+        num=(186, 51),
     ),
     "pulmao": dict(
         nome="Pulmão",
         marca=(
             '<path d="M141 106 C130 114 126 140 129 162 C131 176 141 178 143 166 '
             'C146 146 145 118 141 106 Z"/>'
-            '<path d="M159 106 C170 114 174 140 171 162 C169 176 159 178 157 166 '
-            'C154 146 155 118 159 106 Z"/>'
+            # o esquerdo com incisura cardíaca — é ela que distingue os dois
+            '<path d="M159 106 C170 114 174 140 171 162 C169 176 161 178 158 168 '
+            'C157 161 163 158 163 150 C163 142 156 139 156 130 '
+            'C156 120 157 112 159 106 Z"/>'
             '<path d="M150 96 L150 108 M150 108 L142 116 M150 108 L158 116"/>'
         ),
         num=(190, 130),
@@ -97,12 +101,14 @@ TERRITORIOS = {
     "rim": dict(
         nome="Rim",
         marca=(
-            '<path d="M133 186 C124 186 120 196 121 206 C122 217 128 223 134 220 '
-            'C139 218 138 210 136 204 C134 198 137 190 133 186 Z"/>'
-            '<path d="M167 186 C176 186 180 196 179 206 C178 217 172 223 166 220 '
-            'C161 218 162 210 164 204 C166 198 163 190 167 186 Z"/>'
+            # Retroperitoneais, T12–L3, sobrepondo as últimas costelas. Estavam
+            # desenhados no mesogástrio, abaixo das bases pulmonares.
+            '<path d="M133 168 C124 168 120 178 121 188 C122 199 128 205 134 202 '
+            'C139 200 138 192 136 186 C134 180 137 172 133 168 Z"/>'
+            '<path d="M167 168 C176 168 180 178 179 188 C178 199 172 205 166 202 '
+            'C161 200 162 192 164 186 C166 180 163 172 167 168 Z"/>'
         ),
-        num=(190, 204),
+        num=(190, 186),
     ),
     "pele": dict(
         nome="Pele",
@@ -119,16 +125,18 @@ TERRITORIOS = {
     "nervo": dict(
         nome="Nervo periférico",
         marca=(
-            # pé caído à direita do paciente e território ulnar à esquerda dele
-            # pé caído à direita do paciente
-            '<path d="M181 392 L185 414 L206 424" stroke-width="3.6" fill="none" '
+            # Vista ANTERIOR: x > 150 é o lado ESQUERDO DO PACIENTE. Os dois
+            # traços estavam espelhados — a tela mostrava o pé caído do lado
+            # esquerdo enquanto a legenda, na mesma tela, dizia "à direita".
+            # Pé caído à DIREITA do paciente:
+            '<path d="M119 392 L115 414 L94 424" stroke-width="3.6" fill="none" '
             'stroke-linecap="round" stroke-linejoin="round"/>'
-            # território ulnar na mão esquerda
-            '<path d="M52 258 L48 280" stroke-width="3" fill="none" '
+            # Território ulnar na mão ESQUERDA do paciente:
+            '<path d="M248 258 L252 280" stroke-width="3" fill="none" '
             'stroke-linecap="round"/>'
-            '<circle cx="47" cy="285" r="6"/>'
+            '<circle cx="253" cy="285" r="6"/>'
         ),
-        num=(218, 424),
+        num=(84, 424),
     ),
 }
 
@@ -154,7 +162,7 @@ def mapa_do_corpo(territorios, altura: int = 350, passo_a_passo: bool = True) ->
             f'stroke-width="1.7" stroke-linejoin="round">{t["marca"]}</g>'
             f'<g class="marca">'
             f'<circle cx="{nx}" cy="{ny}" r="9" fill="{MARCA}"/>'
-            f'<text x="{nx}" y="{ny + 3.8}" text-anchor="middle" fill="#fff" '
+            f'<text x="{nx}" y="{ny + 3.8}" text-anchor="middle" fill="#0b0e12" '
             f'font-size="11" font-weight="700" '
             f'font-family="Helvetica Neue,Arial,sans-serif">{k + 1}</text>'
             f"</g></g>"
@@ -549,8 +557,33 @@ def seta(alvo, rotulo, texto_, *, curva: float = 0) -> dict:
     return {"a": alvo, "r": rotulo, "t": texto(texto_), "c": curva}
 
 
-def anotada(arquivo, largura, altura, *setas, legenda="", credito="",
-            titulo="", moldura: int = 0) -> str:
+def _dimensoes(caminho: Path) -> tuple[int, int]:
+    """Largura e altura do arquivo, lidas do próprio arquivo.
+
+    Elas estavam escritas à mão na chamada. Um recorte no JPG — e houve um,
+    para tirar a medida gravada num ultrassom — moveria TODAS as setas em
+    silêncio para estruturas erradas, que é a pior falha possível numa figura
+    anotada: continua parecendo certa.
+    """
+    d = caminho.read_bytes()
+    if d[:8] == b"\x89PNG\r\n\x1a\n":
+        return int.from_bytes(d[16:20], "big"), int.from_bytes(d[20:24], "big")
+    i = 2
+    while i < len(d) - 9:
+        if d[i] != 0xFF:
+            i += 1
+            continue
+        m = d[i + 1]
+        if m in (0xC0, 0xC1, 0xC2, 0xC3, 0xC5, 0xC6, 0xC7,
+                 0xC9, 0xCA, 0xCB, 0xCD, 0xCE, 0xCF):
+            return (int.from_bytes(d[i + 7:i + 9], "big"),
+                    int.from_bytes(d[i + 5:i + 7], "big"))
+        i += 2 + int.from_bytes(d[i + 2:i + 4], "big")
+    raise ValueError(f"não consegui ler as dimensões de {caminho}")
+
+
+def anotada(caminho, *setas, legenda="", credito="", titulo="",
+            moldura: int = 0) -> str:
     """A foto de licença aberta com as setas que explicam o que olhar.
 
     Substitui o esquema autoral onde existe imagem real: o esquema ensina a
@@ -558,6 +591,9 @@ def anotada(arquivo, largura, altura, *setas, legenda="", credito="",
     lâmina do hospital. A seta resolve o problema que fazia o esquema
     necessário — dizer QUAL das estruturas da foto é a que interessa.
     """
+    caminho = Path(caminho)
+    largura, altura = _dimensoes(caminho)
+    arquivo = caminho.name
     h = round(1000 * altura / largura, 1)
     partes = []
     for s in setas:
@@ -580,7 +616,7 @@ def anotada(arquivo, largura, altura, *setas, legenda="", credito="",
             # dois traços sobre o mesmo caminho: o escuro largo abre espaço na
             # textura, o claro fino é a seta que se lê
             f'<path class="fio halo" d="{d}"/><path class="fio luz" d="{d}"/>'
-            f'<path class="ponta" d="M0 0 L-19 8 L-19 -8 Z" '
+            f'<path class="ponta" d="M0 0 L-27 11 L-27 -11 Z" '
             f'transform="translate({px:.1f} {py:.1f}) rotate({ang:.1f})"/>'
             f'<text class="rot" x="{rx:.1f}" y="{ry:.1f}" text-anchor="{anc}" '
             f'dy="-7">{s["t"]}</text>'

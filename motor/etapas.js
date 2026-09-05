@@ -82,6 +82,13 @@ function adiante(){
     irPara(tem ? e.rota.entao : e.rota.senao);
     return;
   }
+  /* A evolução volta a se separar aqui: a página é a mesma para os três
+     caminhos até o ponto em que o hemograma deixa de ser o mesmo. */
+  if (e.conforme){
+    const k = escolhas[e.conforme.de];
+    irPara(e.conforme.para[k === undefined ? 0 : k]);
+    return;
+  }
   // `segue` deixa a ordem do arquivo de ser a única costura entre as páginas:
   // é o que permite três trilhas de tratamento convivendo na mesma lista
   if (e.segue){ irPara(e.segue); return; }
@@ -113,11 +120,6 @@ function podeAdiante(){
 
 /* ─────────────────────────── o trilho ─────────────────────────── */
 
-/* Só as etapas que pedem alguma coisa do grupo entram no trilho: contar
-   páginas de prosa transformaria o progresso em barra de rolagem. */
-const PASSOS = ETAPAS.map((e, n) => ({e: e, n: n}))
-  .filter(x => ['pedido', 'pergunta', 'bifurcacao'].includes(x.e.t));
-
 /* Desde que o caso ramifica, a lista de etapas deixou de ser o caminho: ela
    contém as páginas das DUAS rotas, e contar 27 num percurso de 19 é mentir
    para quem olha o trilho. Esta função percorre o caso a partir do estado
@@ -138,6 +140,9 @@ function rotaAtual(){
     } else if (e.rota){
       n = porId(e.rota.pediu.every(x => pedidos.has(x))
                 ? e.rota.entao : e.rota.senao);
+    } else if (e.conforme){
+      const k = escolhas[e.conforme.de];
+      n = porId(e.conforme.para[k === undefined ? 0 : k]);
     } else if (e.segue){
       n = porId(e.segue);
     } else n = n + 1;
@@ -208,10 +213,52 @@ function resolverImagens(){
   });
 }
 
+/* ─────────────────────── a lupa ─────────────────────── */
+
+/* Tomografia lida num cartão de 300 px é decoração. Qualquer figura da peça
+   abre em tela cheia por clique, com a legenda embaixo, e fecha por clique,
+   por Esc ou pelo botão. Enquanto a lupa está aberta as setas do teclado
+   param de virar página: elas pertencem à figura, não ao caso. */
+let lupaAberta = false;
+
+function abrirLupa(figura){
+  const clone = figura.cloneNode(true);
+  clone.classList.remove('lamina');
+  const cx = document.createElement('div');
+  cx.className = 'lupa';
+  cx.innerHTML = '<button class="fechar" title="Fechar (Esc)">Fechar ✕</button>';
+  const quadro = document.createElement('div');
+  quadro.className = 'quadro';
+  quadro.appendChild(clone);
+  cx.appendChild(quadro);
+  document.body.appendChild(cx);
+  lupaAberta = true;
+  const fechar = () => {
+    cx.remove(); lupaAberta = false;
+    document.removeEventListener('keydown', porTecla, true);
+  };
+  const porTecla = ev => {
+    if (ev.key === 'Escape'){ ev.stopPropagation(); fechar(); }
+  };
+  document.addEventListener('keydown', porTecla, true);
+  cx.onclick = ev => { if (!quadro.contains(ev.target) || ev.target.tagName === 'IMG') fechar(); };
+  cx.querySelector('.fechar').onclick = fechar;
+}
+
+function ligarLupa(){
+  document.querySelectorAll('#palco figure').forEach(f => {
+    if (!f.querySelector('img,svg')) return;
+    f.classList.add('amplia');
+    f.title = 'Clique para ampliar';
+    f.onclick = () => abrirLupa(f);
+  });
+}
+
 function pintar(){
   const e = etapa();
   $('#palco').innerHTML = '<section class="tela on">' + DESENHO[e.t](e) + '</section>';
   resolverImagens();
+  ligarLupa();
   ligar(e);
   pintarTrilho();
   pintarPe();
@@ -219,14 +266,16 @@ function pintar(){
 
 const DESENHO = {
 
+  /* Título e imagem. A imagem sobe do chão para a tela inteira, sem véu de
+     leitura por cima dela senão o gradiente que segura o título. */
   capa: e =>
-    fundoDe(e) + '<div class="veu esq"></div>'
-    + '<div class="plano">'
+    '<div class="fundo capa-fundo" style="background-image:url(' + IMG(e.fundo) + ')"></div>'
+    + '<div class="veu capa-veu"></div>'
+    + '<div class="abertura">'
     + (e.kicker ? '<div class="marca"><i></i><span>' + e.kicker + '</span></div>' : '')
-    + '<h1>' + e.tt + '</h1><p class="lede">' + e.lede + '</p>'
-    + e.nums + e.terrs
-    + (e.ressalva ? '<div class="ress">' + e.ressalva + '</div>' : '')
-    + '</div>' + laminaDe(e.lamina),
+    + '<h1>' + e.tt + '</h1>'
+    + (e.selo ? '<div class="selo">' + e.selo + '</div>' : '')
+    + '</div>',
 
   /* Quando o rótulo é mais informativo que a manchete — "onde dava para ter
      chegado antes" contra "a retrospectiva" — quem sobe a título é o rótulo, e
@@ -428,11 +477,16 @@ function mostrarRevisao(){
   const pediu = new Set();
   Object.values(marcados).forEach(s => s.forEach(n => pediu.add(n)));
   const faltou = REVISAO.filter(r => !pediu.has(r.chave));
-  const acertos = Object.entries(respostas).filter(([k, r]) => {
+  /* `respostas[k]` nasce quando a página é PINTADA, não quando é respondida, e
+     `[].every()` é `true`: uma pergunta só visitada entrava no total e no
+     acerto. Dava para chegar à revisão com "4 de 4" tendo respondido três. */
+  const feitas = Object.entries(respostas).filter(([, r]) => r.feita);
+  const acertos = feitas.filter(([k, r]) => {
     const e = ETAPAS[porId(k)];
-    return e && r.marcadas.every(x => e.alts[x].ok);
+    return e && r.marcadas.length === e.escolhas
+             && r.marcadas.every(x => e.alts[x].ok);
   }).length;
-  const total = Object.keys(respostas).length;
+  const total = feitas.length;
 
   $('#palco').innerHTML = '<section class="tela on">'
     + '<div class="fundo" style="background:#0d1014"></div>'
@@ -442,8 +496,7 @@ function mostrarRevisao(){
     + '<p class="sub">' + acertos + ' de ' + total + ' perguntas de escolha com '
     + 'a resposta inteiramente certa · ' + Object.keys(marcados).length
     + ' rodadas de exames, ' + pediu.size + ' pedidos ao todo · '
-    + Object.keys(escolhas).length + ' bifurcação de conduta. '
-    + 'São as seis decisões do caso.</p>'
+    + Object.keys(escolhas).length + ' bifurcação de conduta.</p>'
     + '<div class="rev">' + (faltou.length
         ? faltou.map(r => '<div class="li"><b>' + r.rotulo + '</b><p>'
             + r.porque + '</p></div>').join('')
@@ -466,6 +519,7 @@ function recomecar(){
 /* ─────────────────────────── teclado ─────────────────────────── */
 
 addEventListener('keydown', ev => {
+  if (lupaAberta) return;              // as setas são da figura enquanto ela está aberta
   if (ev.key === 'ArrowRight' || ev.key === 'PageDown'){
     if (podeAdiante()) adiante();
     ev.preventDefault();

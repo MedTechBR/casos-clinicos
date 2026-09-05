@@ -23,13 +23,23 @@
   --gelo:#eef2f6; --nevoa:#a8b2be; --fumaca:#8d97a4; --sombra:#737d8a;
 
   /* Vermelho é a cor da marca — do filete do kicker, do botão de avançar, da
-   marca do trilho em que se está agora. Nenhum território o reivindica, e
-   nenhum par de territórios fica abaixo de ΔE 25. */
-  --via:#4fb3a6; --pulmao:#3f9fc4; --rim:#cf7a3e; --pele:#c9a53f;
-  --nervo:#8878d6; --sangue:#c25fa8; --geral:#93a0ae;
+   marca do trilho em que se está agora. Nenhum território o reivindica.
+
+   O comentário anterior prometia ΔE ≥ 25 entre territórios e a medição
+   devolveu 23,9 (pulmão × geral) — e, pior, ΔE 7,0 entre `--pele` e
+   `--atencao`, que são a cor de um território e a cor de um desfecho: o mesmo
+   amarelo dizendo duas coisas. Territórios e estados agora vivem em famílias
+   separadas, e os estados saíram do arco quente dos territórios. */
+  --via:#4fb3a6; --pulmao:#3f9fc4; --rim:#e08a3c; --pele:#d9c04a;
+  --nervo:#8878d6; --sangue:#c25fa8; --geral:#8d9aa8;
   --marca:#c2455e;
 
-  --alerta:#e0574d; --certo:#43b585; --atencao:#d3a03c;
+  --alerta:#e0574d; --certo:#5aa8d8; --atencao:#b98a2e;
+
+  /* Uma sombra, em duas intensidades. Havia cinco, todas do mesmo desenho
+     genérico (sem deslocamento horizontal, sem spread), para a mesma ideia. */
+  --fundo1:0 18px 34px rgba(0,0,0,.44);
+  --fundo2:0 30px 58px rgba(0,0,0,.55);
 
   --serifa:"Iowan Old Style",Charter,"Palatino Linotype",Palatino,
            "Book Antiqua",Georgia,serif;
@@ -111,11 +121,15 @@ body{background:var(--preto);color:var(--gelo);font-family:var(--sans);
 /* O teto do plano é o espaço real entre o trilho (64 px) e o pé (76 px), com
    uma folga de respiro — e não uma fração da tela escolhida no olho. Era por
    isso que a capa rolava 14 px em tela baixa e não rolava em tela alta. */
+/* `ch` deriva do font-size da raiz, que nunca muda: acima de ~1064 px de
+   viewport o `76ch` sempre vencia e a peça parava de crescer — 766 px de
+   coluna numa tela de 2560. Agora a coluna cresce com a tela e o teto é de
+   medida de linha, não de pixel. */
 .plano{position:absolute;left:var(--eixo);top:50%;
-  transform:translateY(-50%);width:min(58ch,44vw);
+  transform:translateY(-50%);width:clamp(34ch,42vw,64ch);
   max-height:min(82vh,calc(100vh - 164px));overflow:auto;padding-right:10px}
 .plano.centro{left:var(--eixo);transform:translateY(-50%);
-  width:min(76ch,72vw)}
+  width:clamp(48ch,64vw,88ch)}
 /* três colunas não cabem em 76ch: a página da prescrição pede a tela toda */
 .plano.centro:has(.grade.c3){width:min(120ch,calc(100vw - 2 * var(--eixo)))}
 .plano::-webkit-scrollbar{width:3px}
@@ -128,8 +142,11 @@ body{background:var(--preto);color:var(--gelo);font-family:var(--sans);
   color:var(--nevoa);letter-spacing:0;text-transform:none;flex-basis:100%;
   margin-top:8px;max-width:78ch;line-height:1.5}
 /* o rótulo promovido a título: mantém a marca vermelha e o corpo do h2 */
-h2.do-kicker{position:relative;padding-left:38px;margin-bottom:20px}
-h2.do-kicker::before{content:"";position:absolute;left:0;top:.62em;width:26px;
+/* O filete sobe para cima do título, em vez de empurrá-lo 38 px para dentro:
+   era a única página do caso cujo título não começava no eixo. */
+h2.do-kicker{position:relative;padding-top:16px;
+  margin-bottom:clamp(10px,1.7vh,16px)}
+h2.do-kicker::before{content:"";position:absolute;left:0;top:0;width:26px;
   height:2px;background:var(--marca)}
 .marca i{width:26px;height:2px;display:block;background:var(--marca)}
 .marca span{font-size:10.5px;letter-spacing:2.6px;text-transform:uppercase;
@@ -225,7 +242,7 @@ li{margin-bottom:7px}
 
 .lamina{position:absolute;right:5.5vw;top:50%;width:31vw;height:60vh;
   transform:translateY(-50%) rotateY(-11deg) translateZ(30px);
-  box-shadow:0 60px 110px rgba(0,0,0,.7),0 0 0 1px var(--linha);
+  box-shadow:var(--fundo2),0 0 0 1px var(--linha);
   overflow:hidden;background:#000}
 .lamina img{width:100%;height:100%;object-fit:cover;opacity:.94}
 .lamina .cap{position:absolute;left:0;right:0;bottom:0;padding:18px 20px;
@@ -255,8 +272,7 @@ li{margin-bottom:7px}
   background:rgba(255,255,255,.035);
   transition:transform .24s cubic-bezier(.2,.7,.3,1),box-shadow .24s;
   transform-style:preserve-3d;align-self:start}
-.gr:hover{transform:translateZ(24px) translateY(-3px);
-  box-shadow:0 24px 46px rgba(0,0,0,.5)}
+.gr:hover{transform:translateZ(24px) translateY(-3px);box-shadow:var(--fundo2)}
 .gr>b{display:flex;align-items:center;gap:9px;font-size:10.5px;
   letter-spacing:1.8px;text-transform:uppercase;font-weight:800;
   margin-bottom:clamp(7px,1.4vh,13px);color:var(--nevoa)}
@@ -281,10 +297,12 @@ li{margin-bottom:7px}
 .cx{width:17px;height:17px;border:1.5px solid var(--fumaca);flex:0 0 auto;
   margin-top:3px;position:relative;transition:.15s}
 .it:hover .cx{border-color:var(--gelo)}
-.it.on .cx{background:var(--certo);border-color:var(--certo)}
+.it.on .cx{background:var(--gelo);border-color:var(--gelo)}
 .it.on .cx::after{content:"";position:absolute;left:5px;top:1px;width:5px;
   height:10px;border:solid var(--preto);border-width:0 2px 2px 0;
   transform:rotate(42deg)}
+/* Marcado não é certo. O verde de acerto dizia as duas coisas na mesma peça,
+   e na tela do pedido de exames ele parecia aprovar a escolha. */
 .it .n{font-family:var(--serifa);font-size:clamp(13.5px,1.72vh,16px);
   line-height:1.24;color:#cdd5de}
 .it.on .n{color:var(--gelo)}
@@ -292,10 +310,15 @@ li{margin-bottom:7px}
   font-size:clamp(10px,1.25vh,11.5px);color:var(--fumaca);margin-top:3px;
   line-height:1.35}
 
-/* O item além do teto não some nem fica proibido: fica apagado e inerte. Ver
-   o que se está deixando de fora é parte da decisão. */
-.it.bloq{opacity:.38;cursor:default}
-.it.bloq:hover .cx{border-color:var(--linha2)}
+/* O item além do teto não some nem fica proibido: fica recuado e inerte. Ver
+   o que se está deixando de fora é parte da decisão — e por isso ele não pode
+   ser esmaecido com `opacity`, que levava o nome do exame a 2,7:1 e a
+   descrição a 1,87:1 de contraste. Recuo por cor sólida, medida. */
+.it.bloq{cursor:default}
+.it.bloq .n{color:#7d858f}
+.it.bloq .d{color:#6a727c}
+.it.bloq .cx{border-color:#4b525b}
+.it.bloq:hover .cx{border-color:#4b525b}
 .conta{font-family:var(--sans);font-size:12.5px;color:var(--nevoa);
   letter-spacing:.3px}
 .conta b{color:var(--gelo);font-size:16px;font-weight:700}
@@ -316,7 +339,7 @@ li{margin-bottom:7px}
 .rc{border:1px solid var(--linha);border-left:2px solid var(--linha2);
   padding:clamp(9px,1.3vh,14px) 16px;background:rgba(255,255,255,.028);
   transition:box-shadow .22s}
-.rc:hover{box-shadow:0 20px 38px rgba(0,0,0,.45)}
+.rc:hover{box-shadow:var(--fundo1)}
 .rc.alt{border-left-color:var(--alerta)}
 .rc>b{display:block;font-family:var(--sans);font-size:13px;font-weight:700;
   letter-spacing:.2px;margin-bottom:6px;color:var(--gelo)}
@@ -368,7 +391,7 @@ li{margin-bottom:7px}
   background:rgba(255,255,255,.035);
   transition:transform .2s cubic-bezier(.2,.7,.3,1),box-shadow .2s,border-color .2s}
 .alts li:hover{transform:translateZ(18px);border-color:var(--linha2);
-  box-shadow:0 18px 34px rgba(0,0,0,.42)}
+  box-shadow:var(--fundo1)}
 .alts .k{font-family:var(--sans);font-size:13px;font-weight:800;
   color:var(--fumaca);letter-spacing:1px;padding-top:2px}
 .alts .tx{font-family:var(--serifa);font-size:clamp(15px,.4vw + 1.25vh,21px);
@@ -378,23 +401,30 @@ li{margin-bottom:7px}
    dobravam a altura da lista e devolviam a rolagem que a pergunta acabou de
    perder. */
 .alts .cm{display:none;font-family:var(--sans);
-  font-size:clamp(10.5px,.25vw + .9vh,13.5px);line-height:1.38;
+  font-size:clamp(10.5px,.22vw + .85vh,13px);line-height:1.35;
   color:var(--nevoa)}
-.alts.feita li{grid-template-columns:30px minmax(0,1.05fr) minmax(0,1fr)}
+.alts.feita li{grid-template-columns:30px minmax(0,1fr) minmax(0,1.02fr)}
+.alts.feita .tx{font-size:clamp(13.5px,.32vw + 1.05vh,18px)}
+.alts.feita li{padding-block:clamp(7px,1.1vh,15px)}
+.alts.feita{gap:clamp(6px,.9vh,12px)}
 .alts.feita .cm{padding-left:clamp(12px,1.2vw,20px);
   border-left:1px solid var(--linha)}
 .alts.feita li{cursor:default}
 .alts.feita li:hover{transform:none;box-shadow:none}
 .alts.feita .cm{display:block}
+.alts.feita li{position:relative}
 .alts.feita li.certa{border-color:var(--certo);
-  background:linear-gradient(160deg,rgba(67,181,133,.11),rgba(67,181,133,.02))}
+  background:rgba(90,168,216,.07);box-shadow:inset 3px 0 0 var(--certo)}
 .alts.feita li.certa .k{color:var(--certo)}
-.alts.feita li.certa .k::after{content:" ✓"}
+.alts.feita li.certa .k::after{content:"certa";display:block;font-size:9px;
+  letter-spacing:1.2px;margin-top:4px;font-weight:800}
 .alts.feita li.errada.marcada{border-color:var(--alerta);
-  background:linear-gradient(160deg,rgba(224,87,77,.09),rgba(224,87,77,.02))}
+  box-shadow:inset 3px 0 0 var(--alerta)}
 .alts.feita li.errada.marcada .k{color:var(--alerta)}
-.alts.feita li.errada.marcada .k::after{content:" ✕"}
-.alts.feita li.errada:not(.marcada){opacity:.62}
+.alts.feita li.errada.marcada .k::after{content:"sua";display:block;
+  font-size:9px;letter-spacing:1.2px;margin-top:4px;font-weight:800}
+.alts.feita li.errada:not(.marcada) .tx{color:#a9b1bb}
+.alts.feita li.errada:not(.marcada) .cm{color:#96a0ab}
 /* Confirmar é um gesto à parte: marcar ainda é discussão, confirmar é a
    resposta. Enquanto não se confirma, dá para trocar de alternativa. */
 .conf{align-self:flex-start;margin-top:18px;font-family:var(--sans);
@@ -422,7 +452,7 @@ li{margin-bottom:7px}
   background:rgba(255,255,255,.035);
   transition:transform .24s cubic-bezier(.2,.7,.3,1),box-shadow .24s}
 .cam:hover{transform:translateZ(30px) translateX(5px);
-  box-shadow:0 30px 56px rgba(0,0,0,.55)}
+  box-shadow:var(--fundo2)}
 .cam .l{font-family:var(--sans);font-size:11px;font-weight:800;
   letter-spacing:1.8px;color:var(--marca);margin-bottom:5px;display:block}
 .cam .r{font-family:var(--serifa);font-size:clamp(16px,.5vw + 1.4vh,22px);
@@ -434,8 +464,11 @@ li{margin-bottom:7px}
 .cams.feita .cam{cursor:default}
 .cams.feita .cam:hover{transform:none;box-shadow:none}
 .cams.feita .cam .c{display:block}
-.cams.feita .cam:not(.escolhido){opacity:.5;border-left-color:var(--linha2)}
+.cams.feita .cam:not(.escolhido){border-left-color:var(--linha2);
+  background:rgba(255,255,255,.018)}
 .cams.feita .cam:not(.escolhido) .l{color:var(--fumaca)}
+.cams.feita .cam:not(.escolhido) .r{color:#aeb6c0}
+.cams.feita .cam:not(.escolhido) .c{color:#98a1ac}
 .cams.feita .cam.escolhido{border-left-width:5px}
 .cams.feita .cam.escolhido .l::after{content:" — escolhido"}
 
@@ -568,3 +601,53 @@ li{margin-bottom:7px}
   #pe{height:64px}
   .rc figure figcaption{display:none}
 }
+
+/* ───────────────────────── a capa ───────────────────────── */
+
+/* Título e imagem. A imagem sobe do chão: aqui ela não é textura, é a
+   fotografia de abertura. */
+.capa-fundo{filter:brightness(.62) saturate(.9) blur(0);transform:none;
+  background-position:center right;background-size:cover}
+.veu.capa-veu{background:
+  linear-gradient(100deg,var(--preto) 0 26%,rgba(8,9,11,.86) 46%,
+  rgba(8,9,11,.25) 70%,rgba(8,9,11,.55) 100%)}
+.abertura{position:absolute;left:var(--eixo);bottom:clamp(96px,14vh,150px);
+  width:min(46ch,52vw)}
+.abertura h1{font-size:clamp(34px,2.1vw + 2.4vh,62px);margin-bottom:0}
+.abertura .selo{margin-top:clamp(14px,2.4vh,22px);padding-top:clamp(11px,1.8vh,16px);
+  border-top:1px solid var(--linha);font-family:var(--sans);font-size:11px;
+  letter-spacing:2.2px;text-transform:uppercase;color:var(--sombra);
+  font-weight:700}
+
+/* ───────────────────────── a lupa ───────────────────────── */
+
+.lupa{position:fixed;inset:0;z-index:80;background:rgba(4,5,7,.94);
+  display:flex;align-items:center;justify-content:center;
+  padding:clamp(40px,7vh,72px) clamp(24px,5vw,90px);cursor:zoom-out;
+  animation:surge .18s ease-out}
+@keyframes surge{from{opacity:0}to{opacity:1}}
+.lupa .quadro{max-width:min(1500px,94vw);max-height:88vh;overflow:auto;
+  cursor:default}
+.lupa figure{margin:0;background:#05070a;border:1px solid var(--linha)}
+.lupa figure img{display:block;width:auto;max-width:100%;
+  max-height:calc(88vh - 130px);object-fit:contain;filter:none;height:auto}
+.lupa figure svg{display:block;width:auto;max-width:100%;
+  max-height:calc(88vh - 130px)}
+.lupa figcaption,.lupa .cap{display:block;padding:16px 22px 18px;
+  font-family:var(--sans);font-size:13px;line-height:1.55;color:var(--nevoa);
+  border-top:1px solid var(--linha);max-width:none;position:static;
+  background:none;transform:none;width:auto}
+.lupa .cap b{display:block;color:var(--gelo);font-size:14px;margin-bottom:5px}
+.lupa .cr{display:block;margin-top:7px;color:var(--sombra);font-size:11.5px}
+.lupa .fechar{position:fixed;top:20px;right:26px;font-family:var(--sans);
+  font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;
+  background:none;border:1px solid var(--linha2);color:var(--nevoa);
+  padding:10px 18px;cursor:pointer;transition:.18s}
+.lupa .fechar:hover{border-color:var(--gelo);color:var(--gelo)}
+#palco figure.amplia{cursor:zoom-in}
+#palco figure.amplia::after{content:"⤢";position:absolute;right:9px;bottom:9px;
+  width:26px;height:26px;line-height:26px;text-align:center;font-size:13px;
+  background:rgba(8,9,11,.72);color:var(--nevoa);opacity:0;transition:opacity .2s;
+  border:1px solid var(--linha)}
+#palco figure.amplia{position:relative}
+#palco figure.amplia:hover::after{opacity:1}

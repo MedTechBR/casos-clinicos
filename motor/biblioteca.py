@@ -6,8 +6,9 @@ biblioteca é clara, de papel, e pertence à família de aplicativos que já exi
 
 Como num aplicativo de streaming: prateleira clara, reprodutor escuro.
 
-O progresso de quem já começou fica em `localStorage`, por caso. Não é nota:
-é onde a pessoa parou.
+Cada cartão diz o que custa entrar: duração, número de decisões e número de
+desfechos. Não há nota, não há estrela e não há barra de progresso — é uma
+prateleira de casos, não um jogo.
 """
 
 from __future__ import annotations
@@ -27,7 +28,8 @@ CORES = {
 
 
 def caso(*, slug, titulo, subtitulo, especialidade, minutos, decisoes,
-         desfechos, nivel, cor, capa, arquivo, pronto=True, resumo="") -> dict:
+         desfechos, nivel, cor, capa="", arquivo="", pronto=True,
+         resumo="") -> dict:
     if cor not in CORES:
         raise ValueError(f"cor desconhecida: {cor!r}; use {sorted(CORES)}")
     if nivel not in ("interno", "residente", "os dois"):
@@ -39,7 +41,7 @@ def caso(*, slug, titulo, subtitulo, especialidade, minutos, decisoes,
             "resumo": texto(resumo)}
 
 
-def montar(*, titulo, subtitulo, casos, img_dir: Path) -> str:
+def montar(*, titulo, subtitulo, casos, img_dir: Path, rodape="") -> str:
     raiz = Path(__file__).parent
     css = (raiz / "biblioteca.css").read_text(encoding="utf-8")
     js = (raiz / "biblioteca.js").read_text(encoding="utf-8")
@@ -59,6 +61,7 @@ def montar(*, titulo, subtitulo, casos, img_dir: Path) -> str:
         return cache[nome]
 
     dados = {"titulo": titulo, "subtitulo": texto(subtitulo),
+             "rodape": texto(rodape),
              "casos": [dict(c, capa=embutir(c["capa"])) for c in casos]}
 
     return (
