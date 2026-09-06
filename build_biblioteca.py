@@ -26,21 +26,16 @@ CASOS = [
          minutos=55, decisoes=12, desfechos=4, nivel="os dois", cor="vermelho",
          capa="cena_admissao.jpg", arquivo="pulmao-rim.html"),
 
-    # Os cinco abaixo estão no plano e ainda não existem. Aparecem porque uma
-    # prateleira com um item só não é uma prateleira — e porque prometer no
-    # cartão o que não está pronto seria pior do que dizer que está em preparo.
-    caso(slug="cocaina_levamisol",
-         titulo="Mulher de 34 anos com necrose de orelhas e neutropenia",
-         subtitulo="Púrpura retiforme em pavilhões auriculares, leucopenia e "
-                   "sorologia autoimune exuberante.",
-         especialidade="Clínica médica · Dermatologia", minutos=35, decisoes=6,
-         desfechos=2, nivel="os dois", cor="roxo", pronto=False),
-    caso(slug="west_nile",
-         titulo="Homem de 71 anos com febre e paresia flácida assimétrica",
-         subtitulo="Verão, exposição a mosquitos, e uma fraqueza que não "
-                   "obedece a raiz nem a nível medular.",
-         especialidade="Neurologia · Infectologia", minutos=35, decisoes=6,
-         desfechos=2, nivel="residente", cor="azul", pronto=False),
+    caso(slug="cocaina_levamisol", titulo="À flor da pele",
+         subtitulo="Uma mulher de 34 anos volta ao atendimento após uma mudança nas lesões da pele.",
+         especialidade="Clínica médica · Emergência", minutos=45, decisoes=12,
+         desfechos=4, nivel="os dois", cor="roxo",
+         capa="../../cocaina_levamisol/img/cena.png", arquivo="cocaina-levamisol.html"),
+    caso(slug="west_nile", titulo="O peso dos dias",
+         subtitulo="Um homem de 71 anos com febre passa a precisar de ajuda para caminhar.",
+         especialidade="Clínica médica · Emergência", minutos=45, decisoes=13,
+         desfechos=3, nivel="os dois", cor="azul",
+         capa="../../west_nile/img/cena.png", arquivo="west-nile.html"),
     caso(slug="kikuchi",
          titulo="Mulher de 27 anos com febre prolongada e linfonodomegalia cervical",
          subtitulo="Três semanas de febre, linfonodo doloroso e um hemograma "
