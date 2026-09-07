@@ -84,3 +84,8 @@ matriz sem alça capilar reconhecível, e um deles apontou o glomérulo
 globalmente esclerosado do canto inferior esquerdo como distrator. As duas
 coisas foram feitas: a seta do tufo mudou de alvo e o esclerosado ganhou seta
 própria, dizendo que não é crescente.
+
+## Imagens para discussão — revisão editorial
+
+- **Alvéolo**: LadyofHats. Domínio público. [Fonte e licença](https://commons.wikimedia.org/wiki/File:Alveolus_diagram.svg). Arquivo sem alterações. Uso comparativo; não é exame do paciente ficcional.
+- **Corpúsculo renal**: Michał Komorniczak. CC BY-SA 3.0. [Fonte e licença](https://commons.wikimedia.org/wiki/File:Renal_corpuscle.svg). Arquivo sem alterações. Uso comparativo; não é exame do paciente ficcional.

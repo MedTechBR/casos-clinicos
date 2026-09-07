@@ -37,13 +37,22 @@ def questao(ident, enunciado, opcoes, titulo):
 ETAPAS = [
     capa(TITULO, fundo=CENA,
          procedencia='Roteiro autoral; fontes e limites no fecho.'),
-    pagina('historia', 'Primeiro momento', 'História',
-        p('Marina, 34 anos, procura atendimento por três dias de manchas dolorosas '
-          'nas coxas, mal-estar e dor nas articulações. Hoje apresentou febre. '
-          'Não refere dispneia, hemoptise ou alteração urinária. Não usa medicamentos '
-          'contínuos; tomou paracetamol depois do início dos sintomas.'),
-        p('A irmã acompanha a consulta. Marina trabalha no comércio e não relata trauma local. Não há exames prévios disponíveis.'),
+    pagina('historia', 'Admissão', 'Apresentação',
+        p('Marina, 34 anos, procura atendimento acompanhada da irmã por manchas dolorosas nas coxas e febre. Trabalha em uma loja de roupas e, nos últimos dois dias, deixou de cumprir o turno porque o tecido da calça incomodava ao tocar a pele. Está preocupada com uma área que escureceu naquela manhã.'),
+        p('Diz que nunca teve uma lesão “desse tamanho”. Não refere falta de ar, dor torácica ou sangramento aparente. Está lúcida, conversa sem dificuldade e relata a sequência dos sintomas.'),
         fundo=CENA, lamina_=CENA_HISTORIA),
+    pagina('hda', 'Antes da admissão', 'História da doença atual',
+        p('Três dias antes, notou duas áreas avermelhadas dolorosas na face externa das coxas. Pensou em atrito da roupa, mas não recordava exercício, queda ou picada naquele local. Nas horas seguintes surgiram outras manchas próximas, de cor mais escura. A dor passou de incômodo ao toque para dor em repouso.'),
+        p('Havia também mal-estar e dor nos punhos e tornozelos, sem articulação visivelmente inchada. A febre começou no dia da consulta, com calafrios. Tomou paracetamol depois do início dos sintomas e não usou antibiótico ou pomada antes de procurar atendimento.'),fundo=CENA),
+    pagina('hda2', 'Admissão', 'Sintomas associados',
+        p('Nega sangramento gengival, epistaxe recente ou aumento do fluxo menstrual. Não percebeu inchaço nas pernas nem mudança na quantidade ou na cor da urina até aquela manhã. Não apresenta tosse, dor abdominal persistente, diarreia ou ardor ao urinar.'),
+        p('Perguntada sobre episódios anteriores, recorda manchas pequenas que desapareceram sem consulta alguns meses antes. Não guardou fotografias e não sabe precisar a duração. Não atribui relação entre aquele episódio e o atual.'),fundo=CENA),
+    pagina('antecedentes', 'História pessoal', 'Antecedentes',
+        p('Não tem diagnóstico de hipertensão, diabetes, doença renal ou doença autoimune. Nunca teve trombose, embolia ou sangramento prolongado após procedimentos. Teve uma gestação a termo, sem perdas gestacionais. Não relata infecções graves recorrentes ou internações recentes.'),
+        p('Foi submetida a apendicectomia na adolescência, sem complicações, e nega transfusões. Não conhece alergia medicamentosa. A mãe tem hipotireoidismo; não há história familiar conhecida de trombose em idade jovem ou doença hemorrágica.'),fundo=CENA),
+    pagina('medicacoes', 'História pessoal', 'Medicações e hábitos',
+        p('Não usa medicação contínua, anticoncepcional hormonal ou imunossupressor. Nega medicamento novo nas semanas anteriores, incluindo antibiótico, anti-inflamatório e fórmula para emagrecimento. O paracetamol foi tomado somente depois do aparecimento das manchas.'),
+        p('Mora com a irmã e a filha, trabalha em pé durante boa parte do dia e relata sono irregular. Fuma cerca de cinco cigarros por dia e refere consumo de álcool nos fins de semana. Não houve viagem recente, contato com enchente ou mudança relevante no trabalho. A entrevista inicial foi feita com a irmã presente.'),fundo=CENA),
     pagina('exame', 'Admissão', 'Exame físico',
         vitais(('PA','108/68 mmHg',False),('FC','112 bpm',True),('FR','18 irpm',False),('Temperatura','38,6 °C',True),('SpO₂','98% em ar ambiente',False)),
         topicos(('Estado geral','Lúcida e orientada, com dor nas coxas.'),
@@ -51,6 +60,10 @@ ETAPAS = [
                 ('Abdome','Indolor, sem massas ou visceromegalias palpáveis.'),
                 ('Pele e membros','Placas violáceas dolorosas nas coxas, não desaparecendo à pressão, algumas com centro escurecido. Pulsos presentes, sem crepitação.'),
                 ('Neurológico','Força e sensibilidade preservadas nos quatro membros.')),fundo=CENA),
+    pagina('imagem_pele','Discussão visual','Morfologia das lesões',
+        p('Observe esta fotografia de outro paciente. Descreva a cor, a distribuição e as diferenças de tamanho. O que é possível afirmar apenas pela imagem?'),
+        '<details class="leitura"><summary>Revelar pontos de discussão</summary><p>A fotografia mostra lesões purpúricas. Imagem isolada não permite avaliar palpabilidade ou resposta à digitopressão e não distingue, por si, causa plaquetária, inflamatória ou oclusiva. Esta figura é comparativa; não documenta as placas de Marina.</p></details>',
+        fundo=CENA,lamina_=lamina('purpura.jpg','Púrpura: imagem comparativa','Fotografia de outro paciente, utilizada apenas para discutir morfologia.','Hektor · Wikimedia Commons · CC BY-SA 3.0 · sem alterações.')),
     questao('q1', 'Febre acompanha placas dolorosas não branqueáveis, com pulsos distais presentes. Quais duas avaliações melhor distinguem os mecanismos iniciais?', [
         ('Contagem de plaquetas e coagulograma', 'Ajudam a avaliar distúrbios hemostáticos; púrpura não estabelece vasculite.', True),
         ('Angiografia dos grandes vasos como primeiro exame', 'Os pulsos e a distribuição tornam menos prioritária a pesquisa invasiva de oclusão proximal.', False),
@@ -127,8 +140,8 @@ ETAPAS = [
         ('Pulso isolado de corticoide', 'Não oferece cobertura infecciosa e pode agravar infecção.', False),
     ], 'Urgência antes da causa'),
     pagina('evolucao', 'Segundo momento', 'Evolução',
-        p('Durante a internação, surgem contornos ramificados em algumas placas. '
-          'Não há falta de ar. Marina refere urina mais escura. A lesão cutânea '
+        p('Durante a internação, Marina consegue dormir após analgesia, mas refere dor ao trocar os curativos. Algumas placas passam a ter contornos ramificados e centro mais escuro, sem que isso seja acompanhado de crepitação. '
+          'Não há falta de ar. Ao levantar para ir ao banheiro, percebe a urina mais escura pela primeira vez e avisa à enfermagem. Não refere ardor ao urinar. A lesão cutânea '
           'pode continuar evoluindo mesmo após o início do atendimento; isso '
           'não comprova falha do antibiótico ou necessidade de corticoide.'), fundo=CENA),
     painel('p2', 'Segundo momento', 'Mecanismo e extensão', [
@@ -174,9 +187,8 @@ ETAPAS = [
         ('Aguardar cicatrização para investigar outros órgãos', 'A evolução sistêmica não deve depender da cicatrização cutânea.', False),
     ], 'Discussão'),
     pagina('entrevista', 'Terceiro momento', 'Entrevista privada',
-        p('Em conversa sem acompanhantes e sem julgamento, Marina relata uso '
-          'intranasal de cocaína cerca de 72 horas antes da admissão. Recorda '
-          'episódio menor de manchas após uso anterior. Não conhece a composição '
+        p('Em nova conversa, desta vez sem acompanhantes, Marina explica que hesitou em falar sobre um hábito por receio da reação da irmã. A equipe esclarece a finalidade clínica da entrevista. Ela relata uso '
+          'intranasal de cocaína cerca de 72 horas antes da admissão. Ao reconstruir a cronologia, associa o episódio anterior de manchas ao mesmo contexto de uso. Não conhece a composição '
           'do produto. No reexame, observa-se pequena placa purpúrica na orelha.'),
         p('O relato muda a probabilidade das hipóteses; não confirma adulteração. '
           'A urina escura persiste, sem dispneia ou hemoptise.'), fundo=CENA),
@@ -219,13 +231,17 @@ ETAPAS = [
     ], 'Exposição não equivale a causalidade'),
     bifurcacao('b3', 'Decisão 3', 'Plano integrado',
         'Escolha com base no seu prontuário. Se faltam exames, mantenha a incerteza explícita.', [
-            caminho('Avaliar ameaça orgânica em paralelo', 'q6',
+            caminho('Avaliar ameaça orgânica em paralelo', 'imagem_rim',
                 'Investigar rim e infecção simultaneamente permite individualizar terapia; ausência de biópsia não impede avaliação urgente.', rotulo_curto='Investigar e proteger'),
             caminho('Manter apenas cuidados da pele', 'suporte',
                 'Suporte é central, mas pode ser insuficiente diante de sinais renais. Um resultado favorável não validaria ignorar esses sinais.', rotulo_curto='Só suporte'),
             caminho('Iniciar pulso sem avaliar infecção', 'fim_infeccao',
                 'Aumenta risco infeccioso sem esclarecer benefício. O curso adverso apresentado é possível, não inevitável.', rotulo_curto='Pulso isolado'),
         ], fundo=CENA),
+    pagina('imagem_rim','Discussão visual','Corpúsculo renal',
+        p('Localize o tufo capilar e o espaço urinário. Em qual compartimento se inicia a filtração? Que observações urinárias poderiam sugerir lesão nessa barreira?'),
+        '<details class="leitura"><summary>Revelar pontos de discussão</summary><p>A barreira de filtração separa sangue e espaço urinário. Hematúria glomerular e proteinúria precisam ser demonstradas e interpretadas em conjunto. Este esquema normal não substitui o sedimento nem demonstra o padrão de uma biópsia.</p></details>',
+        fundo=CENA,lamina_=lamina('corpusculo.svg','Corpúsculo renal','Anatomia normal para comparação; não é biópsia da paciente.','Michał Komorniczak · Wikimedia Commons · CC BY-SA 3.0 · sem alterações.')),
     questao('q6', 'Qual princípio orienta a condução simultânea de suspeita de lesão orgânica e possível infecção? Selecione uma.', [
         ('Esperar toxicologia positiva', 'A confirmação do agente não é requisito para abordar ameaça renal.', False),
         ('Avaliar rim e infecção em paralelo', 'Buscar biópsia quando viável e discutir imunossupressão se houver ameaça orgânica; tratar infecção concomitante.', True),

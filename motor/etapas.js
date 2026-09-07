@@ -164,7 +164,7 @@ function pintarTrilho(){
   const seq = rotaAtual();
   const aqui = Math.max(seq.indexOf(i), 0);
   $('#trilho').innerHTML =
-    '<span class="tt">' + CASO.titulo + '</span>'
+    '<a class="voltar-biblioteca" href="index.html" aria-label="Voltar à biblioteca"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg><span>Biblioteca</span></a><span class="tt">' + CASO.titulo + '</span>'
     + '<span class="cnt">' + (aqui + 1) + ' / ' + seq.length + '</span>'
     + '<span class="marcas">' + seq.map(n => ETAPAS[n]).map((e, k) =>
         // o título só aparece no que já foi percorrido: com o mouse parado
@@ -192,7 +192,7 @@ function pintarPe(){
     + '<span class="nav">'
     + '<button class="bt" id="voltar"' + (historia.length < 2 ? ' disabled' : '') + '>Voltar</button>'
     + '<button class="bt forte" id="seguir"' + (podeAdiante() ? '' : ' disabled') + '>'
-    + (fim ? 'Ver a revisão' : 'Avançar') + '</button></span>';
+    + (e.t === 'capa' ? 'Começar o caso' : fim ? 'Continuar' : 'Avançar') + '</button></span>';
   $('#voltar').onclick = atras;
   $('#seguir').onclick = adiante;
 }
@@ -266,6 +266,7 @@ function pintar(){
   resolverImagens();
   ligarLupa();
   ligar(e);
+  acessibilidadeDaPagina();
   pintarTrilho();
   pintarPe();
 }
@@ -512,6 +513,7 @@ function ligar(e){
         else if (cheio()) return;          // o teto não empurra: ele segura
         else conj.add(n);
         l.classList.toggle('on', conj.has(n));
+        l.setAttribute('aria-checked', conj.has(n) ? 'true' : 'false');
         contar();
       };
     });
@@ -591,7 +593,7 @@ function mostrarRevisao(){
   $('#pe').innerHTML = '<span class="rod">' + CASO.rodape + '</span>'
     + '<span class="nav"><button class="bt" onclick="recomecar()">'
     + 'Conduzir de novo</button></span>';
-  $('#trilho').innerHTML = '<span class="tt">' + CASO.titulo + '</span>';
+  $('#trilho').innerHTML = '<a class="voltar-biblioteca" href="index.html" aria-label="Voltar à biblioteca"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg><span>Biblioteca</span></a><span class="tt">' + CASO.titulo + '</span>';
 }
 
 function recomecar(){
@@ -616,3 +618,11 @@ addEventListener('keydown', ev => {
 });
 
 pintar();
+
+function acessibilidadeDaPagina(){
+  document.querySelectorAll('.it,.cam,.alts li,figure.amplia').forEach(el=>{
+    el.tabIndex=0;el.setAttribute('role',el.classList.contains('it')?'checkbox':'button');
+    if(el.classList.contains('it'))el.setAttribute('aria-checked',el.classList.contains('on')?'true':'false');
+    el.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();ev.stopPropagation();el.click();}});
+  });
+}

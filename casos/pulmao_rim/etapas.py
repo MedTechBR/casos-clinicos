@@ -367,6 +367,10 @@ ETAPAS = [
                  "Crepitações finas difusas nos dois hemitórax, da base ao "
                  "terço médio. Sem sibilos e sem atrito pleural."),
             ),
+            corpo([("via", ""), ("pulmao", "")], altura=300, so_marcas=True), colunas=2),
+        fundo=CENA, so_kicker=True),
+    pagina("exame_complementar", "Exame físico", "Pele, membros e exame neurológico",
+        grade(
             topicos(
                 ("Abdome",
                  "Flácido, indolor, sem massas ou visceromegalias. "
@@ -386,15 +390,8 @@ ETAPAS = [
                  "nível sensitivo e sem raiz única. Reflexo aquileu direito "
                  "abolido."),
             ),
-            corpo([
-                ("via", ""), ("pulmao", ""), ("rim", ""),
-                ("pele", ""), ("nervo", ""),
-            ], altura=290, so_marcas=True),
-            colunas=3,
-        ),
-        fundo=CENA,
-        so_kicker=True,
-    ),
+            corpo([("pele", ""), ("nervo", "")], altura=320, so_marcas=True), colunas=2),
+        fundo=CENA),
 
     pergunta("p3", "Pergunta 4",
         "Primeiras duas horas de pronto-socorro. A hipótese de trabalho é "
@@ -583,6 +580,10 @@ ETAPAS = [
         fundo=TC,
     ),
 
+    pagina("imagem_alveolo", "Discussão visual", "Alvéolo e capilares",
+        p("Observe a relação entre espaço aéreo e leito capilar. Em que compartimentos podem se acumular líquido, sangue ou células? A opacidade radiológica consegue distinguir sozinha esses materiais?"),
+        '<details class="leitura"><summary>Revelar pontos de discussão</summary><p>O mesmo compartimento alveolar pode ser ocupado por materiais diferentes. A imagem do tórax precisa ser integrada à evolução clínica, à hemoglobina e aos exames dirigidos. O desenho apresenta anatomia normal, sem estabelecer o mecanismo deste paciente.</p></details>',
+        fundo=CENA,lamina_=lamina("alveolo.svg", "Alvéolo", "Anatomia normal para discussão; não é exame do paciente.", "LadyofHats · Wikimedia Commons · domínio público · sem alterações.")),
     pergunta("p4", "Pergunta 6",
         "Ele piorou sob antibiótico adequado. **Quais quatro** achados deste "
         "paciente sustentam hemorragia alveolar difusa?",
@@ -869,7 +870,11 @@ ETAPAS = [
 
     # ─────────────── rota A: o tecido e o anticorpo foram pedidos ───────────
 
-    pagina("crescente", "Discussão", "A biópsia renal",
+    pagina("crescente", "Discussão visual", "Corpúsculo renal",
+        p("Antes de interpretar a microfotografia, localize a cápsula, o espaço urinário e o tufo capilar neste esquema. O que significa uma proliferação ocorrer fora do tufo?"),
+        '<details class="leitura"><summary>Revelar pontos de discussão</summary><p>O espaço de Bowman está entre o tufo e o epitélio parietal da cápsula. Uma crescente ocupa esse espaço. O esquema normal orienta a leitura da microfotografia seguinte, mas não demonstra lesão ou proporção de glomérulos afetados.</p></details>',
+        fundo=CENA,lamina_=lamina("corpusculo.svg", "Corpúsculo renal", "Esquema anatômico normal.", "Michał Komorniczak · Wikimedia Commons · CC BY-SA 3.0 · sem alterações.")),
+    pagina("crescente_histologia", "Discussão", "A biópsia renal",
         grade(
             anotada(IMG / CRESCENTE,
                 seta((795, 285), (612, 66), "Tufo capilar", curva=14),

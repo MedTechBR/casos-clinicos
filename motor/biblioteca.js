@@ -1,38 +1,10 @@
-/* A biblioteca: monta a prateleira a partir do JSON embutido.
-
-   Sem framework e sem dependência — a mesma regra do caso. Os ícones são
-   desenhados aqui, em traço, e não vêm de nenhuma fonte de ícones: é o que
-   evita o ar de template. */
-
 const D = JSON.parse(document.getElementById('dados').textContent);
-
-const ICONE = {
-  relogio: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/>',
-  bifurca: '<path d="M7 20V9a4 4 0 0 1 4-4h6"/><path d="M14 2l3 3-3 3"/>'
-         + '<circle cx="7" cy="21" r="1.4"/>',
-  camada:  '<path d="M12 3l8 4.5-8 4.5-8-4.5L12 3z"/><path d="M4 12.5l8 4.5 8-4.5"/>',
-};
-const ico = n => '<svg viewBox="0 0 24 24" aria-hidden="true">' + ICONE[n] + '</svg>';
-
-document.getElementById('topo').innerHTML =
-  '<div class="chapeu"><i></i><span>Casos clínicos interativos</span></div>'
-  + '<h1>' + D.titulo + '</h1><p>' + D.subtitulo + '</p>';
-
-document.getElementById('grade').innerHTML = D.casos.map(c => {
-  const miolo =
-    '<div class="capa" style="' + (c.capa ? 'background-image:url(' + c.capa + ')' : '') + '">'
-    + (c.pronto ? '' : '<span class="faixa">Em preparo</span>') + '</div>'
-    + '<div class="corpo"><div class="esp">' + c.esp + '</div>'
-    + '<h2>' + c.tt + '</h2>'
-    + '<p class="sub">' + c.sub + '</p>'
-    + '<div class="pe">'
-    + '<span>' + ico('relogio') + '<b>' + c.min + '</b> min</span>'
-    + '<span>' + ico('bifurca') + '<b>' + c.dec + '</b> decisões</span>'
-    + '<span>' + ico('camada') + '<b>' + c.des + '</b> desfechos</span>'
-    + '</div></div>';
-  return c.pronto
-    ? '<a class="cs" style="--cor:' + c.cor + '" href="' + c.arq + '">' + miolo + '</a>'
-    : '<div class="cs preparo" style="--cor:' + c.cor + '">' + miolo + '</div>';
-}).join('');
-
-document.getElementById('rodape').innerHTML = D.rodape;
+const prontos=D.casos.filter(c=>c.pronto), futuros=D.casos.filter(c=>!c.pronto);
+const simbolo='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>';
+document.getElementById('topo').innerHTML='<nav class="barra"><span class="identidade">'+simbolo+'Casos clínicos</span><span class="edicao">Biblioteca de ensino</span></nav>'
+ +'<div class="intro"><div><p class="sobretitulo">Investigação · Discussão · Decisão</p><h1>Biblioteca de casos</h1><p class="descricao">Escolha uma história. Conduza a investigação, acompanhe a evolução e discuta as decisões em cada etapa.</p></div><div class="acervo"><b>'+String(prontos.length).padStart(2,'0')+'</b><span>casos disponíveis<br>para conduzir em aula</span></div></div>'
+ +'<div class="ferramentas"><h2>Apresentações</h2><label class="busca"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg><input id="busca" type="search" placeholder="Buscar no acervo" aria-label="Buscar casos por título" autocomplete="off"></label></div>';
+const card=(c,n)=>'<a class="cs" href="'+c.arq+'" style="--cor:'+c.cor+'"><div class="capa" style="background-image:url('+c.capa+')"><span class="numero">CASO '+String(n+1).padStart(2,'0')+'</span></div><div class="corpo"><div class="esp">Clínica médica</div><h2>'+c.tt+'</h2><p class="sub">'+c.sub+'</p><div class="meta"><span>≈ '+c.min+' min</span><span>'+c.des+' desfechos</span></div><div class="abrir">Abrir apresentação <span aria-hidden="true">↗</span></div></div></a>';
+function render(){const termo=document.getElementById('busca').value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();const filtrados=prontos.map((c,n)=>({c,n})).filter(({c})=>(c.tt+' '+c.sub).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(termo));document.getElementById('grade').innerHTML=filtrados.length?filtrados.map(({c,n})=>card(c,n)).join(''):'<p class="vazio">Nenhum caso encontrado. Experimente outra palavra.</p>';}
+document.getElementById('busca').addEventListener('input',render);render();
+document.getElementById('rodape').innerHTML='<details class="proximos"><summary>Em desenvolvimento <span>'+futuros.length+' casos</span></summary><div>'+futuros.map(c=>'<p>'+c.tt+'</p>').join('')+'</div></details><div class="nota"><span class="selo">Sobre o acervo</span><p>'+D.rodape+'</p></div>';
