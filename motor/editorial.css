@@ -83,3 +83,12 @@ p b{font-weight:600}
 .leitura{border:1px solid var(--linha2);border-radius:12px;margin-top:24px;background:#1b2d37;padding:18px 20px}.leitura summary{cursor:pointer;font:600 16px var(--sans);color:var(--marca)}.leitura p{font-size:20px;margin-top:18px;line-height:1.45}.cams.feita .cam.escolhido .l::after{content:none}.plano.centro:has(.grade.c3){width:calc(100vw - 2 * var(--eixo))}.tela:has(.grade) .fundo{display:none}
 .lamina img[src^="data:image/svg"]{background:#fff}
 @media(max-width:900px){.tela:has(.lamina) .plano{max-height:calc(100dvh - var(--teto) - 300px)}.lamina{display:flex;top:auto;bottom:94px;left:var(--eixo);right:var(--eixo);width:auto;height:190px;flex-direction:row}.lamina img{height:100%;width:55%;flex:none}.lamina .cap{width:45%;padding:10px;border-top:0;font-size:12px}.lamina .cap b{font-size:13px}.lamina .cap .cr{font-size:10px}}
+
+/* Cada rodada começa no problema clínico, antes do catálogo de exames. */
+.folha.pedido .sub{font:500 clamp(21px,1.55vw,26px)/1.35 var(--serifa);color:var(--gelo);max-width:96ch;border-bottom:1px solid var(--linha);padding-bottom:16px;margin-bottom:18px;flex-shrink:0}
+@media(max-width:550px){.folha.pedido .sub{font-size:19px;padding-bottom:10px;margin-bottom:10px}}
+/* Uma ou duas imagens recebem o espaço que o painel tem disponível. */
+.res:has(>.rc figure):not(:has(>.rc:nth-child(3))){display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));align-content:start;gap:18px;column-width:auto}
+.res:has(>.rc figure):not(:has(>.rc:nth-child(3))) .rc{margin-bottom:0;min-width:0}
+.res:has(>.rc figure):not(:has(>.rc:nth-child(3))) .rc figure img{height:clamp(180px,28vh,260px)}
+.res:has(>.rc figure):not(:has(>.rc:nth-child(3))) .rc figcaption{display:block}

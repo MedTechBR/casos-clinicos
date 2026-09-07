@@ -23,7 +23,7 @@ with sync_playwright() as pw:
      p.locator('details.leitura summary').click();assert p.locator('details.leitura').evaluate('(e)=>e.open')
      p.locator('figure.amplia').click();assert p.locator('.lupa').count()==1
      p.keyboard.press('Escape');assert p.locator('.lupa').count()==0;images+=1
-   assert images==2,(slug,images)
+   assert images>=2,(slug,images)
    p.locator('.voltar-biblioteca').click();p.wait_for_url('**/index.html');p.locator('a.cs').first.wait_for();assert p.locator('a.cs').count()==3
   print('UI OK',w,h,flush=True)
  assert not errors,errors;b.close()

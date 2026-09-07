@@ -27,7 +27,7 @@ with sync_playwright() as pw:
   endings=set();visited=set();flows=0;layout=[]
   for mode,plan in itertools.product(['full','minimal'],plans):
    page.evaluate('recomecar()');seen=[]
-   for turn in range(65):
+   for turn in range(len(steps)+1):
     if page.locator('#seguir').count()==0:break
     e=page.evaluate('etapa()');k=e['k'];assert k not in seen,(slug,'cycle',seen,k);seen.append(k);visited.add(k)
     if e['t']=='pedido':
@@ -48,7 +48,7 @@ with sync_playwright() as pw:
      count=page.locator('.rc').count();assert count==len(cfg[mode][e['de']]),(slug,k,count)
     elif e['t']=='desfecho':endings.add(k)
     page.locator('#seguir').click()
-   else:raise AssertionError('route exceeded 65 steps')
+   else:raise AssertionError('route exceeded authored step count')
    assert page.locator('#seguir').count()==0,(slug,'not finished')
    flows+=1
   assert not errors,errors

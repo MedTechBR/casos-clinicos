@@ -89,3 +89,10 @@ própria, dizendo que não é crescente.
 
 - **Alvéolo**: LadyofHats. Domínio público. [Fonte e licença](https://commons.wikimedia.org/wiki/File:Alveolus_diagram.svg). Arquivo sem alterações. Uso comparativo; não é exame do paciente ficcional.
 - **Corpúsculo renal**: Michał Komorniczak. CC BY-SA 3.0. [Fonte e licença](https://commons.wikimedia.org/wiki/File:Renal_corpuscle.svg). Arquivo sem alterações. Uso comparativo; não é exame do paciente ficcional.
+
+## Ampliação radiológica
+
+- `rx_consolidacao.jpg` — Mikael Häggström. [Fonte](https://commons.wikimedia.org/wiki/File:X-ray_of_lobar_pneumonia.jpg) · [CC0](https://creativecommons.org/publicdomain/zero/1.0/). sem alterações. Imagem de outro paciente para uso ilustrativo/comparativo.
+- `tc_cavidade.jpg` — Yale Rosen. [Fonte](https://commons.wikimedia.org/wiki/File:Lung_abscess_-_CT_scan_(7471756882).jpg) · [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/). sem alterações. Imagem de outro paciente para uso ilustrativo/comparativo.
+
+Os dois revisores independentes aceitaram os usos delimitados. Cortes de TC/RM não representam séries completas nem excluem doença no restante do estudo. O laudo simulado e o crédito da figura são apresentados separadamente.

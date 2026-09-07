@@ -24,7 +24,11 @@ CENA_HISTORIA = (lamina(CENA, 'Cena ilustrativa',
 
 def painel(ident, momento, titulo, grupos):
     return pedido(ident, momento, titulo,
-        'Escolha até quatro exames para esta rodada.',
+        {
+            'p1': 'Diante da febre e das placas dolorosas não branqueáveis, quais exames você pede agora para avaliar o risco sistêmico e os mecanismos da púrpura?',
+            'p2': 'Com a mudança das placas e o aparecimento de urina escura, quais exames você pede para distinguir o mecanismo cutâneo e investigar possível acometimento de outro órgão?',
+            'p3': 'Após o relato de exposição e com a queixa urinária persistente, quais exames você prioriza para esclarecer a associação e orientar a próxima decisão de tratamento?',
+        }[ident],
         grupos, fundo=CENA, banco=BANCO, limite=4)
 
 
@@ -71,6 +75,9 @@ ETAPAS = [
         ('Teste terapêutico com anticoagulação', 'A resposta não substitui a identificação do mecanismo e pode acrescentar risco.', False),
         ('Rastreio de alergia alimentar', 'A morfologia e a evolução não favorecem uma reação alimentar imediata.', False),
     ], 'Discussão'),
+    pagina('reavaliacao_inicial', 'Evolução', 'Reavaliação à beira do leito',
+        p('Marina continua conversando, mas evita movimentar as pernas por causa da dor. Na nova avaliação, as extremidades estão aquecidas, os pulsos permanecem palpáveis e a sensibilidade distal está preservada. Não há crepitação ou secreção espontânea nas placas.'),
+        p('As bordas das lesões são registradas para comparação. A equipe mantém vigilância sobre dor, velocidade de progressão e estado geral enquanto organiza os exames. A irmã permanece ao lado e ajuda a reconstruir a sequência dos sintomas.'), fundo=CENA),
     painel('p1', 'Primeiro momento', 'Investigação inicial', [
         grupo('Sangue', 'sangue', [
             op('Hemograma diferencial', resultado='Leucócitos 900/µL · Neutrófilos absolutos 180/µL · Hemoglobina 12,1 g/dL · Plaquetas 238.000/µL', referencia='Neutrófilos 1.500–7.500/µL', alterado=True),
@@ -90,6 +97,7 @@ ETAPAS = [
         ]),
     ]),
     resultados('r1', 'Primeiro momento', 'Resultados solicitados', 'p1', fundo=CENA,
+        laminas={'Radiografia de tórax':lamina('rx_torax_normal.jpg','Radiografia de tórax','Imagem ilustrativa de outro adulto. Não há opacidade focal evidente; isso não exclui infecção precoce.','Mikael Häggström · Wikimedia Commons · CC0.')},
         rota=dict(pediu=['Hemograma diferencial'], entao='hemograma', senao='sem_hemograma')),
     pagina('hemograma', 'Interpretação', 'Risco imediato',
         p('O hemograma solicitado documenta neutropenia profunda em uma pessoa febril. '
@@ -144,6 +152,15 @@ ETAPAS = [
           'Não há falta de ar. Ao levantar para ir ao banheiro, percebe a urina mais escura pela primeira vez e avisa à enfermagem. Não refere ardor ao urinar. A lesão cutânea '
           'pode continuar evoluindo mesmo após o início do atendimento; isso '
           'não comprova falha do antibiótico ou necessidade de corticoide.'), fundo=CENA),
+    pagina('evolucao_urinaria', 'Durante a internação', 'Uma nova queixa',
+        p('Marina tenta lembrar se a urina já estava diferente em casa, mas não '
+          'tem certeza. Não sabe estimar o volume eliminado e não identifica '
+          'sangue vivo. A equipe registra a descrição como urina escura, sem '
+          'convertê-la automaticamente em hematúria.'),
+        p('A melhora do conforto após analgesia e a mudança da pele ocorreram '
+          'no mesmo intervalo. Nenhuma delas, isoladamente, esclarece o que '
+          'está acontecendo com a queixa urinária. Que hipótese conecta os '
+          'achados e que alternativa ainda precisa permanecer em consideração?'), fundo=CENA),
     painel('p2', 'Segundo momento', 'Mecanismo e extensão', [
         grupo('Tecido e marcadores', 'pele', [
             op('Biópsia cutânea', resultado='Trombos em pequenos vasos dérmicos · Necrose epidérmica · Leucocitoclasia focal', referencia='Sem trombos ou necrose', alterado=True),
@@ -186,12 +203,18 @@ ETAPAS = [
         ('Trocar antibiótico apenas porque a cor se intensificou', 'Mudança da cor não demonstra falha microbiológica.', False),
         ('Aguardar cicatrização para investigar outros órgãos', 'A evolução sistêmica não deve depender da cicatrização cutânea.', False),
     ], 'Discussão'),
+    pagina('preparo_entrevista', 'Evolução', 'Entrevista individual',
+        p('No intervalo entre os cuidados, Marina pede para conversar sem a irmã. Parece receosa ao retomar o episódio anterior de manchas e pergunta quem terá acesso às informações.'),
+        p('A equipe oferece privacidade e explica como os dados serão usados no cuidado. Quando fica sozinha com a médica, conta que há um aspecto da história que preferiu não mencionar durante o atendimento inicial.'), fundo=CENA),
     pagina('entrevista', 'Terceiro momento', 'Entrevista privada',
         p('Em nova conversa, desta vez sem acompanhantes, Marina explica que hesitou em falar sobre um hábito por receio da reação da irmã. A equipe esclarece a finalidade clínica da entrevista. Ela relata uso '
           'intranasal de cocaína cerca de 72 horas antes da admissão. Ao reconstruir a cronologia, associa o episódio anterior de manchas ao mesmo contexto de uso. Não conhece a composição '
           'do produto. No reexame, observa-se pequena placa purpúrica na orelha.'),
         p('O relato muda a probabilidade das hipóteses; não confirma adulteração. '
           'A urina escura persiste, sem dispneia ou hemoptise.'), fundo=CENA),
+    pagina('plano_exposicao', 'Evolução', 'História complementar',
+        p('Marina não dispõe de amostra do produto e não sabe sua composição. Nega nova exposição depois da internação. A irmã, que ajuda com a filha, ainda não conhece essa parte da história; Marina prefere escolher como será feita a conversa.'),
+        p('A pequena lesão na orelha é registrada no exame seriado. Ela permanece sem falta de ar ou sangue no escarro. A urina continua descrita como escura, enquanto a equipe organiza a próxima etapa da investigação.'), fundo=CENA),
     painel('p3', 'Terceiro momento', 'Exposição e gravidade', [
         grupo('Toxicologia', 'geral', [
             op('Benzoilecgonina urinária', resultado='Detectada por método confirmatório.', referencia='Não detectada', alterado=True),
@@ -212,6 +235,7 @@ ETAPAS = [
         ]),
     ]),
     resultados('r3', 'Terceiro momento', 'Resultados solicitados', 'p3', fundo=CENA,
+        laminas={'Ultrassonografia renal':lamina('us_rim.jpg','Ultrassonografia renal','Corte longitudinal de rim de outro adulto, sem dilatação coletora evidente neste corte. Não demonstra ausência de glomerulonefrite nem medidas do caso. Asteriscos e cálipers pertencem à fonte; medida numérica recortada.','Hansen, Nielsen e Ewertsen · Wikimedia Commons · CC BY 4.0 · imagem recortada.')},
         rota=dict(pediu=['Benzoilecgonina urinária', 'Levamisol urinário por LC-MS/MS'], entao='toxicologia', senao='sem_toxicologia')),
     pagina('toxicologia', 'Interpretação', 'Janela de detecção',
         p('Os testes solicitados documentam exposição à cocaína, mas não documentam '
@@ -233,9 +257,9 @@ ETAPAS = [
         'Escolha com base no seu prontuário. Se faltam exames, mantenha a incerteza explícita.', [
             caminho('Avaliar ameaça orgânica em paralelo', 'imagem_rim',
                 'Investigar rim e infecção simultaneamente permite individualizar terapia; ausência de biópsia não impede avaliação urgente.', rotulo_curto='Investigar e proteger'),
-            caminho('Manter apenas cuidados da pele', 'suporte',
+            caminho('Manter apenas cuidados da pele', 'reavaliacao_suporte',
                 'Suporte é central, mas pode ser insuficiente diante de sinais renais. Um resultado favorável não validaria ignorar esses sinais.', rotulo_curto='Só suporte'),
-            caminho('Iniciar pulso sem avaliar infecção', 'fim_infeccao',
+            caminho('Iniciar pulso sem avaliar infecção', 'vigilancia_infecciosa',
                 'Aumenta risco infeccioso sem esclarecer benefício. O curso adverso apresentado é possível, não inevitável.', rotulo_curto='Pulso isolado'),
         ], fundo=CENA),
     pagina('imagem_rim','Discussão visual','Corpúsculo renal',
@@ -249,17 +273,26 @@ ETAPAS = [
         ('Proibir toda imunossupressão', 'Neutropenia aumenta risco, mas não é veto absoluto diante de ameaça orgânica.', False),
         ('Pulsar só pelo ANCA', 'Sorologia isolada não estabelece o mecanismo da lesão renal.', False),
     ], 'Órgão ameaçado muda a decisão'),
+    pagina('plano_conjunto', 'Evolução', 'Avaliação conjunta',
+        p('Durante a visita conjunta, Marina está lúcida, alimenta-se e relata dor ao trocar os curativos. A pele adjacente às placas não apresenta crepitação; a inspeção e a avaliação da profundidade continuam sendo feitas em cada troca.'),
+        p('A equipe revê o risco infeccioso e os resultados disponíveis antes de definir a intensidade do tratamento. Marina pergunta se a necessidade de cuidar do rim significa que precisará de diálise. A resposta é vinculada à avaliação clínica e funcional, sem concluir apenas pelo aspecto da urina.'), fundo=CENA),
     pagina('renal', 'Plano', 'Avaliação conjunta',
         p('Nefrologia, infectologia e reumatologia discutem gravidade, possibilidade '
           'de biópsia e segurança da imunossupressão. Antimicrobianos e controle '
           'de foco continuam conforme indicação. Não é preciso esperar uma '
           'cultura negativa para sempre, nem ignorar infecção para tratar o rim.'),
-        fundo=CENA, rota=dict(pediu=['Biópsia renal'], entao='fim_recuperacao', senao='fim_incerteza')),
+        fundo=CENA, rota=dict(pediu=['Biópsia renal'], entao='seguimento_recuperacao', senao='fim_incerteza')),
+    pagina('reavaliacao_suporte', 'Evolução', 'Reavaliação das lesões',
+        p('Após analgesia e proteção das lesões, Marina tolera melhor a troca de roupa. Algumas áreas escuras permanecem bem delimitadas. Não há resolução imediata da dor e a urina continua escura.'),
+        p('Consegue ir ao banheiro com ajuda da irmã, mas sente receio de voltar ao trabalho em pé. A equipe reavalia o plano, porque a melhora do conforto não esclareceu a queixa urinária.'), fundo=CENA, segue='suporte'),
     pagina('suporte', 'Plano', 'Extensão não resolvida',
         p('Curativos, analgesia e interrupção da exposição são mantidos. '
           'Urina escura requer avaliação além da pele. O grau de certeza sobre '
           'a extensão depende do que foi investigado.'),
         fundo=CENA, rota=dict(pediu=['Sedimento urinário'], entao='fim_sequela', senao='fim_incerteza')),
+    pagina('seguimento_recuperacao', 'Evolução', 'Evolução na enfermaria',
+        p('Depois do tratamento individualizado, o estado geral melhora e deixa de apresentar novas placas durante a observação. As áreas já necrosadas, porém, persistem e continuam exigindo cuidados locais. A recuperação da pele não é imediata.'),
+        p('Marina participa das trocas de curativo e aprende a reconhecer sinais de piora. Os retornos renal, hematológico e cutâneo são articulados antes de encerrar a internação; ela ainda não se sente pronta para cumprir um turno inteiro na loja.'), fundo=CENA, segue='fim_recuperacao'),
     desfecho('fim_recuperacao', 'Recuperação parcial',
         p('A biópsia solicitada permite discutir tratamento da lesão glomerular '
           'pauci-imune. Neste curso possível, após terapia individualizada e '
@@ -274,6 +307,9 @@ ETAPAS = [
           'quantificar função renal residual ou afirmar dependência de diálise.'),
         qualidade='medio', porque='O atraso pode ampliar dano orgânico. A gravidade inicial também influencia a evolução; não há penalidade numérica automática.',
         fundo=CENA, fecho='incerteza'),
+    pagina('vigilancia_infecciosa', 'Evolução', 'Reavaliação clínica',
+        p('Após a decisão de pulso nesta rota, Marina volta a apresentar calafrios e passa a responder mais lentamente. As extremidades estão frias, a frequência cardíaca aumenta e a equipe é chamada para nova avaliação.'),
+        p('É iniciada abordagem de deterioração com revisão do suporte, pesquisa de foco e reavaliação dos antimicrobianos. Não há identificação de agente nesta página. A equipe discute a imunossupressão novamente diante da mudança do quadro.'), fundo=CENA, segue='fim_infeccao'),
     desfecho('fim_infeccao', 'Complicação infecciosa possível',
         p('Neste curso possível, Marina desenvolve deterioração clínica compatível '
           'com infecção e precisa de suporte intensivo e revisão do plano. '
@@ -298,6 +334,9 @@ ETAPAS = [
           'via de uso pode ser apresentado como seguro. Reexposição pode causar '
           'recorrência. Os desfechos são exemplos, não probabilidades clínicas.'),
         fundo=CENA),
+    pagina('continuidade_cuidado', 'Evolução', 'Continuidade do cuidado',
+        p('Na conversa sobre continuidade, Marina manifesta preocupação com o trabalho, a filha e a exposição de informações pessoais. Autoriza a participação da irmã no planejamento e combina quem poderá acompanhá-la nos retornos.'),
+        p('O destino depende do curso percorrido: alguns caminhos ainda exigem internação ou transferência. O plano registra a hipótese clínica, a situação das feridas e a avaliação renal pendente, além de oferecer cuidado para interrupção da exposição sem condicionar o acolhimento à abstinência.'), fundo=CENA),
     pagina('fontes', 'Fontes e revisão', 'Evidência e limites',
         p('Fontes primárias abertas: '
           '<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2780984/" target="_blank" rel="noopener">Knowles 2009</a>; '

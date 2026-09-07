@@ -23,17 +23,17 @@ CASOS = [
          # "Nefrologia · Pneumologia" no cartão entrega a síndrome antes de o
          # aluno abrir o caso, do mesmo jeito que o título entregava.
          especialidade="Clínica médica · Emergência",
-         minutos=55, decisoes=12, desfechos=4, nivel="os dois", cor="vermelho",
+         minutos=65, decisoes=12, desfechos=4, nivel="os dois", cor="vermelho",
          capa="cena_admissao.jpg", arquivo="pulmao-rim.html"),
 
     caso(slug="cocaina_levamisol", titulo="À flor da pele",
          subtitulo="Uma mulher de 34 anos volta ao atendimento após uma mudança nas lesões da pele.",
-         especialidade="Clínica médica · Emergência", minutos=45, decisoes=12,
+         especialidade="Clínica médica · Emergência", minutos=55, decisoes=12,
          desfechos=4, nivel="os dois", cor="roxo",
          capa="../../cocaina_levamisol/img/cena.png", arquivo="cocaina-levamisol.html"),
     caso(slug="west_nile", titulo="O peso dos dias",
          subtitulo="Um homem de 71 anos com febre passa a precisar de ajuda para caminhar.",
-         especialidade="Clínica médica · Emergência", minutos=45, decisoes=13,
+         especialidade="Clínica médica · Emergência", minutos=55, decisoes=13,
          desfechos=3, nivel="os dois", cor="azul",
          capa="../../west_nile/img/cena.png", arquivo="west-nile.html"),
     caso(slug="kikuchi",

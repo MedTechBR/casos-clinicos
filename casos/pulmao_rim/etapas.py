@@ -201,11 +201,14 @@ ETAPAS = [
         fundo=CENA,
     ),
 
+    pagina("retorno_ambulatorial", "Consulta ambulatorial", "Reavaliação",
+        p("A esposa acrescenta que ele abandonou a horta há duas semanas. Antes passava a manhã fora de casa; agora precisa sentar-se depois de tarefas simples. Ele atribui o cansaço ao sono interrompido pela obstrução nasal."),
+        p("Não refere vômitos, diarreia ou redução importante da ingestão de líquidos. Ao fim da consulta, pergunta se outro antibiótico resolveria o problema. A equipe revê o que mudou desde o primeiro atendimento antes de organizar a investigação."), fundo=CENA),
+
     pedido("ex_amb", "Pergunta 2",
         "Que exames você pede aqui?",
-        "Ambulatório de unidade básica, resultado em três a cinco dias. "
-        "**Quatro vagas.** O que não for pedido não volta, nem agora nem "
-        "depois.",
+        "Sintomas nasais persistentes, febre baixa e perda de peso apesar do tratamento. "
+        "Quais quatro exames ajudariam a distinguir doença localizada de um processo sistêmico?",
         [
             grupo("Sangue", "sangue", [
                 op("Hemoglobina", resultado="11,2 g/dL {{(13,9 há dois meses)}}",
@@ -393,6 +396,10 @@ ETAPAS = [
             corpo([("pele", ""), ("nervo", "")], altura=320, so_marcas=True), colunas=2),
         fundo=CENA),
 
+    pagina("observacao_admissao", "Pronto-socorro", "Primeira reavaliação",
+        p("Com oxigênio suplementar, consegue contar a história em frases mais longas, mas volta a ficar ofegante ao mudar de posição. A esposa mostra no lenço pequenas estrias de sangue misturadas ao escarro. Não houve vômito com sangue."),
+        p("A equipe mantém monitorização e acesso venoso enquanto organiza a avaliação. Ele permanece consciente e pede que a esposa avise aos filhos sobre a internação. A melhora transitória do conforto respiratório não encerra a investigação."), fundo=CENA),
+
     pergunta("p3", "Pergunta 4",
         "Primeiras duas horas de pronto-socorro. A hipótese de trabalho é "
         "pneumonia grave, e a creatinina está em 3,8 mg/dL. **Quais três** "
@@ -435,8 +442,8 @@ ETAPAS = [
 
     pedido("ex_adm", "Pergunta 5",
         "Que exames você pede agora?",
-        "Pronto-socorro, com a hipótese de infecção grave em curso. **Seis "
-        "vagas.** De novo: o que não for pedido não volta.",
+        "Agora há dispneia, sangue no escarro e redução da diurese. Quais seis exames "
+        "você prioriza para avaliar gravidade e testar as hipóteses iniciais?",
         [
             grupo("Bancada, em minutos", "rim", [
                 op("Creatinina",
@@ -620,6 +627,15 @@ ETAPAS = [
         fundo=TC,
     ),
 
+    pagina("comparacao_rx", "Discussão de imagem", "Radiografia de tórax",
+        p("Esta radiografia pertence a outro paciente e serve para comparação. Descreva a distribuição da opacidade e observe as bordas do coração e dos diafragmas. Que informação a imagem acrescenta — e qual ela não fornece?"),
+        '<details class="leitura"><summary>Revelar discussão</summary><p>Há opacidade focal no campo inferior direito, junto à borda cardíaca direita. A distribuição é diferente de um acometimento alveolar difuso. O padrão ajuda a localizar o processo, mas não identifica sozinho um microrganismo nem substitui a evolução clínica.</p></details>',
+        fundo=CENA, lamina_=lamina("rx_consolidacao.jpg", "Radiografia comparativa", "Outro paciente; não é um novo resultado deste caso.", "Mikael Häggström · Wikimedia Commons · CC0 · arquivo sem alterações.")),
+    pagina("comparacao_tc", "Discussão de imagem", "Tomografia de tórax",
+        p("Em outro paciente, este corte de TC mostra uma alteração focal sobre um parênquima também alterado. Antes de abrir o comentário, descreva a parede, o conteúdo e o restante do campo pulmonar."),
+        '<details class="leitura"><summary>Revelar discussão</summary><p>Uma cavidade com parede discernível aparece no pulmão direito, associada a opacidades bilaterais. Infecção, neoplasia e processos inflamatórios podem cavitar. Este único corte não distingue essas causas. A fonte documenta um abscesso; isso não transforma a imagem em diagnóstico do paciente da apresentação.</p></details>',
+        fundo=CENA, lamina_=lamina("tc_cavidade.jpg", "TC comparativa", "Corte de outro paciente, em janela pulmonar. Não é exame adicional deste caso.", "Yale Rosen · Wikimedia Commons · CC BY-SA 2.0 · sem alterações.")),
+
     bifurcacao("b_dia2", "Decisão",
         "Ele piorou sob antibiótico adequado. O que você faz agora?",
         "Trinta e seis horas de ceftriaxona, mais oxigênio, mais hemoptise e "
@@ -679,8 +695,8 @@ ETAPAS = [
 
     pedido("ex_mec", "Pergunta 7",
         "O que você pede agora?",
-        "Origem do sangramento alveolar, compartimento da lesão renal e "
-        "mecanismo. **Seis vagas.**",
+        "A evolução exige rever a hipótese inicial. Quais seis exames podem distinguir "
+        "infecção, lesão imunomediada e outras causas, orientando a próxima decisão?",
         [
             grupo("Autoanticorpos", "sangue", [
                 op("ANCA por imunofluorescência indireta"),
@@ -1134,6 +1150,10 @@ ETAPAS = [
         fundo=CENA,
     ),
 
+    pagina("dia4", "Quarto dia de indução", "Reavaliação funcional",
+        p("Consegue permanecer sentado para se alimentar e já não interrompe cada frase para respirar. Ao tentar caminhar com ajuda, porém, arrasta a ponta de um dos pés. A dificuldade preocupa mais o paciente agora que o desconforto respiratório diminuiu."),
+        p("O exame motor é registrado separadamente da avaliação pulmonar. A equipe inicia assistência para mobilização e prevenção de quedas. A esposa pergunta se todos os sintomas devem melhorar ao mesmo tempo; ainda não há como prometer recuperação funcional completa."), fundo=CENA),
+
     pagina("dia5", "Quinto dia de indução", "Quinto dia",
         p("Na madrugada do quinto dia, temperatura de **38,9 °C**, com "
           "calafrio. A pressão arterial caiu para 92/54 mmHg e respondeu a 500 "
@@ -1217,7 +1237,7 @@ ETAPAS = [
           "creatinina de 3,2 mg/dL e diurese recuperada, ainda dependente de "
           "oxigênio suplementar."),
         fundo=CENA,
-        conforme=("b1", ["d_rituximabe", "d_cfx_ajustada", "d_cfx_plena"]),
+        conforme=("b1", ["prealta_rituximabe", "prealta_cfx", "prealta_uti"]),
     ),
 
     desfecho("fi_obito", "Óbito no décimo quarto dia de internação",
@@ -1263,7 +1283,7 @@ ETAPAS = [
         p("Completou as quatro doses semanais e catorze dias de oxacilina. A "
           "creatinina caiu de forma sustentada."),
 
-        fundo=CENA, segue="d_rituximabe",
+        fundo=CENA, segue="prealta_rituximabe",
     ),
 
     pagina("d10_cfx_ajustada", "Décimo dia · caminho B", "O hemograma do décimo dia",
@@ -1275,7 +1295,7 @@ ETAPAS = [
         p("A febre cedeu, completou catorze dias de oxacilina, e o segundo "
           "pulso foi dado na semana 2 como programado."),
 
-        fundo=CENA, segue="d_cfx_ajustada",
+        fundo=CENA, segue="prealta_cfx",
     ),
 
     pagina("d10_cfx_plena", "Décimo dia · caminho C", "O hemograma do décimo dia",
@@ -1289,10 +1309,20 @@ ETAPAS = [
           "empírica ao quinto dia de neutropenia febril e fator estimulador de "
           "colônias."),
 
-        fundo=CENA, segue="d_cfx_plena",
+        fundo=CENA, segue="prealta_uti",
     ),
 
     # ═══════════════════════ desfechos ═══════════════════════
+
+    pagina("prealta_rituximabe", "Após estabilização", "Preparação do seguimento",
+        p("Passa a fazer parte dos trajetos da enfermaria com apoio. A dispneia em repouso deixou de dominar a conversa; agora pergunta como retomará as atividades em casa. A dificuldade com o pé exige orientação para marcha e segurança."),
+        p("Na reconciliação da prescrição, a equipe escreve as datas das próximas infusões e retornos, além do desmame indicado. O paciente repete o plano com suas palavras e a esposa confere como conseguirão chegar ao serviço."), fundo=CENA, segue="d_rituximabe"),
+    pagina("prealta_cfx", "Após estabilização", "Planejamento dos próximos pulsos",
+        p("Está mais disposto e volta a comer fora do leito. Ainda precisa de ajuda em percursos longos e não se sente seguro para andar sozinho à noite. A esposa pretende permanecer com ele na primeira semana em casa."),
+        p("A equipe organiza a avaliação antes de cada pulso, com revisão da tolerância e dos exames programados. Ele recebe um calendário por escrito e orientações para procurar atendimento diante de febre ou nova piora respiratória, sem esperar a consulta agendada."), fundo=CENA, segue="d_cfx_ajustada"),
+    pagina("prealta_uti", "Depois da terapia intensiva", "Recuperação na enfermaria",
+        p("Fora da terapia intensiva, o paciente está desperto e reconhece a família. Precisa interromper a caminhada até o banheiro e se apoia no acompanhante para levantar. Conta que não se lembra de parte da internação e teme voltar a piorar."),
+        p("A equipe revê com a família o que ocorreu, organiza reabilitação e reconcilia os medicamentos. O plano de seguimento contempla tanto a doença inicial quanto as consequências da internação prolongada."), fundo=CENA, segue="d_cfx_plena"),
 
     desfecho("d_rituximabe", "Alta sem diálise",
         p("A creatinina, que havia chegado a 4,6 mg/dL, caiu de forma "

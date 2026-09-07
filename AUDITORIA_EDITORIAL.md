@@ -25,3 +25,15 @@ A revisão visual aprovou biblioteca, história, exame e três telas de pergunta
 - Conteúdo fechado das páginas em 1600×900: sem transbordamento dos painéis principais.
 
 Os testes não representam validação clínica externa de cada decisão ou prognóstico simulado. Os desfechos permanecem autorais para ensino.
+
+## Ampliação dos casos e exames contextualizados
+
+- Conteúdo passou de 59/44/43 para 67/51/52 etapas autoradas (pulmão-rim/West Nile/cocaína), acrescentando 24 páginas. Cada percurso visita apenas suas páginas; a contagem não corresponde a uma sessão única.
+- Todas as nove rodadas de pedidos agora apresentam um problema clínico interrogativo, com os mesmos limites de seleção.
+- Sete novas inserções radiológicas: RX nos dois casos novos, TC de crânio e RM de encéfalo no painel neurológico, ultrassom no painel renal, RX e TC comparativos no caso original. Quatro arquivos inéditos no acervo e três reutilizações de figuras existentes.
+- Laudos permanecem optativos, agora com estado separado por rodada: ler um RX anterior não abre o seguinte. Painéis com uma ou duas imagens aproveitam melhor a largura disponível.
+- Dois auditores independentes aceitaram as seis figuras distintas para os usos delimitados. Figuras são de outros pacientes; cortes de TC/RM e US não representam estudos completos. As fontes e licenças estão nos CREDITOS.md de cada caso.
+- Auditoria estática de narrativa e transições: sem bloqueador novo; sedação, intubação e pré-altas compatíveis com os percursos que as alcançam. Não equivale à revisão de todo o conteúdo clínico preexistente.
+- 150 percursos novamente executados: 54 no original, 72 West Nile e 24 cocaína, sem erro JS ou perguntas cortadas. A questão condicional de dupla positividade na cocaína também foi renderizada diretamente, embora não apareça nas combinações padrão.
+- Teste específico de imagens: somente pedidos selecionados retornam; laudos inicialmente ocultos; revelação e lupa funcionam, inclusive RX repetido em rodadas distintas.
+- Interface verificada em 1600×900, 1366×768 e 375×812. Catálogos longos usam rolagem; alternativas das perguntas em desktop permanecem inteiras.

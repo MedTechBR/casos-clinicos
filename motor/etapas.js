@@ -299,7 +299,7 @@ const DESENHO = {
 
   pedido: e =>
     fundoDe(e) + '<div class="veu tudo"></div>'
-    + '<div class="folha">'
+    + '<div class="folha pedido">'
     + '<div class="marca"><i></i><span>' + e.kicker + '</span></div>'
     + '<h2>' + e.tt + '</h2><p class="sub">' + e.enunciado + '</p>'
     + '<div class="grupos">' + e.grupos.map(g =>
@@ -358,13 +358,14 @@ const DESENHO = {
          bilaterais predominando nos campos médios" antes de descrever coisa
          alguma. Sob a figura fica só o crédito; a descrição e o valor saem
          juntos, no clique. */
-      const aberto = laudos.has(n);
+      const chaveLaudo = e.de + '::' + n;
+      const aberto = laudos.has(chaveLaudo);
       return '<article class="rc' + (x.a ? ' alt' : '') + '"><b>' + n + '</b>'
         + '<figure><img src="' + IMG(im.img) + '" alt="' + n + '">'
         + '<figcaption class="soc">' + im.cr + '</figcaption></figure>'
         + (aberto
             ? laudo + '<div class="leglaudo">' + im.lg + '</div>'
-            : '<button class="verlaudo" data-laudo="' + esc(n) + '">'
+            : '<button class="verlaudo" data-laudo="' + esc(chaveLaudo) + '">'
               + 'Ver o laudo</button>')
         + '</article>';
     }).join('');

@@ -50,7 +50,11 @@ ETAPAS = [
       ('Medir glicemia e pesquisar alterações metabólicas.','Causas reversíveis podem produzir ou agravar alteração do estado mental.',True),
       ('Programar avaliação neurológica apenas se não melhorar com soro.','Melhora parcial da perfusão não exclui infecção do sistema nervoso.',False),
       ('Priorizar investigação de hipotensão postural medicamentosa.','Não há hipotensão nem mudança de dose que sustente essa explicação.',False)]),
-    pedido('ex1','Investigação inicial','Primeira rodada','Escolha até quatro exames para orientar a avaliação inicial.',[
+    pg('avaliacao_atencao','Avaliação inicial',
+       p('Antônio reconhece a esposa e informa onde mora, mas perde o fio da conversa quando duas pessoas falam ao mesmo tempo. Ao pedir que repita uma sequência curta de palavras, é preciso retomar a instrução. Não parece compreender por que o atendimento está demorando.'),
+       p('A esposa esclarece que esse comportamento começou com a doença atual. A equipe registra a alteração da atenção e mantém observação para acompanhar consciência, mobilidade e capacidade de engolir.')),
+
+    pedido('ex1','Investigação inicial','Primeira rodada','Febre, cefaleia e perda recente da autonomia acompanham alteração cognitiva. Quais quatro exames você prioriza para investigar causas tratáveis e avaliar a gravidade?',[
       grupo('Sangue','sangue',[
         ex('Hemograma','Hb 13,2 g/dL · leucócitos 10.900/mm³ · plaquetas 181.000/mm³','Hb 13–17 · leucócitos 4.000–11.000 · plaquetas 150.000–450.000'),
         ex('Glicemia','132 mg/dL','70–140 (valor casual adotado no caso)'),
@@ -65,7 +69,7 @@ ETAPAS = [
         ex('Eletrocardiograma','Ritmo sinusal, frequência 102 bpm.'),
         ex('TSH','2,4 mUI/L','0,4–4,0'),
         ex('Vitamina B12','410 pg/mL','200–900')])],banco=BANCO,limite=4,fundo=CENA),
-    resultados('res1','Resultados','Primeira rodada','ex1',fundo=CENA),
+    resultados('res1','Resultados','Primeira rodada','ex1',fundo=CENA,laminas={'Radiografia de tórax':lamina('rx_torax_normal.jpg','Radiografia de tórax','Imagem comparativa de outro adulto. Ausência de opacidade focal evidente não exclui infecção precoce.','Mikael Häggström · Wikimedia Commons · CC0. Imagem ilustrativa.')}),
     pg('reexame','Reavaliação',
        p('Depois de analgesia e hidratação cautelosa, continua desorientado. A perna direita não vence a gravidade; a esquerda vence resistência leve. O braço direito está discretamente mais fraco que o esquerdo. A sensibilidade ao toque e à picada permanece simétrica.'),
        p('Os reflexos patelar e aquileu direitos estão abolidos; à esquerda estão diminuídos. Não há nível sensitivo. Surge rigidez de nuca discreta. A dificuldade não se limita à dor ou à fadiga.'),
@@ -85,14 +89,19 @@ ETAPAS = [
       caminho('Internar, colher amostras e iniciar cobertura empírica para meningoencefalite.','r_interna','A coleta é importante, mas não deve atrasar antimicrobianos quando a suspeita é relevante.'),
       caminho('Conduzir como polirradiculoneuropatia e priorizar imunoglobulina.','r_ig','Guillain–Barré é um diferencial, mas febre ativa e encefalopatia tornam insuficiente essa hipótese isolada.'),
       caminho('Manter observação com hidratação antes de ampliar a investigação.','r_observa','A observação sem investigação dirigida pode retardar o reconhecimento da progressão neurológica.')],fundo=CENA),
-    pg('r_interna','Primeiro dia',p('Antônio é internado em leito monitorizado. A esposa permanece disponível para complementar a história, e a equipe registra força, consciência e deglutição como parâmetros de reavaliação. São iniciados aciclovir e cobertura para meningite bacteriana, incluindo Listeria pela idade, com ajuste à função renal e ao protocolo local. A coleta de amostras e a avaliação de segurança da punção são organizadas sem atrasar o tratamento.'),segue='ex2'),
-    pg('r_ig','Primeiro dia',p('A imunoglobulina é iniciada sob a hipótese de polirradiculoneuropatia. Ele mantém febre e confusão e desenvolve tremor de ação. Na revisão conjunta, a equipe amplia a abordagem para meningoencefalite e inicia cobertura empírica. A hipótese inicial será reavaliada, sem esperar resposta imediata à imunoglobulina.'),segue='ex2'),
-    pg('r_observa','Primeiro dia',p('Durante a observação, a perna direita passa a apresentar apenas contração, sem movimento e ele se torna mais sonolento. É transferido para internação monitorizada. A equipe de resgate inicia a abordagem empírica de meningoencefalite; os resultados etiológicos ainda dependem da investigação.'),segue='ex2'),
-    pedido('ex2','Investigação','Segunda rodada','Escolha até quatro investigações. A punção inclui avaliação de segurança; imagem prévia será obtida se indicada.',[
+    pg('r_interna','Primeiro dia',p('Antônio é internado em leito monitorizado. A esposa permanece disponível para complementar a história, e a equipe registra força, consciência e deglutição como parâmetros de reavaliação. São iniciados aciclovir e cobertura para meningite bacteriana, incluindo Listeria pela idade, com ajuste à função renal e ao protocolo local. A coleta de amostras e a avaliação de segurança da punção são organizadas sem atrasar o tratamento.'),segue='reavaliacao_internacao'),
+    pg('r_ig','Primeiro dia',p('A imunoglobulina é iniciada sob a hipótese de polirradiculoneuropatia. Ele mantém febre e confusão e desenvolve tremor de ação. Na revisão conjunta, a equipe amplia a abordagem para meningoencefalite e inicia cobertura empírica. A hipótese inicial será reavaliada, sem esperar resposta imediata à imunoglobulina.'),segue='reavaliacao_internacao'),
+    pg('r_observa','Primeiro dia',p('Durante a observação, a perna direita passa a apresentar apenas contração, sem movimento e ele se torna mais sonolento. É transferido para internação monitorizada. A equipe de resgate inicia a abordagem empírica de meningoencefalite; os resultados etiológicos ainda dependem da investigação.'),segue='reavaliacao_internacao'),
+    pg('reavaliacao_internacao','Reavaliação na internação',
+       p('Na transferência para o leito, precisa de duas pessoas para se acomodar. Ao tentar ajustar o lençol, usa mais a mão esquerda. Mantém sensibilidade ao toque e responde quando chamado, mas alterna períodos de conversa com sonolência.'),
+       p('A cefaleia permanece. A equipe revê a evolução da consciência e o déficit focal antes de definir a segurança da punção e a necessidade de imagem prévia. A investigação não deve atrasar o tratamento empírico já indicado.'),segue='ex2'),
+
+    pedido('ex2','Investigação','Segunda rodada','A paresia assimétrica persiste com febre e confusão. Quais quatro investigações distinguiriam os mecanismos possíveis e mudariam a conduta?',[
       grupo('Sistema nervoso','nervo',[
         ex('Líquor: celularidade, proteína, glicose e Gram','86 células/mm³ (58% neutrófilos) · proteína 92 mg/dL · glicose 68 mg/dL, sérica 120 · Gram sem bactérias','Até 5 células · proteína 15–45 · relação glicose >0,4',True),
         ex('Cultura e PCR bacteriana do líquor','Sem crescimento até o momento · painel bacteriano negativo.'),
         ex('PCR para HSV e VZV no líquor','Não detectados em amostra obtida no sexto dia de sintomas.'),
+        ex('Tomografia de crânio sem contraste','Sem hemorragia intracraniana, hidrocefalia ou efeito de massa significativo. TC sem lesão evidente não exclui encefalite ou isquemia precoce.'),
         ex('Ressonância de encéfalo e medula','Sem infarto, compressão medular ou lesão temporal. Ausência de alteração específica não exclui inflamação.'),
         ex('Eletroneuromiografia','Respostas motoras reduzidas, assimétricas; respostas sensitivas preservadas. Sem critérios de desmielinização. Estudo precoce requer correlação clínica.', '—',True),
         ex('Eletroencefalograma','Lentificação difusa, sem atividade epiléptica registrada.')]),
@@ -101,6 +110,8 @@ ETAPAS = [
         ex('Dengue: NS1 e IgM','Não reagentes.'),ex('Leptospira: PCR','Não detectado.'),
         ex('Amônia','28 µmol/L','11–35'),ex('Cortisol matinal','18 µg/dL','5–25')])],banco=BANCO,limite=4,fundo=CENA),
     resultados('res2','Resultados','Segunda rodada','ex2',fundo=CENA,
+      laminas={'Tomografia de crânio sem contraste':lamina('tc_cranio.png','TC de crânio','Corte axial e localizador sagital de outro adulto. Figura ilustrativa; não representa o exame completo nem exclui encefalite.','Mikael Häggström · Wikimedia Commons · CC0 · sem alterações.'),
+      'Ressonância de encéfalo e medula':lamina('rm_encefalo.png','RM do encéfalo','A figura ilustra somente um corte axial T2 do encéfalo de outro adulto. Não mostra a medula nem todas as sequências do estudo. Não permite excluir encefalite ou isquemia.','Sean Novak · Wikimedia Commons · CC BY-SA 4.0 · sem alterações.')},
       rota={'pediu':['Líquor: celularidade, proteína, glicose e Gram'],'entao':'p3','senao':'sem_lcr'}),
     q('p3','O líquor tem 86 células/mm³, predomínio neutrofílico e glicose preservada. Qual interpretação é a mais adequada?',[
       ('O predomínio neutrofílico comprova meningite bacteriana.','A celularidade inicial de algumas infecções virais também pode ser neutrofílica.',False),
@@ -126,8 +137,12 @@ ETAPAS = [
       ('Aguardar dessaturação para solicitar avaliação intensiva.','A oximetria pode permanecer normal durante a deterioração ventilatória.',False),
       ('Reavaliar somente pela gasometria após oferecer oxigênio.','Oxigênio não corrige falência da bomba respiratória.',False),
       ('Acionar terapia intensiva e planejar proteção de via aérea.','Tendência funcional, tosse e proteção da via aérea orientam a intervenção.',True),
-      ('Manter líquidos por via oral para fluidificar secreções.','A disfagia exige avaliação antes de manter essa via.',False)],segue='ex3'),
-    pedido('ex3','Investigação','Terceira rodada','A viagem e a evolução ampliam a investigação. Escolha até quatro exames.',[
+      ('Manter líquidos por via oral para fluidificar secreções.','A disfagia exige avaliação antes de manter essa via.',False)],segue='visita_dia4'),
+    pg('visita_dia4','Quarto dia',
+       p('Quando a sedação é reduzida, acompanha a esposa com o olhar e responde por gestos. Consegue apertar sua mão, mas não eleva a perna direita do leito. A família percebe que ele está mais presente na conversa, embora o movimento não tenha melhorado na mesma proporção.'),
+       p('A equipe organiza a cronologia com os familiares: início da febre, aparecimento da dificuldade para caminhar, mudança do comportamento e piora da tosse. A evolução continua sendo reavaliada junto dos resultados disponíveis.'),segue='ex3'),
+
+    pedido('ex3','Investigação','Terceira rodada','Após complementar a exposição e acompanhar a evolução neurológica, quais quatro exames acrescentariam informação etiológica ou ajudariam a rever as hipóteses concorrentes?',[
       grupo('Agentes e exposição','geral',[
         ex('IgM para vírus do Nilo Ocidental em soro e líquor','Reagente nas duas amostras; resultado presuntivo, sujeito a reação cruzada.', 'Não reagente',True),
         ex('PCR para enterovírus no líquor','Não detectado.'),
@@ -161,12 +176,26 @@ ETAPAS = [
       ('Imunoglobulina deve ser mantida para qualquer mielite infecciosa.','Benefício não está estabelecido de forma geral; o mecanismo precisa orientar a indicação.',False),
       ('A ausência de confirmação dispensa acompanhamento etiológico.','A incerteza precisa ser registrada e revista.',False),
       ('Deglutição, respiração e capacidade funcional precisam de seguimento.','As necessidades de suporte podem persistir após resolução da infecção aguda.',True)],segue='tratamento'),
-    pg('tratamento','Tratamento e seguimento',p('O suporte inclui ventilação conforme necessidade, manejo de secreções, nutrição por via segura, prevenção de trombose e lesão por pressão e mobilização progressiva. Antimicrobianos empíricos são revistos segundo os resultados disponíveis e a evolução, não retirados apenas porque apareceu uma sorologia.'),p('Para Nilo Ocidental, não há terapia específica com benefício conclusivo. Imunoglobulina e corticoide não são apresentados como tratamento comprovado. Neurologia, fisioterapia e fonoaudiologia acompanham recuperação e limitações.'),segue='imagem_neuronio'),
+    pg('tratamento','Tratamento e seguimento',p('O suporte inclui ventilação conforme necessidade, manejo de secreções, nutrição por via segura, prevenção de trombose e lesão por pressão e mobilização progressiva. Antimicrobianos empíricos são revistos segundo os resultados disponíveis e a evolução, não retirados apenas porque apareceu uma sorologia.'),p('Para Nilo Ocidental, não há terapia específica com benefício conclusivo. Imunoglobulina e corticoide não são apresentados como tratamento comprovado. Neurologia, fisioterapia e fonoaudiologia acompanham recuperação e limitações.'),segue='cuidado_diario'),
+    pg('cuidado_diario','Evolução no leito',
+       p('Nos períodos acordado, Antônio tenta participar da higiene e escolhe como prefere se comunicar. A perna direita permanece mais fraca; a esquerda consegue ajudar na mudança de posição. A equipe repete o exame motor em condições semelhantes de vigília.'),
+       p('A esposa nota que ele se cansa com visitas longas. São combinados períodos de descanso, orientação sobre o ambiente e participação gradual nos cuidados. A melhora do contato não equivale à recuperação da força.'),segue='avaliacao_degluticao'),
+    pg('avaliacao_degluticao','Reavaliação funcional',
+       p('A necessidade de ajuda para eliminar secreções é revista diariamente. A equipe acompanha tosse, proteção da via aérea e tolerância ao suporte; uma saturação confortável, isoladamente, não responde a essas questões.'),
+       p('A família pergunta quando poderá oferecer água. A via de alimentação permanece vinculada à avaliação da deglutição, enquanto fonoaudiologia e fisioterapia acompanham a recuperação. As metas do dia são registradas de forma que o paciente também possa entendê-las.'),segue='imagem_neuronio'),
+
     pg('imagem_neuronio','Discussão de imagem',
        p('Compare o corpo celular, o axônio e a bainha de mielina. Por que quadros com fraqueza semelhante podem ter tempos de recuperação diferentes?'),
        '<details class="leitura"><summary>Revelar pontos de discussão</summary><p>Bloqueio de condução, perda de mielina e destruição do neurônio não são equivalentes. Localização, extensão e mecanismo da lesão influenciam a recuperação. Uma figura anatômica não prevê o prognóstico individual, e a melhora da febre não comprova recuperação motora.</p></details>',
        lamina_=lamina('neuronio.svg','Neurônio','Diagrama anatômico, sem achados específicos deste caso.','LadyofHats · Wikimedia Commons · domínio público · sem alterações.'),
-       conforme=('b2',['f_reabilita','f_longa','f_longa'])),
+       conforme=('b2',['pre_reabilitacao','pre_prolongada','pre_prolongada'])),
+    pg('pre_reabilitacao','Terceira semana',
+       p('Com a redução do suporte, Antônio volta a conversar sobre a casa e pergunta pelo neto. Senta-se na borda do leito com assistência. Ao tentar ficar em pé, a perna direita não sustenta o peso e o movimento é interrompido com apoio da equipe.'),
+       p('A família recebe orientação sobre transferências e prevenção de quedas. A alta será articulada com um serviço capaz de continuar a reabilitação; caminhar sozinho ainda não é uma condição presente.'),segue='f_reabilita'),
+    pg('pre_prolongada','Internação prolongada',
+       p('A retirada do suporte progride mais lentamente. Antônio compreende as orientações nos períodos de vigília, mas precisa de ajuda para se posicionar e eliminar secreções. As sessões de mobilização são ajustadas à tolerância de cada dia.'),
+       p('A equipe conversa com a família sobre transferência para cuidados de continuidade. São revistos o suporte respiratório, a via de alimentação e as necessidades de assistência. A persistência do déficit motor impede estabelecer uma data segura para retorno ao domicílio.'),segue='f_longa'),
+
     fim('f_reabilita','Reabilitação','Na terceira semana está desperto, sem suporte invasivo e com deglutição em recuperação. Continua sem caminhar sozinho. Segue para reabilitação; aos três meses usa auxílio para marcha e mantém fraqueza maior à direita.','O suporte antecipado reduz riscos secundários, mas não garante recuperação da lesão motora. Este é um desfecho ficcional possível.','melhor'),
     fim('f_longa','Internação prolongada','A complicação respiratória prolonga a internação. Necessita de suporte ventilatório e reabilitação por mais tempo. Na transferência, mantém dependência para mobilidade e alimentação por via alternativa.','Aspiração e falência ventilatória podem acrescentar morbidade à lesão neurológica. A duração e a recuperação deste roteiro não são previsões individuais.'),
     fim('f_obito','Evolução desfavorável','A manutenção da estratégia apesar da piora bulbar é seguida, neste ramo simulado, de aspiração grave e parada hipóxica. O paciente não sobrevive. A causa infecciosa não chegou a ser definida neste percurso.','Este ramo ilustra um risco possível do atraso na proteção de via aérea, não uma consequência inevitável nem uma probabilidade estimada.','pior'),
