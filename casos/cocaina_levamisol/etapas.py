@@ -5,6 +5,7 @@ Os desfechos são cenários possíveis, não probabilidades nem punições causa
 A única imagem futura é ilustrativa e nunca constitui evidência clínica.
 """
 from pathlib import Path
+from motor.desenhos import chave_corpusculo
 from motor.etapas import (
     alt, bifurcacao, caminho, capa, desfecho, grupo, lamina, op, p,
     pagina, pedido, pergunta, quadro, resultados, vitais, topicos,
@@ -263,7 +264,7 @@ ETAPAS = [
     pagina('imagem_rim','Discussão visual','Corpúsculo renal',
         p('Localize o tufo capilar e o espaço urinário. Em qual compartimento se inicia a filtração? Que observações urinárias poderiam sugerir lesão nessa barreira?'),
         '<details class="leitura"><summary>Revelar pontos de discussão</summary><p>A barreira de filtração separa sangue e espaço urinário. Hematúria glomerular e proteinúria precisam ser demonstradas e interpretadas em conjunto. Este esquema normal não substitui o sedimento nem demonstra o padrão de uma biópsia.</p></details>',
-        fundo=CENA,lamina_=lamina('corpusculo.svg','Corpúsculo renal','Anatomia normal para comparação; não é biópsia da paciente.','Michał Komorniczak · Wikimedia Commons · CC BY-SA 3.0 · sem alterações.')),
+        chave_corpusculo(), fundo=CENA,lamina_=lamina('corpusculo.svg','Corpúsculo renal','Anatomia normal. 2: camada parietal; 4: espaço urinário; 10: capilares. Não é biópsia da paciente.','Michał Komorniczak · Wikimedia Commons · CC BY-SA 3.0 · sem alterações.')),
     questao('q6', 'Qual princípio orienta a condução simultânea de suspeita de lesão orgânica e possível infecção? Selecione uma.', [
         ('Esperar toxicologia positiva', 'A confirmação do agente não é requisito para abordar ameaça renal.', False),
         ('Avaliar rim e infecção em paralelo', 'Buscar biópsia quando viável e discutir imunossupressão se houver ameaça orgânica; tratar infecção concomitante.', True),

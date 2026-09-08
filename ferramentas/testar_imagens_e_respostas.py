@@ -1,5 +1,6 @@
 """Regressão: marcador sem pseudo-rótulo; exame da equipe antes da leitura anotada."""
 from pathlib import Path
+from ui_paginas import mostrar, ultima
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
 with sync_playwright() as pw:
@@ -10,7 +11,7 @@ with sync_playwright() as pw:
    page.goto((ROOT/(slug+'.html')).as_uri())
    for q in page.evaluate('ETAPAS.filter(e=>e.t==="pergunta").map(e=>({k:e.k,n:e.escolhas}))'):
     page.evaluate('(k)=>ir(porId(k))',q['k'])
-    for n in range(q['n']):page.locator('.alts li').nth(n).click()
+    for n in range(q['n']):mostrar(page,'.alts li',n).click()
     page.locator('#conf').click()
     assert page.locator('.alts.feita').count()==1
     assert page.locator('.estado-resposta').count()==page.locator('.alts li').count()
@@ -18,7 +19,7 @@ with sync_playwright() as pw:
     assert page.evaluate('Array.from(document.querySelectorAll(".alts li")).every(e=>{let k=e.querySelector(".k").getBoundingClientRect(),c=e.querySelector(".cm").getBoundingClientRect();return k.right<=c.left+1 || k.bottom<=c.top+1})'),(slug,q['k'],'sobreposição')
     assert page.evaluate('document.documentElement.scrollWidth<=innerWidth'),(slug,q['k'],'overflow horizontal')
     # A última explicação pode ser alcançada, mesmo nas questões extensas.
-    page.locator('.estado-resposta').last.scroll_into_view_if_needed()
+    mostrar(page,'.estado-resposta',page.locator('.estado-resposta').count()-1)
     assert page.locator('.estado-resposta').last.is_visible()
     questions+=1
    for k in ['ecg_evolucao',exam+'_evolucao']:
@@ -26,16 +27,18 @@ with sync_playwright() as pw:
     assert page.locator('.estudo-imagem aside').count()==0
     assert page.locator('.estudo-imagem .rot').count()==0
     before=page.locator('.estudo-imagem svg image').bounding_box()
-    page.locator('figure.amplia').click()
+    mostrar(page,'figure.amplia').click()
     if w>900:
      enlarged=page.locator('.lupa svg image').bounding_box()
      assert enlarged['width']>before['width'] or enlarged['height']>before['height'],(slug,k,'lupa não ampliou')
     assert page.locator('.lupa svg image').get_attribute('href').startswith('data:image/');page.keyboard.press('Escape')
-    page.locator('#seguir').click();assert page.evaluate('etapa().k')==k+'_leitura'
+    ultima(page);page.locator('#seguir').click();assert page.evaluate('etapa().k')==k+'_leitura'
     assert page.locator('.estudo-imagem .rot').count()==2
     assert page.locator('.estudo-imagem aside').count()==1
     if w>900:assert page.locator('.plano').evaluate('(e)=>e.scrollHeight<=e.clientHeight+2'),(slug,k,'leitura cortada')
-    page.locator('figure.amplia').click();assert page.locator('.lupa .rot').count()==2;page.keyboard.press('Escape')
+    mostrar(page,'figure.amplia').click();assert page.locator('.lupa .rot').count()==2;page.keyboard.press('Escape')
+
+    while page.evaluate('parteTela')>0:page.locator('#voltar').click()
     page.locator('#voltar').click();assert page.evaluate('etapa().k')==k
    names=page.evaluate('ETAPAS.filter(e=>e.t==="pedido").flatMap(e=>e.grupos.flatMap(g=>g.o.map(o=>o.e)))')
    if slug=='west-nile':assert 'Tomografia de crânio sem contraste' not in names

@@ -1,5 +1,6 @@
 """Exames pedidos, laudos optativos e enunciados clínicos nas três apresentações."""
 from pathlib import Path
+from ui_paginas import mostrar, ultima
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
 CONFIG={
@@ -22,14 +23,14 @@ with sync_playwright() as pw:
    page.evaluate('(k)=>ir(porId(k))',order)
    for name in names:
     page.evaluate('(name)=>Array.from(document.querySelectorAll(".it")).find(e=>e.dataset.ex===name).click()',name)
-   page.locator('#seguir').click();assert page.evaluate('etapa().k')==result
+   ultima(page);page.locator('#seguir').click();assert page.evaluate('etapa().k')==result
    assert page.locator('.rc').count()==len(names)
    assert page.locator('.verlaudo').count()==len(names)
    assert page.locator('.rc .v').count()==0,(slug,order,'laudo vazou de outra rodada')
    assert page.evaluate('Array.from(document.querySelectorAll(".rc img")).every(i=>i.complete&&i.naturalWidth>0)')
-   page.locator('figure.amplia').first.click();assert page.locator('.lupa').count()==1
+   mostrar(page,'figure.amplia').click();assert page.locator('.lupa').count()==1
    page.keyboard.press('Escape');assert page.locator('.lupa').count()==0
-   page.locator('.verlaudo').first.click();assert page.locator('.rc .v').count()==1
+   mostrar(page,'.verlaudo').click();assert page.locator('.rc .v').count()==1
    page.screenshot(path=str(ROOT/'saida/revisao'/f'exames-{slug}-{order}.png'))
   print(slug,'pedidos, imagens, laudos e lupa OK',flush=True)
  assert not errors,errors;browser.close()

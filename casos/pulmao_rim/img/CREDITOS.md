@@ -102,3 +102,13 @@ Os dois revisores independentes aceitaram os usos delimitados. Cortes de TC/RM n
 - `ecg_taquicardia.jpg`: Ewingdo, [arquivo original](https://commons.wikimedia.org/wiki/File:ECG_Sinus_Tachycardia_125_bpm.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Traçado de outra pessoa, 125 bpm, sem alteração do arquivo. As setas da segunda página são uma adaptação sob CC BY-SA 4.0. O mesmo traçado comparativo é usado nos três casos; não representa três registros independentes nem os ECGs dos pacientes ficcionais.
 - Discussão de ritmo e causas sistêmicas: [ESC, diretriz de taquicardias supraventriculares, seção de taquicardia sinusal](https://academic.oup.com/eurheartj/article/41/5/655/5556821). Não se atribui causa ou diagnóstico etiológico pelo traçado isolado.
 - As figuras de radiologia/ultrassom nesta sequência mantêm seus arquivos e créditos prévios. Setas sobrepostas por SVG na página seguinte são adições editoriais; em obras BY-SA, a adaptação conserva a licença original.
+
+## Revisão das marcações — 8 de setembro de 2026
+
+A chave numérica de `Renal corpuscle.svg` foi traduzida da [fonte original](https://commons.wikimedia.org/wiki/File:Renal_corpuscle.svg) e incluída como legenda revelável. A figura permanece sem alterações. Os diagramas transparentes usam fundo branco também na lupa.
+
+Na microfotografia `glomerulo_crescente.jpg`, foi **revogada a interpretação anterior do quarto marcador como glomérulo esclerosado**. Essa estrutura não sustenta a identificação; a seta e o nome foram removidos. Restam três pontos numerados (tufo, cápsula, proliferação extracapilar), conferidos sobre a imagem e pela ponta real do SVG. O laudo simulado agora ocupa uma página separada e não é apresentado como conclusão extraída de uma única fotografia.
+
+O esquema `alveolo.svg` foi retirado da apresentação por conter uma indicação de glândula mucosa na via distal que não é adequada ao ensino dessa anatomia. A página usa agora a TC comparativa previamente conferida. O arquivo original permanece no acervo, sem modificações e sem uso no produto construído.
+
+A legenda de `us_rim.jpg` escreve por extenso a quantidade de asteriscos, evitando que o processador de texto transforme as marcações em negrito.

@@ -637,3 +637,12 @@ def anotada(caminho, *setas, legenda="", credito="", titulo="",
                 + (f'<span class="cr">{texto(credito)}</span>' if credito else "")
                 + "</figcaption>")
     return fig + "</figure>"
+
+
+def chave_corpusculo():
+    """Chave traduzida da figura Renal corpuscle.svg, sem modificar a figura."""
+    return ('<details class="leitura"><summary>Legenda dos números e letras</summary>'
+            '<p>A: corpúsculo renal; B: túbulo proximal; C: segmento espesso ascendente da alça; D: aparelho justaglomerular.</p>'
+            '<p>1: membrana basal; 2: camada parietal da cápsula; 3: camada visceral; 3a: pedicelos; 3b: podócito; 4: espaço urinário.</p>'
+            '<p>5a: célula mesangial intraglomerular; 5b: célula mesangial extraglomerular; 6: células granulares; 7: mácula densa; 8: músculo liso.</p>'
+            '<p>9: arteríola aferente; 10: capilares glomerulares; 11: arteríola eferente.</p></details>')

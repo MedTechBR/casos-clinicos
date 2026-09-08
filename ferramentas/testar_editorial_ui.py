@@ -1,5 +1,6 @@
 """Verifica biblioteca, imagens, discussão revelável e perguntas em três viewports."""
 from pathlib import Path
+from ui_paginas import mostrar
 from playwright.sync_api import sync_playwright
 r=Path(__file__).resolve().parents[1]
 with sync_playwright() as pw:
@@ -19,9 +20,9 @@ with sync_playwright() as pw:
      if w>900:assert p.evaluate('document.querySelector(".alts").scrollHeight<=document.querySelector(".alts").clientHeight+2')
      if w==1366 and e['k'] in ['p2','q1']:p.screenshot(path=str(r/'saida/revisao'/f'editorial-{slug}-pergunta.png'))
     if p.locator('details.leitura').count():
-     assert not p.locator('details.leitura').evaluate('(e)=>e.open')
-     p.locator('details.leitura summary').click();assert p.locator('details.leitura').evaluate('(e)=>e.open')
-     p.locator('figure.amplia').click();assert p.locator('.lupa').count()==1
+     assert not p.locator('details.leitura').first.evaluate('(e)=>e.open')
+     mostrar(p,'details.leitura summary').click();p.wait_for_function('document.querySelector("details.leitura").open')
+     mostrar(p,'figure.amplia').click();assert p.locator('.lupa').count()==1
      p.keyboard.press('Escape');assert p.locator('.lupa').count()==0;images+=1
    assert images>=2,(slug,images)
    p.locator('.voltar-biblioteca').click();p.wait_for_url('**/index.html');p.locator('a.cs').first.wait_for();assert p.locator('a.cs').count()==3

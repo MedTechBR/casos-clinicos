@@ -46,3 +46,14 @@ Os testes não representam validação clínica externa de cada decisão ou prog
 - Marcadores de alternativa não usam mais pseudo-rótulos “certa/sua”; o resultado aparece junto ao comentário. Ampliação de SVG corrigida: a figura ocupa a lupa em vez de encolher ao tamanho intrínseco.
 - Testes: 54 percursos principais + 72 West + 24 cocaína, todos com finais alcançados e zero erro JavaScript. 19 perguntas confirmadas em 1600×900, 1366×768 e 375×812 sem sobreposição do marcador/comentário. Seis pares testados para ordem, ausência de setas iniciais, leitura seguinte, voltar, lupa e ganho de tamanho. Questões extensas podem rolar após a confirmação; alternativas antes de confirmar continuam sem corte nos desktops testados.
 - Totais autorais: 71/55/56 páginas, incluindo ramos alternativos. Nenhum percurso individual contém necessariamente todas elas.
+
+## 8 de setembro — conferência das setas e fim da rolagem
+
+Reabertura das imagens originais, exame da ponta efetiva dos SVGs e revisão independente de Carver. As tentativas adicionais de revisão tiveram erro de limite do serviço e não produziram novos pareceres; não são contadas como aprovação.
+
+- Removido o quarto marcador da histologia, anteriormente chamado de “glomérulo esclerosado”, por identificação não sustentada. Três estruturas mantidas e novamente conferidas: tufo, cápsula e crescente. Numeração curta na imagem e explicação ao lado; contagem de glomérulos e imunofluorescência ficcionais em página separada. Retiradas afirmações absolutas de reversibilidade.
+- ECG, RX, TC e US: alvos mantidos após reconferência. Corrigida a legenda dos asteriscos no US antigo, adicionada chave completa do corpúsculo renal, retirado o esquema alveolar com rótulo anatômico inadequado e usado fundo branco para os diagramas na lupa.
+- Novo paginador mede os blocos reais e distribui conteúdo excedente entre páginas, sem zoom tipográfico ou exclusão de informação. Seleção de exames e limite persistem. Resultados abertos levam à página do laudo; comentários, tabelas, exame físico e revisão final também são paginados quando necessário. Fontes mantidas. A biblioteca aponta explicitamente para esta versão dos arquivos.
+- Verificação automatizada de 1.411 páginas/estados em 1366×768, 1600×900 e 375×812: nenhum transbordamento vertical/horizontal das áreas de leitura. Catálogos conservam todas as opções, cada bloco pertence a uma página, navegação preserva marcações e discussão pode abrir/fechar. A paginação usa os botões Avançar/Voltar e mostra “Página X de Y”.
+
+Validação complementar: 54 percursos principais e 96 percursos dos outros casos na revisão de navegação; verificação final de quatro percursos principais após incluir a paginação da revisão de encerramento. Testes de biblioteca, lupa, perguntas, laudos optativos e interface passaram nos três viewports. Corrigida também a repaginação síncrona ao abrir discussão, evitando que uma atualização tardia devolvesse o usuário à primeira página.

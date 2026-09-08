@@ -418,7 +418,7 @@ def desfecho(ident, titulo, *blocos, qualidade, porque, fundo="",
 def montar(caso) -> str:
     raiz = Path(__file__).parent
     css = (raiz / "etapas.css").read_text(encoding="utf-8") + "\n" + (raiz / "editorial.css").read_text(encoding="utf-8")
-    js = (raiz / "etapas.js").read_text(encoding="utf-8")
+    js = (raiz / "paginas.js").read_text(encoding="utf-8") + "\n" + (raiz / "etapas.js").read_text(encoding="utf-8")
 
     cache: dict[str, str] = {}
 

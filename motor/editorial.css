@@ -115,3 +115,48 @@ p b{font-weight:600}
 /* O SVG também precisa ocupar a lupa; width:auto o reduzia ao tamanho intrínseco. */
 .lupa .quadro:has(figure.anot){width:90vw}
 .lupa figure.anot svg{width:100%;height:calc(82dvh - 130px);max-height:none}
+
+/* Conteúdo em páginas, nunca em painéis de rolagem. */
+[data-fora]{display:none!important}
+.plano.paginavel{height:calc(100dvh - var(--teto) - var(--rodape));display:flex;flex-direction:column;overflow:visible}
+.paginavel>h1,.paginavel>h2,.paginavel>.marca,.folha>.enun,.folha>.qdica,.folha>.sub,.folha>h2,.folha>.marca,.folha>.conta,.folha>.conf,.folha>.forca{flex-shrink:0}
+.conteudo-paginado{flex:1;min-height:0;display:flow-root}
+.area-paginada{overflow:clip!important;mask-image:none!important;min-height:0}
+.cams.area-paginada{flex:1}
+.res.area-paginada{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-content:start;gap:14px;column-width:auto}
+.res.area-paginada .rc{min-width:0;margin:0}
+.res.area-paginada .rc img{max-height:170px;object-fit:contain}
+.fim{align-items:stretch;padding:var(--teto) var(--eixo) var(--rodape)}
+.fim .caixa.paginavel{display:flex;flex-direction:column;max-height:100%;width:100%;max-width:1000px}
+.fim h1{font-size:clamp(30px,3.4vw,48px);margin-bottom:18px;padding-bottom:12px}
+.pagina-indice{font:500 13px var(--sans);color:var(--nevoa);white-space:nowrap;margin-right:10px}
+.alts.feita .cm{line-height:1.35}
+.grupos .gr{align-self:start}
+@media(min-width:901px){.plano.centro:has(.tb){width:calc(100vw - 2 * var(--eixo))}.plano.centro:not(:has(.lamina)){padding-right:0}.res.area-paginada:has(>.rc figure):not(:has(>.rc:nth-child(3))){grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:900px){
+ .tela:has(.lamina) .plano.paginavel{max-height:calc(100dvh - var(--teto) - var(--rodape));height:calc(100dvh - var(--teto) - var(--rodape))}
+ .plano .lamina{position:static;display:flex;width:100%;height:auto;max-height:none;flex-direction:column;margin:0}
+ .plano .lamina img{height:29dvh;width:100%;flex:none}
+ .plano .lamina .cap{width:100%;font-size:13px;padding:10px}
+ .plano .lamina .cap .cr{font-size:11px}
+ .estudo-imagem:has(aside) .anot svg{height:28dvh}
+ .estudo-imagem{margin-top:0}
+ .estudo-imagem:has(aside){display:block}
+ .estudo-imagem aside{width:100%}
+ .corpo{display:block}.corpo svg{height:30dvh;max-width:100%;margin:auto}
+ .res.area-paginada{grid-template-columns:1fr!important}
+ .vit{margin:8px 0}.vit>div{padding:9px}
+ .pagina-indice{font-size:12px;margin:0}
+ #pe .nav{gap:10px}.bt{padding:10px 12px}
+ .folha .enun{font-size:20px}.folha>.forca{font-size:13px;line-height:1.35;margin-top:10px}
+ .fim .caixa{max-width:100%}
+ .grupos .gr{padding:12px}
+}
+@media(max-width:900px){
+ .tb{width:100%;table-layout:fixed}.tb thead{display:none}.tb tr,.tb td{display:block;width:100%;min-width:0;white-space:normal;overflow-wrap:anywhere}.tb td::before{content:attr(data-col);display:block;font:600 12px var(--sans);color:var(--marca);margin-bottom:5px}
+ .area-paginada>.forca{font-size:14px;line-height:1.4;display:block}
+ .placar{grid-template-columns:1fr}.cons{display:block}.cn{margin-bottom:12px}
+}
+.tela:has(.estudo-imagem) .fundo{display:none}
+/* Diagramas transparentes conservam seus rótulos pretos também na ampliação. */
+.lupa img[src^="data:image/svg"]{background:#fff}

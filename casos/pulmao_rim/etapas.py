@@ -27,7 +27,7 @@ CKD-EPI 2021, e a relação PaO₂/FiO₂ calculada, não estimada.
 
 from pathlib import Path
 
-from motor.desenhos import anotada, corpo, seta
+from motor.desenhos import anotada, corpo, seta, chave_corpusculo
 from motor.etapas import (
     alt, balanco, bifurcacao, caminho, capa, consequencia, desfecho, grade,
     grupo, lamina, op, p, pagina, pedido, pergunta, quadro, resultados, tabela,
@@ -525,8 +525,8 @@ ETAPAS = [
                 "Rim de ecotextura normal, com diferenciação córtico-medular "
                 "preservada e sem hidronefrose. Imagem ilustrativa; o tamanho "
                 "vem do laudo, não desta figura. Os asteriscos são do autor da "
-                "fonte — * coluna de Bertin, ** pirâmide, *** córtex, "
-                "**** seio renal — e a linha pontilhada é o cursor de medida "
+                "fonte — um asterisco: coluna de Bertin; dois: pirâmide; três: córtex; "
+                "quatro: seio renal — e a linha pontilhada é o cursor de medida "
                 "dele, sem valor associado.",
                 "Hansen, Nielsen e Ewertsen · Wikimedia Commons · CC BY 4.0"),
             "Ecocardiograma transtorácico": lamina(ECO,
@@ -587,10 +587,11 @@ ETAPAS = [
         fundo=TC,
     ),
 
-    pagina("imagem_alveolo", "Discussão visual", "Alvéolo e capilares",
-        p("Observe a relação entre espaço aéreo e leito capilar. Em que compartimentos podem se acumular líquido, sangue ou células? A opacidade radiológica consegue distinguir sozinha esses materiais?"),
-        '<details class="leitura"><summary>Revelar pontos de discussão</summary><p>O mesmo compartimento alveolar pode ser ocupado por materiais diferentes. A imagem do tórax precisa ser integrada à evolução clínica, à hemoglobina e aos exames dirigidos. O desenho apresenta anatomia normal, sem estabelecer o mecanismo deste paciente.</p></details>',
-        fundo=CENA,lamina_=lamina("alveolo.svg", "Alvéolo", "Anatomia normal para discussão; não é exame do paciente.", "LadyofHats · Wikimedia Commons · domínio público · sem alterações.")),
+    pagina("imagem_alveolo", "Discussão visual", "Tomografia de tórax",
+        p("Na revisão da radiografia, a equipe discute o que a tomografia poderia acrescentar. Observe esta imagem comparativa de outro paciente: como você descreve a distribuição das alterações?"),
+        '<details class="leitura"><summary>Revelar pontos de discussão</summary><p>Há opacidades bilaterais em vidro fosco e áreas mais densas. Esses padrões precisam ser integrados à evolução clínica e não distinguem, isoladamente, sangue, líquido ou inflamação no espaço alveolar.</p></details>',
+        fundo=CENA,lamina_=lamina(TC, "TC de tórax — comparação", "Imagem de outro paciente para discussão morfológica; não constitui novo resultado deste caso.", "Hellerhoff · Wikimedia Commons · CC BY-SA 4.0 · sem alterações.")),
+
     pergunta("p4", "Pergunta 6",
         "Ele piorou sob antibiótico adequado. **Quais quatro** achados deste "
         "paciente sustentam hemorragia alveolar difusa?",
@@ -889,41 +890,22 @@ ETAPAS = [
     pagina("crescente", "Discussão visual", "Corpúsculo renal",
         p("Antes de interpretar a microfotografia, localize a cápsula, o espaço urinário e o tufo capilar neste esquema. O que significa uma proliferação ocorrer fora do tufo?"),
         '<details class="leitura"><summary>Revelar pontos de discussão</summary><p>O espaço de Bowman está entre o tufo e o epitélio parietal da cápsula. Uma crescente ocupa esse espaço. O esquema normal orienta a leitura da microfotografia seguinte, mas não demonstra lesão ou proporção de glomérulos afetados.</p></details>',
-        fundo=CENA,lamina_=lamina("corpusculo.svg", "Corpúsculo renal", "Esquema anatômico normal.", "Michał Komorniczak · Wikimedia Commons · CC BY-SA 3.0 · sem alterações.")),
-    pagina("crescente_histologia", "Discussão", "A biópsia renal",
-        grade(
-            anotada(IMG / CRESCENTE,
-                seta((795, 285), (612, 66), "Tufo capilar", curva=14),
-                seta((432, 292), (24, 150), "Cápsula de Bowman", curva=20),
-                seta((505, 362), (24, 536),
-                     "Crescente celular, no espaço de Bowman", curva=-26),
-                # o distrator: no canto inferior esquerdo há um glomérulo
-                # globalmente esclerosado, e o halo claro em volta dele parece
-                # uma crescente para quem está aprendendo
-                seta((398, 548), (168, 650),
-                     "Glomérulo esclerosado — não é crescente", curva=10),
-                titulo="Glomérulo com crescente celular · PAS, grande aumento",
-                legenda="As quatro setas são leitura editorial deste caso, não "
-                        "do autor da imagem. Lâmina ilustrativa, de "
-                        "repositório aberto; não pertence a este paciente.",
-                credito="Nephron · Wikimedia Commons · CC BY-SA 3.0"),
-            p("**Crescentes celulares em 15 dos 24 glomérulos**, com necrose "
-              "fibrinoide segmentar, e imunofluorescência **sem depósitos "
-              "significativos**.")
-            + quadro("O que é uma crescente, e por que a palavra celular importa",
-                p("Crescente é proliferação de células **fora do tufo**, dentro "
-                  "do espaço de Bowman: epitélio parietal, monócitos e fibrina "
-                  "que escaparam por uma ruptura da parede capilar. Ela "
-                  "comprime o tufo e obstrui a saída do filtrado. **Celular** "
-                  "quer dizer tecido inflamado, que ainda responde; "
-                  "**fibrosa** quer dizer colágeno, que não responde. A "
-                  "transição corre ao longo de semanas — não de meses, e não "
-                  "de horas — e é isso que dá urgência ao tratamento sem "
-                  "torná-lo emergência de minutos."),
-                sistema="rim"),
-        ),
-        fundo=BIOPSIA,
-    ),
+        chave_corpusculo(), fundo=CENA,lamina_=lamina("corpusculo.svg", "Corpúsculo renal", "Esquema normal. 2: camada parietal; 4: espaço urinário; 10: capilares.", "Michał Komorniczak · Wikimedia Commons · CC BY-SA 3.0 · sem alterações.")),
+    pagina("crescente_histologia", "Discussão de imagem", "Biópsia renal",
+        '<div class="estudo-imagem">' + anotada(IMG / CRESCENTE,
+            seta((795, 285), (750, 110), "1", curva=14),
+            seta((432, 292), (230, 210), "2", curva=20),
+            seta((505, 362), (320, 490), "3", curva=-26),
+            legenda="PAS. Microfotografia ilustrativa de outro paciente; não permite contar os glomérulos do laudo do caso.",
+            credito="Nephron · Wikimedia Commons · CC BY-SA 3.0. Setas editoriais; adaptação sob a mesma licença.")
+        + '<aside>'
+        + p("1. **Tufo glomerular:** região com alças capilares, à direita da proliferação extracapilar.")
+        + p("2. **Cápsula de Bowman:** limite externo do corpúsculo renal.")
+        + p("3. **Crescente:** proliferação extracapilar na periferia do tufo, dentro da cápsula.")
+        + '</aside></div>', fundo=BIOPSIA),
+    pagina("crescente_correlacao", "Discussão", "Biópsia renal",
+        p("**Laudo do caso ficcional:** crescentes celulares em 15 dos 24 glomérulos, necrose fibrinoide segmentar e imunofluorescência sem depósitos significativos. A microfotografia anterior ilustra a morfologia; não demonstra essa contagem nem o padrão da imunofluorescência."),
+        p("A crescente é uma proliferação extracapilar que ocupa o espaço de Bowman. O predomínio celular indica atividade e potencial de resposta; a fibrose representa dano crônico. A recuperação depende também da extensão da lesão e do parênquima preservado, e não pode ser garantida por uma única imagem."), fundo=BIOPSIA),
 
     pergunta("p6", "Pergunta 9",
         "A imunofluorescência da biópsia renal não mostra depósito imune. "

@@ -20,6 +20,7 @@ const $ = s => document.querySelector(s);
 
 /* ─────────────────────────── estado da sessão ─────────────────────────── */
 
+let emRevisao = false;
 let i = 0;                    // índice da etapa atual
 const marcados = {};          // ident do pedido -> Set de nomes de exame
 const respostas = {};         // ident da pergunta -> {marcadas:[], feita:bool}
@@ -47,7 +48,7 @@ function ir(n, empilhar){
   if (n < 0 || n >= ETAPAS.length) return;
   if (ETAPAS[n].t === 'resultados') folhaDe[ETAPAS[n].k] = 0;
   if (empilhar !== false) historia.push(n);
-  i = n;
+  i = n; parteTela = 0; emRevisao=false;
   pintar();
 }
 
@@ -60,6 +61,8 @@ function irPara(k){
 /* A folha seguinte é a vizinha, a menos que a etapa atual diga outra coisa —
    é assim que a bifurcação muda o rumo sem que a lista de etapas mude. */
 function adiante(){
+  if (temProximaParte()){ virarParte(1); return; }
+  if(emRevisao){recomecar();return;}
   const e = etapa();
   if (e.t === 'bifurcacao'){
     const esc = escolhas[e.k];
@@ -103,6 +106,8 @@ function adiante(){
 }
 
 function atras(){
+  if (parteTela > 0){ virarParte(-1); return; }
+  if(emRevisao){emRevisao=false;parteTela=0;pintar();return;}
   const e = etapa();
   if (e.t === 'resultados' && (folhaDe[e.k] || 0) > 0){
     folhaDe[e.k] -= 1; pintar(); return;
@@ -117,6 +122,7 @@ function atras(){
    exame marcado seguram a página: o caso não anda por cima de uma decisão que
    não foi tomada. */
 function podeAdiante(){
+  if (emRevisao || temProximaParte()) return true;
   const e = etapa();
   if (e.t === 'pergunta') return !!(respostas[e.k] && respostas[e.k].feita);
   if (e.t === 'bifurcacao') return escolhas[e.k] !== undefined;
@@ -190,11 +196,12 @@ function pintarPe(){
   $('#pe').innerHTML =
     '<span class="rod">' + CASO.rodape + '</span>'
     + '<span class="nav">'
-    + '<button class="bt" id="voltar"' + (historia.length < 2 ? ' disabled' : '') + '>Voltar</button>'
-    + '<button class="bt forte" id="seguir"' + (podeAdiante() ? '' : ' disabled') + '>'
-    + (e.t === 'capa' ? 'Começar o caso' : fim ? 'Continuar' : 'Avançar') + '</button></span>';
+    + (partesTela.length > 1 ? '<span class="pagina-indice">Página ' + (parteTela + 1) + ' de ' + partesTela.length + '</span>' : '')
+    + '<button class="bt" id="voltar"' + (historia.length < 2 && parteTela === 0 ? ' disabled' : '') + '>Voltar</button>'
+    + '<button class="bt forte" id="' + (emRevisao && !temProximaParte() ? 'reiniciar' : 'seguir') + '"' + (podeAdiante() ? '' : ' disabled') + '>'
+    + (temProximaParte() ? 'Próxima página' : emRevisao ? 'Recomeçar' : e.t === 'capa' ? 'Começar o caso' : fim ? 'Continuar' : 'Avançar') + '</button></span>';
   $('#voltar').onclick = atras;
-  $('#seguir').onclick = adiante;
+  ($('#seguir') || $('#reiniciar')).onclick = adiante;
 }
 
 /* ─────────────────────────── desenho das etapas ─────────────────────────── */
@@ -264,8 +271,11 @@ function pintar(){
   const e = etapa();
   $('#palco').innerHTML = '<section class="tela on">' + DESENHO[e.t](e) + '</section>';
   resolverImagens();
-  ligarLupa();
+  document.querySelectorAll('#palco details').forEach((d,n)=>{const key=etapa().k+'::'+n;d.dataset.detalhe=key;d.open=detalhesAbertos.has(key);});
   ligar(e);
+  montarFolhas();
+  document.querySelectorAll('#palco details').forEach(d=>{const summary=d.querySelector('summary');if(summary)summary.onclick=ev=>{ev.preventDefault();const key=d.dataset.detalhe;d.open?detalhesAbertos.delete(key):detalhesAbertos.add(key);parteTela=0;pintar();};});
+  ligarLupa();
   acessibilidadeDaPagina();
   pintarTrilho();
   pintarPe();
@@ -513,9 +523,9 @@ function ligar(e){
         if (conj.has(n)) conj.delete(n);
         else if (cheio()) return;          // o teto não empurra: ele segura
         else conj.add(n);
-        l.classList.toggle('on', conj.has(n));
-        l.setAttribute('aria-checked', conj.has(n) ? 'true' : 'false');
-        contar();
+        pintar();
+        const atual=[...document.querySelectorAll('.it')].find(x=>x.dataset.ex===n);
+        if(atual?.getClientRects().length)atual.focus({preventScroll:true});
       };
     });
     contar();
@@ -523,7 +533,13 @@ function ligar(e){
 
   if (e.t === 'resultados'){
     document.querySelectorAll('.verlaudo').forEach(b => {
-      b.onclick = () => { laudos.add(b.dataset.laudo); pintar(); };
+      b.onclick = () => {
+        const nome=b.closest('.rc').querySelector('b').textContent;
+        laudos.add(b.dataset.laudo);pintar();
+        const cartao=[...document.querySelectorAll('.rc')].find(c=>c.querySelector('b')?.textContent===nome&&c.querySelector('.v'));
+        const parte=partesTela.findIndex(p=>p.some(n=>n===cartao||n.contains(cartao)));
+        if(parte>=0){parteTela=parte;aplicarParte();pintarPe();}
+      };
     });
   }
 
@@ -546,13 +562,13 @@ function ligar(e){
       };
     });
     const conf = $('#conf');
-    if (conf) conf.onclick = () => { r.feita = true; pintar(); };
+    if (conf) conf.onclick = () => { r.feita = true; parteTela=0; pintar(); };
   }
 
   if (e.t === 'bifurcacao'){
     if (escolhas[e.k] !== undefined) return;
     document.querySelectorAll('.cam').forEach(c => {
-      c.onclick = () => { escolhas[e.k] = +c.dataset.k; pintar(); };
+      c.onclick = () => { escolhas[e.k] = +c.dataset.k; parteTela=0; pintar(); };
     });
   }
 }
@@ -595,14 +611,15 @@ function mostrarRevisao(){
     + '<span class="nav"><button class="bt" onclick="recomecar()">'
     + 'Conduzir de novo</button></span>';
   $('#trilho').innerHTML = '<a class="voltar-biblioteca" href="index.html" aria-label="Voltar à biblioteca"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg><span>Biblioteca</span></a><span class="tt">' + CASO.titulo + '</span>';
+  emRevisao=true;parteTela=0;montarFolhas();pintarPe();
 }
 
 function recomecar(){
-  i = 0; historia = [0];
+  i = 0; historia = [0]; emRevisao=false;
   Object.keys(marcados).forEach(k => delete marcados[k]);
   Object.keys(respostas).forEach(k => delete respostas[k]);
   Object.keys(escolhas).forEach(k => delete escolhas[k]);
-  laudos.clear();
+  laudos.clear(); detalhesAbertos.clear(); parteTela=0;
   pintar();
 }
 
@@ -618,6 +635,8 @@ addEventListener('keydown', ev => {
   }
 });
 
+let resizeTela;
+addEventListener("resize",()=>{clearTimeout(resizeTela);resizeTela=setTimeout(()=>{if(!lupaAberta){if(emRevisao)mostrarRevisao();else pintar();}},120);});
 pintar();
 
 function acessibilidadeDaPagina(){

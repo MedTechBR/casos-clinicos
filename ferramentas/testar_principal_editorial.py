@@ -26,6 +26,9 @@ with sync_playwright() as pw:
   for mode,plan in itertools.product(['full','minimal'],plans):
    page.evaluate('recomecar()');seen=[]
    for turn in range(len(steps)+1):
+    if page.evaluate('emRevisao'):
+     while page.evaluate('temProximaParte()'):page.locator('#seguir').click()
+     break
     if page.locator('#seguir').count()==0:break
     e=page.evaluate('etapa()');k=e['k'];assert k not in seen,(slug,'cycle',seen,k);seen.append(k);visited.add(k)
     if e['t']=='pedido':
@@ -39,12 +42,13 @@ with sync_playwright() as pw:
      bounds=page.evaluate('()=>{let a=document.querySelector(".alts"),f=document.querySelector(".folha"),z=document.querySelector("#conf");return {overflow:a.scrollHeight-a.clientHeight, bottom:z.getBoundingClientRect().bottom, footer:document.querySelector("#pe").getBoundingClientRect().top}}')
      if bounds['overflow']>2 or bounds['bottom']>bounds['footer']:layout.append((k,bounds))
      for n,a in enumerate(e['alts']):
-      if a['ok']:page.locator(f'.alts li[data-k="{n}"]').click()
+      if a['ok']:page.evaluate('(n)=>document.querySelectorAll(".alts li")[n].click()',n)
      page.locator('#conf').click()
     elif e['t']=='bifurcacao':page.locator(f'.cam[data-k="{plan[k]}"]').click()
     elif e['t']=='resultados':
      count=page.locator('.rc').count();assert count==len(cfg[mode][e['de']]),(slug,k,count)
     elif e['t']=='desfecho':endings.add(k)
+    while page.evaluate('temProximaParte()'):page.locator('#seguir').click()
     page.locator('#seguir').click()
    else:raise AssertionError('route exceeded authored step count')
    assert page.locator('#seguir').count()==0,(slug,'not finished')
