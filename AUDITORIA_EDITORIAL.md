@@ -37,3 +37,12 @@ Os testes não representam validação clínica externa de cada decisão ou prog
 - 150 percursos novamente executados: 54 no original, 72 West Nile e 24 cocaína, sem erro JS ou perguntas cortadas. A questão condicional de dupla positividade na cocaína também foi renderizada diretamente, embora não apareça nas combinações padrão.
 - Teste específico de imagens: somente pedidos selecionados retornam; laudos inicialmente ocultos; revelação e lupa funcionam, inclusive RX repetido em rodadas distintas.
 - Interface verificada em 1600×900, 1366×768 e 375×812. Catálogos longos usam rolagem; alternativas das perguntas em desktop permanecem inteiras.
+
+## 7 de setembro — exames na evolução e respostas
+
+- Doze páginas novas, em seis pares: observação sem interpretação, depois leitura com setas. Um par de ECG por caso; adicionalmente RX na piora respiratória, TC após déficit focal e US na investigação urinária. O mesmo ECG aberto é comparativo nos três roteiros, com identificação explícita de outro paciente.
+- A equipe pode solicitar esses exames na narrativa, conforme nova orientação do autor. TC e US migrados para a evolução foram retirados dos respectivos catálogos para não consumir uma escolha redundante. Os painéis continuam exibindo somente os exames selecionados.
+- Dois auditores independentes (Godel e Carver) aceitaram RX, TC e US. Houve divergência na seta inicialmente atribuída à onda P; essa marcação foi substituída por dois QRS consecutivos, sem nomear P nas setas. Ambos aceitaram o ECG revisado. Originais, SVGs, capturas e grade de coordenadas conferidos. Licenças e limites em `casos/*/img/CREDITOS.md`.
+- Marcadores de alternativa não usam mais pseudo-rótulos “certa/sua”; o resultado aparece junto ao comentário. Ampliação de SVG corrigida: a figura ocupa a lupa em vez de encolher ao tamanho intrínseco.
+- Testes: 54 percursos principais + 72 West + 24 cocaína, todos com finais alcançados e zero erro JavaScript. 19 perguntas confirmadas em 1600×900, 1366×768 e 375×812 sem sobreposição do marcador/comentário. Seis pares testados para ordem, ausência de setas iniciais, leitura seguinte, voltar, lupa e ganho de tamanho. Questões extensas podem rolar após a confirmação; alternativas antes de confirmar continuam sem corte nos desktops testados.
+- Totais autorais: 71/55/56 páginas, incluindo ramos alternativos. Nenhum percurso individual contém necessariamente todas elas.

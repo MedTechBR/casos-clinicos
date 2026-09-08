@@ -1681,3 +1681,18 @@ REVISAO = [
                 "forma definitiva, e o tratamento dela inclui troca "
                 "plasmática, que nesta é discutível."),
 ]
+
+# Exames trazidos pela equipe durante a evolução; a discussão vem na página seguinte.
+from motor.estudo_imagem import ecg, sequencia, inserir_antes
+inserir_antes(ETAPAS, 'p3', ecg('ecg_evolucao',
+    'Na observação, o pulso permanece acelerado enquanto ele recebe oxigênio. A equipe registra um ECG durante essa reavaliação. Como você descreve o ritmo e como o integra à dispneia?', IMG,
+    'A frequência pode acompanhar hipóxia, anemia ou infecção. O traçado não distingue essas causas: reavalie perfusão e oxigenação antes de tratar o número isoladamente.'))
+inserir_antes(ETAPAS, 'imagem_alveolo', sequencia('rx_evolucao', 'Radiografia de tórax',
+    'Com a piora respiratória, a equipe repete a radiografia à beira do leito. Descreva a distribuição das opacidades antes de propor uma causa.',
+    IMG / 'rx_torax_alveolar.jpg',
+    'Samir · Wikimedia Commons · CC BY-SA 3.0. Recorte prévio e setas na discussão; adaptação sob a mesma licença.',
+    'Radiografia ilustrativa de outro paciente. A figura não documenta a evolução temporal deste caso.',
+    [((308, 427), (110, 345)), ((704, 430), (912, 320))],
+    ['1 e 2. Há opacidades em ambos os pulmões, mais evidentes nas regiões médias e inferiores.',
+     'A distribuição bilateral amplia a discussão para preenchimento alveolar por líquido, sangue ou material inflamatório. A radiografia isolada não separa esses mecanismos.',
+     'Compare com a resposta ao tratamento, a oxigenação e a evolução da hemoglobina, quando disponíveis. Não conclua a etiologia apenas pelo padrão.']))

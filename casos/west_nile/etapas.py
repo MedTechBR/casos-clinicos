@@ -66,7 +66,6 @@ ETAPAS = [
         ex('Urina tipo 1','0–2 leucócitos/campo · nitrito negativo · sem sangue'),
         ex('Radiografia de tórax','Sem opacidade focal ou derrame pleural.'),
         ex('Hemoculturas iniciais','Coletadas; em processamento nesta etapa.'),
-        ex('Eletrocardiograma','Ritmo sinusal, frequência 102 bpm.'),
         ex('TSH','2,4 mUI/L','0,4–4,0'),
         ex('Vitamina B12','410 pg/mL','200–900')])],banco=BANCO,limite=4,fundo=CENA),
     resultados('res1','Resultados','Primeira rodada','ex1',fundo=CENA,laminas={'Radiografia de tórax':lamina('rx_torax_normal.jpg','Radiografia de tórax','Imagem comparativa de outro adulto. Ausência de opacidade focal evidente não exclui infecção precoce.','Mikael Häggström · Wikimedia Commons · CC0. Imagem ilustrativa.')}),
@@ -101,7 +100,6 @@ ETAPAS = [
         ex('Líquor: celularidade, proteína, glicose e Gram','86 células/mm³ (58% neutrófilos) · proteína 92 mg/dL · glicose 68 mg/dL, sérica 120 · Gram sem bactérias','Até 5 células · proteína 15–45 · relação glicose >0,4',True),
         ex('Cultura e PCR bacteriana do líquor','Sem crescimento até o momento · painel bacteriano negativo.'),
         ex('PCR para HSV e VZV no líquor','Não detectados em amostra obtida no sexto dia de sintomas.'),
-        ex('Tomografia de crânio sem contraste','Sem hemorragia intracraniana, hidrocefalia ou efeito de massa significativo. TC sem lesão evidente não exclui encefalite ou isquemia precoce.'),
         ex('Ressonância de encéfalo e medula','Sem infarto, compressão medular ou lesão temporal. Ausência de alteração específica não exclui inflamação.'),
         ex('Eletroneuromiografia','Respostas motoras reduzidas, assimétricas; respostas sensitivas preservadas. Sem critérios de desmielinização. Estudo precoce requer correlação clínica.', '—',True),
         ex('Eletroencefalograma','Lentificação difusa, sem atividade epiléptica registrada.')]),
@@ -110,8 +108,7 @@ ETAPAS = [
         ex('Dengue: NS1 e IgM','Não reagentes.'),ex('Leptospira: PCR','Não detectado.'),
         ex('Amônia','28 µmol/L','11–35'),ex('Cortisol matinal','18 µg/dL','5–25')])],banco=BANCO,limite=4,fundo=CENA),
     resultados('res2','Resultados','Segunda rodada','ex2',fundo=CENA,
-      laminas={'Tomografia de crânio sem contraste':lamina('tc_cranio.png','TC de crânio','Corte axial e localizador sagital de outro adulto. Figura ilustrativa; não representa o exame completo nem exclui encefalite.','Mikael Häggström · Wikimedia Commons · CC0 · sem alterações.'),
-      'Ressonância de encéfalo e medula':lamina('rm_encefalo.png','RM do encéfalo','A figura ilustra somente um corte axial T2 do encéfalo de outro adulto. Não mostra a medula nem todas as sequências do estudo. Não permite excluir encefalite ou isquemia.','Sean Novak · Wikimedia Commons · CC BY-SA 4.0 · sem alterações.')},
+      laminas={'Ressonância de encéfalo e medula':lamina('rm_encefalo.png','RM do encéfalo','A figura ilustra somente um corte axial T2 do encéfalo de outro adulto. Não mostra a medula nem todas as sequências do estudo. Não permite excluir encefalite ou isquemia.','Sean Novak · Wikimedia Commons · CC BY-SA 4.0 · sem alterações.')},
       rota={'pediu':['Líquor: celularidade, proteína, glicose e Gram'],'entao':'p3','senao':'sem_lcr'}),
     q('p3','O líquor tem 86 células/mm³, predomínio neutrofílico e glicose preservada. Qual interpretação é a mais adequada?',[
       ('O predomínio neutrofílico comprova meningite bacteriana.','A celularidade inicial de algumas infecções virais também pode ser neutrofílica.',False),
@@ -205,3 +202,17 @@ ETAPAS = [
        '<p><a href="https://wwwnc.cdc.gov/eid/article/9/7/03-0129_article" target="_blank" rel="noopener">Sejvar et al., 2003 — paralisia flácida</a> · <a href="https://www.idsociety.org/practice-guideline/encephalitis" target="_blank" rel="noopener">IDSA — encefalite</a></p>')
 ]
 REVISAO = [dict(chave='Líquor: celularidade, proteína, glicose e Gram',rotulo='Caracterização do líquor',porque='A ausência dessa investigação limitou a diferenciação entre causas infecciosas e pós-infecciosas neste percurso.'),dict(chave='IgM para vírus do Nilo Ocidental em soro e líquor',rotulo='Atribuição etiológica',porque='A hipótese epidemiológica pode orientar testes dirigidos; sem eles, o registro deve preservar a incerteza.')]
+
+from motor.estudo_imagem import ecg, sequencia, inserir_antes
+inserir_antes(ETAPAS, 'ex1', ecg('ecg_evolucao',
+    'Durante a observação, Antônio mantém febre e o pulso fica mais acelerado. A equipe registra um ECG. O ritmo ajuda a explicar a dificuldade para caminhar ou exige uma investigação em paralelo?', IMG,
+    'A taquicardia pode acompanhar a febre e o estresse sistêmico. Isso não explica por si só o déficit motor e a alteração da atenção; a investigação neurológica continua.'))
+inserir_antes(ETAPAS, 'ex2', sequencia('tc_evolucao', 'Tomografia de crânio',
+    'Diante do déficit focal e da alteração da consciência, a equipe solicita TC de crânio antes de definir a segurança da punção. O tratamento empírico é mantido enquanto o exame é realizado. Observe o corte disponível.',
+    IMG / 'tc_cranio.png',
+    'Mikael Häggström · Wikimedia Commons · CC0. Setas adicionadas na discussão.',
+    'Corte axial e localizador de outro adulto. Figura ilustrativa; não substitui a leitura do exame completo.',
+    [((250, 400), (35, 340)), ((282, 210), (400, 100))],
+    ['1. Os espaços liquóricos ventriculares aparecem escuros neste corte; não há dilatação grosseira evidente na figura.',
+     '2. A fissura inter-hemisférica anterior oferece uma referência da linha média. Não se observa desvio grosseiro neste nível.',
+     'O laudo ficcional do estudo completo não mostra hemorragia, hidrocefalia ou efeito de massa significativo. Isso não exclui encefalite ou isquemia precoce, nem autoriza a punção sem avaliação clínica.']))

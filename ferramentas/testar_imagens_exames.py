@@ -3,8 +3,8 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
 CONFIG={
- 'west-nile':[('ex1','res1',['Radiografia de tórax']),('ex2','res2',['Tomografia de crânio sem contraste','Ressonância de encéfalo e medula'])],
- 'cocaina-levamisol':[('p1','r1',['Radiografia de tórax']),('p3','r3',['Ultrassonografia renal'])],
+ 'west-nile':[('ex1','res1',['Radiografia de tórax']),('ex2','res2',['Ressonância de encéfalo e medula'])],
+ 'cocaina-levamisol':[('p1','r1',['Radiografia de tórax'])],
  'pulmao-rim':[('ex_amb','res_amb',['Radiografia de tórax']),('ex_adm','res_adm',['Radiografia de tórax'])]}
 with sync_playwright() as pw:
  browser=pw.chromium.launch();page=browser.new_page(viewport={'width':1366,'height':768});errors=[];page.on('pageerror',lambda e:errors.append(str(e)))

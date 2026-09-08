@@ -1,6 +1,6 @@
 """Caso ficcional; API de motor.etapas, sem alterar motor ou biblioteca.
 
-Três momentos diagnósticos; resultados exclusivamente nos painéis pedidos.
+Três momentos diagnósticos; painéis selecionáveis e exames trazidos pela equipe.
 Os desfechos são cenários possíveis, não probabilidades nem punições causais.
 A única imagem futura é ilustrativa e nunca constitui evidência clínica.
 """
@@ -231,11 +231,9 @@ ETAPAS = [
             op('Hemograma de controle', resultado='Neutrófilos absolutos 420/µL · Hemoglobina 11,7 g/dL · Plaquetas 226.000/µL', referencia='Neutrófilos 1.500–7.500/µL', alterado=True),
             op('Novas hemoculturas', resultado='Sem crescimento em 48 h; coleta sob antibiótico.', referencia='Sem crescimento'),
             op('Cultura de tecido cutâneo', resultado='Sem crescimento bacteriano em 48 h; coleta sob antibiótico.', referencia='Sem crescimento'),
-            op('Ultrassonografia renal', resultado='Rins de dimensões preservadas, sem dilatação pielocalicial.', referencia='Sem dilatação'),
         ]),
     ]),
     resultados('r3', 'Terceiro momento', 'Resultados solicitados', 'p3', fundo=CENA,
-        laminas={'Ultrassonografia renal':lamina('us_rim.jpg','Ultrassonografia renal','Corte longitudinal de rim de outro adulto, sem dilatação coletora evidente neste corte. Não demonstra ausência de glomerulonefrite nem medidas do caso. Asteriscos e cálipers pertencem à fonte; medida numérica recortada.','Hansen, Nielsen e Ewertsen · Wikimedia Commons · CC BY 4.0 · imagem recortada.')},
         rota=dict(pediu=['Benzoilecgonina urinária', 'Levamisol urinário por LC-MS/MS'], entao='toxicologia', senao='sem_toxicologia')),
     pagina('toxicologia', 'Interpretação', 'Janela de detecção',
         p('Os testes solicitados documentam exposição à cocaína, mas não documentam '
@@ -367,3 +365,17 @@ REVISAO = [
     dict(rotulo='Toxicologia específica', chave='Levamisol urinário por LC-MS/MS',
          porque='Pode documentar exposição se positiva; coleta tardia reduz rendimento. Não é requisito para tratar ameaça clínica.'),
 ]
+
+from motor.estudo_imagem import ecg, sequencia, inserir_antes
+inserir_antes(ETAPAS, 'p1', ecg('ecg_evolucao',
+    'Na reavaliação, Marina mantém dor e febre; o pulso continua acelerado. A equipe obtém um ECG. Qual é o ritmo e quais dados clínicos você revê antes de atribuir uma causa?', IMG,
+    'Febre, dor e outras causas de ativação simpática podem produzir esse ritmo. O ECG não identifica uma exposição nem estabelece a causa das lesões cutâneas.'))
+inserir_antes(ETAPAS, 'p3', sequencia('us_evolucao', 'Ultrassonografia renal',
+    'Como a urina permanece escura, a equipe acrescenta ultrassonografia à investigação urinária. Observe o corte longitudinal apresentado. O que esse método pode esclarecer e quais mecanismos continuariam possíveis?',
+    IMG / 'us_rim.jpg',
+    'Hansen, Nielsen e Ewertsen · Wikimedia Commons · CC BY 4.0. Recorte prévio e setas adicionadas na discussão.',
+    'Rim de outro adulto. Asteriscos e cálipers são da fonte; não representam medidas da paciente.',
+    [((524, 283), (620, 105)), ((447, 400), (720, 550))],
+    ['1. A seta alcança o parênquima periférico, mais escuro que a região central.',
+     '2. O seio renal é mais ecogênico. Neste corte, não há dilatação coletora evidente.',
+     'O laudo ficcional descreve rins de dimensões preservadas, sem dilatação pielocalicial. A ausência de obstrução não exclui lesão glomerular: urina e função renal continuam fundamentais.']))

@@ -395,7 +395,7 @@ const DESENHO = {
           + (r.marcadas.includes(k) ? ' marcada' : '') + '">'
           + '<span class="k">' + String.fromCharCode(65 + k) + '</span>'
           + '<span class="tx">' + a.t + '</span>'
-          + '<span class="cm">' + a.c + '</span></li>').join('')
+          + '<span class="cm">' + (r.feita ? '<span class="estado-resposta">' + (a.ok ? 'Correta' : 'Incorreta') + (r.marcadas.includes(k) ? ' · sua seleção' : '') + '</span>' : '') + a.c + '</span></li>').join('')
       + '</ul>'
       + (r.feita ? '' : '<button class="conf" id="conf"'
           + (r.marcadas.length >= e.escolhas ? '' : ' disabled') + '>'

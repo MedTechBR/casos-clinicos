@@ -74,8 +74,9 @@ def construir() -> Path:
     destino.write_text(montar(
         titulo="Casos para conduzir, não para ler",
         subtitulo="Cada caso avança página a página. Você pede os exames que "
-                  "quiser dentro do teto da rodada, e só o que for pedido "
-                  "volta. As decisões mudam o rumo, e o rumo muda o desfecho.",
+                  "priorizar dentro do limite da rodada. A equipe também traz "
+                  "exames durante a evolução, com imagens para discussão. "
+                  "Suas decisões mudam o rumo e o desfecho.",
         casos=CASOS, rodape=RODAPE,
         img_dir=RAIZ / "casos" / "pulmao_rim" / "img",
     ), encoding="utf-8")
