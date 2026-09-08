@@ -216,3 +216,6 @@ inserir_antes(ETAPAS, 'ex2', sequencia('tc_evolucao', 'Tomografia de crânio',
     ['1. Os espaços liquóricos ventriculares aparecem escuros neste corte; não há dilatação grosseira evidente na figura.',
      '2. A fissura inter-hemisférica anterior oferece uma referência da linha média. Não se observa desvio grosseiro neste nível.',
      'O laudo ficcional do estudo completo não mostra hemorragia, hidrocefalia ou efeito de massa significativo. Isso não exclui encefalite ou isquemia precoce, nem autoriza a punção sem avaliação clínica.']))
+
+from casos.investigacoes import aplicar, ESPECIFICACOES
+aplicar(ETAPAS, ESPECIFICACOES["west_nile"])

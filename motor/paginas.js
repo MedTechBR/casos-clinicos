@@ -33,6 +33,16 @@ function montarFolhas(){
   if(area.classList.contains('cams')){const aviso=root.querySelector(':scope>.forca');if(aviso)area.append(aviso);}
   if(mobile)root.querySelectorAll('table').forEach(t=>{const nomes=[...t.querySelectorAll('thead th')].map(x=>x.textContent);t.querySelectorAll('tbody tr').forEach(tr=>[...tr.children].forEach((td,n)=>td.dataset.col=nomes[n]||''));});
   area.classList.add('area-paginada'); areaTela = area;
+  // Respostas e resultados permanecem inteiros: a densidade se adapta à tela.
+  if(area.matches('.alts,.res,.cams')){
+    root.classList.add('tela-unica');
+    const cabe=()=>area.scrollHeight<=area.clientHeight+1&&area.scrollWidth<=area.clientWidth+1;
+    let fator=1;
+    root.style.setProperty('--compacto',fator);
+    while(!cabe()&&fator>0.25){fator=Math.max(0.25,fator-0.015);root.style.setProperty('--compacto',fator.toFixed(3));}
+    partesTela=[[...area.children]];parteTela=0;aplicarParte();return;
+  }
+
   // O flex precisa reservar espaço aos cabeçalhos e aos botões antes da medição.
   const capacidade = () => area.clientHeight;
   function grande(el){ const st=getComputedStyle(el);return el.getBoundingClientRect().height+parseFloat(st.marginTop||0)+parseFloat(st.marginBottom||0) > capacidade() - 3; }

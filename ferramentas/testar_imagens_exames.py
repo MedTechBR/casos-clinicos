@@ -14,16 +14,15 @@ with sync_playwright() as pw:
   for order in page.evaluate('ETAPAS.filter(e=>e.t==="pedido").map(e=>({k:e.k,enunciado:e.enunciado}))'):
    assert '?' in order['enunciado'],(slug,order['k'],'sem pergunta contextual')
    page.evaluate('(k)=>ir(porId(k))',order['k'])
-   assert page.locator('.folha.pedido .sub').is_visible()
-   assert page.evaluate('document.querySelector(".grupos").clientHeight>150'),(slug,order['k'],'catálogo sem espaço')
+   assert page.locator('.enun').is_visible()
+   assert page.evaluate('document.querySelector(".alts").clientHeight>150'),(slug,order['k'],'catálogo sem espaço')
    page.screenshot(path=str(ROOT/'saida/revisao'/f'pedido-{slug}-{order["k"]}.png'))
   for order,result,names in rounds:
    # Um exame de imagem não selecionado não aparece no painel.
    page.evaluate('(k)=>ir(porId(k))',result);assert page.locator('.rc img').count()==0
    page.evaluate('(k)=>ir(porId(k))',order)
-   for name in names:
-    page.evaluate('(name)=>Array.from(document.querySelectorAll(".it")).find(e=>e.dataset.ex===name).click()',name)
-   ultima(page);page.locator('#seguir').click();assert page.evaluate('etapa().k')==result
+   # Teste isolado do renderizador; o fluxo de confirmação tem suíte própria.
+   page.evaluate('([order,names,result])=>{marcados[order]=new Set(names);ir(porId(result))}',[order,names,result])
    assert page.locator('.rc').count()==len(names)
    assert page.locator('.verlaudo').count()==len(names)
    assert page.locator('.rc .v').count()==0,(slug,order,'laudo vazou de outra rodada')

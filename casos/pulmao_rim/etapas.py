@@ -1678,3 +1678,6 @@ inserir_antes(ETAPAS, 'imagem_alveolo', sequencia('rx_evolucao', 'Radiografia de
     ['1 e 2. Há opacidades em ambos os pulmões, mais evidentes nas regiões médias e inferiores.',
      'A distribuição bilateral amplia a discussão para preenchimento alveolar por líquido, sangue ou material inflamatório. A radiografia isolada não separa esses mecanismos.',
      'Compare com a resposta ao tratamento, a oxigenação e a evolução da hemoglobina, quando disponíveis. Não conclua a etiologia apenas pelo padrão.']))
+
+from casos.investigacoes import aplicar, ESPECIFICACOES
+aplicar(ETAPAS, ESPECIFICACOES["pulmao_rim"])

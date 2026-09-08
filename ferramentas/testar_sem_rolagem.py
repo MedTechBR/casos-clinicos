@@ -14,9 +14,10 @@ with sync_playwright() as pw:
    for e in steps:
     page.evaluate('(k)=>ir(porId(k))',e['k'])
     for state in ['inicial','revelado']:
-     if state=='revelado':page.evaluate('''()=>{let e=etapa();if(e.t==='pergunta')respostas[e.k]={feita:true,marcadas:e.alts.map((a,i)=>a.ok?i:-1).filter(i=>i>=0)};if(e.t==='bifurcacao')escolhas[e.k]=0;if(e.t==='resultados')document.querySelectorAll('.verlaudo').forEach(b=>laudos.add(b.dataset.laudo));document.querySelectorAll('details').forEach((d,n)=>detalhesAbertos.add(e.k+'::'+n));parteTela=0;pintar()}''')
+     if state=='revelado':page.evaluate('''()=>{let e=etapa();if(e.t==='pergunta'||e.comentado)respostas[e.k]={feita:true,marcadas:e.alts.map((a,i)=>a.ok?i:-1).filter(i=>i>=0)};if(e.t==='bifurcacao')escolhas[e.k]=0;if(e.t==='resultados')document.querySelectorAll('.verlaudo').forEach(b=>laudos.add(b.dataset.laudo));document.querySelectorAll('details').forEach((d,n)=>detalhesAbertos.add(e.k+'::'+n));parteTela=0;pintar()}''')
      assert page.evaluate('!areaTela || new Set(partesTela.flat()).size===areaTela.children.length'),(slug,e['k'],'conteúdo sem página')
-     if e['t']=='pedido':assert page.evaluate('new Set([...document.querySelectorAll(".it")].map(x=>x.dataset.ex)).size===etapa().grupos.reduce((n,g)=>n+g.o.length,0)'),(slug,e['k'],'exames ausentes')
+     if e['t'] in ('pergunta','resultados','bifurcacao'):assert page.evaluate('partesTela.length===1 && !areaTela.querySelector("[data-fora]")'),(w,slug,e['k'],state,'deve caber em uma tela')
+     if e['t']=='pedido':assert page.locator('.alts li').count()==6,(slug,e['k'],'alternativas ausentes')
      for n in range(page.evaluate('partesTela.length')):
       page.evaluate('(n)=>{parteTela=n;aplicarParte();pintarPe()}',n)
       bounds=page.evaluate('''()=>{let a=areaTela,r=a?.getBoundingClientRect();return a?[a.scrollHeight-a.clientHeight,a.scrollWidth-a.clientWidth,r.bottom-document.querySelector('#pe').getBoundingClientRect().top]:[0,0,0]}''')
@@ -29,25 +30,11 @@ with sync_playwright() as pw:
     assert page.evaluate('areaTela.scrollHeight<=areaTela.clientHeight+2')
    page.locator('#reiniciar').click();assert page.evaluate('etapa().t')=='capa'
   print(w,h,'todas as páginas e estados OK',flush=True)
- # Interação real: catálogo dividido, seleção preservada, limite e retorno.
- page.set_viewport_size({'width':1366,'height':768});page.goto((ROOT/'pulmao-rim.html').as_uri());page.evaluate('ir(porId("ex_mec"))')
- original=page.evaluate('partesTela.length');assert original>1
- names=[]
- for n in range(original):
-  for loc in page.locator('.it:not(.trava)').all():
-   if loc.is_visible() and len(names)<6:
-    names.append(loc.get_attribute('data-ex'));loc.click()
-  if n+1<original:page.locator('#seguir').click()
- assert page.evaluate('marcados.ex_mec.size')==6
- for n in range(original-1):page.locator('#voltar').click()
- assert page.evaluate('parteTela')==0
- assert set(page.evaluate('[...marcados.ex_mec]'))==set(names)
- first=page.locator('.it.on').first
- first.click();assert page.evaluate('marcados.ex_mec.size')==5;first.click()
+ page.set_viewport_size({'width':1366,'height':768});page.goto((ROOT/'pulmao-rim.html').as_uri())
  # Abertura e fechamento da discussão conservam estado após repaginar.
  page.evaluate('ir(porId("crescente"))');mostrar(page,'details summary').click()
  page.wait_for_function('detalhesAbertos.has("crescente::0")')
  assert page.locator('details').first.get_attribute('open') is not None
  mostrar(page,'details summary').click();page.wait_for_function('!detalhesAbertos.has("crescente::0")')
  assert not errors,errors
- b.close();print(total,'páginas/estados sem overflow; catálogo e discussão interativos OK')
+ b.close();print(total,'páginas/estados sem overflow; questões e discussão interativas OK')

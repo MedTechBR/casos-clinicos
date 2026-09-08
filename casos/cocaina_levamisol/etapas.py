@@ -380,3 +380,6 @@ inserir_antes(ETAPAS, 'p3', sequencia('us_evolucao', 'Ultrassonografia renal',
     ['1. A seta alcança o parênquima periférico, mais escuro que a região central.',
      '2. O seio renal é mais ecogênico. Neste corte, não há dilatação coletora evidente.',
      'O laudo ficcional descreve rins de dimensões preservadas, sem dilatação pielocalicial. A ausência de obstrução não exclui lesão glomerular: urina e função renal continuam fundamentais.']))
+
+from casos.investigacoes import aplicar, ESPECIFICACOES
+aplicar(ETAPAS, ESPECIFICACOES["cocaina_levamisol"])

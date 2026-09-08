@@ -57,3 +57,20 @@ Reabertura das imagens originais, exame da ponta efetiva dos SVGs e revisão ind
 - Verificação automatizada de 1.411 páginas/estados em 1366×768, 1600×900 e 375×812: nenhum transbordamento vertical/horizontal das áreas de leitura. Catálogos conservam todas as opções, cada bloco pertence a uma página, navegação preserva marcações e discussão pode abrir/fechar. A paginação usa os botões Avançar/Voltar e mostra “Página X de Y”.
 
 Validação complementar: 54 percursos principais e 96 percursos dos outros casos na revisão de navegação; verificação final de quatro percursos principais após incluir a paginação da revisão de encerramento. Testes de biblioteca, lupa, perguntas, laudos optativos e interface passaram nos três viewports. Corrigida também a repaginação síncrona ao abrir discussão, evitando que uma atualização tardia devolvesse o usuário à primeira página.
+
+## 8 de setembro — investigação com confirmação e comentários
+
+As nove rodadas de exames foram convertidas em questões de seis alternativas, com dois ou três conjuntos a selecionar conforme o enunciado. A classificação e a justificativa aparecem apenas após confirmar. As alternativas não prioritárias distinguem menor rendimento, indicação dirigida e dependência da exposição; não são proibições universais. Os exames efetivamente selecionados continuam alimentando resultados e ramificações, inclusive percursos de incerteza. A revisão final inclui essas questões.
+
+Respostas, comentários, decisões e resultados deixam de ter páginas internas: fonte, espaços e imagens se ajustam à área disponível. Laudos continuam optativos, e as imagens continuam ampliáveis. A paginação de narrativa extensa permanece.
+
+Referências clínicas consultadas para esta revisão (não se trata de transcrição de questões do NEJM):
+- CDC, diagnóstico de Nilo Ocidental: https://www.cdc.gov/west-nile-virus/hcp/diagnosis-testing/index.html
+- IDSA, investigação da encefalite: https://www.idsociety.org/practice-guideline/encephalitis
+- KDIGO, diretriz de vasculites ANCA: https://kdigo.org/guidelines/antineutrophilic-cytoplasmic-antibody-anca-associated-vasculitis-aav/
+- CDC, agranulocitose associada à cocaína: https://www.cdc.gov/mmwr/preview/mmwrhtml/mm5849a3.htm
+- IDSA, infecção de pele e tecidos moles, incluindo neutropenia: https://www.idsociety.org/practice-guideline/skin-and-soft-tissue-infections/
+
+A seleção de prioridades é editorial e contextual; as referências não apresentam exatamente estas alternativas ou este paciente ficcional.
+
+Validação desta entrega: 525 combinações das nove questões nos três viewports, com confirmação, comentários, laudos abertos, retorno e correspondência exata entre seleção e resultados; 1.241 páginas/estados sem transbordamento; 12 percursos de ponta a ponta pelos três casos, incluindo escolhas prioritárias e não prioritárias, sem erros JavaScript. Biblioteca e interface nos três tamanhos, além de laudos e lupa, verificados. Os testes antigos de pedidos foram adaptados ao novo contrato.

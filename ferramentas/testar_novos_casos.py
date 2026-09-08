@@ -34,12 +34,10 @@ with sync_playwright() as pw:
     if page.locator('#seguir').count()==0:break
     e=page.evaluate('etapa()');k=e['k'];assert k not in seen,(slug,'cycle',seen,k);seen.append(k);visited.add(k)
     if e['t']=='pedido':
-     for name in cfg[mode][k]:
-      page.evaluate('(name)=>Array.from(document.querySelectorAll(".it")).find(x=>x.dataset.ex===name).click()',name)
-     assert page.evaluate('(k)=>marcados[k].size',k)==len(cfg[mode][k]),(slug,k,'selection blocked')
-     if mode=='full':
-      page.evaluate('()=>{const x=document.querySelector(".it.bloq:not(.trava)");if(x)x.click()}')
-      assert page.evaluate('(k)=>marcados[k].size',k)==4
+     selected=[n for n,a in enumerate(e['alts']) if bool(a['ok'])==(mode=='full')][:e['escolhas']]
+     for n in selected:page.locator('.alts li').nth(n).click()
+     page.locator('#conf').click()
+     assert page.evaluate('(k)=>respostas[k].feita',k)
     elif e['t']=='pergunta':
      bounds=page.evaluate('()=>{let a=document.querySelector(".alts"),f=document.querySelector(".folha"),z=document.querySelector("#conf");return {overflow:a.scrollHeight-a.clientHeight, bottom:z.getBoundingClientRect().bottom, footer:document.querySelector("#pe").getBoundingClientRect().top}}')
      if bounds['overflow']>2 or bounds['bottom']>bounds['footer']:layout.append((k,bounds))
@@ -48,7 +46,7 @@ with sync_playwright() as pw:
      page.locator('#conf').click()
     elif e['t']=='bifurcacao':page.locator(f'.cam[data-k="{plan[k]}"]').click()
     elif e['t']=='resultados':
-     count=page.locator('.rc').count();assert count==len(cfg[mode][e['de']]),(slug,k,count)
+     count=page.locator('.rc').count();assert count==page.evaluate('(k)=>marcados[k].size',e['de']),(slug,k,count)
     elif e['t']=='desfecho':endings.add(k)
     while page.evaluate('temProximaParte()'):page.locator('#seguir').click()
     page.locator('#seguir').click()

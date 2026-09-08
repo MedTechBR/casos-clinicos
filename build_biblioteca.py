@@ -24,18 +24,18 @@ CASOS = [
          # aluno abrir o caso, do mesmo jeito que o título entregava.
          especialidade="Clínica médica · Emergência",
          minutos=65, decisoes=12, desfechos=4, nivel="os dois", cor="vermelho",
-         capa="cena_admissao.jpg", arquivo="pulmao-rim.html?v=20260908-paginas"),
+         capa="cena_admissao.jpg", arquivo="pulmao-rim.html?v=20260908-investigacao"),
 
     caso(slug="cocaina_levamisol", titulo="À flor da pele",
          subtitulo="Uma mulher de 34 anos volta ao atendimento após uma mudança nas lesões da pele.",
          especialidade="Clínica médica · Emergência", minutos=55, decisoes=12,
          desfechos=4, nivel="os dois", cor="roxo",
-         capa="../../cocaina_levamisol/img/cena.png", arquivo="cocaina-levamisol.html?v=20260908-paginas"),
+         capa="../../cocaina_levamisol/img/cena.png", arquivo="cocaina-levamisol.html?v=20260908-investigacao"),
     caso(slug="west_nile", titulo="O peso dos dias",
          subtitulo="Um homem de 71 anos com febre passa a precisar de ajuda para caminhar.",
          especialidade="Clínica médica · Emergência", minutos=55, decisoes=13,
          desfechos=3, nivel="os dois", cor="azul",
-         capa="../../west_nile/img/cena.png", arquivo="west-nile.html?v=20260908-paginas"),
+         capa="../../west_nile/img/cena.png", arquivo="west-nile.html?v=20260908-investigacao"),
     caso(slug="kikuchi",
          titulo="Mulher de 27 anos com febre prolongada e linfonodomegalia cervical",
          subtitulo="Três semanas de febre, linfonodo doloroso e um hemograma "
@@ -73,8 +73,8 @@ def construir() -> Path:
     destino.parent.mkdir(parents=True, exist_ok=True)
     destino.write_text(montar(
         titulo="Casos para conduzir, não para ler",
-        subtitulo="Cada caso avança página a página. Você pede os exames que "
-                  "priorizar dentro do limite da rodada. A equipe também traz "
+        subtitulo="Cada caso avança página a página. Você escolhe os exames "
+                  "e recebe comentários sobre cada alternativa. A equipe também traz "
                   "exames durante a evolução, com imagens para discussão. "
                   "Suas decisões mudam o rumo e o desfecho.",
         casos=CASOS, rodape=RODAPE,

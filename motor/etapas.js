@@ -26,13 +26,7 @@ const marcados = {};          // ident do pedido -> Set de nomes de exame
 const respostas = {};         // ident da pergunta -> {marcadas:[], feita:bool}
 const escolhas = {};          // ident da bifurcação -> índice do caminho
 let historia = [0];           // pilha de etapas visitadas, para voltar
-/* Numa peça página a página, rolar é trapaça. A folha vira duas só se os
-   cartões não couberem — e desde que o pedido passou a ter teto, não cabem
-   nunca: seis exames entram numa folha com folga. A paginação fica como rede
-   de segurança para um caso futuro que peça mais. */
-const folhaDe = {};           // ident da etapa de resultados -> folha atual
-const laudos = new Set();     // exames com imagem cujo laudo já foi revelado
-const POR_FOLHA = 9;
+const laudos = new Set(); // laudos revelados por rodada de investigação
 
 const porId = k => ETAPAS.findIndex(e => e.k === k);
 /* Tudo o que já foi pedido em qualquer rodada, para os pré-requisitos e para
@@ -46,7 +40,6 @@ const etapa = () => ETAPAS[i];
 
 function ir(n, empilhar){
   if (n < 0 || n >= ETAPAS.length) return;
-  if (ETAPAS[n].t === 'resultados') folhaDe[ETAPAS[n].k] = 0;
   if (empilhar !== false) historia.push(n);
   i = n; parteTela = 0; emRevisao=false;
   pintar();
@@ -73,12 +66,6 @@ function adiante(){
   if (e.t === 'desfecho'){
     if (e.fecho) irPara(e.fecho); else mostrarRevisao();
     return;
-  }
-  if (e.t === 'resultados'){
-    const n = (marcados[e.de] || new Set()).size;
-    const folhas = Math.max(1, Math.ceil(n / POR_FOLHA));
-    const f = folhaDe[e.k] || 0;
-    if (f + 1 < folhas){ folhaDe[e.k] = f + 1; pintar(); return; }
   }
   /* A rota é a ramificação de verdade: quem não pediu a prova não recebe a
      página que a discute. Sem isto, a peça perguntava "que exames você pede?" e
@@ -109,9 +96,6 @@ function atras(){
   if (parteTela > 0){ virarParte(-1); return; }
   if(emRevisao){emRevisao=false;parteTela=0;pintar();return;}
   const e = etapa();
-  if (e.t === 'resultados' && (folhaDe[e.k] || 0) > 0){
-    folhaDe[e.k] -= 1; pintar(); return;
-  }
   if (historia.length < 2) return;
   historia.pop();
   i = historia[historia.length - 1];
@@ -126,7 +110,7 @@ function podeAdiante(){
   const e = etapa();
   if (e.t === 'pergunta') return !!(respostas[e.k] && respostas[e.k].feita);
   if (e.t === 'bifurcacao') return escolhas[e.k] !== undefined;
-  if (e.t === 'pedido') return (marcados[e.k] || new Set()).size > 0;
+  if (e.t === 'pedido') return e.comentado ? !!respostas[e.k]?.feita : (marcados[e.k] || new Set()).size > 0;
   return true;
 }
 
@@ -307,7 +291,7 @@ const DESENHO = {
     + e.corpo + '</div>'
     + laminaDe(e.lamina),
 
-  pedido: e =>
+  pedido: e => e.comentado ? DESENHO.pergunta(e) :
     fundoDe(e) + '<div class="veu tudo"></div>'
     + '<div class="folha pedido">'
     + '<div class="marca"><i></i><span>' + e.kicker + '</span></div>'
@@ -334,9 +318,7 @@ const DESENHO = {
   // topo visual. Ganha noventa pixels e a tela começa no dado.
   resultados: e => {
     const todos = [...(marcados[e.de] || [])];
-    const folhas = Math.max(1, Math.ceil(todos.length / POR_FOLHA));
-    const f = Math.min(folhaDe[e.k] || 0, folhas - 1);
-    const pedidos = todos.slice(f * POR_FOLHA, (f + 1) * POR_FOLHA);
+    const pedidos = todos;
     const sobre = (ETAPAS[porId(e.de)] || {}).sobre || {};
     const cartas = pedidos.map(n => {
       // o resultado que o caso declarou vence o do banco: o banco foi escrito
@@ -381,7 +363,7 @@ const DESENHO = {
     }).join('');
     return fundoDe(e) + '<div class="veu tudo"></div><div class="folha">'
       + '<div class="marca larga"><i></i><span>' + e.kicker
-      + (folhas > 1 ? ' · folha ' + (f + 1) + ' de ' + folhas : '') + '</span>'
+      + '</span>'
       + (e.intro ? '<b class="sub-in">' + e.intro + '</b>' : '') + '</div>'
       + '<div class="res">' + (cartas
           || '<div class="vazio">Você não pediu nenhum exame nesta etapa. O caso '
@@ -405,7 +387,7 @@ const DESENHO = {
           + (r.marcadas.includes(k) ? ' marcada' : '') + '">'
           + '<span class="k">' + String.fromCharCode(65 + k) + '</span>'
           + '<span class="tx">' + a.t + '</span>'
-          + '<span class="cm">' + (r.feita ? '<span class="estado-resposta">' + (a.ok ? 'Correta' : 'Incorreta') + (r.marcadas.includes(k) ? ' · sua seleção' : '') + '</span>' : '') + a.c + '</span></li>').join('')
+          + '<span class="cm">' + (r.feita ? '<span class="estado-resposta">' + (e.comentado ? a.situacao : (a.ok ? 'Correta' : 'Incorreta')) + (r.marcadas.includes(k) ? ' · sua seleção' : '') + '</span>' : '') + a.c + '</span></li>').join('')
       + '</ul>'
       + (r.feita ? '' : '<button class="conf" id="conf"'
           + (r.marcadas.length >= e.escolhas ? '' : ' disabled') + '>'
@@ -495,7 +477,7 @@ const esc = s => s.replace(/"/g, '&quot;');
 const temMarcado = (k, n) => (marcados[k] || new Set()).has(n);
 
 function ligar(e){
-  if (e.t === 'pedido'){
+  if (e.t === 'pedido' && !e.comentado){
     const conj = marcados[e.k] || (marcados[e.k] = new Set());
     /* O teto é o que faz a pergunta ser uma pergunta. Sem ele, marcar tudo é
        sempre a jogada dominante — e um grupo que marca tudo não decidiu nada,
@@ -543,7 +525,7 @@ function ligar(e){
     });
   }
 
-  if (e.t === 'pergunta'){
+  if (e.t === 'pergunta' || e.comentado){
     const r = respostas[e.k] || (respostas[e.k] = {marcadas: [], feita: false});
     if (r.feita) return;
     document.querySelectorAll('.alts li').forEach(li => {
@@ -562,7 +544,12 @@ function ligar(e){
       };
     });
     const conf = $('#conf');
-    if (conf) conf.onclick = () => { r.feita = true; parteTela=0; pintar(); };
+    if (conf) conf.onclick = () => {
+      if(r.marcadas.length!==e.escolhas)return;
+      r.feita = true;
+      if(e.comentado)marcados[e.k]=new Set(r.marcadas.flatMap(k=>e.alts[k].exames));
+      parteTela=0; pintar();
+    };
   }
 
   if (e.t === 'bifurcacao'){
