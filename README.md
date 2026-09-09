@@ -2,9 +2,20 @@
 
 **No ar:** <https://medtechbr.github.io/casos-clinicos/>
 
-Casos no modelo dos *Case Records of the Massachusetts General Hospital*, para
-sessão clínica com internos e residentes. O caso avança em blocos de informação
-nova, o grupo discute, e o diagnóstico só aparece depois do raciocínio.
+Casos no modelo dos *Interactive Medical Cases* do *New England Journal of
+Medicine*, para sessão clínica com internos e residentes. A unidade do caso é o
+par **alíquota → pergunta**: uma página curta com um dado novo do paciente, e a
+pergunta que aquele dado abre — o diferencial de um sintoma, a interpretação de
+um resultado, o mecanismo de um achado, um pareamento, a conduta. A proporção
+dos tipos segue a medida nas 333 perguntas dos 71 casos da série.
+
+Os três casos no ar (`casos/pulmao_rim`, `casos/west_nile`,
+`casos/cocaina_levamisol`) usam o motor em etapas (`motor/etapas.py`):
+`pagina`, `pergunta`, `pareamento`, `pedido`/`resultados` (com teto por rodada e
+pré-requisito), `bifurcacao`, `desfecho`, `balanco`. Montagem com
+`python3 build_etapas.py <caso>`; teste com
+`python3 ferramentas/percorrer_casos.py` (todas as combinações de bifurcação,
+painel completo e mínimo, em 1600×900 e 1366×768).
 
 A apresentação é **um arquivo `.html` único**: abre com duplo clique, roda em
 `file://`, sem servidor, sem internet, sem dependência externa. CSS, JavaScript,

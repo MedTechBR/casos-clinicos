@@ -114,7 +114,8 @@ function atras(){
 function podeAdiante(){
   if (emRevisao || temProximaParte()) return true;
   const e = etapa();
-  if (e.t === 'pergunta') return !!(respostas[e.k] && respostas[e.k].feita);
+  if (e.t === 'pergunta' || e.t === 'pareamento')
+    return !!(respostas[e.k] && respostas[e.k].feita);
   if (e.t === 'bifurcacao') return escolhas[e.k] !== undefined;
   if (e.t === 'pedido') return e.comentado ? !!respostas[e.k]?.feita : (marcados[e.k] || new Set()).size > 0;
   return true;
@@ -404,6 +405,45 @@ const DESENHO = {
       + '</div>';
   },
 
+  /* Pareamento: cada item tem a sua linha de letras. Marcar é atribuir uma
+     letra ao item; a mesma letra pode servir a mais de um item, porque é
+     assim na prova — e porque proibir a repetição entregaria a resposta por
+     exclusão. */
+  pareamento: e => {
+    const r = respostas[e.k] || {marcadas: [], feita: false};
+    const L = n => String.fromCharCode(65 + n);
+    return fundoDe(e) + '<div class="veu tudo"></div>'
+      + '<div class="folha q par-folha">'
+      + '<div class="marca"><i></i><span>' + e.kicker + '</span></div>'
+      + '<p class="enun">' + e.enunciado + '</p>'
+      + '<div class="qdica">' + (r.feita ? e.tr
+          : 'atribua uma letra a cada item · ' + r.marcadas.filter(x => x !== undefined && x !== null).length
+            + ' de ' + e.itens.length) + '</div>'
+      + '<div class="par' + (r.feita ? ' feita' : '') + '">'
+      + '<div class="par-ops">' + e.ops.map((o, n) =>
+          '<span class="po"><b>' + L(n) + '</b>' + o + '</span>').join('') + '</div>'
+      + '<div class="par-itens">' + e.itens.map((it, n) => {
+          const esc = r.marcadas[n];
+          const certa = r.feita && esc === it.ok;
+          return '<div class="pi' + (r.feita ? (certa ? ' certa' : ' errada') : '')
+            + '" data-n="' + n + '">'
+            + '<span class="pt">' + it.t + '</span>'
+            + '<span class="pesc">' + e.ops.map((o, m) =>
+                '<i class="pe' + (esc === m ? ' on' : '')
+                + (r.feita && m === it.ok ? ' ok' : '') + '" data-m="' + m
+                + '" title="' + esc2(o) + '">' + L(m) + '</i>').join('') + '</span>'
+            + (r.feita ? '<span class="cm"><span class="estado-resposta">'
+                + (certa ? 'Correta' : 'Incorreta · a resposta é ' + L(it.ok)
+                    + (esc === undefined || esc === null ? '' : ' · você marcou ' + L(esc)))
+                + '</span>' + it.c + '</span>' : '')
+            + '</div>';
+        }).join('') + '</div></div>'
+      + (r.feita ? '' : '<button class="conf" id="conf"'
+          + (e.itens.every((_, n) => r.marcadas[n] !== undefined && r.marcadas[n] !== null) ? '' : ' disabled')
+          + '>Confirmar resposta</button>')
+      + '</div>';
+  },
+
   bifurcacao: e => {
     const esc = escolhas[e.k];
     return fundoDe(e) + '<div class="veu tudo"></div><div class="folha">'
@@ -483,6 +523,7 @@ const DESENHO = {
 /* ─────────────────────────── interação ─────────────────────────── */
 
 const esc = s => s.replace(/"/g, '&quot;');
+const esc2 = s => String(s).replace(/<[^>]+>/g, '').replace(/"/g, '&quot;');
 const temMarcado = (k, n) => (marcados[k] || new Set()).has(n);
 
 function ligar(e){
@@ -561,6 +602,31 @@ function ligar(e){
     };
   }
 
+  if (e.t === 'pareamento'){
+    const r = respostas[e.k] || (respostas[e.k] = {marcadas: [], feita: false});
+    if (r.feita) return;
+    document.querySelectorAll('.par .pe').forEach(ch => {
+      ch.onclick = ev => {
+        ev.stopPropagation();
+        const n = +ch.closest('.pi').dataset.n, m = +ch.dataset.m;
+        r.marcadas[n] = (r.marcadas[n] === m) ? undefined : m;
+        const linha = ch.closest('.pi');
+        linha.querySelectorAll('.pe').forEach(x => x.classList.toggle('on', +x.dataset.m === r.marcadas[n]));
+        const completo = e.itens.every((_, k) => r.marcadas[k] !== undefined && r.marcadas[k] !== null);
+        const b = $('#conf'); if (b) b.disabled = !completo;
+        const d = document.querySelector('.qdica');
+        if (d) d.textContent = 'atribua uma letra a cada item · '
+          + e.itens.filter((_, k) => r.marcadas[k] !== undefined && r.marcadas[k] !== null).length
+          + ' de ' + e.itens.length;
+      };
+    });
+    const conf = $('#conf');
+    if (conf) conf.onclick = () => {
+      if (!e.itens.every((_, k) => r.marcadas[k] !== undefined && r.marcadas[k] !== null)) return;
+      r.feita = true; parteTela = 0; pintar();
+    };
+  }
+
   if (e.t === 'bifurcacao'){
     if (escolhas[e.k] !== undefined) return;
     document.querySelectorAll('.cam').forEach(c => {
@@ -584,8 +650,10 @@ function mostrarRevisao(){
   const feitas = Object.entries(respostas).filter(([, r]) => r.feita);
   const acertos = feitas.filter(([k, r]) => {
     const e = ETAPAS[porId(k)];
-    return e && r.marcadas.length === e.escolhas
-             && r.marcadas.every(x => e.alts[x].ok);
+    if (!e) return false;
+    if (e.t === 'pareamento')
+      return e.itens.every((it, n) => r.marcadas[n] === it.ok);
+    return r.marcadas.length === e.escolhas && r.marcadas.every(x => e.alts[x].ok);
   }).length;
   const total = feitas.length;
 
@@ -636,7 +704,7 @@ addEventListener("resize",()=>{clearTimeout(resizeTela);resizeTela=setTimeout(()
 pintar();
 
 function acessibilidadeDaPagina(){
-  document.querySelectorAll('.it,.cam,.alts li,figure.amplia').forEach(el=>{
+  document.querySelectorAll('.it,.cam,.alts li,figure.amplia,.par .pe').forEach(el=>{
     el.tabIndex=0;el.setAttribute('role',el.classList.contains('it')?'checkbox':'button');
     if(el.classList.contains('it'))el.setAttribute('aria-checked',el.classList.contains('on')?'true':'false');
     el.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();ev.stopPropagation();el.click();}});

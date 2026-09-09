@@ -18,6 +18,7 @@ sistema tem a sua, e ela reaparece em todo lugar onde aquele sistema é citado.
     pedido()        "que exames você pede?", em grupos, marcação múltipla
     resultados()    devolve só o que foi marcado
     pergunta()      escolha comentada, com o comentário de cada alternativa
+    pareamento()    associe cada item à opção certa — cada linha é uma decisão
     bifurcacao()    a escolha que muda a página seguinte
     desfecho()      o fim, e por quê
 """
@@ -331,6 +332,45 @@ def pergunta(ident, kicker, enunciado, alternativas, *, fundo="",
     return _pag("pergunta", ident, kicker=texto(kicker),
                 enunciado=texto(enunciado), alts=alternativas,
                 escolhas=len(certas), fundo=fundo,
+                tr=texto(titulo_resposta), nota=texto(nota), segue=segue)
+
+
+def par(item, resposta, porque) -> tuple:
+    """Uma linha do pareamento: o item, o rótulo da resposta certa e o comentário."""
+    if not porque.strip():
+        raise ValueError(f"par sem comentário: {item!r}")
+    return (item, resposta, porque)
+
+
+def pareamento(ident, kicker, enunciado, pares, *, opcoes=None, fundo="",
+               titulo_resposta="", nota="", segue="") -> dict:
+    """A questão de pareamento do //New England// — "associe cada padrão ao
+    diagnóstico", "associe cada paciente à causa mais provável". Sete das 333
+    perguntas da série são assim, e são as que mais exigem do grupo: não há
+    como acertar por eliminação, porque cada item cobra uma associação
+    independente.
+
+    `pares` é uma lista de `par(item, resposta, porque)`. `opcoes` é a lista
+    completa de rótulos oferecidos — inclui as respostas dos pares e, de
+    preferência, um ou dois distratores que não pertencem a ninguém. Se for
+    omitida, as opções são só as respostas, na ordem em que aparecem."""
+    if not 3 <= len(pares) <= 6:
+        raise ValueError(f"pareamento {ident!r}: use de 3 a 6 pares")
+    respostas = [r for _, r, _ in pares]
+    ops = list(opcoes) if opcoes is not None else list(dict.fromkeys(respostas))
+    if len(ops) != len(set(ops)):
+        raise ValueError(f"pareamento {ident!r}: opção repetida")
+    if not 3 <= len(ops) <= 7:
+        raise ValueError(f"pareamento {ident!r}: use de 3 a 7 opções")
+    faltam = [r for r in respostas if r not in ops]
+    if faltam:
+        raise ValueError(f"pareamento {ident!r}: resposta fora das opções: {faltam}")
+    if not titulo_resposta.strip():
+        raise ValueError(f"pareamento {ident!r}: sem título de resposta")
+    itens = [{"t": texto(i), "ok": ops.index(r), "c": texto(c)} for i, r, c in pares]
+    return _pag("pareamento", ident, kicker=texto(kicker),
+                enunciado=texto(enunciado), itens=itens,
+                ops=[texto(o) for o in ops], fundo=fundo,
                 tr=texto(titulo_resposta), nota=texto(nota), segue=segue)
 
 
