@@ -94,7 +94,7 @@ ETAPAS = [
     # ═══════════════════════════ capa ═══════════════════════════
 
     capa(TITULO, fundo=CENA,
-         kicker="Caso interativo · 23 perguntas · 3 rodadas de exames · 3 decisões",
+         kicker="Caso interativo · 12 perguntas · 3 rodadas de exames · 3 decisões",
          selo="Paciente ficcional · procedência e créditos na última tela"),
 
     # ══════════════ ATO I — as oito semanas que ninguém fechou ══════════════
@@ -112,48 +112,6 @@ ETAPAS = [
         fundo=CENA,
     ),
 
-    pergunta("p1", Q(1),
-        "Rinossinusite com crostas hemáticas, epistaxe diária e anosmia, sem "
-        "resposta a dois cursos de antibiótico. **Quais quatro** diagnósticos "
-        "precisam ser considerados?",
-        [
-            alt("Granulomatose com poliangeíte",
-                "A via aérea superior é o território inaugural em três de "
-                "cada quatro casos: crosta, epistaxe, perfuração septal e, "
-                "tarde, o nariz em sela.", certa=True),
-            alt("Rinossinusite bacteriana por germe resistente",
-                "É a leitura que manteve este paciente por oito semanas. "
-                "Sobreviver a dois espectros diferentes, com adesão "
-                "confirmada, deixou de ser a explicação mais provável."),
-            alt("Linfoma extranodal de células NK/T, tipo nasal",
-                "A neoplasia da linha média: obstrução, crosta, necrose e "
-                "epistaxe, com anosmia progressiva. A biópsia precisa ser "
-                "profunda, porque a superfície é só necrose.", certa=True),
-            alt("Rinite alérgica",
-                "Prurido, espirro e secreção clara. Não faz crosta hemática "
-                "nem epistaxe diária por oito semanas."),
-            alt("Lesão de linha média por cocaína",
-                "Cocaína — com ou sem levamisol — destrói mucosa e cartilagem "
-                "e produz ANCA. É a pergunta obrigatória e a menos feita.",
-                certa=True),
-            alt("Desvio de septo",
-                "Obstrução fixa e sangramento por ressecamento, sem curso "
-                "progressivo em semanas e sem secreção purulenta."),
-            alt("Leishmaniose mucosa",
-                "No Ceará, é diferencial real: crostas, epistaxe e destruição "
-                "do septo anos depois de uma úlcera cutânea que o paciente "
-                "esqueceu. Pergunte pela cicatriz.", certa=True),
-            alt("Polipose nasossinusal",
-                "Obstrução e anosmia, sim — mas pólipo não sangra diariamente "
-                "nem faz crosta hemática."),
-            alt("Rinite medicamentosa por descongestionante tópico",
-                "Obstrução de rebote, sem destruição, sem crosta e sem "
-                "sangramento. Explicaria a queixa de nariz entupido, não o "
-                "resto."),
-        ],
-        titulo_resposta="Doença de linha média que não cede a antibiótico tem quatro nomes",
-        fundo=CENA,
-    ),
 
     pagina("evolucao_a", "Cinco semanas antes", "Os sintomas que se somaram",
         p("Três semanas depois do início dos sintomas nasais, surgiram dores "
@@ -166,50 +124,6 @@ ETAPAS = [
         fundo=CENA,
     ),
 
-    pergunta("p2", Q(2),
-        "Poliartralgia **migratória**, sem sinovite, com febre vespertina e "
-        "sudorese noturna. Em **quais cinco** condições esse padrão articular "
-        "é clássico?",
-        [
-            alt("Endocardite infecciosa",
-                "Artralgia migratória em até um terço dos casos, por "
-                "imunocomplexo e por êmbolo. É a que muda a conduta de todas "
-                "as outras: contraindica imunossuprimir.", certa=True),
-            alt("Osteoartrite",
-                "Dor mecânica, fixa nas articulações de carga, sem febre e "
-                "sem sudorese. Não migra."),
-            alt("Febre reumática",
-                "A poliartrite migratória de grandes articulações é o critério "
-                "maior mais frequente — em crianças e adultos jovens. Aos 63 "
-                "anos o padrão vale, a doença não.", certa=True),
-            alt("Gota",
-                "Monoartrite intermitente, com crises que resolvem por "
-                "completo entre si. Não é migração: é recorrência."),
-            alt("Infecção gonocócica disseminada",
-                "Na fase bacterêmica, poliartralgia migratória com "
-                "tenossinovite e pústulas — antes de assentar numa "
-                "articulação.", certa=True),
-            alt("Artrite reumatoide",
-                "Aditiva, simétrica, de pequenas articulações, com rigidez "
-                "matinal prolongada. É o oposto de migratória."),
-            alt("Hepatite B aguda, fase pré-ictérica",
-                "A síndrome tipo doença do soro — artralgia migratória, "
-                "urticária e febre — precede a icterícia em uma a duas "
-                "semanas. É a que quase ninguém lembra.", certa=True),
-            alt("Espondiloartrite axial",
-                "Dor lombar inflamatória e entesite, com padrão fixo. Não "
-                "migra entre punhos e tornozelos."),
-            alt("Vasculite sistêmica de pequenos vasos",
-                "Artralgia — muitas vezes migratória e sem sinovite — é "
-                "sintoma inaugural em mais da metade das vasculites "
-                "associadas ao ANCA.", certa=True),
-            alt("Fibromialgia",
-                "Dor difusa, crônica, sem febre, sem sudorese e sem perda de "
-                "peso. Nenhum sinal inflamatório."),
-        ],
-        titulo_resposta="Migratória não é aditiva, e não é intermitente",
-        fundo=CENA,
-    ),
 
     pagina("anamnese", "No ambulatório", "O que se sabia dele",
         p("Hipertenso há dez anos, em uso de losartana 50 mg por dia. "
@@ -233,49 +147,6 @@ ETAPAS = [
         fundo=CENA,
     ),
 
-    pareamento("p3", Q(3),
-        "A equipe perguntou nominalmente por cinco exposições — e uma delas "
-        "está na história dele sem que ninguém a tenha chamado pelo nome. "
-        "Associe cada exposição à síndrome que ela produz.",
-        [
-            par("Propiltiouracila ou hidralazina por meses",
-                "Vasculite associada ao ANCA induzida por droga",
-                "Anti-MPO em título alto, muitas vezes com anti-elastase e "
-                "anti-histona junto. Suspender a droga costuma bastar — e a "
-                "biópsia é igual à da doença primária."),
-            par("Cocaína adulterada com levamisol",
-                "Púrpura retiforme de orelhas, neutropenia e ANCA atípico",
-                "O levamisol dá a tríade: púrpura de orelhas, nariz e "
-                "bochechas, agranulocitose e ANCA com anti-PR3 e anti-MPO "
-                "simultâneos. Cede com a abstinência."),
-            par("Quarenta anos de obra, cortando tijolo e cimento",
-                "Risco duas a três vezes maior de vasculite ANCA",
-                "Sílica. É a exposição que estava na história dele o tempo "
-                "todo: risco duas a três vezes maior de vasculite ANCA, "
-                "sobretudo anti-MPO, além de esclerose sistêmica e silicose."),
-            par("Descongestionante nasal tópico por meses",
-                "Rinite medicamentosa: obstrução de rebote, sem destruição",
-                "Oximetazolina crônica dá obstrução de rebote e mucosa "
-                "pálida — sem crosta hemática, sem epistaxe, sem anosmia."),
-            par("Roedores e água de enchente",
-                "Leptospirose: hemorragia alveolar com nefrite tubulointersticial",
-                "Faz síndrome pulmão-rim, e é por isso que se pergunta. A "
-                "diferença está no rim: a lesão é tubulointersticial, e o "
-                "sedimento não tem cilindro hemático."),
-        ],
-        opcoes=[
-            "Vasculite associada ao ANCA induzida por droga",
-            "Púrpura retiforme de orelhas, neutropenia e ANCA atípico",
-            "Risco duas a três vezes maior de vasculite ANCA",
-            "Rinite medicamentosa: obstrução de rebote, sem destruição",
-            "Leptospirose: hemorragia alveolar com nefrite tubulointersticial",
-            "Doença anti-membrana basal glomerular",
-        ],
-        titulo_resposta="A exposição que ninguém perguntou era a profissão",
-        nota="A opção que sobrou — doença anti-membrana basal — tem a sua "
-             "exposição própria: hidrocarbonetos e solventes.",
-        fundo=CENA,
-    ),
 
     pagina("retorno_ambulatorial", "Consulta ambulatorial", "Reavaliação",
         p("A esposa acrescenta que ele abandonou a horta há duas semanas. "
@@ -376,7 +247,7 @@ ETAPAS = [
         p("Há dois meses a creatinina era 1,0 e a urina, normal."),
         fundo=CENA),
 
-    pergunta("p4", Q(4),
+    pergunta("p4", Q(1),
         "Creatinina de 1,4 mg/dL hoje — referência até 1,3 — e 1,0 mg/dL há "
         "dois meses. **Quais três** afirmações essa comparação autoriza?",
         [
@@ -410,7 +281,7 @@ ETAPAS = [
         fundo=CENA,
     ),
 
-    pergunta("p5", Q(5),
+    pergunta("p5", Q(2),
         "Doze hemácias por campo e proteinúria 1+. **Quais três** achados, se "
         "presentes no sedimento, localizariam o sangramento **no glomérulo**?",
         [
@@ -457,7 +328,7 @@ ETAPAS = [
         fundo=CENA,
     ),
 
-    pergunta("p6", Q(6),
+    pergunta("p6", Q(3),
         "Hemoptise de pequeno volume com **radiografia de tórax normal**, em "
         "ex-tabagista de 63 anos. **Quais quatro** causas devem permanecer no "
         "diferencial?",
@@ -496,30 +367,6 @@ ETAPAS = [
         fundo=CENA,
     ),
 
-    pergunta("p7", Q(7),
-        "Naquela emergência, com hemoptise e radiografia normal, qual seria o "
-        "exame **mais apropriado** antes da alta?",
-        [
-            alt("Tomografia de tórax",
-                "É o exame que responde às quatro causas da pergunta anterior "
-                "de uma vez: bronquiectasia, tumor central, vidro fosco e — "
-                "com contraste em fase arterial — embolia.", certa=True),
-            alt("Broncoscopia imediata",
-                "Vem depois da tomografia, para lesão endobrônquica ou "
-                "sangramento ativo que ela não localizou. Como primeiro exame, "
-                "tem rendimento baixo."),
-            alt("Repetir a radiografia em duas semanas",
-                "Foi o que se fez, na prática. Adiou por duas semanas um "
-                "diagnóstico que já estava disponível."),
-            alt("D-dímero isolado",
-                "Elevado em qualquer inflamação, e este paciente já tinha "
-                "PCR de 62. Não exclui nem confirma nada sozinho aqui."),
-            alt("Espirometria",
-                "Mede função, não estrutura. Não localiza sangramento."),
-        ],
-        titulo_resposta="A tomografia responde às quatro de uma vez",
-        fundo=CENA,
-    ),
 
     pagina("evolucao_c", "Na última semana", "A última semana",
         p("Nos sete dias que antecederam a internação, a esposa notou que a "
@@ -533,41 +380,6 @@ ETAPAS = [
         fundo=CENA,
     ),
 
-    pergunta("p8", Q(8),
-        "Urina cor de cola, sem coágulos e sem dor. E a noctúria de anos "
-        "desapareceu. **Quais três** afirmações estão corretas?",
-        [
-            alt("A ausência de coágulos favorece origem glomerular",
-                "A urocinase tubular impede que sangue vindo do glomérulo "
-                "coagule. Coágulo é via urinária.", certa=True),
-            alt("Urina vermelho-viva com coágulos seria igualmente compatível "
-                "com glomerulonefrite",
-                "É o contrário: vermelho-vivo e coágulo apontam para pelve, "
-                "ureter ou bexiga."),
-            alt("Cor de cola também cabe em mioglobinúria e hemoglobinúria; "
-                "a fita positiva para sangue com sedimento sem hemácias é o "
-                "que separa pigmento de hematúria",
-                "A fita reage com o grupo heme, esteja ele na hemácia, na "
-                "hemoglobina livre ou na mioglobina. Só o sedimento diz "
-                "qual.", certa=True),
-            alt("Beterraba e rifampicina positivam a fita para sangue",
-                "Colorem a urina, mas não têm heme: a fita fica negativa. É "
-                "a distinção em um minuto."),
-            alt("Noctúria que desaparece depois de anos sugere queda do "
-                "débito urinário, não melhora",
-                "Ele não passou a concentrar melhor a urina: passou a "
-                "produzir menos. É oligúria contada pela esposa.",
-                certa=True),
-            alt("Hematúria macroscópica exclui nefropatia por IgA",
-                "É o oposto: a hematúria macroscópica sincrônica com "
-                "infecção de via aérea é a apresentação clássica dela."),
-            alt("Colúria por bilirrubina é indistinguível de hematúria à fita",
-                "A fita tem campo próprio para bilirrubina, e colúria faz "
-                "espuma amarela. Não se confundem."),
-        ],
-        titulo_resposta="Sem coágulo, sem dor, e sem levantar à noite",
-        fundo=CENA,
-    ),
 
     pagina("exame", "Exame físico", "O que o exame mostrou",
         vitais(
@@ -625,7 +437,7 @@ ETAPAS = [
             corpo([("pele", ""), ("nervo", "")], altura=320, so_marcas=True), colunas=2),
         fundo=CENA),
 
-    pareamento("p9", Q(9),
+    pareamento("p9", Q(4),
         "Púrpura tem mais de uma anatomia, e cada anatomia tem um mecanismo. "
         "Associe cada apresentação ao mecanismo que a produz.",
         [
@@ -670,33 +482,6 @@ ETAPAS = [
         fundo=CENA,
     ),
 
-    pergunta("p10", Q(10),
-        "Pé caído à **direita** com reflexo aquileu abolido, e hipoestesia "
-        "ulnar à **esquerda**. Qual a melhor descrição do padrão?",
-        [
-            alt("Mononeuropatia múltipla",
-                "Dois nervos nomeados — fibular comum à direita, ulnar à "
-                "esquerda — em territórios não contíguos, assimétricos e "
-                "sequenciais. As causas: vasculite, diabetes, hanseníase, "
-                "sarcoidose, HIV, crioglobulinemia, amiloidose.", certa=True),
-            alt("Polineuropatia distal simétrica",
-                "Seria em bota e luva, simétrica, sensitiva antes de motora. "
-                "Aqui os dois lados têm nervos diferentes e déficits "
-                "diferentes."),
-            alt("Radiculopatia L5 e neuropatia ulnar compressiva coincidentes",
-                "Duas lesões mecânicas ao acaso, num homem com febre, púrpura "
-                "e hematúria. Explicar cada achado separadamente é o erro "
-                "que este caso repete desde a sinusite."),
-            alt("Mielopatia",
-                "Exigiria nível sensitivo, sinal piramidal e disfunção "
-                "esfincteriana. O reflexo dele está abolido, não exaltado."),
-            alt("Síndrome de Guillain-Barré",
-                "Ascendente, simétrica, com arreflexia global e evolução em "
-                "dias. Não escolhe um nervo de cada lado."),
-        ],
-        titulo_resposta="Dois nervos nomeados, um de cada lado",
-        fundo=CENA,
-    ),
 
     pagina("observacao_admissao", "Pronto-socorro", "Primeira reavaliação",
         p("Com oxigênio suplementar, consegue contar a história em frases mais "
@@ -719,7 +504,7 @@ ETAPAS = [
          'não distingue essas causas: reavalie perfusão e oxigenação antes de '
          'tratar o número isoladamente.'),
 
-    pergunta("p11", Q(11),
+    pergunta("p11", Q(5),
         "Primeiras duas horas de pronto-socorro. Hipótese de pneumonia grave, "
         "creatinina de 3,8 mg/dL, saturação de 88%. **Quais três** condutas?",
         [
@@ -859,7 +644,7 @@ ETAPAS = [
           "hiato aniônico, corrigido pela albumina, cabem num guardanapo."),
         fundo=TC),
 
-    pergunta("p12", Q(12),
+    pergunta("p12", Q(6),
         "pH 7,29 · pCO₂ 32 · HCO₃⁻ 15 · Na 136 · Cl 104 · albumina 2,9. Qual a "
         "interpretação?",
         [
@@ -897,33 +682,6 @@ ETAPAS = [
           "seis gramas por decilitro — e ninguém viu sangue sair."),
         fundo=ESFREGACO),
 
-    pergunta("p13", Q(13),
-        "Hematócrito 23,6% e reticulócitos 2,1%. Corrigidos pelo hematócrito "
-        "e pelo tempo de maturação, o índice fica em torno de **0,5**. O que "
-        "ele diz sobre a medula?",
-        [
-            alt("Perda sanguínea com resposta medular adequada",
-                "Resposta adequada a uma anemia desta profundidade seria "
-                "índice acima de 2 — reticulócitos de 8 a 10%. Não é o que "
-                "há."),
-            alt("Hemólise extravascular",
-                "DHL e bilirrubina normais, Coombs negativo, e reticulócito "
-                "baixo. Hemólise compensada teria reticulocitose."),
-            alt("Medula que não responde à perda: anemia hipoproliferativa",
-                "2,1% × (23,6/45) = 1,1; dividido pelo fator de maturação de "
-                "2 para este hematócrito = 0,55. Abaixo de 2 é medula que não "
-                "repõe: inflamação de oito semanas e eritropoetina que o rim "
-                "lesado deixou de produzir.", certa=True),
-            alt("Anemia megaloblástica",
-                "VCM de 88 é normocítico. E megaloblástica teria "
-                "hipersegmentação e, muitas vezes, DHL alta."),
-            alt("Microangiopatia trombótica",
-                "Exigiria esquizócito, plaquetopenia e DHL elevada. As "
-                "plaquetas dele estão em 468.000."),
-        ],
-        titulo_resposta="O sangue saiu, e a medula não repôs",
-        fundo=ESFREGACO,
-    ),
 
     pagina("leitura_infeccao", "Discussão", "A conduta inicial",
         p("Com febre, infiltrado bilateral, proteína C reativa de 186 mg/L e "
@@ -981,40 +739,8 @@ ETAPAS = [
          'Compare com a resposta ao tratamento, a oxigenação e a evolução da '
          'hemoglobina. Não conclua a etiologia apenas pelo padrão.']),
 
-    pergunta("p14", Q(14),
-        "O laudo do filme do segundo dia. **Quais três** achados estão "
-        "presentes?",
-        [
-            alt("Opacidades alveolares bilaterais e simétricas",
-                "Preenchimento de espaço aéreo dos dois lados, em mancha, "
-                "com predomínio médio e inferior.", certa=True),
-            alt("Linhas B de Kerley",
-                "Marca de edema intersticial cardiogênico. Não há — e ele "
-                "não tem estase jugular nem edema."),
-            alt("Área cardíaca normal",
-                "Índice cardiotorácico preservado: o infiltrado não é de "
-                "coração grande.", certa=True),
-            alt("Cavitação",
-                "Cavidade fala em necrose — abscesso, tuberculose, "
-                "granulomatose com poliangeíte, êmbolo séptico. Não há."),
-            alt("Ausência de derrame pleural",
-                "Seios costofrênicos livres. Hemorragia alveolar é "
-                "intraparenquimatosa: não faz derrame.", certa=True),
-            alt("Nódulos múltiplos",
-                "Nódulo — com ou sem cavidade — é o padrão da granulomatose "
-                "com poliangeíte e do êmbolo séptico. O filme dele é de "
-                "preenchimento alveolar, não de nódulo."),
-            alt("Pneumotórax",
-                "Não há linha de pleura visceral descolada."),
-            alt("Cardiomegalia com cefalização de fluxo",
-                "É o par que descreveria congestão. Nenhum dos dois está "
-                "presente."),
-        ],
-        titulo_resposta="Alvéolo cheio, coração normal, pleura seca",
-        fundo=RX,
-    ),
 
-    pergunta("p15", Q(15),
+    pergunta("p15", Q(7),
         "Ele piorou sob antibiótico adequado. **Quais quatro** achados deste "
         "paciente sustentam hemorragia alveolar difusa?",
         [
@@ -1084,7 +810,7 @@ ETAPAS = [
           "creatinina subiu para 4,9 mg/dL e a diurese caiu para 380 mL."),
         p("As três hemoculturas da admissão vieram negativas em 48 horas. A "
           "urocultura, negativa."),
-        fundo=TC, segue="p16",
+        fundo=TC, segue="ex_mec",
     ),
 
     pagina("r_investiga", "Terceiro dia", "A broncoscopia",
@@ -1095,7 +821,7 @@ ETAPAS = [
         p("Lavado em três alíquotas de 60 mL no mesmo segmento: a primeira "
           "rosada, a segunda vermelha, a terceira **francamente hemorrágica**. "
           "Material enviado para citologia e cultura."),
-        fundo=TC, segue="p16",
+        fundo=TC, segue="ex_mec",
     ),
 
     pagina("r_corticoide", "Terceiro e quarto dias", "Sob corticoide",
@@ -1105,46 +831,9 @@ ETAPAS = [
         p("As hemoculturas da admissão vieram negativas em 48 horas. **A "
           "partir de agora, toda cultura que vier negativa terá sido colhida "
           "sob imunossupressão** — e o valor dela é menor."),
-        fundo=TC, segue="p16",
+        fundo=TC, segue="ex_mec",
     ),
 
-    pergunta("p16", Q(16),
-        "Num infiltrado bilateral com queda de hemoglobina, **quais três** "
-        "achados do lavado broncoalveolar estabelecem hemorragia alveolar "
-        "difusa?",
-        [
-            alt("Alíquotas sequenciais progressivamente mais hemorrágicas",
-                "Sangue de via aérea clareia a cada alíquota; sangue de "
-                "alvéolo escurece. É o critério à beira do leito, no mesmo "
-                "segmento.", certa=True),
-            alt("Neutrófilos acima de 50% das células",
-                "Neutrofilia no lavado é pneumonia bacteriana ou SDRA. Não "
-                "define sangramento."),
-            alt("Hemossiderófagos acima de 20% dos macrófagos",
-                "Macrófago carregado de hemossiderina leva 48 a 72 horas "
-                "para aparecer: acima de 20% (escore de Golde) prova "
-                "sangramento e diz que ele não é de hoje.", certa=True),
-            alt("Eosinófilos acima de 25%",
-                "Pneumonia eosinofílica. Sangra raramente e não é o "
-                "mecanismo aqui."),
-            alt("Ausência de lesão endobrônquica e de ponto de sangramento",
-                "Sangue que vem de todos os óstios segmentares, sem fonte "
-                "localizada, é difuso por definição. Exclui tumor e "
-                "bronquiectasia focal.", certa=True),
-            alt("Líquido leitoso, PAS-positivo",
-                "Proteinose alveolar. Preenche o alvéolo de surfactante, "
-                "não de sangue."),
-            alt("Linfocitose com relação CD4/CD8 acima de 3,5",
-                "Sarcoidose. Linfócito, granuloma e hilo — nada de "
-                "hemorragia."),
-            alt("Células epiteliais atípicas",
-                "Carcinoma bronquioloalveolar, hoje adenocarcinoma lepídico. "
-                "Pode sangrar, mas não é o achado que define hemorragia "
-                "alveolar."),
-        ],
-        titulo_resposta="Cada alíquota mais vermelha, e o macrófago com ferro",
-        fundo=TC,
-    ),
 
     pedido("ex_mec", "Exames · terceira rodada",
         "O que você pede agora?",
@@ -1277,7 +966,7 @@ ETAPAS = [
         ]) + '</div>',
         fundo=TC, so_kicker=True),
 
-    pergunta("p17", Q(17),
+    pergunta("p17", Q(8),
         "Hemorragia alveolar difusa e glomerulonefrite, no mesmo paciente e no "
         "mesmo mês. **Quais cinco** das condições abaixo produzem esse par?",
         [
@@ -1392,9 +1081,13 @@ ETAPAS = [
         p("A crescente é uma proliferação extracapilar que ocupa o espaço de "
           "Bowman. O predomínio celular indica atividade e potencial de "
           "resposta; a fibrose representa dano crônico."),
+        p("Na classificação de Berden, 62% de crescentes celulares sem "
+          "esclerose global é **classe crescêntica**: prognóstico renal "
+          "intermediário, e a classe em que a rapidez do tratamento mais "
+          "muda a função residual — crescente celular ainda é tecido vivo."),
         fundo=BIOPSIA),
 
-    pergunta("p18", Q(18),
+    pergunta("p18", Q(9),
         "A imunofluorescência da biópsia renal não mostra depósito imune. "
         "**Quais cinco** mecanismos esse achado torna improváveis?",
         [
@@ -1427,7 +1120,7 @@ ETAPAS = [
         fundo=BIOPSIA,
     ),
 
-    pareamento("p19", Q(19),
+    pareamento("p19", Q(10),
         "O anticorpo veio: padrão perinuclear 1:640, anti-MPO 148 U/mL, "
         "anti-PR3 não reagente, anti-MBG não reagente. Associe cada padrão "
         "sorológico ao contexto em que ele é característico.",
@@ -1472,34 +1165,6 @@ ETAPAS = [
         fundo=IF,
     ),
 
-    pergunta("p20", Q(20),
-        "Crescentes celulares em 15 de 24 glomérulos (62%), sem esclerose "
-        "global significativa. Na classificação histológica de Berden, qual "
-        "a classe — e o que ela prediz?",
-        [
-            alt("Focal: metade ou mais dos glomérulos normais — melhor "
-                "prognóstico renal",
-                "Exigiria pelo menos 12 glomérulos preservados. Ele tem 9."),
-            alt("Crescêntica: metade ou mais com crescente celular — "
-                "prognóstico intermediário, e o que mais responde ao "
-                "tratamento precoce",
-                "62% de crescentes celulares. A crescente celular é tecido "
-                "inflamado e vivo: é a classe em que a rapidez do tratamento "
-                "mais muda a função renal residual.", certa=True),
-            alt("Mista: nenhuma das lesões passa da metade",
-                "Mista é o que sobra quando nada predomina. Aqui a crescente "
-                "celular predomina."),
-            alt("Esclerótica: metade ou mais globalmente esclerosados — "
-                "pior prognóstico",
-                "É a classe da lesão irreversível, e é a que ele **não** tem. "
-                "Por isso o tratamento vale a pena."),
-            alt("Classe IV da ISN/RPS",
-                "Essa é a classificação da nefrite lúpica, que exige "
-                "depósito imune. A imunofluorescência dele não tem."),
-        ],
-        titulo_resposta="Crescente celular ainda é tecido vivo",
-        fundo=BIOPSIA,
-    ),
 
     pagina("fenotipo", "Discussão", "Os dois fenótipos",
         p("Vasculite de pequenos vasos associada ao ANCA está estabelecida: "
@@ -1552,7 +1217,7 @@ ETAPAS = [
         fundo=BIOPSIA,
     ),
 
-    pergunta("p18b", Q(18),
+    pergunta("p18b", Q(9),
         "Sem o tecido e sem o anticorpo, com creatinina de 4,6 e alvéolo "
         "sangrando. **Quais três** condutas?",
         [
@@ -1676,7 +1341,7 @@ ETAPAS = [
         fundo=CENA, segue="p21",
     ),
 
-    pergunta("p21", Q(21),
+    pergunta("p21", Q(11),
         "Sobre a indução da remissão na vasculite associada ao ANCA com "
         "lesão renal grave, **quais três** afirmações estão corretas?",
         [
@@ -1744,7 +1409,7 @@ ETAPAS = [
         fundo=CENA,
     ),
 
-    pergunta("p22", Q(22),
+    pergunta("p22", Q(12),
         "Febre de 38,9 °C no quinto dia de indução, hipotensão que respondeu "
         "a volume, sem nova hemoptise. **Quais quatro** causas devem entrar na "
         "lista?",
@@ -2028,43 +1693,6 @@ ETAPAS = [
         fundo=CENA,
     ),
 
-    pergunta("p23", Q(23),
-        "Ele sai de alta em indução, com anti-MPO positivo e sintomas nasais "
-        "residuais. **Quais quatro** fatores aumentam o risco de recidiva na "
-        "vasculite associada ao ANCA?",
-        [
-            alt("Anti-PR3, em vez de anti-MPO",
-                "O fator mais consistente: a doença anti-PR3 recidiva cerca "
-                "de duas vezes mais. Ele é anti-MPO — e isso pesa a favor "
-                "dele.", certa=True),
-            alt("Anti-MPO, em vez de anti-PR3",
-                "É o contrário. A doença anti-MPO recidiva menos, e perde "
-                "mais rim na apresentação."),
-            alt("Acometimento de via aérea superior",
-                "Doença de nariz e seio é o fenótipo que mais volta — "
-                "granuloma é reservatório. As crostas dele contam contra.",
-                certa=True),
-            alt("Creatinina acima de 4 mg/dL no diagnóstico",
-                "Paradoxalmente, quanto pior o rim na apresentação, "
-                "**menor** a recidiva — e maior a chance de doença renal "
-                "terminal. Rim que sobrou é rim que pode recidivar."),
-            alt("Acometimento pulmonar",
-                "Doença pulmonar no diagnóstico é preditor independente de "
-                "recidiva nas coortes de indução.", certa=True),
-            alt("Idade acima de 65 anos",
-                "Idade avançada aumenta morte e infecção, não recidiva."),
-            alt("Interrupção da manutenção antes de 18 a 24 meses",
-                "REMAIN e MAINRITSAN: quem para cedo recidiva mais. A "
-                "manutenção é de pelo menos 18 meses, e para anti-PR3, "
-                "mais.", certa=True),
-            alt("Sexo masculino",
-                "Não é preditor de recidiva nas coortes."),
-            alt("Uso prévio de losartana",
-                "Não tem relação com a doença nem com a recidiva."),
-        ],
-        titulo_resposta="Quem tem nariz e pulmão volta mais; quem tem anti-MPO, menos",
-        fundo=CENA,
-    ),
 
     balanco("balanco", "O balanço da sua condução",
         "O percurso e o preço",
@@ -2198,7 +1826,7 @@ ETAPAS = [
             sistema="via"),
         quadro("A resposta medular",
             p("A queda de hemoglobina localiza o sangue no alvéolo, e a "
-              "Pergunta 15 estabeleceu isso. O que fica sem explicação é a "
+              "Pergunta 7 estabeleceu isso. O que fica sem explicação é a "
               "resposta a ela: o índice reticulocitário de 0,5 é medula que "
               "não repõe o que se perde. Inflamação de oito semanas e "
               "deficiência de eritropoetina na lesão renal aguda explicam boa "

@@ -23,7 +23,7 @@ CASOS = [
          # "Nefrologia · Pneumologia" no cartão entrega a síndrome antes de o
          # aluno abrir o caso, do mesmo jeito que o título entregava.
          especialidade="Clínica médica · Emergência",
-         minutos=80, decisoes=23, desfechos=4, nivel="os dois", cor="vermelho",
+         minutos=60, decisoes=12, desfechos=4, nivel="os dois", cor="vermelho",
          capa="cena_admissao.jpg", arquivo="pulmao-rim.html?v=20260909-nejm"),
 
     caso(slug="cocaina_levamisol", titulo="À flor da pele",
