@@ -383,3 +383,6 @@ inserir_antes(ETAPAS, 'p3', sequencia('us_evolucao', 'Ultrassonografia renal',
 
 from casos.investigacoes import aplicar, ESPECIFICACOES
 aplicar(ETAPAS, ESPECIFICACOES["cocaina_levamisol"])
+
+from casos.paineis_evolucao import aplicar as paineis_equipe
+paineis_equipe(ETAPAS, "cocaina_levamisol")

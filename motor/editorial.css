@@ -197,3 +197,15 @@ p b{font-weight:600}
 #palco .tela-unica .alts.muitas.feita .cm{margin-top:0;padding-top:calc(3px * var(--compacto))}
 #palco .tela-unica .alts.muitas li{row-gap:calc(3px * var(--compacto))}
 #palco .tela-unica .rc .v .ln{font-size:inherit;line-height:1.25;margin-bottom:calc(3px * var(--compacto));padding-left:calc(10px * var(--compacto))}
+
+
+#palco .painel-lab{flex:1;min-height:0}
+#palco .tela-unica .painel-lab p{font-size:calc(21px * var(--compacto));line-height:1.4;margin-bottom:calc(16px * var(--compacto))}
+#palco .tela-unica .painel-lab td,#palco .tela-unica .painel-lab th{font-size:calc(20px * var(--compacto));padding:calc(12px * var(--compacto));line-height:1.3}
+@media(max-width:900px){
+ #palco .painel-lab .tb{display:table;table-layout:fixed;width:100%}
+ #palco .painel-lab .tb thead{display:table-header-group}
+ #palco .painel-lab .tb tr{display:table-row}
+ #palco .painel-lab .tb td,#palco .painel-lab .tb th{display:table-cell;width:auto;font-size:calc(14px * var(--compacto));padding:calc(7px * var(--compacto));overflow-wrap:normal}
+ #palco .painel-lab .tb td::before{display:none}
+}

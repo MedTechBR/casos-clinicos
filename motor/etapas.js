@@ -57,6 +57,12 @@ function adiante(){
   if (temProximaParte()){ virarParte(1); return; }
   if(emRevisao){recomecar();return;}
   const e = etapa();
+  if(e.comentado){
+    const r=respostas[e.k];if(!r?.feita)return;
+    const alts=e.alts.filter(a=>a.ok);
+    marcados[e.k]=new Set(alts.flatMap(a=>a.exames));
+    r.conducao='indicados';
+  }
   if (e.t === 'bifurcacao'){
     const esc = escolhas[e.k];
     if (esc === undefined) return;
@@ -177,13 +183,14 @@ function pintarTrilho(){
 function pintarPe(){
   const e = etapa();
   const fim = e.t === 'desfecho';
+  const corrigida=e.comentado && respostas[e.k]?.feita;
   $('#pe').innerHTML =
     '<span class="rod">' + CASO.rodape + '</span>'
     + '<span class="nav">'
     + (partesTela.length > 1 ? '<span class="pagina-indice">Página ' + (parteTela + 1) + ' de ' + partesTela.length + '</span>' : '')
     + '<button class="bt" id="voltar"' + (historia.length < 2 && parteTela === 0 ? ' disabled' : '') + '>Voltar</button>'
     + '<button class="bt forte" id="' + (emRevisao && !temProximaParte() ? 'reiniciar' : 'seguir') + '"' + (podeAdiante() ? '' : ' disabled') + '>'
-    + (temProximaParte() ? 'Próxima página' : emRevisao ? 'Recomeçar' : e.t === 'capa' ? 'Começar o caso' : fim ? 'Continuar' : 'Avançar') + '</button></span>';
+    + (temProximaParte() ? 'Próxima página' : emRevisao ? 'Recomeçar' : e.t === 'capa' ? 'Começar o caso' : corrigida ? 'Realizar indicados' : fim ? 'Continuar' : 'Avançar') + '</button></span>';
   $('#voltar').onclick = atras;
   ($('#seguir') || $('#reiniciar')).onclick = adiante;
 }
@@ -318,6 +325,8 @@ const DESENHO = {
   // topo visual. Ganha noventa pixels e a tela começa no dado.
   resultados: e => {
     const todos = [...(marcados[e.de] || [])];
+    const origem=respostas[e.de]?.conducao;
+    const resumo=origem==='indicados'?'Exames realizados pela equipe após a discussão.':'';
     const pedidos = todos;
     const sobre = (ETAPAS[porId(e.de)] || {}).sobre || {};
     const cartas = pedidos.map(n => {
@@ -364,7 +373,7 @@ const DESENHO = {
     return fundoDe(e) + '<div class="veu tudo"></div><div class="folha">'
       + '<div class="marca larga"><i></i><span>' + e.kicker
       + '</span>'
-      + (e.intro ? '<b class="sub-in">' + e.intro + '</b>' : '') + '</div>'
+      + (resumo || e.intro ? '<b class="sub-in">' + resumo + ' ' + (e.intro || '').replace(/(?:De novo, só o que foi marcado\.|Só o que foi marcado\.)/g,'') + '</b>' : '') + '</div>'
       + '<div class="res">' + (cartas
           || '<div class="vazio">Você não pediu nenhum exame nesta etapa. O caso '
              + 'segue com o que se sabe do leito.</div>') + '</div></div>';
@@ -547,7 +556,7 @@ function ligar(e){
     if (conf) conf.onclick = () => {
       if(r.marcadas.length!==e.escolhas)return;
       r.feita = true;
-      if(e.comentado)marcados[e.k]=new Set(r.marcadas.flatMap(k=>e.alts[k].exames));
+      if(e.comentado)marcados[e.k]=new Set(e.alts.filter(a=>a.ok).flatMap(a=>a.exames));
       parteTela=0; pintar();
     };
   }

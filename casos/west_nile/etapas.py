@@ -219,3 +219,6 @@ inserir_antes(ETAPAS, 'ex2', sequencia('tc_evolucao', 'Tomografia de crânio',
 
 from casos.investigacoes import aplicar, ESPECIFICACOES
 aplicar(ETAPAS, ESPECIFICACOES["west_nile"])
+
+from casos.paineis_evolucao import aplicar as paineis_equipe
+paineis_equipe(ETAPAS, "west_nile")

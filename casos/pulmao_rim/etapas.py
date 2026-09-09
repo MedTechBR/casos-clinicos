@@ -1681,3 +1681,6 @@ inserir_antes(ETAPAS, 'imagem_alveolo', sequencia('rx_evolucao', 'Radiografia de
 
 from casos.investigacoes import aplicar, ESPECIFICACOES
 aplicar(ETAPAS, ESPECIFICACOES["pulmao_rim"])
+
+from casos.paineis_evolucao import aplicar as paineis_equipe
+paineis_equipe(ETAPAS, "pulmao_rim")

@@ -21,7 +21,7 @@ function montarFolhas(){
     const figura = document.querySelector('#palco .lamina');
     if (figura) root.append(figura);
   }
-  let area = root.querySelector(':scope > .alts,:scope > .grupos,:scope > .res,:scope > .cams');
+  let area = root.querySelector(':scope > .alts,:scope > .grupos,:scope > .res,:scope > .cams,:scope > .painel-lab');
   if (!area){
     root.classList.add('paginavel');
     area = document.createElement('div'); area.className = 'conteudo-paginado';
@@ -34,8 +34,9 @@ function montarFolhas(){
   if(mobile)root.querySelectorAll('table').forEach(t=>{const nomes=[...t.querySelectorAll('thead th')].map(x=>x.textContent);t.querySelectorAll('tbody tr').forEach(tr=>[...tr.children].forEach((td,n)=>td.dataset.col=nomes[n]||''));});
   area.classList.add('area-paginada'); areaTela = area;
   // Respostas e resultados permanecem inteiros: a densidade se adapta à tela.
-  if(area.matches('.alts,.res,.cams')){
+  if(area.matches('.alts,.res,.cams,.painel-lab')){
     root.classList.add('tela-unica');
+    if(area.matches('.painel-lab'))root.classList.add('paginavel');
     const cabe=()=>area.scrollHeight<=area.clientHeight+1&&area.scrollWidth<=area.clientWidth+1;
     let fator=1;
     root.style.setProperty('--compacto',fator);

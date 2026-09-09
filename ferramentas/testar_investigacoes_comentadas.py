@@ -22,8 +22,9 @@ with sync_playwright() as pw:
      assert p.evaluate('Object.keys(marcados).length')==0
      p.locator('#conf').evaluate('(el)=>el.click()')
      assert p.evaluate('podeAdiante() && partesTela.length===1')
+     assert p.locator('#manter-selecao').count()==0
      assert p.locator('.cm:visible').count()==6
-     expected={n for k in combo for n in e['alts'][k]['exames']}
+     expected={n for a in e['alts'] if a['ok'] for n in a['exames']}
      assert set(p.evaluate('(k)=>[...marcados[k]]',e['k']))==expected
      assert p.evaluate('areaTela.scrollHeight<=areaTela.clientHeight+2')
      p.locator('#seguir').evaluate('(el)=>el.click()')
@@ -33,8 +34,14 @@ with sync_playwright() as pw:
      while p.locator('.verlaudo').count():p.locator('.verlaudo').first.evaluate('(el)=>el.click()')
      assert p.evaluate('areaTela.scrollHeight<=areaTela.clientHeight+2 && partesTela.length===1')
      p.locator('#voltar').evaluate('(el)=>el.click()')
+     assert p.locator('#manter-selecao').count()==0
      assert p.locator('.cm:visible').count()==6
      assert set(p.evaluate('(k)=>[...marcados[k]]',e['k']))==expected
+     p.locator('#seguir').evaluate('(el)=>el.click()')
+     indicados={n for a in e['alts'] if a['ok'] for n in a['exames']}
+     assert set(p.locator('.rc>b').all_text_contents())==indicados
+     assert 'Exames realizados pela equipe' in p.locator('.sub-in').inner_text()
+     assert p.evaluate('areaTela.scrollHeight<=areaTela.clientHeight+2 && partesTela.length===1')
      total+=1
    # Percurso completo pelas questões novas e decisões existentes.
    p.evaluate('recomecar()')

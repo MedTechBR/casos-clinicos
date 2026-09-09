@@ -1,4 +1,4 @@
-"""Questões de priorização diagnóstica; resultados continuam ligados à seleção.
+"""Questões de priorização diagnóstica; a equipe realiza os exames prioritários.
 
 As alternativas são conjuntos clinicamente coerentes, não um catálogo livre.
 O comentário avalia a prioridade no cenário, não uma proibição universal.
@@ -20,7 +20,7 @@ def aplicar(etapas, especificacoes):
         assert 1<=sum(a['ok'] for a in itens)<len(itens)
         e.update(comentado=True, alts=itens, escolhas=sum(a['ok'] for a in itens),
                  enunciado=texto(enunciado),
-                 tr='Prioridade neste momento · os resultados seguintes correspondem à sua seleção')
+                 tr='A equipe realiza os exames mais indicados; sua resposta fica registrada para a discussão')
 
 A=alternativa
 ESPECIFICACOES={

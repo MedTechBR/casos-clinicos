@@ -74,3 +74,11 @@ Referências clínicas consultadas para esta revisão (não se trata de transcri
 A seleção de prioridades é editorial e contextual; as referências não apresentam exatamente estas alternativas ou este paciente ficcional.
 
 Validação desta entrega: 525 combinações das nove questões nos três viewports, com confirmação, comentários, laudos abertos, retorno e correspondência exata entre seleção e resultados; 1.241 páginas/estados sem transbordamento; 12 percursos de ponta a ponta pelos três casos, incluindo escolhas prioritárias e não prioritárias, sem erros JavaScript. Biblioteca e interface nos três tamanhos, além de laudos e lupa, verificados. Os testes antigos de pedidos foram adaptados ao novo contrato.
+
+## 9 de setembro — separar resposta didática de condução da investigação
+
+Correção explícita de escopo solicitada pelo autor: acertar ou errar a questão não limita os exames exibidos. A confirmação registra a resposta para discussão e prepara sempre os conjuntos classificados como mais indicados. Não há opção de manter pedidos alternativos. As ramificações de conduta permanecem; ramificações antigas dependentes da omissão desses exames deixam de ser alcançadas no percurso guiado.
+
+Incluídos três painéis da equipe: comparação ambulatório/admissão no caso pulmonar-renal, sangue/líquor na evolução neurológica e comparação de hemograma/função renal na evolução cutânea. Valores retirados do próprio caso; não se atribui uma nova coleta a uma data inventada. Painéis completos em uma tela, com referências e contexto temporal.
+
+Validação: 525 combinações confirmam que qualquer resposta gera os exames prioritários; comentários mantêm a seleção original, retorno preserva o registro e laudos permanecem optativos. Doze percursos até o encerramento, incluindo respostas corretas e incorretas, sem erros JavaScript. Reprodução do exemplo A/C/F agora inclui a radiografia e retira TC/US dos resultados dessa rodada.
