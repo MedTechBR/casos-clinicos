@@ -107,7 +107,8 @@ with sync_playwright() as pw:
             page.evaluate('k => document.querySelectorAll(".cam")[k].click()', plan[k])
           elif e['t'] == 'resultados':
             c = page.locator('.rc').count()
-            assert c == page.evaluate('(k)=>marcados[k].size', page.evaluate('etapa().de')), (slug, k, 'cartões', c)
+            esperado = page.evaluate('()=>{const e=etapa();return e.todos?e.todos.length:(marcados[e.de]||new Set()).size}')
+            assert c == esperado, (slug, k, 'cartões', c, esperado)
           elif e['t'] == 'desfecho': endings.add(k)
           # cada parte da página deve caber
           partes = page.evaluate('partesTela.length')

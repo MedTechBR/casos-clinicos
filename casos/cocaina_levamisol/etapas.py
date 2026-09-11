@@ -12,6 +12,7 @@ from motor.etapas import (
     pagina, par, pareamento, pedido, pergunta, quadro, resultados, tabela,
     vitais, topicos,
 )
+from motor.etapas import painel as painel_resultados
 
 TITULO = 'À flor da pele'
 RODAPE = 'Caso ficcional · ensino para internos e residentes'
@@ -25,8 +26,17 @@ CENA_HISTORIA = lamina(CENA, 'Cena ilustrativa',
 
 
 def painel(ident, kicker, titulo, enunciado, grupos):
-    return pedido(ident, kicker, titulo, enunciado, grupos, fundo=CENA,
-                  banco=BANCO, limite=4)
+    """Os exames que a equipe fez nesta rodada, todos, com o laudo no botão."""
+    exames = [o for g in grupos for o in g['o']]
+    laminas = {}
+    if any(o['e'] == 'Radiografia de tórax' for o in exames):
+        laminas['Radiografia de tórax'] = lamina('rx_torax_normal.jpg',
+            'Radiografia de tórax',
+            'Imagem ilustrativa de outro adulto. Não há opacidade focal '
+            'evidente; isso não exclui infecção precoce.',
+            'Mikael Häggström · Wikimedia Commons · CC0.')
+    return painel_resultados(ident, kicker, titulo, exames, fundo=CENA,
+                             introducao=enunciado, laminas=laminas)
 
 
 def q(ident, n, enunciado, opcoes, titulo, segue=''):
@@ -37,7 +47,7 @@ def q(ident, n, enunciado, opcoes, titulo, segue=''):
 
 ETAPAS = [
     capa(TITULO, fundo=CENA,
-         kicker='Caso interativo · 12 perguntas · 3 rodadas de exames · 3 decisões',
+         kicker='Caso interativo · 8 perguntas · 3 decisões',
          procedencia='Roteiro autoral; fontes e limites no fecho.'),
 
     pagina('historia', 'Admissão', 'Apresentação',
@@ -111,29 +121,6 @@ ETAPAS = [
           'fotografias e não sabe precisar a duração.'),
         fundo=CENA),
 
-    q('q2', 2,
-      'Lesões purpúricas ramificadas, de bordas angulares, com centro '
-      'necrótico. Qual termo descreve melhor essa morfologia — e o que ele '
-      'implica?', [
-      ('Púrpura retiforme: oclusão do vaso, mais que inflamação',
-       'Retiforme é o desenho da rede vascular desenhado pela oclusão: '
-       'trombo, êmbolo, crioglobulina, calcifilaxia, levamisol. A biópsia '
-       'procura trombo antes de procurar vasculite.', True),
-      ('Púrpura palpável: vasculite leucocitoclástica',
-       'Palpável é arredondada, de 2 a 10 mm, sem ramificação. É '
-       'inflamação de vênula — outra anatomia e outro diferencial.', False),
-      ('Livedo reticular: vasoespasmo fisiológico',
-       'Livedo é rendilhado violáceo **sem** púrpura nem necrose, e some '
-       'ao aquecer. Quando fixo e com necrose, chama-se livedo racemosa e '
-       'aproxima-se da retiforme.', False),
-      ('Eritema multiforme: lesão em alvo',
-       'Alvo tem três zonas concêntricas e não necrosa a pele em rede.',
-       False),
-      ('Petéquias: sangramento plaquetário',
-       'Puntiformes, não palpáveis, em áreas de pressão. Não ramificam.',
-       False),
-     ], 'Retiforme é o mapa do vaso que fechou'),
-
     pagina('antecedentes', 'História pessoal', 'Antecedentes e hábitos',
         p('Sem hipertensão, diabetes, doença renal ou autoimune conhecida. '
           'Nunca teve trombose ou sangramento prolongado. Uma gestação a '
@@ -177,7 +164,7 @@ ETAPAS = [
                        'discutir morfologia.',
                        'Hektor · Wikimedia Commons · CC BY-SA 3.0 · sem alterações.')),
 
-    q('q3', 3,
+    q('q3', 2,
       'Febre de 38,6 °C, frequência cardíaca de 112, lesões dolorosas com '
       'necrose. **Quais três** medidas nas primeiras horas?', [
       ('Hemograma com diferencial, agora',
@@ -214,9 +201,9 @@ ETAPAS = [
          'ritmo. O ECG não identifica uma exposição nem estabelece a causa '
          'das lesões cutâneas.'),
 
-    painel('p1', 'Exames · primeira rodada', 'Investigação inicial',
-        'Febre e placas dolorosas não branqueáveis. Quatro exames para o '
-        'risco sistêmico e os mecanismos da púrpura.', [
+    painel('p1', 'A investigação inicial', 'O que a equipe pediu',
+        'Hemograma, culturas e coagulação antes do antibiótico; perfusão e '
+        'imagem para as outras hipóteses.', [
         grupo('Sangue', 'sangue', [
             op('Hemograma diferencial',
                resultado='Leucócitos 900/µL · Neutrófilos absolutos 180/µL · '
@@ -250,31 +237,13 @@ ETAPAS = [
         ]),
     ]),
 
-    resultados('r1', 'Primeira rodada', 'Resultados solicitados', 'p1',
-        fundo=CENA,
-        laminas={'Radiografia de tórax': lamina('rx_torax_normal.jpg',
-                 'Radiografia de tórax',
-                 'Imagem ilustrativa de outro adulto. Não há opacidade focal '
-                 'evidente; isso não exclui infecção precoce.',
-                 'Mikael Häggström · Wikimedia Commons · CC0.')},
-        rota=dict(pediu=['Hemograma diferencial'], entao='hemograma',
-                  senao='sem_hemograma')),
-
     pagina('hemograma', 'Interpretação', 'Risco imediato',
         p('O hemograma documenta **180 neutrófilos por microlitro** numa '
           'mulher febril: agranulocitose. Hemoglobina e plaquetas normais — '
           'a medula falhou numa linhagem só. A etiologia ainda está aberta; '
           'reconhecer a síndrome muda a urgência.'),
         fundo=CENA, segue='q4'),
-    pagina('sem_hemograma', 'Interpretação', 'Reavaliação',
-        p('Sem o diferencial, a febre e as lesões dolorosas continuam sem '
-          'explicação suficiente. A enfermagem informa que o hemograma de '
-          'rotina da admissão, colhido pelo protocolo, mostra **180 '
-          'neutrófilos por microlitro**. A equipe recebe o número de quem '
-          'não o pediu.'),
-        fundo=CENA, segue='q4'),
-
-    q('q4', 4,
+    q('q4', 3,
       'Neutrófilos de 180/µL, com hemoglobina e plaquetas normais, em mulher '
       'de 34 anos previamente hígida e febril. **Quais quatro** causas devem '
       'ser consideradas?', [
@@ -357,7 +326,7 @@ ETAPAS = [
           'outros cursos seriam possíveis.'),
         fundo=CENA, segue='q5'),
 
-    q('q5', 5,
+    q('q5', 4,
       'Febre de 38,6 °C com 180 neutrófilos e lesão necrótica de pele. '
       '**Quais três** afirmações sobre o antibiótico estão corretas?', [
       ('A primeira dose deve entrar em até 60 minutos, depois das culturas',
@@ -394,9 +363,9 @@ ETAPAS = [
           'sem convertê-la automaticamente em hematúria.'),
         fundo=CENA),
 
-    painel('p2', 'Exames · segunda rodada', 'Mecanismo e extensão',
-        'As placas mudaram e apareceu urina escura. Quatro exames para o '
-        'mecanismo cutâneo e para outro órgão acometido.', [
+    painel('p2', 'Mecanismo e extensão', 'O que a equipe pediu',
+        'As placas mudaram e apareceu urina escura: tecido, anticorpo, rim '
+        'e os diferenciais da oclusão.', [
         grupo('Tecido e marcadores', 'pele', [
             op('Biópsia cutânea',
                resultado='Trombos em pequenos vasos dérmicos · Necrose '
@@ -431,24 +400,12 @@ ETAPAS = [
         ]),
     ]),
 
-    resultados('r2', 'Segunda rodada', 'Resultados solicitados', 'p2',
-        fundo=CENA,
-        rota=dict(pediu=['Biópsia cutânea'], entao='tecido', senao='sem_tecido')),
-
     pagina('tecido', 'Interpretação', 'Mecanismo',
         p('A biópsia sustenta lesão vascular com componente trombótico e '
           'leucocitoclasia focal. O tecido não identifica a substância '
           'causal e não define, sozinho, anticoagulação ou imunossupressão.'),
-        fundo=CENA,
-        rota=dict(pediu=['Anti-MPO', 'Anti-PR3'], entao='q6', senao='q7')),
-    pagina('sem_tecido', 'Interpretação', 'Hipóteses abertas',
-        p('A aparência clínica permite mais de um mecanismo. Sem '
-          'documentação tecidual, a linguagem continua de hipótese, e os '
-          'próximos passos seguem a gravidade e o que realmente se tem.'),
-        fundo=CENA,
-        rota=dict(pediu=['Anti-MPO', 'Anti-PR3'], entao='q6', senao='q7')),
-
-    q('q6', 6,
+        fundo=CENA, segue='q6'),
+    q('q6', 5,
       'p-ANCA 1:1.280 com **anti-MPO 128 e anti-PR3 46 U/mL, os dois '
       'positivos**. Qual a interpretação mais adequada?', [
       ('Confirma granulomatose com poliangeíte',
@@ -468,66 +425,13 @@ ETAPAS = [
        False),
       ('Artefato de laboratório, a repetir',
        'Título de 1:1.280 com dois ELISA positivos não é artefato.', False),
-     ], 'Dois alvos ao mesmo tempo é pergunta de exposição', segue='q7'),
-
-    q('q7', 7,
-      'Sobre a biópsia de pele na púrpura retiforme, **quais três** '
-      'afirmações estão corretas?', [
-      ('Trombo em vaso dérmico com leucocitoclasia focal é o padrão '
-       'descrito na vasculopatia por levamisol',
-       'Oclusão com pouca ou nenhuma inflamação, às vezes com vasculite '
-       'leucocitoclástica ao lado: é a assinatura, embora não seja '
-       'específica.', True),
-      ('Leucocitoclasia focal confirma vasculite ANCA primária',
-       'Leucocitoclasia é resto de neutrófilo. Aparece em vasculite por '
-       'imunocomplexo, por droga, por infecção — não nomeia a causa.',
-       False),
-      ('Trombo sem vasculite exige procurar antifosfolípide, crioglobulina '
-       'tipo I e coagulação intravascular',
-       'A histologia da oclusão é a mesma; o que muda é o sangue. A '
-       'biópsia manda de volta ao laboratório.', True),
-      ('A imunofluorescência direta é dispensável',
-       'É ela que mostra IgA (vasculite por IgA), imunocomplexo ou nada. '
-       'Pele fresca, sem formol, em tubo próprio.', False),
-      ('A biópsia deve ser da borda de uma lesão recente, profunda, '
-       'incluindo tecido subcutâneo',
-       'Retiforme é vaso de derme profunda e hipoderme: punch raso do '
-       'centro necrótico mostra só necrose. Borda, recente, fundo.', True),
-      ('A biópsia identifica o adulterante',
-       'Nenhuma histologia identifica levamisol. Só a toxicologia — e só '
-       'nas primeiras 48 horas.', False),
-     ], 'Borda, recente, profunda — e com imunofluorescência'),
+     ], 'Dois alvos ao mesmo tempo é pergunta de exposição'),
 
     pagina('evolucao_urinaria', 'Durante a internação', 'O rim entra em cena',
         p('A creatinina de controle da manhã, colhida na rotina, voltou '
           '**1,6 mg/dL** — era 0,9 três dias antes. A urina continua escura. '
           'Pressão arterial 122/78, sem edema.'),
         fundo=CENA),
-
-    q('q8', 8,
-      'Creatinina de 0,9 para 1,6 mg/dL em três dias, com urina escura. '
-      '**Quais três** afirmações estão corretas?', [
-      ('É lesão renal aguda KDIGO estágio 1',
-       '1,6 ÷ 0,9 = 1,78 vezes a basal: estágio 1 vai de 1,5 a 1,9. '
-       'Estágio 2 seria o dobro.', True),
-      ('É lesão renal aguda KDIGO estágio 2',
-       'Estágio 2 exige 2,0 a 2,9 vezes a basal. Ela está em 1,78.', False),
-      ('Com sedimento ativo, é glomerulonefrite rapidamente progressiva '
-       'até prova em contrário — e biópsia em dias, não em semanas',
-       'Creatinina que sobe em dias com hemácia dismórfica e cilindro '
-       'hemático é crescente até que a biópsia diga o contrário. A janela '
-       'de tratamento é curta.', True),
-      ('Necrose tubular por sepse é a explicação mais provável',
-       'Sem hipotensão sustentada, sem nefrotóxico — e com púrpura '
-       'retiforme e ANCA. O rim entrou pela mesma porta da pele.', False),
-      ('A taxa de filtração por CKD-EPI é confiável agora',
-       'CKD-EPI pressupõe creatinina em estado estável. Numa creatinina '
-       'que sobe, a fórmula superestima a filtração — a real é menor.',
-       False),
-      ('Suspender anti-inflamatório e evitar contraste até esclarecer',
-       'Nada de nefrotóxico enquanto o rim está sendo julgado. Se a '
-       'tomografia for necessária, sem contraste.', True),
-     ], 'Setenta e oito por cento acima da basal, em três dias'),
 
     pagina('preparo_entrevista', 'Evolução', 'Entrevista individual',
         p('No intervalo entre os cuidados, Marina pede para conversar sem a '
@@ -567,9 +471,9 @@ ETAPAS = [
          'dilatação pielocalicial. A ausência de obstrução não exclui lesão '
          'glomerular.']),
 
-    painel('p3', 'Exames · terceira rodada', 'Exposição e gravidade',
-        'Com o relato de exposição e a lesão renal, quatro exames para '
-        'esclarecer a associação e orientar o tratamento.', [
+    painel('p3', 'Exposição e gravidade', 'O que a equipe pediu',
+        'Com o relato de exposição e a lesão renal: toxicologia, o rim por '
+        'dentro e a vigilância da infecção.', [
         grupo('Toxicologia', 'geral', [
             op('Benzoilecgonina urinária',
                resultado='Detectada por método confirmatório.',
@@ -587,10 +491,7 @@ ETAPAS = [
             op('Biópsia renal',
                resultado='Glomerulonefrite necrosante com crescentes celulares '
                          '· Imunofluorescência pauci-imune',
-               referencia='Sem necrose ou crescentes', alterado=True,
-               exige=['Sedimento urinário', 'Creatinina de reavaliação'],
-               porque='a nefrologia punciona depois de documentar sedimento e '
-                      'função renal'),
+               referencia='Sem necrose ou crescentes', alterado=True),
             op('Anti-MBG', resultado='Não reagente', referencia='Não reagente'),
         ]),
         grupo('Infecção e sangue', 'sangue', [
@@ -607,24 +508,12 @@ ETAPAS = [
         ]),
     ]),
 
-    resultados('r3', 'Terceira rodada', 'Resultados solicitados', 'p3',
-        fundo=CENA,
-        rota=dict(pediu=['Benzoilecgonina urinária',
-                         'Levamisol urinário por LC-MS/MS'],
-                  entao='toxicologia', senao='sem_toxicologia')),
-
     pagina('toxicologia', 'Interpretação', 'Janela de detecção',
         p('Os testes documentam exposição à cocaína, mas não documentam '
           'levamisol. O resultado negativo tardio não exclui o adulterante: '
           'a detecção depende de tempo, método e limite analítico.'),
         fundo=CENA, segue='q9'),
-    pagina('sem_toxicologia', 'Interpretação', 'Limite da atribuição',
-        p('O relato de uso sustenta a hipótese, mas não autoriza afirmar a '
-          'composição do produto. Sem análise específica positiva, não se '
-          'documenta confirmação de levamisol.'),
-        fundo=CENA, segue='q9'),
-
-    q('q9', 9,
+    q('q9', 6,
       'Cocaína 72 horas antes, orelha com púrpura, 180 neutrófilos, '
       'anti-MPO e anti-PR3. Sobre a síndrome do levamisol, **quais quatro** '
       'afirmações estão corretas?', [
@@ -663,7 +552,7 @@ ETAPAS = [
        False),
      ], 'Quarenta e oito horas para detectar; três semanas para melhorar'),
 
-    pareamento('q10', 'Pergunta 10',
+    pareamento('q10', 'Pergunta 7',
       'Substâncias que fabricam vasculite. Associe cada exposição à síndrome '
       'que ela produz.', [
       par('Levamisol, adulterando cocaína',
@@ -750,7 +639,7 @@ ETAPAS = [
         ]) + '</div>',
         fundo=CENA, so_kicker=True),
 
-    q('q11', 11,
+    q('q11', 8,
       'Glomerulonefrite crescêntica pauci-imune, neutrófilos de 420, '
       'culturas negativas, abstinência há cinco dias. **Quais três** '
       'afirmações orientam o tratamento?', [
@@ -796,9 +685,7 @@ ETAPAS = [
           'pela lesão glomerular e mantém a cobertura infecciosa enquanto '
           'os neutrófilos sobem. Sem a biópsia, a decisão permanece em '
           'aberto — e o caso segue assim.'),
-        fundo=CENA,
-        rota=dict(pediu=['Biópsia renal'], entao='seguimento_recuperacao',
-                  senao='fim_incerteza')),
+        fundo=CENA, segue='seguimento_recuperacao'),
 
     pagina('reavaliacao_suporte', 'Evolução', 'Reavaliação das lesões',
         p('Após analgesia e proteção das lesões, Marina tolera melhor a '
@@ -810,9 +697,7 @@ ETAPAS = [
           'Urina escura com creatinina em ascensão requer avaliação além da '
           'pele. O grau de certeza sobre a extensão depende do que foi '
           'investigado.'),
-        fundo=CENA,
-        rota=dict(pediu=['Sedimento urinário'], entao='fim_sequela',
-                  senao='fim_incerteza')),
+        fundo=CENA, segue='fim_sequela'),
 
     pagina('seguimento_recuperacao', 'Evolução', 'Evolução na enfermaria',
         p('Depois do tratamento dirigido, o estado geral melhora e não '
@@ -859,46 +744,12 @@ ETAPAS = [
         porque='Imunossupressão sem reavaliar infecção pode agravá-la; a '
                'associação não determina que todo paciente terá este curso.',
         fundo=CENA, fecho='incerteza'),
-    desfecho('fim_incerteza', 'Investigação em continuidade',
-        p('A hipótese associada à exposição permanece provável, sem '
-          'caracterização completa da extensão. Marina segue em avaliação '
-          'hospitalar. Não se declara rim normal, glomerulonefrite '
-          'confirmada ou cura na ausência de documentação.'),
-        qualidade='medio',
-        porque='Falta de exame é falta de conhecimento, não proteção contra '
-               'doença.',
-        fundo=CENA, fecho='incerteza'),
-
     pagina('incerteza', 'Fecho clínico', 'Diagnóstico provável',
         p('O conjunto clínico e a exposição relatada sustentam vasculopatia '
           'provavelmente associada à cocaína, com suspeita de participação '
           'do levamisol. O grau de sustentação depende dos exames '
           'escolhidos. A exposição ao adulterante não foi confirmada.'),
-        fundo=CENA, segue='q12'),
-
-    q('q12', 12,
-      'Na alta, **quais três** orientações e vigilâncias estão corretas?', [
-      ('ANCA e neutrófilos tendem a normalizar em meses com abstinência; '
-       'a reexposição reabre tudo',
-       'Anticorpo negativa entre 2 e 14 meses; a lesão cutânea volta com o '
-       'primeiro uso. A conversa sobre isso é o remédio.', True),
-      ('Encaminhar para tratamento do transtorno por uso de substâncias, '
-       'sem condicionar o cuidado à abstinência',
-       'Acolher e tratar, com redução de danos. Quem é expulso do serviço '
-       'por recair não volta — e volta a usar.', True),
-      ('Manter antibiótico profilático por seis meses',
-       'Não há indicação. A neutropenia se resolve; profilaxia só cria '
-       'resistência.', False),
-      ('Repetir toxicologia mensal como condição para o retorno',
-       'Exame como vigilância punitiva afasta a paciente do seguimento. '
-       'Toxicologia é ferramenta clínica, não de controle.', False),
-      ('Vigiar creatinina e sedimento por meses, porque a glomerulonefrite '
-       'pode persistir',
-       'A pele fecha em semanas; o rim, quando acometido, pode não fechar. '
-       'Retorno nefrológico com sedimento e proteinúria.', True),
-      ('Vacinas inativadas estão contraindicadas pelo ANCA',
-       'Não estão. Vacinar — sobretudo se houver imunossupressão.', False),
-     ], 'A recaída é da droga; o cuidado não pode depender dela'),
+        fundo=CENA),
 
     pagina('continuidade_cuidado', 'Evolução', 'Continuidade do cuidado',
         p('Marina manifesta preocupação com o trabalho, a filha e a '
@@ -931,24 +782,4 @@ ETAPAS = [
         fundo=CENA),
 ]
 
-REVISAO = [
-    dict(rotulo='Hemograma diferencial', chave='Hemograma diferencial',
-         porque='Febre com lesão necrótica exige saber o número de neutrófilos '
-                'antes de qualquer outra coisa. A equipe recebeu o número da '
-                'rotina; deveria tê-lo pedido.'),
-    dict(rotulo='Culturas iniciais', chave='Hemoculturas iniciais',
-         porque='Colher antes do antibiótico, sem atrasá-lo. Culturas '
-                'negativas não excluem infecção, mas autorizam decisões.'),
-    dict(rotulo='Sedimento urinário', chave='Sedimento urinário',
-         porque='Localiza a lesão renal no glomérulo. Sem ele, urina escura '
-                'com creatinina subindo ficou sem árbitro.'),
-    dict(rotulo='Função renal atual', chave='Creatinina atual',
-         porque='Quantifica a progressão; com o sedimento, define a urgência '
-                'da biópsia.'),
-    dict(rotulo='Mecanismo cutâneo', chave='Biópsia cutânea',
-         porque='Separa oclusão de inflamação, sem identificar o agente.'),
-    dict(rotulo='Toxicologia específica',
-         chave='Levamisol urinário por LC-MS/MS',
-         porque='Documenta a exposição se colhida cedo; a de 96 horas era '
-                'tarde. Não é requisito para tratar a ameaça clínica.'),
-]
+REVISAO = []

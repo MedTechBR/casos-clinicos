@@ -325,11 +325,11 @@ const DESENHO = {
   // Sem manchete: o rótulo já diz "o que voltou", e o primeiro cartão vira o
   // topo visual. Ganha noventa pixels e a tela começa no dado.
   resultados: e => {
-    const todos = [...(marcados[e.de] || [])];
+    const todos = e.todos ? e.todos : [...(marcados[e.de] || [])];
     const origem=respostas[e.de]?.conducao;
     const resumo=origem==='indicados'?'Exames realizados pela equipe após a discussão.':'';
     const pedidos = todos;
-    const sobre = (ETAPAS[porId(e.de)] || {}).sobre || {};
+    const sobre = e.sobre || (ETAPAS[porId(e.de)] || {}).sobre || {};
     const cartas = pedidos.map(n => {
       // o resultado que o caso declarou vence o do banco: o banco foi escrito
       // para um formato com relógio, e aqui não há relógio
@@ -360,7 +360,7 @@ const DESENHO = {
          bilaterais predominando nos campos médios" antes de descrever coisa
          alguma. Sob a figura fica só o crédito; a descrição e o valor saem
          juntos, no clique. */
-      const chaveLaudo = e.de + '::' + n;
+      const chaveLaudo = (e.de || e.k) + '::' + n;
       const aberto = laudos.has(chaveLaudo);
       return '<article class="rc' + (x.a ? ' alt' : '') + '"><b>' + n + '</b>'
         + '<figure><img src="' + IMG(im.img) + '" alt="' + n + '">'
@@ -663,9 +663,9 @@ function mostrarRevisao(){
     + '<div class="marca"><i></i><span>Revisão</span></div>'
     + '<h2>O que ficou para trás</h2>'
     + '<p class="sub">' + acertos + ' de ' + total + ' perguntas de escolha com '
-    + 'a resposta inteiramente certa · ' + Object.keys(marcados).length
-    + ' rodadas de exames, ' + pediu.size + ' pedidos ao todo · '
-    + Object.keys(escolhas).length + ' bifurcação de conduta.</p>'
+    + 'a resposta inteiramente certa · '
+    + (pediu.size ? Object.keys(marcados).length + ' rodadas de exames, ' + pediu.size + ' pedidos ao todo · ' : '')
+    + Object.keys(escolhas).length + ' decisões de conduta.</p>'
     + '<div class="rev">' + (faltou.length
         ? faltou.map(r => '<div class="li"><b>' + r.rotulo + '</b><p>'
             + r.porque + '</p></div>').join('')

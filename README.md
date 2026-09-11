@@ -11,8 +11,9 @@ dos tipos segue a medida nas 333 perguntas dos 71 casos da série.
 
 Os três casos no ar (`casos/pulmao_rim`, `casos/west_nile`,
 `casos/cocaina_levamisol`) usam o motor em etapas (`motor/etapas.py`):
-`pagina`, `pergunta`, `pareamento`, `pedido`/`resultados` (com teto por rodada e
-pré-requisito), `bifurcacao`, `desfecho`, `balanco`. Montagem com
+`pagina`, `pergunta`, `pareamento`, `painel` (os resultados de tudo o que a equipe
+pediu, depois da pergunta "quais exames são os mais apropriados?"), `bifurcacao`,
+`desfecho`, `balanco`. Oito perguntas por caso, como na série do NEJM. Montagem com
 `python3 build_etapas.py <caso>`; teste com
 `python3 ferramentas/percorrer_casos.py` (todas as combinações de bifurcação,
 painel completo e mínimo, em 1600×900 e 1366×768).

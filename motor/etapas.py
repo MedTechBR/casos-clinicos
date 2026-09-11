@@ -17,6 +17,7 @@ sistema tem a sua, e ela reaparece em todo lugar onde aquele sistema é citado.
     pagina()        prosa, painel, figura
     pedido()        "que exames você pede?", em grupos, marcação múltipla
     resultados()    devolve só o que foi marcado
+    painel()        devolve o que a EQUIPE pediu — formato New England
     pergunta()      escolha comentada, com o comentário de cada alternativa
     pareamento()    associe cada item à opção certa — cada linha é uma decisão
     bifurcacao()    a escolha que muda a página seguinte
@@ -298,6 +299,29 @@ def resultados(ident, kicker, titulo, de, *, fundo="", introducao="",
     return _pag("resultados", ident, kicker=texto(kicker), tt=texto(titulo),
                 de=de, fundo=fundo, intro=texto(introducao), nota=texto(nota),
                 laminas=laminas or {}, rota=_rota(rota))
+
+
+def painel(ident, kicker, titulo, exames, *, fundo="", introducao="",
+           nota="", laminas=None, banco=None) -> dict:
+    """Os resultados dos exames que a EQUIPE fez — um conjunto fixo.
+
+    É o formato do //New England//: a pergunta "quais exames são os mais
+    apropriados?" tem gabarito, e na página seguinte vêm os resultados de
+    todos os que a equipe pediu — não só dos que o aluno marcou. Quem errou
+    a escolha aprende no comentário; quem acertou, também. Ninguém fica sem
+    o dado que o caso precisa para continuar.
+    """
+    if banco is not None:
+        nomes = {e["n"] for e in banco}
+        orfaos = [o["e"] for o in exames if o["e"] not in nomes and "r" not in o]
+        if orfaos:
+            raise ValueError(f"painel {ident!r}: sem resultado no banco: {orfaos}")
+    sobre = {o["e"]: {"n": o["e"], "r": o["r"], "ref": o["ref"], "a": o["a"]}
+             for o in exames if "r" in o}
+    return _pag("resultados", ident, kicker=texto(kicker), tt=texto(titulo),
+                de="", fundo=fundo, intro=texto(introducao), nota=texto(nota),
+                laminas=laminas or {}, todos=[o["e"] for o in exames],
+                sobre=sobre, rota=None)
 
 
 # ─────────────────────────── perguntas ───────────────────────────

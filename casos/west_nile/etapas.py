@@ -6,8 +6,8 @@ evoluções autorais, sem pretensão de prognóstico individual.
 from pathlib import Path
 from motor.estudo_imagem import ecg, sequencia
 from motor.etapas import (alt, bifurcacao, caminho, capa, desfecho, grupo,
-    lamina, op, p, pagina, par, pareamento, pedido, pergunta, resultados,
-    tabela, topicos, vitais)
+    lamina, op, p, pagina, painel, par, pareamento, pedido, pergunta,
+    resultados, tabela, topicos, vitais)
 
 TITULO = 'O peso dos dias'
 RODAPE = 'Caso ficcional · evoluções simuladas para ensino'
@@ -39,7 +39,7 @@ def fim(k, titulo, texto, porque, qualidade='medio'):
 
 ETAPAS = [
     capa(TITULO, fundo=CENA,
-         kicker='Caso interativo · 13 perguntas · 3 rodadas de exames · 4 decisões',
+         kicker='Caso interativo · 8 perguntas · 3 decisões',
          procedencia='Paciente ficcional. Curso simulado.'),
 
     pg('historia', 'Apresentação',
@@ -100,33 +100,6 @@ ETAPAS = [
          'cabeça. Ela não observou convulsão, desvio da boca ou fala '
          'arrastada.')),
 
-    q('p2', 2,
-      'Perguntas repetidas, perda do fio da conversa quando duas pessoas '
-      'falam, e piora ao entardecer. **Quais três** características '
-      'distinguem delirium de demência?', [
-      ('Início em horas ou dias',
-       'Demência se instala em meses ou anos. Uma semana entre "cuidava '
-       'das contas" e "não acha o banheiro" é delirium até prova em '
-       'contrário.', True),
-      ('Desorientação no tempo e no espaço',
-       'Presente nos dois. Não distingue.', False),
-      ('Flutuação ao longo do dia',
-       'Pior à noite, melhor de manhã: é a marca do delirium, e o que faz '
-       'o exame das 8h discordar do das 20h.', True),
-      ('Déficit de atenção como núcleo do quadro',
-       'Delirium é falha de atenção; demência é falha de memória com '
-       'atenção preservada até tarde. Peça os meses do ano de trás para '
-       'frente.', True),
-      ('Alucinações visuais',
-       'Mais frequentes no delirium, mas presentes na demência com corpos '
-       'de Lewy. Não separam.', False),
-      ('Prejuízo de memória recente',
-       'Comum aos dois — no delirium, secundário à atenção que falha.',
-       False),
-      ('Alteração do ciclo sono-vigília',
-       'Acontece em ambos. Sozinha, não decide.', False),
-     ], 'Agudo, flutuante e desatento'),
-
     pg('antecedentes', 'Antecedentes e medicações',
        p('Hipertensão há catorze anos e diabetes tipo 2 há sete, acompanhados '
          'na unidade de saúde. Não conhece doença renal, retinopatia ou '
@@ -137,31 +110,6 @@ ETAPAS = [
          'ao dia. Durante a doença tomou apenas paracetamol e, nos últimos '
          'dois dias, quase não comeu nem bebeu. Aposentado, mora com a '
          'esposa. Parou de fumar há vinte anos; bebe cerveja ocasionalmente.')),
-
-    q('p3', 3,
-      'Diabético em metformina e losartana, febril, dois dias sem comer nem '
-      'beber direito. **Quais três** riscos essa combinação impõe agora?', [
-      ('Hipoglicemia pela metformina',
-       'Metformina sozinha não causa hipoglicemia: não estimula insulina. '
-       'É o erro clássico da lista.', False),
-      ('Acidose láctica associada à metformina, se houver lesão renal',
-       'A droga se acumula quando a filtração cai. Desidratação e sepse '
-       'são o cenário em que a suspensão é obrigatória.', True),
-      ('Lesão renal aguda pré-renal',
-       'Febre, baixa ingestão e bloqueio do receptor de angiotensina: o '
-       'rim perde a capacidade de manter a filtração com volume baixo.',
-       True),
-      ('Cetoacidose euglicêmica',
-       'É efeito dos inibidores de SGLT2, que ele não usa.', False),
-      ('Hipercalemia',
-       'Losartana mais lesão renal aguda mais jejum. Potássio é o primeiro '
-       'eletrólito a olhar no ECG e na bancada.', True),
-      ('Síndrome serotoninérgica',
-       'Nenhuma droga serotoninérgica em uso.', False),
-      ('Hiponatremia pela losartana',
-       'Não é efeito típico do bloqueador do receptor. Hiponatremia aqui, se '
-       'vier, tem outra causa.', False),
-     ], 'Metformina não baixa glicose demais; é o rim que ela cobra'),
 
     pg('exame', 'Exame físico',
        vitais(('PA', '146/84 mmHg', False), ('FC', '102 bpm', True),
@@ -178,36 +126,6 @@ ETAPAS = [
                 'gravidade no leito, mas não se mantém em pé sem auxílio. '
                 'Exame motor detalhado será repetido após analgesia.'))),
 
-    q('p4', 4,
-      'Sem rigidez de nuca evidente; eleva os quatro membros no leito, mas '
-      'não fica em pé; frequência cardíaca de 102 com 38,7 °C. **Quais três** '
-      'afirmações estão corretas?', [
-      ('A ausência de rigidez de nuca não exclui meningite no idoso',
-       'Em adultos com meningite, a rigidez de nuca tem sensibilidade em '
-       'torno de 30%; Kernig e Brudzinski, de 5%. No idoso é ainda menor. '
-       'Sinal meníngeo negativo não dispensa a punção.', True),
-      ('Kernig e Brudzinski negativos tornam a punção lombar dispensável',
-       'É o contrário: são específicos e pouco sensíveis. Servem quando '
-       'presentes, não quando ausentes.', False),
-      ('Elevar os quatro membros contra a gravidade não exclui paresia',
-       'Força grau 3 é "vence a gravidade". Ele pode ter grau 3 na perna '
-       'direita e grau 5 na esquerda e "elevar os quatro". É preciso '
-       'graduar contra resistência, lado a lado.', True),
-      ('A fala compreensível exclui encefalite',
-       'Encefalite se apresenta com confusão, sonolência e crise — a '
-       'afasia é achado de lesão focal, não requisito.', False),
-      ('Não ficar em pé pode ser paresia, ataxia ou desatenção — o exame '
-       'precisa separar',
-       'Três mecanismos, três exames: força segmentar, prova '
-       'índex-nariz e marcha, e o teste de atenção. A queixa é uma; a '
-       'lesão, não necessariamente.', True),
-      ('A frequência de 102 com 38,7 °C caracteriza dissociação '
-       'pulso-temperatura',
-       'Seria o sinal de Faget se o pulso estivesse **baixo** para a '
-       'febre — febre tifoide, brucelose, legionelose. 102 para 38,7 é '
-       'proporcional.', False),
-     ], 'Sinal meníngeo negativo não é exame normal'),
-
     *ecg('ecg_evolucao',
          'Durante a observação, Antônio mantém febre e o pulso fica mais '
          'acelerado. A equipe registra um ECG. O ritmo ajuda a explicar a '
@@ -217,71 +135,59 @@ ETAPAS = [
          'não explica por si só o déficit motor e a alteração da atenção; a '
          'investigação neurológica continua.'),
 
-    pedido('ex1', 'Exames · primeira rodada', 'Primeira rodada',
-      'Febre, cefaleia e perda recente da autonomia com alteração cognitiva. '
-      'Quatro exames para causas tratáveis e gravidade.', [
-      grupo('Sangue', 'sangue', [
+    q('ex1', 2,
+      'Febre, cefaleia, confusão e uma perna que cedeu, em diabético de 71 '
+      'anos. **Quais quatro** investigações são imediatas?', [
+      ('Glicemia capilar e sódio',
+       'Hipoglicemia e hiponatremia produzem confusão e fraqueza, custam um '
+       'minuto e se corrigem. São o primeiro passo em qualquer '
+       'encefalopatia.', True),
+      ('TSH',
+       'Hipotireoidismo não faz febre nem perna que cede de manhã.', False),
+      ('Hemoculturas, urina tipo 1 e radiografia de tórax',
+       'O idoso faz delirium por infecção urinária ou pneumonia antes de '
+       'qualquer sintoma local. Culturas antes do antibiótico.', True),
+      ('Vitamina B12',
+       'Neuropatia por B12 é subaguda, sensitiva e sem febre.', False),
+      ('Tomografia de crânio, seguida de punção lombar',
+       'Déficit focal e rebaixamento pedem imagem antes da agulha — e a '
+       'punção não espera: o antibiótico e o aciclovir entram antes dela.',
+       True),
+      ('Eletroneuromiografia agora',
+       'Útil na segunda semana, quando a denervação aparece. Hoje não '
+       'muda a conduta.', False),
+      ('Creatinina e potássio',
+       'Losartana, metformina e dois dias sem beber: o rim e o potássio '
+       'decidem doses e riscos nas próximas horas.', True),
+      ('Cortisol matinal',
+       'Entra se a hiponatremia e a hipotensão persistirem. Não é imediato.',
+       False),
+      ('Ressonância de coluna lombar',
+       'Uma perna fraca em homem confuso e febril não é radiculopatia até '
+       'que o exame neurológico diga.', False),
+      ('Ecocardiograma',
+       'Sem sopro e sem embolia suspeita. Depois, se a hemocultura '
+       'positivar.', False),
+     ], 'Metabolismo, foco infeccioso, imagem e o rim — a equipe pede os quatro'),
+
+    painel('res1', 'Resultados', 'O que a equipe pediu', [
         ex('Hemograma', 'Hb 13,2 g/dL · leucócitos 10.900/mm³ · plaquetas 181.000/mm³',
            'Hb 13–17 · leucócitos 4.000–11.000 · plaquetas 150.000–450.000'),
         ex('Glicemia', '132 mg/dL', '70–140 (valor casual adotado no caso)'),
         ex('Eletrólitos e função renal', 'Na 131 mmol/L · K 4,1 mmol/L · creatinina 1,1 mg/dL',
            'Na 135–145 · K 3,5–5,0 · Cr 0,7–1,3', True),
-        ex('Creatinoquinase', '124 U/L', '40–200'),
-        ex('Transaminases', 'AST 39 U/L · ALT 35 U/L', 'Até 40'),
-        ex('Proteína C reativa', '42 mg/L', 'Menor que 5', True)]),
-      grupo('Avaliação complementar', 'geral', [
+        ex('Proteína C reativa', '42 mg/L', 'Menor que 5', True),
         ex('Urina tipo 1', '0–2 leucócitos/campo · nitrito negativo · sem sangue'),
         ex('Radiografia de tórax', 'Sem opacidade focal ou derrame pleural.'),
         ex('Hemoculturas iniciais', 'Coletadas; em processamento nesta etapa.'),
-        ex('TSH', '2,4 mUI/L', '0,4–4,0'),
-        ex('Vitamina B12', '410 pg/mL', '200–900')])],
-      banco=BANCO, limite=4, fundo=CENA),
-
-    resultados('res1', 'Resultados', 'Primeira rodada', 'ex1', fundo=CENA,
+      ], fundo=CENA,
+      introducao='Sódio de 131 com mucosas secas e dois dias sem beber: a '
+                 'equipe repõe volume com cautela e mede o sódio urinário.',
       laminas={'Radiografia de tórax': lamina('rx_torax_normal.jpg',
                'Radiografia de tórax',
                'Imagem comparativa de outro adulto. Ausência de opacidade '
                'focal evidente não exclui infecção precoce.',
                'Mikael Häggström · Wikimedia Commons · CC0. Imagem ilustrativa.')}),
-
-    pg('bancada', 'Pronto atendimento',
-       p('A bancada da chegada, que a equipe colheu de qualquer modo, voltou: '
-         '**sódio 131 mmol/L**, potássio 4,1, creatinina 1,1 mg/dL, glicemia '
-         '132 mg/dL, proteína C reativa 42 mg/L. Mucosas secas ao exame; '
-         'sem edema; pressão arterial 146/84.'),
-       p('A esposa conta que ele bebeu pouco nos últimos dois dias e que "o '
-         'suor da febre molhava a cama".')),
-
-    q('p5', 5,
-      'Sódio de 131 mmol/L com glicemia de 132, mucosas secas, febre de '
-      'quatro dias e doença do sistema nervoso em investigação. **Quais '
-      'três** causas devem ser consideradas?', [
-      ('Secreção inapropriada de hormônio antidiurético',
-       'Qualquer doença do sistema nervoso central — meningite, encefalite, '
-       'AVC — dispara ADH. É a causa mais comum de hiponatremia neste '
-       'contexto, e exige sódio urinário e osmolalidade para se afirmar.',
-       True),
-      ('Hiponatremia translocacional por hiperglicemia',
-       'Cada 100 mg/dL de glicose acima de 100 baixa o sódio 1,6 a 2,4 '
-       'mEq/L. Com 132 de glicemia, a correção é de meio ponto. Não é '
-       'isso.', False),
-      ('Depleção de volume',
-       'Sudorese, febre e dois dias sem beber, com mucosas secas. '
-       'Hiponatremia hipovolêmica é a hipótese que a esposa acabou de '
-       'sustentar — e a que muda a conduta: soro, não restrição.', True),
-      ('Polidipsia primária',
-       'Ele bebeu **menos**, não mais.', False),
-      ('Insuficiência adrenal',
-       'Hiponatremia com febre, hipotensão relativa e fraqueza num idoso: '
-       'o cortisol da manhã custa pouco e a hipótese mata quando '
-       'esquecida.', True),
-      ('Efeito da losartana',
-       'Bloqueador do receptor de angiotensina não produz hiponatremia '
-       'clinicamente relevante. Tiazídico produziria — ele não usa.',
-       False),
-      ('Efeito da metformina',
-       'Não altera o sódio.', False),
-     ], 'Cérebro que segura água, corpo que perdeu água, adrenal que não responde'),
 
     pg('reexame', 'Reavaliação',
        p('Depois de analgesia e hidratação cautelosa, continua desorientado. '
@@ -294,7 +200,7 @@ ETAPAS = [
          'Babinski. Surge rigidez de nuca discreta. Tremor de ação nas '
          'mãos.')),
 
-    q('p6', 6,
+    q('p6', 3,
       'Paresia flácida assimétrica, arreflexia do lado mais fraco, '
       'sensibilidade preservada, sem nível sensitivo, sem Babinski. '
       '**Onde está a lesão?**', [
@@ -318,7 +224,7 @@ ETAPAS = [
        'paraparesia simétrica. Não há nível.', False),
      ], 'Flácido, arreflexo, assimétrico, sensível: corno anterior'),
 
-    q('p7', 7,
+    q('p7', 4,
       'Paralisia flácida aguda assimétrica, com febre e rigidez de nuca. '
       '**Quais quatro** causas produzem esse quadro?', [
       ('Vírus do Nilo Ocidental',
@@ -433,46 +339,68 @@ ETAPAS = [
          'hidrocefalia ou efeito de massa. Isso não exclui encefalite ou '
          'isquemia precoce.']),
 
-    pedido('ex2', 'Exames · segunda rodada', 'Segunda rodada',
-      'Paresia assimétrica com febre e confusão. Quatro investigações para '
-      'distinguir os mecanismos.', [
-      grupo('Sistema nervoso', 'nervo', [
+    q('ex2', 5,
+      'Paresia flácida assimétrica com febre e confusão; a tomografia de '
+      'crânio não mostra alteração. **Quais quatro** investigações '
+      'distinguem os mecanismos?', [
+      ('Líquor: celularidade, proteína, glicose, Gram e cultura',
+       'É o exame que separa bactéria, vírus, tuberculose e Guillain-Barré '
+       'numa tarde. Com a tomografia limpa, a agulha entra.', True),
+      ('PCR para herpes-simples, varicela-zóster e enterovírus no líquor',
+       'Herpes tem tratamento e o enterovírus imita a pólio. As duas '
+       'respostas vêm da mesma amostra.', True),
+      ('Eletroencefalograma',
+       'Útil se houver crise ou suspeita de estado não convulsivo. Não '
+       'localiza a fraqueza.', False),
+      ('Ressonância de encéfalo e medula',
+       'Procura o lobo temporal do herpes, o infarto que a tomografia não '
+       'viu e o sinal de corno anterior na medula.', True),
+      ('Amônia',
+       'Sem hepatopatia e sem asterixe. Não é esta encefalopatia.', False),
+      ('Eletroneuromiografia',
+       'Separa axônio de mielina e corno anterior de raiz — é o que decide '
+       'entre Guillain-Barré e mielite flácida. Cedo, mostra pouco; ainda '
+       'assim, entra.', True),
+      ('Anticorpos anti-GM1',
+       'Só se a eletroneuromiografia apontar neuropatia axonal motora. '
+       'Depois.', False),
+      ('Biópsia de nervo',
+       'Não tem lugar numa paralisia aguda febril.', False),
+      ('Angiotomografia cerebral',
+       'Sem sinal de neurônio motor superior nem de território arterial. '
+       'Não é vaso.', False),
+      ('Cortisol matinal',
+       'Entra se a hiponatremia persistir. Não distingue os mecanismos da '
+       'fraqueza.', False),
+     ], 'Líquor, PCR, ressonância e o nervo — a equipe pede os quatro'),
+
+    painel('res2', 'Resultados', 'O que a equipe pediu', [
         ex('Líquor: celularidade, proteína, glicose e Gram',
            '86 células/mm³ (58% neutrófilos) · proteína 92 mg/dL · glicose 68 '
            'mg/dL, sérica 120 · Gram sem bactérias',
            'Até 5 células · proteína 15–45 · relação glicose >0,4', True),
         ex('Cultura e PCR bacteriana do líquor',
            'Sem crescimento até o momento · painel bacteriano negativo.'),
-        ex('PCR para HSV e VZV no líquor',
+        ex('PCR para HSV, VZV e enterovírus no líquor',
            'Não detectados em amostra obtida no sexto dia de sintomas.'),
         ex('Ressonância de encéfalo e medula',
-           'Sem infarto, compressão medular ou lesão temporal. Ausência de '
-           'alteração específica não exclui inflamação.'),
+           'Sem infarto, compressão medular ou lesão temporal. Discreto '
+           'hipersinal em T2 na substância cinzenta anterior da medula '
+           'cervical baixa, de significado a correlacionar.'),
         ex('Eletroneuromiografia',
            'Respostas motoras reduzidas, assimétricas; respostas sensitivas '
            'preservadas. Sem critérios de desmielinização.', '—', True),
-        ex('Eletroencefalograma',
-           'Lentificação difusa, sem atividade epiléptica registrada.')]),
-      grupo('Outras hipóteses', 'geral', [
-        ex('HIV Ag/Ac', 'Não reagente.'),
-        ex('Sífilis: teste treponêmico e VDRL', 'Não reagentes.'),
-        ex('Dengue: NS1 e IgM', 'Não reagentes.'),
-        ex('Leptospira: PCR', 'Não detectado.'),
-        ex('Amônia', '28 µmol/L', '11–35'),
-        ex('Cortisol matinal', '18 µg/dL', '5–25')])],
-      banco=BANCO, limite=4, fundo=CENA),
-
-    resultados('res2', 'Resultados', 'Segunda rodada', 'ex2', fundo=CENA,
+      ], fundo=CENA,
+      introducao='A punção foi feita depois da tomografia, com o antibiótico e '
+                 'o aciclovir já correndo.',
       laminas={'Ressonância de encéfalo e medula': lamina('rm_encefalo.png',
                'RM do encéfalo',
                'A figura ilustra somente um corte axial T2 do encéfalo de '
                'outro adulto. Não mostra a medula nem todas as sequências do '
                'estudo.',
-               'Sean Novak · Wikimedia Commons · CC BY-SA 4.0 · sem alterações.')},
-      rota={'pediu': ['Líquor: celularidade, proteína, glicose e Gram'],
-            'entao': 'p8', 'senao': 'sem_lcr'}),
+               'Sean Novak · Wikimedia Commons · CC BY-SA 4.0 · sem alterações.')}),
 
-    pareamento('p8', 'Pergunta 8',
+    pareamento('p8', 'Pergunta 6',
       'O líquor dele: 86 células, 58% neutrófilos, proteína 92, glicose '
       '68 com sérica 120. Associe cada perfil de líquor ao diagnóstico que '
       'ele sugere.', [
@@ -513,15 +441,6 @@ ETAPAS = [
            'de abertura alta e tinta da China positiva.',
       fundo=CENA, segue='historia2'),
 
-    pg('sem_lcr', 'Discussão',
-       p('A equipe ainda não dispõe de caracterização do líquor neste '
-         'percurso. O diagnóstico permanece sindrômico: doença febril com '
-         'alteração do estado mental e paresia flácida assimétrica.'),
-       p('As hipóteses infecciosas seguem cobertas empiricamente. A falta de '
-         'definição não impede monitorização respiratória ou nova avaliação '
-         'neurológica.'),
-       segue='historia2'),
-
     pg('historia2', 'História complementar',
        p('Ao reconstruir o mês anterior com a esposa, a equipe descobre que '
          'voltaram de uma visita a familiares na Louisiana, no sul dos '
@@ -535,37 +454,7 @@ ETAPAS = [
          'capacidade vital caiu de 24 para **17 mL/kg** entre as duas '
          'medidas do dia, e a pressão inspiratória máxima piorou.')),
 
-    q('p9', 9,
-      'Doze dias entre as picadas num pântano da Louisiana e a febre. Sobre '
-      'a infecção pelo vírus do Nilo Ocidental, **quais três** afirmações '
-      'estão corretas?', [
-      ('Cerca de 80% das infecções são assintomáticas, e menos de 1% '
-       'evolui para doença neuroinvasiva',
-       'A maioria nunca sabe que teve. Dos 20% sintomáticos, a doença '
-       'febril autolimitada é a regra; a neuroinvasiva é a exceção.', True),
-      ('O período de incubação é de quatro a seis semanas',
-       'É de 2 a 14 dias. Os doze dias dele cabem exatamente.', False),
-      ('Idade acima de 60 anos e imunossupressão são os principais fatores '
-       'de risco para a forma neuroinvasiva',
-       'O risco de encefalite e de paralisia é várias vezes maior acima dos '
-       '60 anos, e a mortalidade da forma neuroinvasiva chega a 10%.', True),
-      ('Existe vacina humana licenciada',
-       'Só para cavalos. A prevenção humana é o repelente.', False),
-      ('A transmissão é por mosquito //Culex//, com aves como reservatório; '
-       'o humano é hospedeiro terminal',
-       'Ave amplifica, //Culex// transmite. Humano e cavalo não fazem '
-       'viremia suficiente para infectar o mosquito — mas transfusão e '
-       'transplante transmitem.', True),
-      ('A IgM no líquor confirma o diagnóstico sem reação cruzada',
-       'Flavivírus reagem entre si: quem teve dengue pode ter IgM '
-       'falsamente reagente. A neutralização em laboratório de referência '
-       'é o que decide.', False),
-      ('Há transmissão por contato direto entre pessoas',
-       'Não há. Transfusão, transplante e via transplacentária, sim.',
-       False),
-     ], 'Dois a catorze dias, um em cem, e nenhuma vacina'),
-
-    q('p10', 10,
+    q('p10', 7,
       'Capacidade vital de 24 para 17 mL/kg, tosse fraca, engasgo com água, '
       'saturação de 96%. **Quais três** parâmetros indicam proteção '
       'eletiva da via aérea na fraqueza neuromuscular?', [
@@ -653,69 +542,24 @@ ETAPAS = [
        p('A equipe organiza a cronologia com os familiares: início da febre, '
          'a dificuldade para caminhar, a mudança do comportamento e a piora '
          'da tosse.'),
-       segue='ex3'),
+       segue='res3'),
 
-    pedido('ex3', 'Exames · terceira rodada', 'Terceira rodada',
-      'Com a exposição esclarecida e a evolução neurológica, quatro exames '
-      'para a etiologia e para as hipóteses concorrentes.', [
-      grupo('Agentes e exposição', 'geral', [
+    painel('res3', 'Resultados', 'A investigação etiológica', [
         ex('IgM para vírus do Nilo Ocidental em soro e líquor',
            'Reagente nas duas amostras; resultado presuntivo, sujeito a '
-           'reação cruzada.', 'Não reagente', True),
+           'reação cruzada com dengue.', 'Não reagente', True),
+        ex('Teste de neutralização por redução de placas (laboratório de referência)',
+           'Enviado; resultado em dez dias.'),
         ex('PCR para enterovírus no líquor', 'Não detectado.'),
         ex('Sorologia para encefalite de Saint Louis', 'IgM não reagente.'),
-        ex('Chikungunya: IgM', 'Não reagente.'),
-        ex('Pesquisa de malária', 'Gota espessa sem parasitas.'),
-        ex('Pesquisa de vírus rábico em laboratório de referência',
-           'Não detectado nas amostras do protocolo; interpretar com '
-           'história de exposição.')]),
-      grupo('Mecanismos alternativos', 'nervo', [
-        ex('Anticorpos anti-GM1',
-           'Não reagentes; resultado negativo não exclui neuropatia imune.'),
-        ex('Anticorpos de encefalite autoimune',
-           'Painel sem reatividade.'),
-        ex('Porfobilinogênio urinário', 'Dentro do intervalo do método.'),
+        ex('Dengue: NS1 e IgM', 'Não reagentes.'),
         ex('Nova eletroneuromiografia',
            'Denervação ativa assimétrica, respostas motoras reduzidas e '
            'sensitivas preservadas; sem desmielinização.', '—', True),
-        ex('Nova PCR para HSV no líquor', 'Não detectado.'),
-        ex('Cobre sérico', '102 µg/dL', '70–140')])],
-      banco=BANCO, limite=4, fundo=CENA),
-
-    resultados('res3', 'Resultados', 'Terceira rodada', 'ex3', fundo=CENA,
-      rota={'pediu': ['IgM para vírus do Nilo Ocidental em soro e líquor'],
-            'entao': 'p11', 'senao': 'indefinido'}),
-
-    q('p11', 11,
-      'A IgM reagente para Nilo Ocidental combina com o contexto, mas ele já '
-      'teve dengue. Qual é a melhor forma de consolidar a atribuição '
-      'etiológica?', [
-      ('Interpretar qualquer IgM como confirmação definitiva',
-       'Anticorpos contra flavivírus reagem entre si. Dengue prévia é a '
-       'situação em que o falso reagente é mais provável.', False),
-      ('Excluir a hipótese se a PCR sérica for negativa',
-       'A viremia é curta e já passou quando a doença neurológica aparece. '
-       'PCR negativa não exclui.', False),
-      ('Substituir a IgM por uma IgG isolada',
-       'IgG isolada pode ser da dengue de anos atrás.', False),
-      ('Solicitar teste de neutralização por redução de placas em '
-       'laboratório de referência',
-       'O PRNT distingue o flavivírus responsável pela reatividade, e '
-       'amostras pareadas mostram a soroconversão. É o que fecha.', True),
-      ('Exigir biópsia cerebral antes de aceitar etiologia viral',
-       'Não é investigação deste cenário.', False),
-     ], 'Flavivírus cruzam; a neutralização separa', segue='b3'),
-
-    bifurcacao('b3', 'Decisão', 'Definição etiológica',
-      'Como você prossegue com a sorologia?', [
-      caminho('Enviar confirmação por neutralização e manter suporte.',
-              'confirmado',
-              'A confirmação resolve uma limitação do método sem interromper '
-              'o cuidado.'),
-      caminho('Manter a classificação presuntiva e seguimento clínico.',
-              'provavel',
-              'É possível manejar a síndrome sem afirmar uma confirmação que '
-              'não foi obtida.')], fundo=CENA),
+      ], fundo=CENA,
+      introducao='Com a viagem esclarecida, a equipe pede a sorologia dirigida '
+                 '— e, porque ele já teve dengue, manda a amostra para '
+                 'neutralização.'),
 
     pg('confirmado', 'Resultado complementar',
        p('O laboratório de referência informa neutralização compatível com '
@@ -723,19 +567,7 @@ ETAPAS = [
          'resultado. A investigação sustenta doença neuroinvasiva com '
          'comprometimento motor.'),
        segue='p12'),
-    pg('provavel', 'Avaliação etiológica',
-       p('A associação clínica e sorológica sustenta doença neuroinvasiva '
-         'provavelmente pelo vírus do Nilo Ocidental. Sem a confirmação '
-         'complementar, permanece registrada a limitação de reação cruzada.'),
-       segue='p12'),
-    pg('indefinido', 'Avaliação etiológica',
-       p('Neste percurso, a etiologia não foi estabelecida. A documentação '
-         'permanece como meningoencefalite com paresia flácida assimétrica. '
-         'O seguimento em neurologia e infectologia inclui reavaliar amostras '
-         'e exposição, sem registrar um agente confirmado.'),
-       segue='p12'),
-
-    q('p12', 12,
+    q('p12', 8,
       'Sexto dia de internação. Sobre o tratamento da doença neuroinvasiva '
       'pelo vírus do Nilo Ocidental, **quais três** afirmações estão '
       'corretas?', [
@@ -764,31 +596,6 @@ ETAPAS = [
        'autoriza suspender. Nos três primeiros dias pode ser falso '
        'negativo — a dele foi no sexto.', False),
      ], 'Sem antiviral, o tratamento é não perder o que sobrou'),
-
-    q('p13', 13,
-      'A família pergunta se ele voltará a andar. Sobre o prognóstico da '
-      'paralisia flácida pelo vírus do Nilo Ocidental, **quais três** '
-      'afirmações estão corretas?', [
-      ('A recuperação motora costuma ser incompleta',
-       'Lesão de corno anterior é perda neuronal, como na poliomielite. '
-       'Metade recupera parcialmente; a força total volta em poucos.',
-       True),
-      ('A maioria recupera completamente em semanas',
-       'É o curso da doença febril sem acometimento neurológico — não da '
-       'mielite.', False),
-      ('A mortalidade da forma neuroinvasiva fica em torno de 10%, maior '
-       'na paralisia com insuficiência respiratória',
-       'Quem precisa de ventilação mecânica morre mais e fica mais tempo. '
-       'Idade avançada e imunossupressão pesam.', True),
-      ('Fadiga e sintomas cognitivos podem persistir por meses',
-       'Mesmo quem recupera a força relata fadiga, dificuldade de '
-       'concentração e depressão por meses a um ano.', True),
-      ('Recidiva é frequente',
-       'Não há recidiva. A imunidade após a infecção é duradoura.',
-       False),
-      ('A imunidade não é duradoura, e reinfecção é comum',
-       'É o contrário: infecção prévia protege por toda a vida.', False),
-     ], 'O que o corno anterior perde, ele não devolve'),
 
     pg('tratamento', 'Tratamento e seguimento',
        p('O suporte inclui ventilação conforme necessidade, manejo de '
@@ -900,14 +707,4 @@ ETAPAS = [
          'Imunoglobulina: Gnann e cols., //Clin Infect Dis// 2019.')),
 ]
 
-REVISAO = [
-    dict(chave='Líquor: celularidade, proteína, glicose e Gram',
-         rotulo='Caracterização do líquor',
-         porque='Sem o líquor, a diferença entre infecção e pós-infecção '
-                'ficou sem árbitro — e a suspensão dos antibióticos, sem '
-                'lastro.'),
-    dict(chave='IgM para vírus do Nilo Ocidental em soro e líquor',
-         rotulo='Atribuição etiológica',
-         porque='A hipótese epidemiológica pede o teste dirigido; sem ele, o '
-                'registro deve preservar a incerteza.'),
-]
+REVISAO = []
