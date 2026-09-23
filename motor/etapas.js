@@ -330,7 +330,8 @@ const DESENHO = {
     const resumo=origem==='indicados'?'Exames realizados pela equipe após a discussão.':'';
     const pedidos = todos;
     const sobre = e.sobre || (ETAPAS[porId(e.de)] || {}).sobre || {};
-    const cartas = pedidos.map(n => {
+    const linhas = [], imagens = [];
+    pedidos.forEach(n => {
       // o resultado que o caso declarou vence o do banco: o banco foi escrito
       // para um formato com relógio, e aqui não há relógio
       const x = sobre[n] || BANCO[n];
@@ -351,9 +352,12 @@ const DESENHO = {
       const laudo = '<div class="v">' + valor
         + (x.ref && x.ref !== '—' ? '<span class="rf">referência: ' + x.ref
             + '</span>' : '') + '</div>';
-      if (!im)
-        return '<article class="rc' + (x.a ? ' alt' : '') + '"><b>' + n + '</b>'
-          + laudo + '</article>';
+      if (!im) {
+        linhas.push('<tr class="rc' + (x.a ? ' alt' : '') + '"><th scope="row"><b>' + n
+          + '</b></th><td class="v">' + valor + '</td><td class="rf">'
+          + (x.ref || '—') + '</td></tr>');
+        return;
+      }
       /* A legenda descritiva É o laudo. Deixá-la sob a figura enquanto um
          botão promete "ver o laudo" é entregar a leitura e cobrar o clique
          por nada: quem olhava a radiografia já lia "opacidades alveolares
@@ -362,20 +366,22 @@ const DESENHO = {
          juntos, no clique. */
       const chaveLaudo = (e.de || e.k) + '::' + n;
       const aberto = laudos.has(chaveLaudo);
-      return '<article class="rc' + (x.a ? ' alt' : '') + '"><b>' + n + '</b>'
+      imagens.push('<article class="rc resultado-imagem' + (x.a ? ' alt' : '') + '"><b>' + n + '</b>'
         + '<figure><img src="' + IMG(im.img) + '" alt="' + n + '">'
         + '<figcaption class="soc">' + im.cr + '</figcaption></figure>'
         + (aberto
             ? laudo + '<div class="leglaudo">' + im.lg + '</div>'
             : '<button class="verlaudo" data-laudo="' + esc(chaveLaudo) + '">'
               + 'Ver o laudo</button>')
-        + '</article>';
-    }).join('');
+        + '</article>');
+    });
+    const cartas = (linhas.length ? '<div class="laboratorio"><table class="exames-tabela"><thead><tr><th>Exame</th><th>Resultado</th><th>Referência</th></tr></thead><tbody>' + linhas.join('') + '</tbody></table></div>' : '')
+      + (imagens.length ? '<div class="imagens-resultados" style="--figuras:' + imagens.length + '">' + imagens.join('') + '</div>' : '');
     return fundoDe(e) + '<div class="veu tudo"></div><div class="folha">'
       + '<div class="marca larga"><i></i><span>' + e.kicker
       + '</span>'
       + (resumo || e.intro ? '<b class="sub-in">' + resumo + ' ' + (e.intro || '').replace(/(?:De novo, só o que foi marcado\.|Só o que foi marcado\.)/g,'') + '</b>' : '') + '</div>'
-      + '<div class="res">' + (cartas
+      + '<div class="res resultados-editoriais' + (linhas.length && imagens.length ? ' misto' : '') + '">' + (cartas
           || '<div class="vazio">Você não pediu nenhum exame nesta etapa. O caso '
              + 'segue com o que se sabe do leito.</div>') + '</div></div>';
   },
