@@ -36,24 +36,18 @@ CASOS = [
          especialidade="Clínica médica · Emergência", minutos=45, decisoes=8,
          desfechos=3, nivel="os dois", cor="azul",
          capa="../../west_nile/img/cena.png", arquivo="west-nile.html?v=20260922-tabelas"),
-    caso(slug="kikuchi",
-         titulo="Mulher de 27 anos com febre prolongada e linfonodomegalia cervical",
-         subtitulo="Três semanas de febre, linfonodo doloroso e um hemograma "
-                   "que não fecha com infecção bacteriana.",
-         especialidade="Clínica médica · Hematologia", minutos=30, decisoes=6,
-         desfechos=2, nivel="interno", cor="laranja", pronto=False),
-    caso(slug="sarcoidose",
-         titulo="Homem de 41 anos com dispneia, eritema nodoso e hipercalcemia",
-         subtitulo="Linfonodomegalia hilar bilateral e um cálcio que sobe sem "
-                   "paratormônio para explicá-lo.",
-         especialidade="Pneumologia · Reumatologia", minutos=35, decisoes=6,
-         desfechos=2, nivel="os dois", cor="verde", pronto=False),
-    caso(slug="cmv",
-         titulo="Mulher de 58 anos transplantada com febre e citopenias",
-         subtitulo="Quarto mês de transplante renal, febre sem foco, e a "
-                   "profilaxia terminou há três semanas.",
-         especialidade="Infectologia · Nefrologia", minutos=40, decisoes=7,
-         desfechos=3, nivel="residente", cor="ocre", pronto=False),
+    caso(slug="kikuchi", titulo="O que ficou no pescoço",
+         subtitulo="Uma professora volta à consulta porque a febre e o desconforto no pescoço persistem.",
+         especialidade="Clínica médica", minutos=35, decisoes=6,
+         desfechos=2, nivel="os dois", cor="laranja", arquivo="kikuchi.html?v=20260923"),
+    caso(slug="sarcoidose", titulo="Entre a sede e o fôlego",
+         subtitulo="Um homem que vinha se cansando nas caminhadas passa a sentir sede durante toda a noite.",
+         especialidade="Clínica médica", minutos=35, decisoes=6,
+         desfechos=2, nivel="os dois", cor="verde", arquivo="sarcoidose.html?v=20260923"),
+    caso(slug="cmv", titulo="Depois da travessia",
+         subtitulo="Depois de retomar a rotina, uma mulher precisa voltar ao hospital por febre e diarreia.",
+         especialidade="Clínica médica", minutos=35, decisoes=6,
+         desfechos=3, nivel="residente", cor="ocre", arquivo="cmv.html?v=20260923"),
 ]
 
 RODAPE = (
@@ -76,7 +70,7 @@ def construir() -> Path:
         subtitulo="Cada caso avança em alíquotas: um dado novo do paciente, e "
                   "a pergunta que ele abre — o diferencial de um sintoma, a "
                   "leitura de um resultado, o mecanismo de um achado. Você "
-                  "escolhe os exames, e suas decisões mudam o rumo e o desfecho.",
+                  "discute a investigação, e suas condutas mudam o rumo e o desfecho.",
         casos=CASOS, rodape=RODAPE,
         img_dir=RAIZ / "casos" / "pulmao_rim" / "img",
     ), encoding="utf-8")
