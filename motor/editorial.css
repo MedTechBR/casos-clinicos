@@ -281,3 +281,12 @@ p b{font-weight:600}
 #palco .misto .imagens-resultados:has(>.resultado-imagem:nth-child(2)){grid-template-columns:repeat(2,minmax(0,1fr))}
 #palco .misto .imagens-resultados:has(>.resultado-imagem:nth-child(3)){grid-template-rows:repeat(2,minmax(0,1fr))}
 #palco .misto .imagens-resultados:has(>.resultado-imagem:nth-child(3))>.resultado-imagem:last-child:nth-child(odd){grid-column:1 / -1}
+
+/* ECG e contexto formam uma única página; o traçado usa o espaço restante. */
+#palco .observacao-imagem{display:flex;flex-direction:column;min-height:0;flex:1;overflow:hidden;gap:12px}
+#palco .observacao-imagem>p{flex:none;font-size:calc(clamp(18px,1.7vw,26px) * var(--compacto));line-height:1.35;margin:0}
+#palco .observacao-imagem .estudo-imagem{flex:1;min-height:0;margin:0;align-items:stretch}
+#palco .observacao-imagem .anot{display:flex;flex-direction:column;min-height:0;width:100%}
+#palco .observacao-imagem .anot svg{flex:1;min-height:0;width:100%;height:100%;max-height:none}
+#palco .observacao-imagem figcaption{flex:none;font-size:calc(13px * var(--compacto));padding:8px 12px}
+#palco .observacao-imagem figcaption .cr{font-size:calc(11px * var(--compacto))}
