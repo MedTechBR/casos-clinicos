@@ -25,7 +25,7 @@ pela albumina, índice reticulocitário pelo hematócrito.
 from pathlib import Path
 
 from motor.desenhos import anotada, corpo, seta, chave_corpusculo
-from motor.estudo_imagem import ecg, sequencia
+from motor.estudo_imagem import ecg, estudo
 from motor.etapas import (
     alt, balanco, bifurcacao, caminho, capa, consequencia, desfecho, grade,
     grupo, lamina, op, p, pagina, painel, par, pareamento, pedido, pergunta,
@@ -505,23 +505,20 @@ ETAPAS = [
         fundo=TC,
     ),
 
-    *sequencia('rx_evolucao', 'Radiografia de tórax',
+    estudo('rx_evolucao', 'Radiografia de tórax',
         'Com a piora respiratória, a equipe repete a radiografia à beira do '
         'leito. Descreva a distribuição das opacidades antes de propor uma '
         'causa.',
         IMG / 'rx_torax_alveolar.jpg',
-        'Samir · Wikimedia Commons · CC BY-SA 3.0. Recorte prévio e setas na '
-        'discussão; adaptação sob a mesma licença.',
         'Radiografia ilustrativa de outro paciente. A figura não documenta a '
         'evolução temporal deste caso.',
-        [((308, 427), (110, 345)), ((704, 430), (912, 320))],
-        ['1 e 2. Há opacidades em ambos os pulmões, mais evidentes nas '
-         'regiões médias e inferiores.',
-         'A distribuição bilateral amplia a discussão para preenchimento '
-         'alveolar por líquido, sangue ou material inflamatório. A '
-         'radiografia isolada não separa esses mecanismos.',
-         'Compare com a resposta ao tratamento, a oxigenação e a evolução da '
-         'hemoglobina. Não conclua a etiologia apenas pelo padrão.']),
+        'Samir · Wikimedia Commons · CC BY-SA 3.0. Recorte prévio e setas; adaptação sob a mesma licença.',
+        [
+         ((308, 427), (110, 345), '**Opacidades alveolares** no pulmão direito, mais densas nos campos médio e inferior.', 12),
+         ((704, 430), (912, 320), 'O mesmo padrão no **pulmão esquerdo**: a doença é bilateral.', -12),
+         ((620, 160), (760, 60), '**Ápices relativamente poupados**: o predomínio é central e inferior.', 12),
+        ],
+        ['Opacidades alveolares bilaterais, em campos médios e inferiores.', 'A distribuição bilateral amplia a discussão para líquido, sangue ou material inflamatório no alvéolo; a radiografia isolada não separa esses mecanismos. Compare com a oxigenação e com a evolução da hemoglobina.']),
 
 
     pergunta("p15", Q(4),
@@ -816,29 +813,28 @@ ETAPAS = [
                        "Michał Komorniczak · Wikimedia Commons · CC BY-SA 3.0 · "
                        "sem alterações.")),
 
-    pagina("crescente_histologia", "Discussão de imagem", "Biópsia renal",
-        '<div class="estudo-imagem">' + anotada(IMG / CRESCENTE,
-            seta((795, 285), (750, 110), "1", curva=14),
-            seta((432, 292), (230, 210), "2", curva=20),
-            seta((505, 362), (320, 490), "3", curva=-26),
-            legenda="PAS. Microfotografia ilustrativa de outro paciente; não "
-                    "permite contar os glomérulos do laudo do caso.",
-            credito="Nephron · Wikimedia Commons · CC BY-SA 3.0. Setas "
-                    "editoriais; adaptação sob a mesma licença.")
-        + '<aside>'
-        + p("1. **Tufo glomerular:** região com alças capilares, à direita da "
-            "proliferação extracapilar.")
-        + p("2. **Cápsula de Bowman:** limite externo do corpúsculo renal.")
-        + p("3. **Crescente:** proliferação extracapilar na periferia do "
-            "tufo, dentro da cápsula.")
-        + '</aside></div>', fundo=BIOPSIA),
+    estudo("crescente_histologia", "Biópsia renal",
+        "Microfotografia de outro paciente, com a mesma lesão descrita no "
+        "laudo. Localize o tufo, a cápsula e o que ocupa o espaço entre eles.",
+        IMG / CRESCENTE,
+        "PAS. Microfotografia ilustrativa de outro paciente; não permite contar "
+        "os glomérulos do laudo do caso.",
+        "Nephron · Wikimedia Commons · CC BY-SA 3.0. Setas editoriais; "
+        "adaptação sob a mesma licença.",
+        [((795, 285), (750, 110), "**Tufo glomerular**: alças capilares, à direita da "
+          "proliferação extracapilar.", 14),
+         ((432, 292), (230, 210), "**Cápsula de Bowman**: o limite externo do "
+          "corpúsculo renal.", 20),
+         ((505, 362), (320, 490), "**Crescente**: proliferação extracapilar que ocupa "
+          "o espaço de Bowman, na periferia do tufo.", -26)],
+        ["Crescentes celulares em 15 dos 24 glomérulos, necrose fibrinoide "
+         "segmentar e imunofluorescência sem depósitos significativos (laudo "
+         "do caso ficcional).",
+         "A microfotografia ilustra a morfologia; não demonstra essa contagem "
+         "nem o padrão da imunofluorescência."],
+        kicker="Discussão de imagem", fundo=BIOPSIA),
 
     pagina("crescente_correlacao", "Discussão", "Biópsia renal",
-        p("**Laudo do caso ficcional:** crescentes celulares em 15 dos 24 "
-          "glomérulos, necrose fibrinoide segmentar e imunofluorescência sem "
-          "depósitos significativos. A microfotografia anterior ilustra a "
-          "morfologia; não demonstra essa contagem nem o padrão da "
-          "imunofluorescência."),
         p("A crescente é uma proliferação extracapilar que ocupa o espaço de "
           "Bowman. O predomínio celular indica atividade e potencial de "
           "resposta; a fibrose representa dano crônico."),

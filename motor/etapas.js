@@ -229,6 +229,11 @@ let lupaAberta = false;
 function abrirLupa(figura){
   const clone = figura.cloneNode(true);
   clone.classList.remove('lamina');
+  /* o tamanho ajustado à coluna não vale na lupa; e setas ainda não
+     reveladas continuam ocultas quando a figura é ampliada */
+  clone.style.width = '';
+  clone.querySelectorAll('svg').forEach(s => { s.style.width = ''; s.style.height = ''; });
+  if (document.querySelector('#palco .vv-est-rev:not([open])')) clone.querySelectorAll('.an').forEach(a => a.style.visibility = 'hidden');
   const cx = document.createElement('div');
   cx.className = 'lupa';
   cx.innerHTML = '<button class="fechar" title="Fechar (Esc)">Fechar ✕</button>';
@@ -238,6 +243,17 @@ function abrirLupa(figura){
   cx.appendChild(quadro);
   document.body.appendChild(cx);
   lupaAberta = true;
+  /* figura anotada na lupa: do tamanho da imagem, sem faixas laterais */
+  const sv = clone.querySelector('svg');
+  if (sv && sv.viewBox && sv.viewBox.baseVal && sv.viewBox.baseVal.width){
+    const r = sv.viewBox.baseVal.width / sv.viewBox.baseVal.height, cap = clone.querySelector('figcaption');
+    const ajusta = w => { clone.style.width = w + 'px'; sv.style.width = w + 'px'; sv.style.height = (w / r) + 'px'; sv.style.maxHeight = 'none'; return cap ? cap.offsetHeight : 0; };
+    const maxW = innerWidth * 0.92, maxH = innerHeight * 0.84;
+    let w = Math.min(maxW, (maxH - ajusta(maxW)) * r);
+    w = Math.min(maxW, (maxH - ajusta(w)) * r);
+    ajusta(Math.max(w, 200));
+    clone.classList.add('lupa-ajustada');
+  }
   const fechar = () => {
     cx.remove(); lupaAberta = false;
     document.removeEventListener('keydown', porTecla, true);

@@ -8,6 +8,8 @@ prescrição depende de depuração renal e protocolo do serviço.
 """
 from pathlib import Path
 
+from motor.estudo_imagem import estudo
+
 from motor.etapas import (alt, bifurcacao, caminho, capa, desfecho, op, p,
                           pagina, painel, par, pareamento, pergunta, tabela,
                           topicos, vitais, lamina)
@@ -283,28 +285,31 @@ ETAPAS = [
        'com mucosa intermediária pouco alterada. São colhidas biópsias da '
        'borda e do fundo das úlceras.'),
 
-    imagem('histologia_baixo', 'Biópsia do cólon: aumento intermediário',
+    estudo('histologia_baixo', 'Biópsia do cólon: aumento intermediário',
            'Esta lâmina é de outro paciente com a mesma doença. Descreva a '
            'mucosa antes de procurar a célula que decide.',
            IMG / 'colon_baixo.jpg',
            'Mucosa colônica em hematoxilina-eosina · outro paciente.',
-           sem_setas(IMG / 'colon_baixo.jpg.json'),
-           ['Inflamação intensa da lâmina própria, com distorção e perda de '
-            'criptas. Nesse aumento, procuram-se células grandes no estroma e '
-            'no endotélio.',
-            'A imagem não é imuno-histoquímica nem é de Helena.']),
+           referencia_imagem(IMG / 'colon_baixo.jpg.json'),
+        [
+         ((300, 229), (230, 90), '**Lâmina própria** tomada por infiltrado inflamatório denso, sem criptas nessa região.', 12),
+         ((854, 457), (965, 143), '**Criptas** remanescentes, distorcidas e afastadas umas das outras.', -12),
+         ((500, 150), (560, 55), '**Superfície** irregular, com perda do epitélio de revestimento.', 12),
+        ],
+        ['Colite ativa com distorção e perda de criptas. Nesse aumento, procuram-se células grandes no estroma e no endotélio.', 'A imagem não é imuno-histoquímica nem é de Helena.']),
 
-    imagem('histologia_alto', 'Biópsia do cólon: grande aumento',
+    estudo('histologia_alto', 'Biópsia do cólon: grande aumento',
            'O mesmo diagnóstico em grande aumento. Que alteração celular '
            'aparece?',
            IMG / 'colon_alto.jpg',
            'Hematoxilina-eosina, grande aumento · outro paciente.',
-           sem_setas(IMG / 'colon_alto.jpg.json'),
-           ['Células muito aumentadas — citomegalia — com inclusão '
-            'intranuclear grande e halo claro: o "olho de coruja". Pode '
-            'haver inclusões citoplasmáticas menores.',
-            'É o efeito citopático do CMV. A imuno-histoquímica, em outro '
-            'preparo, confirma o antígeno.']),
+           referencia_imagem(IMG / 'colon_alto.jpg.json'),
+        [
+         ((743, 551), (930, 640), '**Inclusão intranuclear** grande e densa, que ocupa quase todo o núcleo.', 12),
+         ((765, 420), (910, 300), '**Citomegalia**: célula várias vezes maior que as vizinhas, junto ao vaso.', -12),
+         ((300, 795), (130, 900), '**Infiltrado inflamatório** misto na lâmina própria.', 12),
+        ],
+        ['Efeito citopático do citomegalovírus: citomegalia com inclusão intranuclear, em células do estroma e do endotélio.', 'A imuno-histoquímica, em outro preparo, confirma o antígeno.']),
 
     pareamento('p5', 'Pergunta 5',
       'Cada agente deixa uma marca na lâmina. Associe cada achado '

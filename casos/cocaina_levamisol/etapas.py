@@ -6,7 +6,7 @@ os desfechos são cenários didáticos, não probabilidades.
 """
 from pathlib import Path
 from motor.desenhos import chave_corpusculo
-from motor.estudo_imagem import ecg, sequencia
+from motor.estudo_imagem import ecg, estudo
 from motor.etapas import (
     alt, bifurcacao, caminho, capa, desfecho, grupo, lamina, op, p,
     pagina, par, pareamento, pedido, pergunta, quadro, resultados, tabela,
@@ -451,24 +451,20 @@ ETAPAS = [
           'adulteração. A urina escura persiste, sem dispneia ou hemoptise.'),
         fundo=CENA),
 
-    *sequencia('us_evolucao', 'Ultrassonografia renal',
+    estudo('us_evolucao', 'Ultrassonografia renal',
         'Como a urina permanece escura e a creatinina subiu, a equipe '
         'acrescenta ultrassonografia. Observe o corte longitudinal. O que '
         'esse método pode esclarecer e quais mecanismos continuariam '
         'possíveis?',
         IMG / 'us_rim.jpg',
-        'Hansen, Nielsen e Ewertsen · Wikimedia Commons · CC BY 4.0. Recorte '
-        'prévio e setas adicionadas na discussão.',
         'Rim de outro adulto. Asteriscos e cálipers são da fonte; não '
         'representam medidas da paciente.',
-        [((524, 283), (620, 105)), ((447, 400), (720, 550))],
-        ['1. A seta alcança o parênquima periférico, mais escuro que a '
-         'região central.',
-         '2. O seio renal é mais ecogênico. Neste corte, não há dilatação '
-         'coletora evidente.',
-         'O laudo ficcional descreve rins de dimensões preservadas, sem '
-         'dilatação pielocalicial. A ausência de obstrução não exclui lesão '
-         'glomerular.']),
+        'Hansen, Nielsen e Ewertsen · Wikimedia Commons · CC BY 4.0. Recorte prévio e setas adicionadas.',
+        [
+         ((524, 283), (620, 105), '**Parênquima** periférico, mais escuro que a região central, de espessura preservada.', 12),
+         ((447, 400), (720, 550), '**Seio renal** ecogênico, sem dilatação do sistema coletor.', -12),
+        ],
+        ['Rins de dimensões preservadas, sem dilatação pielocalicial (laudo ficcional do caso).', 'Afastar obstrução não exclui lesão glomerular.']),
 
     painel('p3', 'Exposição e gravidade', 'O que a equipe pediu',
         'Com o relato de exposição e a lesão renal: toxicologia, o rim por '

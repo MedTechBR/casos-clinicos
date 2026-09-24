@@ -8,6 +8,8 @@ Saúde do Ministério da Saúde.
 """
 from pathlib import Path
 
+from motor.estudo_imagem import estudo
+
 from motor.etapas import (alt, bifurcacao, caminho, capa, desfecho, op, p,
                           pagina, painel, par, pareamento, pergunta, tabela,
                           topicos, vitais, lamina)
@@ -245,18 +247,19 @@ ETAPAS = [
        'A nova radiografia mostra opacidades alveolares confluentes nos dois '
        'pulmões.'),
 
-    imagem('rx_hemorragia', 'Discussão de imagem',
+    estudo('rx_hemorragia', 'Radiografia de tórax',
            'Radiografia ilustrativa de outro paciente, com o padrão descrito '
            'no laudo de Joaquim. Descreva a distribuição antes de propor o '
            'mecanismo.',
            IMG / 'rx_torax_alveolar.jpg',
            'Radiografia de outro paciente · comparação didática.',
            CREDITO_RX,
-           ['Opacidades alveolares bilaterais, em mancha e confluentes, sem '
-            'cardiomegalia e sem derrame.',
-            'Na leptospirose, hipoxemia com hemoptise e queda de hemoglobina '
-            'é hemorragia pulmonar: a vasculite capilar difusa que faz a '
-            'mortalidade da forma grave passar de 50%.']),
+        [
+         ((308, 427), (110, 345), '**Opacidades alveolares** no pulmão direito, em mancha e confluentes.', 12),
+         ((704, 430), (912, 320), 'O mesmo padrão no **pulmão esquerdo**: a doença é bilateral.', -12),
+         ((620, 160), (760, 60), '**Ápices relativamente poupados**: o predomínio é central e inferior.', 12),
+        ],
+        ['Opacidades alveolares bilaterais, confluentes, com predomínio central e inferior.', 'Na leptospirose, hipoxemia com hemoptise e queda de hemoglobina é hemorragia pulmonar: a vasculite capilar difusa que faz a mortalidade da forma grave passar de 50%.']),
 
     Q('p5', 5,
       'Hemorragia pulmonar, oligúria e sonolência. **Quais três** fatores '

@@ -7,6 +7,8 @@ consequência. Paciente ficcional.
 """
 from pathlib import Path
 
+from motor.estudo_imagem import estudo
+
 from motor.etapas import (alt, bifurcacao, caminho, capa, desfecho, op, p,
                           pagina, painel, par, pareamento, pergunta, tabela,
                           topicos, vitais, lamina)
@@ -207,18 +209,18 @@ ETAPAS = [
     nota='A opção que sobrou, síndrome leite-álcali, teria alcalose e história '
          'de carbonato de cálcio.'),
 
-    imagem('rx_hilos', 'Discussão de imagem',
+    estudo('rx_hilos', 'Radiografia de tórax',
            'Com o calcitriol alto, a equipe volta à radiografia. Observe os '
            'hilos nas incidências frontal e lateral antes de ler a descrição.',
            IMG / 'rx_hilos.jpg',
            'Radiografia frontal e lateral de outro paciente · comparação didática.',
-           sem_setas(IMG / 'rx_hilos.jpg.json'),
-           ['Os dois hilos estão aumentados, de contorno lobulado e simétrico, '
-            'e a janela aortopulmonar e a região paratraqueal direita também '
-            'podem estar ocupadas: é o padrão "1-2-3" de Garland.',
-            'A incidência lateral mostra a massa hilar sobreposta à sombra '
-            'cardíaca. O parênquima está limpo — estágio I da classificação '
-            'radiográfica de Scadding.']),
+           referencia_imagem(IMG / 'rx_hilos.jpg.json'),
+        [
+         ((176, 280), (70, 180), '**Hilo direito** aumentado, de contorno lobulado.', 12),
+         ((353, 273), (470, 180), '**Hilo esquerdo** também aumentado: a adenopatia é bilateral e simétrica.', -12),
+         ((735, 315), (900, 240), 'Na incidência lateral, a **massa hilar** se sobrepõe à sombra cardíaca.', 12),
+        ],
+        ['Adenopatia hilar bilateral e simétrica, com parênquima pulmonar sem opacidades: estágio I de Scadding.', 'Linfoma e tuberculose voltam ao diferencial quando a adenopatia é assimétrica ou quando a tomografia mostra necrose.']),
 
     pg('tomografia', 'Tomografia de tórax',
        'O laudo descreve **linfonodos hilares e mediastinais bilaterais, '
@@ -290,18 +292,18 @@ ETAPAS = [
        'molecular para tuberculose são negativos; as culturas seguem em '
        'incubação por seis a oito semanas.'),
 
-    imagem('granuloma', 'Discussão de imagem',
+    estudo('granuloma', 'Granuloma pulmonar',
            'Compare com esta microfotografia de tecido pulmonar de outro '
            'paciente. Descreva o granuloma antes de ler a interpretação.',
            IMG / 'granuloma.jpg',
            'Tecido pulmonar de outro paciente · comparação morfológica.',
-           sem_setas(IMG / 'granuloma.jpg.json'),
-           ['Um agregado compacto de histiócitos epitelioides com células '
-            'gigantes multinucleadas, sem necrose central, cercado por poucos '
-            'linfócitos.',
-            'Granuloma não necrosante descreve morfologia. Não exclui '
-            'micobactéria nem fungo: o diagnóstico junta lâmina, cultura e '
-            'exposição.']),
+           referencia_imagem(IMG / 'granuloma.jpg.json'),
+        [
+         ((420, 330), (330, 55), '**Histiócitos epitelioides**: citoplasma amplo e pálido, núcleo oval, agrupados de forma compacta.', -12),
+         ((500, 628), (330, 700), '**Coroa de linfócitos**, pequenos e escuros, na periferia do granuloma.', 12),
+         ((540, 470), (800, 670), '**Centro celular, sem necrose**: é o que define o granuloma como não necrosante.', 12),
+        ],
+        ['Granuloma não necrosante: agregado compacto de histiócitos epitelioides com coroa linfocitária, sem necrose central.', 'Descreve morfologia, não causa. Não exclui micobactéria nem fungo: o diagnóstico junta lâmina, cultura e exposição.']),
 
     Q('p5', 5,
       'Granulomas não necrosantes no EBUS, com BAAR, fungos e teste '
@@ -361,17 +363,19 @@ ETAPAS = [
        'normais. Creatinina 1,5 mg/dL, sedimento sem cilindros. Capacidade '
        'vital forçada 83% e difusão de monóxido de carbono 64% do previsto.'),
 
-    imagem('rx_tc', 'Discussão de imagem',
+    estudo('rx_tc', 'Sarcoidose avançada',
            'Outro paciente, com sarcoidose pulmonar avançada. Não é a '
            'tomografia de Rafael — é o que a doença pode fazer quando '
            'progride no parênquima.',
            IMG / 'rx_tc.jpg',
            'Radiografia e TC coronal de outro paciente · doença parenquimatosa avançada.',
-           sem_setas(IMG / 'rx_tc.jpg.json'),
-           ['Opacidades bilaterais extensas, com predomínio superior e '
-            'central, distorção arquitetural e retração hilar para cima.',
-            'É o estágio IV de Scadding: fibrose. O que se trata é a '
-            'inflamação antes dela; fibrose não volta.']),
+           referencia_imagem(IMG / 'rx_tc.jpg.json'),
+        [
+         ((360, 110), (470, 35), '**Opacidades reticulonodulares** densas, que predominam nos campos superiores.', -12),
+         ((665, 240), (575, 420), 'Na TC coronal, **conglomerado peri-hilar** com espessamento peribroncovascular.', 12),
+         ((905, 170), (985, 60), '**Micronódulos** difusos, de distribuição perilinfática.', -12),
+        ],
+        ['Doença parenquimatosa extensa, com predomínio superior e peri-hilar e conglomerados: o estágio IV de Scadding, a fibrose.', 'O que se trata é a inflamação antes dela; fibrose não volta.']),
 
     Q('p7', 7,
       'A prednisona vai começar. **Quais três** afirmações estão corretas?', [

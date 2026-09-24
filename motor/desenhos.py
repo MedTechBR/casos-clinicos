@@ -613,15 +613,18 @@ def anotada(caminho, *setas, legenda="", credito="", titulo="",
         py = (1 - t) ** 2 * ry + 2 * (1 - t) * t * cy + t * t * ay
         ang = math.degrees(math.atan2(ay - py, ax - px))
         d = f"M{rx:.1f} {ry:.1f} Q{cx:.1f} {cy:.1f} {px:.1f} {py:.1f}"
-        anc = "start" if rx <= ax else "end"
+        comp = math.hypot(ax - rx, ay - ry) * 1.15 + 40
         partes.append(
             # dois traços sobre o mesmo caminho: o escuro largo abre espaço na
-            # textura, o claro fino é a seta que se lê
+            # textura, o claro fino é a seta que se lê. O número vai num
+            # círculo na origem da seta, o mesmo círculo da lista de achados.
+            f'<g class="sa" data-n="{s["t"]}" style="--i:{len(partes)};--L:{comp:.0f}">'
             f'<path class="fio halo" d="{d}"/><path class="fio luz" d="{d}"/>'
-            f'<path class="ponta" d="M0 0 L-27 11 L-27 -11 Z" '
-            f'transform="translate({px:.1f} {py:.1f}) rotate({ang:.1f})"/>'
-            f'<text class="rot" x="{rx:.1f}" y="{ry:.1f}" text-anchor="{anc}" '
-            f'dy="-7">{s["t"]}</text>'
+            f'<g transform="translate({px:.1f} {py:.1f}) rotate({ang:.1f})">'
+            f'<path class="ponta" d="M0 0 L-27 11 L-27 -11 Z"/></g>'
+            f'<circle class="bd" cx="{rx:.1f}" cy="{ry:.1f}" r="25"/>'
+            f'<text class="rot" x="{rx:.1f}" y="{ry:.1f}" text-anchor="middle" '
+            f'dominant-baseline="central">{s["t"]}</text></g>'
         )
     fig = (
         f'<figure class="anot{" mold" if moldura else ""}">'

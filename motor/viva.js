@@ -79,8 +79,62 @@ function vvGuardar(extra){
 }
 
 let vvUltimo = '', vvPlacarAntes = -1;
+/* Discussão de imagem: a figura toma o tamanho exato da imagem dentro da
+   coluna (sem faixas laterais), e achado e seta de mesmo número se acendem
+   juntos. */
+function vvFiguras(){
+  const aberto = !!document.querySelector('#palco .vv-est-rev[open]');
+  document.querySelectorAll('#palco .vv-est-fig').forEach(col => {
+    const fig = col.querySelector('.anot'), svg = fig && fig.querySelector('svg');
+    if (!svg || !svg.viewBox.baseVal || !svg.viewBox.baseVal.width) return;
+    const vb = svg.viewBox.baseVal, r = vb.width / vb.height;
+    const cap = fig.querySelector('figcaption');
+    const mobile = innerWidth <= 900;
+    const W = col.clientWidth;
+    const H = mobile ? innerHeight * 0.4 : col.clientHeight;
+    if (!W || !H) return;
+    const medir = w => { fig.style.width = w + 'px'; svg.style.width = w + 'px'; svg.style.height = (w / r) + 'px'; return cap ? cap.offsetHeight : 0; };
+    let w = Math.min(W, (H - medir(W)) * r);
+    // a legenda cresce quando a figura estreita; uma segunda medida basta
+    w = Math.min(W, (H - medir(w)) * r);
+    w = Math.max(w, Math.min(W, 160));
+    medir(w);
+    // unidades do desenho por pixel de tela: setas e números com o mesmo
+    // tamanho visível, seja a imagem larga ou em retrato
+    svg.style.setProperty('--u', (vb.width / w).toFixed(3));
+  });
+}
+/* No celular, figura, achados e laudo não cabem legíveis numa tela: o bloco
+   se desfaz em peças que o paginador distribui em partes. */
+function vvDesmontarEstudo(){
+  const est = document.querySelector('#palco .vv-estudo');
+  if (!est || innerWidth > 900) return;
+  const txt = est.querySelector('.vv-est-txt'), fig = est.querySelector('.vv-est-fig');
+  const det = txt.querySelector('.vv-est-rev');
+  const pecas = [fig, ...[...txt.children].filter(x => x !== det), det];
+  if (det) pecas.push(...det.querySelectorAll(':scope > .vv-achados, :scope > .vv-laudo'));
+  est.replaceWith(...pecas.filter(Boolean));
+}
+function vvLigarAchados(){
+  [document.querySelector('#palco')].forEach(est => {
+    const acende = (n, on) => {
+      est.querySelectorAll('.vv-achados li[data-n="' + n + '"], .sa[data-n="' + n + '"]')
+        .forEach(x => x.classList.toggle('on', on));
+    };
+    est.querySelectorAll('.vv-achados li').forEach(li => {
+      li.onmouseenter = () => acende(li.dataset.n, true);
+      li.onmouseleave = () => acende(li.dataset.n, false);
+    });
+    est.querySelectorAll('.sa').forEach(g => {
+      g.addEventListener('mouseenter', () => acende(g.dataset.n, true));
+      g.addEventListener('mouseleave', () => acende(g.dataset.n, false));
+    });
+  });
+}
+
 function vvAntes(){
   if (emRevisao) return;
+  try { vvDesmontarEstudo(); vvFiguras(); } catch (err) { console.warn(err); }
   const e = etapa();
   const tipo = vvTipo(e);
   document.body.dataset.tipo = tipo;
@@ -154,6 +208,7 @@ function vvAntes(){
 }
 
 function vvDecorar(){
+  try { vvFiguras(); vvLigarAchados(); } catch (err) { console.warn(err); }
   const e = etapa();
   const tipo = vvTipo(e);
   document.body.dataset.tipo = tipo;

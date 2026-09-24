@@ -7,6 +7,8 @@ Paciente e valores são ficcionais.
 """
 from pathlib import Path
 
+from motor.estudo_imagem import estudo
+
 from motor.etapas import (alt, bifurcacao, caminho, capa, desfecho, op, p,
                           pagina, painel, par, pareamento, pergunta, tabela,
                           topicos, vitais, lamina)
@@ -285,33 +287,32 @@ ETAPAS = [
        'fragmentos nucleares e histiócitos**, sem granulomas e sem população '
        'linfoide monomórfica. A citometria não encontra clone.'),
 
-    imagem('arquitetura', 'Biópsia: pequeno aumento',
+    estudo('arquitetura', 'Biópsia: pequeno aumento',
            'Esta lâmina é de outro paciente com o mesmo diagnóstico que a '
            'patologia vai propor. Descreva a distribuição das áreas claras e '
            'das áreas celulares antes de ler a interpretação.',
            IMG / 'linfonodo_baixo.jpg',
            'Hematoxilina-eosina, pequeno aumento · outro paciente.',
-           referencia_imagem(IMG / 'linfonodo_baixo.jpg.json').replace(
-               'Setas editoriais sob a mesma licença; ', 'Sem setas; '),
-           ['Áreas pálidas, irregulares e confluentes, no córtex e paracórtex, '
-            'alternam com regiões densamente celulares. As áreas pálidas são a '
-            'necrose; a arquitetura do linfonodo está parcialmente '
-            'preservada.',
-            'O pequeno aumento mostra onde está o processo. Quem ele é, só o '
-            'grande aumento diz.']),
+           referencia_imagem(IMG / 'linfonodo_baixo.jpg.json'),
+        [
+         ((560, 560), (820, 430), '**Área pálida e eosinofílica**, ampla e mal delimitada, que substitui o tecido linfoide: a necrose com histiócitos.', 12),
+         ((200, 520), (90, 390), '**Ilha de linfócitos** residuais, azul-escura, entre as áreas pálidas.', 12),
+         ((450, 185), (330, 70), '**Cápsula** com gordura perinodal: o contorno do linfonodo está preservado.', -12),
+        ],
+        ['Linfonodo com arquitetura parcialmente preservada, substituída por áreas confluentes de necrose pálida, sem granulomas e sem população linfoide monomórfica.', 'O pequeno aumento mostra onde está o processo. Quem ele é, só o grande aumento diz.']),
 
-    imagem('celulas', 'Biópsia: grande aumento',
+    estudo('celulas', 'Biópsia: grande aumento',
            'O mesmo diagnóstico em grande aumento. Que células povoam a área '
            'de necrose — e qual célula chama a atenção pela ausência?',
            IMG / 'linfonodo_alto.jpg',
            'Hematoxilina-eosina, grande aumento · outro paciente.',
-           referencia_imagem(IMG / 'linfonodo_alto.jpg.json').replace(
-               'Setas editoriais sob a mesma licença; ', 'Sem setas; '),
-           ['Muitos fragmentos nucleares escuros (cariorrexe) entre histiócitos '
-            'de citoplasma claro, alguns com núcleo em crescente.',
-            'O que falta é o neutrófilo. Necrose cheia de restos nucleares e '
-            'sem neutrófilos é a assinatura da linfadenite necrosante '
-            'histiocítica.']),
+           referencia_imagem(IMG / 'linfonodo_alto.jpg.json'),
+        [
+         ((325, 452), (150, 330), '**Cariorrexe**: fragmentos nucleares escuros, pequenos e irregulares, espalhados pela necrose.', 12),
+         ((655, 518), (860, 430), '**Histiócito** de núcleo claro, ovalado ou reniforme, com citoplasma pálido.', -12),
+         ((560, 330), (760, 250), 'Fundo **eosinofílico e granular** de necrose, sem neutrófilos.', -12),
+        ],
+        ['Necrose com abundante cariorrexe e histiócitos, sem neutrófilos e sem granulomas: linfadenite necrosante histiocítica.', 'A falta de neutrófilos a separa da linfadenite supurativa, e a de granulomas, da tuberculose. O lúpus pode dar lâmina idêntica, e por isso o FAN.']),
 
     pareamento('p4', 'Pergunta 5',
       'Linfadenite necrosante tem mais de um endereço. Associe cada achado '

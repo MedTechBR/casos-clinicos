@@ -4,7 +4,7 @@ Alíquota → pergunta, na gramática do //New England//. Paciente ficcional;
 evoluções autorais, sem pretensão de prognóstico individual.
 """
 from pathlib import Path
-from motor.estudo_imagem import ecg, sequencia
+from motor.estudo_imagem import ecg, estudo
 from motor.etapas import (alt, bifurcacao, caminho, capa, desfecho, grupo,
     lamina, op, p, pagina, painel, par, pareamento, pedido, pergunta,
     resultados, tabela, topicos, vitais)
@@ -322,23 +322,19 @@ ETAPAS = [
          'necessidade de imagem prévia.'),
        segue='tc_evolucao'),
 
-    *sequencia('tc_evolucao', 'Tomografia de crânio',
+    estudo('tc_evolucao', 'Tomografia de crânio',
         'Diante do déficit focal e da alteração da consciência, a equipe '
         'solicita TC de crânio antes de definir a segurança da punção. O '
         'tratamento empírico é mantido enquanto o exame é realizado.',
         IMG / 'tc_cranio.png',
-        'Mikael Häggström · Wikimedia Commons · CC0. Setas adicionadas na '
-        'discussão.',
         'Corte axial e localizador de outro adulto. Figura ilustrativa; não '
         'substitui a leitura do exame completo.',
-        [((250, 400), (35, 340)), ((282, 210), (400, 100))],
-        ['1. Os espaços liquóricos ventriculares aparecem escuros neste '
-         'corte; não há dilatação grosseira evidente na figura.',
-         '2. A fissura inter-hemisférica anterior oferece uma referência da '
-         'linha média. Não se observa desvio grosseiro neste nível.',
-         'O laudo ficcional do estudo completo não mostra hemorragia, '
-         'hidrocefalia ou efeito de massa. Isso não exclui encefalite ou '
-         'isquemia precoce.']),
+        'Mikael Häggström · Wikimedia Commons · CC0. Setas adicionadas.',
+        [
+         ((250, 400), (35, 340), '**Ventrículos laterais**, escuros neste corte, sem dilatação grosseira.', 12),
+         ((282, 210), (400, 100), '**Fissura inter-hemisférica** anterior, na linha média: sem desvio.', -12),
+        ],
+        ['O laudo ficcional do estudo completo não mostra hemorragia, hidrocefalia ou efeito de massa.', 'Isso não exclui encefalite nem isquemia precoce: a tomografia normal libera a punção, não fecha o diagnóstico.']),
 
     q('ex2', 5,
       'Paresia flácida assimétrica com febre e confusão; a tomografia de '

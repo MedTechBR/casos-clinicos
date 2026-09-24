@@ -24,22 +24,28 @@ with sync_playwright() as pw:
     questions+=1
    for k in ['ecg_evolucao',exam+'_evolucao']:
     page.evaluate('(k)=>ir(porId(k))',k)
-    assert page.locator('.estudo-imagem aside').count()==0
-    assert page.locator('.estudo-imagem .rot').count()==0
-    before=page.locator('.estudo-imagem svg image').bounding_box()
+    # Um slide só: setas ocultas até o clique, depois setas, achados e laudo.
+    if w>900:
+     assert page.locator('.vv-estudo').count()==1,(slug,k)
+     assert page.locator('.vv-est-fig .sa').count()>=2,(slug,k,'setas')
+     assert page.evaluate('getComputedStyle(document.querySelector(".vv-est-fig .an")).visibility')=='hidden'
+    before=page.locator('.vv-est-fig svg image').bounding_box()
     mostrar(page,'figure.amplia').click()
     if w>900:
      enlarged=page.locator('.lupa svg image').bounding_box()
      assert enlarged['width']>before['width'] or enlarged['height']>before['height'],(slug,k,'lupa não ampliou')
-    assert page.locator('.lupa svg image').get_attribute('href').startswith('data:image/');page.keyboard.press('Escape')
-    ultima(page);page.locator('#seguir').click();assert page.evaluate('etapa().k')==k+'_leitura'
-    assert page.locator('.estudo-imagem .rot').count()==2
-    assert page.locator('.estudo-imagem aside').count()==1
-    if w>900:assert page.locator('.plano').evaluate('(e)=>e.scrollHeight<=e.clientHeight+2'),(slug,k,'leitura cortada')
-    mostrar(page,'figure.amplia').click();assert page.locator('.lupa .rot').count()==2;page.keyboard.press('Escape')
-
-    while page.evaluate('parteTela')>0:page.locator('#voltar').click()
-    page.locator('#voltar').click();assert page.evaluate('etapa().k')==k
+    assert page.locator('.lupa svg image').get_attribute('href').startswith('data:image/')
+    assert page.evaluate('getComputedStyle(document.querySelector(".lupa .an")).visibility')=='hidden',(slug,k,'lupa revelou setas')
+    page.keyboard.press('Escape')
+    mostrar(page,'.vv-est-rev summary').click();page.wait_for_timeout(200)
+    assert page.evaluate('etapa().k')==k
+    assert page.evaluate('getComputedStyle(document.querySelector(".vv-est-fig .an")).visibility')=='visible'
+    assert page.locator('.vv-achados li').count()==page.locator('.vv-est-fig .sa').count()
+    assert page.locator('.vv-laudo').count()==1
+    if w>900:
+     assert page.evaluate('(()=>{const s=document.querySelector(".vv-est-fig svg").getBoundingClientRect(),i=document.querySelector(".vv-est-fig svg image").getBoundingClientRect();return Math.abs(s.width-i.width)<2&&Math.abs(s.height-i.height)<2})()'),(slug,k,'faixa lateral')
+     assert page.evaluate('partesTela.length')==1,(slug,k,'mais de uma parte')
+    mostrar(page,'.vv-est-rev summary').click()
    names=page.evaluate('ETAPAS.filter(e=>e.t==="pedido").flatMap(e=>e.grupos.flatMap(g=>g.o.map(o=>o.e)))')
    if slug=='west-nile':assert 'Tomografia de crânio sem contraste' not in names
    if slug=='cocaina-levamisol':assert 'Ultrassonografia renal' not in names
