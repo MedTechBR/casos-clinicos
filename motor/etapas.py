@@ -327,6 +327,20 @@ def painel(ident, kicker, titulo, exames, *, fundo="", introducao="",
 # ─────────────────────────── perguntas ───────────────────────────
 
 
+def _embaralhar(lista, semente):
+    """Fisher-Yates com semente fixa: a ordem muda de uma pergunta para outra,
+    mas não de um build para outro. Autorada, a resposta certa caía na
+    primeira posição em um quarto das perguntas — e `sort(random)` não
+    embaralha de verdade."""
+    import hashlib, random
+    r = random.Random(int(hashlib.sha256(semente.encode()).hexdigest()[:12], 16))
+    lista = list(lista)
+    for i in range(len(lista) - 1, 0, -1):
+        j = r.randint(0, i)
+        lista[i], lista[j] = lista[j], lista[i]
+    return lista
+
+
 def alt(txt, porque, *, certa=False) -> dict:
     if not porque.strip():
         raise ValueError(f"alternativa sem comentário: {txt!r}")
@@ -344,6 +358,7 @@ def pergunta(ident, kicker, enunciado, alternativas, *, fundo="",
     dos quais quatro contam, não existe a alternativa obviamente sensata que
     denuncia a resposta: é preciso incluir E excluir, e o distrator é sempre
     uma doença que um bom clínico consideraria."""
+    alternativas = _embaralhar(alternativas, ident + enunciado)
     certas = [a for a in alternativas if a["ok"]]
     if not 1 <= len(certas) <= 5:
         raise ValueError(f"pergunta {ident!r}: use de 1 a 5 corretas")
@@ -382,6 +397,8 @@ def pareamento(ident, kicker, enunciado, pares, *, opcoes=None, fundo="",
         raise ValueError(f"pareamento {ident!r}: use de 3 a 6 pares")
     respostas = [r for _, r, _ in pares]
     ops = list(opcoes) if opcoes is not None else list(dict.fromkeys(respostas))
+    # Autorado na ordem dos itens, o pareamento sairia 1-A, 2-B, 3-C.
+    ops = _embaralhar(ops, ident + enunciado)
     if len(ops) != len(set(ops)):
         raise ValueError(f"pareamento {ident!r}: opção repetida")
     if not 3 <= len(ops) <= 7:
@@ -481,8 +498,10 @@ def desfecho(ident, titulo, *blocos, qualidade, porque, fundo="",
 
 def montar(caso) -> str:
     raiz = Path(__file__).parent
-    css = (raiz / "etapas.css").read_text(encoding="utf-8") + "\n" + (raiz / "editorial.css").read_text(encoding="utf-8")
-    js = (raiz / "paginas.js").read_text(encoding="utf-8") + "\n" + (raiz / "etapas.js").read_text(encoding="utf-8")
+    css = "\n".join((raiz / f).read_text(encoding="utf-8")
+                     for f in ("etapas.css", "editorial.css", "viva.css"))
+    js = "\n".join((raiz / f).read_text(encoding="utf-8")
+                    for f in ("paginas.js", "etapas.js", "viva.js"))
 
     cache: dict[str, str] = {}
 
@@ -492,8 +511,19 @@ def montar(caso) -> str:
             if not caminho_img.exists():
                 raise FileNotFoundError(f"imagem não encontrada: {caminho_img}")
             tipo = mimetypes.guess_type(nome)[0] or "image/jpeg"
+            dados_img = caminho_img.read_bytes()
+            # A cena do paciente sai do gerador em PNG de 2 MB, e a capa a
+            # mostra com meia tela. Em JPEG de 1400 px ela pesa um décimo.
+            if tipo == "image/png" and len(dados_img) > 600_000:
+                import subprocess, tempfile
+                mini = Path(tempfile.gettempdir()) / (
+                    "etapa_" + caminho_img.parent.parent.name + "_" + caminho_img.stem + ".jpg")
+                subprocess.run(["sips", "-Z", "1400", "-s", "format", "jpeg", "-s",
+                                "formatOptions", "78", str(caminho_img), "--out", str(mini)],
+                               capture_output=True, check=True)
+                dados_img, tipo = mini.read_bytes(), "image/jpeg"
             cache[nome] = ("data:" + tipo + ";base64,"
-                           + base64.b64encode(caminho_img.read_bytes()).decode())
+                           + base64.b64encode(dados_img).decode())
         return cache[nome]
 
     def resolver(v):
@@ -520,6 +550,8 @@ def montar(caso) -> str:
     carimbo = datetime.datetime.now().strftime("%d/%m %H:%M")
     dados = {
         "caso": {"titulo": caso.TITULO,
+                 "slug": caso.__name__.split(".")[-2],
+                 "cor": getattr(caso, "COR", "#4f46e5"),
                  "rodape": caso.RODAPE + " · versão de " + carimbo,
                  "sistemas": SISTEMAS},
         "etapas": resolver(caso.ETAPAS),

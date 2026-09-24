@@ -36,6 +36,7 @@ from .banco import BANCO  # noqa: F401  — a gaveta de exames é a mesma
 
 TITULO = "O sangue que não saiu"
 RODAPE = "Caso interativo · curso simulado"
+COR = '#e11d48'
 IMG = Path(__file__).parent / "img"
 
 CENA = "cena_admissao.jpg"
@@ -168,7 +169,7 @@ ETAPAS = [
                 "Anemia de doença inflamatória e plaquetose são o retrato de "
                 "oito semanas de inflamação. Barato, e muda a leitura.",
                 certa=True),
-            alt("TSH",
+            alt('TSH e T4 livre',
                 "Cansaço e perda de peso cabem no hipertireoidismo — mas não "
                 "as crostas, a epistaxe nem a febre vespertina."),
             alt("Proteína C reativa e VHS",
@@ -184,7 +185,7 @@ ETAPAS = [
                 "vai decidir o caso.", certa=True),
             alt("Ácido úrico",
                 "Não há artrite, e artralgia migratória não é gota."),
-            alt("Exame de urina com sedimento",
+            alt('Urina com sedimento',
                 "Hemácia dismórfica e cilindro são o exame mais barato para "
                 "achar o órgão silencioso. Pede-se com a creatinina, sempre.",
                 certa=True),
@@ -193,7 +194,7 @@ ETAPAS = [
                 "separa localizado de sistêmico, e cabe depois."),
             alt("Eletrocardiograma",
                 "Nada na história pede. Entra na admissão, não aqui."),
-            alt("Ferritina",
+            alt('Ferritina e saturação de transferrina',
                 "Reagente de fase aguda: repete a informação da proteína C "
                 "reativa sem acrescentar."),
         ],
@@ -237,19 +238,19 @@ ETAPAS = [
         "Creatinina de 1,4 mg/dL hoje — referência até 1,3 — e 1,0 mg/dL há "
         "dois meses. **Quais três** afirmações essa comparação autoriza?",
         [
-            alt("Está pouco acima da referência e muito acima do que era dele",
+            alt('Subiu 40% em relação ao valor dele',
                 "1,4 contra um teto de 1,3 é um laudo que quase não chama "
                 "atenção. Contra os 1,0 dele, é outra coisa: a referência é "
                 "populacional, e o paciente é a referência dele mesmo.",
                 certa=True),
-            alt("A lesão está no glomérulo",
+            alt('A lesão está no glomérulo, pelo padrão da creatinina',
                 "Nada aqui localiza o compartimento. Creatinina não distingue "
                 "pré-renal, glomerular, tubular ou obstrutivo — quem faz isso "
                 "é o sedimento."),
-            alt("A lesão é aguda ou subaguda, e portanto investigável",
+            alt('A lesão é recente e tem causa a procurar',
                 "Doença que se instalou em semanas tem causa procurável e "
                 "janela de tratamento.", certa=True),
-            alt("Perda de cerca de um terço da filtração glomerular",
+            alt('Caiu cerca de um terço da filtração',
                 "Por CKD-EPI 2021, um homem de 63 anos sai de cerca de 80 para "
                 "cerca de 53 mL/min/1,73 m² com essa mudança.", certa=True),
             alt("Trata-se de doença renal crônica estágio 2",
@@ -259,7 +260,7 @@ ETAPAS = [
             alt("O achado é efeito esperado da losartana",
                 "Bloqueador do receptor eleva a creatinina nas primeiras "
                 "semanas de uso — e ele usa losartana há dez anos."),
-            alt("Há indicação de diálise",
+            alt('Já há indicação de diálise, pela velocidade da queda',
                 "Nenhum critério de urgência está presente, e a creatinina "
                 "sozinha nunca foi indicação."),
         ],
@@ -287,7 +288,7 @@ ETAPAS = [
                 "Hemoptise é sintoma de apresentação em cerca de 10% dos "
                 "embolismos, e a radiografia é normal na maioria deles. Sem "
                 "fator de risco aparente, mas nunca fora da lista.", certa=True),
-            alt("Pneumonia lobar",
+            alt('Pneumonia lobar em fase inicial',
                 "Consolidação lobar aparece no filme. Radiografia normal não "
                 "sustenta a hipótese."),
             alt("Carcinoma brônquico",
@@ -295,14 +296,14 @@ ETAPAS = [
                 "anos-maço: até um em cada dez se apresenta com radiografia "
                 "normal. É a causa que não se pode deixar de excluir.",
                 certa=True),
-            alt("Abscesso pulmonar",
+            alt('Abscesso pulmonar por aspiração',
                 "Cavidade com nível hidroaéreo é achado radiográfico. E o "
                 "escarro seria purulento e fétido."),
             alt("Bronquite crônica e bronquiectasias",
                 "A causa mais comum de hemoptise com radiografia normal em "
                 "quem fumou. A bronquiectasia só aparece na tomografia.",
                 certa=True),
-            alt("Aspergiloma",
+            alt('Aspergiloma em cavidade antiga',
                 "Bola fúngica precisa de cavidade prévia, e a cavidade "
                 "aparece no filme."),
             alt("Hemorragia alveolar difusa incipiente",
@@ -623,7 +624,7 @@ ETAPAS = [
         "com culturas negativas. **Quais cinco** exames são os mais "
         "apropriados agora?",
         [
-            alt("ANCA por imunofluorescência, com anti-MPO e anti-PR3",
+            alt('ANCA, com anti-MPO e anti-PR3',
                 "Nomeia a causa mais frequente da síndrome pulmão-rim e "
                 "separa os dois fenótipos. Leva dias: pede-se hoje.",
                 certa=True),
@@ -631,18 +632,18 @@ ETAPAS = [
                 "Sangra, exige anestesia num paciente em máscara de "
                 "reservatório e o rim responde à mesma pergunta com menos "
                 "risco."),
-            alt("Anticorpo anti-membrana basal glomerular",
+            alt('Anti-membrana basal glomerular',
                 "A mais urgente das causas: perde rim em dias e o tratamento "
                 "inclui troca plasmática. Resultado em horas, se o "
                 "laboratório for avisado.", certa=True),
-            alt("PET-CT",
+            alt('PET-CT de corpo inteiro',
                 "Não localiza mecanismo nem substitui tecido. Custo alto, "
                 "resposta nenhuma para a pergunta de hoje."),
-            alt("Complemento C3 e C4, com crioglobulinas",
+            alt('C3, C4 e crioglobulinas',
                 "Complemento consumido aponta para imunocomplexo — lúpus, "
                 "crioglobulinemia, pós-infecciosa. Normal, fala pauci-imune. "
                 "Crioglobulina viaja aquecida.", certa=True),
-            alt("Angiografia renal",
+            alt('Angiografia renal por cateter',
                 "É exame de vaso médio — poliarterite nodosa —, que não faz "
                 "glomerulonefrite nem hemorragia alveolar."),
             alt("FAN e anti-DNA nativo",

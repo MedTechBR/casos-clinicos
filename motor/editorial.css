@@ -290,3 +290,9 @@ p b{font-weight:600}
 #palco .observacao-imagem .anot svg{flex:1;min-height:0;width:100%;height:100%;max-height:none}
 #palco .observacao-imagem figcaption{flex:none;font-size:calc(13px * var(--compacto));padding:8px 12px}
 #palco .observacao-imagem figcaption .cr{font-size:calc(11px * var(--compacto))}
+/* A imagem abre sem interpretação. O mesmo clique revela leitura e setas. */
+.figura-discussao:not(:has(.leitura-imagem[open])) .an{visibility:hidden}
+#palco .observacao-imagem .leitura-imagem{flex:none;margin:0;border-top:1px solid var(--linha);padding-top:8px}
+#palco .observacao-imagem .leitura-imagem summary{font:600 calc(17px * var(--compacto))/1.3 var(--sans);cursor:pointer;color:var(--gelo);padding:5px 0}
+#palco .observacao-imagem .leitura-imagem p{font:calc(18px * var(--compacto))/1.35 var(--sans);margin:7px 0 0}
+#palco .observacao-imagem figcaption a{color:inherit}

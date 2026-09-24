@@ -1,6 +1,6 @@
 # Casos clínicos interativos
 
-**No ar:** <https://medtechbr.github.io/casos-clinicos/>
+**No ar:** <https://medtechbr.com.br/casos-clinicos/>
 
 Casos no modelo dos *Interactive Medical Cases* do *New England Journal of
 Medicine*, para sessão clínica com internos e residentes. A unidade do caso é o
@@ -9,14 +9,29 @@ pergunta que aquele dado abre — o diferencial de um sintoma, a interpretação
 um resultado, o mecanismo de um achado, um pareamento, a conduta. A proporção
 dos tipos segue a medida nas 333 perguntas dos 71 casos da série.
 
-Os três casos no ar (`casos/pulmao_rim`, `casos/west_nile`,
-`casos/cocaina_levamisol`) usam o motor em etapas (`motor/etapas.py`):
-`pagina`, `pergunta`, `pareamento`, `painel` (os resultados de tudo o que a equipe
-pediu, depois da pergunta "quais exames são os mais apropriados?"), `bifurcacao`,
-`desfecho`, `balanco`. Oito perguntas por caso, como na série do NEJM. Montagem com
-`python3 build_etapas.py <caso>`; teste com
+Nove casos no ar, todos no motor em etapas (`motor/etapas.py`):
+`pulmao_rim`, `cocaina_levamisol`, `west_nile`, `kikuchi`, `sarcoidose`,
+`leptospirose`, `endocardite`, `adrenal` e `cmv`. Tipos de página: `pagina`,
+`pergunta`, `pareamento`, `painel` (os resultados de tudo o que a equipe
+pediu, depois da pergunta "quais exames são os mais apropriados?"),
+`bifurcacao`, `desfecho`, `balanco`. Oito perguntas por caso, como na série do
+NEJM. Alternativas e opções de pareamento são embaralhadas de forma
+determinística (`_embaralhar`), para que a certa não caia sempre na mesma
+posição. Montagem com `python3 build_etapas.py <caso>` e
+`python3 build_biblioteca.py`; copiar `saida/<caso>-etapas.html` para
+`<caso>.html` e `saida/biblioteca.html` para `index.html`. Testes:
 `python3 ferramentas/percorrer_casos.py` (todas as combinações de bifurcação,
-painel completo e mínimo, em 1600×900 e 1366×768).
+1600×900 e 1366×768) e `python3 ferramentas/testar_sem_rolagem.py`
+(1366, 1600 e 375 de largura).
+
+**Camada viva** (`motor/viva.css` + `motor/viva.js`, carregados por último):
+papel cinza-claro, cartões brancos arredondados, ícones em círculos coloridos,
+cor por tipo de página (`body[data-tipo]`) e por caso (`COR` no módulo do
+caso), animação de acerto e erro, placar, anel de resultado no fim e
+progresso salvo em `localStorage` (`casos-clinicos:progresso`), que a
+biblioteca lê para "Continue de onde parou" e para os filtros. Tudo que muda
+o tamanho da página entra em `vvAntes()`, antes da paginação; o resto em
+`vvDecorar()`, depois.
 
 A apresentação é **um arquivo `.html` único**: abre com duplo clique, roda em
 `file://`, sem servidor, sem internet, sem dependência externa. CSS, JavaScript,

@@ -11,6 +11,7 @@ from motor.etapas import (alt, bifurcacao, caminho, capa, desfecho, grupo,
 
 TITULO = 'O peso dos dias'
 RODAPE = 'Caso ficcional · evoluções simuladas para ensino'
+COR = '#2563eb'
 IMG = Path(__file__).parent / 'img'
 BANCO = []
 CENA = 'cena.png'
@@ -142,14 +143,14 @@ ETAPAS = [
        'Hipoglicemia e hiponatremia produzem confusão e fraqueza, custam um '
        'minuto e se corrigem. São o primeiro passo em qualquer '
        'encefalopatia.', True),
-      ('TSH',
+      ('TSH e T4 livre',
        'Hipotireoidismo não faz febre nem perna que cede de manhã.', False),
-      ('Hemoculturas, urina tipo 1 e radiografia de tórax',
+      ('Hemoculturas, urina e radiografia',
        'O idoso faz delirium por infecção urinária ou pneumonia antes de '
        'qualquer sintoma local. Culturas antes do antibiótico.', True),
-      ('Vitamina B12',
+      ('Vitamina B12 e ácido fólico',
        'Neuropatia por B12 é subaguda, sensitiva e sem febre.', False),
-      ('Tomografia de crânio, seguida de punção lombar',
+      ('Tomografia de crânio e punção lombar',
        'Déficit focal e rebaixamento pedem imagem antes da agulha — e a '
        'punção não espera: o antibiótico e o aciclovir entram antes dela.',
        True),
@@ -165,7 +166,7 @@ ETAPAS = [
       ('Ressonância de coluna lombar',
        'Uma perna fraca em homem confuso e febril não é radiculopatia até '
        'que o exame neurológico diga.', False),
-      ('Ecocardiograma',
+      ('Ecocardiograma transtorácico',
        'Sem sopro e sem embolia suspeita. Depois, se a hemocultura '
        'positivar.', False),
      ], 'Metabolismo, foco infeccioso, imagem e o rim — a equipe pede os quatro'),
@@ -343,28 +344,28 @@ ETAPAS = [
       'Paresia flácida assimétrica com febre e confusão; a tomografia de '
       'crânio não mostra alteração. **Quais quatro** investigações '
       'distinguem os mecanismos?', [
-      ('Líquor: celularidade, proteína, glicose, Gram e cultura',
+      ('Análise completa do líquor',
        'É o exame que separa bactéria, vírus, tuberculose e Guillain-Barré '
        'numa tarde. Com a tomografia limpa, a agulha entra.', True),
-      ('PCR para herpes-simples, varicela-zóster e enterovírus no líquor',
+      ('PCR viral no líquor',
        'Herpes tem tratamento e o enterovírus imita a pólio. As duas '
        'respostas vêm da mesma amostra.', True),
-      ('Eletroencefalograma',
+      ('Eletroencefalograma de rotina',
        'Útil se houver crise ou suspeita de estado não convulsivo. Não '
        'localiza a fraqueza.', False),
       ('Ressonância de encéfalo e medula',
        'Procura o lobo temporal do herpes, o infarto que a tomografia não '
        'viu e o sinal de corno anterior na medula.', True),
-      ('Amônia',
+      ('Amônia sérica',
        'Sem hepatopatia e sem asterixe. Não é esta encefalopatia.', False),
       ('Eletroneuromiografia',
        'Separa axônio de mielina e corno anterior de raiz — é o que decide '
        'entre Guillain-Barré e mielite flácida. Cedo, mostra pouco; ainda '
        'assim, entra.', True),
-      ('Anticorpos anti-GM1',
+      ('Anticorpos antigangliosídeo GM1',
        'Só se a eletroneuromiografia apontar neuropatia axonal motora. '
        'Depois.', False),
-      ('Biópsia de nervo',
+      ('Biópsia de nervo sural',
        'Não tem lugar numa paralisia aguda febril.', False),
       ('Angiotomografia cerebral',
        'Sem sinal de neurônio motor superior nem de território arterial. '
@@ -466,16 +467,16 @@ ETAPAS = [
        'Sinal **tardio**. Na falência de bomba a saturação cai por último, '
        'quando a hipoventilação já é grave. Esperar por ela é esperar a '
        'parada.', False),
-      ('Pressão inspiratória máxima menos negativa que −30 cmH₂O',
+      ('Pressão inspiratória máxima pior que −30 cmH₂O',
        'Mede a força do diafragma diretamente, à beira do leito, com um '
        'manovacuômetro. É o segundo número da regra.', True),
       ('pCO₂ acima de 45 mmHg na gasometria',
        'Também tardio: a hipercapnia aparece quando a reserva acabou. A '
        'gasometria confirma a falência; não a antecipa.', False),
-      ('Incapacidade de proteger a via aérea: tosse ineficaz e disfagia',
+      ('Tosse ineficaz e disfagia',
        'Ele engasga com água e não tosse. Aspiração não espera número de '
        'espirometria.', True),
-      ('Frequência respiratória acima de 30',
+      ('Frequência respiratória acima de 30 por minuto',
        'Inespecífica — febre e dor fazem o mesmo. Não decide sozinha.',
        False),
      ], 'Vinte, trinta, quarenta — e a tosse'),
@@ -578,15 +579,13 @@ ETAPAS = [
        'O único ensaio randomizado — com imunoglobulina rica em anticorpo '
        'contra o vírus — foi inconclusivo. Não é tratamento estabelecido.',
        False),
-      ('Suporte ventilatório, prevenção de complicações e reabilitação são '
-       'o tratamento ativo',
+      ('Suporte e reabilitação são o tratamento ativo',
        'Sem antiviral, o que muda o desfecho é não morrer de aspiração, '
        'trombose ou úlcera — e reabilitar o que sobrou.', True),
       ('Corticoide em altas doses acelera a recuperação motora',
        'Sem evidência; o dano é neuronal, não inflamatório reversível.',
        False),
-      ('Os antibacterianos empíricos podem ser suspensos com cultura e PCR '
-       'bacteriana do líquor negativas e quadro compatível',
+      ('Os antibacterianos podem ser suspensos com culturas negativas',
        'Quarenta e oito a setenta e duas horas de cultura negativa, PCR '
        'negativa e evolução compatível: suspende. Manter "por via das '
        'dúvidas" só custa.', True),

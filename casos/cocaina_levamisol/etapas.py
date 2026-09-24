@@ -16,6 +16,7 @@ from motor.etapas import painel as painel_resultados
 
 TITULO = 'À flor da pele'
 RODAPE = 'Caso ficcional · ensino para internos e residentes'
+COR = '#7c3aed'
 IMG = Path(__file__).parent / 'img'
 BANCO = []
 CENA = 'cena.png'
@@ -78,18 +79,18 @@ ETAPAS = [
       'Placas purpúricas dolorosas, de contorno ramificado, com centro '
       'escurecido, nas coxas de uma mulher de 34 anos com febre. **Quais '
       'quatro** diagnósticos considerar?', [
-      ('Vasculopatia trombótica por cocaína adulterada com levamisol',
+      ('Vasculopatia por levamisol',
        'Púrpura retiforme dolorosa, em mulher jovem, com artralgia e febre: '
        'é a apresentação clássica — e as coxas são sítio comum, junto com '
        'orelhas, nariz e bochechas. Pergunte pela droga, a sós.', True),
       ('Eritema nodoso',
        'Nódulos eritematosos, não purpúricos, na face anterior das '
        'pernas. Não necrosa nem ramifica.', False),
-      ('Púrpura fulminante por coagulação intravascular disseminada',
+      ('Púrpura fulminante',
        'Febre com púrpura que necrosa em horas é meningococcemia até prova '
        'em contrário. Hemocultura e antibiótico antes de qualquer '
        'raciocínio elegante.', True),
-      ('Celulite bacteriana',
+      ('Celulite bacteriana extensa',
        'Eritema quente, branqueável, de bordas mal definidas — não '
        'púrpura angulada com centro necrótico.', False),
       ('Crioglobulinemia mista',
@@ -105,7 +106,7 @@ ETAPAS = [
       ('Urticária vasculite',
        'Placas urticariformes que duram mais de 24 horas e deixam '
        'pigmento — sem necrose ramificada.', False),
-      ('Calcifilaxia',
+      ('Calcifilaxia (arteriolopatia urêmica)',
        'Necrose retiforme dolorosa, sim — mas em doença renal terminal '
        'com hiperparatireoidismo. Ela tem 34 anos e creatinina normal.',
        False),
@@ -247,7 +248,7 @@ ETAPAS = [
       'Neutrófilos de 180/µL, com hemoglobina e plaquetas normais, em mulher '
       'de 34 anos previamente hígida e febril. **Quais quatro** causas devem '
       'ser consideradas?', [
-      ('Agranulocitose induzida por droga ou tóxico',
+      ('Agranulocitose por droga ou tóxico',
        'Dipirona, propiltiouracila, clozapina, sulfa — e levamisol. Uma '
        'linhagem só, início abrupto, recuperação em uma a três semanas '
        'após retirar o agente. Pergunte por tudo, inclusive o que ela não '
@@ -408,22 +409,20 @@ ETAPAS = [
     q('q6', 5,
       'p-ANCA 1:1.280 com **anti-MPO 128 e anti-PR3 46 U/mL, os dois '
       'positivos**. Qual a interpretação mais adequada?', [
-      ('Confirma granulomatose com poliangeíte',
+      ('Confirma granulomatose com poliangeíte, pelo anti-PR3',
        'GPA é anti-PR3 com padrão citoplasmático — e quase nunca com '
        'anti-MPO junto.', False),
-      ('Confirma poliangeíte microscópica',
+      ('Confirma poliangeíte microscópica, pelo anti-MPO alto',
        'PAM é anti-MPO, sem anti-PR3. A dupla positividade não é o padrão '
        'dela.', False),
-      ('Dupla positividade em título alto é atípica das vasculites '
-       'primárias e aponta para exposição: levamisol, propiltiouracila, '
-       'hidralazina',
+      ('Sugere exposição a droga ou tóxico, como o levamisol',
        'Menos de 5% das vasculites primárias têm os dois anticorpos. '
        'Quando têm — sobretudo com anti-elastase —, a pergunta é "o que '
        'você usou", não "qual vasculite".', True),
       ('Indica doença anti-membrana basal concomitante',
        'Anti-MBG é outro anticorpo, contra outro alvo. Não está na frase.',
        False),
-      ('Artefato de laboratório, a repetir',
+      ('É artefato do ensaio e deve ser repetido',
        'Título de 1:1.280 com dois ELISA positivos não é artefato.', False),
      ], 'Dois alvos ao mesmo tempo é pergunta de exposição'),
 
@@ -517,37 +516,33 @@ ETAPAS = [
       'Cocaína 72 horas antes, orelha com púrpura, 180 neutrófilos, '
       'anti-MPO e anti-PR3. Sobre a síndrome do levamisol, **quais quatro** '
       'afirmações estão corretas?', [
-      ('O levamisol é detectável na urina por cerca de 48 horas; um exame '
-       'negativo depois disso não exclui a exposição',
+      ('Exame de urina negativo após 48 horas não exclui levamisol',
        'Meia-vida de 5,6 horas. A amostra de 96 horas era tarde demais — '
        'e é por isso que se pede no primeiro dia.', True),
-      ('A benzoilecgonina identifica o adulterante',
+      ('A benzoilecgonina na urina identifica o adulterante',
        'Identifica cocaína. O que estava misturado a ela só a '
        'espectrometria de massa diz.', False),
-      ('A tríade é púrpura retiforme (orelhas, nariz, bochechas), '
-       'neutropenia e ANCA com anti-MPO e anti-PR3, muitas vezes com '
-       'anti-elastase',
+      ('Púrpura de orelhas, neutropenia e ANCA duplo formam a tríade',
        'É a assinatura descrita desde 2009–2010, quando o levamisol '
        'passou a estar em mais de dois terços da cocaína apreendida nos '
        'Estados Unidos.', True),
-      ('A lesão de orelha é patognomônica',
+      ('A lesão de orelha é patognomônica da síndrome',
        'Crioglobulinemia, antifosfolípide, lúpus pérnio e congelamento '
        'também acometem orelha. Sugestiva, não exclusiva.', False),
       ('A agranulocitose é idiossincrática e associada ao HLA-B27',
        'Descrita desde o uso do levamisol como imunomodulador nos anos '
        '1970: agranulocitose em 2,5 a 13% dos tratados, com o HLA-B27 como '
        'fator de risco.', True),
-      ('A neutropenia é por hiperesplenismo',
+      ('A neutropenia se deve a hiperesplenismo',
        'Não há esplenomegalia. É toxicidade medular, imunomediada.',
        False),
-      ('As lesões e a neutropenia melhoram com a abstinência, e '
-       'recorrem com a reexposição',
+      ('Melhora com abstinência e volta com reexposição',
        'Duas a três semanas de abstinência resolvem a maioria das lesões '
        'cutâneas; o ANCA leva meses. Cada nova exposição reabre.', True),
       ('Imunossupressão intensa é sempre necessária',
        'Só quando há órgão ameaçado — rim, pulmão. Pele e neutropenia '
        'respondem à abstinência.', False),
-      ('A síndrome só ocorre com uso intranasal',
+      ('A síndrome só ocorre com a cocaína aspirada',
        'Fumada, injetada ou aspirada: o levamisol chega do mesmo jeito.',
        False),
      ], 'Quarenta e oito horas para detectar; três semanas para melhorar'),
@@ -643,20 +638,18 @@ ETAPAS = [
       'Glomerulonefrite crescêntica pauci-imune, neutrófilos de 420, '
       'culturas negativas, abstinência há cinco dias. **Quais três** '
       'afirmações orientam o tratamento?', [
-      ('A abstinência é a medida com maior efeito documentado sobre a pele '
-       'e a neutropenia',
+      ('A abstinência é o que mais melhora pele e neutropenia',
        'Nas séries, a interrupção da exposição resolve as lesões em duas a '
        'três semanas sem imunossupressor. É o tratamento de base.', True),
       ('Rituximabe está contraindicado com neutrófilos abaixo de 500',
        'Não é contraindicação absoluta: com órgão ameaçado e infecção '
        'controlada, a depleção de células B pode entrar — com G-CSF e '
        'vigilância.', False),
-      ('Com órgão ameaçado — rim crescêntico —, glicocorticoide com '
-       'rituximabe ou ciclofosfamida é justificável, sob cobertura '
+      ('Rim crescêntico justifica imunossupressão, com cobertura '
        'infecciosa',
        'A pele espera; o glomérulo não. Crescente celular é a única '
        'indicação consistente de imunossupressão nesta síndrome.', True),
-      ('Troca plasmática é rotina',
+      ('Troca plasmática deve ser feita de rotina',
        'Não há evidência para plasmaférese na vasculopatia por levamisol; '
        'entraria só com anti-MBG ou hemorragia alveolar grave.', False),
       ('G-CSF pode encurtar a agranulocitose enquanto há infecção ativa',

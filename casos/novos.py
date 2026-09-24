@@ -18,3 +18,42 @@ def bif(k, texto, opcoes):
 
 def fim(k, titulo, texto, motivo, qualidade):
     return desfecho(k, titulo, p(texto), qualidade=qualidade, porque=motivo, fecho='retrospectiva')
+
+
+def substituir(etapas, k, *novas):
+    i=next(i for i,e in enumerate(etapas) if e['k']==k)
+    etapas[i:i+1]=list(novas)
+
+
+def antes(etapas, k, *novas):
+    """Insere uma alíquota preservando entradas por saltos e ramos."""
+    primeiro=novas[0]['k']
+    for e in etapas:
+        for attr in ('segue','fecho'):
+            if e.get(attr)==k:e[attr]=primeiro
+        for c in e.get('caminhos',[]):
+            if c['vai']==k:c['vai']=primeiro
+    i=next(i for i,e in enumerate(etapas) if e['k']==k)
+    etapas[i:i]=list(novas)
+
+
+def imagem(k, titulo, contexto, arquivo, legenda, credito, leitura, pontos=()):
+    """Exame e contexto juntos; leitura e setas só após ação do apresentador."""
+    from motor.desenhos import anotada, seta
+    from html import escape
+    fig=anotada(arquivo,*[seta(a,r,str(n+1)) for n,(a,r) in enumerate(pontos)],legenda=legenda,credito=credito)
+    corpo=('<div class="observacao-imagem figura-discussao">'+p(contexto)
+           +'<div class="estudo-imagem">'+fig+'</div>'
+           +'<details class="leitura-imagem"><summary>Revelar leitura e marcações</summary>'
+           +''.join(p(t) for t in leitura)+'</details></div>')
+    return pagina(k,'Discussão de exame',titulo,corpo)
+
+
+def referencia_imagem(meta):
+    import json
+    from pathlib import Path
+    m=json.loads(Path(meta).read_text())
+    version=m['licenca'].split()[-1]
+    return (m['autor']+' · <a href="'+m['fonte']+'" target="_blank" rel="noopener">Fonte</a> · '
+            +'<a href="https://creativecommons.org/licenses/by-sa/'+version+'/" target="_blank" rel="noopener">'
+            +m['licenca']+'</a>. Setas editoriais sob a mesma licença; arquivo sem recorte adicional.')

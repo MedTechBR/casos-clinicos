@@ -7,7 +7,7 @@ with sync_playwright() as pw:
  b=pw.chromium.launch();page=b.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)));total=0
  for w,h in [(1366,768),(1600,900),(375,812)]:
   page.set_viewport_size({'width':w,'height':h})
-  for slug in ['pulmao-rim','west-nile','cocaina-levamisol']:
+  for slug in ['pulmao-rim','west-nile','cocaina-levamisol','kikuchi','sarcoidose','cmv','leptospirose','endocardite','adrenal']:
    page.goto((ROOT/(slug+'.html')).as_uri())
    steps=page.evaluate('ETAPAS.map(e=>({k:e.k,t:e.t}))')
    page.evaluate('ETAPAS.filter(e=>e.t==="pedido").forEach(e=>{const res=ETAPAS.find(x=>x.de===e.k&&x.t==="resultados");let opts=e.grupos.flatMap(g=>g.o).sort((a,b)=>Number(!!res?.laminas[b.e])-Number(!!res?.laminas[a.e]));marcados[e.k]=new Set(opts.slice(0,e.limite).map(o=>o.e))})')

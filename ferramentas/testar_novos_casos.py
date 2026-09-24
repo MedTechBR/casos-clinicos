@@ -15,7 +15,7 @@ with sync_playwright() as pw:
   for j in range(n):page.locator('.alts li').nth(j).click()
   page.locator('#conf').click();assert page.locator('.alts.feita').count()==1
   page.evaluate('ir(porId("b1"))');page.locator('.cam').first.click()
-  page.evaluate('adiante()');assert page.evaluate('etapa().k') in ('tecido','endoscopia')
+  dest=page.evaluate('etapa().caminhos[0].vai');page.evaluate('adiante()');assert page.evaluate('etapa().k')==dest
   page.reload()
   steps=page.evaluate('ETAPAS')
   ids=[s['k'] for s in steps];assert len(ids)==len(set(ids))
@@ -42,9 +42,10 @@ with sync_playwright() as pw:
    page.set_viewport_size({'width':w,'height':h})
    for s in steps:
     page.evaluate('(k)=>ir(porId(k))',s['k'])
+    page.evaluate('()=>{detalhesAbertos.clear();pintar()}')
     for revealed in (False,True):
-     if revealed:page.evaluate('''()=>{let e=etapa();if(e.t==='pergunta')respostas[e.k]={feita:true,marcadas:e.alts.map((a,i)=>a.ok?i:-1).filter(i=>i>=0)};if(e.t==='bifurcacao')escolhas[e.k]=0;parteTela=0;pintar()}''')
-     if s['t'] in ('pergunta','resultados','bifurcacao'):assert page.evaluate('partesTela.length===1'),(slug,w,s['k'],'pagination')
+     if revealed:page.evaluate('''()=>{document.querySelectorAll('#palco details').forEach(d=>detalhesAbertos.add(d.dataset.detalhe));let e=etapa();if(e.t==='pergunta')respostas[e.k]={feita:true,marcadas:e.alts.map((a,i)=>a.ok?i:-1).filter(i=>i>=0)};if(e.t==='bifurcacao')escolhas[e.k]=0;parteTela=0;pintar()}''')
+     if s['t'] in ('pergunta','resultados','bifurcacao') or page.locator('.observacao-imagem').count():assert page.evaluate('partesTela.length===1'),(slug,w,s['k'],'pagination')
      for n in range(page.evaluate('partesTela.length')):
       page.evaluate('(n)=>{parteTela=n;aplicarParte();pintarPe()}',n)
       assert page.evaluate('!areaTela || (areaTela.scrollHeight<=areaTela.clientHeight+2 && areaTela.scrollWidth<=areaTela.clientWidth+2)'),(slug,w,s['k'],revealed)

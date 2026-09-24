@@ -1,59 +1,516 @@
-"""Caso autoral de diarreia e citopenias após transplante renal."""
+"""Doença gastrointestinal por citomegalovírus após transplante renal.
+
+Alíquota → pergunta, no molde dos casos interativos do //New England//. Oito
+perguntas no percurso, uma rodada de exames com gabarito e painel, um
+pareamento de histologia e três decisões de conduta, uma delas com
+perfuração. Paciente ficcional; sem doses numéricas de antiviral — a
+prescrição depende de depuração renal e protocolo do serviço.
+"""
 from pathlib import Path
-from motor.etapas import capa,pagina,p,vitais,topicos,lamina
-from casos.novos import pg,q,labs,bif,fim
-TITULO='Depois da travessia'
-RODAPE='Paciente ficcional · evoluções simuladas para ensino'
-IMG=Path(__file__).parents[1]/'pulmao_rim'/'img'
-BANCO=[]
-ETAPAS=[
- capa(TITULO,fundo='',kicker='Caso interativo',procedencia='Paciente ficcional. Curso autoral e simulado.'),
- pg('historia','Apresentação','Helena, 58 anos, retorna ao hospital por seis dias de diarreia e cansaço. Fez transplante renal há quatro meses e vinha retomando as atividades da casa. Nos últimos dois dias apresentou febre de até 38,4 °C e deixou de conseguir completar as refeições.','Tem seis a oito evacuações aquosas por dia, inclusive durante a noite, acompanhadas de cólicas. Não observou sangue. A família acredita que algum medicamento esteja irritando o intestino.'),
- pg('hda','História da doença atual','No começo, a diarreia ocorria apenas após as refeições. Agora persiste mesmo com baixa ingestão. Não há vômitos, dor localizada no enxerto, ardor para urinar, tosse ou falta de ar. Perdeu 2 kg nesta semana e percebeu redução da diurese.','Ninguém em casa está doente. Nega viagens recentes, água não tratada ou alimento suspeito. Recebeu amoxicilina-clavulanato para sinusite cinco semanas antes.'),
- pg('antecedentes','Transplante e medicações','Doença renal terminal atribuída a diabetes e hipertensão, com três anos de hemodiálise antes do transplante de doador falecido. Creatinina basal após o procedimento: 1,2 mg/dL. Não houve episódio documentado de rejeição.','Usa tacrolimo, micofenolato mofetil e prednisona, além de insulina, anlodipino e profilaxia para pneumocistose. A profilaxia antiviral foi encerrada conforme o protocolo da equipe após três meses. A paciente era soropositiva para CMV antes do transplante. Não mudou as doses por conta própria.'),
- pagina('exame','Exame físico','',vitais(('PA','100/62 mmHg',False),('FC','108 bpm',True),('FR','18 irpm',False),('Temperatura','38,2 °C',True),('SpO₂','97% em ar ambiente',False)),topicos(('Estado geral','Alerta, mucosas secas, enchimento capilar preservado.'),('Cardiopulmonar','Taquicardia regular, sem sopro; ausculta pulmonar normal.'),('Abdome','Dolorimento difuso leve, sem defesa. Enxerto na fossa ilíaca direita indolor.'),('Pele e neurologia','Sem exantema ou déficit focal. Não há edema.')),so_kicker=True),
- q('p1',1,'Qual estratégia inicial melhor combina o risco infeccioso com as causas medicamentosas da diarreia?',[
- ('Suspender todos os imunossupressores e aguardar resolução',False,'Expõe o enxerto à rejeição; mudanças devem ser individualizadas com a equipe de transplante.'),
- ('Hidratar, colher exames e investigar infecção, revisando níveis e toxicidade das medicações',True,'As duas possibilidades podem coexistir e a desidratação altera a função renal e a exposição a fármacos.'),
- ('Atribuir o quadro ao micofenolato pela frequência desse efeito adverso',False,'Febre e repercussão sistêmica exigem avaliar infecção antes de encerrar o raciocínio.'),
- ('Tratar rejeição com pulso de corticoide a partir da redução da diurese',False,'Oligúria neste contexto pode decorrer de hipovolemia ou toxicidade e não confirma rejeição.')]),
- labs('res1','Admissão',[
- ('Hemoglobina','10,1 g/dL','12–16 g/dL',True),('Leucócitos','2.100/mm³','4.000–11.000/mm³',True),('Neutrófilos','1.200/mm³','1.500–7.500/mm³',True),('Plaquetas','112.000/mm³','150.000–400.000/mm³',True),('Creatinina','2,1 mg/dL (basal 1,2)','0,6–1,1 mg/dL',True),('Potássio','4,6 mmol/L','3,5–5,0 mmol/L',False),('AST / ALT','62 / 71 U/L','até 35 / 35 U/L',True),('Tacrolimo — vale','14 ng/mL','Alvo individual: 5–8 ng/mL',True)],'A equipe solicita hemoculturas, pesquisa de patógenos nas fezes e quantificação de CMV no plasma.'),
- pg('evolucao1','Após hidratação','A pressão melhora e a creatinina cai para 1,6 mg/dL. A ultrassonografia do enxerto, realizada pela equipe, não mostra obstrução ou alteração vascular relevante. A dose do tacrolimo é revista conforme seu nível e a função renal.','A febre e a diarreia persistem. Hemoculturas permanecem negativas. A investigação para Clostridioides difficile e o painel de patógenos entéricos comuns são negativos.'),
- pagina('rx','Avaliação torácica','',p('A radiografia, obtida durante a investigação da febre, não mostra infiltrado. A saturação permanece normal. A avaliação se concentra na síndrome gastrointestinal com citopenias.'),lamina_=lamina('rx_torax_normal.jpg','Radiografia de tórax','Figura comparativa de outro paciente; não é registro de Helena.','Mikael Häggström · Wikimedia Commons · CC0'),so_kicker=True),
- q('p2',2,'A creatinina melhorou, mas a diarreia, a febre e as citopenias persistem. Quais duas interpretações são adequadas?',[
- ('O nível alto de tacrolimo explica necessariamente todo o quadro',False,'Pode contribuir para a lesão renal, mas não deve encerrar a investigação da síndrome febril.'),
- ('Resultado negativo nas fezes exclui infecção gastrointestinal oportunista',False,'Os painéis não pesquisam todos os agentes nem substituem avaliação de doença tecidual.'),
- ('A cronologia da imunossupressão e da profilaxia modifica a probabilidade de infecção oportunista',True,'A história do transplante orienta hipóteses, sem funcionar como diagnóstico isolado.'),
- ('Endoscopia com biópsias pode distinguir lesão medicamentosa de doença infecciosa tecidual',True,'É útil na persistência do quadro após a investigação inicial.')]),
- pg('virologia','Resultado virológico','A quantificação plasmática de CMV é de 18.600 UI/mL. O exame demonstra replicação viral, mas não localiza sozinho a doença. Helena continua com sete evacuações diárias e baixa ingestão.','A equipe discute endoscopia com biópsias das áreas alteradas. A questão é se há lesão intestinal atribuível ao vírus, a medicamento ou a outro processo.'),
- q('p3',3,'O que o resultado plasmático permite afirmar?',[
- ('Há evidência de replicação; a relação com a lesão intestinal precisa de correlação e, quando viável, tecido',True,'DNAemia e doença invasiva não são sinônimos. A biópsia pode demonstrar envolvimento tecidual.'),
- ('O valor estabelece sozinho colite invasiva e sua extensão',False,'O sangue não mostra diretamente a localização nem a extensão da lesão.'),
- ('A presença de DNA viral exclui toxicidade pelo micofenolato',False,'Mecanismos podem coexistir no transplantado.'),
- ('Uma segunda quantificação negativa excluiria qualquer doença gastrointestinal pelo vírus',False,'Doença localizada pode ocorrer sem DNAemia detectável, dependendo do contexto.')]),
- bif('b1','A paciente mantém febre, diarreia importante e dificuldade para tomar medicamentos. Qual conduta você adota?',[
- ('Tratar a suspeita de doença por CMV e obter biópsias, coordenando ajustes com o transplante','endoscopia','A gravidade e a absorção duvidosa favorecem terapia intravenosa inicial; tecido esclarece a doença intestinal.'),
- ('Reduzir apenas o micofenolato e observar, atribuindo a diarreia à medicação','atraso','A toxicidade é plausível, mas não explica com segurança a combinação de febre, citopenias e DNAemia.'),
- ('Intensificar corticoide por suspeita de rejeição do enxerto','imunossupressao','Sem demonstrar rejeição, aumentar imunossupressão pode agravar uma infecção ativa.')]),
- pg('atraso','Quatro dias depois','A diarreia não diminui. Helena passa a apresentar sangue nas fezes e a creatinina sobe para 2,3 mg/dL. O hemograma mantém citopenias.','A equipe revê a hipótese, indica tratamento antiviral e endoscopia. O atraso trouxe desidratação e maior comprometimento nutricional neste percurso.',segue='endoscopia'),
- pg('imunossupressao','Após a intensificação','A febre aumenta e a paciente desenvolve dor abdominal mais intensa, com sinais de irritação peritoneal. Tomografia urgente demonstra perfuração intestinal. A equipe inicia abordagem cirúrgica, suporte e tratamento anti-infeccioso.',segue='f3'),
- pg('endoscopia','Endoscopia e biópsias','A colonoscopia mostra úlceras em segmentos do cólon. As amostras revelam inflamação, células aumentadas com inclusões virais e imunohistoquímica positiva para CMV. O conjunto confirma doença gastrointestinal invasiva por CMV.','A aparência endoscópica isolada não seria suficiente para identificar o agente. O diagnóstico se apoia na relação entre clínica e demonstração do vírus no tecido.'),
- pg('tratamento','Tratamento inicial','É iniciado ganciclovir intravenoso, com dose calculada pela função renal e revista à medida que a hidratação melhora a depuração. A equipe acompanha hemograma, creatinina, tolerância e quantificação viral seriada.','A revisão da imunossupressão é coordenada com o transplante. Não se suspendem todos os fármacos indiscriminadamente. A transição para valganciclovir oral depende de melhora clínica e absorção confiável.'),
- q('p4',4,'Após uma semana, a diarreia melhora e a carga viral diminui. Os neutrófilos caem para 700/mm³. Qual resposta é mais apropriada?',[
- ('Reduzir automaticamente o antiviral abaixo da dose ajustada à função renal',False,'Subdose pode comprometer eficácia; leucopenia exige revisão dos demais fármacos e medidas de suporte.'),
- ('Suspender definitivamente o tratamento porque a diarreia melhorou',False,'A melhora clínica é importante, mas o término também depende da resposta virológica e da duração adequada.'),
- ('Rever medicamentos mielotóxicos, função renal e suporte hematológico com a equipe',True,'Busca controlar a citopenia sem deixar a infecção inadequadamente tratada.'),
- ('Concluir resistência viral pela neutropenia',False,'Neutropenia não é critério de resistência e pode refletir doença ou medicamentos.')]),
- pg('evolucao2','Segunda semana','Após ajustes coordenados e suporte, neutrófilos sobem para 1.400/mm³. Helena está afebril, volta a se alimentar e evacua duas vezes ao dia. Creatinina é 1,3 mg/dL. O tratamento passa à via oral com dose ajustada.','A carga viral ainda é detectável, embora em queda. Não é correto encerrar o tratamento apenas por ter alcançado uma data fixa ou desaparecido a diarreia.'),
- bif('b2','Como definir o término do tratamento?',[
- ('Integrar resolução clínica e resposta virológica, respeitando o mínimo terapêutico e o método do laboratório','resposta','O consenso recomenda pelo menos duas semanas e continuidade até resposta clínica e supressão virológica adequada.'),
- ('Parar imediatamente porque já não há febre nem diarreia relevante','recaida','Sintomas podem melhorar antes do controle virológico suficiente; a decisão isolada aumenta risco de recaída.')]),
- pg('resposta','Seguimento','Com acompanhamento semanal, a quantificação cai abaixo do limiar utilizado pela equipe e a paciente permanece sem sintomas. O tratamento é encerrado após avaliação clínica e virológica.','É combinado um plano de vigilância após o término. Profilaxia secundária não é automática: a equipe considera risco individual, intensidade da imunossupressão e capacidade de monitorização.',segue='f1'),
- fim('f1','Retorno ao ambulatório','Helena mantém boa função do enxerto, alimentação adequada e recuperação do hemograma. Segue em acompanhamento próximo após o episódio.','Tratamento eficaz precisou conciliar absorção, função renal, toxicidade hematológica e resposta virológica.','melhor'),
- pg('recaida','Duas semanas depois','A paciente volta com diarreia e febre. A carga viral aumentou. A equipe revê adesão, dose, absorção e imunossupressão antes de atribuir o problema a resistência antiviral.',segue='f2'),
- fim('f2','Reinternação','O tratamento é retomado e a investigação reavaliada. A paciente recupera o controle da infecção após nova internação neste cenário.','Encerrar precocemente produziu uma recaída simulada; não prova resistência nem obriga troca automática de antiviral.','medio'),
- fim('f3','Complicação grave','Apesar da cirurgia e do suporte intensivo, Helena apresenta sepse abdominal, perda da função do enxerto e necessidade de diálise. Permanece hospitalizada ao final deste percurso.','A evolução é hipotética: intensificar imunossupressão durante infecção não controlada pode agravar a doença. Perfuração é uma complicação possível, não inevitável.','pior'),
- pg('retrospectiva','Retrospectiva','Havia mais de um mecanismo: desidratação e nível alto de tacrolimo contribuíram para a creatinina, enquanto a doença intestinal explicava a persistência da síndrome. Corrigir um problema não resolveu o outro.','DNAemia direcionou a investigação; tecido confirmou invasão. A decisão de terminar tratamento exigiu observar a paciente e a evolução virológica.'),
- pg('referencias','Fontes e limites','Caso e trajetórias ficcionais; não reproduzem um paciente publicado.','Kotton et al. The Fourth International Consensus Guidelines on the Management of Cytomegalovirus in Solid Organ Transplantation. Transplantation, 2025. <a href="https://doi.org/10.1097/TP.0000000000005374" target="_blank" rel="noopener">Abrir referência</a>','Radiografia comparativa: Mikael Häggström, Wikimedia Commons, CC0. Endoscopia e histologia são descritas como resultados simulados; não há figura atribuída ao paciente.')
+
+from motor.etapas import (alt, bifurcacao, caminho, capa, desfecho, op, p,
+                          pagina, painel, par, pareamento, pergunta, tabela,
+                          topicos, vitais, lamina)
+from casos.novos import imagem, referencia_imagem
+
+TITULO = 'Depois da travessia'
+RODAPE = 'Paciente ficcional · evoluções simuladas para ensino'
+COR = '#ca8a04'
+IMG = Path(__file__).parent / 'img'
+BANCO = []
+CENA = 'cena.png'
+
+
+def pg(k, titulo, *textos, segue=''):
+    return pagina(k, titulo, '', *(p(t) for t in textos), so_kicker=True, segue=segue)
+
+
+def Q(k, n, enunciado, itens, titulo, segue=''):
+    return pergunta(k, f'Pergunta {n}', enunciado,
+                    [alt(t, c, certa=ok) for t, c, ok in itens],
+                    titulo_resposta=titulo, segue=segue)
+
+
+def ex(nome, valor, ref='—', alt_=False):
+    return op(nome, resultado=valor, referencia=ref, alterado=alt_)
+
+
+def fim(k, titulo, texto, porque, qualidade):
+    return desfecho(k, titulo, p(texto), qualidade=qualidade, porque=porque,
+                    fecho='retrospectiva')
+
+
+def sem_setas(meta):
+    return referencia_imagem(meta).replace('Setas editoriais sob a mesma licença; ', 'Sem setas; ')
+
+
+ETAPAS = [
+    capa(TITULO, fundo=CENA, kicker='Caso interativo',
+         selo='Paciente ficcional · procedência e créditos na última tela'),
+
+    pg('historia', 'Apresentação',
+       'Helena, 58 anos, volta ao hospital por seis dias de diarreia e '
+       'cansaço. Recebeu um transplante renal há quatro meses e vinha '
+       'retomando as tarefas da casa. Há dois dias tem febre de até 38,4 °C e '
+       'não consegue terminar as refeições.',
+       'São seis a oito evacuações aquosas por dia, inclusive à noite, com '
+       'cólica. Não viu sangue. A família acha que "algum remédio está '
+       'irritando o intestino".'),
+
+    pg('hda', 'História da doença atual',
+       'No começo a diarreia vinha depois das refeições; agora persiste em '
+       'jejum. Sem vômitos, sem dor sobre o enxerto, sem disúria, tosse ou '
+       'falta de ar. Perdeu 2 kg na semana e notou que urina menos.',
+       'Ninguém em casa está doente. Nega viagens, água não tratada ou '
+       'comida suspeita. Recebeu **amoxicilina-clavulanato** por uma sinusite '
+       'cinco semanas antes.'),
+
+    pg('antecedentes', 'O transplante e as medicações',
+       'Doença renal por diabetes e hipertensão, três anos de hemodiálise e '
+       'transplante de doador falecido. Creatinina basal depois do '
+       'transplante: 1,2 mg/dL. Sem rejeição documentada. **Doadora e '
+       'receptora eram soropositivas para CMV.**',
+       'Usa **tacrolimo, micofenolato mofetil e prednisona**, além de '
+       'insulina, anlodipino e **sulfametoxazol-trimetoprima** como profilaxia '
+       'de pneumocistose. O **valganciclovir profilático foi encerrado há '
+       'quatro semanas**, no fim dos três meses previstos.'),
+
+    pagina('exame', 'Exame físico', '',
+           vitais(('Pressão arterial', '100/62', True), ('Frequência cardíaca', '108', True),
+                  ('Frequência respiratória', '18', False), ('Temperatura', '38,2 °C', True),
+                  ('SpO₂ em ar ambiente', '97%', False)),
+           topicos(('Estado geral', 'Alerta, **mucosas secas**, enchimento capilar preservado.'),
+                   ('Cardiopulmonar', 'Taquicardia regular, sem sopros; ausculta pulmonar normal.'),
+                   ('Abdome', 'Dor difusa leve, **sem defesa ou descompressão**. Ruídos aumentados. '
+                    'Enxerto na fossa ilíaca direita indolor.'),
+                   ('Pele e neurologia', 'Sem exantema, sem déficit focal. Sem edema.')),
+           so_kicker=True),
+
+    Q('p1', 1,
+      'Diarreia febril quatro meses depois de um transplante renal, quatro '
+      'semanas após o fim da profilaxia antiviral. **Quais cinco** causas '
+      'precisam ser consideradas?', [
+      ('Doença gastrointestinal por CMV',
+       'O fim da profilaxia é a hora do CMV: a doença de início tardio '
+       'aparece nos meses seguintes à suspensão.', True),
+      ('Rejeição aguda do enxerto',
+       'Rejeição sobe a creatinina, mas não causa diarreia febril.', False),
+      ('Colite por //Clostridioides difficile//',
+       'Antibiótico há cinco semanas, imunossupressão e internações '
+       'prévias: o risco é alto.', True),
+      ('Síndrome do intestino irritável',
+       'Não faz febre, nem diarreia noturna, nem perda de peso.', False),
+      ('Toxicidade do micofenolato',
+       'É a causa medicamentosa mais comum de diarreia no transplantado, e '
+       'pode coexistir com infecção.', True),
+      ('Norovírus crônico',
+       'No imunossuprimido, o norovírus pode durar meses. O painel '
+       'molecular o encontra.', True),
+      ('Doença celíaca de início tardio',
+       'Possível em qualquer idade, mas não explica febre e citopenias '
+       'agudas.', False),
+      ('Doença linfoproliferativa pós-transplante',
+       'O linfoma associado ao EBV acomete o intestino e faz febre. Entra '
+       'na lista até a endoscopia.', True),
+      ('Insuficiência pancreática exócrina',
+       'Esteatorreia crônica, sem febre.', False),
+      ('Hipertireoidismo',
+       'Diarreia sim, febre de 38 °C e citopenia, não.', False),
+     ], 'Vírus, bactéria, droga — e o linfoma que o transplante permite'),
+
+    Q('ex1', 2,
+      'Na admissão, **quais cinco** exames são os mais apropriados?', [
+      ('PCR quantitativa de CMV no plasma',
+       'Replicação viral medida no mesmo ensaio, em unidades '
+       'internacionais: é a base para diagnosticar e para acompanhar.',
+       True),
+      ('Sorologia IgM para CMV',
+       'No transplantado, IgM não diagnostica doença ativa: falha em quem é '
+       'soropositivo e aparece em reativações que não importam.', False),
+      ('Teste para //C. difficile// nas fezes',
+       'Obrigatório com antibiótico recente e diarreia de três ou mais '
+       'evacuações por dia.', True),
+      ('Biópsia do enxerto renal',
+       'A creatinina subiu com desidratação. Primeiro corrige-se o volume; '
+       'rejeição só se a disfunção persistir.', False),
+      ('Nível sérico de tacrolimo',
+       'Diarreia aumenta a absorção do tacrolimo, e o nível alto soma '
+       'nefrotoxicidade à desidratação.', True),
+      ('Colonoscopia antes de hidratar',
+       'Preparo intestinal numa paciente depletada piora o rim. A endoscopia '
+       'vem depois da estabilização.', False),
+      ('Painel molecular gastrointestinal',
+       'Norovírus, adenovírus, //Cryptosporidium//, //Giardia//: um só '
+       'exame para os agentes que duram meses no imunossuprimido.', True),
+      ('Hemograma e função renal',
+       'Citopenia orienta mielotoxicidade e CMV; creatinina e potássio '
+       'orientam volume e doses.', True),
+      ('Tomografia de abdome com contraste iodado',
+       'Sem peritonismo, não se expõe o enxerto a contraste na chegada.',
+       False),
+      ('Pesquisa de sangue oculto nas fezes',
+       'Não muda nada numa diarreia febril aguda.', False),
+     ], 'A equipe pede os cinco, e hemoculturas'),
+
+    painel('res1', 'Na admissão', 'O que a equipe pediu', [
+        ex('Hemoglobina', '10,1 g/dL', '12–16 g/dL', True),
+        ex('Leucócitos', '2.100/mm³ · neutrófilos 1.200/mm³', '4.000–11.000/mm³', True),
+        ex('Plaquetas', '112.000/mm³', '150.000–400.000/mm³', True),
+        ex('Creatinina', '2,1 mg/dL {{(basal 1,2)}}', '0,6–1,1 mg/dL', True),
+        ex('Potássio', '4,6 mmol/L', '3,5–5,0 mmol/L'),
+        ex('AST / ALT', '62 / 71 U/L', 'até 35 / 35 U/L', True),
+        ex('Tacrolimo, nível de vale', '14 ng/mL', 'alvo individual 5–8 ng/mL', True),
+        ex('PCR de CMV no plasma', '18.600 UI/mL', 'não detectado', True),
+        ex('//C. difficile//, toxina e PCR', 'Negativos', 'negativos'),
+        ex('Painel molecular gastrointestinal', 'Nenhum agente detectado', 'negativo'),
+        ex('Hemoculturas', 'Sem crescimento em 48 horas', 'negativas'),
+    ], introducao='A equipe hidrata, ajusta o tacrolimo pelo nível e revê as medicações.'),
+
+    Q('p3', 3,
+      'PCR de CMV no plasma de **18.600 UI/mL**. Qual a interpretação mais '
+      'adequada?', [
+      ('Confirma doença gastrointestinal por CMV e dispensa endoscopia',
+       'Mostra replicação no sangue, não localiza a doença. Colite por '
+       'outra causa pode coexistir com viremia.', False),
+      ('Replicação ativa; a doença intestinal exige tecido',
+       'Doença gastrointestinal "comprovada" exige biópsia com efeito '
+       'citopático ou imuno-histoquímica — e a viremia pode ser baixa ou '
+       'ausente nela.', True),
+      ('É latência, sem significado clínico',
+       'Latência não produz DNA circulante nesse nível.', False),
+      ('Carga abaixo de 50.000 UI/mL exclui doença invasiva',
+       'Não existe limiar que exclua doença gastrointestinal: ela pode '
+       'ocorrer com viremia baixa ou indetectável.', False),
+      ('Deve ser repetida em outro laboratório antes de qualquer decisão',
+       'O acompanhamento é feito no mesmo ensaio. Trocar de laboratório '
+       'quebra a série.', False),
+     ], 'Sangue mostra o vírus; tecido mostra a doença'),
+
+    Q('p4', 4,
+      'Leucopenia, neutropenia e plaquetopenia neste contexto. **Quais três** '
+      'causas contribuem?', [
+      ('O próprio CMV', 'Mielossupressão viral é parte da síndrome do CMV.',
+       True),
+      ('Micofenolato mofetil', 'Antiproliferativo: deprime a medula e é o '
+       'primeiro a ser reduzido na infecção.', True),
+      ('Sulfametoxazol-trimetoprima', 'O antifolato soma mielotoxicidade, '
+       'sobretudo com o micofenolato.', True),
+      ('Anlodipino em dose plena', 'Não é mielotóxico.', False),
+      ('Prednisona de manutenção', 'Corticoide causa leucocitose por desmarginação, não '
+       'leucopenia.', False),
+      ('Insulina basal-bolus', 'Sem efeito medular.', False),
+      ('Hiperesplenismo', 'Sem esplenomegalia nem hepatopatia.', False),
+     ], 'Vírus, antiproliferativo e antifolato: a medula paga três contas'),
+
+    pg('evolucao1', 'Depois da hidratação',
+       'A pressão melhora e a creatinina cai para 1,6 mg/dL. O ultrassom do '
+       'enxerto não mostra obstrução nem alteração vascular. O micofenolato '
+       'é reduzido pela metade.',
+       'A febre e a diarreia continuam: sete evacuações por dia, ingestão '
+       'precária.'),
+
+    bifurcacao('b1', 'Decisão', 'Febre, diarreia e viremia',
+      'O que você faz agora?', [
+      caminho('Ganciclovir endovenoso já, com endoscopia e biópsias após a '
+              'estabilização', 'inicio_antiviral',
+              'Absorção oral incerta com diarreia; a biópsia não precisa '
+              'atrasar a primeira dose.'),
+      caminho('Observar a resposta à redução do micofenolato antes do '
+              'antiviral', 'atraso',
+              'A toxicidade é possível, mas febre, viremia e fim da '
+              'profilaxia apontam para CMV.'),
+      caminho('Pulso de corticoide por possível rejeição', 'imunossupressao',
+              'A creatinina subiu com desidratação e caiu com volume. '
+              'Rejeição não foi demonstrada, e a infecção está ativa.'),
+    ]),
+
+    pg('atraso', 'Quatro dias de observação',
+       'Oito evacuações por dia, agora com **estrias de sangue**. Creatinina '
+       '2,3 mg/dL, albumina 2,7 g/dL. Sem defesa abdominal. A persistência '
+       'depois da redução do micofenolato fala contra toxicidade isolada.',
+       segue='resgate_atraso'),
+
+    bifurcacao('resgate_atraso', 'Decisão', 'O que muda agora',
+      'Qual a conduta?', [
+      caminho('Iniciar ganciclovir e seguir com a endoscopia', 'inicio_antiviral',
+              'Trata a hipótese de maior risco sem abandonar o diagnóstico.'),
+      caminho('Esperar o laudo da biópsia antes do antiviral', 'piora_atraso',
+              'O diagnóstico não exige manter a infecção sem tratamento.'),
+    ]),
+
+    pg('piora_atraso', 'Mais 48 horas',
+       'Helena precisa de reposição venosa contínua e nutrição. Hemoglobina '
+       '8,8 g/dL; a tomografia mostra colite extensa, sem ar livre. A equipe '
+       'do transplante inicia o ganciclovir.',
+       segue='inicio_antiviral'),
+
+    pg('imunossupressao', '48 horas de pulso',
+       'A febre chega a 39 °C, a diarreia aumenta e aparece sangue. A '
+       'creatinina não cai. A tomografia mostra espessamento colônico, sem '
+       'perfuração.',
+       segue='resgate_corticoide'),
+
+    bifurcacao('resgate_corticoide', 'Decisão', 'A piora sob corticoide',
+      'Como prosseguir?', [
+      caminho('Parar o pulso, iniciar ganciclovir e reavaliar o enxerto com a '
+              'nefrologia', 'inicio_antiviral',
+              'Tira a prioridade de uma rejeição não demonstrada sem suspender '
+              'a imunossupressão de base.'),
+      caminho('Completar o pulso e deixar o antiviral para depois da biópsia',
+              'insistencia',
+              'Mais imunossupressão sobre uma infecção invasiva em curso.'),
+    ]),
+
+    pg('insistencia', '72 horas depois',
+       'Dor intensa no flanco esquerdo, defesa abdominal, pressão de 82/50 e '
+       'lactato de 3,8 mmol/L. A tomografia mostra **ar extraluminal** junto '
+       'ao cólon descendente.',
+       'Ressuscitação, antibiótico para sepse abdominal, ganciclovir e '
+       'cirurgia de urgência. A peça mostra colite ulcerada com perfuração e '
+       'imuno-histoquímica positiva para CMV.',
+       segue='f3'),
+
+    pg('inicio_antiviral', 'Tratar enquanto se investiga',
+       '**Ganciclovir endovenoso** começa hoje, com dose ajustada à '
+       'depuração de creatinina e revista a cada mudança da função renal. A '
+       'data da primeira dose passa a ser o D0.',
+       'Transplante e infectologia mantêm o micofenolato reduzido, conferem '
+       'o tacrolimo e o hemograma duas vezes por semana.'),
+
+    pg('endoscopia', 'A colonoscopia',
+       'Já estável e sem sinais peritoneais, Helena faz colonoscopia: '
+       '**úlceras rasas, bem delimitadas, em cólon transverso e descendente**, '
+       'com mucosa intermediária pouco alterada. São colhidas biópsias da '
+       'borda e do fundo das úlceras.'),
+
+    imagem('histologia_baixo', 'Biópsia do cólon: aumento intermediário',
+           'Esta lâmina é de outro paciente com a mesma doença. Descreva a '
+           'mucosa antes de procurar a célula que decide.',
+           IMG / 'colon_baixo.jpg',
+           'Mucosa colônica em hematoxilina-eosina · outro paciente.',
+           sem_setas(IMG / 'colon_baixo.jpg.json'),
+           ['Inflamação intensa da lâmina própria, com distorção e perda de '
+            'criptas. Nesse aumento, procuram-se células grandes no estroma e '
+            'no endotélio.',
+            'A imagem não é imuno-histoquímica nem é de Helena.']),
+
+    imagem('histologia_alto', 'Biópsia do cólon: grande aumento',
+           'O mesmo diagnóstico em grande aumento. Que alteração celular '
+           'aparece?',
+           IMG / 'colon_alto.jpg',
+           'Hematoxilina-eosina, grande aumento · outro paciente.',
+           sem_setas(IMG / 'colon_alto.jpg.json'),
+           ['Células muito aumentadas — citomegalia — com inclusão '
+            'intranuclear grande e halo claro: o "olho de coruja". Pode '
+            'haver inclusões citoplasmáticas menores.',
+            'É o efeito citopático do CMV. A imuno-histoquímica, em outro '
+            'preparo, confirma o antígeno.']),
+
+    pareamento('p5', 'Pergunta 5',
+      'Cada agente deixa uma marca na lâmina. Associe cada achado '
+      'histológico ao diagnóstico.', [
+      par('Células gigantes com inclusão intranuclear em "olho de coruja"',
+          'Citomegalovírus',
+          'Citomegalia no endotélio e no estroma, com inclusão rodeada de '
+          'halo. É o laudo de Helena.'),
+      par('Pseudomembranas com exsudato em "vulcão" saindo das criptas',
+          '//Clostridioides difficile//',
+          'Fibrina, neutrófilos e muco em jato. O teste de fezes dela foi '
+          'negativo.'),
+      par('Apoptose de criptas sem inclusões, em uso de micofenolato',
+          'Colite pelo micofenolato',
+          'Lembra doença enxerto-contra-hospedeiro. Pode coexistir com o '
+          'CMV, e por isso a dose foi reduzida.'),
+      par('Células multinucleadas com núcleos em vidro fosco e moldagem',
+          'Herpes-simples',
+          'Os três M: multinucleação, moldagem, marginação da cromatina. '
+          'Mais no esôfago que no cólon.'),
+      par('Infiltrado linfoide atípico com EBER positivo',
+          'Doença linfoproliferativa pós-transplante',
+          'Linfócitos B transformados pelo EBV. Muda tudo: redução da '
+          'imunossupressão e rituximabe.'),
+    ], opcoes=['Citomegalovírus', '//Clostridioides difficile//',
+               'Colite pelo micofenolato', 'Herpes-simples',
+               'Doença linfoproliferativa pós-transplante', 'Colite isquêmica'],
+    titulo_resposta='Na lâmina, cada agente assina de um jeito',
+    nota='A opção que sobrou, colite isquêmica, teria atrofia de criptas e '
+         'hialinização da lâmina própria, sem inclusões.'),
+
+    pg('confirmacao', 'O laudo de Helena',
+       'Colite ulcerada com células citomegálicas e **imuno-histoquímica '
+       'positiva para CMV**. Clínica e tecido fecham **doença '
+       'gastrointestinal por CMV comprovada**.',
+       'Todas as medidas seguintes usam plasma e o mesmo ensaio. O limite '
+       'inferior de quantificação do laboratório é 137 UI/mL.'),
+
+    painel('semana1', 'D7', 'A primeira semana', [
+        ex('PCR de CMV no plasma, D0', '18.600 UI/mL', 'mesmo ensaio', True),
+        ex('PCR de CMV no plasma, D7', '3.200 UI/mL', 'limite de quantificação 137 UI/mL', True),
+        ex('Neutrófilos', '700/mm³', '1.500–7.500/mm³', True),
+        ex('Creatinina', '1,4 mg/dL', 'basal 1,2 mg/dL'),
+        ex('Evacuações', 'Quatro por dia, sem sangue · febre em resolução', '—'),
+    ], introducao='A carga viral caiu mais de cinco vezes em uma semana.'),
+
+    Q('p6', 6,
+      'Quais **três** achados, se presentes, levantariam suspeita de '
+      'resistência do CMV ao ganciclovir e justificariam genotipagem?', [
+      ('Mais de seis semanas de ganciclovir',
+       'A mutação em UL97 é selecionada por exposição prolongada, sobretudo '
+       'com viremia persistente.', True),
+      ('Carga viral inicial acima de 10.000 UI/mL',
+       'Carga alta pede tratamento, não sugere resistência.', False),
+      ('Carga que não cai após duas semanas',
+       'Na primeira semana a carga pode subir por cinética; depois de duas '
+       'semanas de dose e absorção adequadas, não deveria.', True),
+      ('Neutropenia surgindo durante o tratamento',
+       'É toxicidade, não resistência.', False),
+      ('Doadora soropositiva e receptora soronegativa',
+       'Ausência de imunidade prévia é o principal fator de risco para '
+       'resistência.', True),
+      ('Recorrência depois de parar o tratamento antes do limiar',
+       'Isso é interrupção precoce, não resistência. Reinicia-se o mesmo '
+       'fármaco.', False),
+      ('Diarreia persistente na primeira semana',
+       'O intestino cicatriza mais devagar que a carga cai.', False),
+     ], 'Exposição longa, resposta ruim depois de duas semanas, e receptor sem imunidade'),
+
+    pergunta('p7', 'Pergunta 7',
+      'Neutrófilos de 700/mm³ no D7, com clínica e carga viral melhorando. '
+      'Qual o próximo passo?', [
+      alt('Reduzir a dose do ganciclovir para poupar a medula',
+          'Subdose seleciona resistência. Ajusta-se a dose à função renal, '
+          'não à contagem.'),
+      alt('Trocar imediatamente para foscarnet',
+          'Nefrotóxico e com distúrbio eletrolítico. É a alternativa quando '
+          'a mielotoxicidade é grave e refratária ou há resistência.'),
+      alt('Tirar mielotóxicos e manter o antiviral',
+          'Suspender o micofenolato temporariamente e trocar a profilaxia de '
+          'pneumocistose por atovaquona mantém o antiviral eficaz.',
+          certa=True),
+      alt('Pausar o antiviral até os neutrófilos normalizarem',
+          'Resposta parcial não autoriza interrupção: a doença invasiva está '
+          'no meio do tratamento.'),
+      alt('Iniciar letermovir em dose de tratamento',
+          'O letermovir é aprovado para profilaxia, não para tratar doença '
+          'estabelecida.'),
+    ], titulo_resposta='Proteger a medula sem enfraquecer o antiviral'),
+
+    pg('evolucao2', 'D14',
+       'Sem o micofenolato e com a profilaxia trocada, os neutrófilos sobem '
+       'para 1.400/mm³. Creatinina 1,3 mg/dL. Afebril, uma a duas evacuações '
+       'formadas por dia, comendo bem.',
+       'A PCR de CMV do D14 é **620 UI/mL** — ainda quantificável.'),
+
+    pergunta('p8', 'Pergunta 8',
+      'Clínica resolvida, absorção confiável e carga de 620 UI/mL no D14. '
+      'Qual a conduta sobre o antiviral?', [
+      alt('Valganciclovir oral em dose de tratamento',
+          'Melhora clínica e absorção confiável permitem a via oral. A dose '
+          'continua sendo de tratamento.', certa=True),
+      alt('Manter endovenoso até a carga ficar indetectável',
+          'Indetectável não é requisito para trocar a via; a internação '
+          'prolongada tem riscos próprios.'),
+      alt('Trocar para valganciclovir em dose de profilaxia',
+          'Via e intensidade são decisões diferentes. A carga ainda está '
+          'acima do limiar de término.'),
+      alt('Encerrar hoje: completou os 14 dias mínimos',
+          'O término exige três coisas juntas: clínica resolvida, duas '
+          'semanas no mínimo e carga abaixo do limite de quantificação.'),
+      alt('Trocar para maribavir, pela carga persistente',
+          'Reservado para doença refratária ou resistente — o que a queda '
+          'contínua da carga desmente.'),
+    ], titulo_resposta='Via oral sim; dose de profilaxia, não'),
+
+    bifurcacao('b2', 'Decisão', 'O fim do tratamento',
+      'D14, sintomas resolvidos e carga de 620 UI/mL. Como seguir?', [
+      caminho('Valganciclovir oral em dose de tratamento, com nova carga em '
+              'uma semana', 'resposta',
+              'Cumpre as duas semanas mínimas e espera o limiar virológico.'),
+      caminho('Encerrar agora e manter só vigilância', 'recaida',
+              'O mínimo de duração não basta com a carga acima do limiar.'),
+    ]),
+
+    pg('resposta', 'D21',
+       'Série semanal: 18.600 → 3.200 → 620 → **abaixo de 137 UI/mL**. '
+       'Assintomática, comendo, hemograma em recuperação.',
+       'Encerra-se o tratamento com clínica resolvida, mais de duas semanas '
+       'de terapia e uma amostra abaixo do limite de quantificação de um '
+       'ensaio altamente sensível. A vigilância semanal segue por oito '
+       'semanas.',
+       segue='f1'),
+
+    pg('recaida', 'D28',
+       'Duas semanas depois de parar, voltam a febre e seis evacuações '
+       'líquidas por dia. Carga de CMV **9.800 UI/mL**, creatinina 1,8 mg/dL.',
+       'O tratamento foi interrompido com 620 UI/mL. A queda foi contínua '
+       'enquanto ele durou — o padrão é de interrupção precoce, não de '
+       'resistência.',
+       segue='resgate_recaida'),
+
+    bifurcacao('resgate_recaida', 'Decisão', 'A recorrência',
+      'Como abordar?', [
+      caminho('Reiniciar ganciclovir e revisar dose, absorção e outras causas',
+              'retratamento', 'A interrupção precoce explica a volta.'),
+      caminho('Trocar para foscarnet e pedir genotipagem por suspeita de '
+              'resistência', 'revisao_resistencia',
+              'Resistência é hipótese, mas a curva durante o tratamento não '
+              'a sustenta.'),
+    ]),
+
+    pg('revisao_resistencia', 'Antes da troca',
+       'A infectologia revê a série: queda contínua sob tratamento e '
+       'interrupção acima do limiar. Menos de seis semanas de exposição. A '
+       'troca reflexa para foscarnet é suspensa pelo risco renal.',
+       segue='retratamento'),
+
+    pg('retratamento', 'Novo curso',
+       'Ganciclovir endovenoso, depois valganciclovir em dose de tratamento. '
+       'Carga semanal: 9.800 → 1.700 → 280 → abaixo de 137 UI/mL. Encerra-se '
+       'no D21 do novo curso.',
+       segue='f2'),
+
+    fim('f1', 'Retorno ao ambulatório',
+        'Helena mantém alimentação, função do enxerto próxima da basal e '
+        'hemograma em recuperação. O micofenolato volta em dose menor.',
+        'Tratar sem esperar a biópsia, proteger a medula sem subdose e '
+        'encerrar só no limiar virológico foram as três decisões que '
+        'contaram.', 'melhor'),
+
+    fim('f2', 'Recuperação depois da reinternação',
+        'A infecção é controlada e a função renal volta perto da basal, '
+        'com uma reinternação de três semanas.',
+        'O término no mínimo de dias, com a carga ainda quantificável, deu '
+        'a recorrência. O resgate funcionou sem presumir resistência.',
+        'medio'),
+
+    fim('f3', 'Perfuração e diálise',
+        'Depois da colectomia parcial e do controle da sepse, Helena segue '
+        'internada, dependente de diálise por lesão renal aguda. A '
+        'recuperação do enxerto é incerta.',
+        'O corticoide dado para uma rejeição não demonstrada, sobre uma '
+        'colite por CMV sem tratamento, contribuiu para um desfecho grave '
+        'que o antiviral precoce provavelmente teria evitado.', 'pior'),
+
+    pagina('retrospectiva', 'Retrospectiva', '',
+        tabela(['Momento', 'O dado', 'O que decidiu'], [
+            ['Admissão', 'Diarreia febril um mês depois do fim da profilaxia',
+             'CMV, //C. difficile//, micofenolato, norovírus e linfoma na mesma lista'],
+            ['Laboratório', 'Carga de 18.600 UI/mL, citopenias, tacrolimo alto',
+             'Replicação ativa; o tecido é que comprova doença intestinal'],
+            ['Decisão', 'Febre e ingestão precária', 'Antiviral antes da biópsia, não depois'],
+            ['D7', 'Neutrófilos de 700', 'Tirar os mielotóxicos, não baixar o antiviral'],
+            ['D14', 'Carga de 620 UI/mL', 'Via oral em dose de tratamento até o limiar'],
+        ]),
+        so_kicker=True),
+
+    pg('referencias', 'Fontes e limites',
+       'Paciente, séries laboratoriais e percursos são ficcionais. Não há '
+       'doses numéricas: a prescrição depende de depuração renal e do '
+       'protocolo do serviço.',
+       'Kotton e cols. Fourth International Consensus Guidelines on the '
+       'Management of Cytomegalovirus in Solid Organ Transplantation, 2025. '
+       'Histologia de outros pacientes: Nephron, Wikimedia Commons, CC BY-SA '
+       '3.0. Cena: ilustração gerada por IA.'),
 ]
+
+REVISAO = []

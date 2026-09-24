@@ -1,0 +1,2562 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pequenos sinais</title>
+<style>
+/* ATLAS — a linguagem visual do caso em etapas.
+
+   Três decisões governam tudo o que vem abaixo:
+
+   1. A imagem médica é o chão da tela, não um selo no canto. Ela ocupa a tela
+      inteira, recuada no eixo Z, escurecida e dessaturada até virar textura.
+      O conteúdo flutua acima dela, num plano à frente.
+
+   2. Cor é sistema, não enfeite. Cada território tem a sua, e ela reaparece em
+      todo lugar onde aquele território é citado — no marcador, na borda do
+      grupo de exames, no número do painel, na barra do desfecho. Quem aprende
+      a cor lê a tela mais rápido.
+
+   3. Profundidade é informação. O que está à frente é o que se decide agora; o
+      que está atrás é contexto. Perspectiva de verdade, não sombra difusa. */
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --eixo:88px;
+  /* Uma só altura de topo e uma só de rodapé, para toda a peça. */
+  --teto:clamp(78px,10vh,102px);
+  --rodape:clamp(88px,11vh,104px);
+  --preto:#08090b; --carvao:#0f1216; --grafite:#171b21; --linha:#414a57;
+  --linha2:#5b6672;
+  --gelo:#eef2f6; --nevoa:#a8b2be; --fumaca:#8d97a4; --sombra:#737d8a;
+
+  /* Vermelho é a cor da marca — do filete do kicker, do botão de avançar, da
+   marca do trilho em que se está agora. Nenhum território o reivindica.
+
+   O comentário anterior prometia ΔE ≥ 25 entre territórios e a medição
+   devolveu 23,9 (pulmão × geral) — e, pior, ΔE 7,0 entre `--pele` e
+   `--atencao`, que são a cor de um território e a cor de um desfecho: o mesmo
+   amarelo dizendo duas coisas. Territórios e estados agora vivem em famílias
+   separadas, e os estados saíram do arco quente dos territórios. */
+  --via:#4fb3a6; --pulmao:#3f9fc4; --rim:#e08a3c; --pele:#d9c04a;
+  --nervo:#8878d6; --sangue:#c25fa8; --geral:#8d9aa8;
+  --marca:#c2455e;
+
+  --alerta:#e0574d; --certo:#5aa8d8; --atencao:#b98a2e;
+
+  /* Uma sombra, em duas intensidades. Havia cinco, todas do mesmo desenho
+     genérico (sem deslocamento horizontal, sem spread), para a mesma ideia. */
+  --fundo1:0 18px 34px rgba(0,0,0,.44);
+  --fundo2:0 30px 58px rgba(0,0,0,.55);
+
+  --serifa:"Iowan Old Style",Charter,"Palatino Linotype",Palatino,
+           "Book Antiqua",Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,"Helvetica Neue",
+         Arial,sans-serif;
+}
+
+html,body{height:100%}
+body{background:var(--preto);color:var(--gelo);font-family:var(--sans);
+  overflow:hidden;perspective:1600px;perspective-origin:50% 46%}
+
+/* ───────────────────────── o trilho de etapas ───────────────────────── */
+
+#trilho{position:fixed;top:0;left:0;right:0;height:64px;z-index:30;
+  display:flex;align-items:center;gap:22px;padding:0 40px;
+  background:linear-gradient(var(--preto) 40%,transparent)}
+#trilho .tt{font-size:10.5px;letter-spacing:2.6px;text-transform:uppercase;
+  color:var(--fumaca);font-weight:700;white-space:nowrap}
+#trilho .cnt{font-family:var(--sans);font-size:11.5px;font-weight:700;
+  color:var(--nevoa);font-variant-numeric:tabular-nums;letter-spacing:.5px;
+  margin-left:auto;white-space:nowrap}
+#trilho .marcas{display:flex;gap:3px}
+/* Uma marca por etapa, colorida pelo tipo: dá para ver quantas páginas faltam
+   e onde caem as perguntas antes de chegar nelas. */
+#trilho .marcas i{width:15px;height:4px;background:var(--linha);display:block;
+  transition:background .25s,transform .25s}
+#trilho .marcas i.m-pedido,#trilho .marcas i.m-pergunta,#trilho .marcas i.m-pareamento{background:#3b4552}
+#trilho .marcas i.m-bifurcacao{background:#4d3a44}
+#trilho .marcas i.m-desfecho{background:#4a3b34}
+#trilho .marcas i.feita{background:var(--linha2);cursor:pointer}
+#trilho .marcas i.feita.m-pedido,#trilho .marcas i.feita.m-pergunta,#trilho .marcas i.feita.m-pareamento{
+  background:var(--pulmao);opacity:.55}
+#trilho .marcas i.feita:hover{transform:scaleY(2)}
+#trilho .marcas i.aqui{background:var(--marca);transform:scaleY(2)}
+
+/* ───────────────────────── o pé ───────────────────────── */
+
+#pe{position:fixed;left:0;right:0;bottom:0;height:76px;z-index:30;
+  display:flex;align-items:center;gap:18px;padding:0 40px;
+  background:linear-gradient(transparent,var(--preto) 55%)}
+#pe .rod{font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--sombra)}
+#pe .nav{margin-left:auto;display:flex;gap:10px;align-items:center}
+.bt{font-family:var(--sans);font-size:12.5px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;border:1px solid var(--linha2);background:none;
+  color:var(--nevoa);padding:13px 22px;cursor:pointer;transition:.2s}
+.bt:hover{color:var(--gelo);border-color:var(--nevoa)}
+.bt.forte{background:var(--marca);border-color:var(--marca);color:#fff}
+.bt.forte:hover{background:#d4506c;border-color:#d4506c}
+.bt[disabled]{opacity:.28;cursor:default}
+.bt[disabled]:hover{color:var(--nevoa);border-color:var(--linha2)}
+
+/* ───────────────────────── a tela ───────────────────────── */
+
+#palco{position:absolute;inset:0;transform-style:preserve-3d}
+.tela{position:absolute;inset:0;transform-style:preserve-3d;
+  opacity:0;pointer-events:none;transition:opacity .34s ease}
+.tela.on{opacity:1;pointer-events:auto}
+
+/* o chão: a imagem médica, recuada e escurecida até virar textura */
+.fundo{position:absolute;inset:-5%;background-size:cover;background-position:center;
+  filter:saturate(.5) contrast(1.2) brightness(.6);
+  transform:translateZ(-340px) scale(1.28)}
+.veu{position:absolute;inset:0}
+.veu.esq{background:linear-gradient(95deg,rgba(8,9,11,.97) 0%,rgba(8,9,11,.93) 30%,
+  rgba(8,9,11,.55) 52%,rgba(8,9,11,.18) 78%,rgba(8,9,11,.5) 100%)}
+.veu.tudo{background:linear-gradient(rgba(8,9,11,.9),rgba(8,9,11,.94)),
+  radial-gradient(90% 70% at 50% 40%,rgba(63,159,196,.1),transparent 65%)}
+.veu.tudo.q-melhor{background:linear-gradient(rgba(8,9,11,.9),rgba(8,9,11,.95)),
+  radial-gradient(90% 70% at 50% 40%,rgba(67,181,133,.14),transparent 65%)}
+.veu.tudo.q-pior{background:linear-gradient(rgba(8,9,11,.9),rgba(8,9,11,.95)),
+  radial-gradient(90% 70% at 50% 40%,rgba(224,87,77,.14),transparent 65%)}
+
+/* ───────────────────────── plano de conteúdo ───────────────────────── */
+
+/* Sem translateZ no que carrega texto: a perspectiva ampliava o plano por
+   1,0458 e a mesma font-size saía em corpos diferentes conforme a tela. A
+   profundidade fica para o fundo e para os cartões, que não têm prosa. */
+/* O teto do plano é o espaço real entre o trilho (64 px) e o pé (76 px), com
+   uma folga de respiro — e não uma fração da tela escolhida no olho. Era por
+   isso que a capa rolava 14 px em tela baixa e não rolava em tela alta. */
+/* `ch` deriva do font-size da raiz, que nunca muda: acima de ~1064 px de
+   viewport o `76ch` sempre vencia e a peça parava de crescer — 766 px de
+   coluna numa tela de 2560. Agora a coluna cresce com a tela e o teto é de
+   medida de linha, não de pixel. */
+/* `.plano` era centrado verticalmente e `.folha` ancorada no topo: o primeiro
+   elemento de cada página caía em quinze alturas diferentes, com salto médio
+   de 63 px e máximo de 131 px ao virar a folha. Numa peça folha-a-folha o
+   título dançava na projeção a cada avanço. Agora as duas começam na mesma
+   linha. */
+.plano{position:absolute;left:var(--eixo);top:var(--teto);
+  width:clamp(34ch,42vw,64ch);
+  max-height:calc(100vh - var(--teto) - var(--rodape));
+  overflow:auto;padding-right:10px}
+.plano.centro{left:var(--eixo);width:clamp(48ch,64vw,88ch)}
+/* três colunas não cabem em 76ch: a página da prescrição pede a tela toda */
+.plano.centro:has(.grade.c3){width:min(120ch,calc(100vw - 2 * var(--eixo)))}
+.plano::-webkit-scrollbar{width:3px}
+.plano::-webkit-scrollbar-thumb{background:var(--linha2)}
+
+.marca{display:flex;align-items:center;gap:11px;
+  margin-bottom:clamp(11px,2vh,20px)}
+.marca.larga{margin-bottom:clamp(12px,2.2vh,22px);flex-wrap:wrap}
+.marca .sub-in{font-family:var(--sans);font-size:13.5px;font-weight:400;
+  color:var(--nevoa);letter-spacing:0;text-transform:none;flex-basis:100%;
+  margin-top:8px;max-width:78ch;line-height:1.5}
+/* o rótulo promovido a título: mantém a marca vermelha e o corpo do h2 */
+/* O filete sobe para cima do título, em vez de empurrá-lo 38 px para dentro:
+   era a única página do caso cujo título não começava no eixo. */
+h2.do-kicker{position:relative;padding-top:16px;
+  margin-bottom:clamp(10px,1.7vh,16px)}
+h2.do-kicker::before{content:"";position:absolute;left:0;top:0;width:26px;
+  height:2px;background:var(--marca)}
+.marca i{width:26px;height:2px;display:block;background:var(--marca)}
+.marca span{font-size:10.5px;letter-spacing:2.6px;text-transform:uppercase;
+  color:var(--nevoa);font-weight:700}
+
+h1{font-family:var(--serifa);font-size:clamp(29px,1.7vw + 2vh,52px);
+  line-height:1.05;font-weight:600;letter-spacing:-.6px;
+  margin-bottom:clamp(11px,1.9vh,18px)}
+h1 em{font-style:normal;color:var(--marca)}
+h2{font-family:var(--serifa);font-size:clamp(23px,1.3vw + 1.5vh,38px);
+  line-height:1.12;font-weight:600;letter-spacing:-.3px;
+  margin-bottom:clamp(10px,1.7vh,16px)}
+h3{font-family:var(--sans);font-size:11px;letter-spacing:1.9px;
+  text-transform:uppercase;color:var(--nevoa);font-weight:800;
+  margin:22px 0 10px}
+
+p{font-family:var(--serifa);font-size:clamp(18.5px,.46vw + 1.58vh,24px);
+  line-height:1.52;color:#c8d1da;margin-bottom:clamp(9px,1.4vh,15px)}
+p:last-child{margin-bottom:0}
+p.lede{font-size:clamp(21px,.55vw + 1.78vh,27px);line-height:1.45;color:#dbe2e9}
+b,strong{color:var(--gelo);font-weight:600}
+em,i{font-style:italic}
+ul,ol{margin:0 0 14px 20px;font-family:var(--serifa);font-size:17.5px;
+  line-height:1.5;color:#c3ccd6}
+li{margin-bottom:7px}
+
+/* números grandes, na cor do sistema */
+.nums{display:flex;gap:0;border-top:1px solid var(--linha);
+  border-bottom:1px solid var(--linha);margin:22px 0}
+.nums div{padding:clamp(9px,1.6vh,15px) 26px clamp(9px,1.6vh,15px) 0;margin-right:26px;
+  border-right:1px solid var(--linha)}
+.nums div:last-child{border-right:none;margin-right:0}
+.nums b{display:block;font-size:clamp(21px,2.9vh,27px);font-weight:700;
+  line-height:1;
+  font-variant-numeric:tabular-nums}
+.nums span{display:block;font-size:12px;letter-spacing:1.4px;
+  text-transform:uppercase;color:var(--fumaca);margin-top:6px}
+.n-via b{color:var(--via)} .n-pulmao b{color:var(--pulmao)}
+.n-rim b{color:var(--rim)} .n-pele b{color:var(--pele)}
+.n-nervo b{color:var(--nervo)} .n-sangue b{color:var(--sangue)}
+.n-geral b{color:var(--gelo)}
+
+/* territórios */
+.terrs{display:grid;gap:0 26px;margin-top:6px;
+  font-size:clamp(13px,1.55vh,15px)}
+.terrs.c1{grid-template-columns:1fr}
+.terrs.c2{grid-template-columns:1fr 1fr}
+.terr{display:grid;grid-template-columns:11px 1fr;gap:12px;
+  padding:clamp(6px,1.2vh,11px) 0;border-top:1px solid var(--linha);
+  align-items:start;
+  transition:transform .2s}
+.terr:hover{transform:translateZ(16px) translateX(3px)}
+.terr i{width:9px;height:9px;border-radius:50%;margin-top:6px}
+.terr b{display:block;font-family:var(--sans);font-size:10px;
+  letter-spacing:1.7px;text-transform:uppercase;font-weight:800;margin-bottom:4px}
+.terr span{display:block;font-family:var(--serifa);
+  font-size:clamp(13px,1.6vh,15.5px);line-height:1.36;color:#b6c0cb}
+.t-via i{background:var(--via)} .t-via b{color:var(--via)}
+.t-pulmao i{background:var(--pulmao)} .t-pulmao b{color:var(--pulmao)}
+.t-rim i{background:var(--rim)} .t-rim b{color:var(--rim)}
+.t-pele i{background:var(--pele)} .t-pele b{color:var(--pele)}
+.t-nervo i{background:var(--nervo)} .t-nervo b{color:var(--nervo)}
+.t-sangue i{background:var(--sangue)} .t-sangue b{color:var(--sangue)}
+.t-geral i{background:var(--geral)} .t-geral b{color:var(--geral)}
+
+/* quadro */
+.qd{border-left:3px solid var(--geral);
+  padding:clamp(9px,1.4vh,14px) 0 clamp(9px,1.4vh,14px) 18px;
+  margin:clamp(11px,1.8vh,18px) 0;
+  background:linear-gradient(90deg,rgba(255,255,255,.04),transparent 70%)}
+.qd>b{display:block;font-family:var(--sans);font-size:10.5px;letter-spacing:1.8px;
+  text-transform:uppercase;font-weight:800;margin-bottom:8px;color:var(--nevoa)}
+.qd p{font-size:clamp(17px,.42vw + 1.4vh,21px);line-height:1.5}
+.q-via{border-left-color:var(--via)} .q-via>b{color:var(--via)}
+.q-pulmao{border-left-color:var(--pulmao)} .q-pulmao>b{color:var(--pulmao)}
+.q-rim{border-left-color:var(--rim)} .q-rim>b{color:var(--rim)}
+.q-pele{border-left-color:var(--pele)} .q-pele>b{color:var(--pele)}
+.q-nervo{border-left-color:var(--nervo)} .q-nervo>b{color:var(--nervo)}
+.q-sangue{border-left-color:var(--sangue)} .q-sangue>b{color:var(--sangue)}
+
+/* tabela */
+.tb{width:100%;border-collapse:collapse;margin:clamp(10px,1.6vh,16px) 0;
+  font-family:var(--sans);
+  font-size:13.5px}
+.tb th{text-align:left;font-size:12px;letter-spacing:1.3px;
+  text-transform:uppercase;color:var(--fumaca);font-weight:800;
+  padding:0 14px 8px 0;border-bottom:1px solid var(--linha2)}
+.tb td{font-size:clamp(15px,1.85vh,18px);
+  padding:clamp(7px,1.25vh,12px) 16px clamp(7px,1.25vh,12px) 0;
+  border-bottom:1px solid var(--linha);
+  color:#b6c0cb;line-height:1.42;vertical-align:top}
+
+/* ───────────────────────── a lâmina ───────────────────────── */
+
+.lamina{position:absolute;right:5.5vw;top:50%;width:31vw;height:60vh;
+  transform:translateY(-50%) rotateY(-11deg) translateZ(30px);
+  box-shadow:var(--fundo2),0 0 0 1px var(--linha);
+  overflow:hidden;background:#000}
+.lamina img{width:100%;height:100%;object-fit:cover;opacity:.94}
+.lamina .cap{position:absolute;left:0;right:0;bottom:0;padding:18px 20px;
+  background:linear-gradient(transparent,rgba(8,9,11,.95) 52%);
+  font-size:11.5px;line-height:1.5;color:var(--nevoa)}
+.lamina .cap b{display:block;color:var(--gelo);font-size:13.5px;
+  margin-bottom:4px;letter-spacing:.3px;font-family:var(--sans);font-weight:700}
+.lamina .cap .cr{display:block;color:var(--sombra);font-size:10.5px;margin-top:4px}
+
+/* ───────────────────────── pedido de exames ───────────────────────── */
+
+.folha{position:absolute;inset:0;
+  padding:var(--teto) var(--eixo) var(--rodape);display:flex;
+  flex-direction:column;transform-style:preserve-3d}
+.folha h2{max-width:24ch;margin-bottom:8px}
+.folha .sub{font-family:var(--sans);font-size:clamp(15.5px,2vh,18.5px);
+  color:var(--nevoa);margin-bottom:clamp(13px,2.6vh,26px);max-width:70ch;
+  line-height:1.5}
+
+/* Catálogo de 30 exames com corpo de leitura não cabe em tela baixa, e a
+   troca certa é rolar o catálogo, não encolher a letra. O contador fica preso
+   embaixo, para não sumir com a rolagem. */
+.grupos{display:grid;grid-template-columns:repeat(auto-fill,minmax(244px,1fr));
+  gap:clamp(10px,1.1vw,16px);
+  align-content:start;transform-style:preserve-3d;overflow:auto;flex:1;
+  padding-bottom:10px;
+  mask-image:linear-gradient(#000 calc(100% - 26px),transparent)}
+.grupos::-webkit-scrollbar{height:3px}
+.grupos::-webkit-scrollbar-thumb{background:var(--linha2)}
+.gr{border:1px solid var(--linha);
+  padding:clamp(9px,1.5vh,14px) clamp(10px,1vw,14px) clamp(4px,.8vh,7px);
+  background:rgba(255,255,255,.035);
+  transition:transform .24s cubic-bezier(.2,.7,.3,1),box-shadow .24s;
+  transform-style:preserve-3d;align-self:start}
+.gr:hover{transform:translateZ(24px) translateY(-3px);box-shadow:var(--fundo2)}
+.gr>b{display:flex;align-items:center;gap:8px;font-size:10.5px;
+  letter-spacing:1.7px;text-transform:uppercase;font-weight:800;
+  margin-bottom:clamp(6px,1.1vh,10px);color:var(--nevoa)}
+.gr>b i{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+.gr.g-via>b{color:var(--via)} .gr.g-via>b i{background:var(--via)}
+.gr.g-via{border-top:2px solid var(--via)}
+.gr.g-pulmao>b{color:var(--pulmao)} .gr.g-pulmao>b i{background:var(--pulmao)}
+.gr.g-pulmao{border-top:2px solid var(--pulmao)}
+.gr.g-rim>b{color:var(--rim)} .gr.g-rim>b i{background:var(--rim)}
+.gr.g-rim{border-top:2px solid var(--rim)}
+.gr.g-pele>b{color:var(--pele)} .gr.g-pele>b i{background:var(--pele)}
+.gr.g-pele{border-top:2px solid var(--pele)}
+.gr.g-nervo>b{color:var(--nervo)} .gr.g-nervo>b i{background:var(--nervo)}
+.gr.g-nervo{border-top:2px solid var(--nervo)}
+.gr.g-sangue>b{color:var(--sangue)} .gr.g-sangue>b i{background:var(--sangue)}
+.gr.g-sangue{border-top:2px solid var(--sangue)}
+.gr.g-geral{border-top:2px solid var(--geral)}
+
+.it{display:flex;gap:11px;align-items:flex-start;padding:clamp(5px,.85vh,9px) 0;
+  border-top:1px solid rgba(255,255,255,.06);cursor:pointer;user-select:none}
+.it:first-of-type{border-top:none}
+.cx{width:17px;height:17px;border:1.5px solid var(--fumaca);flex:0 0 auto;
+  margin-top:3px;position:relative;transition:.15s}
+.it:hover .cx{border-color:var(--gelo)}
+.it.on .cx{background:var(--gelo);border-color:var(--gelo)}
+.it.on .cx::after{content:"";position:absolute;left:5px;top:1px;width:5px;
+  height:10px;border:solid var(--preto);border-width:0 2px 2px 0;
+  transform:rotate(42deg)}
+/* Marcado não é certo. O verde de acerto dizia as duas coisas na mesma peça,
+   e na tela do pedido de exames ele parecia aprovar a escolha. */
+.it .n{font-family:var(--serifa);font-size:clamp(16.5px,2.15vh,20.5px);
+  line-height:1.26;color:#d2dae2}
+.it.on .n{color:var(--gelo)}
+.it .d{display:block;font-family:var(--sans);
+  font-size:clamp(10px,1.25vh,11.5px);color:var(--fumaca);margin-top:3px;
+  line-height:1.35}
+
+/* O item além do teto não some nem fica proibido: fica recuado e inerte. Ver
+   o que se está deixando de fora é parte da decisão — e por isso ele não pode
+   ser esmaecido com `opacity`, que levava o nome do exame a 2,7:1 e a
+   descrição a 1,87:1 de contraste. Recuo por cor sólida, medida. */
+.it.bloq{cursor:default}
+.it.bloq .n{color:#7d858f}
+.it.bloq .d{color:#6a727c}
+.it.bloq .cx{border-color:#4b525b}
+.it.bloq:hover .cx{border-color:#4b525b}
+.conta{font-family:var(--sans);font-size:12.5px;color:var(--nevoa);
+  letter-spacing:.3px}
+.conta b{color:var(--gelo);font-size:16px;font-weight:700}
+
+/* ───────────────────────── resultados ───────────────────────── */
+
+/* sem overflow: numa peça página a página, o que não cabe vira outra folha */
+/* Coluna, não grade. Em grade, a linha inteira ganha a altura do cartão mais
+   alto: o sedimento, que traz imagem, empurrava o vizinho de 60 px para 380 e
+   abria um buraco no meio da tela — e ainda jogava o sexto cartão para fora.
+   Em colunas, cada cartão ocupa a altura que tem e a folha fecha. */
+.res{display:block;column-width:308px;column-gap:clamp(11px,1.2vw,18px);
+  flex:0 1 auto;min-height:0;margin-block:auto}
+.rc{break-inside:avoid;-webkit-column-break-inside:avoid;
+  margin:0 0 clamp(9px,1.3vh,16px);display:block;width:100%}
+.res::-webkit-scrollbar{width:3px}
+.res::-webkit-scrollbar-thumb{background:var(--linha2)}
+.rc{border:1px solid var(--linha);border-left:2px solid var(--linha2);
+  padding:clamp(9px,1.3vh,14px) 16px;background:rgba(255,255,255,.028);
+  transition:box-shadow .22s}
+.rc:hover{box-shadow:var(--fundo1)}
+.rc.alt{border-left-color:var(--alerta)}
+.rc>b{display:block;font-family:var(--sans);font-size:13px;font-weight:700;
+  letter-spacing:.2px;margin-bottom:6px;color:var(--gelo)}
+.rc.alt>b{color:var(--alerta)}
+.rc .v{font-family:var(--sans);font-size:clamp(18.5px,2.3vh,22px);
+  line-height:1.42;color:var(--gelo)}
+.rc .v b{color:var(--gelo)}
+.rc .v .ln{display:block;padding-left:13px;position:relative;
+  font-size:clamp(16.5px,2.05vh,19.5px);line-height:1.4;margin-bottom:5px}
+.rc .v .ln::before{content:"";position:absolute;left:0;top:.62em;width:5px;
+  height:1px;background:var(--linha2)}
+.rc .rf{display:block;font-size:11px;color:var(--sombra);margin-top:6px;
+  letter-spacing:.2px}
+.rc figure{margin:12px -16px -14px;background:#000}
+/* Medido: a foto tinha brilho médio 196 e o achado clínico ao lado, 56. Numa
+   sala escura o olho vai para o mais claro — ia para uma imagem ilustrativa
+   do Wikimedia enquanto o professor falava do título do ANCA. */
+/* `contain`, não `cover`: radiografia cortada pelas bordas perde o seio
+   costofrênico, que é metade do que se olha nela. */
+.rc figure img{width:100%;height:clamp(110px,15vh,182px);object-fit:contain;
+  display:block;filter:brightness(.72) contrast(1.06) saturate(.85)}
+.rc figcaption{padding:8px 16px 10px;font-size:10.5px;line-height:1.4;
+  color:var(--fumaca)}
+.vazio{font-family:var(--serifa);font-size:19px;color:var(--nevoa);
+  line-height:1.55;max-width:52ch;padding:30px 0}
+
+/* ───────────────────────── pergunta ───────────────────────── */
+
+/* Ler a pergunta inteira sem rolar é requisito, não conforto: numa sala, quem
+   rola a página perde as alternativas de vista antes de comparar, e a última
+   alternativa — que estava cortada — deixa de existir na discussão. Por isso
+   tudo aqui é medido em altura de tela: o enunciado, o intervalo entre as
+   alternativas e o corpo de cada uma encolhem juntos quando a tela é baixa. */
+.folha.q{padding-top:clamp(74px,9vh,96px);padding-bottom:clamp(84px,10vh,96px)}
+.enun{font-family:var(--serifa);font-size:clamp(23px,1.1vw + 1.78vh,38px);
+  line-height:1.24;font-weight:600;max-width:46ch;margin-bottom:6px}
+.qdica{font-family:var(--sans);font-size:11.5px;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--fumaca);
+  margin-bottom:clamp(10px,1.8vh,22px)}
+/* Antes de confirmar, rolar é proibido: quem não vê as dez alternativas ao
+   mesmo tempo não consegue comparar. Depois de confirmar, os comentários são
+   texto sequencial e podem rolar — e é o que permite que eles tenham corpo de
+   leitura em vez dos 9,8 px a que estavam reduzidos. */
+.alts{list-style:none;margin:0;display:flex;flex-direction:column;
+  gap:clamp(7px,1.1vh,15px);
+  max-width:126ch;overflow:hidden;flex:1;transform-style:preserve-3d;
+  padding-bottom:4px}
+.alts.feita{overflow:auto;padding-right:8px}
+.alts::-webkit-scrollbar{width:3px}
+.alts::-webkit-scrollbar-thumb{background:var(--linha2)}
+.alts li{display:grid;grid-template-columns:30px minmax(0,1fr);
+  gap:clamp(10px,1.1vw,16px);align-items:start;
+  border:1px solid var(--linha);
+  padding:clamp(8px,1.3vh,18px) clamp(14px,1.4vw,24px);cursor:pointer;
+  background:rgba(255,255,255,.035);
+  transition:transform .2s cubic-bezier(.2,.7,.3,1),box-shadow .2s,border-color .2s}
+.alts li:hover{transform:translateZ(18px);border-color:var(--linha2);
+  box-shadow:var(--fundo1)}
+.alts .k{font-family:var(--sans);font-size:13px;font-weight:800;
+  color:var(--fumaca);letter-spacing:1px;padding-top:2px}
+.alts .tx{font-family:var(--serifa);font-size:clamp(18.5px,.46vw + 1.55vh,25px);
+  line-height:1.28;color:#d2dae2}
+/* Depois de confirmar, o comentário vai para uma TERCEIRA coluna, ao lado da
+   alternativa, em vez de crescer por baixo dela. Empilhado, cinco comentários
+   dobravam a altura da lista e devolviam a rolagem que a pergunta acabou de
+   perder. */
+.alts .cm{display:none;font-family:var(--sans);
+  font-size:clamp(15.5px,.33vw + 1.28vh,19px);line-height:1.46;
+  color:var(--nevoa)}
+.alts.feita li{grid-template-columns:30px minmax(0,1fr) minmax(0,1.02fr)}
+.alts.feita .tx{font-size:clamp(17.5px,.44vw + 1.45vh,23px)}
+.alts.feita li{padding-block:clamp(7px,1.1vh,15px)}
+.alts.feita{gap:clamp(6px,.9vh,12px)}
+.alts.feita .cm{padding-left:clamp(12px,1.2vw,20px);
+  border-left:1px solid var(--linha)}
+.alts.feita li{cursor:default}
+.alts.feita li:hover{transform:none;box-shadow:none}
+.alts.feita .cm{display:block}
+.alts.feita li{position:relative}
+.alts.feita li.certa{border-color:var(--certo);
+  background:rgba(90,168,216,.07);box-shadow:inset 3px 0 0 var(--certo)}
+.alts.feita li.certa .k{color:var(--certo)}
+.alts.feita li.certa .k::after{content:"certa";display:block;font-size:9px;
+  letter-spacing:1.2px;margin-top:4px;font-weight:800}
+.alts.feita li.errada.marcada{border-color:var(--alerta);
+  box-shadow:inset 3px 0 0 var(--alerta)}
+.alts.feita li.errada.marcada .k{color:var(--alerta)}
+.alts.feita li.errada.marcada .k::after{content:"sua";display:block;
+  font-size:9px;letter-spacing:1.2px;margin-top:4px;font-weight:800}
+.alts.feita li.errada:not(.marcada) .tx{color:#a9b1bb}
+.alts.feita li.errada:not(.marcada) .cm{color:#96a0ab}
+/* Confirmar é um gesto à parte: marcar ainda é discussão, confirmar é a
+   resposta. Enquanto não se confirma, dá para trocar de alternativa. */
+.conf{align-self:flex-start;margin-top:18px;font-family:var(--sans);
+  font-size:12.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  background:var(--marca);border:1px solid var(--marca);color:#fff;
+  padding:13px 26px;cursor:pointer;transition:.2s}
+.conf:hover{background:#d4506c;border-color:#d4506c}
+.conf[disabled]{background:none;border-color:var(--linha2);color:var(--fumaca);
+  cursor:default}
+.alts li.marcada:not(.feita){border-color:var(--nevoa)}
+.alts:not(.feita) li.marcada{border-color:var(--gelo);
+  background:linear-gradient(160deg,rgba(255,255,255,.1),rgba(255,255,255,.03))}
+.resposta{display:none;font-family:var(--serifa);font-size:20px;
+  color:var(--gelo);margin:0 0 18px;padding-left:16px;
+  border-left:3px solid var(--certo)}
+.resposta.on{display:block}
+
+/* ───────────────────────── bifurcação ───────────────────────── */
+
+.cams{display:grid;gap:clamp(8px,1.3vh,16px);align-content:start;
+  flex:0 1 auto;min-height:0;transform-style:preserve-3d;overflow:auto;
+  max-width:118ch;margin-block:auto}
+.cam{border:1px solid var(--linha);border-left:3px solid var(--marca);
+  padding:clamp(11px,1.8vh,20px) clamp(16px,1.6vw,24px);cursor:pointer;
+  background:rgba(255,255,255,.035);
+  transition:transform .24s cubic-bezier(.2,.7,.3,1),box-shadow .24s}
+.cam:hover{transform:translateZ(30px) translateX(5px);
+  box-shadow:var(--fundo2)}
+.cam .l{font-family:var(--sans);font-size:11px;font-weight:800;
+  letter-spacing:1.8px;color:var(--marca);margin-bottom:5px;display:block}
+.cam .r{font-family:var(--serifa);font-size:clamp(19.5px,.54vw + 1.7vh,26px);
+  line-height:1.26;color:var(--gelo);display:block}
+.cam .c{display:none;font-family:var(--sans);
+  font-size:clamp(15.5px,.31vw + 1.28vh,18.5px);line-height:1.5;
+  color:var(--nevoa);margin-top:clamp(7px,1.2vh,12px);
+  padding-top:clamp(7px,1.2vh,12px);border-top:1px solid var(--linha)}
+.cams.feita .cam{cursor:default}
+.cams.feita .cam:hover{transform:none;box-shadow:none}
+.cams.feita .cam .c{display:block}
+.cams.feita .cam:not(.escolhido){border-left-color:var(--linha2);
+  background:rgba(255,255,255,.018)}
+.cams.feita .cam:not(.escolhido) .l{color:var(--fumaca)}
+.cams.feita .cam:not(.escolhido) .r{color:#aeb6c0}
+.cams.feita .cam:not(.escolhido) .c{color:#98a1ac}
+.cams.feita .cam.escolhido{border-left-width:5px}
+.cams.feita .cam.escolhido .l::after{content:" — escolhido"}
+
+/* ───────────────────────── desfecho ───────────────────────── */
+
+.fim{position:absolute;inset:0;padding:96px var(--eixo) 96px;display:flex;
+  flex-direction:column;justify-content:center;transform-style:preserve-3d}
+.fim .caixa{max-width:78ch}
+.ress{font-family:var(--sans);font-size:clamp(9.5px,1.15vh,11px);
+  line-height:1.45;color:var(--sombra);
+  margin-top:clamp(10px,1.9vh,20px);padding-top:clamp(8px,1.4vh,14px);
+  border-top:1px solid var(--linha);max-width:62ch}
+.fim h1{border-bottom:4px solid var(--linha2);padding-bottom:20px;
+  margin-bottom:22px}
+.fim.melhor h1{border-bottom-color:var(--certo)}
+.fim.medio h1{border-bottom-color:var(--atencao)}
+.fim.pior h1{border-bottom-color:var(--alerta)}
+.porque{margin:24px 0;padding:18px 0 0;border-top:1px solid var(--linha)}
+.porque>b{display:block;font-family:var(--sans);font-size:10.5px;
+  letter-spacing:1.8px;text-transform:uppercase;color:var(--nevoa);
+  font-weight:800;margin-bottom:9px}
+
+/* revisão do fim */
+.rev{max-width:82ch;overflow:auto;flex:1;padding-top:4px}
+.rev::-webkit-scrollbar{width:3px}
+.rev::-webkit-scrollbar-thumb{background:var(--linha2)}
+.rev .li{padding:14px 0;border-bottom:1px solid var(--linha)}
+.rev .li b{font-family:var(--serifa);font-size:19px;color:var(--gelo);
+  display:block;margin-bottom:5px}
+.rev .li p{font-family:var(--sans);font-size:13.5px;color:var(--nevoa);
+  line-height:1.5;margin:0}
+.rev .ok{font-family:var(--serifa);font-size:21px;color:var(--certo);
+  padding:16px 0}
+
+/* ───────────────────────── projetor pequeno ───────────────────────── */
+
+@media (max-width:1280px){
+  .plano{width:min(52ch,52vw)}
+  .lamina{width:34vw;height:52vh}
+  .grupos{grid-template-columns:repeat(2,1fr)}
+  .folha{padding-left:4vw;padding-right:4vw}
+}
+
+/* ───────────────────── o boneco e a figura anotada ───────────────────── */
+
+/* O boneco não é ilustração: é o resumo espacial do exame físico. Cinco
+   territórios acometidos, listados em prosa, exigem que o leitor monte o mapa
+   na cabeça; desenhados, o mapa já está montado, e a pergunta seguinte — o que
+   esses cinco compartilham — passa a ter uma figura para apontar. */
+.corpo{display:grid;grid-template-columns:auto minmax(0,1fr);
+  gap:clamp(18px,2.4vw,34px);align-items:center;margin-top:6px}
+.corpo svg{display:block;height:var(--ch,340px);width:auto}
+.corpo .lg{display:flex;flex-direction:column}
+.corpo .lt{display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;
+  align-items:baseline;padding:clamp(6px,1.1vh,11px) 0;
+  border-top:1px solid var(--linha)}
+.corpo .lt:first-child{border-top:none}
+.corpo .lt b{font-family:var(--sans);font-size:12px;font-weight:800;
+  text-align:center;line-height:1.5;border-radius:50%;
+  color:#0b0e12;background:var(--geral)}
+.corpo .lt .nm{display:block;font-family:var(--sans);font-size:10.5px;
+  letter-spacing:1.7px;text-transform:uppercase;font-weight:700;
+  margin-bottom:3px}
+.corpo .lt .ds{display:block;font-family:var(--serifa);
+  font-size:clamp(14px,.35vw + 1vh,16.5px);line-height:1.4;color:var(--nevoa)}
+.corpo .lt.t-via b{background:var(--via)}       .corpo .lt.t-via .nm{color:var(--via)}
+.corpo .lt.t-pulmao b{background:var(--pulmao)} .corpo .lt.t-pulmao .nm{color:var(--pulmao)}
+.corpo .lt.t-rim b{background:var(--rim)}       .corpo .lt.t-rim .nm{color:var(--rim)}
+.corpo .lt.t-pele b{background:var(--pele)}     .corpo .lt.t-pele .nm{color:var(--pele)}
+.corpo .lt.t-nervo b{background:var(--nervo)}   .corpo .lt.t-nervo .nm{color:var(--nervo)}
+.corpo .lt.t-sangue b{background:var(--sangue)} .corpo .lt.t-sangue .nm{color:var(--sangue)}
+
+/* A fotografia com seta substitui o esquema autoral onde a imagem real existe.
+   Duas camadas em cada traço — uma escura larga por baixo, a clara fina por
+   cima — porque anotação de traço único desaparece assim que passa de um campo
+   claro para um escuro, e em histologia isso acontece a cada 20 pixels. */
+.anot{margin:clamp(10px,1.6vh,18px) 0 0;background:#05070a;
+  border:1px solid var(--linha)}
+.anot svg{display:block;width:100%;height:auto;max-height:52vh}
+.anot image{filter:brightness(.9) saturate(.92)}
+.anot .an .fio{fill:none;stroke-linecap:round}
+.anot .an .halo{stroke:#0a0c10;stroke-width:9;stroke-opacity:.8}
+.anot .an .luz{stroke:#f0c260;stroke-width:3.6}
+.anot .an .ponta{fill:#f0c260;stroke:#0a0c10;stroke-width:2.4;
+  paint-order:stroke}
+.anot .an .rot{font-family:-apple-system,"Segoe UI",Arial,sans-serif;
+  font-size:34px;font-weight:700;letter-spacing:.3px;fill:#fbeed2;
+  stroke:#0a0c10;stroke-width:7;paint-order:stroke}
+.anot .an{stroke-linejoin:round}
+.anot figcaption{padding:11px 16px 13px;font-family:var(--sans);font-size:11.5px;
+  line-height:1.5;color:var(--fumaca);border-top:1px solid var(--linha)}
+.anot figcaption b{display:block;color:var(--gelo);font-size:12px;
+  letter-spacing:.3px;margin-bottom:3px}
+.anot figcaption .cr{display:block;margin-top:5px;color:var(--sombra);
+  font-size:10.5px}
+
+/* ───────────────────── a bifurcação, dita em voz alta ───────────────── */
+
+/* Sem esta linha o caso ramificava sem que ninguém visse: as justificativas
+   abriam, a página virava, e nada dizia que o rumo tinha mudado. */
+.forca{display:flex;align-items:center;gap:12px;
+  margin-top:clamp(10px,1.7vh,18px);padding-top:clamp(9px,1.5vh,16px);
+  border-top:1px solid var(--linha);flex:0 0 auto}
+.forca i{width:26px;height:4px;background:var(--linha2);display:block}
+.forca i.on{background:var(--marca);height:6px}
+.forca span{font-family:var(--sans);font-size:12.5px;line-height:1.5;
+  color:var(--nevoa);max-width:82ch}
+
+/* ─────────────────── blocos lado a lado ─────────────────── */
+
+/* Altura é o recurso escasso de uma peça que não rola. */
+.grade{display:grid;gap:clamp(9px,1.2vw,16px);align-items:start;
+  margin-top:clamp(6px,1vh,12px)}
+.grade.c2{grid-template-columns:repeat(2,minmax(0,1fr))}
+/* quando a primeira coluna é a figura, ela manda: microscopia lida em meia
+   coluna de 370 px é decoração, não evidência */
+.grade.c2:has(>div>.anot:first-child){grid-template-columns:1.3fr 1fr}
+.grade.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grade>div>*:first-child{margin-top:0}
+.grade .qd{margin:0 0 clamp(4px,.7vh,8px)}
+.grade>div>.qd:last-child{margin-bottom:0}
+.grade .anot{margin:0}
+@media (max-width:900px){.grade.c2,.grade.c3{grid-template-columns:1fr}}
+
+/* Datashow de sala de aula costuma ser 1280×720. Nessa altura a margem
+   generosa vira rolagem: ela encolhe, e o conteúdo ganha a largura de volta —
+   menos quebra de linha por coluna é menos altura. */
+@media (max-height:820px){
+  :root{--eixo:52px}
+  #trilho{height:54px;padding:0 26px}
+  #pe{height:64px}
+  .rc figure figcaption{display:none}
+}
+
+/* ───────────────────────── a capa ───────────────────────── */
+
+/* Título e imagem. A imagem sobe do chão: aqui ela não é textura, é a
+   fotografia de abertura. */
+.capa-fundo{filter:brightness(.62) saturate(.9) blur(0);transform:none;
+  background-position:center right;background-size:cover}
+.veu.capa-veu{background:
+  linear-gradient(100deg,var(--preto) 0 26%,rgba(8,9,11,.86) 46%,
+  rgba(8,9,11,.25) 70%,rgba(8,9,11,.55) 100%)}
+.abertura{position:absolute;left:var(--eixo);bottom:clamp(96px,14vh,150px);
+  width:min(46ch,52vw)}
+.abertura h1{font-size:clamp(34px,2.1vw + 2.4vh,62px);margin-bottom:0}
+.abertura .selo{margin-top:clamp(14px,2.4vh,22px);padding-top:clamp(11px,1.8vh,16px);
+  border-top:1px solid var(--linha);font-family:var(--sans);font-size:11px;
+  letter-spacing:2.2px;text-transform:uppercase;color:var(--sombra);
+  font-weight:700}
+
+/* ───────────────────────── a lupa ───────────────────────── */
+
+.lupa{position:fixed;inset:0;z-index:80;background:rgba(4,5,7,.94);
+  display:flex;align-items:center;justify-content:center;
+  padding:clamp(40px,7vh,72px) clamp(24px,5vw,90px);cursor:zoom-out;
+  animation:surge .18s ease-out}
+@keyframes surge{from{opacity:0}to{opacity:1}}
+.lupa .quadro{max-width:min(1500px,94vw);max-height:88vh;overflow:auto;
+  cursor:default}
+.lupa figure{margin:0;background:#05070a;border:1px solid var(--linha)}
+.lupa figure img{display:block;width:auto;max-width:100%;
+  max-height:calc(88vh - 130px);object-fit:contain;filter:none;height:auto}
+.lupa figure svg{display:block;width:auto;max-width:100%;
+  max-height:calc(88vh - 130px)}
+.lupa figcaption,.lupa .cap{display:block;padding:16px 22px 18px;
+  font-family:var(--sans);font-size:13px;line-height:1.55;color:var(--nevoa);
+  border-top:1px solid var(--linha);max-width:none;position:static;
+  background:none;transform:none;width:auto}
+.lupa .cap b{display:block;color:var(--gelo);font-size:14px;margin-bottom:5px}
+.lupa .cr{display:block;margin-top:7px;color:var(--sombra);font-size:11.5px}
+.lupa .fechar{position:fixed;top:20px;right:26px;font-family:var(--sans);
+  font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;
+  background:none;border:1px solid var(--linha2);color:var(--nevoa);
+  padding:10px 18px;cursor:pointer;transition:.18s}
+.lupa .fechar:hover{border-color:var(--gelo);color:var(--gelo)}
+#palco figure.amplia{cursor:zoom-in}
+/* `position:relative` só onde a figura AINDA NÃO é posicionada. A regra
+   anterior era `#palco figure.amplia{position:relative}` sem ressalva, e o
+   seletor com id vencia por especificidade o `.lamina{position:absolute}`:
+   a lâmina saía do canto direito e caía por cima da prosa, na primeira
+   página do caso. */
+#palco figure.amplia:not(.lamina){position:relative}
+#palco figure.amplia::after{content:"⤢";position:absolute;right:9px;bottom:9px;
+  width:26px;height:26px;line-height:26px;text-align:center;font-size:13px;
+  background:rgba(8,9,11,.72);color:var(--nevoa);opacity:0;transition:opacity .2s;
+  border:1px solid var(--linha);z-index:2}
+#palco figure.amplia:hover::after{opacity:1}
+
+/* O botão que revela o laudo. Ele fica no lugar exato onde o texto vai
+   aparecer, para que a folha não pule quando o laudo abre. */
+.verlaudo{margin-top:10px;font-family:var(--sans);font-size:11px;font-weight:700;
+  letter-spacing:1.6px;text-transform:uppercase;background:none;
+  border:1px solid var(--linha2);color:var(--nevoa);padding:9px 14px;
+  cursor:pointer;transition:.18s;width:100%}
+.verlaudo:hover{border-color:var(--gelo);color:var(--gelo);
+  background:rgba(255,255,255,.05)}
+.rc figure{margin:12px -16px 0;background:#000}
+
+/* O exame que ainda não se justifica: visível, travado, e com o motivo. */
+.it.trava{cursor:not-allowed}
+.it.trava .n{color:#6f767f}
+.it.trava .cx{border-color:#3c434b;background:repeating-linear-gradient(
+  -45deg,transparent 0 3px,rgba(255,255,255,.07) 3px 6px)}
+.it.trava .trv{color:var(--atencao);margin-top:4px;font-style:italic}
+
+/* ───────────────────── o balanço da condução ───────────────────── */
+
+.bal{margin-top:clamp(10px,1.6vh,18px);display:flex;flex-direction:column;
+  min-height:0;flex:1}
+.placar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  border-top:1px solid var(--linha);border-bottom:1px solid var(--linha)}
+.placar>div{padding:clamp(11px,1.8vh,18px) 22px clamp(11px,1.8vh,18px) 0;
+  border-right:1px solid var(--linha)}
+.placar>div:last-child{border-right:none}
+.placar b{display:block;font-size:clamp(24px,3.4vh,34px);font-weight:700;
+  line-height:1;font-variant-numeric:tabular-nums;color:var(--gelo)}
+.placar span{display:block;font-size:10.5px;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--fumaca);margin-top:7px;font-weight:700}
+.placar .ideal b{color:var(--certo)}
+.cons{margin-top:clamp(10px,1.6vh,18px);display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:clamp(9px,1.3vh,16px);overflow:auto;min-height:0}
+.cn{border-left:3px solid var(--alerta);padding:12px 0 12px 16px}
+.cn.limpo{border-left-color:var(--certo)}
+.cn>b{display:block;font-family:var(--sans);font-size:12.5px;font-weight:700;
+  color:var(--gelo);margin-bottom:5px;line-height:1.35}
+.cn .pr{display:block;font-family:var(--sans);font-size:11px;font-weight:800;
+  letter-spacing:1.4px;text-transform:uppercase;color:var(--alerta);
+  margin-bottom:7px}
+.cn p{font-size:clamp(15px,.31vw + 1.18vh,18px);line-height:1.46}
+.placar .grave b{color:var(--alerta)}
+.placar .grave span{color:var(--alerta)}
+
+/* A pergunta de múltipla seleção do New England tem oito, nove, dez itens —
+   e cada item é o nome de uma doença, não uma frase. Em coluna única ela não
+   cabe; em duas, sobra espaço. */
+.alts.muitas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  align-content:start;gap:clamp(6px,.9vh,12px) clamp(10px,1.2vw,18px)}
+.alts.muitas li{grid-template-columns:26px minmax(0,1fr)}
+.alts.muitas .tx{font-size:clamp(17px,.4vw + 1.4vh,22px)}
+.alts.muitas.feita li{grid-template-columns:26px minmax(0,1fr)}
+.alts.muitas.feita .cm{grid-column:2;padding-left:0;border-left:none;
+  margin-top:7px;padding-top:7px;border-top:1px solid var(--linha);
+  font-size:clamp(15px,.31vw + 1.24vh,18px);line-height:1.45}
+.alts.muitas.feita li{padding-block:clamp(6px,.85vh,11px)}
+.alts.muitas.feita{gap:clamp(5px,.7vh,9px) clamp(10px,1.2vw,18px)}
+.alts.muitas.feita .tx{font-size:clamp(17px,.4vw + 1.4vh,22px);
+  line-height:1.26}
+@media (max-width:900px){.alts.muitas{grid-template-columns:1fr}}
+
+/* Enunciado curto e dez alternativas: o cabeçalho cede altura para a lista. */
+.folha.q.densa .enun{font-size:clamp(17px,.75vw + 1.1vh,26px);max-width:64ch;
+  margin-bottom:4px}
+.folha.q.densa .qdica{margin-bottom:clamp(7px,1.1vh,14px)}
+.folha.q.densa .marca{margin-bottom:clamp(8px,1.4vh,14px)}
+
+/* Sob a figura, só o crédito. A descrição vem no clique, com o valor. */
+.rc figcaption.soc{padding:7px 16px 9px;font-size:10.5px;color:var(--sombra)}
+.leglaudo{margin-top:9px;padding-top:9px;border-top:1px solid var(--linha);
+  font-family:var(--sans);font-size:11.5px;line-height:1.45;color:var(--fumaca)}
+
+/* Num caso que termina em óbito, contar dias de internação seria obsceno. */
+.placar.obito{grid-template-columns:1fr;border-color:var(--alerta)}
+.placar.obito .cheio{border-right:none;padding-right:0}
+.placar.obito b{color:var(--alerta);font-family:var(--serifa);
+  font-size:clamp(28px,4vh,42px);font-weight:600;letter-spacing:-.5px}
+.placar.obito span{text-transform:none;letter-spacing:0;font-weight:400;
+  font-family:var(--serifa);font-size:clamp(14px,1.7vh,17px);color:#c3ccd6;
+  line-height:1.45;max-width:80ch;margin-top:10px}
+
+/* ───────────────── sinais vitais e exame por aparelho ───────────────── */
+
+/* Os vitais num quadro, e não diluídos na prosa: ninguém volta a um parágrafo
+   para conferir a frequência respiratória discutindo o caso em pé. */
+.vit{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));
+  border-top:1px solid var(--linha);border-bottom:1px solid var(--linha);
+  margin:clamp(8px,1.4vh,16px) 0 clamp(12px,2vh,20px)}
+.vit>div{padding:clamp(9px,1.5vh,14px) 18px clamp(9px,1.5vh,14px) 0;
+  border-right:1px solid var(--linha)}
+.vit>div:last-child{border-right:none}
+.vit>div>b{display:block;font-family:var(--sans);font-size:clamp(20px,2.6vh,26px);
+  font-weight:700;line-height:1;color:var(--gelo);
+  font-variant-numeric:tabular-nums}
+.vit>div.alt>b{color:var(--alerta)}
+.vit span{display:block;font-size:9.5px;letter-spacing:1.6px;
+  text-transform:uppercase;color:var(--fumaca);margin-top:7px;font-weight:700}
+
+.tops{display:flex;flex-direction:column}
+.tops>div{padding:clamp(7px,1.2vh,11px) 0;border-top:1px solid var(--linha)}
+.tops>div:first-child{border-top:none;padding-top:0}
+/* Só o RÓTULO do aparelho leva o tratamento de maiúsculas. `b` solto pegava
+   também o negrito de dentro da prosa, e "palidez cutâneo-mucosa acentuada"
+   virava um cabeçalho no meio do parágrafo. */
+.tops>div>b{display:block;font-family:var(--sans);font-size:10.5px;
+  letter-spacing:1.9px;text-transform:uppercase;font-weight:800;
+  color:var(--nevoa);margin-bottom:5px}
+.tops p b{color:var(--gelo);font-weight:600}
+.tops p{font-size:clamp(16.5px,.39vw + 1.35vh,20.5px);line-height:1.46;
+  margin-bottom:0}
+
+/* o boneco só com os marcadores, quando o achado está na lista ao lado */
+.corpo.curto{grid-template-columns:auto auto;gap:clamp(14px,1.8vw,24px)}
+.corpo.curto .lt{grid-template-columns:20px auto;padding:clamp(4px,.8vh,7px) 0}
+.corpo.curto .lt .nm{margin-bottom:0;white-space:nowrap}
+
+/* Sistema editorial compartilhado pelas três apresentações. */
+:root{--preto:#101b22;--carvao:#16242d;--grafite:#20333e;--linha:#40545f;--linha2:#667d88;--gelo:#f4f1e8;--nevoa:#c0cbd0;--fumaca:#a7b8c0;--sombra:#9aadb7;--marca:#a8d8c5;--alerta:#f0a18f;--certo:#add2e4;--atencao:#e0bd7d;--eixo:clamp(24px,4.5vw,84px);--teto:100px;--rodape:94px;--fundo1:none;--fundo2:none}
+body{perspective:none;background:var(--preto)}
+#trilho{height:72px;background:#101b22;border-bottom:1px solid #344851;padding:0 var(--eixo);gap:18px}
+#trilho .tt{font:500 17px var(--serifa);text-transform:none;letter-spacing:0;color:var(--gelo);overflow:hidden;text-overflow:ellipsis}
+#trilho .cnt{font-size:13px;color:var(--nevoa)}
+#trilho .marcas{max-width:38vw;gap:3px;flex:1}
+#trilho .marcas i{width:auto;flex:1;min-width:2px;border-radius:4px;height:4px}
+#trilho .marcas i.aqui{transform:none;height:6px;background:var(--marca)}
+.voltar-biblioteca{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--linha);border-radius:10px;padding:9px 12px;text-decoration:none;color:var(--gelo);font:500 13px var(--sans);flex-shrink:0}
+.voltar-biblioteca svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.voltar-biblioteca:hover{background:#263b45}
+#pe{height:76px;background:#101b22;border-top:1px solid #344851;padding:0 var(--eixo)}
+#pe .rod{font-size:11px;letter-spacing:0;text-transform:none;color:var(--fumaca);max-width:55%}
+.bt,.conf,.verlaudo,.lupa .fechar{font-size:14px;letter-spacing:0;text-transform:none;border-radius:9px;padding:12px 20px;font-weight:600;min-height:44px}
+.bt.forte,.conf{background:var(--marca);border-color:var(--marca);color:#102b23}
+.bt.forte:hover,.conf:hover{background:#c2e6d7;border-color:#c2e6d7;color:#102b23}
+.bt[disabled]{opacity:1;color:#8899a2;border-color:#40545f;background:#17262f}
+.bt:focus-visible,.conf:focus-visible,a:focus-visible,.it:focus-visible,.cam:focus-visible,.alts li:focus-visible,figure.amplia:focus-visible{outline:3px solid var(--marca);outline-offset:3px}
+.tela{transform-style:flat}
+.fundo{inset:72px 0 76px auto;width:36%;filter:none;transform:none;opacity:.38;background-position:65% center;background-size:cover}
+.veu.tudo,.veu.esq,.veu.tudo.q-melhor,.veu.tudo.q-pior{background:none}
+.tela:has(.folha) .fundo{display:none}
+.plano{width:52%;max-height:calc(100dvh - var(--teto) - var(--rodape));padding-right:24px;scrollbar-width:thin;scrollbar-color:var(--linha2) transparent}
+.plano.centro{width:62%;max-width:1100px}
+.plano.centro:has(.grade),.plano.centro:has(.tb),.plano.centro:has(.corpo){width:calc(100vw - 2 * var(--eixo));max-width:none;background:var(--preto)}
+h1{font-size:clamp(38px,4.8vw,76px);font-weight:500;line-height:1.06;letter-spacing:-1.5px}
+h2{font-size:clamp(28px,2.3vw,42px);font-weight:500;line-height:1.14;letter-spacing:-.5px}
+h2.do-kicker{padding-top:0}h2.do-kicker::before,.marca i{display:none}
+.marca{margin-bottom:14px}.marca span{font-size:12px;letter-spacing:.7px;text-transform:none;color:var(--marca);font-weight:600}
+p{color:#e0e4df;font-size:clamp(20px,1.45vw,26px);line-height:1.5;margin-bottom:18px}
+p b{font-weight:600}
+.lamina{right:var(--eixo);top:var(--teto);width:34%;height:calc(100dvh - var(--teto) - var(--rodape));transform:none;border:1px solid var(--linha);border-radius:14px;box-shadow:none;display:flex;flex-direction:column;background:#0a1015}
+.lamina img{height:0;flex:1;min-height:0;object-fit:contain;opacity:1}
+.lamina .cap{position:static;padding:16px 18px;background:#182831;border-top:1px solid var(--linha);font:14px/1.45 var(--sans)}
+.lamina .cap b{font-size:16px}.lamina .cap .cr{font-size:12px;color:var(--fumaca)}
+.tela:has(.lamina) .fundo{display:none}
+.folha{padding-top:var(--teto);padding-bottom:var(--rodape)}
+.folha.q{padding-top:var(--teto);padding-bottom:var(--rodape)}
+.folha h2{max-width:none}.folha .sub{font-size:18px;max-width:88ch;margin-bottom:20px;line-height:1.4}
+.grupos{grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:16px;mask-image:none;min-height:0;scrollbar-width:thin}
+.gr{background:#172832;border:1px solid var(--linha);border-top-width:1px;border-radius:12px;padding:16px;transform:none}
+.gr:hover,.rc:hover,.cam:hover,.alts li:hover,.terr:hover{transform:none;box-shadow:none}
+.gr>b{font-size:13px;text-transform:none;letter-spacing:0;margin-bottom:12px}
+.gr>b i{width:6px;height:6px}.it{padding:10px 0;gap:10px}.it .n{font-size:clamp(17px,1.23vw,21px);font-family:var(--sans);line-height:1.32}
+.it .d{font-size:12px}.cx{border-radius:5px;width:19px;height:19px;margin-top:2px}
+.it.on .cx{background:var(--marca);border-color:var(--marca)}.it.bloq .n,.it.trava .n{color:#a8b8c1}.it.bloq .d{color:#a8b8c1}
+.conta{font-size:14px;padding-top:8px}.conta b{color:var(--marca)}
+.res{margin-block:8px;column-width:300px;overflow:auto;padding:2px;flex:1;scrollbar-width:thin}
+.rc{background:#172832;border:1px solid var(--linha);border-left:3px solid var(--linha2);border-radius:10px;padding:15px 18px;margin-bottom:14px}
+.rc>b{font-size:16px;line-height:1.3}.rc .v{font-size:20px}.rc .rf{font-size:13px;color:var(--nevoa)}
+.rc figure img{filter:none}.rc figcaption.soc{font-size:12px}.leglaudo{font-size:14px}
+.verlaudo{background:#203741;border-color:#637f8d;color:var(--gelo);width:auto;padding:9px 14px}
+.enun{font-size:clamp(24px,2.1vw,34px);font-weight:500;max-width:80ch;line-height:1.28}
+.qdica{font-size:13px;letter-spacing:0;text-transform:none;color:var(--nevoa);margin-bottom:14px}
+.alts{max-width:none;gap:8px;min-height:0}.alts li{border-radius:10px;padding:clamp(9px,1.3vh,15px) 18px;background:#172832;gap:14px;margin:0;flex-shrink:0}
+.alts .k{border:1px solid #6b818c;display:flex;align-items:center;justify-content:center;min-height:28px;border-radius:7px;font-size:13px;padding:3px;color:var(--nevoa)}
+.alts .tx{font:400 clamp(19px,1.42vw,24px)/1.3 var(--sans);color:var(--gelo)}
+.alts:not(.feita) li.marcada{background:#243d44;border-color:var(--marca)}
+.alts.feita .cm{font-size:clamp(17px,1.25vw,21px);color:var(--nevoa)}
+.alts.feita li.certa{background:#203641;box-shadow:none;border-color:var(--certo)}
+.alts.feita li.errada.marcada{box-shadow:none;background:#332b2b}
+.alts.muitas .tx{font-size:clamp(18px,1.3vw,22px)}
+.alts.muitas.feita .cm{font-size:clamp(17px,1.2vw,20px)}
+.conf{margin-top:12px}
+.cams{margin-top:12px;margin-bottom:0;max-width:none;gap:14px}.cam{border:1px solid var(--linha);border-radius:12px;background:#172832;position:relative;padding:20px 22px 20px 74px}
+.cam .l{position:absolute;top:20px;left:20px;width:32px;height:32px;border:1px solid var(--linha2);border-radius:8px;display:grid;place-items:center;letter-spacing:0;margin:0}
+.cam .r{font:400 clamp(20px,1.65vw,27px)/1.35 var(--sans)}.cam .c{font-size:18px}.cam.escolhido{border-color:var(--marca);background:#213a40}
+.vit{background:#1b2e38;border:1px solid var(--linha);border-radius:12px;overflow:hidden;margin:16px 0 20px}.vit>div{padding:14px}.vit>div>b{font-size:clamp(19px,1.6vw,25px);line-height:1.15}.vit span{font-size:12px;letter-spacing:0;text-transform:none}
+.tops>div>b{text-transform:none;letter-spacing:0;font-size:14px;color:var(--marca)}.tops p{font-size:clamp(18px,1.35vw,23px);line-height:1.4}.tops>div{padding:10px 0}
+.tb th{text-transform:none;letter-spacing:0;font-size:15px;color:var(--marca)}.tb td{font-size:18px;color:var(--gelo)}
+.grade.c4{grid-template-columns:repeat(2,minmax(0,1fr))}
+.qd{border-radius:0;border-color:var(--linha2)}.qd>b{letter-spacing:0;text-transform:none;font-size:16px}
+.capa-fundo{inset:72px 0 76px 34%;width:66%;opacity:1;filter:none;transform:none;background-position:center}
+.capa-veu{background:linear-gradient(90deg,#101b22 0%,#101b22 24%,rgba(16,27,34,.93) 35%,transparent 67%)}
+.abertura{left:var(--eixo);top:50%;width:52%;transform:translateY(-50%)}
+.abertura h1{max-width:11ch}.abertura .marca,.abertura .selo{display:none}
+.lupa{background:rgba(6,13,18,.96)}.lupa .quadro{max-width:95vw}.lupa .fechar{background:#1a303a;z-index:2}.lupa figcaption{color:#d9e1e5}
+@media(max-height:800px) and (min-width:901px){:root{--teto:88px;--rodape:88px}.marca{margin-bottom:10px}.folha .sub{margin-bottom:12px}.alts li{padding:9px 14px}.enun{font-size:25px}.folha.q.densa .enun{font-size:24px}.alts.muitas .tx{font-size:18px}.alts .tx{font-size:19px}p{font-size:20px;line-height:1.45;margin-bottom:14px}.tops p{font-size:18px}.lamina .cap{font-size:13px;padding:12px}}
+@media(max-width:900px){:root{--eixo:22px;--teto:90px;--rodape:94px}#trilho{gap:10px}#trilho .marcas{display:none}#trilho .tt{font-size:15px}#pe .rod{display:none}.plano,.plano.centro{width:calc(100vw - 44px);max-width:none}.tela:has(.lamina) .plano{width:calc(100vw - 44px);max-height:calc(100dvh - 190px);padding-right:0}.lamina{display:none}.fundo{opacity:.08;width:100%}.grupos{grid-template-columns:repeat(2,minmax(0,1fr))}.res{column-width:260px}.enun{font-size:24px}.alts .tx{font-size:18px}.alts.muitas{grid-template-columns:repeat(2,minmax(0,1fr))}.alts.feita li{grid-template-columns:26px 1fr}.alts.feita .cm{grid-column:2;border:0;padding:6px 0}.cams .cam{padding:15px 15px 15px 60px}.cam .l{left:15px;top:15px}.cam .r{font-size:20px}.grade{grid-template-columns:1fr!important}.abertura{width:80%}.abertura h1{font-size:54px}.capa-fundo{left:0;width:100%;opacity:.65}.capa-veu{background:linear-gradient(90deg,rgba(16,27,34,.95),rgba(16,27,34,.15))}}
+@media(max-width:550px){.voltar-biblioteca span{display:none}.grupos{grid-template-columns:1fr}.folha .sub{font-size:16px}.alts.muitas{grid-template-columns:1fr}.alts{overflow:auto}.folha.q{padding-bottom:88px}.folha.q .marca{margin-bottom:8px}.folha.q .enun{font-size:20px}.qdica{margin-bottom:9px}.alts li{padding:9px 10px;gap:9px}.alts .tx{font-size:16px}.conf{min-height:40px;padding:8px 14px}.vit{grid-template-columns:repeat(2,1fr)}.abertura h1{font-size:46px}.bt{padding:10px 15px}#pe .nav{width:100%;justify-content:space-between}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+.leitura{border:1px solid var(--linha2);border-radius:12px;margin-top:24px;background:#1b2d37;padding:18px 20px}.leitura summary{cursor:pointer;font:600 16px var(--sans);color:var(--marca)}.leitura p{font-size:20px;margin-top:18px;line-height:1.45}.cams.feita .cam.escolhido .l::after{content:none}.plano.centro:has(.grade.c3){width:calc(100vw - 2 * var(--eixo))}.tela:has(.grade) .fundo{display:none}
+.lamina img[src^="data:image/svg"]{background:#fff}
+@media(max-width:900px){.tela:has(.lamina) .plano{max-height:calc(100dvh - var(--teto) - 300px)}.lamina{display:flex;top:auto;bottom:94px;left:var(--eixo);right:var(--eixo);width:auto;height:190px;flex-direction:row}.lamina img{height:100%;width:55%;flex:none}.lamina .cap{width:45%;padding:10px;border-top:0;font-size:12px}.lamina .cap b{font-size:13px}.lamina .cap .cr{font-size:10px}}
+
+/* Cada rodada começa no problema clínico, antes do catálogo de exames. */
+.folha.pedido .sub{font:500 clamp(21px,1.55vw,26px)/1.35 var(--serifa);color:var(--gelo);max-width:96ch;border-bottom:1px solid var(--linha);padding-bottom:16px;margin-bottom:18px;flex-shrink:0}
+@media(max-width:550px){.folha.pedido .sub{font-size:19px;padding-bottom:10px;margin-bottom:10px}}
+/* Uma ou duas imagens recebem o espaço que o painel tem disponível. */
+.res:has(>.rc figure):not(:has(>.rc:nth-child(3))){display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));align-content:start;gap:18px;column-width:auto}
+.res:has(>.rc figure):not(:has(>.rc:nth-child(3))) .rc{margin-bottom:0;min-width:0}
+.res:has(>.rc figure):not(:has(>.rc:nth-child(3))) .rc figure img{height:clamp(180px,28vh,260px)}
+.res:has(>.rc figure):not(:has(>.rc:nth-child(3))) .rc figcaption{display:block}
+
+/* A letra identifica a alternativa; o resultado pertence ao comentário. */
+.alts.feita li .k::after{content:none!important}
+.alts.feita .k{align-self:start;min-width:30px;width:30px;height:30px;letter-spacing:0;padding:0;flex-shrink:0}
+.estado-resposta{display:block;font:600 13px/1.3 var(--sans);letter-spacing:0;margin-bottom:5px;color:var(--nevoa)}
+.certa .estado-resposta{color:var(--certo)}
+.errada.marcada .estado-resposta{color:var(--alerta)}
+
+/* Uma imagem por página, com leitura comentada apenas na página seguinte. */
+.plano.centro:has(.estudo-imagem){width:calc(100vw - 2 * var(--eixo));max-width:none;padding-right:0}
+.estudo-imagem{display:flex;gap:32px;align-items:center;margin-top:16px}
+.estudo-imagem .anot{flex:1;min-width:0;margin:0;background:#080b0d}
+.estudo-imagem .anot svg{display:block;width:100%;height:46dvh;max-height:430px}
+.estudo-imagem:has(aside) .anot svg{height:54dvh;max-height:500px}
+.estudo-imagem .anot image{filter:none}
+.estudo-imagem aside{flex:0 0 30%;min-width:0}
+.estudo-imagem aside p{font-size:20px;line-height:1.5;margin:0 0 20px}
+.estudo-imagem figcaption{font:14px/1.4 var(--sans);padding:12px 16px;color:var(--nevoa)}
+.estudo-imagem figcaption .cr{display:block;margin-top:5px;font-size:12px}
+@media(max-width:900px){.estudo-imagem{flex-direction:column;gap:16px}.estudo-imagem .anot{width:100%}.estudo-imagem aside{width:100%}.estudo-imagem .anot svg,.estudo-imagem:has(aside) .anot svg{height:auto;max-height:45dvh}.estudo-imagem aside p{font-size:19px}}
+/* O SVG também precisa ocupar a lupa; width:auto o reduzia ao tamanho intrínseco. */
+.lupa .quadro:has(figure.anot){width:90vw}
+.lupa figure.anot svg{width:100%;height:calc(82dvh - 130px);max-height:none}
+
+/* Conteúdo em páginas, nunca em painéis de rolagem. */
+[data-fora]{display:none!important}
+.plano.paginavel{height:calc(100dvh - var(--teto) - var(--rodape));display:flex;flex-direction:column;overflow:visible}
+.paginavel>h1,.paginavel>h2,.paginavel>.marca,.folha>.enun,.folha>.qdica,.folha>.sub,.folha>h2,.folha>.marca,.folha>.conta,.folha>.conf,.folha>.forca{flex-shrink:0}
+.conteudo-paginado{flex:1;min-height:0;display:flow-root}
+.area-paginada{overflow:clip!important;mask-image:none!important;min-height:0}
+.cams.area-paginada{flex:1}
+.res.area-paginada{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-content:start;gap:14px;column-width:auto}
+.res.area-paginada .rc{min-width:0;margin:0}
+.res.area-paginada .rc img{max-height:170px;object-fit:contain}
+.fim{align-items:stretch;padding:var(--teto) var(--eixo) var(--rodape)}
+.fim .caixa.paginavel{display:flex;flex-direction:column;max-height:100%;width:100%;max-width:1000px}
+.fim h1{font-size:clamp(30px,3.4vw,48px);margin-bottom:18px;padding-bottom:12px}
+.pagina-indice{font:500 13px var(--sans);color:var(--nevoa);white-space:nowrap;margin-right:10px}
+.alts.feita .cm{line-height:1.35}
+.grupos .gr{align-self:start}
+@media(min-width:901px){.plano.centro:has(.tb){width:calc(100vw - 2 * var(--eixo))}.plano.centro:not(:has(.lamina)){padding-right:0}.res.area-paginada:has(>.rc figure):not(:has(>.rc:nth-child(3))){grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:900px){
+ .tela:has(.lamina) .plano.paginavel{max-height:calc(100dvh - var(--teto) - var(--rodape));height:calc(100dvh - var(--teto) - var(--rodape))}
+ .plano .lamina{position:static;display:flex;width:100%;height:auto;max-height:none;flex-direction:column;margin:0}
+ .plano .lamina img{height:29dvh;width:100%;flex:none}
+ .plano .lamina .cap{width:100%;font-size:13px;padding:10px}
+ .plano .lamina .cap .cr{font-size:11px}
+ .estudo-imagem:has(aside) .anot svg{height:28dvh}
+ .estudo-imagem{margin-top:0}
+ .estudo-imagem:has(aside){display:block}
+ .estudo-imagem aside{width:100%}
+ .corpo{display:block}.corpo svg{height:30dvh;max-width:100%;margin:auto}
+ .res.area-paginada{grid-template-columns:1fr!important}
+ .vit{margin:8px 0}.vit>div{padding:9px}
+ .pagina-indice{font-size:12px;margin:0}
+ #pe .nav{gap:10px}.bt{padding:10px 12px}
+ .folha .enun{font-size:20px}.folha>.forca{font-size:13px;line-height:1.35;margin-top:10px}
+ .fim .caixa{max-width:100%}
+ .grupos .gr{padding:12px}
+}
+@media(max-width:900px){
+ .tb{width:100%;table-layout:fixed}.tb thead{display:none}.tb tr,.tb td{display:block;width:100%;min-width:0;white-space:normal;overflow-wrap:anywhere}.tb td::before{content:attr(data-col);display:block;font:600 12px var(--sans);color:var(--marca);margin-bottom:5px}
+ .area-paginada>.forca{font-size:14px;line-height:1.4;display:block}
+ .placar{grid-template-columns:1fr}.cons{display:block}.cn{margin-bottom:12px}
+}
+.tela:has(.estudo-imagem) .fundo{display:none}
+/* Diagramas transparentes conservam seus rótulos pretos também na ampliação. */
+.lupa img[src^="data:image/svg"]{background:#fff}
+
+/* Respostas e exames: uma tela inteira, sem páginas intermediárias. */
+#palco .tela-unica{--compacto:1}
+#palco .tela-unica .enun{font-size:calc(clamp(24px,2.1vw,34px) * var(--compacto));margin-bottom:calc(12px * var(--compacto));line-height:1.25}
+#palco .tela-unica .qdica{margin-bottom:calc(10px * var(--compacto));font-size:calc(13px * var(--compacto))}
+#palco .tela-unica .alts{gap:calc(7px * var(--compacto));padding:0;align-content:start}
+#palco .tela-unica .alts li{padding:calc(9px * var(--compacto)) calc(14px * var(--compacto));gap:calc(10px * var(--compacto));grid-template-columns:calc(28px * var(--compacto)) minmax(0,1fr)}
+#palco .tela-unica .alts.feita:not(.muitas) li{grid-template-columns:calc(28px * var(--compacto)) minmax(0,1fr) minmax(0,1.25fr)}
+#palco .tela-unica .alts .tx{font-size:calc(clamp(18px,1.35vw,22px) * var(--compacto));line-height:1.25}
+#palco .tela-unica .alts.feita .cm{font-size:calc(clamp(17px,1.25vw,20px) * var(--compacto));line-height:1.3;padding:calc(5px * var(--compacto)) 0 0}
+#palco .tela-unica .alts.feita:not(.muitas) .cm{padding:0 0 0 calc(12px * var(--compacto))}
+#palco .tela-unica .alts .k{width:calc(28px * var(--compacto));min-width:0;height:calc(28px * var(--compacto));min-height:0;font-size:calc(13px * var(--compacto));padding:0}
+#palco .tela-unica .estado-resposta{font-size:calc(12px * var(--compacto));margin-bottom:calc(4px * var(--compacto))}
+#palco .tela-unica .res{gap:calc(12px * var(--compacto))}
+#palco .tela-unica .rc{padding:calc(12px * var(--compacto));margin:0}
+#palco .tela-unica .rc>b{font-size:calc(16px * var(--compacto))}
+#palco .tela-unica .rc .v{font-size:calc(19px * var(--compacto));line-height:1.3;margin-top:calc(8px * var(--compacto))}
+#palco .tela-unica .rc .rf,#palco .tela-unica .leglaudo,#palco .tela-unica .rc figcaption.soc{font-size:calc(12px * var(--compacto));line-height:1.3;margin-top:calc(5px * var(--compacto));padding:calc(5px * var(--compacto)) 0}
+#palco .tela-unica .rc figure{margin:calc(8px * var(--compacto)) 0}
+#palco .tela-unica .rc figure img{height:calc(170px * var(--compacto))!important;max-height:none}
+#palco .tela-unica .rc .verlaudo{min-height:0;padding:calc(8px * var(--compacto)) calc(12px * var(--compacto));font-size:calc(14px * var(--compacto))}
+#palco .tela-unica .cams{gap:calc(10px * var(--compacto))}
+#palco .tela-unica .cam{padding:calc(15px * var(--compacto)) calc(18px * var(--compacto)) calc(15px * var(--compacto)) calc(62px * var(--compacto))}
+#palco .tela-unica .cam .l{width:calc(28px * var(--compacto));height:calc(28px * var(--compacto));top:calc(15px * var(--compacto));left:calc(15px * var(--compacto))}
+#palco .tela-unica .cam .r{font-size:calc(22px * var(--compacto));line-height:1.25}
+#palco .tela-unica .cam .c{font-size:calc(18px * var(--compacto));line-height:1.3;margin-top:calc(8px * var(--compacto))}
+#palco .tela-unica .forca{font-size:calc(14px * var(--compacto));line-height:1.3;margin-top:calc(8px * var(--compacto))}
+@media(max-width:900px){
+ #palco .tela-unica .alts.feita:not(.muitas) li{grid-template-columns:calc(28px * var(--compacto)) minmax(0,1fr)}
+ #palco .tela-unica .alts.feita:not(.muitas) .cm{grid-column:2;padding:calc(4px * var(--compacto)) 0 0}
+ #palco .tela-unica .res.area-paginada{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #palco .tela-unica .res.area-paginada:has(>.rc:only-child){grid-template-columns:1fr!important}
+ #palco .tela-unica .rc figure img{height:calc(125px * var(--compacto))!important}
+}
+#palco .tela-unica .alts.muitas.feita .cm{margin-top:0;padding-top:calc(3px * var(--compacto))}
+#palco .tela-unica .alts.muitas li{row-gap:calc(3px * var(--compacto))}
+#palco .tela-unica .rc .v .ln{font-size:inherit;line-height:1.25;margin-bottom:calc(3px * var(--compacto));padding-left:calc(10px * var(--compacto))}
+
+
+#palco .painel-lab{flex:1;min-height:0}
+#palco .tela-unica .painel-lab p{font-size:calc(21px * var(--compacto));line-height:1.4;margin-bottom:calc(16px * var(--compacto))}
+#palco .tela-unica .painel-lab td,#palco .tela-unica .painel-lab th{font-size:calc(20px * var(--compacto));padding:calc(12px * var(--compacto));line-height:1.3}
+@media(max-width:900px){
+ #palco .painel-lab .tb{display:table;table-layout:fixed;width:100%}
+ #palco .painel-lab .tb thead{display:table-header-group}
+ #palco .painel-lab .tb tr{display:table-row}
+ #palco .painel-lab .tb td,#palco .painel-lab .tb th{display:table-cell;width:auto;font-size:calc(14px * var(--compacto));padding:calc(7px * var(--compacto));overflow-wrap:normal}
+ #palco .painel-lab .tb td::before{display:none}
+}
+
+/* ───────── pareamento: cada item recebe uma letra ───────── */
+.par{display:flex;flex-direction:column;gap:14px;min-height:0;flex:1}
+.par-ops{display:flex;flex-wrap:wrap;gap:8px 14px;padding:12px 16px;border:1px solid var(--linha);border-radius:12px;background:#152329;flex-shrink:0}
+.par-ops .po{font:400 clamp(16px,1.15vw,20px)/1.3 var(--sans);color:var(--gelo);display:inline-flex;align-items:center;gap:8px}
+.par-ops .po b{display:inline-grid;place-items:center;min-width:26px;height:26px;border:1px solid #6b818c;border-radius:7px;font-size:13px;color:var(--nevoa);font-weight:600}
+.par-itens{display:flex;flex-direction:column;gap:8px;min-height:0}
+.pi{display:grid;grid-template-columns:minmax(0,1.4fr) auto;gap:10px 18px;align-items:center;border:1px solid var(--linha);border-radius:10px;background:#172832;padding:10px 16px}
+.pi .pt{font:400 clamp(17px,1.3vw,22px)/1.3 var(--sans);color:var(--gelo)}
+.pi .pesc{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.pi .pe{display:grid;place-items:center;width:34px;height:34px;border:1px solid #6b818c;border-radius:8px;font:600 14px var(--sans);color:var(--nevoa);cursor:pointer;user-select:none;font-style:normal;transition:.15s}
+.pi .pe:hover{border-color:var(--gelo);color:var(--gelo)}
+.pi .pe.on{background:var(--marca);border-color:var(--marca);color:#102b23}
+.par.feita .pi{grid-template-columns:minmax(0,1fr) auto minmax(0,1.15fr)}
+.par.feita .pi .pe{cursor:default}
+.par.feita .pi .pe:hover{border-color:#6b818c;color:var(--nevoa)}
+.par.feita .pi .pe.on{color:#102b23}
+.par.feita .pi .pe.ok{border-color:var(--certo);color:var(--certo);box-shadow:inset 0 0 0 1px var(--certo)}
+.par.feita .pi .pe.ok.on{background:var(--certo);color:#102b23}
+.par.feita .pi.errada .pe.on:not(.ok){background:var(--alerta);border-color:var(--alerta)}
+.par.feita .pi.certa{border-color:var(--certo);background:#203641}
+.par.feita .pi.errada{border-color:var(--alerta);background:#332b2b}
+.par.feita .pi .cm{font:400 clamp(16px,1.15vw,20px)/1.35 var(--sans);color:var(--nevoa);border-left:1px solid var(--linha);padding-left:14px}
+.par.feita .pi.certa .estado-resposta{color:var(--certo)}
+.par.feita .pi.errada .estado-resposta{color:var(--alerta)}
+#palco .tela-unica .par{gap:calc(12px * var(--compacto))}
+#palco .tela-unica .par-ops{padding:calc(10px * var(--compacto)) calc(14px * var(--compacto));gap:calc(6px * var(--compacto)) calc(12px * var(--compacto))}
+#palco .tela-unica .par-ops .po{font-size:calc(clamp(16px,1.15vw,20px) * var(--compacto))}
+#palco .tela-unica .par-ops .po b{min-width:calc(26px * var(--compacto));height:calc(26px * var(--compacto));font-size:calc(13px * var(--compacto))}
+#palco .tela-unica .par-itens{gap:calc(8px * var(--compacto))}
+#palco .tela-unica .pi{padding:calc(9px * var(--compacto)) calc(14px * var(--compacto));gap:calc(8px * var(--compacto)) calc(16px * var(--compacto))}
+#palco .tela-unica .pi .pt{font-size:calc(clamp(17px,1.3vw,22px) * var(--compacto));line-height:1.25}
+#palco .tela-unica .pi .pe{width:calc(34px * var(--compacto));height:calc(34px * var(--compacto));font-size:calc(14px * var(--compacto))}
+#palco .tela-unica .par.feita .pi .cm{font-size:calc(clamp(16px,1.15vw,20px) * var(--compacto));line-height:1.3;padding-left:calc(12px * var(--compacto))}
+#palco .tela-unica .par .estado-resposta{font-size:calc(12px * var(--compacto));margin-bottom:calc(3px * var(--compacto))}
+@media(max-width:900px){.pi,.par.feita .pi{grid-template-columns:1fr}.pi .pesc{justify-content:flex-start}.par.feita .pi .cm{border-left:0;padding-left:0}}
+/* Balanço paginável: sem rolagem interna, para o divisor medir a altura real. */
+.conteudo-paginado .bal{display:block;flex:none;min-height:0}
+.conteudo-paginado .cons{overflow:visible;max-height:none}
+
+/* Resultados: tabela clínica e campo de imagem, sem cartões por analito. */
+#palco .res.resultados-editoriais{display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:minmax(0,1fr);column-width:auto;gap:28px;padding:0;overflow:hidden;min-height:0;align-content:stretch}
+#palco .res.resultados-editoriais.misto{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)!important}
+#palco .resultados-editoriais .laboratorio{min-width:0;min-height:0}
+#palco .exames-tabela{width:100%;border-collapse:collapse;table-layout:fixed;margin:0;background:transparent}
+#palco .exames-tabela th,#palco .exames-tabela td{display:table-cell;border:0;border-bottom:1px solid var(--linha);padding:calc(13px * var(--compacto)) calc(12px * var(--compacto));font-size:calc(clamp(16px,1.2vw,22px) * var(--compacto));line-height:1.35;vertical-align:top;text-align:left;overflow-wrap:anywhere}
+#palco .exames-tabela thead th{color:var(--nevoa);font-size:calc(13px * var(--compacto));font-weight:500;border-top:1px solid var(--linha2);border-bottom:2px solid var(--linha2)}
+#palco .exames-tabela th:first-child{width:31%}#palco .exames-tabela th:last-child{width:25%}
+#palco .exames-tabela tr.rc{display:table-row;background:transparent;border:0;border-radius:0;box-shadow:none;transform:none}
+#palco .exames-tabela tbody tr:nth-child(even){background:rgba(255,255,255,.025)}
+#palco .exames-tabela th b{font-weight:500;color:var(--gelo)}
+#palco .exames-tabela .alt .v{color:#efaa96}
+#palco .exames-tabela .rf{color:var(--nevoa);font-size:calc(clamp(13px,1vw,17px) * var(--compacto))}
+#palco .exames-tabela .ln{display:block;padding:0;margin:0 0 3px;font-size:inherit}
+#palco .exames-tabela td::before{display:none!important}
+#palco .imagens-resultados{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));grid-auto-rows:minmax(0,1fr);gap:18px;min-width:0;min-height:0;height:100%}
+#palco .imagens-resultados .resultado-imagem{display:flex;flex-direction:column;min-width:0;min-height:0;margin:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none}
+#palco .resultado-imagem>b{font-size:20px;font-weight:500;margin-bottom:12px}
+#palco .resultado-imagem figure{flex:1;min-height:0;display:flex;flex-direction:column;margin:0 0 12px;background:#000}
+#palco .resultado-imagem figure img{width:100%;height:100%!important;min-height:0;flex:1;object-fit:contain;max-height:none;filter:none}
+#palco .resultado-imagem figure figcaption.soc{flex:none;font-size:11px;padding:7px 10px;margin:0;color:#a9b2b9}
+#palco .resultado-imagem .verlaudo{align-self:flex-start;flex:none}
+#palco .resultado-imagem .v,#palco .resultado-imagem .leglaudo{font-size:calc(16px * var(--compacto));line-height:1.35;margin:0 0 6px;flex:none}
+@media(max-width:900px){
+ #palco .res.resultados-editoriais.misto{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto minmax(180px,1fr);gap:12px}
+ #palco .exames-tabela th,#palco .exames-tabela td{font-size:calc(14px * var(--compacto));padding:calc(7px * var(--compacto)) 5px}
+ #palco .exames-tabela .rf{font-size:calc(11px * var(--compacto))}
+ #palco .resultado-imagem>b{font-size:15px;margin-bottom:6px}
+}
+#palco .misto .imagens-resultados:has(>.resultado-imagem:nth-child(2)){grid-template-columns:repeat(2,minmax(0,1fr))}
+#palco .misto .imagens-resultados:has(>.resultado-imagem:nth-child(3)){grid-template-rows:repeat(2,minmax(0,1fr))}
+#palco .misto .imagens-resultados:has(>.resultado-imagem:nth-child(3))>.resultado-imagem:last-child:nth-child(odd){grid-column:1 / -1}
+
+/* ECG e contexto formam uma única página; o traçado usa o espaço restante. */
+#palco .observacao-imagem{display:flex;flex-direction:column;min-height:0;flex:1;overflow:hidden;gap:12px}
+#palco .observacao-imagem>p{flex:none;font-size:calc(clamp(18px,1.7vw,26px) * var(--compacto));line-height:1.35;margin:0}
+#palco .observacao-imagem .estudo-imagem{flex:1;min-height:0;margin:0;align-items:stretch}
+#palco .observacao-imagem .anot{display:flex;flex-direction:column;min-height:0;width:100%}
+#palco .observacao-imagem .anot svg{flex:1;min-height:0;width:100%;height:100%;max-height:none}
+#palco .observacao-imagem figcaption{flex:none;font-size:calc(13px * var(--compacto));padding:8px 12px}
+#palco .observacao-imagem figcaption .cr{font-size:calc(11px * var(--compacto))}
+/* A imagem abre sem interpretação. O mesmo clique revela leitura e setas. */
+.figura-discussao:not(:has(.leitura-imagem[open])) .an{visibility:hidden}
+#palco .observacao-imagem .leitura-imagem{flex:none;margin:0;border-top:1px solid var(--linha);padding-top:8px}
+#palco .observacao-imagem .leitura-imagem summary{font:600 calc(17px * var(--compacto))/1.3 var(--sans);cursor:pointer;color:var(--gelo);padding:5px 0}
+#palco .observacao-imagem .leitura-imagem p{font:calc(18px * var(--compacto))/1.35 var(--sans);margin:7px 0 0}
+#palco .observacao-imagem figcaption a{color:inherit}
+
+/* ═══════════ camada viva — clara, colorida, com movimento ═══════════
+
+   Vem por último e manda. Três ideias:
+   1. Papel levemente cinza, cartões brancos de canto grande, texto escuro.
+   2. Cor por TIPO de página (--ac): história índigo, exame físico verde-água,
+      exames azul, imagem violeta, pergunta laranja, decisão rosa, desfecho
+      verde, discussão âmbar. A cor do CASO (--caso) marca a capa e o trilho.
+   3. Movimento que responde: entrada escalonada, acerto pulsa, erro treme,
+      contadores que sobem. `prefers-reduced-motion` desliga tudo.
+   Sem gradiente, sem emoji, sem fonte baixada. */
+
+:root{
+  --caso:#4f46e5; --ac:#4f46e5;
+  --papel:#f3f5f9; --cartao:#ffffff; --tinta:#141b2d; --suave:#5b6477;
+  --fio:#e3e7ef; --fio2:#cfd6e2;
+  --ok:#15a34a; --erro:#e5484d; --aviso:#d97706;
+  /* os tokens antigos passam a descrever o tema claro */
+  --preto:#f3f5f9; --carvao:#ffffff; --grafite:#eef1f6; --linha:#e3e7ef; --linha2:#cfd6e2;
+  --gelo:#141b2d; --nevoa:#5b6477; --fumaca:#6b7386; --sombra:#8a92a4;
+  --marca:var(--ac); --alerta:#e5484d; --certo:#15a34a; --atencao:#d97706;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --serifa:var(--sans);
+  --r:22px; --r2:16px; --r3:12px;
+  --som1:0 1px 2px rgba(20,27,45,.06),0 6px 18px rgba(20,27,45,.06);
+  --som2:0 2px 4px rgba(20,27,45,.06),0 16px 34px rgba(20,27,45,.10);
+}
+body[data-tipo="historia"]{--ac:#4f46e5}
+body[data-tipo="exame"]{--ac:#0d9488}
+body[data-tipo="exames"]{--ac:#2563eb}
+body[data-tipo="imagem"]{--ac:#7c3aed}
+body[data-tipo="pergunta"]{--ac:#ea580c}
+body[data-tipo="pareamento"]{--ac:#db2777}
+body[data-tipo="decisao"]{--ac:#c026d3}
+body[data-tipo="evolucao"]{--ac:#0891b2}
+body[data-tipo="discussao"]{--ac:#ca8a04}
+body[data-tipo="desfecho"]{--ac:#16a34a}
+body[data-tipo="fecho"]{--ac:#475569}
+body[data-tipo="capa"]{--ac:var(--caso)}
+
+html,body{background:var(--papel)}
+body{color:var(--tinta);font-family:var(--sans)}
+.fundo,.veu{display:none!important}
+.tela.on{animation:vv-folha .32s cubic-bezier(.2,.7,.3,1)}
+@keyframes vv-folha{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ─────────── trilho ─────────── */
+#trilho{background:rgba(243,245,249,.96);border-bottom:1px solid var(--fio);height:72px}
+#trilho .tt{font:700 16px var(--sans);color:var(--tinta);display:flex;align-items:center;gap:10px}
+#trilho .tt::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--caso);flex:none;
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--caso) 18%,transparent)}
+.voltar-biblioteca{background:var(--cartao);border:1px solid var(--fio);border-radius:999px;color:var(--tinta);
+  box-shadow:var(--som1);transition:transform .15s,box-shadow .15s,border-color .15s;padding:8px 14px 8px 8px}
+.voltar-biblioteca svg{width:28px;height:28px;padding:6px;border-radius:50%;background:var(--caso);stroke:#fff}
+.voltar-biblioteca:hover{background:var(--cartao);transform:translateY(-1px);box-shadow:var(--som2);border-color:var(--caso)}
+#trilho .cnt{font:700 13px var(--sans);color:var(--tinta);background:var(--cartao);border:1px solid var(--fio);
+  border-radius:999px;padding:6px 12px;display:inline-flex;align-items:center;gap:7px}
+#trilho .cnt .vv-ic{width:18px;height:18px;padding:3px;border-radius:50%;background:var(--ac);stroke:#fff}
+#trilho .vv-placar{font:700 13px var(--sans);color:var(--tinta);background:var(--cartao);border:1px solid var(--fio);
+  border-radius:999px;padding:6px 12px 6px 6px;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+#trilho .vv-placar .vv-ic{width:22px;height:22px;padding:4px;border-radius:50%;background:var(--ok);stroke:#fff}
+#trilho .vv-placar.sobe{animation:vv-pulso .5s}
+#trilho .marcas{gap:4px}
+#trilho .marcas i{height:8px!important;border-radius:99px;background:var(--fio2);transition:background .2s,transform .2s}
+#trilho .marcas i.m-pergunta,#trilho .marcas i.m-pareamento{background:#fed7aa}
+#trilho .marcas i.m-bifurcacao{background:#f5d0fe}
+#trilho .marcas i.m-desfecho{background:#bbf7d0}
+#trilho .marcas i.m-resultados{background:#bfdbfe}
+#trilho .marcas i.feita{background:color-mix(in srgb,var(--caso) 55%,#fff)!important;opacity:1}
+#trilho .marcas i.aqui{background:var(--caso)!important;height:12px!important;transform:none}
+#trilho .marcas i.feita:hover{transform:scaleY(1.4)}
+
+/* ─────────── pé ─────────── */
+#pe{background:rgba(243,245,249,.96);border-top:1px solid var(--fio)}
+#pe .rod{color:var(--sombra)}
+.bt{text-decoration:none;border-radius:999px!important;border:1px solid var(--fio2);background:var(--cartao);color:var(--tinta);
+  box-shadow:var(--som1);transition:transform .15s,box-shadow .15s,background .15s}
+.bt:hover{color:var(--tinta);border-color:var(--ac);transform:translateY(-1px);box-shadow:var(--som2)}
+.bt.forte,.conf{background:var(--ac)!important;border-color:var(--ac)!important;color:#fff!important;
+  display:inline-flex;align-items:center;gap:8px}
+.bt.forte:hover,.conf:hover{filter:brightness(1.06);color:#fff}
+.bt.forte::after{content:"";width:16px;height:16px;background:currentColor;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center/contain no-repeat}
+.bt[disabled],.conf[disabled]{background:#eef1f6!important;border-color:var(--fio)!important;color:#9aa2b2!important;
+  box-shadow:none;transform:none;filter:none}
+.bt[disabled]::after{opacity:.5}
+.pagina-indice{color:var(--suave)}
+
+/* ─────────── tipografia ─────────── */
+h1,h2,.enun,.cam .r,.alts .tx,.pi .pt{font-family:var(--sans)!important;color:var(--tinta)}
+h1{font-weight:800;letter-spacing:-1px}
+h2{font-weight:750;letter-spacing:-.4px}
+p,ul,ol,.tops p,.leitura p{color:#2b3346;font-family:var(--sans)}
+p.lede{color:var(--tinta)}
+b,strong{color:var(--tinta)}
+.tb td{color:#2b3346}
+.tb th{color:var(--ac)}
+
+/* o rótulo da página vira um selo com ícone em círculo */
+.marca{display:flex;align-items:center;gap:10px}
+.marca i{display:none}
+.marca span:not(.vv-bola),h2.do-kicker .vv-selo{font:700 13px var(--sans)!important;letter-spacing:0!important;text-transform:none!important;
+  color:var(--ac)!important}
+.vv-ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.vv-bola{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;flex:none;
+  background:color-mix(in srgb,var(--ac) 14%,#fff);color:var(--ac);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ac) 25%,#fff)}
+.vv-bola .vv-ic{width:18px;height:18px}
+h2.do-kicker{display:flex;align-items:center;gap:12px;padding-top:0}
+h2.do-kicker::before{display:none}
+
+/* ─────────── páginas de prosa ─────────── */
+.plano .conteudo-paginado>p,.plano>p{max-width:72ch}
+.qd{background:var(--cartao);border:1px solid var(--fio)!important;border-left:4px solid var(--ac)!important;
+  border-radius:var(--r2);padding:14px 18px;box-shadow:var(--som1)}
+.qd>b{color:var(--ac)!important}
+.lamina{background:var(--cartao)!important;border:1px solid var(--fio)!important;border-radius:var(--r)!important;
+  box-shadow:var(--som2)!important;overflow:hidden}
+.lamina img{background:#0f1420}
+.lamina .cap{background:var(--cartao)!important;color:var(--suave);border-top:1px solid var(--fio)}
+.lamina .cap b{color:var(--tinta)}
+.leitura{background:var(--cartao)!important;border:1px solid var(--fio)!important;border-radius:var(--r2)!important;box-shadow:var(--som1)}
+.leitura summary,.leitura-imagem summary{color:var(--ac)!important;display:flex;align-items:center;gap:8px;list-style:none}
+.leitura summary::-webkit-details-marker,.leitura-imagem summary::-webkit-details-marker{display:none}
+.leitura summary::before,.leitura-imagem summary::before{content:"";width:22px;height:22px;border-radius:50%;
+  background:var(--ac) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round'%3E%3Cpath d='M12 6v12M6 12h12'/%3E%3C/svg%3E") center/13px no-repeat;
+  transition:transform .2s;flex:none}
+.leitura[open] summary::before,.leitura-imagem[open] summary::before{transform:rotate(45deg)}
+
+/* tabela solta em prosa */
+.tb{background:var(--cartao);border-radius:var(--r2);overflow:hidden;box-shadow:var(--som1);border:1px solid var(--fio)}
+.tb th,.tb td{padding-left:14px!important}
+.tb thead th{background:color-mix(in srgb,var(--ac) 8%,#fff);border-bottom:1px solid var(--fio)}
+.tb td{border-bottom:1px solid var(--fio)}
+.tb tr:last-child td{border-bottom:0}
+
+/* ─────────── sinais vitais e exame por aparelho ─────────── */
+.vit{background:transparent!important;border:0!important;gap:10px;display:grid!important;
+  grid-template-columns:repeat(auto-fit,minmax(118px,1fr))!important;overflow:visible!important}
+.vit>div{background:var(--cartao);border:1px solid var(--fio)!important;border-radius:var(--r2);
+  box-shadow:var(--som1);position:relative;padding:12px 14px!important;border-right:1px solid var(--fio)!important}
+.vit>div>b{color:var(--tinta)!important}
+.vit>div.alt{background:color-mix(in srgb,var(--erro) 7%,#fff);border-color:color-mix(in srgb,var(--erro) 30%,#fff)!important}
+.vit>div.alt>b{color:var(--erro)!important}
+.vit>div.alt::after{content:"";position:absolute;top:10px;right:10px;width:8px;height:8px;border-radius:50%;
+  background:var(--erro);animation:vv-pisca 1.6s infinite}
+.vit span{color:var(--suave)!important}
+.vit .vv-ic{position:absolute;top:10px;right:10px;width:18px;height:18px;color:var(--ac);opacity:.9}
+.vit>div.alt .vv-ic{right:24px;color:var(--erro)}
+.tops>div{background:var(--cartao);border:1px solid var(--fio)!important;border-radius:var(--r3);padding:7px 12px!important;
+  margin-bottom:6px;box-shadow:var(--som1)}
+.tops>div:first-child{padding-top:7px!important}
+.tops>div>b{display:flex!important;align-items:center;gap:8px;color:var(--ac)!important}
+.tops>div>b .vv-ic{width:16px;height:16px}
+.corpo svg>path:first-of-type,.corpo svg path[fill="#161b22"]{fill:#eef1f7!important;stroke:#b9c2d3!important}
+.corpo svg text{fill:#fff}
+.corpo .lt{border-top-color:var(--fio)!important}
+
+/* ─────────── perguntas ─────────── */
+.enun{color:var(--tinta)!important;font-weight:750!important}
+.qdica{color:var(--suave)!important;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.vv-nota{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:3px 12px 3px 3px;font:700 13px var(--sans);
+  animation:vv-pop .45s cubic-bezier(.2,.7,.3,1.4) both}
+.vv-nota .vv-ic{width:18px;height:18px;padding:3px;border-radius:50%;stroke:#fff}
+.vv-nota.bom{background:color-mix(in srgb,var(--ok) 12%,#fff);color:var(--ok)}
+.vv-nota.bom .vv-ic{background:var(--ok)}
+.vv-nota.parcial{background:color-mix(in srgb,var(--aviso) 14%,#fff);color:#b45309}
+.vv-nota.parcial .vv-ic{background:var(--aviso)}
+.vv-nota.ruim{background:color-mix(in srgb,var(--erro) 11%,#fff);color:var(--erro)}
+.vv-nota.ruim .vv-ic{background:var(--erro)}
+.alts li{background:var(--cartao)!important;border:1.5px solid var(--fio)!important;border-radius:var(--r2)!important;
+  box-shadow:var(--som1);transition:transform .16s,box-shadow .16s,border-color .16s,background .16s}
+.alts:not(.feita) li:hover{transform:translateY(-2px)!important;box-shadow:var(--som2)!important;
+  border-color:color-mix(in srgb,var(--ac) 55%,#fff)!important}
+.alts .k{border-radius:50%!important;border:1.5px solid var(--fio2)!important;background:#f6f7fb;color:var(--suave)!important;
+  transition:background .16s,color .16s,border-color .16s,transform .2s}
+.alts:not(.feita) li:hover .k{border-color:var(--ac)!important;color:var(--ac)!important}
+.alts:not(.feita) li.marcada{background:color-mix(in srgb,var(--ac) 8%,#fff)!important;border-color:var(--ac)!important}
+.alts:not(.feita) li.marcada .k{background:var(--ac)!important;border-color:var(--ac)!important;color:#fff!important;transform:scale(1.08)}
+.alts .tx{color:var(--tinta)!important}
+.alts.feita .cm{color:var(--suave)!important;border-left-color:var(--fio)!important}
+.alts.feita li.certa{background:color-mix(in srgb,var(--ok) 7%,#fff)!important;border-color:color-mix(in srgb,var(--ok) 55%,#fff)!important;box-shadow:none}
+.alts.feita li.certa .k{background:var(--ok)!important;border-color:var(--ok)!important;color:#fff!important}
+.alts.feita li.certa.marcada{animation:vv-anel-ok .9s ease-out both;animation-delay:calc(var(--i,0) * 60ms)}
+.alts.feita li.certa.marcada .k{animation:vv-pop .5s cubic-bezier(.2,.7,.3,1.4) both;animation-delay:calc(var(--i,0) * 60ms)}
+.alts.feita li.certa:not(.marcada){border-style:dashed!important}
+.alts.feita li.errada.marcada{background:color-mix(in srgb,var(--erro) 7%,#fff)!important;border-color:color-mix(in srgb,var(--erro) 55%,#fff)!important;
+  animation:vv-anel-erro .9s ease-out both;animation-delay:calc(var(--i,0) * 60ms)}
+.alts.feita li.errada.marcada .k{animation:vv-treme .45s both;animation-delay:calc(var(--i,0) * 60ms)}
+.alts.feita li.errada.marcada .k{background:var(--erro)!important;border-color:var(--erro)!important;color:#fff!important}
+.alts.feita li.errada:not(.marcada){opacity:.78}
+.alts.feita li.errada:not(.marcada) .tx{color:#434b5e!important}
+.estado-resposta{color:var(--suave)!important}
+.certa .estado-resposta{color:var(--ok)!important}
+.errada.marcada .estado-resposta{color:var(--erro)!important}
+.conf{border-radius:999px!important;box-shadow:var(--som1)}
+
+/* pareamento */
+.par-ops{background:var(--cartao)!important;border:1px solid var(--fio)!important;border-radius:var(--r2)!important;box-shadow:var(--som1)}
+.par-ops .po{color:var(--tinta)!important}
+.par-ops .po b{border-radius:50%!important;border:0!important;background:color-mix(in srgb,var(--ac) 14%,#fff);color:var(--ac)!important}
+.pi{background:var(--cartao)!important;border:1.5px solid var(--fio)!important;border-radius:var(--r2)!important;box-shadow:var(--som1)}
+.pi .pt{color:var(--tinta)!important}
+.pi .pe{border-radius:50%!important;border:1.5px solid var(--fio2)!important;color:var(--suave)!important;background:#f6f7fb;
+  transition:transform .15s,background .15s,color .15s,border-color .15s}
+.pi .pe:hover{border-color:var(--ac)!important;color:var(--ac)!important;transform:scale(1.1)}
+.pi .pe.on{background:var(--ac)!important;border-color:var(--ac)!important;color:#fff!important;transform:scale(1.08)}
+.par.feita .pi .pe:hover{transform:none}
+.par.feita .pi .pe.ok{border-color:var(--ok)!important;color:var(--ok)!important;box-shadow:none!important;background:#fff}
+.par.feita .pi .pe.ok.on{background:var(--ok)!important;color:#fff!important}
+.par.feita .pi.errada .pe.on:not(.ok){background:var(--erro)!important;border-color:var(--erro)!important;color:#fff!important}
+.par.feita .pi.certa{background:color-mix(in srgb,var(--ok) 7%,#fff)!important;border-color:color-mix(in srgb,var(--ok) 55%,#fff)!important;
+  animation:vv-anel-ok .9s ease-out both;animation-delay:calc(var(--i,0) * 60ms)}
+.par.feita .pi.certa .pe.on{animation:vv-pop .5s cubic-bezier(.2,.7,.3,1.4) both;animation-delay:calc(var(--i,0) * 60ms)}
+.par.feita .pi.errada{background:color-mix(in srgb,var(--erro) 6%,#fff)!important;border-color:color-mix(in srgb,var(--erro) 50%,#fff)!important;
+  animation:vv-anel-erro .9s ease-out both;animation-delay:calc(var(--i,0) * 60ms)}
+.par.feita .pi.errada .pe.on{animation:vv-treme .45s both;animation-delay:calc(var(--i,0) * 60ms)}
+.par.feita .pi .cm{color:var(--suave)!important;border-left-color:var(--fio)!important}
+
+/* ─────────── bifurcação ─────────── */
+.cam{background:var(--cartao)!important;border:1.5px solid var(--fio)!important;border-radius:var(--r)!important;box-shadow:var(--som1);
+  transition:transform .16s,box-shadow .16s,border-color .16s}
+.cams:not(.feita) .cam:hover{transform:translateY(-3px)!important;box-shadow:var(--som2)!important;border-color:var(--ac)!important}
+.cam .l{border-radius:50%!important;border:0!important;background:color-mix(in srgb,var(--ac) 14%,#fff);color:var(--ac)!important;font-weight:800}
+.cams:not(.feita) .cam:hover .l{background:var(--ac);color:#fff!important}
+.cam .r{color:var(--tinta)!important}
+.cam .c{color:var(--suave)!important;border-top-color:var(--fio)!important}
+.cam.escolhido{background:color-mix(in srgb,var(--ac) 7%,#fff)!important;border-color:var(--ac)!important;animation:vv-anel-ac .9s ease-out}
+.cam.escolhido .l{animation:vv-pop .5s cubic-bezier(.2,.7,.3,1.4)}
+.cam.escolhido .l{background:var(--ac)!important;color:#fff!important}
+.cams.feita .cam:not(.escolhido){opacity:.72}
+.forca i{border-radius:99px;background:var(--fio2)!important}
+.forca i.on{background:var(--ac)!important}
+.forca span{color:var(--suave)!important}
+
+/* ─────────── resultados ─────────── */
+.rc,.laboratorio,#palco .exames-tabela{background:var(--cartao)!important;border:1px solid var(--fio)!important;border-radius:var(--r2)!important;box-shadow:var(--som1)}
+.laboratorio{overflow:hidden}
+#palco .exames-tabela{border:0!important;box-shadow:none}
+#palco .exames-tabela thead th{color:var(--ac)!important;background:color-mix(in srgb,var(--ac) 7%,#fff)}
+#palco .exames-tabela th,#palco .exames-tabela td{border-bottom:1px solid var(--fio)!important;color:#2b3346}
+#palco .exames-tabela tr.rc{background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important}
+#palco .exames-tabela tbody tr:hover{background:color-mix(in srgb,var(--ac) 4%,#fff)!important}
+#palco .exames-tabela .alt .v,#palco .exames-tabela .alt th b{color:var(--erro)!important}
+#palco .exames-tabela .alt th b::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--erro);margin-right:8px;vertical-align:1px}
+.rc.alt:not(.resultado-imagem){border-left:4px solid var(--erro)!important}
+#palco .resultado-imagem{padding:calc(10px * var(--compacto,1))!important}
+#palco .resultado-imagem>b{display:flex;align-items:center;gap:8px;padding:0 2px 8px}
+#palco .resultado-imagem.alt>b::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--erro);flex:none}
+.rc>b,.rc .v,.rc .v b{color:var(--tinta)!important}
+.rc.alt>b{color:var(--erro)!important}
+.rc .rf{color:var(--suave)!important}
+#palco .resultado-imagem figure,.rc figure{background:#0f1420!important;border-radius:var(--r3);overflow:hidden}
+#palco .resultado-imagem figure figcaption.soc,.rc figcaption{color:#aab3c2!important}
+.verlaudo{background:color-mix(in srgb,var(--ac) 10%,#fff)!important;border:0!important;color:var(--ac)!important;border-radius:999px!important;
+  font-weight:700!important;transition:transform .15s,background .15s}
+.verlaudo:hover{background:var(--ac)!important;color:#fff!important;transform:translateY(-1px)}
+.leglaudo{color:var(--suave)!important;border-top-color:var(--fio)!important}
+.marca .sub-in{color:var(--suave)!important}
+.painel-lab .tb{box-shadow:var(--som1)}
+
+/* ─────────── imagem em discussão ─────────── */
+.anot,.estudo-imagem .anot{background:#0f1420!important;border:0!important;border-radius:var(--r);overflow:hidden;box-shadow:var(--som2)}
+.anot figcaption,.estudo-imagem figcaption{background:var(--cartao);color:var(--suave)!important;border-top:1px solid var(--fio)!important}
+.anot figcaption b{color:var(--tinta)!important}
+.estudo-imagem aside p{color:#2b3346}
+#palco figure.amplia::after{background:var(--ac)!important;color:#fff!important;border:0!important;border-radius:50%;opacity:1!important}
+.lupa{background:rgba(243,245,249,.97)!important}
+.lupa figure{background:#0f1420!important;border-radius:var(--r);overflow:hidden;border:0!important}
+.lupa figcaption,.lupa .cap{background:var(--cartao)!important;color:var(--suave)!important}
+.lupa .cap b{color:var(--tinta)!important}
+.lupa .fechar{background:var(--cartao)!important;color:var(--tinta)!important;border:1px solid var(--fio)!important;border-radius:999px!important;box-shadow:var(--som1)}
+
+/* ─────────── desfecho, balanço, revisão ─────────── */
+.fim .caixa{background:var(--cartao);border:1px solid var(--fio);border-radius:var(--r);padding:30px 34px;box-shadow:var(--som2)}
+.fim h1{border-bottom:0!important;display:flex;align-items:center;gap:14px}
+.fim.melhor{--ac:#16a34a}.fim.medio{--ac:#d97706}.fim.pior{--ac:#e5484d}
+.fim .porque{background:color-mix(in srgb,var(--ac) 7%,#fff);border:0!important;border-radius:var(--r2);padding:16px 18px!important}
+.fim .porque>b{color:var(--ac)!important}
+.placar{background:var(--cartao);border:1px solid var(--fio)!important;border-radius:var(--r2);overflow:hidden;box-shadow:var(--som1)}
+.placar>div{padding-left:18px!important;border-right-color:var(--fio)!important}
+.placar b{color:var(--tinta)!important}
+.placar .ideal b{color:var(--ok)!important}
+.placar.obito{border-color:var(--erro)!important}
+.placar.obito b{color:var(--erro)!important}
+.placar.obito span{color:#2b3346!important}
+.cn{background:var(--cartao);border:1px solid var(--fio);border-left:4px solid var(--erro)!important;border-radius:var(--r3);padding:12px 16px!important}
+.cn.limpo{border-left-color:var(--ok)!important}
+.rev .li{background:var(--cartao);border:1px solid var(--fio)!important;border-radius:var(--r2);padding:14px 18px!important;margin-bottom:10px}
+.rev .li p{color:var(--suave)}
+
+/* revisão final com anel */
+.vv-fim{display:flex;align-items:center;gap:32px;flex-wrap:wrap;margin:6px 0 18px}
+.vv-anel{position:relative;width:132px;height:132px;flex:none}
+.vv-anel svg{width:100%;height:100%;transform:rotate(-90deg)}
+.vv-anel circle{fill:none;stroke-width:12;stroke-linecap:round}
+.vv-anel .fundo-anel{stroke:#e7eaf1}
+.vv-anel .cheio{stroke:var(--ac);transition:stroke-dashoffset 1.1s cubic-bezier(.2,.7,.3,1)}
+.vv-anel b{position:absolute;inset:0;display:grid;place-items:center;font:800 30px var(--sans);color:var(--tinta)}
+.vv-cards{display:grid;grid-template-columns:repeat(3,minmax(130px,1fr));gap:12px;flex:1;min-width:280px}
+.vv-cards div{background:var(--cartao);border:1px solid var(--fio);border-radius:var(--r2);padding:14px 16px;box-shadow:var(--som1)}
+.vv-cards b{display:block;font:800 26px var(--sans);color:var(--c,var(--ac))}
+.vv-cards span{font:600 13px var(--sans);color:var(--suave)}
+
+/* ─────────── capa ─────────── */
+.capa-fundo{display:block!important;inset:96px var(--eixo) 100px 50%!important;width:auto!important;
+  border-radius:28px;box-shadow:var(--som2);background-size:cover!important;background-position:center!important;opacity:1!important;filter:none!important;transform:none!important}
+.abertura{width:min(44%,640px)!important}
+.abertura h1{color:var(--tinta)!important;font-size:clamp(40px,4.6vw,72px)!important;font-weight:800;letter-spacing:-1.8px}
+.abertura .marca{display:flex!important}
+.abertura .marca span:not(.vv-bola){background:color-mix(in srgb,var(--caso) 12%,#fff);color:var(--caso)!important;border-radius:999px;padding:6px 14px 6px 6px;
+  display:inline-flex;align-items:center;gap:8px}
+.abertura .marca .vv-bola{width:26px;height:26px;background:var(--caso);color:#fff;box-shadow:none}
+.abertura .selo{display:block!important;color:var(--suave)!important;border-top:0!important;text-transform:none!important;letter-spacing:0!important;font-weight:500!important}
+.vv-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.vv-chips span{display:inline-flex;align-items:center;gap:8px;background:var(--cartao);border:1px solid var(--fio);border-radius:999px;
+  padding:6px 14px 6px 6px;font:700 14px var(--sans);color:var(--tinta);box-shadow:var(--som1)}
+.vv-chips .vv-ic{width:26px;height:26px;padding:5px;border-radius:50%;background:var(--c);stroke:#fff}
+
+/* ─────────── entrada escalonada ─────────── */
+.vv-entra{animation:vv-entra .42s cubic-bezier(.2,.7,.3,1) both;animation-delay:calc(var(--i,0) * 45ms)}
+@keyframes vv-entra{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+.vv-entra{transform-origin:50% 0}
+@keyframes vv-pop{0%{transform:scale(.6)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
+@keyframes vv-anel-ok{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ok) 45%,transparent)}100%{box-shadow:0 0 0 14px transparent}}
+@keyframes vv-anel-erro{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--erro) 40%,transparent)}100%{box-shadow:0 0 0 14px transparent}}
+@keyframes vv-anel-ac{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ac) 40%,transparent)}100%{box-shadow:0 0 0 14px transparent}}
+@keyframes vv-pulso{0%{transform:scale(1)}35%{transform:scale(1.025)}100%{transform:scale(1)}}
+@keyframes vv-treme{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+@keyframes vv-pisca{0%,100%{opacity:1}50%{opacity:.35}}
+.vv-confete{position:fixed;inset:0;pointer-events:none;z-index:90;overflow:hidden}
+.vv-confete i{position:absolute;top:-12px;width:10px;height:14px;border-radius:3px;animation:vv-cai 1.9s cubic-bezier(.3,.6,.4,1) forwards}
+@keyframes vv-cai{to{transform:translate(var(--dx),105vh) rotate(var(--rot));opacity:.9}}
+
+@media (max-width:900px){
+  .capa-fundo{inset:auto 22px 110px 22px!important;height:34vh}
+  .abertura{width:auto!important;right:22px;top:110px!important;transform:none!important}
+  .vv-fim{gap:18px}.vv-anel{width:104px;height:104px}.vv-cards{grid-template-columns:1fr 1fr}
+  #trilho .vv-placar{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .vv-entra,.tela.on,.alts.feita li,.alts.feita .k,.par.feita .pi,.par.feita .pe,.cam.escolhido,.cam .l,.vv-nota,#trilho .vv-placar.sobe,.vit>div.alt::after{animation:none!important}
+  .vv-confete{display:none}
+}
+
+/* capa sem ilustração */
+.vv-mosaico{position:absolute;inset:96px var(--eixo) 100px 50%;border-radius:28px;background:color-mix(in srgb,var(--caso) 10%,#fff);
+  border:1px solid color-mix(in srgb,var(--caso) 22%,#fff);display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,2vw,26px);
+  padding:clamp(24px,4vw,56px);align-content:center;justify-items:center;box-shadow:var(--som2)}
+.vv-mosaico span{width:clamp(64px,7vw,110px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;
+  background:color-mix(in srgb,var(--c) 16%,#fff);color:var(--c);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--c) 30%,#fff);
+  animation:vv-pop .6s cubic-bezier(.2,.7,.3,1.4) both;animation-delay:calc(var(--i) * 60ms)}
+.vv-mosaico span:nth-child(odd){background:var(--c);color:#fff;box-shadow:none}
+.vv-mosaico .vv-ic{width:44%;height:44%}
+@media (max-width:900px){.vv-mosaico{inset:auto 22px 110px 22px;height:34vh;gap:10px;padding:18px}.vv-mosaico span{width:clamp(40px,12vw,64px)}}
+
+/* o que o paginador esconde fica escondido, qualquer que seja o display acima */
+#palco [data-fora]{display:none!important}
+
+</style>
+</head>
+<body>
+<div id="trilho"></div>
+<div id="palco"></div>
+<div id="pe"></div>
+<script type="application/json" id="dados">{"caso": {"titulo": "Pequenos sinais", "slug": "endocardite", "cor": "#db2777", "rodape": "Paciente ficcional · evoluções simuladas para ensino · versão de 24/09 00:35", "sistemas": {"via": "via aérea superior", "pulmao": "pulmão", "rim": "rim", "pele": "pele", "nervo": "nervo periférico", "sangue": "sangue", "geral": "sistêmico"}}, "etapas": [{"t": "capa", "k": "capa", "tt": "Pequenos sinais", "fundo": "", "kicker": "Caso interativo", "selo": "Paciente ficcional · procedência e créditos na última tela", "proc": ""}, {"t": "pagina", "k": "historia", "kicker": "Apresentação", "tt": "", "corpo": "<p>Lúcia, 59 anos, costureira em Sobral, procura o ambulatório de clínica médica por cinco semanas de febre baixa no fim do dia, cansaço e sudorese à noite. Perdeu 5 kg. \"Não tenho mais força nem para a máquina de costura.\"<\/p><p>Na terceira semana, a unidade básica tratou como infecção urinária com ciprofloxacino por sete dias: a febre sumiu e voltou quatro dias depois. Na quarta semana recebeu amoxicilina por cinco dias por \"sinusite\". Nada mudou.<\/p>", "fundo": "", "lamina": null, "nota": "", "sis": "geral", "so_kicker": 1, "segue": "", "conforme": null, "rota": null}, {"t": "pagina", "k": "hda", "kicker": "História da doença atual", "tt": "", "corpo": "<p>A febre fica entre 37,8 e 38,3 °C. Há dores nas costas e nos joelhos, sem inchaço. Nos últimos dias notou \"umas manchinhas vermelhas\" nas plantas dos pés, que não doem, e dois caroços doloridos na ponta dos dedos, que sumiram em dois dias.<\/p><p>Nega tosse, disúria e diarreia. Nos últimos três meses, as fezes às vezes vêm \"mais escuras\", e ela atribuiu ao sulfato ferroso que tomou por anemia.<\/p>", "fundo": "", "lamina": null, "nota": "", "sis": "geral", "so_kicker": 1, "segue": "", "conforme": null, "rota": null}, {"t": "pagina", "k": "antecedentes", "kicker": "Antecedentes", "tt": "", "corpo": "<p>Teve <b>febre reumática na infância<\/b>, com \"sopro no coração\" acompanhado no posto. Um ecocardiograma de três anos atrás mostrou insuficiência mitral moderada. Hipertensa, usa losartana.<\/p><p>Não fez procedimentos dentários recentes. Não usa drogas injetáveis, não tem cateter nem prótese. Anemia ferropriva tratada há seis meses, sem investigação da causa.<\/p>", "fundo": "", "lamina": null, "nota": "", "sis": "geral", "so_kicker": 1, "segue": "", "conforme": null, "rota": null}, {"t": "pagina", "k": "exame", "kicker": "Exame físico", "tt": "", "corpo": "<div class=\"vit\"><div class=alt><b>38,1 °C<\/b><span>Temperatura<\/span><\/div><div><b>132/70<\/b><span>Pressão arterial<\/span><\/div><div><b>98<\/b><span>Frequência cardíaca<\/span><\/div><div><b>18<\/b><span>Frequência respiratória<\/span><\/div><div><b>96%<\/b><span>SpO₂ em ar ambiente<\/span><\/div><\/div><div class=\"tops\"><div><b>Estado geral<\/b><p><b>Palidez<\/b> moderada, emagrecida.<\/p><\/div><div><b>Cardiovascular<\/b><p><b>Sopro holossistólico mitral 3+/6<\/b> irradiado para a axila. Sem terceira bulha.<\/p><\/div><div><b>Olhos<\/b><p>Duas <b>petéquias na conjuntiva<\/b> palpebral inferior esquerda.<\/p><\/div><div><b>Mãos e pés<\/b><p><b>Hemorragias em estilha<\/b> em três unhas. Máculas eritematosas indolores nas plantas. Um nódulo doloroso na polpa do quarto dedo direito.<\/p><\/div><div><b>Abdome<\/b><p><b>Baço palpável<\/b> a 2 cm do rebordo.<\/p><\/div><div><b>Neurológico<\/b><p>Sem déficit focal.<\/p><\/div><\/div>", "fundo": "", "lamina": null, "nota": "", "sis": "geral", "so_kicker": 1, "segue": "", "conforme": null, "rota": null}, {"t": "pergunta", "k": "p1", "kicker": "Pergunta 1", "enunciado": "Febre baixa por cinco semanas, perda de peso e sopro mitral numa mulher com cardiopatia reumática, depois de dois antibióticos curtos. <b>Quais quatro<\/b> diagnósticos precisam ser considerados?", "alts": [{"t": "Febre reumática aguda recorrente", "c": "Rara depois dos 40, sem artrite migratória verdadeira, sem coreia, sem cardite nova.", "ok": 0}, {"t": "Sinusite bacteriana", "c": "Não faz cinco semanas de febre com esplenomegalia.", "ok": 0}, {"t": "Endocardite infecciosa", "c": "Valvopatia prévia, febre prolongada que cede e volta com antibiótico curto, esplenomegalia: é a hipótese principal.", "ok": 1}, {"t": "Mixoma atrial", "c": "Febre, sopro e fenômenos embólicos também são mixoma. O ecocardiograma separa.", "ok": 1}, {"t": "Pielonefrite crônica", "c": "Explicaria febre, não o sopro, o baço e as lesões de pele.", "ok": 0}, {"t": "Tuberculose extrapulmonar", "c": "Febre vespertina e emagrecimento no Brasil. Hemocultura e imagem ajudam a separar.", "ok": 1}, {"t": "Hipertireoidismo", "c": "Perda de peso e taquicardia, sim; febre persistente e petéquias, não.", "ok": 0}, {"t": "Linfoma", "c": "Febre, sudorese, perda de peso e baço palpável: não se fecha febre prolongada sem pensar nele.", "ok": 1}, {"t": "Doença de Still do adulto", "c": "Febre em picos acima de 39 °C, exantema que acompanha a febre e artrite: não é o padrão dela.", "ok": 0}], "escolhas": 4, "fundo": "", "tr": "Febre que volta sempre que o antibiótico acaba", "nota": "", "segue": ""}, {"t": "pareamento", "k": "p2", "kicker": "Pergunta 2", "enunciado": "Os sinais periféricos da endocardite entram como critérios menores de Duke. Associe cada achado ao tipo de fenômeno.", "itens": [{"t": "Nódulo de Osler: doloroso, na polpa digital", "ok": 2, "c": "Vasculite por imunocomplexo. Dói porque é inflamação, não microabscesso."}, {"t": "Lesão de Janeway: mácula indolor, na palma ou na planta", "ok": 3, "c": "Microêmbolo séptico com microabscesso na derme. Não dói."}, {"t": "Mancha de Roth: hemorragia retiniana com centro pálido", "ok": 2, "c": "Vasculite retiniana por imunocomplexo, no mesmo grupo de Osler."}, {"t": "Hemorragia conjuntival em paciente com vegetação", "ok": 3, "c": "Êmbolo em capilar conjuntival. Soma com Janeway e infartos."}, {"t": "Glomerulonefrite com hematúria e fator reumatoide positivo", "ok": 2, "c": "Imunocomplexo circulante: o rim e o fator reumatoide contam como critério imunológico."}, {"t": "Regurgitação nova por perfuração de folheto no ecocardiograma", "ok": 0, "c": "Não é critério menor: é evidência direta de lesão endocárdica."}], "ops": ["Destruição valvar (critério maior de imagem)", "Reação ao antibiótico", "Fenômeno imunológico", "Fenômeno vascular"], "fundo": "", "tr": "Dói é imunológico; não dói é embólico", "nota": "A opção que sobrou, reação ao antibiótico, não explica nenhum desses achados.", "segue": ""}, {"t": "pergunta", "k": "ex1", "kicker": "Pergunta 3", "enunciado": "Suspeita de endocardite. <b>Quais quatro<\/b> condutas diagnósticas são as mais apropriadas agora?", "alts": [{"t": "Sorologias para Bartonella e Coxiella já na chegada", "c": "Entram na endocardite com cultura negativa, que ainda não é o caso.", "ok": 0}, {"t": "Tomografia de crânio sem sintoma neurológico", "c": "Rastreio de êmbolo cerebral assintomático não é rotina antes do diagnóstico.", "ok": 0}, {"t": "Iniciar antibiótico empírico antes de colher, pela febre", "c": "Ela está estável. Na endocardite subaguda, colher antes vale mais que ganhar horas.", "ok": 0}, {"t": "PET-CT como exame inicial", "c": "Tem papel na endocardite de prótese e em focos a distância. Não substitui o ecocardiograma na valva nativa.", "ok": 0}, {"t": "Procalcitonina para decidir se trata", "c": "Não confirma nem exclui endocardite.", "ok": 0}, {"t": "Eletrocardiograma", "c": "Um PR que se alarga no seguimento é abscesso perivalvar até prova em contrário. O basal é a referência.", "ok": 1}, {"t": "Ecocardiograma transtorácico, seguido de transesofágico", "c": "O transtorácico vê vegetações grandes; o transesofágico vê as pequenas e as complicações perivalvares.", "ok": 1}, {"t": "Hemograma, função renal e urina com sedimento", "c": "Anemia, lesão renal e hematúria de glomerulonefrite entram na gravidade e nos critérios.", "ok": 1}, {"t": "Três pares de hemoculturas de punções diferentes, antes do antibiótico", "c": "Bacteremia contínua é a marca da endocardite. Três pares separados, antes de qualquer dose, dão o agente e a persistência.", "ok": 1}], "escolhas": 4, "fundo": "", "tr": "Colher antes, olhar a valva, medir o estrago", "nota": "", "segue": ""}, {"t": "resultados", "k": "res1", "kicker": "Resultados", "tt": "O que a equipe pediu", "de": "", "fundo": "", "intro": "Hemoculturas colhidas em três punções, com uma hora de intervalo, antes de qualquer antibiótico.", "nota": "", "laminas": {}, "todos": ["Hemoculturas", "Hemoglobina", "Ferritina", "Leucócitos / plaquetas", "VHS / proteína C reativa", "Creatinina", "Urina", "Fator reumatoide", "Eletrocardiograma", "Ecocardiograma transtorácico"], "sobre": {"Hemoculturas": {"n": "Hemoculturas", "r": "<b>3 de 3 pares positivos<\/b> para <i>Streptococcus gallolyticus<\/i> (antigo <i>S. bovis<\/i> biotipo I) · sensível à penicilina, CIM 0,06 µg/mL", "ref": "negativas", "a": 1}, "Hemoglobina": {"n": "Hemoglobina", "r": "9,8 g/dL · VCM 76 fL", "ref": "12–16 g/dL", "a": 1}, "Ferritina": {"n": "Ferritina", "r": "18 ng/mL", "ref": "15–150 ng/mL", "a": 1}, "Leucócitos / plaquetas": {"n": "Leucócitos / plaquetas", "r": "11.200 / 180.000 por mm³", "ref": "—", "a": 0}, "VHS / proteína C reativa": {"n": "VHS / proteína C reativa", "r": "86 mm/h / 74 mg/L", "ref": "até 20 / 5", "a": 1}, "Creatinina": {"n": "Creatinina", "r": "1,3 mg/dL", "ref": "0,6–1,1 mg/dL", "a": 1}, "Urina": {"n": "Urina", "r": "Hematúria de 15 por campo, proteinúria 1+", "ref": "normal", "a": 1}, "Fator reumatoide": {"n": "Fator reumatoide", "r": "Reagente, 64 UI/mL", "ref": "até 14 UI/mL", "a": 1}, "Eletrocardiograma": {"n": "Eletrocardiograma", "r": "Ritmo sinusal, 98 bpm · PR 180 ms", "ref": "—", "a": 0}, "Ecocardiograma transtorácico": {"n": "Ecocardiograma transtorácico", "r": "<b>Vegetação de 12 mm<\/b> no folheto anterior mitral · insuficiência mitral importante · fração de ejeção 62%", "ref": "—", "a": 1}}, "rota": null}, {"t": "pergunta", "k": "p4", "kicker": "Pergunta 4", "enunciado": "Três hemoculturas com <i>S. gallolyticus<\/i> e vegetação de 12 mm na mitral. Pelos critérios de Duke-ISCVID de 2023, qual a classificação?", "alts": [{"t": "Endocardite possível, até o ecocardiograma transesofágico", "c": "O transesofágico vai detalhar complicações, mas o diagnóstico já está fechado pelo transtorácico.", "ok": 0}, {"t": "Endocardite possível, porque falta o critério patológico", "c": "Patologia só existe quando se opera ou na necropsia. A classificação clínica não depende dela.", "ok": 0}, {"t": "Endocardite rejeitada, porque ela recebeu antibiótico antes", "c": "O antibiótico prévio reduz a positividade das culturas; aqui elas vieram positivas assim mesmo.", "ok": 0}, {"t": "Endocardite definida", "c": "Dois critérios maiores: microrganismo típico em hemoculturas repetidas e evidência de imagem de vegetação. Os menores só reforçam.", "ok": 1}, {"t": "Bacteremia sem endocardite, por ser um estreptococo", "c": "O <i>S. gallolyticus<\/i> está entre os agentes típicos de endocardite nos critérios.", "ok": 0}], "escolhas": 1, "fundo": "", "tr": "Dois maiores fecham", "nota": "", "segue": ""}, {"t": "pergunta", "k": "p5", "kicker": "Pergunta 5", "enunciado": "O agente é <i>Streptococcus gallolyticus<\/i>. Que investigação adicional é <b>obrigatória<\/b>?", "alts": [{"t": "Colonoscopia", "c": "O <i>S. gallolyticus<\/i> tem associação forte com adenoma e adenocarcinoma colorretal. A anemia ferropriva não investigada e as fezes escuras dela ganham outro sentido.", "ok": 1}, {"t": "Tomografia de crânio", "c": "Sem sintoma neurológico, não é a investigação que o agente pede.", "ok": 0}, {"t": "Pesquisa de sangue oculto nas fezes, e colonoscopia só se positiva", "c": "Um resultado negativo não afasta a lesão. O agente já é a indicação.", "ok": 0}, {"t": "Biópsia de medula óssea", "c": "A anemia é ferropriva, com ferritina de 18.", "ok": 0}, {"t": "Endoscopia digestiva alta, e só ela", "c": "Pode entrar, mas a associação do agente é com o cólon.", "ok": 0}], "escolhas": 1, "fundo": "", "tr": "O agente manda olhar o cólon", "nota": "", "segue": ""}, {"t": "bifurcacao", "k": "b1", "kicker": "Decisão", "tt": "O antibiótico", "enunciado": "Endocardite definida por estreptococo sensível à penicilina, em valva nativa. Como tratar?", "caminhos": [{"r": "Penicilina cristalina ou ceftriaxona endovenosa por quatro semanas, com transesofágico e avaliação da cirurgia cardíaca", "vai": "tratamento", "c": "É o esquema da valva nativa por estreptococo sensível, com a equipe de endocardite desde o início.", "rc": ""}, {"r": "Amoxicilina oral por duas semanas, em casa", "vai": "oral", "c": "Duas semanas de oral não é esquema de endocardite, e a vegetação é grande.", "rc": ""}, {"r": "Vancomicina e gentamicina empíricas até o transesofágico", "vai": "vanco", "c": "O agente e a sensibilidade já são conhecidos. Vancomicina é inferior aos betalactâmicos para estreptococo sensível, e a gentamicina lesa o rim.", "rc": ""}], "fundo": "", "nota": ""}, {"t": "pagina", "k": "oral", "kicker": "Dez dias depois", "tt": "", "corpo": "<p>Lúcia volta com febre de 38,6 °C e falta de ar ao deitar. As hemoculturas voltam a crescer <i>S. gallolyticus<\/i>. É internada para antibiótico endovenoso, com dez dias perdidos.<\/p>", "fundo": "", "lamina": null, "nota": "", "sis": "geral", "so_kicker": 1, "segue": "tratamento", "conforme": null, "rota": null}, {"t": "pagina", "k": "vanco", "kicker": "Quatro dias depois", "tt": "", "corpo": "<p>A febre cede devagar, mas a creatinina sobe de 1,3 para 2,4 mg/dL. A infectologia troca para ceftriaxona e suspende a gentamicina.<\/p>", "fundo": "", "lamina": null, "nota": "", "sis": "geral", "so_kicker": 1, "segue": "tratamento", "conforme": null, "rota": null}, {"t": "pagina", "k": "tratamento", "kicker": "Primeira semana de antibiótico", "tt": "", "corpo": "<p>Ceftriaxona 2 g ao dia. A febre some no quarto dia, e as hemoculturas de controle do terceiro dia são negativas.<\/p><p>O transesofágico confirma a vegetação de 12 mm, móvel, e mostra <b>perfuração do folheto anterior<\/b> com regurgitação importante. Sem abscesso perivalvar.<\/p>", "fundo": "", "lamina": null, "nota": "", "sis": "geral", "so_kicker": 1, "segue": "", "conforme": null, "rota": null}, {"t": "pagina", "k": "piora", "kicker": "Sexto dia", "tt": "", "corpo": "<p>Na madrugada, Lúcia acorda sufocada. Crepitações até o terço médio, saturação de 88%, pressão de 100/60, frequência cardíaca de 124. A radiografia mostra congestão pulmonar. O eletrocardiograma segue com PR de 180 ms.<\/p>", "fundo": "", "lamina": null, "nota": "", "sis": "geral", "so_kicker": 1, "segue": "", "conforme": null, "rota": null}, {"t": "pergunta", "k": "p6", "kicker": "Pergunta 6", "enunciado": "Na endocardite de valva nativa esquerda, <b>quais quatro<\/b> situações indicam cirurgia precoce?", "alts": [{"t": "Hemoculturas persistentemente positivas depois de uma semana de antibiótico adequado", "c": "Infecção não controlada: foco que o antibiótico não alcança.", "ok": 1}, {"t": "Febre ainda presente no segundo dia de antibiótico", "c": "A febre leva alguns dias para ceder. Não é indicação por si.", "ok": 0}, {"t": "Hematúria de glomerulonefrite", "c": "Melhora com o tratamento da infecção.", "ok": 0}, {"t": "Sopro audível na alta", "c": "A valva doente continua soprando. Não é indicação.", "ok": 0}, {"t": "Proteína C reativa ainda elevada no terceiro dia", "c": "Cai devagar. Não indica cirurgia.", "ok": 0}, {"t": "Insuficiência cardíaca por regurgitação valvar grave", "c": "É a indicação mais frequente e a mais urgente. Esperar o fim do antibiótico com a valva perfurada mata.", "ok": 1}, {"t": "Vegetação acima de 10 mm com evento embólico", "c": "Vegetação grande que já embolizou tem alto risco de novo êmbolo. A cirurgia precoce reduz a embolia.", "ok": 1}, {"t": "Abscesso perivalvar ou bloqueio atrioventricular novo", "c": "Infecção que saiu da valva não se controla só com antibiótico.", "ok": 1}], "escolhas": 4, "fundo": "", "tr": "Coração que falha, infecção que escapa, êmbolo que se repete", "nota": "", "segue": ""}, {"t": "bifurcacao", "k": "b2", "kicker": "Decisão", "tt": "A valva perfurada", "enunciado": "Edema pulmonar por insuficiência mitral aguda, no sexto dia de antibiótico. O que você faz?", "caminhos": [{"r": "Cirurgia cardíaca nesta internação, em caráter de urgência", "vai": "cirurgia", "c": "Insuficiência cardíaca por destruição valvar é a indicação clássica de cirurgia precoce.", "rc": ""}, {"r": "Diurético e vasodilatador, e cirurgia só depois de completar as quatro semanas", "vai": "espera", "c": "A valva não vai se refazer com antibiótico. O coração não aguenta quatro semanas de regurgitação aguda.", "rc": ""}], "fundo": "", "nota": ""}, {"t": "pagina", "k": "espera", "kicker": "Nona noite", "tt": "", "corpo": "<p>Com furosemida e nitroglicerina, Lúcia melhora por dois dias. Na nona noite, entra em edema pulmonar de novo, agora com pressão de 78/46 e lactato de 4,2. Vai para a UTI com noradrenalina.<\/p>", "fundo": "", "lamina": null, "nota": "", "sis": "geral", "so_kicker": 1, "segue": "b3", "conforme": null, "rota": null}, {"t": "bifurcacao", "k": "b3", "kicker": "Decisão", "tt": "Choque cardiogênico", "enunciado": "Qual a conduta?", "caminhos": [{"r": "Cirurgia de emergência", "vai": "cirurgia_tardia", "c": "O risco cirúrgico subiu muito, mas sem cirurgia não há saída.", "rc": ""}, {"r": "Manter suporte clínico e esperar estabilizar para operar", "vai": "obito_pagina", "c": "A estabilização não vem enquanto a valva estiver aberta.", "rc": ""}], "fundo": "", "nota": ""}, {"t": "pagina", "k": "obito_pagina", "kicker": "Décimo dia", "tt": "", "corpo": "<p>Com duas drogas vasoativas e ventilação mecânica, a pressão não se sustenta. Lúcia evolui com disfunção de múltiplos órgãos.<\/p>", "fundo": "", "lamina": null, "nota": "", "sis": "geral", "so_kicker": 1, "segue": "f_obito", "conforme": null, "rota": null}, {"t": "pagina", "k": "cirurgia_tardia", "kicker": "Cirurgia de emergência", "tt": "", "corpo": "<p>A troca valvar mitral por prótese biológica é feita no décimo dia, sob choque. O pós-operatório tem lesão renal com três sessões de diálise e onze dias de UTI.<\/p>", "fundo": "", "lamina": null, "nota": "", "sis": "geral", "so_kicker": 1, "segue": "colono", "conforme": null, "rota": null}, {"t": "pagina", "k": "cirurgia", "kicker": "Cirurgia no sétimo dia", "tt": "", "corpo": "<p>A cirurgia encontra perfuração de 6 mm no folheto anterior, sem abscesso. A equipe faz <b>plástica mitral<\/b> com remendo de pericárdio, preservando a valva nativa. A cultura da vegetação é negativa, e o antibiótico segue contando a partir da primeira hemocultura negativa.<\/p>", "fundo": "", "lamina": null, "nota": "", "sis": "geral", "so_kicker": 1, "segue": "colono", "conforme": null, "rota": null}, {"t": "pagina", "k": "colono", "kicker": "A colonoscopia", "tt": "", "corpo": "<p>Na terceira semana de antibiótico, a colonoscopia encontra um <b>adenoma tubuloviloso de 25 mm no cólon sigmoide<\/b>, com displasia de alto grau, ressecado por inteiro. Margens livres.<\/p><p>A anemia ferropriva de seis meses atrás e as fezes escuras tinham um endereço. Encontrá-lo foi mérito do agente, não da anemia.<\/p>", "fundo": "", "lamina": null, "nota": "", "sis": "geral", "so_kicker": 1, "segue": "", "conforme": null, "rota": null}, {"t": "pergunta", "k": "p7", "kicker": "Pergunta 7", "enunciado": "Pelas recomendações da AHA, <b>quais três<\/b> pacientes têm indicação de profilaxia antibiótica antes de procedimento dentário que manipula a gengiva?", "alts": [{"t": "Valvopatia reumática sem prótese nem endocardite prévia", "c": "Pelas recomendações atuais, não. Antes do episódio, Lúcia não tinha indicação.", "ok": 0}, {"t": "Portador de prolapso da valva mitral sem regurgitação", "c": "Risco baixo; a profilaxia não é indicada.", "ok": 0}, {"t": "Paciente com stent coronário", "c": "Não há indicação.", "ok": 0}, {"t": "Paciente com endocardite infecciosa prévia", "c": "Quem já teve, tem risco alto de ter de novo.", "ok": 1}, {"t": "Cardiopatia congênita cianótica não corrigida", "c": "Está entre as condições de risco mais alto.", "ok": 1}, {"t": "Portador de prótese valvar ou de material protético em reparo valvar", "c": "Maior risco de endocardite e de desfecho grave. Lúcia, agora com remendo ou prótese, entra aqui.", "ok": 1}, {"t": "Portador de marca-passo definitivo", "c": "Não há indicação para procedimento dentário.", "ok": 0}], "escolhas": 3, "fundo": "", "tr": "Prótese, endocardite prévia e congênita cianótica", "nota": "", "segue": ""}, {"t": "pergunta", "k": "p8", "kicker": "Pergunta 8", "enunciado": "Sobre o tratamento de Lúcia, <b>quais três<\/b> afirmações estão corretas?", "alts": [{"t": "A duração conta a partir da primeira hemocultura negativa", "c": "E, se a cultura da valva operada for positiva, recomeça da cirurgia.", "ok": 1}, {"t": "Avaliação odontológica completa antes da alta", "c": "Tratar focos dentários reduz o risco de nova endocardite.", "ok": 1}, {"t": "A gentamicina deve ser associada em todo esquema de estreptococo", "c": "Estreptococo sensível em valva nativa trata-se com betalactâmico isolado por quatro semanas.", "ok": 0}, {"t": "Hemoculturas diárias até o fim do tratamento", "c": "Colhe-se até a primeira negativa, e de novo se voltar a febre.", "ok": 0}, {"t": "Paciente estável, com culturas negativas, pode completar com antibiótico oral ou em casa", "c": "O ensaio POET mostrou que a passagem para via oral, em pacientes estáveis, não foi inferior.", "ok": 1}, {"t": "Ácido acetilsalicílico para prevenir embolia", "c": "Sem benefício e com mais sangramento.", "ok": 0}, {"t": "Anticoagulação plena reduz a embolia da vegetação", "c": "Não reduz, e aumenta o sangramento, inclusive cerebral.", "ok": 0}], "escolhas": 3, "fundo": "", "tr": "Contar certo, completar em casa quando der, e cuidar dos dentes", "nota": "", "segue": ""}, {"t": "pagina", "k": "alta", "kicker": "Preparando a alta", "tt": "", "corpo": "<p>Lúcia completa o antibiótico com culturas negativas. O ecocardiograma de controle mostra a valva funcionando.<\/p>", "fundo": "", "lamina": null, "nota": "", "sis": "geral", "so_kicker": 1, "segue": "", "conforme": {"de": "b2", "para": ["alta_cedo", "f2"]}, "rota": null}, {"t": "pagina", "k": "alta_cedo", "kicker": "Última semana", "tt": "", "corpo": "<p>Ela já sobe um lance de escada sem parar e voltou a costurar no quarto do hospital.<\/p>", "fundo": "", "lamina": null, "nota": "", "sis": "geral", "so_kicker": 1, "segue": "", "conforme": {"de": "b1", "para": ["f1", "f2", "f2"]}, "rota": null}, {"t": "desfecho", "k": "f1", "kicker": "Desfecho", "tt": "Alta com a valva preservada", "corpo": "<p>Plástica mitral funcionando, sem regurgitação significativa, fração de ejeção preservada. Seguimento da cardiologia e colonoscopia de vigilância em um ano.<\/p>", "q": "melhor", "porque": "O antibiótico certo desde o início, a cirurgia no primeiro sinal de insuficiência cardíaca e o cólon investigado pelo agente: as três decisões contaram.", "fundo": "", "fecho": "retrospectiva"}, {"t": "desfecho", "k": "f2", "kicker": "Desfecho", "tt": "Alta depois de um percurso mais longo", "corpo": "<p>Lúcia sai viva, com a infecção controlada, mas com mais dias de internação, função renal pior que a basal ou uma prótese no lugar da valva que poderia ter sido reparada.<\/p>", "q": "medio", "porque": "Esquema inadequado ou cirurgia adiada acrescentaram dano. A valva perfurada não espera o fim do antibiótico.", "fundo": "", "fecho": "retrospectiva"}, {"t": "desfecho", "k": "f_obito", "kicker": "Desfecho", "tt": "Óbito no décimo primeiro dia", "corpo": "<p>Lúcia morre em choque cardiogênico refratário, com a infecção já controlada pelo antibiótico.<\/p>", "q": "pior", "porque": "A insuficiência mitral aguda por perfuração valvar é indicação de cirurgia de urgência. Esperar estabilizar um choque que só a cirurgia corrige foi a decisão fatal.", "fundo": "", "fecho": "retrospectiva"}, {"t": "pagina", "k": "retrospectiva", "kicker": "Retrospectiva", "tt": "", "corpo": "<table class=\"tb\"><thead><tr><th>Momento<\/th><th>O dado<\/th><th>O que decidiu<\/th><\/tr><\/thead><tbody><tr><td>Unidade básica<\/td><td>Febre que voltava depois de cada antibiótico curto<\/td><td>Valvopata com febre prolongada colhe hemocultura antes de tratar<\/td><\/tr><tr><td>Exame<\/td><td>Estilhas, Janeway, Osler, baço<\/td><td>Os pequenos sinais do título<\/td><\/tr><tr><td>Hemoculturas<\/td><td><i>S. gallolyticus<\/i><\/td><td>O agente manda olhar o cólon<\/td><\/tr><tr><td>Sexto dia<\/td><td>Edema pulmonar com folheto perfurado<\/td><td>Cirurgia precoce, sem esperar o fim do antibiótico<\/td><\/tr><tr><td>Alta<\/td><td>Endocardite prévia e material protético<\/td><td>Agora ela tem indicação de profilaxia<\/td><\/tr><\/tbody><\/table>", "fundo": "", "lamina": null, "nota": "", "sis": "geral", "so_kicker": 1, "segue": "", "conforme": null, "rota": null}, {"t": "pagina", "k": "referencias", "kicker": "Fontes e limites", "tt": "", "corpo": "<p>Paciente, valores e percursos são ficcionais.<\/p><p>Fowler e cols. The 2023 Duke-ISCVID Criteria for Infective Endocarditis, Clin Infect Dis 2023. Delgado e cols. ESC Guidelines for the management of endocarditis, 2023. Iversen e cols. POET, N Engl J Med 2019. Wilson e cols. Prevention of Viridans Group Streptococcal Infective Endocarditis, AHA 2021.<\/p>", "fundo": "", "lamina": null, "nota": "", "sis": "geral", "so_kicker": 1, "segue": "", "conforme": null, "rota": null}], "banco": {}, "revisao": [], "imgs": {}}</script>
+<script>
+/* Paginação por blocos medidos. Nenhum bloco é descartado ou reduzido por zoom. */
+let partesTela = [], parteTela = 0, areaTela = null;
+const detalhesAbertos = new Set();
+const temProximaParte = () => parteTela + 1 < partesTela.length;
+function aplicarParte(){
+  if (!areaTela) return;
+  parteTela = Math.min(Math.max(parteTela, 0), Math.max(0, partesTela.length - 1));
+  const ativos = new Set(partesTela[parteTela] || []);
+  [...areaTela.children].forEach(el => el.toggleAttribute('data-fora', !ativos.has(el)));
+  areaTela.scrollTop = 0; areaTela.scrollLeft = 0;
+}
+function virarParte(delta){
+  parteTela += delta; aplicarParte(); pintarPe();
+}
+function montarFolhas(){
+  partesTela = []; areaTela = null;
+  const root = document.querySelector('#palco .plano,#palco .folha,#palco .fim .caixa');
+  if (!root) return;
+  const mobile = innerWidth <= 900;
+  if (mobile && root.classList.contains('plano')){
+    const figura = document.querySelector('#palco .lamina');
+    if (figura) root.append(figura);
+  }
+  let area = root.querySelector(':scope > .alts,:scope > .grupos,:scope > .res,:scope > .cams,:scope > .painel-lab,:scope > .par,:scope > .observacao-imagem');
+  if (!area){
+    root.classList.add('paginavel');
+    area = document.createElement('div'); area.className = 'conteudo-paginado';
+    const filhos = [...root.children];
+    // Conserva o título como referência em todas as páginas de continuação.
+    filhos.filter(el => !el.matches('.marca,h1,h2')).forEach(el => area.append(el));
+    root.append(area);
+  }
+  if(area.classList.contains('cams')){const aviso=root.querySelector(':scope>.forca');if(aviso)area.append(aviso);}
+  if(mobile)root.querySelectorAll('table').forEach(t=>{const nomes=[...t.querySelectorAll('thead th')].map(x=>x.textContent);t.querySelectorAll('tbody tr').forEach(tr=>[...tr.children].forEach((td,n)=>td.dataset.col=nomes[n]||''));});
+  area.classList.add('area-paginada'); areaTela = area;
+  // Respostas e resultados permanecem inteiros: a densidade se adapta à tela.
+  if(area.matches('.alts,.res,.cams,.painel-lab,.par,.observacao-imagem')){
+    root.classList.add('tela-unica');
+    if(area.matches('.painel-lab,.observacao-imagem'))root.classList.add('paginavel');
+    const cabe=()=>area.scrollHeight<=area.clientHeight+1&&area.scrollWidth<=area.clientWidth+1;
+    let fator=1;
+    root.style.setProperty('--compacto',fator);
+    while(!cabe()&&fator>0.25){fator=Math.max(0.25,fator-0.015);root.style.setProperty('--compacto',fator.toFixed(3));}
+    partesTela=[[...area.children]];parteTela=0;aplicarParte();return;
+  }
+
+  // O flex precisa reservar espaço aos cabeçalhos e aos botões antes da medição.
+  const capacidade = () => area.clientHeight;
+  function grande(el){ const st=getComputedStyle(el);return el.getBoundingClientRect().height+parseFloat(st.marginTop||0)+parseFloat(st.marginBottom||0) > capacidade() - 3; }
+  function dividir(el){
+    if (!grande(el)) return false;
+    if(mobile && el.matches('.grade,.bal,div:not([class])')){el.replaceWith(...el.children);return true;}
+    let filhos = [], criar;
+    if (el.matches('.gr')){
+      filhos = [...el.querySelectorAll(':scope > .it')];
+      criar = () => { const c=el.cloneNode(false);c.append(el.querySelector('b').cloneNode(true));return c; };
+    } else if (el.matches('.tops,.grade,.vit,.corpo .lg,aside,.cons,.rev,.bal,.painel-lab')){
+      filhos = [...el.children]; criar=()=>el.cloneNode(false);
+    } else if (el.matches('.estudo-imagem') && mobile){
+      filhos=[...el.children];criar=()=>el.cloneNode(false);
+    } else if (el.matches('.corpo') && mobile){
+      filhos=[...el.children];criar=()=>el.cloneNode(false);
+    } else if (el.matches('table')){
+      filhos=[...el.querySelectorAll('tbody tr')];
+      criar=()=>{const c=el.cloneNode(false);if(el.tHead)c.append(el.tHead.cloneNode(true));c.append(document.createElement('tbody'));return c;};
+    } else if (el.matches('details[open]')){
+      filhos=[...el.children].filter(x=>x.tagName!=='SUMMARY');
+      criar=()=>{const c=document.createElement('div');c.className='leitura continuacao-leitura';return c;};
+    } else if (el.matches('.rc') && el.querySelector('figure')){
+      filhos=[...el.children].filter(x=>x.tagName!=='B');
+      criar=()=>{const c=el.cloneNode(false);c.append(el.querySelector('b').cloneNode(true));return c;};
+    }
+    // Contêiner com um filho só: o que precisa partir é o filho.
+    if (filhos.length === 1) return dividir(filhos[0]);
+    if (filhos.length > 1){
+      if(el.matches('.gr')){
+        // Conserva o máximo de opções por grupo que a altura comporta.
+        const blocos=[];let atual=criar();el.before(atual);
+        for(const f of filhos){atual.append(f);if(grande(atual)&&atual.querySelectorAll('.it').length>1){f.remove();blocos.push(atual);atual=criar();el.before(atual);atual.append(f);}}
+        el.remove();return true;
+      }
+      // Blocos inteiros, com cabeçalhos repetidos onde necessários.
+      const novos=filhos.map(f=>{const c=criar();(c.tBodies?.[0]||c).append(f);return c;});
+      el.replaceWith(...novos);return true;
+    }
+    if(el.matches('.cam') && el.querySelector('.c')?.textContent && !el.dataset.discussao){
+      const comentario=el.querySelector('.c'),c=el.cloneNode(false);c.dataset.discussao='1';
+      c.append(el.querySelector('.l').cloneNode(true));const rot=document.createElement('span');rot.className='r';rot.textContent='Discussão do caminho '+el.querySelector('.l').textContent;c.append(rot,comentario);el.after(c);return true;
+    }
+    const seletor=el.matches('p')?null:'.c,.cm,:scope>p';
+    const alvo=seletor?el.querySelector(seletor):el;
+    if(alvo && alvo.textContent.length>120){
+      const walker=document.createTreeWalker(alvo,NodeFilter.SHOW_TEXT),nodes=[];
+      while(walker.nextNode())nodes.push(walker.currentNode);
+      const txt=alvo.textContent,mid=txt.indexOf(' ',Math.floor(txt.length/2));
+      if(mid<0)return false;
+      let used=0,cut;
+      for(const n of nodes){if(used+n.length>=mid){cut=[n,mid-used];break;}used+=n.length;}
+      if(!cut)return false;
+      const a=document.createRange();a.selectNodeContents(alvo);a.setEnd(...cut);
+      const b=document.createRange();b.selectNodeContents(alvo);b.setStart(...cut);
+      const left=el.cloneNode(true),right=el.cloneNode(true);
+      (seletor?left.querySelector(seletor):left).replaceChildren(a.cloneContents());
+      (seletor?right.querySelector(seletor):right).replaceChildren(b.cloneContents());
+      el.replaceWith(left,right);return true;
+    }
+    return false;
+  }
+  // Une novamente apenas na próxima renderização; os originais continuam nos dados do caso.
+  for(let pass=0;pass<8;pass++){
+    let mudou=false;
+    for(const el of [...area.children])if(dividir(el))mudou=true;
+    if(!mudou)break;
+  }
+  const itens=[...area.children];
+  itens.forEach(el=>el.setAttribute('data-fora',''));
+  let folha=[];
+  for(const el of itens){
+    el.removeAttribute('data-fora');
+    const excedeu = area.scrollHeight>area.clientHeight+2 || area.scrollWidth>area.clientWidth+2;
+    if(excedeu && folha.length){
+      partesTela.push(folha);folha.forEach(n=>n.setAttribute('data-fora',''));folha=[];
+    }
+    folha.push(el);
+  }
+  if(folha.length)partesTela.push(folha);
+  aplicarParte();
+}
+
+/* ═══════════ o caso em etapas — página a página ═══════════
+
+   Uma folha de cada vez. Nada rola: a página inteira é uma etapa, e passar de
+   etapa é virar a folha. O que decide a folha seguinte é o que foi respondido
+   na atual.
+
+   Três coisas o motor guarda entre as etapas: os exames marcados em cada
+   pedido, as respostas dadas, e o caminho escolhido em cada bifurcação. É com
+   os exames marcados que a página de resultados sabe o que devolver — e é por
+   isso que o que não foi pedido não aparece. */
+
+const DADOS = JSON.parse(document.getElementById('dados').textContent);
+const CASO = DADOS.caso, ETAPAS = DADOS.etapas, BANCO = DADOS.banco;
+const REVISAO = DADOS.revisao;
+/* As imagens viajam numa tabela à parte, uma vez cada: a etapa guarda
+   só o nome do arquivo. */
+const IMG = n => (DADOS.imgs || {})[n] || n || '';
+
+const $ = s => document.querySelector(s);
+
+/* ─────────────────────────── estado da sessão ─────────────────────────── */
+
+let emRevisao = false;
+let i = 0;                    // índice da etapa atual
+const marcados = {};          // ident do pedido -> Set de nomes de exame
+const respostas = {};         // ident da pergunta -> {marcadas:[], feita:bool}
+const escolhas = {};          // ident da bifurcação -> índice do caminho
+let historia = [0];           // pilha de etapas visitadas, para voltar
+const laudos = new Set(); // laudos revelados por rodada de investigação
+
+const porId = k => ETAPAS.findIndex(e => e.k === k);
+/* Tudo o que já foi pedido em qualquer rodada, para os pré-requisitos e para
+   as consequências do fim. */
+function jaPedido(nome){
+  return Object.values(marcados).some(c => c.has(nome));
+}
+const etapa = () => ETAPAS[i];
+
+/* ─────────────────────────── navegação ─────────────────────────── */
+
+function ir(n, empilhar){
+  if (n < 0 || n >= ETAPAS.length) return;
+  if (empilhar !== false) historia.push(n);
+  i = n; parteTela = 0; emRevisao=false;
+  pintar();
+}
+
+function irPara(k){
+  const n = porId(k);
+  if (n < 0){ console.warn('etapa inexistente:', k); return; }
+  ir(n);
+}
+
+/* A folha seguinte é a vizinha, a menos que a etapa atual diga outra coisa —
+   é assim que a bifurcação muda o rumo sem que a lista de etapas mude. */
+function adiante(){
+  if (temProximaParte()){ virarParte(1); return; }
+  if(emRevisao){recomecar();return;}
+  const e = etapa();
+  if(e.comentado){
+    const r=respostas[e.k];if(!r?.feita)return;
+    const alts=e.alts.filter(a=>a.ok);
+    marcados[e.k]=new Set(alts.flatMap(a=>a.exames));
+    r.conducao='indicados';
+  }
+  if (e.t === 'bifurcacao'){
+    const esc = escolhas[e.k];
+    if (esc === undefined) return;
+    irPara(e.caminhos[esc].vai);
+    return;
+  }
+  if (e.t === 'desfecho'){
+    if (e.fecho) irPara(e.fecho); else mostrarRevisao();
+    return;
+  }
+  /* A rota é a ramificação de verdade: quem não pediu a prova não recebe a
+     página que a discute. Sem isto, a peça perguntava "que exames você pede?" e
+     depois seguia contando o resultado de exames que ninguém pediu — que é
+     exatamente o vício que este formato existe para não ter. */
+  if (e.rota){
+    const pedidos = new Set();
+    Object.values(marcados).forEach(c => c.forEach(n => pedidos.add(n)));
+    const tem = e.rota.pediu.every(n => pedidos.has(n));
+    irPara(tem ? e.rota.entao : e.rota.senao);
+    return;
+  }
+  /* A evolução volta a se separar aqui: a página é a mesma para os três
+     caminhos até o ponto em que o hemograma deixa de ser o mesmo. */
+  if (e.conforme){
+    const k = escolhas[e.conforme.de];
+    irPara(e.conforme.para[k === undefined ? 0 : k]);
+    return;
+  }
+  // `segue` deixa a ordem do arquivo de ser a única costura entre as páginas:
+  // é o que permite três trilhas de tratamento convivendo na mesma lista
+  if (e.segue){ irPara(e.segue); return; }
+  if (i + 1 >= ETAPAS.length){ mostrarRevisao(); return; }
+  ir(i + 1);
+}
+
+function atras(){
+  if (parteTela > 0){ virarParte(-1); return; }
+  if(emRevisao){emRevisao=false;parteTela=0;pintar();return;}
+  const e = etapa();
+  if (historia.length < 2) return;
+  historia.pop();
+  i = historia[historia.length - 1];
+  pintar();
+}
+
+/* Quando se pode virar a folha. Pergunta sem resposta e pedido sem nenhum
+   exame marcado seguram a página: o caso não anda por cima de uma decisão que
+   não foi tomada. */
+function podeAdiante(){
+  if (emRevisao || temProximaParte()) return true;
+  const e = etapa();
+  if (e.t === 'pergunta' || e.t === 'pareamento')
+    return !!(respostas[e.k] && respostas[e.k].feita);
+  if (e.t === 'bifurcacao') return escolhas[e.k] !== undefined;
+  if (e.t === 'pedido') return e.comentado ? !!respostas[e.k]?.feita : (marcados[e.k] || new Set()).size > 0;
+  return true;
+}
+
+/* ─────────────────────────── o trilho ─────────────────────────── */
+
+/* Desde que o caso ramifica, a lista de etapas deixou de ser o caminho: ela
+   contém as páginas das DUAS rotas, e contar 27 num percurso de 19 é mentir
+   para quem olha o trilho. Esta função percorre o caso a partir do estado
+   atual e devolve só as páginas que este percurso vai ver. */
+function rotaAtual(){
+  const seq = [], visto = new Set();
+  const pedidos = new Set();
+  Object.values(marcados).forEach(c => c.forEach(x => pedidos.add(x)));
+  let n = 0;
+  while (n >= 0 && n < ETAPAS.length && !visto.has(n)){
+    visto.add(n); seq.push(n);
+    const e = ETAPAS[n];
+    if (e.t === 'bifurcacao'){
+      const esc = escolhas[e.k];
+      n = porId(e.caminhos[esc === undefined ? 0 : esc].vai);
+    } else if (e.t === 'desfecho'){
+      n = e.fecho ? porId(e.fecho) : -1;
+    } else if (e.rota){
+      n = porId(e.rota.pediu.every(x => pedidos.has(x))
+                ? e.rota.entao : e.rota.senao);
+    } else if (e.conforme){
+      const k = escolhas[e.conforme.de];
+      n = porId(e.conforme.para[k === undefined ? 0 : k]);
+    } else if (e.segue){
+      n = porId(e.segue);
+    } else n = n + 1;
+  }
+  return seq;
+}
+
+/* O trilho mostra as etapas do percurso, uma marca cada, colorida pelo tipo —
+   e um contador explícito. É assim que o formato antigo do New England fazia,
+   e a diferença é real: dá para ver quantas páginas faltam e onde estão as
+   perguntas antes de chegar nelas. */
+function pintarTrilho(){
+  const seq = rotaAtual();
+  const aqui = Math.max(seq.indexOf(i), 0);
+  $('#trilho').innerHTML =
+    '<a class="voltar-biblioteca" href="index.html" aria-label="Voltar à biblioteca"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg><span>Biblioteca</span></a><span class="tt">' + CASO.titulo + '</span>'
+    + '<span class="cnt">' + (aqui + 1) + ' / ' + seq.length + '</span>'
+    + '<span class="marcas">' + seq.map(n => ETAPAS[n]).map((e, k) =>
+        // o título só aparece no que já foi percorrido: com o mouse parado
+        // sobre uma marca à frente, o trilho entregava os desfechos — inclusive
+        // qual deles é o ruim — antes de a bifurcação ser feita
+        '<i class="m-' + e.t + (k < aqui ? ' feita' : k === aqui ? ' aqui' : '')
+        + '" data-n="' + seq[k] + '"'
+        + (k < aqui ? ' title="' + (e.tt || e.kicker || '').replace(/"/g, '') + '"' : '')
+        + '></i>'
+      ).join('') + '</span>';
+  // andar para trás pelo trilho é livre; para a frente, não — o caso não pula
+  // uma decisão que ainda não foi tomada
+  const vistos = new Set(historia);
+  $('#trilho').querySelectorAll('.marcas i').forEach(m => {
+    const n = +m.dataset.n;
+    if (vistos.has(n) && n !== i) m.onclick = () => ir(n);
+  });
+}
+
+function pintarPe(){
+  const e = etapa();
+  const fim = e.t === 'desfecho';
+  const corrigida=e.comentado && respostas[e.k]?.feita;
+  $('#pe').innerHTML =
+    '<span class="rod">' + CASO.rodape + '</span>'
+    + '<span class="nav">'
+    + (partesTela.length > 1 ? '<span class="pagina-indice">Página ' + (parteTela + 1) + ' de ' + partesTela.length + '</span>' : '')
+    + '<button class="bt" id="voltar"' + (historia.length < 2 && parteTela === 0 ? ' disabled' : '') + '>Voltar</button>'
+    + '<button class="bt forte" id="' + (emRevisao && !temProximaParte() ? 'reiniciar' : 'seguir') + '"' + (podeAdiante() ? '' : ' disabled') + '>'
+    + (temProximaParte() ? 'Próxima página' : emRevisao ? 'Recomeçar' : e.t === 'capa' ? 'Começar o caso' : corrigida ? 'Realizar indicados' : fim ? 'Continuar' : 'Avançar') + '</button></span>';
+  $('#voltar').onclick = atras;
+  ($('#seguir') || $('#reiniciar')).onclick = adiante;
+}
+
+/* ─────────────────────────── desenho das etapas ─────────────────────────── */
+
+const fundoDe = e => e.fundo
+  ? '<div class="fundo" style="background-image:url(' + IMG(e.fundo) + ')"></div>'
+  : '<div class="fundo" style="background:#0d1014"></div>';
+
+const laminaDe = l => !l ? '' :
+  '<figure class="lamina"><img src="' + IMG(l.img) + '" alt="' + l.tt + '">'
+  + '<figcaption class="cap"><b>' + l.tt + '</b>' + l.lg
+  + '<span class="cr">' + l.cr + '</span></figcaption></figure>';
+
+/* Figura anotada e boneco vêm do caso como HTML pronto, montado antes de
+   existir data: URI. Cada um deixa o nome do arquivo em `data-img` e o
+   endereço é resolvido aqui, contra a mesma tabela de imagens. */
+function resolverImagens(){
+  document.querySelectorAll('[data-img]').forEach(el => {
+    const u = IMG(el.dataset.img);
+    if (el.tagName.toLowerCase() === 'image') el.setAttribute('href', u);
+    else el.setAttribute('src', u);
+  });
+}
+
+/* ─────────────────────── a lupa ─────────────────────── */
+
+/* Tomografia lida num cartão de 300 px é decoração. Qualquer figura da peça
+   abre em tela cheia por clique, com a legenda embaixo, e fecha por clique,
+   por Esc ou pelo botão. Enquanto a lupa está aberta as setas do teclado
+   param de virar página: elas pertencem à figura, não ao caso. */
+let lupaAberta = false;
+
+function abrirLupa(figura){
+  const clone = figura.cloneNode(true);
+  clone.classList.remove('lamina');
+  const cx = document.createElement('div');
+  cx.className = 'lupa';
+  cx.innerHTML = '<button class="fechar" title="Fechar (Esc)">Fechar ✕</button>';
+  const quadro = document.createElement('div');
+  quadro.className = 'quadro';
+  quadro.appendChild(clone);
+  cx.appendChild(quadro);
+  document.body.appendChild(cx);
+  lupaAberta = true;
+  const fechar = () => {
+    cx.remove(); lupaAberta = false;
+    document.removeEventListener('keydown', porTecla, true);
+  };
+  const porTecla = ev => {
+    if (ev.key === 'Escape'){ ev.stopPropagation(); fechar(); }
+  };
+  document.addEventListener('keydown', porTecla, true);
+  cx.onclick = ev => { if (!quadro.contains(ev.target) || ev.target.tagName === 'IMG') fechar(); };
+  cx.querySelector('.fechar').onclick = fechar;
+}
+
+function ligarLupa(){
+  document.querySelectorAll('#palco figure').forEach(f => {
+    if (!f.querySelector('img,svg')) return;
+    f.classList.add('amplia');
+    f.title = 'Clique para ampliar';
+    f.onclick = () => abrirLupa(f);
+  });
+}
+
+function pintar(){
+  const e = etapa();
+  $('#palco').innerHTML = '<section class="tela on">' + DESENHO[e.t](e) + '</section>';
+  resolverImagens();
+  document.querySelectorAll('#palco details').forEach((d,n)=>{const key=etapa().k+'::'+n;d.dataset.detalhe=key;d.open=detalhesAbertos.has(key);});
+  ligar(e);
+  montarFolhas();
+  document.querySelectorAll('#palco details').forEach(d=>{const summary=d.querySelector('summary');if(summary)summary.onclick=ev=>{ev.preventDefault();const key=d.dataset.detalhe;d.open?detalhesAbertos.delete(key):detalhesAbertos.add(key);parteTela=0;pintar();};});
+  ligarLupa();
+  acessibilidadeDaPagina();
+  pintarTrilho();
+  pintarPe();
+}
+
+const DESENHO = {
+
+  /* Título e imagem. A imagem sobe do chão para a tela inteira, sem véu de
+     leitura por cima dela senão o gradiente que segura o título. */
+  capa: e =>
+    '<div class="fundo capa-fundo" style="background-image:url(' + IMG(e.fundo) + ')"></div>'
+    + '<div class="veu capa-veu"></div>'
+    + '<div class="abertura">'
+    + (e.kicker ? '<div class="marca"><i></i><span>' + e.kicker + '</span></div>' : '')
+    + '<h1>' + e.tt + '</h1>'
+    + (e.selo ? '<div class="selo">' + e.selo + '</div>' : '')
+    + '</div>',
+
+  /* Quando o rótulo é mais informativo que a manchete — "onde dava para ter
+     chegado antes" contra "a retrospectiva" — quem sobe a título é o rótulo, e
+     a manchete curta sai. O caso declara isso com `so_kicker`. */
+  pagina: e =>
+    fundoDe(e) + '<div class="veu ' + (e.lamina ? 'esq' : 'tudo') + '"></div>'
+    + '<div class="plano' + (e.lamina ? '' : ' centro') + '">'
+    + (e.so_kicker
+        ? '<h2 class="do-kicker">' + e.kicker + '</h2>'
+        : '<div class="marca"><i></i><span>' + e.kicker + '</span></div>'
+          + '<h2>' + e.tt + '</h2>')
+    + e.corpo + '</div>'
+    + laminaDe(e.lamina),
+
+  pedido: e => e.comentado ? DESENHO.pergunta(e) :
+    fundoDe(e) + '<div class="veu tudo"></div>'
+    + '<div class="folha pedido">'
+    + '<div class="marca"><i></i><span>' + e.kicker + '</span></div>'
+    + '<h2>' + e.tt + '</h2><p class="sub">' + e.enunciado + '</p>'
+    + '<div class="grupos">' + e.grupos.map(g =>
+        '<div class="gr g-' + g.s + '"><b><i></i>' + g.n + '</b>'
+        + g.o.map(o => {
+            /* Um exame com pré-requisito continua VISÍVEL e fica travado, com
+               o motivo escrito. Esconder ensinaria que ele não existe; o que
+               se quer ensinar é que ele ainda não se justifica. */
+            const falta = (o.ex || []).filter(x => !jaPedido(x));
+            const trava = falta.length > 0;
+            return '<label class="it' + (temMarcado(e.k, o.e) ? ' on' : '')
+              + (trava ? ' trava' : '') + '" data-ex="' + esc(o.e) + '">'
+              + '<span class="cx"></span><span class="n">' + o.e
+              + (o.d ? '<span class="d">' + o.d + '</span>' : '')
+              + (trava ? '<span class="d trv">' + o.pq + ' — falta: '
+                  + falta.join(', ') + '</span>' : '')
+              + '</span></label>';
+          }).join('') + '</div>').join('')
+    + '</div><div class="conta" id="conta"></div></div>',
+
+  // Sem manchete: o rótulo já diz "o que voltou", e o primeiro cartão vira o
+  // topo visual. Ganha noventa pixels e a tela começa no dado.
+  resultados: e => {
+    const todos = e.todos ? e.todos : [...(marcados[e.de] || [])];
+    const origem=respostas[e.de]?.conducao;
+    const resumo=origem==='indicados'?'Exames realizados pela equipe após a discussão.':'';
+    const pedidos = todos;
+    const sobre = e.sobre || (ETAPAS[porId(e.de)] || {}).sobre || {};
+    const linhas = [], imagens = [];
+    pedidos.forEach(n => {
+      // o resultado que o caso declarou vence o do banco: o banco foi escrito
+      // para um formato com relógio, e aqui não há relógio
+      const x = sobre[n] || BANCO[n];
+      if (!x) return '';
+      const im = e.laminas[n];
+      /* O laudo do sedimento tem cinco achados separados por ponto médio, e
+         num parágrafo corrido o cilindro hemático — que é o achado — passava
+         no meio da frase. Cada parte vira uma linha. */
+      const partes = x.r.split(' · ');
+      const valor = partes.length > 1
+        ? partes.map(t => '<span class="ln">' + t + '</span>').join('')
+        : x.r;
+      /* Quando o exame tem imagem, a imagem vem SOZINHA e o laudo fica atrás
+         de um botão. Colar o laudo na figura tira do grupo o passo que mais
+         ensina em imagem, que é descrever antes de ler o que outro escreveu —
+         e é invariante declarada do formato: laudo se revela, não se
+         renderiza junto. */
+      const laudo = '<div class="v">' + valor
+        + (x.ref && x.ref !== '—' ? '<span class="rf">referência: ' + x.ref
+            + '</span>' : '') + '</div>';
+      if (!im) {
+        linhas.push('<tr class="rc' + (x.a ? ' alt' : '') + '"><th scope="row"><b>' + n
+          + '</b></th><td class="v">' + valor + '</td><td class="rf">'
+          + (x.ref || '—') + '</td></tr>');
+        return;
+      }
+      /* A legenda descritiva É o laudo. Deixá-la sob a figura enquanto um
+         botão promete "ver o laudo" é entregar a leitura e cobrar o clique
+         por nada: quem olhava a radiografia já lia "opacidades alveolares
+         bilaterais predominando nos campos médios" antes de descrever coisa
+         alguma. Sob a figura fica só o crédito; a descrição e o valor saem
+         juntos, no clique. */
+      const chaveLaudo = (e.de || e.k) + '::' + n;
+      const aberto = laudos.has(chaveLaudo);
+      imagens.push('<article class="rc resultado-imagem' + (x.a ? ' alt' : '') + '"><b>' + n + '</b>'
+        + '<figure><img src="' + IMG(im.img) + '" alt="' + n + '">'
+        + '<figcaption class="soc">' + im.cr + '</figcaption></figure>'
+        + (aberto
+            ? laudo + '<div class="leglaudo">' + im.lg + '</div>'
+            : '<button class="verlaudo" data-laudo="' + esc(chaveLaudo) + '">'
+              + 'Ver o laudo</button>')
+        + '</article>');
+    });
+    const cartas = (linhas.length ? '<div class="laboratorio"><table class="exames-tabela"><thead><tr><th>Exame</th><th>Resultado</th><th>Referência</th></tr></thead><tbody>' + linhas.join('') + '</tbody></table></div>' : '')
+      + (imagens.length ? '<div class="imagens-resultados" style="--figuras:' + imagens.length + '">' + imagens.join('') + '</div>' : '');
+    return fundoDe(e) + '<div class="veu tudo"></div><div class="folha">'
+      + '<div class="marca larga"><i></i><span>' + e.kicker
+      + '</span>'
+      + (resumo || e.intro ? '<b class="sub-in">' + resumo + ' ' + (e.intro || '').replace(/(?:De novo, só o que foi marcado\.|Só o que foi marcado\.)/g,'') + '</b>' : '') + '</div>'
+      + '<div class="res resultados-editoriais' + (linhas.length && imagens.length ? ' misto' : '') + '">' + (cartas
+          || '<div class="vazio">Você não pediu nenhum exame nesta etapa. O caso '
+             + 'segue com o que se sabe do leito.</div>') + '</div></div>';
+  },
+
+  pergunta: e => {
+    const r = respostas[e.k] || {marcadas: [], feita: false};
+    return fundoDe(e) + '<div class="veu tudo"></div>'
+      + '<div class="folha q' + (e.alts.length > 6 ? ' densa' : '') + '">'
+      + '<div class="marca"><i></i><span>' + e.kicker + '</span></div>'
+      + '<p class="enun">' + e.enunciado + '</p>'
+      + '<div class="qdica">' + (r.feita ? e.tr
+          : (e.escolhas === 1 ? 'selecione uma'
+             : 'selecione ' + e.escolhas + ' · marcadas ' + r.marcadas.length))
+      + '</div>'
+      + '<ul class="alts' + (r.feita ? ' feita' : '')
+          + (e.alts.length > 6 ? ' muitas' : '') + '">'
+      + e.alts.map((a, k) =>
+          '<li data-k="' + k + '" class="' + (a.ok ? 'certa' : 'errada')
+          + (r.marcadas.includes(k) ? ' marcada' : '') + '">'
+          + '<span class="k">' + String.fromCharCode(65 + k) + '</span>'
+          + '<span class="tx">' + a.t + '</span>'
+          + '<span class="cm">' + (r.feita ? '<span class="estado-resposta">' + (e.comentado ? a.situacao : (a.ok ? 'Correta' : 'Incorreta')) + (r.marcadas.includes(k) ? ' · sua seleção' : '') + '</span>' : '') + a.c + '</span></li>').join('')
+      + '</ul>'
+      + (r.feita ? '' : '<button class="conf" id="conf"'
+          + (r.marcadas.length >= e.escolhas ? '' : ' disabled') + '>'
+          + 'Confirmar resposta</button>')
+      + '</div>';
+  },
+
+  /* Pareamento: cada item tem a sua linha de letras. Marcar é atribuir uma
+     letra ao item; a mesma letra pode servir a mais de um item, porque é
+     assim na prova — e porque proibir a repetição entregaria a resposta por
+     exclusão. */
+  pareamento: e => {
+    const r = respostas[e.k] || {marcadas: [], feita: false};
+    const L = n => String.fromCharCode(65 + n);
+    return fundoDe(e) + '<div class="veu tudo"></div>'
+      + '<div class="folha q par-folha">'
+      + '<div class="marca"><i></i><span>' + e.kicker + '</span></div>'
+      + '<p class="enun">' + e.enunciado + '</p>'
+      + '<div class="qdica">' + (r.feita ? e.tr
+          : 'atribua uma letra a cada item · ' + r.marcadas.filter(x => x !== undefined && x !== null).length
+            + ' de ' + e.itens.length) + '</div>'
+      + '<div class="par' + (r.feita ? ' feita' : '') + '">'
+      + '<div class="par-ops">' + e.ops.map((o, n) =>
+          '<span class="po"><b>' + L(n) + '</b>' + o + '</span>').join('') + '</div>'
+      + '<div class="par-itens">' + e.itens.map((it, n) => {
+          const esc = r.marcadas[n];
+          const certa = r.feita && esc === it.ok;
+          return '<div class="pi' + (r.feita ? (certa ? ' certa' : ' errada') : '')
+            + '" data-n="' + n + '">'
+            + '<span class="pt">' + it.t + '</span>'
+            + '<span class="pesc">' + e.ops.map((o, m) =>
+                '<i class="pe' + (esc === m ? ' on' : '')
+                + (r.feita && m === it.ok ? ' ok' : '') + '" data-m="' + m
+                + '" title="' + esc2(o) + '">' + L(m) + '</i>').join('') + '</span>'
+            + (r.feita ? '<span class="cm"><span class="estado-resposta">'
+                + (certa ? 'Correta' : 'Incorreta · a resposta é ' + L(it.ok)
+                    + (esc === undefined || esc === null ? '' : ' · você marcou ' + L(esc)))
+                + '</span>' + it.c + '</span>' : '')
+            + '</div>';
+        }).join('') + '</div></div>'
+      + (r.feita ? '' : '<button class="conf" id="conf"'
+          + (e.itens.every((_, n) => r.marcadas[n] !== undefined && r.marcadas[n] !== null) ? '' : ' disabled')
+          + '>Confirmar resposta</button>')
+      + '</div>';
+  },
+
+  bifurcacao: e => {
+    const esc = escolhas[e.k];
+    return fundoDe(e) + '<div class="veu tudo"></div><div class="folha">'
+      + '<div class="marca"><i></i><span>' + e.kicker + '</span></div>'
+      + '<h2>' + e.tt + '</h2><p class="sub">' + e.enunciado + '</p>'
+      + '<div class="cams' + (esc !== undefined ? ' feita' : '') + '">'
+      + e.caminhos.map((c, k) =>
+          '<div class="cam' + (esc === k ? ' escolhido' : '') + '" data-k="' + k + '">'
+          + '<span class="l">' + String.fromCharCode(65 + k) + '</span>'
+          + '<span class="r">' + c.r + '</span>'
+          + '<span class="c">' + c.c + '</span></div>').join('')
+      + '</div>'
+      /* Sem isto, a ramificação era invisível: as três justificativas abriam,
+         o caso seguia, e nada na tela dizia que o rumo tinha mudado. */
+      + (esc !== undefined
+          ? '<div class="forca">' + e.caminhos.map((c, k) =>
+              '<i class="' + (esc === k ? 'on' : '') + '"></i>').join('')
+            + '<span>Daqui em diante o caso segue pelo caminho '
+            + String.fromCharCode(65 + esc) + '. As próximas páginas — '
+            + 'a prescrição, a evolução e o desfecho — são as dele, e são '
+            + 'outras nos outros dois.</span></div>'
+          : '')
+      + '</div>';
+  },
+
+  /* O balanço: o que a condução custou, item a item, com o contrafactual ao
+     lado. É a única tela do caso que só existe por causa do que VOCÊ fez. */
+  balanco: e => {
+    const bateu = q => {
+      if (q.sem) return !q.sem.some(n => jaPedido(n));
+      if (q.escolheu) return escolhas[q.escolheu[0]] === q.escolheu[1];
+      if (q.escolheu_todos)
+        return q.escolheu_todos.every(([k, v]) => escolhas[k] === v);
+      return false;
+    };
+    const disparadas = e.cons.filter(c => bateu(c.q));
+    const morreu = e.obito && bateu(e.obito);
+    const dias = e.bd + disparadas.reduce((s, c) => s + c.d, 0);
+    const tfg = e.bt - disparadas.reduce((s, c) => s + c.t, 0);
+    return fundoDe(e) + '<div class="veu tudo"></div><div class="folha">'
+      + '<div class="marca"><i></i><span>' + e.kicker + '</span></div>'
+      + '<h2>' + e.tt + '</h2>' + e.corpo
+      + '<div class="bal">'
+      + (morreu
+        ? '<div class="placar obito"><div class="cheio"><b>Óbito</b><span>'
+          + e.obitotx + '</span></div></div>'
+        : '<div class="placar">'
+      +   '<div><b>' + dias + '</b><span>dias de internação</span></div>'
+      +   '<div' + (tfg <= 15 ? ' class="grave"' : '') + '><b>' + tfg
+      +     '</b><span>mL/min/1,73 m² na alta'
+      +     (tfg <= 15 ? ' · saiu em diálise' : '') + '</span></div>'
+      +   '<div class="ideal"><b>' + e.bd + ' · ' + e.bt + '</b>'
+      +     '<span>o melhor percurso possível</span></div>'
+      + '</div>')
+      + (disparadas.length
+          ? '<div class="cons">' + disparadas.map(c =>
+              '<div class="cn"><b>' + c.tt + '</b>'
+              + '<span class="pr">' + (c.d ? '+' + c.d + ' dias' : '')
+              + (c.d && c.t ? ' · ' : '') + (c.t ? '−' + c.t + ' mL/min' : '')
+              + '</span><p>' + c.pq + '</p></div>').join('') + '</div>'
+          : '<div class="cons"><div class="cn limpo"><b>Nenhuma decisão desta '
+            + 'condução cobrou preço.</b><p>Você chegou ao melhor percurso que '
+            + 'este caso permite. É raro, e não é sorte: as decisões que '
+            + 'custam caro aqui são todas das primeiras 72 horas.</p></div></div>')
+      + '</div></div>';
+  },
+
+  desfecho: e =>
+    fundoDe(e) + '<div class="veu tudo q-' + e.q + '"></div>'
+    + '<div class="fim ' + e.q + '"><div class="caixa">'
+    + '<div class="marca"><i></i><span>' + e.kicker + '</span></div>'
+    + '<h1>' + e.tt + '</h1>' + e.corpo
+    + '<div class="porque"><b>Por quê</b><p>' + e.porque + '</p></div>'
+    + '</div></div>',
+};
+
+/* ─────────────────────────── interação ─────────────────────────── */
+
+const esc = s => s.replace(/"/g, '&quot;');
+const esc2 = s => String(s).replace(/<[^>]+>/g, '').replace(/"/g, '&quot;');
+const temMarcado = (k, n) => (marcados[k] || new Set()).has(n);
+
+function ligar(e){
+  if (e.t === 'pedido' && !e.comentado){
+    const conj = marcados[e.k] || (marcados[e.k] = new Set());
+    /* O teto é o que faz a pergunta ser uma pergunta. Sem ele, marcar tudo é
+       sempre a jogada dominante — e um grupo que marca tudo não decidiu nada,
+       além de encerrar a investigação na primeira tela. */
+    const teto = e.limite || 0;
+    const cheio = () => teto && conj.size >= teto;
+    const contar = () => {
+      const faltam = teto ? teto - conj.size : 0;
+      $('#conta').innerHTML = '<b>' + conj.size
+        + (teto ? ' de ' + teto : '') + '</b> '
+        + (conj.size === 1 ? 'exame marcado' : 'exames marcados')
+        + (teto
+            ? (faltam > 0
+                ? ' · ainda cabe' + (faltam === 1 ? ' 1' : 'm ' + faltam)
+                : ' · o teto desta rodada está completo — desmarque para trocar')
+            : ' · nada é obrigatório, e nada é sugerido');
+      document.querySelectorAll('.it[data-ex]').forEach(l =>
+        l.classList.toggle('bloq', cheio() && !conj.has(l.dataset.ex)));
+      pintarPe();
+    };
+    document.querySelectorAll('.it[data-ex]').forEach(l => {
+      l.onclick = () => {
+        if (l.classList.contains('trava')) return;
+        const n = l.dataset.ex;
+        if (conj.has(n)) conj.delete(n);
+        else if (cheio()) return;          // o teto não empurra: ele segura
+        else conj.add(n);
+        pintar();
+        const atual=[...document.querySelectorAll('.it')].find(x=>x.dataset.ex===n);
+        if(atual?.getClientRects().length)atual.focus({preventScroll:true});
+      };
+    });
+    contar();
+  }
+
+  if (e.t === 'resultados'){
+    document.querySelectorAll('.verlaudo').forEach(b => {
+      b.onclick = () => {
+        const nome=b.closest('.rc').querySelector('b').textContent;
+        laudos.add(b.dataset.laudo);pintar();
+        const cartao=[...document.querySelectorAll('.rc')].find(c=>c.querySelector('b')?.textContent===nome&&c.querySelector('.v'));
+        const parte=partesTela.findIndex(p=>p.some(n=>n===cartao||n.contains(cartao)));
+        if(parte>=0){parteTela=parte;aplicarParte();pintarPe();}
+      };
+    });
+  }
+
+  if (e.t === 'pergunta' || e.comentado){
+    const r = respostas[e.k] || (respostas[e.k] = {marcadas: [], feita: false});
+    if (r.feita) return;
+    document.querySelectorAll('.alts li').forEach(li => {
+      li.onclick = () => {
+        const k = +li.dataset.k;
+        const j = r.marcadas.indexOf(k);
+        // marcar e desmarcar até confirmar: a escolha não é irreversível
+        // enquanto o grupo ainda está discutindo
+        if (j >= 0) r.marcadas.splice(j, 1);
+        else if (r.marcadas.length < e.escolhas) r.marcadas.push(k);
+        else { r.marcadas.shift(); r.marcadas.push(k); }
+        document.querySelectorAll('.alts li').forEach((x, n) =>
+          x.classList.toggle('marcada', r.marcadas.includes(n)));
+        const b = $('#conf');
+        if (b) b.disabled = r.marcadas.length < e.escolhas;
+      };
+    });
+    const conf = $('#conf');
+    if (conf) conf.onclick = () => {
+      if(r.marcadas.length!==e.escolhas)return;
+      r.feita = true;
+      if(e.comentado)marcados[e.k]=new Set(e.alts.filter(a=>a.ok).flatMap(a=>a.exames));
+      parteTela=0; pintar();
+    };
+  }
+
+  if (e.t === 'pareamento'){
+    const r = respostas[e.k] || (respostas[e.k] = {marcadas: [], feita: false});
+    if (r.feita) return;
+    document.querySelectorAll('.par .pe').forEach(ch => {
+      ch.onclick = ev => {
+        ev.stopPropagation();
+        const n = +ch.closest('.pi').dataset.n, m = +ch.dataset.m;
+        r.marcadas[n] = (r.marcadas[n] === m) ? undefined : m;
+        const linha = ch.closest('.pi');
+        linha.querySelectorAll('.pe').forEach(x => x.classList.toggle('on', +x.dataset.m === r.marcadas[n]));
+        const completo = e.itens.every((_, k) => r.marcadas[k] !== undefined && r.marcadas[k] !== null);
+        const b = $('#conf'); if (b) b.disabled = !completo;
+        const d = document.querySelector('.qdica');
+        if (d) d.textContent = 'atribua uma letra a cada item · '
+          + e.itens.filter((_, k) => r.marcadas[k] !== undefined && r.marcadas[k] !== null).length
+          + ' de ' + e.itens.length;
+      };
+    });
+    const conf = $('#conf');
+    if (conf) conf.onclick = () => {
+      if (!e.itens.every((_, k) => r.marcadas[k] !== undefined && r.marcadas[k] !== null)) return;
+      r.feita = true; parteTela = 0; pintar();
+    };
+  }
+
+  if (e.t === 'bifurcacao'){
+    if (escolhas[e.k] !== undefined) return;
+    document.querySelectorAll('.cam').forEach(c => {
+      c.onclick = () => { escolhas[e.k] = +c.dataset.k; parteTela=0; pintar(); };
+    });
+  }
+}
+
+/* ─────────────────────────── a revisão do fim ─────────────────────────── */
+
+/* O único lugar em que o caso comenta o que ficou de fora, e ele só fala
+   quando não há mais nada a decidir. Durante a condução, apontar o que falta
+   é decidir pelo grupo. */
+function mostrarRevisao(){
+  const pediu = new Set();
+  Object.values(marcados).forEach(s => s.forEach(n => pediu.add(n)));
+  const faltou = REVISAO.filter(r => !pediu.has(r.chave));
+  /* `respostas[k]` nasce quando a página é PINTADA, não quando é respondida, e
+     `[].every()` é `true`: uma pergunta só visitada entrava no total e no
+     acerto. Dava para chegar à revisão com "4 de 4" tendo respondido três. */
+  const feitas = Object.entries(respostas).filter(([, r]) => r.feita);
+  const acertos = feitas.filter(([k, r]) => {
+    const e = ETAPAS[porId(k)];
+    if (!e) return false;
+    if (e.t === 'pareamento')
+      return e.itens.every((it, n) => r.marcadas[n] === it.ok);
+    return r.marcadas.length === e.escolhas && r.marcadas.every(x => e.alts[x].ok);
+  }).length;
+  const total = feitas.length;
+
+  $('#palco').innerHTML = '<section class="tela on">'
+    + '<div class="fundo" style="background:#0d1014"></div>'
+    + '<div class="veu tudo"></div><div class="folha">'
+    + '<div class="marca"><i></i><span>Revisão</span></div>'
+    + '<h2>O que ficou para trás</h2>'
+    + '<p class="sub">' + acertos + ' de ' + total + ' perguntas de escolha com '
+    + 'a resposta inteiramente certa · '
+    + (pediu.size ? Object.keys(marcados).length + ' rodadas de exames, ' + pediu.size + ' pedidos ao todo · ' : '')
+    + Object.keys(escolhas).length + ' decisões de conduta.</p>'
+    + '<div class="rev">' + (faltou.length
+        ? faltou.map(r => '<div class="li"><b>' + r.rotulo + '</b><p>'
+            + r.porque + '</p></div>').join('')
+        : '<div class="ok">Nada essencial ficou de fora.</div>')
+    + '</div></div></section>';
+  $('#pe').innerHTML = '<span class="rod">' + CASO.rodape + '</span>'
+    + '<span class="nav"><button class="bt" onclick="recomecar()">'
+    + 'Conduzir de novo</button></span>';
+  $('#trilho').innerHTML = '<a class="voltar-biblioteca" href="index.html" aria-label="Voltar à biblioteca"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg><span>Biblioteca</span></a><span class="tt">' + CASO.titulo + '</span>';
+  emRevisao=true;parteTela=0;montarFolhas();pintarPe();
+}
+
+function recomecar(){
+  i = 0; historia = [0]; emRevisao=false;
+  Object.keys(marcados).forEach(k => delete marcados[k]);
+  Object.keys(respostas).forEach(k => delete respostas[k]);
+  Object.keys(escolhas).forEach(k => delete escolhas[k]);
+  laudos.clear(); detalhesAbertos.clear(); parteTela=0;
+  pintar();
+}
+
+/* ─────────────────────────── teclado ─────────────────────────── */
+
+addEventListener('keydown', ev => {
+  if (lupaAberta) return;              // as setas são da figura enquanto ela está aberta
+  if (ev.key === 'ArrowRight' || ev.key === 'PageDown'){
+    if (podeAdiante()) adiante();
+    ev.preventDefault();
+  } else if (ev.key === 'ArrowLeft' || ev.key === 'PageUp'){
+    atras(); ev.preventDefault();
+  }
+});
+
+let resizeTela;
+addEventListener("resize",()=>{clearTimeout(resizeTela);resizeTela=setTimeout(()=>{if(!lupaAberta){if(emRevisao)mostrarRevisao();else pintar();}},120);});
+pintar();
+
+function acessibilidadeDaPagina(){
+  document.querySelectorAll('.it,.cam,.alts li,figure.amplia,.par .pe').forEach(el=>{
+    el.tabIndex=0;el.setAttribute('role',el.classList.contains('it')?'checkbox':'button');
+    if(el.classList.contains('it'))el.setAttribute('aria-checked',el.classList.contains('on')?'true':'false');
+    el.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();ev.stopPropagation();el.click();}});
+  });
+}
+
+/* ═══════════ camada viva — ícones, cor por página, placar e movimento ═══════════
+   Vem depois de etapas.js e embrulha `pintar` e `mostrarRevisao`: o motor
+   continua o mesmo, e esta camada só decora o que ele desenhou. */
+
+const VV_IC = {
+  historia:'<rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h6M9 18h3"/>',
+  exame:'<path d="M5 3v6a4 4 0 0 0 8 0V3"/><path d="M9 13v3a4 4 0 0 0 8 0v-2"/><circle cx="17" cy="12" r="2"/>',
+  exames:'<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3"/><path d="M7.5 15h9"/>',
+  imagem:'<rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-9 8"/>',
+  pergunta:'<circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.6 2.3c-.8.4-1.2 1-1.2 1.8v.4"/><path d="M12 17h.01"/>',
+  pareamento:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+  decisao:'<circle cx="6" cy="5" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="12" cy="19" r="2"/><path d="M6 7v1a5 5 0 0 0 5 5h2a5 5 0 0 0 5-5V7M12 13v4"/>',
+  evolucao:'<rect x="4" y="5" width="16" height="16" rx="3"/><path d="M8 3v4M16 3v4M4 10h16M9 14h2v2H9z"/>',
+  discussao:'<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2.2h5.2c0-1 .4-1.7 1-2.2A6 6 0 0 0 12 3z"/>',
+  desfecho:'<path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/>',
+  fecho:'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21a2 2 0 0 1 2-2h13"/>',
+  capa:'<path d="M12 3l2.4 5.6L20 9l-4.3 3.9L17 19l-5-3-5 3 1.3-6.1L4 9l5.6-.4z"/>',
+  check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>', x:'<path d="M7 7l10 10M17 7L7 17"/>',
+  meio:'<path d="M6 12h12"/>', relogio:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  foto:'<rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-9 8"/>',
+  termo:'<path d="M10 14V5a2 2 0 1 1 4 0v9a4 4 0 1 1-4 0z"/><path d="M12 9v6"/>',
+  pressao:'<circle cx="12" cy="13" r="8"/><path d="M12 13l4-4M8 5.5A8 8 0 0 1 16 5.5"/>',
+  coracao:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
+  vento:'<path d="M3 8h10a3 3 0 1 0-3-3M3 12h15a3 3 0 1 1-3 3M3 16h7"/>',
+  gota:'<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>',
+  balanca:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 10a3 3 0 0 1 6 0M12 10l1.5-2"/>',
+  regua:'<path d="M4 16L16 4l4 4L8 20z"/><path d="M8 12l2 2M11 9l2 2M14 6l2 2"/>',
+  pessoa:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+  pulso:'<path d="M3 12h4l3 7 4-14 3 7h4"/>',
+  camadas:'<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/>',
+  raio:'<path d="M13 3L5 14h6l-1 7 8-11h-6z"/>',
+  olho:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+};
+const vvIc = (n, cls) => '<svg class="vv-ic' + (cls ? ' ' + cls : '') + '" viewBox="0 0 24 24" aria-hidden="true">' + (VV_IC[n] || VV_IC.pergunta) + '</svg>';
+const vvBola = n => '<span class="vv-bola">' + vvIc(n) + '</span>';
+
+function vvTipo(e){
+  if (e.t === 'capa') return 'capa';
+  if (e.t === 'pergunta' || e.t === 'pedido') return e.t === 'pedido' ? 'exames' : 'pergunta';
+  if (e.t === 'pareamento') return 'pareamento';
+  if (e.t === 'bifurcacao') return 'decisao';
+  if (e.t === 'resultados') return 'exames';
+  if (e.t === 'desfecho') return 'desfecho';
+  if (e.t === 'balanco') return 'fecho';
+  const s = ((e.kicker || '') + ' ' + (e.tt || '')).toLowerCase();
+  if (/exame físico|pele, membros|pele e membros/.test(s)) return 'exame';
+  if (/imagem|radiograf|tomograf|ultrass|biópsia|eletrocard|\becg\b|lâmina|corpúsculo|microfoto|visual|histolog|arquitetura/.test(s)) return 'imagem';
+  if (/retrospectiva|lacuna|procedência|fontes|referênc|onde o caso|créditos|fecho|onde dava/.test(s)) return 'fecho';
+  if (/discuss|interpreta|diferencial|mecanismo|fenótipo|laudo|resultado|laborat/.test(s)) return 'discussao';
+  if (/dia|semana|evolu|reavalia|pronto|admiss|internação|depois|terapia|alta|seguimento|prescri|conduta|tratamento|retorno|plano|visita|horas/.test(s)) return 'evolucao';
+  return 'historia';
+}
+
+/* ─────────── placar e progresso ─────────── */
+function vvPlacar(){
+  const feitas = Object.entries(respostas).filter(([, r]) => r.feita);
+  let certas = 0;
+  feitas.forEach(([k, r]) => {
+    const e = ETAPAS[porId(k)]; if (!e) return;
+    if (e.t === 'pareamento'){ if (e.itens.every((it, n) => r.marcadas[n] === it.ok)) certas++; }
+    else if (e.alts && r.marcadas.length === e.escolhas && r.marcadas.every(x => e.alts[x].ok)) certas++;
+  });
+  return {certas, feitas: feitas.length};
+}
+const VV_CHAVE = 'casos-clinicos:progresso';
+function vvGuardar(extra){
+  try {
+    const todo = JSON.parse(localStorage.getItem(VV_CHAVE) || '{}');
+    const slug = CASO.slug || document.title;
+    const seq = rotaAtual(); const aqui = Math.max(seq.indexOf(i), 0);
+    const velho = todo[slug] || {};
+    const pl = vvPlacar();
+    todo[slug] = Object.assign({}, velho, {
+      pos: Math.max(velho.fim ? 0 : (velho.pos || 0), aqui + 1), total: seq.length,
+      certas: pl.certas, feitas: pl.feitas, quando: Date.now()
+    }, extra || {});
+    localStorage.setItem(VV_CHAVE, JSON.stringify(todo));
+  } catch (_) {}
+}
+
+let vvUltimo = '', vvPlacarAntes = -1;
+function vvAntes(){
+  if (emRevisao) return;
+  const e = etapa();
+  const tipo = vvTipo(e);
+  document.body.dataset.tipo = tipo;
+  // selo com ícone
+  document.querySelectorAll('#palco .marca').forEach(m => {
+    if (!m.querySelector('.vv-bola')) m.insertAdjacentHTML('afterbegin', vvBola(tipo));
+  });
+  const dk = document.querySelector('#palco h2.do-kicker');
+  if (dk && !dk.querySelector('.vv-bola')) dk.insertAdjacentHTML('afterbegin', vvBola(tipo));
+  if (e.t === 'desfecho'){
+    const h = document.querySelector('#palco .fim h1');
+    if (h && !h.querySelector('.vv-bola')) h.insertAdjacentHTML('afterbegin', vvBola(e.q === 'melhor' ? 'check' : e.q === 'pior' ? 'x' : 'desfecho'));
+  }
+  // vitais e aparelhos
+  document.querySelectorAll('#palco .vit>div').forEach(d => {
+    if (d.querySelector('.vv-ic')) return;
+    const r = (d.querySelector('span') || {}).textContent || '';
+    const n = /temp/i.test(r) ? 'termo' : /press|^pa$/i.test(r) ? 'pressao' : /card|^fc$/i.test(r) ? 'coracao'
+      : /resp|^fr$/i.test(r) ? 'vento' : /spo|satura/i.test(r) ? 'gota' : /peso/i.test(r) ? 'balanca'
+      : /altura/i.test(r) ? 'regua' : 'pulso';
+    d.insertAdjacentHTML('beforeend', vvIc(n));
+  });
+  document.querySelectorAll('#palco .tops>div>b').forEach(b => {
+    if (b.querySelector('.vv-ic')) return;
+    const r = b.textContent;
+    const n = /geral/i.test(r) ? 'pessoa' : /cabeça|pescoço/i.test(r) ? 'pessoa' : /cardio/i.test(r) ? 'coracao'
+      : /respir|pulm/i.test(r) ? 'vento' : /pele/i.test(r) ? 'camadas' : /neuro/i.test(r) ? 'raio'
+      : /olho|ocular/i.test(r) ? 'olho' : 'pulso';
+    b.insertAdjacentHTML('afterbegin', vvIc(n));
+  });
+  // resultado da pergunta
+  const r = respostas[e.k];
+  if ((e.t === 'pergunta' || e.t === 'pareamento') && r && r.feita){
+    let ok, tot;
+    if (e.t === 'pareamento'){ tot = e.itens.length; ok = e.itens.filter((it, n) => r.marcadas[n] === it.ok).length; }
+    else { tot = e.escolhas; ok = r.marcadas.filter(x => e.alts[x].ok).length; }
+    const cls = ok === tot ? 'bom' : ok ? 'parcial' : 'ruim';
+    const txt = ok === tot ? (tot === 1 ? 'Resposta certa' : 'Acertou todas') : ok ? 'Acertou ' + ok + ' de ' + tot : (tot === 1 ? 'Resposta incorreta' : 'Nenhuma certa');
+    const dica = document.querySelector('#palco .qdica');
+    // a frase de efeito do autor sai: o resultado fala por si
+    if (dica && !dica.querySelector('.vv-nota')) dica.textContent = '';
+    if (dica && !dica.querySelector('.vv-nota'))
+      dica.insertAdjacentHTML('afterbegin', '<span class="vv-nota ' + cls + '">' + vvIc(ok === tot ? 'check' : ok ? 'meio' : 'x') + txt + '</span>');
+    document.querySelectorAll('#palco .alts li, #palco .pi').forEach((li, n) => li.style.setProperty('--i', n));
+  }
+  // capa sem ilustração: um mosaico com os ícones do que o caso tem
+  if (e.t === 'capa' && !e.fundo && !document.querySelector('#palco .vv-mosaico')){
+    const tipos = [['historia','#4f46e5'],['exame','#0d9488'],['exames','#2563eb'],['imagem','#7c3aed'],
+                   ['pergunta','#ea580c'],['pareamento','#db2777'],['decisao','#c026d3'],['evolucao','#0891b2'],['desfecho','#16a34a']];
+    const tela = document.querySelector('#palco .tela');
+    if (tela) tela.insertAdjacentHTML('beforeend', '<div class="vv-mosaico">' + tipos.map(([n, c], k) =>
+      '<span style="--c:' + c + ';--i:' + k + '">' + vvIc(n) + '</span>').join('') + '</div>');
+  }
+  // capa: o que o caso tem
+  if (e.t === 'capa'){
+    const ab = document.querySelector('#palco .abertura');
+    const ks = ab && ab.querySelector('.marca span:not(.vv-bola)'); if (ks) ks.textContent = 'Caso interativo';
+    if (ab && !ab.querySelector('.vv-chips')){
+      const seq = rotaAtual().map(n => ETAPAS[n]);
+      const perg = seq.filter(x => x.t === 'pergunta' || x.t === 'pareamento').length;
+      const dec = seq.filter(x => x.t === 'bifurcacao').length;
+      const fins = ETAPAS.filter(x => x.t === 'desfecho').length;
+      const imgs = Math.max(0, Object.keys(DADOS.imgs || {}).length - 1);
+      ab.insertAdjacentHTML('beforeend', '<div class="vv-chips">'
+        + '<span style="--c:#ea580c">' + vvIc('pergunta') + perg + ' perguntas</span>'
+        + '<span style="--c:#c026d3">' + vvIc('decisao') + dec + ' decisões</span>'
+        + '<span style="--c:#16a34a">' + vvIc('desfecho') + fins + ' desfechos</span>'
+        + (imgs ? '<span style="--c:#7c3aed">' + vvIc('foto') + imgs + ' imagens</span>' : '') + '</div>');
+    }
+  }
+}
+
+function vvDecorar(){
+  const e = etapa();
+  const tipo = vvTipo(e);
+  document.body.dataset.tipo = tipo;
+  if (CASO.cor) document.documentElement.style.setProperty('--caso', CASO.cor);
+  // contador com ícone e placar
+  const cnt = document.querySelector('#trilho .cnt');
+  if (cnt && !cnt.querySelector('.vv-ic')) cnt.insertAdjacentHTML('afterbegin', vvIc(tipo));
+  const pl = vvPlacar();
+  if (cnt && pl.feitas){
+    cnt.insertAdjacentHTML('afterend', '<span class="vv-placar' + (vvPlacarAntes >= 0 && pl.certas > vvPlacarAntes ? ' sobe' : '')
+      + '" title="Perguntas com a resposta inteiramente certa">' + vvIc('check') + pl.certas + ' de ' + pl.feitas + '</span>');
+  }
+  vvPlacarAntes = pl.certas;
+  // entrada escalonada, só quando a folha muda
+  const chave = e.k + '::' + parteTela;
+  if (chave !== vvUltimo){
+    let n = 0;
+    document.querySelectorAll('#palco .abertura>*, #palco .plano>*:not(.conteudo-paginado), #palco .conteudo-paginado>*, #palco .folha>.marca, #palco .folha>h2, #palco .folha>.sub, #palco .folha>.enun, #palco .alts:not(.feita) li, #palco .cams:not(.feita) .cam, #palco .par:not(.feita) .pi, #palco .laboratorio, #palco .imagens-resultados>*, #palco .vit>div, #palco .tops>div, #palco .fim .caixa>*').forEach(el => {
+      if (el.hasAttribute('data-fora') || el.classList.contains('area-paginada')) return;
+      el.style.setProperty('--i', Math.min(n++, 14)); el.classList.add('vv-entra');
+    });
+  }
+  vvUltimo = chave;
+  vvGuardar();
+}
+
+const vvMontarOriginal = montarFolhas;
+montarFolhas = function(){ try { vvAntes(); } catch (err) { console.warn(err); } return vvMontarOriginal.apply(this, arguments); };
+const vvPintarOriginal = pintar;
+pintar = function(){ vvPintarOriginal.apply(this, arguments); try { vvDecorar(); } catch (err) { console.warn(err); } };
+
+/* ─────────── revisão final: anel, números e confete ─────────── */
+function vvConfete(){
+  const cx = document.createElement('div'); cx.className = 'vv-confete';
+  const cores = ['#4f46e5', '#ea580c', '#16a34a', '#db2777', '#0891b2', '#ca8a04', '#7c3aed'];
+  for (let k = 0; k < 90; k++){
+    const i2 = document.createElement('i');
+    i2.style.left = (Math.random() * 100) + 'vw';
+    i2.style.background = cores[k % cores.length];
+    i2.style.setProperty('--dx', (Math.random() * 30 - 15) + 'vw');
+    i2.style.setProperty('--rot', (Math.random() * 720 - 360) + 'deg');
+    i2.style.animationDelay = (Math.random() * .5) + 's';
+    cx.appendChild(i2);
+  }
+  document.body.appendChild(cx); setTimeout(() => cx.remove(), 2800);
+}
+mostrarRevisao = function(){
+  const pediu = new Set();
+  Object.values(marcados).forEach(s => s.forEach(n => pediu.add(n)));
+  const faltou = REVISAO.filter(r => !pediu.has(r.chave));
+  const pl = vvPlacar();
+  const pct = pl.feitas ? Math.round(100 * pl.certas / pl.feitas) : 0;
+  const dec = Object.keys(escolhas).length;
+  const R = 54, C = 2 * Math.PI * R;
+  document.body.dataset.tipo = 'desfecho';
+  $('#palco').innerHTML = '<section class="tela on"><div class="folha">'
+    + '<div class="marca">' + vvBola('desfecho') + '<span>Revisão</span></div>'
+    + '<h2>' + (pct >= 70 ? 'Caso concluído com boa condução' : 'Caso concluído') + '</h2>'
+    + '<div class="vv-fim"><div class="vv-anel"><svg viewBox="0 0 132 132"><circle class="fundo-anel" cx="66" cy="66" r="' + R + '"/>'
+    + '<circle class="cheio" cx="66" cy="66" r="' + R + '" stroke-dasharray="' + C + '" stroke-dashoffset="' + C + '"/></svg><b data-conta="' + pct + '">0%</b></div>'
+    + '<div class="vv-cards"><div style="--c:#16a34a"><b data-conta="' + pl.certas + '">0</b><span>perguntas inteiramente certas</span></div>'
+    + '<div style="--c:#ea580c"><b data-conta="' + pl.feitas + '">0</b><span>perguntas respondidas</span></div>'
+    + '<div style="--c:#c026d3"><b data-conta="' + dec + '">0</b><span>decisões de conduta</span></div></div></div>'
+    + (faltou.length ? '<div class="rev">' + faltou.map(r => '<div class="li"><b>' + r.rotulo + '</b><p>' + r.porque + '</p></div>').join('') + '</div>' : '')
+    + '</div></section>';
+  $('#pe').innerHTML = '<span class="rod">' + CASO.rodape + '</span>'
+    + '<span class="nav"><a class="bt" href="index.html">Biblioteca</a><button class="bt forte" id="reiniciar" onclick="recomecar()">Conduzir de novo</button></span>';
+  $('#trilho').innerHTML = '<a class="voltar-biblioteca" href="index.html" aria-label="Voltar à biblioteca"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg><span>Biblioteca</span></a><span class="tt">' + CASO.titulo + '</span>';
+  emRevisao = true; parteTela = 0; montarFolhas(); 
+  document.querySelectorAll('#palco .vv-fim, #palco .rev .li').forEach((el, n) => { el.style.setProperty('--i', n); el.classList.add('vv-entra'); });
+  requestAnimationFrame(() => {
+    const cheio = document.querySelector('.vv-anel .cheio');
+    if (cheio) cheio.style.strokeDashoffset = C * (1 - pct / 100);
+    document.querySelectorAll('[data-conta]').forEach(el => {
+      const alvo = +el.dataset.conta, pc = el.closest('.vv-anel'), t0 = performance.now();
+      const passo = t => { const f = Math.min(1, (t - t0) / 900); el.textContent = Math.round(alvo * (1 - Math.pow(1 - f, 3))) + (pc ? '%' : ''); if (f < 1) requestAnimationFrame(passo); };
+      requestAnimationFrame(passo);
+    });
+  });
+  vvGuardar({fim: true});
+  if (pl.feitas && pct >= 70 && !matchMedia('(prefers-reduced-motion: reduce)').matches) setTimeout(vvConfete, 450);
+};
+
+pintar();
+
+</script>
+</body>
+</html>
