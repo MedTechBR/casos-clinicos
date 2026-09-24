@@ -457,12 +457,14 @@ ETAPAS = [
         'esse método pode esclarecer e quais mecanismos continuariam '
         'possíveis?',
         IMG / 'us_rim.jpg',
-        'Rim de outro adulto. Asteriscos e cálipers são da fonte; não '
-        'representam medidas da paciente.',
+        'Rim de outro adulto. Asteriscos da fonte: um, coluna de Bertin; '
+        'dois, pirâmide; três, córtex; quatro, seio renal. Os cálipers também '
+        'são da fonte e não representam medidas da paciente.',
         'Hansen, Nielsen e Ewertsen · Wikimedia Commons · CC BY 4.0. Recorte prévio e setas adicionadas.',
         [
-         ((524, 283), (620, 105), '**Parênquima** periférico, mais escuro que a região central, de espessura preservada.', 12),
-         ((447, 400), (720, 550), '**Seio renal** ecogênico, sem dilatação do sistema coletor.', -12),
+         ((495, 288), (620, 105), '**Córtex** renal (três asteriscos), de espessura preservada.', 12),
+         ((447, 400), (720, 550), '**Seio renal** (quatro asteriscos), ecogênico, sem dilatação do sistema coletor.', -12),
+         ((462, 345), (330, 160), '**Pirâmide medular** (dois asteriscos), hipoecoica: a diferenciação entre córtex e medula está preservada.', 12),
         ],
         ['Rins de dimensões preservadas, sem dilatação pielocalicial (laudo ficcional do caso).', 'Afastar obstrução não exclui lesão glomerular.']),
 

@@ -372,7 +372,7 @@ ETAPAS = [
            referencia_imagem(IMG / 'rx_tc.jpg.json'),
         [
          ((360, 110), (470, 35), '**Opacidades reticulonodulares** densas, que predominam nos campos superiores.', -12),
-         ((665, 240), (575, 420), 'Na TC coronal, **conglomerado peri-hilar** com espessamento peribroncovascular.', 12),
+         ((638, 257), (575, 420), 'Na TC coronal, **conglomerado peri-hilar** com espessamento peribroncovascular.', 12),
          ((905, 170), (985, 60), '**Micronódulos** difusos, de distribuição perilinfática.', -12),
         ],
         ['Doença parenquimatosa extensa, com predomínio superior e peri-hilar e conglomerados: o estágio IV de Scadding, a fibrose.', 'O que se trata é a inflamação antes dela; fibrose não volta.']),

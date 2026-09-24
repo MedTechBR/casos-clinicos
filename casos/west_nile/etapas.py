@@ -331,8 +331,9 @@ ETAPAS = [
         'substitui a leitura do exame completo.',
         'Mikael Häggström · Wikimedia Commons · CC0. Setas adicionadas.',
         [
-         ((250, 400), (35, 340), '**Ventrículos laterais**, escuros neste corte, sem dilatação grosseira.', 12),
+         ((268, 380), (35, 340), '**Ventrículos laterais**, escuros neste corte, sem dilatação grosseira.', 12),
          ((282, 210), (400, 100), '**Fissura inter-hemisférica** anterior, na linha média: sem desvio.', -12),
+         ((766, 466), (560, 250), '**Localizador**: a linha amarela marca o nível do corte, que passa pelos ventrículos laterais.', 12),
         ],
         ['O laudo ficcional do estudo completo não mostra hemorragia, hidrocefalia ou efeito de massa.', 'Isso não exclui encefalite nem isquemia precoce: a tomografia normal libera a punção, não fecha o diagnóstico.']),
 

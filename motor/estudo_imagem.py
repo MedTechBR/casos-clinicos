@@ -53,10 +53,12 @@ def ecg(ident, contexto, img, discussao):
     return sequencia(ident, 'Eletrocardiograma', contexto, img / 'ecg_taquicardia.jpg',
         'Ewingdo · Wikimedia Commons · CC BY-SA 4.0. Setas adicionadas sob a mesma licença.',
         'Traçado ilustrativo de outro paciente; não é um registro deste caso. 25 mm/s; 10 mm/mV.',
-        [((110, 408), (45, 300), 'Um complexo QRS da tira longa de DII: **estreito**, de '
+        [((110, 408), (40, 300), 'Um complexo QRS da tira longa de DII: **estreito**, de '
           'duração normal.', 12),
-         ((157, 405), (235, 300), 'O QRS seguinte chega cedo e a distância entre eles se '
-          'repete em toda a tira: **ritmo regular e rápido**.', -12)],
+         ((157, 405), (180, 300), 'O QRS seguinte chega cedo e a distância entre eles se '
+          'repete em toda a tira: **ritmo regular e rápido**.', -12),
+         ((225, 414), (310, 300), '**Onda T** positiva depois de cada QRS. Nessa frequência, '
+          'a onda P pode ficar escondida no fim da T.', 8)],
         ['Taquicardia sinusal, cerca de 125 bpm, QRS estreito e ritmo regular. '
          'Confirmar a onda P nas demais derivações antes de fechar o ritmo.',
          discussao])
