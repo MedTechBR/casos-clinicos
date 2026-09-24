@@ -42,7 +42,7 @@ def fim(k, titulo, texto, porque, qualidade):
 
 
 ETAPAS = [
-    capa(TITULO, fundo='', kicker='Caso interativo',
+    capa(TITULO, fundo='cena.png', kicker='Caso interativo',
          selo='Paciente ficcional · procedência e créditos na última tela'),
 
     pg('historia', 'Apresentação',
@@ -453,7 +453,7 @@ ETAPAS = [
         so_kicker=True),
 
     pg('referencias', 'Fontes e limites',
-       'Paciente, valores e percursos são ficcionais.',
+       'Paciente, valores e percursos são ficcionais. A cena de abertura é uma ilustração autoral gerada por inteligência artificial para este caso; não é fotografia nem documentação clínica.',
        'Ministério da Saúde. Guia de Vigilância em Saúde, capítulo de '
        'leptospirose, e Leptospirose: diagnóstico e manejo clínico. Andrade e '
        'cols., Clin J Am Soc Nephrol 2007 (diálise diária). Spichler e cols., '

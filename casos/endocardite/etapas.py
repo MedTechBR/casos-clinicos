@@ -40,7 +40,7 @@ def fim(k, titulo, texto, porque, qualidade):
 
 
 ETAPAS = [
-    capa(TITULO, fundo='', kicker='Caso interativo',
+    capa(TITULO, fundo='cena.png', kicker='Caso interativo',
          selo='Paciente ficcional · procedência e créditos na última tela'),
 
     pg('historia', 'Apresentação',
@@ -437,7 +437,7 @@ ETAPAS = [
         so_kicker=True),
 
     pg('referencias', 'Fontes e limites',
-       'Paciente, valores e percursos são ficcionais.',
+       'Paciente, valores e percursos são ficcionais. A cena de abertura é uma ilustração autoral gerada por inteligência artificial para este caso; não é fotografia nem documentação clínica.',
        'Fowler e cols. The 2023 Duke-ISCVID Criteria for Infective '
        'Endocarditis, Clin Infect Dis 2023. Delgado e cols. ESC Guidelines for '
        'the management of endocarditis, 2023. Iversen e cols. POET, N Engl J '

@@ -42,7 +42,7 @@ def fim(k, titulo, texto, porque, qualidade):
 
 
 ETAPAS = [
-    capa(TITULO, fundo='', kicker='Caso interativo',
+    capa(TITULO, fundo='cena.png', kicker='Caso interativo',
          selo='Paciente ficcional · procedência e créditos na última tela'),
 
     pg('historia', 'Apresentação',
@@ -432,7 +432,7 @@ ETAPAS = [
         so_kicker=True),
 
     pg('referencias', 'Fontes e limites',
-       'Paciente, valores e percursos são ficcionais.',
+       'Paciente, valores e percursos são ficcionais. A cena de abertura é uma ilustração autoral gerada por inteligência artificial para este caso; não é fotografia nem documentação clínica.',
        'Bornstein e cols. Diagnosis and Treatment of Primary Adrenal '
        'Insufficiency: An Endocrine Society Clinical Practice Guideline, J Clin '
        'Endocrinol Metab 2016. Arlt e cols. Society for Endocrinology Endocrine '
