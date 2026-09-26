@@ -4,6 +4,12 @@ Alíquota → pergunta, no molde dos casos interativos do //New England//. Oito
 perguntas no percurso, uma rodada de exames com gabarito e painel, um
 pareamento dos mecanismos de hipercalcemia e duas decisões de conduta com
 consequência. Paciente ficcional.
+
+Condução: a hipercalcemia com PTH suprimido e depois o calcitriol alto são
+investigados com diferencial amplo (PTHrP, linfoma, micobactéria, fungo,
+vitamina D, mieloma, leite-álcali). O nome só entra no diferencial da
+tomografia e se firma depois do tecido. A queixa ocular e a história de
+exposição vêm em alíquotas posteriores.
 """
 from pathlib import Path
 
@@ -47,6 +53,24 @@ def sem_setas(meta):
         'Sem setas ou recorte adicional.')
 
 
+def credito_curto(meta):
+    """Autor e licença, sem o link da fonte: o nome do arquivo no Commons
+    diz o diagnóstico. A fonte completa fica na última tela."""
+    import json
+    m = json.loads(Path(meta).read_text())
+    versao = m['licenca'].split()[-1]
+    return (m['autor'] + ' · Wikimedia Commons · '
+            '<a href="https://creativecommons.org/licenses/by-sa/' + versao
+            + '/" target="_blank" rel="noopener">' + m['licenca'] + '</a>. '
+            'Setas editoriais sob a mesma licença; fonte completa na última tela.')
+
+
+def _fonte(meta, rotulo):
+    import json
+    m = json.loads(Path(meta).read_text())
+    return '<a href="' + m['fonte'] + '" target="_blank" rel="noopener">' + rotulo + '</a>'
+
+
 ETAPAS = [
     capa(TITULO, fundo=CENA, kicker='Caso interativo',
          selo='Paciente ficcional · procedência e créditos na última tela'),
@@ -57,25 +81,24 @@ ETAPAS = [
        'dificuldade para se concentrar. Há uma semana bebe água o tempo todo e '
        'acorda três vezes à noite para urinar.',
        'Antes disso, vinha encurtando as caminhadas do fim de semana por '
-       'cansaço. Atribuiu ao trabalho — e a uma tosse seca que começou há '
-       'dois meses e vai e volta.'),
+       'cansaço. Atribuiu ao trabalho, assim como uma tosse seca que começou '
+       'há dois meses e vai e volta.'),
 
     pg('hda', 'História da doença atual',
        'A tosse não tem catarro nem sangue. Subir dois lances de escada deixa '
        'Rafael sem fôlego, sem ortopneia e sem dor no peito. Não mediu febre. '
        'Perdeu 4 kg em oito semanas. A sede veio antes das náuseas.',
        'Nega vômitos repetidos, diarreia e cólica renal. Não teve desmaio nem '
-       'palpitação. Os olhos, diz, "às vezes ardem com a luz do computador".'),
+       'palpitação. Não notou caroços no pescoço nem suor noturno.'),
 
-    pg('antecedentes', 'Antecedentes e exposições',
-       'Hipertenso há cinco anos, usa **hidroclorotiazida 25 mg/dia**. Há três '
-       'meses, por conta própria, começou **colecalciferol 5.000 UI/dia** '
-       'porque ouviu que "dava disposição". Não usa carbonato de cálcio, lítio '
-       'ou antiácido.',
-       'Nunca teve cálculo renal. Trabalha em escritório; nega corte de '
-       'pedra, jateamento de areia, fundição e contato com berílio. Não fuma. '
-       'Não conhece contato com tuberculose e nunca viajou para fora do '
-       'Nordeste.'),
+    pg('antecedentes', 'Antecedentes',
+       'Hipertenso há cinco anos, usa hidroclorotiazida 25 mg/dia. Há três '
+       'meses, por conta própria, começou colecalciferol 5.000 UI/dia porque '
+       'ouviu que "dava disposição". Não usa carbonato de cálcio, lítio nem '
+       'antiácido.',
+       'Nunca teve cálculo renal. Não fuma e bebe pouco. Não conhece contato '
+       'com tuberculose e nunca viajou para fora do Nordeste. O pai teve '
+       'câncer de próstata aos 70 anos.'),
 
     pagina('exame', 'Exame físico', '',
            vitais(('Pressão arterial', '104/66', True), ('Frequência cardíaca', '102', True),
@@ -83,9 +106,9 @@ ETAPAS = [
                   ('SpO₂ em ar ambiente', '95%', False)),
            topicos(('Estado geral', 'Desidratado, orientado, com atenção lenta; sem déficit focal.'),
                    ('Cardiovascular', 'Ritmo regular, sem sopros, sem turgência jugular.'),
-                   ('Respiratório', 'Murmúrio presente, **raros estertores finos** bilaterais.'),
-                   ('Abdome', 'Ruídos diminuídos, indolor, sem massas.'),
-                   ('Olhos', 'Hiperemia ciliar discreta nos dois olhos, pupilas reagentes.'),
+                   ('Respiratório', 'Murmúrio presente, raros estertores finos nas bases.'),
+                   ('Abdome', 'Ruídos diminuídos, indolor, sem massas nem visceromegalias.'),
+                   ('Linfonodos', 'Sem adenomegalia cervical, axilar ou inguinal palpável.'),
                    ('Pele e membros', 'Sem edema, sem lesões cutâneas, sem sinovite.')),
            so_kicker=True),
 
@@ -95,7 +118,8 @@ ETAPAS = [
         ex('Cálcio ionizado', '1,72 mmol/L', '1,12–1,32 mmol/L', True),
         ex('Creatinina', '2,0 mg/dL {{(1,0 há um ano)}}', '0,7–1,3 mg/dL', True),
         ex('Ureia', '72 mg/dL', '15–45 mg/dL', True),
-        ex('Sódio / potássio', '143 / 3,5 mmol/L', '135–145 / 3,5–5,0'),
+        ex('Sódio / potássio / bicarbonato', '143 / 3,5 / 25 mmol/L', '135–145 / 3,5–5,0 / 22–28'),
+        ex('Glicemia', '98 mg/dL', '70–99 mg/dL'),
         ex('Hemoglobina', '12,8 g/dL', '13,5–17,5 g/dL', True),
         ex('Eletrocardiograma', 'Ritmo sinusal, 102 bpm · QT corrigido curto (360 ms)', '—', True),
     ], introducao='A equipe colhe bioquímica, gasometria venosa e ECG antes de qualquer outra coisa.'),
@@ -104,65 +128,68 @@ ETAPAS = [
       'Cálcio de 13,6 mg/dL, sintomas neurológicos e creatinina que dobrou. '
       '**Quais três** medidas são prioritárias agora?', [
       ('Soro fisiológico com meta de diurese',
-       'Hipercalcemia faz diabetes insípido nefrogênico, e o paciente '
-       'desidratado não excreta cálcio. Volume é o primeiro tratamento.',
-       True),
+       'A hipercalcemia causa poliúria e desidratação; sem volume, o rim não '
+       'excreta cálcio.', True),
       ('Furosemida antes de repor volume',
-       'Aumenta a calciúria só depois que o volume foi restaurado; antes '
-       'disso, piora a desidratação e o rim.', False),
+       'Aumenta a calciúria só com volume restaurado; antes disso, agrava a '
+       'desidratação e o rim.', False),
       ('Suspender tiazídico e colecalciferol',
-       'O tiazídico reduz a excreção de cálcio; a vitamina D aumenta a '
-       'absorção. Os dois contribuem, mesmo que não expliquem tudo.', True),
-      ('Dosar o paratormônio com o cálcio',
-       'É a bifurcação de toda hipercalcemia: PTH alto ou inapropriado de um '
-       'lado, PTH suprimido do outro.', True),
+       'O tiazídico retém cálcio no túbulo e a vitamina D aumenta a absorção '
+       'intestinal.', True),
+      ('Dosar o PTH junto com o cálcio',
+       'Separa as hipercalcemias em dois grupos: PTH alto ou inapropriado, e '
+       'PTH suprimido.', True),
       ('Hemodiálise de urgência pela creatinina',
-       'Reservada para hipercalcemia grave refratária, com insuficiência '
-       'renal que não permite volume. Não é o caso ainda.', False),
+       'Reservada à hipercalcemia refratária ou à oligúria que impede volume; '
+       'ainda não é o caso.', False),
       ('Restrição hídrica pela poliúria',
-       'A poliúria é consequência, não causa. Restringir água piora tudo.',
-       False),
-      ('Dieta rica em cálcio para "equilibrar"',
-       'Não tem racional nenhum.', False),
-      ('Gluconato de cálcio pelo QT curto',
-       'O QT curto é do cálcio alto. Dar cálcio seria absurdo.', False),
-     ], 'Volume, retirar o que soma, e a pergunta do PTH'),
+       'A poliúria é consequência do cálcio; restringir água piora a '
+       'desidratação e a creatinina.', False),
+      ('Prednisona empírica já na emergência',
+       'Sem causa definida, pode mascarar linfoma e agravar infecção; não '
+       'substitui o volume.', False),
+      ('Denosumabe antes de hidratar',
+       'Não corrige a desidratação e, sem causa conhecida, arrisca '
+       'hipocalcemia prolongada depois.', False),
+     ], 'Volume, retirar o que soma e dosar o PTH'),
 
     pg('evolucao1', 'Primeiras 24 horas',
        'Com soro e sem as duas medicações, Rafael fica mais atento. O cálcio '
-       'cai para 12,4 mg/dL e a creatinina para 1,6 mg/dL. **O PTH é 6 '
+       'cai para 12,4 mg/dL e a creatinina para 1,6 mg/dL. O PTH é **6 '
        'pg/mL** (referência 15–65).',
        'A melhora parcial não explica a causa. A tosse, a perda de peso e o '
-       'fôlego curto continuam sem dono.'),
+       'fôlego curto continuam sem explicação.'),
 
     Q('ex2', 2,
-      'Hipercalcemia com **PTH suprimido**. **Quais quatro** exames são os '
+      'Hipercalcemia com PTH suprimido. **Quais quatro** exames são os '
       'mais apropriados agora?', [
       ('Peptídeo relacionado ao PTH (PTHrP)',
-       'É o mediador da hipercalcemia humoral maligna, a causa mais comum de '
+       'Mediador da hipercalcemia humoral maligna, a causa mais comum de '
        'hipercalcemia grave em internados.', True),
       ('Cintilografia com sestamibi das paratireoides',
-       'Localiza adenoma em hiperparatireoidismo — que um PTH de 6 exclui.',
-       False),
+       'Localiza adenoma de paratireoide, e um PTH de 6 pg/mL afasta '
+       'hiperparatireoidismo.', False),
       ('25-hidroxivitamina D e 1,25-di-hidroxivitamina D',
-       'A primeira mede estoque (intoxicação); a segunda, a forma ativa, que '
-       'granuloma e linfoma produzem fora do rim.', True),
+       'A primeira mede o estoque; a segunda, a forma ativa, que pode ser '
+       'produzida fora do rim.', True),
       ('Eletroforese de proteínas com cadeias leves livres',
-       'Mieloma faz hipercalcemia por osteólise, com PTH baixo e lesão '
-       'renal. Não se deixa de fora.', True),
+       'Mieloma causa hipercalcemia por osteólise, com PTH baixo e lesão '
+       'renal.', True),
       ('Radiografia de tórax',
-       'A tosse, a perda de peso e os estertores pedem imagem — e o tórax é '
-       'onde moram granulomas, linfomas e carcinomas.', True),
-      ('Densitometria óssea',
-       'Não investiga a causa da hipercalcemia.', False),
-      ('Enzima conversora da angiotensina como teste diagnóstico',
-       'Sensibilidade e especificidade baixas. Não confirma nem exclui '
-       'sarcoidose.', False),
+       'Tosse há dois meses, perda de peso e estertores pedem imagem do '
+       'tórax.', True),
+      ('Cintilografia óssea',
+       'Não capta bem a lesão lítica do mieloma e não é o primeiro passo com '
+       'PTH suprimido.', False),
+      ('Tomografia de crânio pela confusão',
+       'A confusão tem causa metabólica e melhorou com volume; imagem não '
+       'muda a conduta.', False),
       ('Calcitonina sérica',
-       'Marcador de carcinoma medular de tireoide; não explica hipercalcemia.',
-       False),
+       'Marcador de carcinoma medular de tireoide; não explica '
+       'hipercalcemia.', False),
       ('Ultrassonografia cervical das paratireoides',
-       'Mesma lógica do sestamibi: sem PTH, não há o que procurar.', False),
+       'Mesma lógica do sestamibi: com PTH suprimido, não há adenoma a '
+       'procurar.', False),
      ], 'PTH baixo manda procurar PTHrP, vitamina D, paraproteína e o tórax'),
 
     painel('res2', 'Investigação', 'O que a equipe pediu', [
@@ -173,109 +200,121 @@ ETAPAS = [
         ex('Cadeias leves livres', 'Relação kappa/lambda 1,3', '0,26–1,65'),
         ex('Fósforo', '3,6 mg/dL', '2,5–4,5 mg/dL'),
         ex('Calciúria de 24 horas', '410 mg', 'abaixo de 300 mg', True),
-        ex('Radiografia de tórax', 'Alargamento hilar bilateral e simétrico · parênquima sem consolidação', '—', True),
+        ex('Radiografia de tórax', 'Hilos alargados dos dois lados · parênquima sem consolidação', '—', True),
     ], introducao='Clique na imagem para ampliar; o laudo abre no botão.',
        laminas={'Radiografia de tórax': lamina('rx_hilos.jpg', 'Radiografia de tórax, PA e perfil',
                 'Imagem de outro paciente, usada para ilustrar o achado; não pertence a Rafael.',
                 'Hellerhoff · Wikimedia Commons · CC BY-SA 4.0')}),
 
     pareamento('p3', 'Pergunta 3',
-      'O 1,25-di-hidroxivitamina D está alto e o 25-hidroxi normal. Associe '
+      'O 1,25-di-hidroxivitamina D está alto e o 25-hidroxi, normal. Associe '
       'cada perfil laboratorial ao mecanismo da hipercalcemia.', [
-      par('PTH alto, fósforo baixo', 'Hiperparatireoidismo primário',
-          'O PTH aumenta a reabsorção de cálcio e a perda de fósforo. É a '
-          'causa mais comum no ambulatório.'),
-      par('PTH baixo, PTHrP alto, 1,25-(OH)₂D baixo',
+      par('PTH 95 pg/mL, fósforo 2,2 mg/dL, calciúria alta',
+          'Hiperparatireoidismo primário',
+          'O PTH reabsorve cálcio e espolia fósforo; é a causa mais comum no '
+          'ambulatório.'),
+      par('PTH 48 pg/mL, fração de excreção de cálcio abaixo de 0,01',
+          'Hipercalcemia hipocalciúrica familiar',
+          'O sensor de cálcio mal regulado mantém PTH normal e calciúria muito '
+          'baixa.'),
+      par('PTH suprimido, PTHrP alto, 1,25-(OH)₂D baixo',
           'Hipercalcemia humoral maligna',
-          'Carcinoma escamoso, renal ou de mama. O PTHrP imita o PTH no '
-          'osso e no rim, mas não ativa a vitamina D.'),
-      par('PTH baixo, 1,25-(OH)₂D alto, 25-OH-D normal',
-          'Produção extrarrenal de calcitriol (granuloma, linfoma)',
-          'É o de Rafael. O macrófago do granuloma tem 1-alfa-hidroxilase '
-          'própria, que não obedece ao PTH nem ao cálcio.'),
-      par('PTH baixo, 25-OH-D acima de 150 ng/mL',
+          'O PTHrP imita o PTH no osso e no rim, mas não ativa a vitamina D.'),
+      par('PTH suprimido, 1,25-(OH)₂D alto, 25-OH-D normal',
+          'Produção extrarrenal de calcitriol',
+          'É o perfil de Rafael: uma 1-alfa-hidroxilase fora do rim, que não '
+          'obedece ao PTH.'),
+      par('PTH suprimido, 25-OH-D de 180 ng/mL',
           'Intoxicação por vitamina D',
-          'Exige doses de dezenas de milhares de unidades por meses. Os '
-          '5.000 UI/dia de Rafael não chegam lá — e o 25-OH dele é 38.'),
-      par('PTH baixo, pico monoclonal, lesões líticas',
-          'Mieloma múltiplo',
-          'Osteólise local por citocinas. A eletroforese e as cadeias leves '
-          'dele são normais.'),
-    ], opcoes=['Hiperparatireoidismo primário', 'Hipercalcemia humoral maligna',
-               'Produção extrarrenal de calcitriol (granuloma, linfoma)',
-               'Intoxicação por vitamina D', 'Mieloma múltiplo',
-               'Síndrome leite-álcali'],
+          'Exige doses muito altas por meses; o 25-OH de Rafael é 38.'),
+      par('PTH suprimido, bicarbonato 34 mmol/L, carbonato de cálcio diário',
+          'Síndrome leite-álcali',
+          'Cálcio oral, alcalose e lesão renal se alimentam; o bicarbonato de '
+          'Rafael é normal.'),
+    ], opcoes=['Hiperparatireoidismo primário', 'Hipercalcemia hipocalciúrica familiar',
+               'Hipercalcemia humoral maligna', 'Produção extrarrenal de calcitriol',
+               'Intoxicação por vitamina D', 'Síndrome leite-álcali',
+               'Mieloma múltiplo'],
     titulo_resposta='O calcitriol alto com estoque normal aponta para fora do rim',
-    nota='A opção que sobrou, síndrome leite-álcali, teria alcalose e história '
-         'de carbonato de cálcio.'),
+    nota='A opção que sobrou, mieloma, teria paraproteína ou cadeias leves '
+         'alteradas; as de Rafael são normais.'),
 
     estudo('rx_hilos', 'Radiografia de tórax',
-           'Com o calcitriol alto, a equipe volta à radiografia. Observe os '
+           'Com o calcitriol alto, a equipe revê a radiografia. Observe os '
            'hilos nas incidências frontal e lateral antes de ler a descrição.',
            IMG / 'rx_hilos.jpg',
            'Radiografia frontal e lateral de outro paciente · comparação didática.',
-           referencia_imagem(IMG / 'rx_hilos.jpg.json'),
+           credito_curto(IMG / 'rx_hilos.jpg.json'),
         [
          ((176, 280), (70, 180), '**Hilo direito** aumentado, de contorno lobulado.', 12),
-         ((353, 273), (470, 180), '**Hilo esquerdo** também aumentado: a adenopatia é bilateral e simétrica.', -12),
+         ((353, 273), (470, 180), '**Hilo esquerdo** também aumentado: o alargamento é bilateral e simétrico.', -12),
          ((735, 315), (900, 240), 'Na incidência lateral, a **massa hilar** se sobrepõe à sombra cardíaca.', 12),
         ],
-        ['Adenopatia hilar bilateral e simétrica, com parênquima pulmonar sem opacidades: estágio I de Scadding.', 'Linfoma e tuberculose voltam ao diferencial quando a adenopatia é assimétrica ou quando a tomografia mostra necrose.']),
+        ['Adenopatia hilar bilateral e simétrica, com parênquima pulmonar sem opacidades.',
+         'O diferencial inclui linfoma, infecção granulomatosa, doença granulomatosa não infecciosa e metástase; a tomografia é o próximo passo.']),
 
     pg('tomografia', 'Tomografia de tórax',
-       'O laudo descreve **linfonodos hilares e mediastinais bilaterais, '
-       'simétricos**, sem necrose central, e **pequenos nódulos em '
-       'distribuição perilinfática** — ao longo dos feixes '
-       'broncovasculares, das fissuras e da pleura. Sem cavitação e sem '
-       'derrame.'),
+       'Antes do exame, a residente refaz a história ocupacional. Rafael '
+       'nunca trabalhou com pedra, areia, fundição ou metais. Há cinco meses, '
+       'ajudou a limpar um galinheiro abandonado no sítio do sogro, no '
+       'sertão.',
+       'O laudo descreve linfonodos hilares e mediastinais bilaterais e '
+       'simétricos, até 2,4 cm, **sem necrose central**, e pequenos nódulos ao '
+       'longo dos feixes broncovasculares, das fissuras e da pleura. Sem '
+       'cavitação e sem derrame. Nos cortes do abdome superior, fígado e baço '
+       'de tamanho normal.'),
 
     Q('p4', 4,
-      'Linfonodos hilares bilaterais simétricos e micronódulos '
-      'perilinfáticos, com calcitriol alto. **Quais quatro** diagnósticos '
-      'precisam ser considerados?', [
-      ('Sarcoidose', 'O padrão radiológico mais típico, com o metabolismo do '
-       'cálcio a favor.', True),
-      ('Tuberculose', 'Faz granuloma, linfonodo mediastinal e, raramente, '
-       'produz calcitriol. No Brasil não se imunossuprime sem excluí-la.',
-       True),
-      ('Pneumonia bacteriana', 'Não produz linfonodo bilateral simétrico nem '
-       'micronódulo perilinfático, e não há febre.', False),
-      ('Linfoma', 'Linfonodo mediastinal, perda de peso e calcitriol alto: o '
-       'linfoma produz 1-alfa-hidroxilase como o granuloma.', True),
-      ('Histoplasmose ou outra micose endêmica', 'Granulomatosa, com '
-       'linfonodo mediastinal e, às vezes, hipercalcemia. Pergunta-se pela '
-       'caverna e pelo galinheiro.', True),
-      ('Silicose', 'Faz linfonodo hilar com calcificação em casca de ovo e '
-       'nódulo nos lobos superiores — mas ele nunca trabalhou com sílica.',
-       False),
-      ('Edema pulmonar cardiogênico', 'Nem linfonodo nem nódulo '
-       'perilinfático, e o coração dele é normal.', False),
-      ('Beriliose crônica', 'É indistinguível da sarcoidose, na imagem e na '
-       'lâmina — mas exige exposição ao berílio, que ele não tem.', False),
-      ('Tromboembolismo pulmonar', 'Não produz linfonodo.', False),
-     ], 'Granuloma, micobactéria, fungo e linfoma — e a história de exposição tira dois'),
+      'Adenopatia hilar e mediastinal simétrica, nódulos perilinfáticos, '
+      'calcitriol alto e um galinheiro há cinco meses. **Quais quatro** '
+      'diagnósticos precisam ser considerados?', [
+      ('Sarcoidose',
+       'Adenopatia simétrica, nódulos perilinfáticos e calcitriol alto são '
+       'compatíveis; o diagnóstico exige tecido.', True),
+      ('Tuberculose',
+       'Faz granuloma, linfonodo mediastinal e, raramente, calcitriol alto. '
+       'No Brasil, excluí-la precede imunossupressão.', True),
+      ('Linfoma',
+       'Adenopatia mediastinal, perda de peso e calcitriol alto: o tecido '
+       'linfomatoso também expressa 1-alfa-hidroxilase.', True),
+      ('Histoplasmose',
+       'Galinheiro é exposição típica; faz adenopatia mediastinal, granuloma '
+       'e, às vezes, calcitriol alto.', True),
+      ('Silicose',
+       'Faz adenopatia com calcificação em casca de ovo, mas exige anos de '
+       'exposição à sílica.', False),
+      ('Beriliose crônica',
+       'Imita doença granulomatosa na imagem e na lâmina, mas depende de '
+       'berílio, que ele nega.', False),
+      ('Pneumonite de hipersensibilidade',
+       'Dá nódulos centrolobulares e aprisionamento aéreo, não perilinfáticos, '
+       'e não produz calcitriol.', False),
+      ('Carcinoma de pulmão com metástase linfonodal',
+       'Não há massa pulmonar, o PTHrP é negativo e a adenopatia simétrica '
+       'seria atípica.', False),
+     ], 'Quatro hipóteses que só o tecido separa; a exposição afasta duas'),
 
     bifurcacao('b1', 'Decisão', 'Como chegar ao tecido',
       'Rafael está estável depois da hidratação, sem ameaça respiratória. '
       'Como conduzir a definição etiológica?', [
       caminho('Ecobroncoscopia com punção dos linfonodos (EBUS), com '
-              'histologia e culturas', 'tecido',
+              'histologia, citometria e culturas', 'tecido',
               'Chega aos linfonodos mediastinais sem cirurgia e colhe material '
-              'para micobactéria e fungo antes de imunossuprimir.'),
-      caminho('Iniciar prednisona sem amostra e considerar a resposta como '
+              'para micobactéria, fungo e linfoma antes de imunossuprimir.'),
+      caminho('Iniciar prednisona sem amostra e tomar a resposta como '
               'confirmação', 'empirico',
-              'Sarcoidose, linfoma e até tuberculose podem melhorar por '
-              'semanas com corticoide.'),
+              'Doença granulomatosa, linfoma e até tuberculose podem melhorar '
+              'por semanas com corticoide.'),
       caminho('Atribuir tudo ao suplemento e observar', 'suplemento',
               'O colecalciferol soma, mas não produz linfonodo nem '
               'calcitriol alto com 25-OH normal.'),
     ]),
 
     pg('empirico', 'Dez dias de prednisona',
-       'O cálcio cai e a tosse melhora. Mas ninguém excluiu tuberculose nem '
-       'linfoma, e a pneumologia recusa-se a manter o corticoide sem tecido. '
-       'O EBUS é feito com o paciente já sob prednisona; o patologista é '
-       'avisado.',
+       'O cálcio cai e a tosse melhora. Mas ninguém excluiu tuberculose, '
+       'histoplasmose nem linfoma, e a pneumologia se recusa a manter o '
+       'corticoide sem tecido. O EBUS é feito com o paciente já sob '
+       'prednisona; o patologista é avisado.',
        segue='tecido'),
 
     pg('suplemento', 'Uma semana depois',
@@ -287,10 +326,11 @@ ETAPAS = [
 
     pg('tecido', 'O EBUS',
        'Punções dos linfonodos subcarinal e hilar direito mostram '
-       '**granulomas não necrosantes**, compactos, sem células malignas. '
-       'Colorações para bacilo álcool-ácido resistente e fungos e o teste '
-       'molecular para tuberculose são negativos; as culturas seguem em '
-       'incubação por seis a oito semanas.'),
+       '**granulomas não necrosantes**, compactos, sem células malignas. A '
+       'citometria de fluxo não mostra população clonal.',
+       'Colorações para bacilo álcool-ácido resistente e fungos, teste '
+       'molecular para tuberculose e imunodifusão para //Histoplasma// são '
+       'negativos. As culturas seguem em incubação por seis a oito semanas.'),
 
     estudo('granuloma', 'Granuloma pulmonar',
            'Compare com esta microfotografia de tecido pulmonar de outro '
@@ -306,57 +346,66 @@ ETAPAS = [
         ['Granuloma não necrosante: agregado compacto de histiócitos epitelioides com coroa linfocitária, sem necrose central.', 'Descreve morfologia, não causa. Não exclui micobactéria nem fungo: o diagnóstico junta lâmina, cultura e exposição.']),
 
     Q('p5', 5,
-      'Granulomas não necrosantes no EBUS, com BAAR, fungos e teste '
-      'molecular negativos e culturas pendentes. Qual a interpretação mais '
-      'adequada?', [
-      ('Tuberculose está excluída: o teste molecular é suficientemente sensível',
-       'Em doença paucibacilar a sensibilidade cai muito. O negativo reduz, '
-       'não zera.', False),
-      ('Sarcoidose provável, até as culturas finais',
-       'Apresentação compatível, granuloma não necrosante e exclusão '
-       'razoável de alternativas: é a definição da ATS. As culturas fecham '
-       'a exclusão.', True),
-      ('A ausência de necrose exclui micobactéria e fungo',
-       'Há sobreposição morfológica. Histoplasmose pode ter granuloma sem '
-       'necrose.', False),
-      ('O granuloma confirma sarcoidose e dispensa as culturas',
-       'Granuloma é um padrão de resposta, não uma doença.', False),
-      ('É preciso biópsia pulmonar cirúrgica antes de qualquer conduta',
-       'O EBUS rendeu. Cirurgia só se o quadro divergir.', False),
-     ], 'Granuloma é padrão; o diagnóstico é integração'),
+      'Granulomas não necrosantes no EBUS, citometria sem clone, BAAR, '
+      'fungos, teste molecular e imunodifusão negativos, culturas pendentes. '
+      'Qual a interpretação mais adequada?', [
+      ('Tuberculose excluída pelo teste molecular negativo',
+       'Em doença paucibacilar a sensibilidade cai; o negativo reduz a '
+       'probabilidade, não a zera.', False),
+      ('Sarcoidose provável, a confirmar pelas culturas finais',
+       'Quadro compatível, granuloma não necrosante e alternativas '
+       'razoavelmente excluídas: os três critérios da ATS 2020.', True),
+      ('Ausência de necrose exclui micobactéria e fungo',
+       'Há sobreposição morfológica; histoplasmose e tuberculose podem ter '
+       'granuloma sem necrose.', False),
+      ('Granuloma confirma sarcoidose e dispensa as culturas',
+       'Granuloma é padrão de resposta; a exclusão de infecção faz parte do '
+       'diagnóstico.', False),
+      ('Biópsia pulmonar cirúrgica antes de qualquer conduta',
+       'O EBUS rendeu tecido suficiente; cirurgia fica para quando o quadro '
+       'divergir.', False),
+      ('Esquema RIPE empírico até sair a cultura',
+       'Sem necrose e com pesquisa e teste molecular negativos, tratar às '
+       'cegas só acrescenta toxicidade.', False),
+     ], 'Tecido compatível, exclusão ainda em curso'),
 
     pg('ocular', 'Avaliação oftalmológica',
+       'Rafael conta agora que, há semanas, a luz do computador incomoda e os '
+       'olhos avermelham no fim do dia; ninguém tinha perguntado. A '
+       'oftalmologia examina no mesmo dia.',
        'Na lâmpada de fenda: **células 2+ na câmara anterior dos dois olhos** '
-       'e precipitados ceráticos, sem sinéquias. Acuidade 20/25 em cada olho. '
-       'Pressão intraocular 16 e 17 mmHg. Fundo de olho sem vitreíte; '
-       'tomografia de coerência óptica sem edema macular.',
-       'Uveíte anterior bilateral, sem ameaça macular. O oftalmologista '
-       'inicia colírio de corticoide e cicloplégico.'),
+       'e precipitados ceráticos, sem sinéquias. Acuidade 20/25 em cada olho, '
+       'pressão intraocular 16 e 17 mmHg, fundo sem vitreíte e tomografia de '
+       'coerência óptica sem edema macular. Uveíte anterior bilateral: '
+       'colírio de corticoide e cicloplégico.'),
 
     Q('p6', 6,
       'Sarcoidose com pulmão, linfonodo, cálcio, rim e olho. **Quais três** '
-      'avaliações de outros órgãos são recomendadas para todo paciente ao '
-      'diagnóstico?', [
+      'avaliações a ATS indica para todo paciente ao diagnóstico, mesmo sem '
+      'sintomas?', [
       ('Eletrocardiograma de 12 derivações',
-       'O coração é o órgão que mata na sarcoidose. O ECG é a triagem; '
-       'bloqueio ou arritmia levam à ressonância.', True),
+       'É a triagem cardíaca de base; bloqueio ou arritmia levam à '
+       'ressonância.', True),
       ('Ressonância cardíaca de rotina em todos',
-       'Sem sintoma e com ECG normal, não é recomendada de rotina.', False),
+       'Sem sintoma e com ECG normal, não é recomendada como rastreio.',
+       False),
       ('Exame oftalmológico com lâmpada de fenda',
-       'Uveíte pode ser assintomática e cegar. Todos examinam, com ou sem '
+       'Uveíte pode ser assintomática e deixar sequela; examina-se com ou sem '
        'queixa.', True),
       ('Cálcio, creatinina e fosfatase alcalina',
-       'Rastreiam hipercalcemia, lesão renal e acometimento hepático.', True),
+       'Rastreiam alteração do cálcio, acometimento renal e hepático.', True),
       ('PET-CT de corpo inteiro para todos',
-       'Não é rastreio. Serve em situações específicas — doença cardíaca, '
-       'escolher o sítio de biópsia.', False),
+       'Não é rastreio; serve para doença cardíaca ou para escolher o sítio '
+       'de biópsia.', False),
       ('Biópsia hepática',
-       'Fosfatase alcalina normal não pede biópsia.', False),
+       'Com fosfatase alcalina e transaminases normais, não há indicação.',
+       False),
       ('Holter de 24 horas em assintomáticos',
-       'Guiado por sintomas ou ECG alterado, não de rotina.', False),
+       'A ATS não recomenda Holter de rotina; é guiado por sintoma ou ECG '
+       'alterado.', False),
       ('Enzima conversora seriada para monitorar',
-       'Oscila e não guia tratamento com confiança.', False),
-     ], 'Coração, olho e o metabolismo — em todos'),
+       'Oscila e não orienta o tratamento com segurança.', False),
+     ], 'Coração, olho e metabolismo, em todos'),
 
     pg('extensao', 'Outros órgãos',
        'ECG sem bloqueio nem arritmia. Fosfatase alcalina e transaminases '
@@ -365,7 +414,7 @@ ETAPAS = [
 
     estudo('rx_tc', 'Sarcoidose avançada',
            'Outro paciente, com sarcoidose pulmonar avançada. Não é a '
-           'tomografia de Rafael — é o que a doença pode fazer quando '
+           'tomografia de Rafael; mostra o que a doença pode fazer quando '
            'progride no parênquima.',
            IMG / 'rx_tc.jpg',
            'Radiografia e TC coronal de outro paciente · doença parenquimatosa avançada.',
@@ -375,29 +424,29 @@ ETAPAS = [
          ((638, 257), (575, 420), 'Na TC coronal, **conglomerado peri-hilar** com espessamento peribroncovascular.', 12),
          ((905, 170), (985, 60), '**Micronódulos** difusos, de distribuição perilinfática.', -12),
         ],
-        ['Doença parenquimatosa extensa, com predomínio superior e peri-hilar e conglomerados: o estágio IV de Scadding, a fibrose.', 'O que se trata é a inflamação antes dela; fibrose não volta.']),
+        ['Doença parenquimatosa extensa, com predomínio superior e peri-hilar e conglomerados: o estágio IV de Scadding, a fibrose.', 'O tratamento mira a inflamação antes que ela vire fibrose, que não regride.']),
 
     Q('p7', 7,
-      'A prednisona vai começar. **Quais três** afirmações estão corretas?', [
-      ('A indicação é o cálcio com lesão renal',
-       'Adenopatia hilar isolada muitas vezes se observa. Cálcio e rim são '
+      'A prednisona vai começar. **Quais quatro** afirmações estão corretas?', [
+      ('A indicação é a hipercalcemia com lesão renal',
+       'Adenopatia hilar isolada muitas vezes se observa; cálcio e rim são '
        'indicação clara.', True),
       ('Cálcio e vitamina D devem ser repostos pelo corticoide, como de rotina',
-       'Com calcitriol alto, reposição automática piora a hipercalcemia. A '
+       'Com calcitriol alto, a reposição automática piora a hipercalcemia; a '
        'proteção óssea é individual.', False),
-      ('A uveíte segue com colírio',
-       'O corticoide sistêmico não substitui o colírio nem o seguimento '
-       'ocular.', True),
+      ('A uveíte segue com colírio e seguimento ocular',
+       'O corticoide sistêmico não substitui o colírio nem a lâmpada de '
+       'fenda.', True),
       ('Dose inicial de 20 a 40 mg/dia',
-       'A ERS sugere dose moderada: doses altas não são mais eficazes e '
-       'cobram mais toxicidade.', True),
+       'A ERS sugere dose moderada: doses altas não mostraram benefício e '
+       'somam toxicidade.', True),
       ('Suspender quando a radiografia normalizar',
-       'A meta é a função dos órgãos, não a imagem.', False),
+       'A meta é a função dos órgãos acometidos, não a imagem.', False),
       ('Infliximabe como primeira linha, pela gravidade',
        'É terceira linha, depois do corticoide e do metotrexato.', False),
       ('Pode começar antes das culturas finais',
-       'O risco renal não espera oito semanas. Começa-se com um responsável '
-       'por conferir as culturas.', True),
+       'O risco renal não espera oito semanas; alguém fica responsável por '
+       'conferir as culturas.', True),
      ], 'Trata-se o órgão ameaçado, em dose moderada, olhando cada um'),
 
     pg('evolucao2', 'Oito semanas depois',
@@ -412,21 +461,22 @@ ETAPAS = [
       'A dor ocular voltou durante a redução. Se for recidiva da uveíte, '
       '**quais duas** estratégias são as mais adequadas?', [
       ('Metotrexato como poupador de corticoide',
-       'É a segunda linha da ERS na sarcoidose que recidiva ou exige dose '
-       'alta prolongada — com ácido fólico, função hepática e renal.', True),
+       'Segunda linha da ERS na recidiva ou na dependência de corticoide, com '
+       'ácido fólico e controle hepático.', True),
       ('Manter prednisona 40 mg/dia por tempo indeterminado',
-       'A toxicidade cumulativa — osso, glicemia, catarata, glaucoma — é '
-       'o preço que o poupador existe para evitar.', False),
-      ('Revisar adesão aos colírios e excluir infecção antes de escalonar',
-       'Recidiva também é colírio que acabou, ou uma infecção que imita a '
-       'sarcoidose.', True),
+       'A toxicidade cumulativa em osso, glicemia, catarata e glaucoma é o '
+       'que o poupador evita.', False),
+      ('Conferir adesão ao colírio e excluir infecção',
+       'Recidiva também é colírio que acabou, ou uma infecção ocular que '
+       'imita inflamação.', True),
       ('Iniciar infliximabe antes de tentar metotrexato',
        'Anti-TNF é terceira linha, depois de corticoide e metotrexato.',
        False),
       ('Suspender o sistêmico porque a espirometria melhorou',
-       'Cada órgão tem a sua meta. O olho está ativo.', False),
+       'Cada órgão tem a sua meta, e o olho está ativo.', False),
       ('Hidroxicloroquina para a uveíte',
-       'Tem papel em pele e hipercalcemia; não controla uveíte.', False),
+       'Tem papel na pele e na hipercalcemia; não é o poupador da uveíte.',
+       False),
      ], 'Poupar corticoide, mas primeiro conferir o colírio'),
 
     bifurcacao('b2', 'Decisão', 'O olho durante a redução',
@@ -442,7 +492,7 @@ ETAPAS = [
     pg('controle', 'No mesmo dia',
        'Células 2+ no olho direito, pressão 18 mmHg, sem edema macular. '
        'Recidiva anterior. O colírio é intensificado, a redução sistêmica '
-       'desacelera, e começa o metotrexato.',
+       'desacelera e começa o metotrexato.',
        segue='f1'),
 
     pg('visao', 'Três semanas depois',
@@ -455,7 +505,7 @@ ETAPAS = [
       'Qual resgate organizar?', [
       caminho('Oftalmologia urgente: controlar inflamação e pressão, com '
               'tratamento local e sistêmico', 'resgate',
-              'Edema macular é ameaça à visão central e pede tratamento '
+              'Edema macular ameaça a visão central e pede tratamento '
               'dirigido.'),
       caminho('Só colírio hipotensor e aguardar', 'resgate_tardio',
               'A pressão é parte do problema; a inflamação e o edema '
@@ -496,9 +546,11 @@ ETAPAS = [
         tabela(['Momento', 'O dado', 'O que decidiu'], [
             ['Na emergência', 'Cálcio 13,6, creatinina dobrada, QT curto',
              'Volume antes de diurético; tirar tiazídico e vitamina D'],
-            ['Primeiras 24 h', 'PTH 6 pg/mL', 'A pergunta passa a ser: PTHrP, vitamina D, paraproteína, tórax'],
+            ['Primeiras 24 h', 'PTH 6 pg/mL', 'PTHrP, vitamina D, paraproteína e tórax'],
             ['Investigação', '1,25-(OH)₂D alto, 25-OH normal, hilos bilaterais',
-             'Calcitriol produzido fora do rim — granuloma ou linfoma'],
+             'Calcitriol produzido fora do rim: granuloma ou linfoma'],
+            ['Tomografia', 'Adenopatia simétrica, nódulos perilinfáticos, galinheiro',
+             'Quatro hipóteses, e só o tecido separa'],
             ['EBUS', 'Granuloma não necrosante, culturas pendentes',
              'Sarcoidose provável, tratada pelo rim e pelo cálcio'],
             ['Redução', 'Dor ocular com exames de sangue normais',
@@ -508,11 +560,17 @@ ETAPAS = [
 
     pg('referencias', 'Fontes e limites',
        'Caso autoral e ficcional; valores, intervalos e desfechos simulados.',
-       'Crouser e cols. Diagnosis and detection of sarcoidosis, ATS 2020. '
+       'Crouser e cols. Diagnosis and detection of sarcoidosis, ATS, 2020. '
        'Baughman e cols. ERS clinical practice guidelines on treatment of '
-       'sarcoidosis, 2021. Herbort e cols. IWOS 2021 — sarcoidose ocular. '
-       'Imagens de outros pacientes: Hellerhoff (CC BY-SA 4.0) e Yale Rosen '
-       '(CC BY-SA 2.0), Wikimedia Commons. Cena: ilustração gerada por IA.'),
+       'sarcoidosis, 2021. Mochizuki e cols. Revised criteria of the '
+       'International Workshop on Ocular Sarcoidosis, 2019. Walker e Shane. '
+       'Hypercalcemia: a review, JAMA, 2022. Tebben e cols. Vitamin '
+       'D-mediated hypercalcemia, Endocrine Reviews, 2016.',
+       'Imagens de outros pacientes: Hellerhoff (CC BY-SA 4.0; '
+       + _fonte(IMG / 'rx_hilos.jpg.json', 'radiografia dos hilos') + ' e '
+       + _fonte(IMG / 'rx_tc.jpg.json', 'radiografia e TC') + ') e Yale Rosen '
+       '(CC BY-SA 2.0; ' + _fonte(IMG / 'granuloma.jpg.json', 'granuloma')
+       + '), Wikimedia Commons. Cena: ilustração gerada por IA.'),
 ]
 
 REVISAO = []

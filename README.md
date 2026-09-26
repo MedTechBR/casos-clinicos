@@ -24,6 +24,14 @@ posição. Montagem com `python3 build_etapas.py <caso>` e
 1600×900 e 1366×768) e `python3 ferramentas/testar_sem_rolagem.py`
 (1366, 1600 e 375 de largura).
 
+**Diagnóstico tardio** (26/09/2026, pedido do Matheus: "o diagnóstico deve aparecer mais
+tardiamente, como no New England"). `python3 ferramentas/pistas.py` percorre o caminho padrão
+de cada caso e reprova se o nome do diagnóstico aparece antes de 45% do percurso fora de uma
+única alternativa do diferencial (nunca em comentário, título de resposta, exame, painel ou
+página), ou se os comentários passam de 16 palavras em média ou 26 no máximo. A primeira
+rodada de exames é sindrômica; exposição, sinal decisivo e teste específico chegam em
+alíquotas posteriores. Todo caso novo tem de passar nele.
+
 **Camada viva** (`motor/viva.css` + `motor/viva.js`, carregados por último):
 papel cinza-claro, cartões brancos arredondados, ícones em círculos coloridos,
 cor por tipo de página (`body[data-tipo]`) e por caso (`COR` no módulo do

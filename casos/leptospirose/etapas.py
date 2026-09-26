@@ -1,10 +1,12 @@
-"""Leptospirose grave (síndrome de Weil) com hemorragia pulmonar.
+"""Febre ictérica grave com lesão renal e hemorragia pulmonar.
 
 Alíquota → pergunta, no molde dos casos interativos do //New England//. Oito
-perguntas, uma rodada de exames com gabarito e painel, um pareamento das
-febres ictéricas e hemorrágicas do Nordeste e três decisões de conduta, uma
-delas com óbito. Paciente ficcional; doses segundo o Guia de Vigilância em
-Saúde do Ministério da Saúde.
+perguntas, uma rodada de exames sindrômica com gabarito e painel, um
+pareamento das febres ictéricas e hemorrágicas do Nordeste e três decisões de
+conduta, uma delas com óbito. A exposição só aparece quando o irmão volta, e o
+nome do diagnóstico só na página do laboratório de referência, perto do meio
+do percurso. Paciente ficcional; doses e critérios segundo o Guia de
+Vigilância em Saúde do Ministério da Saúde, 6.ª edição revisada, 2024.
 """
 from pathlib import Path
 
@@ -48,10 +50,10 @@ ETAPAS = [
          selo='Paciente ficcional · procedência e créditos na última tela'),
 
     pg('historia', 'Apresentação',
-       'Joaquim, 38 anos, agente de limpeza urbana em Fortaleza, chega à '
-       'emergência trazido pelo irmão no sexto dia de uma febre que começou '
-       'de repente, com calafrios, dor de cabeça e uma dor muscular que ele '
-       'descreve como "a pior da vida", sobretudo nas batatas das pernas.',
+       'Joaquim, 38 anos, morador de Fortaleza, chega à emergência trazido '
+       'pelo irmão no sexto dia de uma febre que começou de repente, com '
+       'calafrios, dor de cabeça e dor no corpo todo, forte a ponto de '
+       'atrapalhar a marcha.',
        'No segundo dia foi a uma unidade de pronto atendimento, onde '
        'disseram que era dengue: soro oral, paracetamol e repouso. Há dois '
        'dias está amarelo, e desde a noite passada tosse com raias de sangue '
@@ -59,185 +61,236 @@ ETAPAS = [
 
     pg('hda', 'História da doença atual',
        'A febre chegou a 39,8 °C nos três primeiros dias, cedeu um pouco no '
-       'quarto e voltou. A urina está "cor de guaraná". Urinou pouco hoje. '
-       'Teve dois episódios de vômito, sem sangue. Nega dor abdominal forte, '
-       'diarreia e manchas no corpo antes da febre.',
-       'Os olhos ficaram vermelhos no terceiro dia, "sem remela". O irmão '
-       'acha que ele está mais sonolento desde a tarde.'),
+       'quarto e voltou. A urina está "cor de guaraná", e hoje ele urinou '
+       'pouco. Teve dois episódios de vômito, sem sangue. Nega dor abdominal '
+       'forte, diarreia e manchas no corpo antes da febre.',
+       'O irmão acha que ele está mais sonolento desde a tarde.'),
 
-    pg('antecedentes', 'Antecedentes e exposições',
+    pg('antecedentes', 'Antecedentes',
        'Sem doenças conhecidas, sem medicações de uso contínuo. Bebe cerveja '
-       'nos fins de semana, sem excesso diário. Não fuma. Vacinado contra '
-       'febre amarela há seis anos. Não saiu do Ceará no último ano.',
-       'Doze dias antes da febre, depois de três dias de chuva forte, '
-       'trabalhou na desobstrução de um canal alagado no bairro. A bota '
-       'estava furada e ele tinha um corte no pé. Os colegas comentaram que '
-       'havia muitos ratos no depósito da equipe.'),
+       'nos fins de semana, sem excesso diário. Não fuma. Nega drogas '
+       'injetáveis e transfusões. Vacinado contra febre amarela há seis anos. '
+       'Não saiu do Ceará no último ano.',
+       'Joaquim responde pouco, e o irmão, que mora em outro bairro, não '
+       'sabe detalhar a rotina de trabalho dele nas últimas semanas.'),
 
     pagina('exame', 'Exame físico', '',
            vitais(('Temperatura', '38,4 °C', True), ('Pressão arterial', '94/56', True),
                   ('Frequência cardíaca', '116', True), ('Frequência respiratória', '28', True),
                   ('SpO₂ em ar ambiente', '90%', True)),
-           topicos(('Estado geral', 'Prostrado, sonolento mas orientado. **Icterícia '
-                    'intensa, de tom alaranjado.**'),
-                   ('Olhos', '**Sufusão conjuntival bilateral**, sem secreção.'),
+           topicos(('Estado geral', 'Prostrado, sonolento mas orientado. Icterícia '
+                    'intensa.'),
+                   ('Olhos', 'Escleras ictéricas. Conjuntivas hiperemiadas dos dois '
+                    'lados, sem secreção.'),
                    ('Respiratório', 'Crepitações nas bases dos dois pulmões.'),
-                   ('Abdome', 'Fígado a 2 cm do rebordo, doloroso. Baço não palpável.'),
-                   ('Membros', '**Dor intensa à compressão das panturrilhas.** Petéquias '
-                    'nas pernas. Corte cicatrizado na planta do pé direito.'),
+                   ('Abdome', 'Fígado a 2 cm do rebordo, doloroso. Baço não palpável. '
+                    'Sem sinal de Murphy.'),
+                   ('Membros', 'Petéquias nas pernas. Massas musculares dolorosas à '
+                    'palpação.'),
                    ('Neurológico', 'Sem rigidez de nuca, sem déficit focal.')),
            so_kicker=True),
 
     Q('p1', 1,
-      'Febre aguda com icterícia, sufusão conjuntival, mialgia intensa e '
-      'hemoptise, em abril, em Fortaleza. **Quais quatro** diagnósticos '
-      'precisam ser considerados?', [
-      ('Leptospirose', 'Exposição a água de enchente com ferida no pé, '
-       'sufusão conjuntival e dor na panturrilha: é a hipótese principal.',
-       True),
-      ('Malária', 'Ele nunca saiu do Ceará. Malária autóctone no Nordeste é '
-       'excepcional; sem viagem à Amazônia, sai da lista.', False),
-      ('Dengue grave', 'O diagnóstico que a UPA fez. Plaquetopenia, '
-       'sangramento e choque cabem nela — e ela coexiste com leptospirose '
-       'na mesma estação.', True),
-      ('Febre amarela', 'Ele é vacinado e não entrou em área de mata.',
-       False),
-      ('Hepatite viral aguda', 'Icterícia com febre obriga a pensar em A e '
-       'E, ainda que a mialgia e o rim falem contra.', True),
-      ('Hepatite alcoólica', 'Exigiria consumo pesado e diário por anos. '
-       'Cerveja de fim de semana não chega lá.', False),
-      ('Sepse bacteriana com colangite ou pneumonia', 'Febre, icterícia e '
-       'hipotensão também são sepse de foco biliar ou pulmonar. Hemocultura '
-       'e ultrassom a separam.', True),
-      ('Síndrome de Gilbert', 'Bilirrubina indireta que sobe no jejum, sem '
-       'febre, sem doença.', False),
-      ('Mononucleose infecciosa', 'Faz febre e hepatite leve, mas não '
-       'insuficiência renal com hemoptise.', False),
-     ], 'Água de enchente, olho vermelho e panturrilha dolorosa'),
+      'Febre aguda, icterícia intensa, pouca urina, hemoptise e hipotensão '
+      'num homem previamente saudável de Fortaleza. **Quais quatro** '
+      'diagnósticos precisam ser considerados já?', [
+      ('Dengue grave', 'Foi o diagnóstico da UPA. Plaquetopenia, sangramento '
+       'e choque cabem nela.', True),
+      ('Hepatite viral aguda', 'Febre com icterícia obriga a pensar em A e B, '
+       'mesmo com rim e pulmão acometidos.', True),
+      ('Sepse bacteriana de foco biliar ou pulmonar', 'Febre, icterícia e '
+       'hipotensão são sepse até prova em contrário.', True),
+      ('Leptospirose', 'Doença febril aguda que pode reunir icterícia, lesão '
+       'renal e sangramento pulmonar.', True),
+      ('Febre amarela', 'Vacinado há seis anos e sem entrada conhecida em '
+       'área de mata.', False),
+      ('Malária grave', 'Sem viagem. Fora da região amazônica, a malária é '
+       'quase sempre importada.', False),
+      ('Hantavirose', 'Cardiopulmonar, com hemoconcentração e sem icterícia '
+       'intensa. O fígado não combina.', False),
+      ('Hepatite alcoólica', 'Exige anos de consumo pesado diário; cerveja de '
+       'fim de semana não chega lá.', False),
+      ('Mononucleose infecciosa', 'Faz febre e hepatite leve, raramente lesão '
+       'renal com hemoptise.', False),
+     ], 'Febre ictérica com rim e pulmão: o diferencial ainda é largo'),
 
     Q('ex1', 2,
       'Na emergência, **quais cinco** exames são os mais apropriados?', [
-      ('Hemograma com plaquetas', 'Plaquetopenia e neutrofilia são comuns na '
-       'leptospirose; hemoconcentração puxa para dengue.', True),
-      ('Creatinina, ureia e potássio', 'A lesão renal da leptospirose é '
-       'frequentemente não oligúrica e com hipocalemia. Os três números '
-       'decidem diálise e reposição.', True),
-      ('Gota espessa', 'Sem viagem à região amazônica, o exame não tem lugar.',
-       False),
-      ('Bilirrubinas, transaminases e creatinoquinase', 'Bilirrubina muito '
-       'alta com transaminases modestas e CK elevada é o padrão que separa '
-       'leptospirose de hepatite.', True),
-      ('Tomografia de crânio', 'Sem déficit focal, a sonolência é '
-       'metabólica. Não é prioridade.', False),
-      ('Radiografia de tórax', 'Hemoptise e hipoxemia: o pulmão é o órgão que '
-       'mata na leptospirose grave.', True),
-      ('ELISA IgM para leptospira, com hemocultura em meio específico',
-       'Sorologia no sexto dia e cultura antes do antibiótico. Nenhum dos '
-       'dois deve atrasar o tratamento.', True),
-      ('Sorologia para hantavírus', 'A hantavirose das Américas é '
-       'cardiopulmonar e de área rural do Sul e Centro-Oeste.', False),
-      ('Biópsia hepática', 'Não tem indicação na icterícia febril aguda.',
-       False),
-      ('Antiestreptolisina O', 'Não explica nada do quadro.', False),
-     ], 'A equipe pede os cinco, mais dengue, hepatites e gasometria'),
+      ('Hemograma com plaquetas', 'Plaquetas e hematócrito ajudam a separar '
+       'dengue, sepse e outras febres com sangramento.', True),
+      ('Creatinina, ureia, sódio e potássio', 'Urina escura e escassa. '
+       'Esses números decidem reposição e diálise.', True),
+      ('Bilirrubinas, transaminases e creatinoquinase', 'A proporção entre '
+       'bilirrubina e transaminases, e a CK na mialgia, orientam o diferencial.',
+       True),
+      ('Radiografia de tórax', 'Hemoptise com SpO₂ de 90%: é preciso ver o que '
+       'ocupa os alvéolos.', True),
+      ('Hemoculturas antes do antibiótico', 'Sepse está na lista, e a coleta '
+       'agora não atrasa o tratamento.', True),
+      ('Gota espessa', 'Sem viagem à região amazônica, o rendimento esperado '
+       'é mínimo.', False),
+      ('Tomografia de crânio', 'Sonolência sem déficit focal nem rigidez de '
+       'nuca sugere causa metabólica.', False),
+      ('Colangiorressonância', 'Antes dela vem o ultrassom, que mostra se há '
+       'via biliar dilatada.', False),
+      ('Sorologia para hantavírus', 'Sem exposição rural conhecida e com '
+       'icterícia intensa, não entra na primeira rodada.', False),
+      ('Biópsia hepática', 'Não tem lugar na avaliação inicial da icterícia '
+       'febril aguda.', False),
+     ], 'A equipe pede os cinco, mais gasometria, ultrassom e sorologias de '
+        'dengue e hepatites'),
 
     painel('res1', 'Na emergência', 'O que a equipe pediu', [
         ex('Hemoglobina / hematócrito', '11,6 g/dL / 34%', 'Hb 13,5–17,5 g/dL', True),
         ex('Leucócitos', '14.800/mm³ · neutrófilos 88%', '4.000–11.000/mm³', True),
         ex('Plaquetas', '52.000/mm³ {{(145.000 na UPA)}}', '150.000–450.000/mm³', True),
         ex('Creatinina / ureia', '3,9 / 148 mg/dL {{(creatinina 1,0 na UPA)}}', 'até 1,3 / 45 mg/dL', True),
-        ex('Potássio / sódio', '3,1 / 133 mmol/L', 'K 3,5–5,0 · Na 135–145', True),
+        ex('Sódio / potássio / cloro', '133 / 3,1 / 100 mmol/L', 'Na 135–145 · K 3,5–5,0 · Cl 98–107', True),
         ex('Bilirrubina total / direta', '17,8 / 15,2 mg/dL', 'até 1,2 / 0,3 mg/dL', True),
         ex('AST / ALT', '112 / 84 U/L', 'até 40 / 41 U/L', True),
         ex('Creatinoquinase', '4.260 U/L', 'até 190 U/L', True),
         ex('INR', '1,3', 'até 1,2', True),
-        ex('Gasometria arterial', 'pH 7,33 · pCO₂ 30 · HCO₃ 16 · pO₂ 58 mmHg', '—', True),
+        ex('Gasometria arterial em ar ambiente', 'pH 7,32 · pCO₂ 30 · HCO₃ 15 · pO₂ 58 mmHg · lactato 3,6 mmol/L', '—', True),
         ex('Dengue: NS1 e IgM', 'Não reagentes', 'não reagentes'),
-        ex('Hepatites: anti-HAV IgM, HBsAg, anti-HEV IgM', 'Não reagentes', 'não reagentes'),
-        ex('ELISA IgM para leptospira', 'Não reagente', 'não reagente'),
+        ex('Hepatites: anti-HAV IgM, HBsAg, anti-HBc IgM', 'Não reagentes', 'não reagentes'),
+        ex('Ultrassonografia de abdome', 'Fígado discretamente aumentado, vias biliares sem dilatação, rins de tamanho normal', '—', True),
         ex('Radiografia de tórax', 'Infiltrado alveolar bilateral, predominando em bases e periferia', '—', True),
-    ], introducao='Hemoculturas e cultura para leptospira foram colhidas antes de qualquer antibiótico.',
+    ], introducao='Duas hemoculturas foram colhidas antes de qualquer antibiótico, e '
+                  'uma alíquota de sangue da admissão ficou guardada no laboratório.',
        laminas={'Radiografia de tórax': lamina('rx_torax_alveolar.jpg', 'Radiografia de tórax',
                 'Imagem ilustrativa de outro paciente; o padrão alveolar não '
                 'distingue sangue de água ou de pus.', CREDITO_RX)}),
 
     Q('p3', 3,
-      'Bilirrubina de 17,8 com AST de 112, CK de 4.260, potássio de 3,1 e '
-      'creatinina de 3,9. **Quais três** afirmações estão corretas?', [
+      'Bilirrubina de 17,8 (direta 15,2) com AST de 112, CK de 4.260, '
+      'potássio de 3,1 e creatinina de 3,9. **Quais três** afirmações estão '
+      'corretas?', [
       ('A desproporção entre bilirrubina e transaminases fala contra hepatite viral',
-       'Na hepatite aguda as transaminases passam de mil. Na leptospirose a '
-       'icterícia é de colestase com lesão hepatocelular discreta.', True),
-      ('Transaminases acima de 1.000 são esperadas na leptospirose',
-       'É o contrário: raramente passam de 200 a 300.', False),
-      ('A CK alta traduz a miosite que dói na panturrilha',
-       'A rabdomiólise contribui para a lesão renal e é um dado a favor do '
-       'diagnóstico.', True),
-      ('A hipocalemia exclui lesão renal aguda grave',
-       'A leptospirose lesa o túbulo proximal e perde potássio: lesão renal '
-       'com hipocalemia é a assinatura dela.', False),
-      ('A lesão renal costuma ser não oligúrica e hipocalêmica no início',
-       'Nefrite tubulointersticial com defeito de reabsorção de sódio e '
-       'potássio. A oligúria é sinal de gravidade.', True),
-      ('A icterícia é hemolítica, de bilirrubina indireta',
-       'A bilirrubina é quase toda direta: colestase, não hemólise.', False),
-      ('A plaquetopenia exclui leptospirose e confirma dengue',
-       'Plaquetopenia é comum na leptospirose grave e associa-se a pior '
-       'prognóstico.', False),
-     ], 'Bilirrubina alta, transaminase baixa, CK alta e potássio baixo'),
+       'Hepatite viral com essa icterícia teria transaminases na casa dos '
+       'milhares.', True),
+      ('A CK alta indica lesão muscular que pode somar-se à lesão renal',
+       'Miosite com rabdomiólise agrava a lesão tubular e escurece a urina.',
+       True),
+      ('Potássio baixo com creatinina de 3,9 sugere perda tubular de potássio',
+       'Na lesão renal habitual o potássio sobe. Aqui o túbulo perde potássio.',
+       True),
+      ('A icterícia é sobretudo hemolítica, de bilirrubina indireta',
+       'A fração direta é 85% do total: o defeito é de excreção.', False),
+      ('Os dois vômitos explicam a hipocalemia',
+       'Perda gástrica daria alcalose, e o bicarbonato está baixo.', False),
+      ('Bilirrubina direta alta exige colangiorressonância antes de tratar',
+       'Vias biliares finas no ultrassom apontam colestase intra-hepática, sem '
+       'obstrução.', False),
+      ('O INR de 1,3 com sonolência define insuficiência hepática aguda',
+       'O critério pede INR de 1,5 ou mais com encefalopatia.', False),
+      ('A plaquetopenia, com essas provas negativas, ainda confirma dengue',
+       'Plaquetopenia é comum a sepse e a várias febres ictéricas.', False),
+     ], 'Colestase sem necrose, músculo lesado e túbulo que perde potássio'),
 
-    pergunta('p4', 'Pergunta 4',
-      'ELISA IgM para leptospira **não reagente no sexto dia**. Qual a conduta?', [
-      alt('Afastar leptospirose e tratar como dengue grave',
-          'NS1 e IgM de dengue foram negativos, e o IgM da leptospira só se '
-          'torna positivo depois do quinto ao sétimo dia.'),
-      alt('Tratar presuntivamente e repetir a sorologia em uma a duas semanas',
-          'Na suspeita clínico-epidemiológica, a forma grave é tratada sem '
-          'confirmação. A segunda amostra e a microaglutinação pareada '
-          'confirmam depois.', certa=True),
-      alt('Esperar a microaglutinação antes de qualquer antibiótico',
-          'O resultado leva dias. Na síndrome de Weil, cada dia sem '
-          'antibiótico pesa na mortalidade.'),
-      alt('Solicitar biópsia renal para confirmar nefrite',
-          'A clínica e a epidemiologia bastam para tratar. Biópsia não '
-          'tem papel aqui.'),
-      alt('Repetir o mesmo ELISA amanhã e decidir pelo resultado',
-          'Um dia não muda a cinética dos anticorpos, e a conduta já está '
-          'indicada.'),
-    ], titulo_resposta='Sorologia negativa cedo não afasta, e a forma grave não espera'),
+    Q('p4', 4,
+      'Gasometria em ar ambiente: pH 7,32, pCO₂ 30, HCO₃ 15, pO₂ 58; sódio '
+      '133, cloro 100, lactato 3,6. **Quais três** afirmações estão '
+      'corretas?', [
+      ('Há acidose metabólica com ânion gap elevado',
+       '133 menos 115 dá 18. Lactato e uremia somam ácidos não medidos.',
+       True),
+      ('A pCO₂ de 30 é a compensação esperada',
+       'Pela fórmula de Winter, 1,5 × 15 + 8 dá cerca de 30.', True),
+      ('A relação PaO₂/FiO₂ perto de 280 indica lesão pulmonar relevante',
+       '58 dividido por 0,21 dá 276, já com infiltrado bilateral.', True),
+      ('A pCO₂ baixa indica alcalose respiratória primária dominante',
+       'O pH é ácido, e a pCO₂ está no previsto para a compensação.', False),
+      ('A acidose se explica pelos vômitos',
+       'Perda de suco gástrico produz alcalose metabólica, não acidose.',
+       False),
+      ('Bicarbonato intravenoso está indicado com pH de 7,32',
+       'Acima de 7,2, o bicarbonato não traz benefício e soma sódio e volume.',
+       False),
+      ('SpO₂ de 90% em ar ambiente dispensa oxigênio suplementar',
+       'Com taquipneia e infiltrado bilateral, o alvo é de 92 a 96%.', False),
+     ], 'Acidose de ânion gap elevado, compensada, e troca gasosa já comprometida'),
 
-    bifurcacao('b1', 'Decisão', 'O antibiótico',
-      'Joaquim está hipotenso, ictérico e hipoxêmico. Como você trata?', [
-      caminho('Internar em leito monitorizado e iniciar penicilina cristalina '
-              'endovenosa agora', 'tratado',
-              'Penicilina cristalina 1,5 milhão de UI de 6/6 horas (ou '
-              'ceftriaxona 1 a 2 g/dia) é o esquema da forma grave.'),
-      caminho('Doxiciclina oral e retorno em 48 horas', 'doxi',
-              'É o esquema da forma leve, ambulatorial. Joaquim não tem forma '
-              'leve.'),
-      caminho('Hidratar e aguardar a segunda sorologia para iniciar antibiótico',
-              'espera',
-              'A confirmação é importante para a vigilância, não para a '
-              'decisão de tratar.'),
+    bifurcacao('b1', 'Decisão', 'As primeiras horas',
+      'Joaquim está hipotenso, ictérico e hipoxêmico. As hemoculturas já '
+      'foram colhidas. Como você conduz?', [
+      caminho('Oxigênio, leito monitorizado e ceftriaxona 2 g endovenosa agora',
+              'tratado',
+              'Ceftriaxona em dose plena cobre as causas bacterianas tratáveis '
+              'deste diferencial, sem esperar sorologias.'),
+      caminho('Oxigênio e hidratação; escolher o antibiótico quando saírem as '
+              'sorologias', 'espera',
+              'Sorologias e culturas levam dias. Com sepse possível, o '
+              'antibiótico vem no primeiro atendimento.'),
+      caminho('Conduzir como dengue grave: cristaloide 20 mL/kg em bolus '
+              'repetidos, sem antibiótico', 'volume',
+              'NS1 e IgM negativos, hemoptise e crepitações pedem cautela com '
+              'volume e cobertura antibiótica.'),
     ]),
 
-    pg('doxi', 'Na manhã seguinte',
-       'Joaquim volta à emergência carregado pelo irmão, doze horas depois: '
-       'saturação de 84%, hemoptise de 100 mL e urina "quase nada". É '
-       'internado, e a penicilina cristalina começa com um dia de atraso.',
+    pg('volume', 'Quatro horas depois',
+       'Depois de três litros de cristaloide, a pressão sobe para 102/60, mas '
+       'a saturação cai para 84% com cateter nasal e as crepitações chegam '
+       'aos terços médios. A plantonista suspende o volume e inicia '
+       'ceftriaxona com quatro horas de atraso.',
        segue='tratado'),
 
     pg('espera', 'Dezoito horas depois',
        'Sob soro e oxigênio, a saturação cai para 85% e a urina para 20 mL '
-       'por hora. A plantonista inicia penicilina cristalina com dezoito '
-       'horas de atraso.',
+       'por hora. As sorologias ainda não saíram. A plantonista inicia '
+       'ceftriaxona com dezoito horas de atraso.',
        segue='tratado'),
 
     pg('tratado', 'Primeiras horas de antibiótico',
        'Duas horas depois da primeira dose, Joaquim tem calafrios, febre de '
-       '40 °C e piora da pressão por algumas horas. A equipe reconhece uma '
-       '**reação de Jarisch-Herxheimer**, trata com volume e antitérmico e '
-       'mantém a penicilina.',
+       '40 °C e queda da pressão para 84/50. Com 500 mL de cristaloide e '
+       'antitérmico, melhora em quatro horas. A equipe mantém a ceftriaxona.',
        'Na madrugada, a tosse fica úmida. Ele expectora sangue vivo.'),
+
+    pg('irmao', 'Na manhã seguinte',
+       'O irmão volta com os documentos, depois de conversar com os colegas de '
+       'Joaquim. '
+       'Ele é agente de limpeza urbana. Doze dias antes da febre, depois de '
+       'três dias de chuva forte, passou um turno dentro de um canal alagado, '
+       'desobstruindo a passagem da água, com uma bota furada.',
+       'Revisto, o exame mostra que a dor à compressão é muito maior nas '
+       'panturrilhas, e há um corte cicatrizado na planta do pé direito. Os '
+       'colegas dizem que o depósito da equipe tem ratos.'),
+
+    pg('virada', 'Laboratório de referência',
+       'Com essa história, a equipe envia a alíquota guardada da admissão, '
+       'colhida no sexto dia de doença e antes da ceftriaxona, ao laboratório '
+       'de referência.',
+       '**PCR para Leptospira no sangue: DNA detectado.** ELISA IgM para '
+       'leptospira na mesma amostra: não reagente. As hemoculturas seguem '
+       'sem crescimento em 48 horas.',
+       'Joaquim tem leptospirose na forma grave, com icterícia, lesão renal e '
+       'sangramento pulmonar: a síndrome de Weil.'),
+
+    Q('p5', 5,
+      'PCR detectado e ELISA IgM não reagente, ambos na amostra do sexto dia. '
+      '**Quais três** afirmações estão corretas?', [
+      ('PCR detectado em sangue colhido até o sétimo dia confirma o caso',
+       'É critério de confirmação laboratorial do Guia de Vigilância em '
+       'Saúde.', True),
+      ('Nova sorologia deve ser colhida a partir do sétimo dia',
+       'Antes disso é comum não haver anticorpo; a MAT pareada pede '
+       'amostra entre 14 e 60 dias.', True),
+      ('A cultura para leptospira só termina em semanas',
+       'Serve ao diagnóstico retrospectivo e à tipagem, não à decisão de '
+       'hoje.', True),
+      ('O ELISA não reagente no sexto dia descarta a infecção',
+       'Amostra antes do sétimo dia não descarta: o IgM ainda pode não ter '
+       'aparecido.', False),
+      ('Na primeira semana, a urina é a melhor amostra para PCR',
+       'Na fase precoce a leptospira está no sangue; na urina, mais tarde.',
+       False),
+      ('Com a confirmação, a ceftriaxona deve dar lugar à doxiciclina oral',
+       'Doxiciclina oral é esquema da forma leve. Joaquim tem forma grave.',
+       False),
+      ('O tempo de antibiótico depende do resultado da MAT',
+       'O esquema endovenoso dura pelo menos sete dias, independentemente '
+       'da MAT.', False),
+     ], 'O DNA confirma cedo; o anticorpo chega depois'),
 
     pg('hemorragia', 'Segundo dia de internação',
        'Saturação de 83% com máscara com reservatório, frequência '
@@ -259,35 +312,19 @@ ETAPAS = [
          ((704, 430), (912, 320), 'O mesmo padrão no **pulmão esquerdo**: a doença é bilateral.', -12),
          ((620, 160), (760, 60), '**Ápices relativamente poupados**: o predomínio é central e inferior.', 12),
         ],
-        ['Opacidades alveolares bilaterais, confluentes, com predomínio central e inferior.', 'Na leptospirose, hipoxemia com hemoptise e queda de hemoglobina é hemorragia pulmonar: a vasculite capilar difusa que faz a mortalidade da forma grave passar de 50%.']),
-
-    Q('p5', 5,
-      'Hemorragia pulmonar, oligúria e sonolência. **Quais três** fatores '
-      'associam-se a maior mortalidade na leptospirose grave?', [
-      ('Acometimento pulmonar com hemorragia', 'O preditor mais forte de '
-       'morte nas séries brasileiras.', True),
-      ('Icterícia intensa', 'É frequente e dramática, mas não prediz morte '
-       'de forma independente.', False),
-      ('Oligúria', 'A lesão renal oligúrica pesa mais que a não oligúrica.',
-       True),
-      ('Creatinoquinase acima de 1.000 U/L', 'Ajuda o diagnóstico; não é '
-       'preditor independente.', False),
-      ('Alteração do nível de consciência', 'Sonolência ou confusão na '
-       'admissão multiplica o risco.', True),
-      ('Febre acima de 39 °C', 'Comum a quase todos, sem valor '
-       'prognóstico.', False),
-      ('Sufusão conjuntival', 'Sinal diagnóstico, não prognóstico.', False),
-     ], 'Pulmão, rim e cérebro'),
+        ['Opacidades alveolares bilaterais, confluentes, com predomínio central e inferior.',
+         'Com hemoptise, hipoxemia e queda de hemoglobina, é hemorragia pulmonar, '
+         'a complicação que mais mata na leptospirose grave.']),
 
     bifurcacao('b2', 'Decisão', 'O pulmão que sangra',
       'Saturação de 83% com máscara, hemoptise e oligúria. O que você faz?', [
       caminho('UTI: intubação precoce com ventilação protetora e diálise '
               'precoce e diária', 'uti',
-              'Proteger o pulmão com volumes baixos e tirar o excesso de '
-              'volume e as toxinas urêmicas cedo reduz a mortalidade.'),
+              'Proteger o pulmão com volumes baixos e dialisar cedo reduz a '
+              'mortalidade.'),
       caminho('Ventilação não invasiva e furosemida em dose alta', 'vni',
-              'A máscara não protege uma via aérea que sangra, e diurético não '
-              'converte a lesão renal nem reduz a mortalidade.'),
+              'A máscara não protege uma via aérea que sangra, e o diurético '
+              'não muda o curso da lesão renal.'),
       caminho('Pulso de metilprednisolona e observação na enfermaria', 'pulso',
               'O corticoide na hemorragia pulmonar é controverso e não '
               'substitui suporte intensivo.'),
@@ -334,77 +371,75 @@ ETAPAS = [
       'cada quadro à doença que ele sugere.', [
       par('Sufusão conjuntival, dor na panturrilha e contato com enchente',
           'Leptospirose',
-          'A tríade epidemiológica e clínica de Joaquim. A sufusão é '
-          'congestão sem secreção.'),
+          'A combinação de Joaquim. A sufusão é congestão sem secreção.'),
       par('Dor abdominal, vômitos e hematócrito subindo na defervescência',
           'Dengue grave',
-          'O extravasamento plasmático começa quando a febre cai: são os '
-          'sinais de alarme.'),
+          'O extravasamento plasmático começa quando a febre cai.'),
       par('Febre, icterícia e pulso lento para a febre, sem vacina, após mata',
           'Febre amarela',
-          'O sinal de Faget e a hepatite com transaminases de milhares. '
-          'A vacina previne.'),
+          'Sinal de Faget e transaminases na casa dos milhares.'),
       par('Febre em picos, anemia e esplenomegalia depois de viagem ao Pará',
           'Malária por Plasmodium vivax',
-          'A gota espessa decide. No Nordeste, quase sempre importada.'),
+          'A gota espessa decide. No Ceará, quase sempre importada.'),
       par('Icterícia com transaminases acima de 1.000 e pouca febre',
           'Hepatite A aguda',
           'Hepatite hepatocelular pura, sem rim nem pulmão.'),
     ], opcoes=['Leptospirose', 'Dengue grave', 'Febre amarela',
                'Malária por Plasmodium vivax', 'Hepatite A aguda', 'Hantavirose'],
     titulo_resposta='O detalhe da história decide mais que o laboratório',
-    nota='A opção que sobrou, hantavirose, é cardiopulmonar, rural, do Sul e '
-         'do Centro-Oeste, e sem icterícia.'),
+    nota='A opção que sobrou, hantavirose, é cardiopulmonar, de exposição '
+         'rural, com hemoconcentração e sem icterícia importante.'),
 
     Q('p7', 7,
-      'Sobre o tratamento da leptospirose grave, **quais três** afirmações '
-      'estão corretas?', [
-      ('Penicilina cristalina ou ceftriaxona endovenosa por sete dias',
-       'Os dois esquemas têm eficácia semelhante; a doxiciclina oral é da '
+      'Sobre o tratamento de Joaquim, **quais três** afirmações estão '
+      'corretas?', [
+      ('Ceftriaxona ou penicilina cristalina endovenosa, por pelo menos sete dias',
+       'Esquemas equivalentes na forma grave; a doxiciclina oral fica para a '
        'forma leve.', True),
-      ('Furosemida converte a oligúria e evita diálise',
-       'Não muda a necessidade de diálise nem a mortalidade.', False),
       ('Diálise precoce e diária reduz a mortalidade',
        'Comparada à diálise em dias alternados, reduziu a mortalidade num '
        'ensaio brasileiro.', True),
       ('O potássio deve ser reposto conforme os controles',
-       'A perda tubular de potássio continua na fase poliúrica.', True),
-      ('O antibiótico só tem benefício nos primeiros quatro dias',
-       'Recomenda-se tratar em qualquer fase da doença.', False),
-      ('A reação de Jarisch-Herxheimer obriga a suspender a penicilina',
-       'É liberação de toxinas das espiroquetas mortas: trata-se o sintoma '
-       'e mantém-se o antibiótico.', False),
+       'A perda tubular de potássio continua, sobretudo na fase poliúrica.',
+       True),
+      ('A piora febril após a primeira dose pedia suspender a ceftriaxona',
+       'Foi uma reação de Jarisch-Herxheimer: trata-se o sintoma e mantém-se '
+       'o antibiótico.', False),
+      ('Furosemida converte a oligúria e evita a diálise',
+       'Não muda a necessidade de diálise nem a mortalidade.', False),
+      ('O antibiótico só traz benefício na primeira semana de doença',
+       'Está indicado em qualquer fase, embora renda mais na primeira semana.',
+       False),
       ('Corticoide é tratamento de rotina da forma grave',
-       'Não há evidência para uso rotineiro.', False),
-     ], 'Antibiótico em qualquer fase, diálise cedo, potássio sempre'),
+       'Não há evidência que sustente o uso rotineiro.', False),
+     ], 'Antibiótico mantido, diálise cedo, potássio sempre'),
 
     pg('recuperacao', 'Segunda semana',
        'A diurese volta com poliúria de 4 litros por dia, e o potássio '
        'precisa de reposição. A icterícia regride devagar. A segunda '
-       'sorologia, no 14.º dia, é **ELISA IgM reagente**, e a '
-       'microaglutinação mostra soroconversão para o sorovar '
-       'Icterohaemorrhagiae.'),
+       'amostra, no 14.º dia, tem ELISA IgM reagente e microaglutinação com '
+       'título de 1:1.600 para o sorogrupo Icterohaemorrhagiae.'),
 
     Q('p8', 8,
       'Na alta, **quais três** medidas estão corretas?', [
       ('Notificar o caso à vigilância epidemiológica',
-       'Leptospirose é de notificação compulsória. A vigilância investiga o '
-       'local e os colegas expostos.', True),
-      ('Isolamento de contato em casa',
-       'Não há transmissão entre pessoas. O risco está na água e nos '
-       'roedores.', False),
+       'Leptospirose é de notificação compulsória, e a vigilância investiga os '
+       'colegas expostos.', True),
       ('Investigar o local de trabalho e orientar equipamento de proteção',
-       'Botas íntegras e luvas na limpeza de canais. Controle de roedores no '
+       'Botas íntegras e luvas na limpeza de canais, e controle de roedores no '
        'depósito.', True),
+      ('Acompanhar creatinina e potássio nas semanas seguintes',
+       'A função renal costuma recuperar em semanas, e a fase poliúrica perde '
+       'potássio.', True),
+      ('Isolamento de contato em casa',
+       'Não há transmissão entre pessoas; o risco está na água e nos roedores.',
+       False),
       ('Antibiótico profilático por três meses',
        'Não há indicação depois de tratada a infecção.', False),
-      ('Acompanhar creatinina e potássio nas semanas seguintes',
-       'A função renal costuma recuperar, mas em semanas, e a fase poliúrica '
-       'perde potássio.', True),
       ('Vacina humana para os colegas',
        'Não há vacina humana disponível no Brasil.', False),
       ('Repetir a microaglutinação todo mês',
-       'A soroconversão já confirmou. Repetir não muda nada.', False),
+       'O caso já está confirmado, e repetir não muda a conduta.', False),
      ], 'Notificar, proteger quem trabalha na água e acompanhar o rim'),
 
     pg('alta', 'Preparando a alta',
@@ -429,7 +464,7 @@ ETAPAS = [
         'Joaquim sai no 27.º dia, com creatinina de 2,1 mg/dL e fraqueza '
         'muscular que leva dois meses para passar.',
         'O atraso do antibiótico ou do suporte intensivo acrescentou dias de '
-        'hipoxemia e de diálise. Ele sobreviveu à forma que mata metade.',
+        'hipoxemia e de diálise. Ele sobreviveu a uma forma de letalidade alta.',
         'medio'),
 
     fim('f_obito', 'Óbito no terceiro dia',
@@ -441,27 +476,31 @@ ETAPAS = [
 
     pagina('retrospectiva', 'Retrospectiva', '',
         tabela(['Momento', 'O dado', 'O que decidiu'], [
-            ['Na UPA, segundo dia', 'Febre súbita, mialgia de panturrilha, enchente '
-             'dez dias antes', 'Perguntar pela água muda o diagnóstico de dengue '
-             'para leptospirose'],
+            ['Na UPA, segundo dia', 'Febre súbita e mialgia intensa, sem pergunta '
+             'sobre trabalho e água', 'Perguntar pela exposição teria mudado o '
+             'diagnóstico de dengue'],
             ['Na emergência', 'Bilirrubina 17,8 com AST 112, CK alta, potássio baixo',
-             'O padrão laboratorial da síndrome de Weil'],
-            ['Sorologia', 'IgM não reagente no sexto dia', 'Tratar sem esperar: o '
-             'anticorpo vem depois'],
+             'Colestase, miosite e perda tubular: o padrão da síndrome de Weil'],
+            ['Primeiras horas', 'Ceftriaxona antes do diagnóstico', 'O antibiótico '
+             'empírico já cobria a leptospirose'],
+            ['Manhã seguinte', 'O canal alagado, a bota furada, as panturrilhas',
+             'A história que faltava levou ao teste certo'],
+            ['Laboratório', 'PCR detectado, IgM ainda negativo no sexto dia',
+             'O DNA confirma antes do anticorpo'],
             ['Segundo dia', 'Hemoptise, hipoxemia, oligúria', 'UTI, intubação protetora '
              'e diálise precoce'],
-            ['Alta', 'Soroconversão na microaglutinação', 'Notificar e proteger quem '
-             'trabalha na água'],
         ]),
         so_kicker=True),
 
     pg('referencias', 'Fontes e limites',
        'Paciente, valores e percursos são ficcionais. A cena de abertura é uma ilustração autoral gerada por inteligência artificial para este caso; não é fotografia nem documentação clínica.',
-       'Ministério da Saúde. Guia de Vigilância em Saúde, capítulo de '
-       'leptospirose, e Leptospirose: diagnóstico e manejo clínico. Andrade e '
-       'cols., Clin J Am Soc Nephrol 2007 (diálise diária). Spichler e cols., '
-       'Am J Trop Med Hyg 2008 (preditores de mortalidade). Radiografia: '
-       'Samir, Wikimedia Commons, CC BY-SA 3.0 — outro paciente.'),
+       'Ministério da Saúde. Guia de Vigilância em Saúde, 6.ª edição '
+       'revisada, 2024, volume 3, capítulo de leptospirose (critérios de '
+       'confirmação e antibioticoterapia), e Leptospirose: diagnóstico e '
+       'manejo clínico, 2014. Andrade e cols., Clin J Am Soc Nephrol 2007 '
+       '(diálise diária). Spichler e cols., Am J Trop Med Hyg 2008 '
+       '(preditores de mortalidade). Radiografia: Samir, Wikimedia Commons, '
+       'CC BY-SA 3.0, de outro paciente.'),
 ]
 
 REVISAO = []

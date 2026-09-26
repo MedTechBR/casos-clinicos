@@ -1,8 +1,11 @@
-"""Vasculopatia por cocaína adulterada com levamisol — púrpura retiforme,
+"""Vasculopatia por cocaína adulterada com levamisol: púrpura retiforme,
 agranulocitose e ANCA atípico.
 
 Alíquota → pergunta, na gramática do //New England//. Paciente ficcional;
-os desfechos são cenários didáticos, não probabilidades.
+os desfechos são cenários didáticos, não probabilidades. O nome da causa só
+aparece depois da entrevista privada, na toxicologia; antes disso, o caso
+anda pela síndrome (púrpura retiforme com febre, neutropenia isolada, ANCA
+com dois alvos).
 """
 from pathlib import Path
 from motor.desenhos import chave_corpusculo
@@ -52,74 +55,25 @@ ETAPAS = [
          procedencia='Roteiro autoral; fontes e limites no fecho.'),
 
     pagina('historia', 'Admissão', 'Apresentação',
-        p('Marina, 34 anos, procura atendimento acompanhada da irmã por '
+        p('Marina, 34 anos, procura o pronto-socorro acompanhada da irmã por '
           'manchas dolorosas nas coxas e febre. Trabalha em uma loja de '
-          'roupas e, nos últimos dois dias, deixou de cumprir o turno porque '
-          'o tecido da calça incomodava ao tocar a pele. Está preocupada com '
-          'uma área que escureceu naquela manhã.'),
+          'roupas e, nos últimos dois dias, faltou ao turno porque o tecido '
+          'da calça doía ao tocar a pele. Uma das áreas escureceu naquela '
+          'manhã.'),
         p('Diz que nunca teve uma lesão "desse tamanho". Não refere falta de '
           'ar, dor torácica ou sangramento aparente. Está lúcida e relata a '
           'sequência dos sintomas.'),
         fundo=CENA, lamina_=CENA_HISTORIA),
 
     pagina('hda', 'Antes da admissão', 'História da doença atual',
-        p('Três dias antes, notou duas áreas avermelhadas dolorosas na face '
-          'externa das coxas. Pensou em atrito da roupa, mas não recordava '
+        p('Três dias antes, notou duas áreas avermelhadas e dolorosas na face '
+          'externa das coxas. Pensou em atrito da roupa; não recordava '
           'exercício, queda ou picada. Nas horas seguintes surgiram outras '
-          'manchas próximas, de cor mais escura, **com bordas angulosas e '
-          'ramificadas**. A dor passou de incômodo ao toque para dor em '
-          'repouso.'),
-        p('Havia mal-estar e dor nos punhos e tornozelos, sem articulação '
-          'visivelmente inchada. A febre começou no dia da consulta, com '
-          'calafrios. Tomou paracetamol depois do início dos sintomas e não '
-          'usou antibiótico ou pomada.'),
-        fundo=CENA),
-
-    q('q1', 1,
-      'Placas purpúricas dolorosas, de contorno ramificado, com centro '
-      'escurecido, nas coxas de uma mulher de 34 anos com febre. **Quais '
-      'quatro** diagnósticos considerar?', [
-      ('Vasculopatia por levamisol',
-       'Púrpura retiforme dolorosa, em mulher jovem, com artralgia e febre: '
-       'é a apresentação clássica — e as coxas são sítio comum, junto com '
-       'orelhas, nariz e bochechas. Pergunte pela droga, a sós.', True),
-      ('Eritema nodoso',
-       'Nódulos eritematosos, não purpúricos, na face anterior das '
-       'pernas. Não necrosa nem ramifica.', False),
-      ('Púrpura fulminante',
-       'Febre com púrpura que necrosa em horas é meningococcemia até prova '
-       'em contrário. Hemocultura e antibiótico antes de qualquer '
-       'raciocínio elegante.', True),
-      ('Celulite bacteriana extensa',
-       'Eritema quente, branqueável, de bordas mal definidas — não '
-       'púrpura angulada com centro necrótico.', False),
-      ('Crioglobulinemia mista',
-       'Púrpura de membros inferiores com artralgia e, na tipo I, '
-       'oclusão com necrose. Hepatite C e paraproteína na investigação.',
-       True),
-      ('Necrose cutânea por varfarina',
-       'Necrose de coxa e mama nos primeiros dias de anticoagulante — ela '
-       'não usa nenhum.', False),
-      ('Síndrome antifosfolípide',
-       'Livedo, púrpura retiforme e necrose por trombose de pequeno vaso. '
-       'Anticoagulante lúpico e anticardiolipina entram na lista.', True),
-      ('Urticária vasculite',
-       'Placas urticariformes que duram mais de 24 horas e deixam '
-       'pigmento — sem necrose ramificada.', False),
-      ('Calcifilaxia (arteriolopatia urêmica)',
-       'Necrose retiforme dolorosa, sim — mas em doença renal terminal '
-       'com hiperparatireoidismo. Ela tem 34 anos e creatinina normal.',
-       False),
-     ], 'Púrpura que ramifica é vaso ocluído, e quatro coisas ocluem'),
-
-    pagina('hda2', 'Admissão', 'Sintomas associados',
-        p('Nega sangramento gengival, epistaxe recente ou aumento do fluxo '
-          'menstrual. Não percebeu inchaço nas pernas nem mudança na '
-          'quantidade ou na cor da urina. Sem tosse, dor abdominal, diarreia '
-          'ou ardor ao urinar.'),
-        p('Perguntada sobre episódios anteriores, recorda manchas pequenas '
-          'que desapareceram sem consulta alguns meses antes. Não guardou '
-          'fotografias e não sabe precisar a duração.'),
+          'manchas próximas, mais escuras e de contorno irregular. A dor '
+          'passou de incômodo ao toque para dor em repouso.'),
+        p('Há mal-estar e dor nos punhos e tornozelos, sem inchaço articular '
+          'visível. A febre começou no dia da consulta, com calafrios. Tomou '
+          'paracetamol e não usou antibiótico nem pomada.'),
         fundo=CENA),
 
     pagina('antecedentes', 'História pessoal', 'Antecedentes e hábitos',
@@ -127,10 +81,10 @@ ETAPAS = [
           'Nunca teve trombose ou sangramento prolongado. Uma gestação a '
           'termo, sem perdas. Apendicectomia na adolescência. A mãe tem '
           'hipotireoidismo.'),
-        p('Não usa medicação contínua nem anticoncepcional hormonal. Nega '
-          'medicamento novo — antibiótico, anti-inflamatório, fórmula para '
-          'emagrecer — e nega dipirona nas últimas semanas. Fuma cinco '
-          'cigarros por dia; álcool nos fins de semana. Sem viagem recente. '
+        p('Não usa medicação contínua nem anticoncepcional hormonal e nega '
+          'medicamento novo, inclusive antibiótico, anti-inflamatório ou '
+          'fórmula para emagrecer. Fuma cinco cigarros por dia e bebe nos '
+          'fins de semana; nega uso de drogas ilícitas. Sem viagem recente. '
           'A entrevista foi feita com a irmã presente.'),
         fundo=CENA),
 
@@ -142,12 +96,58 @@ ETAPAS = [
                 ('Cardiovascular e pulmonar', 'Ritmo regular, sem sopro. '
                  'Ausculta pulmonar limpa.'),
                 ('Abdome', 'Indolor, sem massas ou visceromegalias.'),
-                ('Pele e membros', 'Placas violáceas dolorosas nas coxas, '
-                 '**não desaparecem à pressão**, de bordas anguladas e '
-                 'ramificadas, algumas com centro escurecido. Pulsos '
-                 'presentes, sem crepitação. Orelhas e nariz sem lesão no '
-                 'primeiro exame.'),
+                ('Pele e membros', 'Placas violáceas dolorosas na face lateral '
+                 'das coxas, que não desaparecem à pressão, de bordas '
+                 'anguladas e ramificadas; duas têm centro escurecido. Sem '
+                 'bolhas ou crepitação. Pulsos distais presentes. Face e '
+                 'mucosas sem lesões.'),
                 ('Neurológico', 'Força e sensibilidade preservadas.')),
+        fundo=CENA),
+
+    q('q1', 1,
+      'Placas purpúricas dolorosas, que não clareiam à pressão, de contorno '
+      'ramificado e centro escuro, com febre e taquicardia. **Quais cinco** '
+      'diagnósticos devem entrar no diferencial?', [
+      ('Púrpura fulminante ou êmbolo séptico',
+       'Febre, taquicardia e necrose em horas: a causa infecciosa é a que '
+       'não pode esperar.', True),
+      ('Vasculite associada a ANCA',
+       'Oclui vasos dérmicos e produz púrpura necrótica; febre e artralgia '
+       'cabem no quadro.', True),
+      ('Crioglobulinemia',
+       'Púrpura de membros inferiores com artralgia; no tipo I, a oclusão '
+       'necrosa a pele.', True),
+      ('Síndrome antifosfolípide',
+       'Trombose de pequeno vaso dérmico dá esse desenho, mesmo sem '
+       'trombose prévia conhecida.', True),
+      ('Vasculopatia por droga ou adulterante',
+       'Várias exposições causam vasculite ou oclusão cutânea; pede '
+       'história de exposição detalhada.', True),
+      ('Embolia de colesterol após manipulação arterial',
+       'Exige aterosclerose extensa e, em geral, cateterismo recente; ela '
+       'não tem nenhum dos dois.', False),
+      ('Calcifilaxia de forma não urêmica',
+       'Necrose retiforme dolorosa, mas quase sempre com doença renal '
+       'avançada ou varfarina.', False),
+      ('Púrpura trombocitopênica imune com sangramento cutâneo',
+       'Plaqueta baixa dá petéquia plana, sem contorno ramificado nem '
+       'necrose.', False),
+      ('Celulite bacteriana extensa das coxas',
+       'Eritema quente, que clareia à pressão e tem bordas mal '
+       'definidas.', False),
+      ('Eritema nodoso com paniculite dolorosa',
+       'Nódulos na face anterior das pernas, sem púrpura e sem '
+       'necrose.', False),
+     ], 'Púrpura retiforme: oclusão de pequeno vaso dérmico'),
+
+    pagina('hda2', 'Admissão', 'Sintomas associados',
+        p('Nega sangramento gengival, epistaxe recente ou aumento do fluxo '
+          'menstrual. Não percebeu inchaço nas pernas nem mudança na '
+          'quantidade ou na cor da urina. Sem tosse, dor abdominal, diarreia '
+          'ou ardor ao urinar.'),
+        p('Perguntada sobre episódios anteriores, recorda manchas pequenas '
+          'que desapareceram sem consulta alguns meses antes. Não guardou '
+          'fotografias e não sabe precisar a duração.'),
         fundo=CENA),
 
     pagina('imagem_pele', 'Discussão visual', 'Morfologia das lesões',
@@ -165,46 +165,45 @@ ETAPAS = [
                        'discutir morfologia.',
                        'Hektor · Wikimedia Commons · CC BY-SA 3.0 · sem alterações.')),
 
-    q('q3', 2,
-      'Febre de 38,6 °C, frequência cardíaca de 112, lesões dolorosas com '
-      'necrose. **Quais três** medidas nas primeiras horas?', [
-      ('Hemograma com diferencial, agora',
-       'Púrpura necrótica com febre numa mulher jovem: o número que muda '
-       'tudo é o de neutrófilos. Sem ele, não se sabe se a febre é de '
-       'imunossuprimida.', True),
-      ('Hemoculturas antes da primeira dose de antibiótico',
-       'Meningococcemia e endocardite estão na lista, e a cultura só vale '
-       'se for anterior ao antibiótico.', True),
-      ('Corticoide empírico pela suspeita de vasculite',
-       'Imunossuprimir uma febre sem hemograma e sem cultura é o erro que '
-       'não se desfaz.', False),
-      ('Delimitar as bordas e examinar a profundidade, com cirurgia à mão',
-       'Dor desproporcional, necrose que avança em horas e crepitação são '
-       'fasciite até prova em contrário. Marcar a borda com caneta custa '
-       'nada e mostra a velocidade.', True),
-      ('Anticoagulação plena empírica',
-       'Trombo de pequeno vaso por levamisol ou crioglobulina não '
-       'responde a heparina, e ela pode ter outra causa de sangrar.',
-       False),
-      ('Biópsia de pele antes de qualquer conduta',
-       'Vem — mas depois de cultura e hemograma, e sem atrasar '
-       'antibiótico.', False),
-      ('Alta com analgésico e retorno em 48 horas',
-       'Febre com necrose cutânea não sai do hospital sem hemograma.',
-       False),
-     ], 'Neutrófilos, cultura e a borda marcada com caneta'),
-
     *ecg('ecg_evolucao',
-         'Na reavaliação, Marina mantém dor e febre; o pulso continua '
-         'acelerado. A equipe obtém um ECG. Qual é o ritmo e quais dados '
-         'clínicos você revê antes de atribuir uma causa?', IMG,
-         'Febre, dor e outras causas de ativação simpática produzem esse '
-         'ritmo. O ECG não identifica uma exposição nem estabelece a causa '
-         'das lesões cutâneas.'),
+         'Uma hora depois do antitérmico, Marina segue com dor e o pulso '
+         'continua acelerado. A equipe obtém um ECG. Qual é o ritmo e quais '
+         'dados clínicos você revê antes de atribuir uma causa?', IMG,
+         'Febre, dor e hipovolemia produzem esse ritmo. O ECG não esclarece '
+         'a causa das lesões cutâneas.'),
+
+    q('q3', 2,
+      'Febre de 38,6 °C, frequência cardíaca de 112 e púrpura necrótica em '
+      'progressão. **Quais quatro** exames são os mais apropriados agora?', [
+      ('Hemograma com contagem diferencial',
+       'A contagem de neutrófilos define o risco infeccioso e o esquema de '
+       'antibiótico.', True),
+      ('Hemoculturas, dois pares, antes do antibiótico',
+       'Púrpura fulminante e êmbolo séptico seguem na lista; depois do '
+       'antibiótico, a cultura rende menos.', True),
+      ('Coagulograma com fibrinogênio',
+       'INR, TTPa e fibrinogênio separam consumo de coagulação de oclusão '
+       'sem consumo.', True),
+      ('Creatinina e exame de urina',
+       'Vasculites e crioglobulinemia acometem o rim sem sintoma; a urina '
+       'mostra cedo.', True),
+      ('Ecocardiograma transesofágico imediato',
+       'Sem sopro e sem cultura, ainda não há pergunta para o '
+       'transesofágico responder.', False),
+      ('Tomografia computadorizada das coxas',
+       'Sem crepitação, bolha ou dor fora da lesão, a imagem não muda as '
+       'primeiras horas.', False),
+      ('Dímero-D isolado como triagem',
+       'Sobe em infecção, trombose e inflamação; sozinho, não separa as '
+       'hipóteses.', False),
+      ('Eletroforese de proteínas séricas',
+       'Procura paraproteína de crioglobulina tipo I, mas o resultado não '
+       'muda as primeiras horas.', False),
+     ], 'Primeira rodada: gravidade, infecção e coagulação'),
 
     painel('p1', 'A investigação inicial', 'O que a equipe pediu',
-        'Hemograma, culturas e coagulação antes do antibiótico; perfusão e '
-        'imagem para as outras hipóteses.', [
+        'Hemograma, culturas e coagulação antes do antibiótico; rim, perfusão '
+        'e imagem para completar a rodada.', [
         grupo('Sangue', 'sangue', [
             op('Hemograma diferencial',
                resultado='Leucócitos 900/µL · Neutrófilos absolutos 180/µL · '
@@ -239,55 +238,54 @@ ETAPAS = [
     ]),
 
     pagina('hemograma', 'Interpretação', 'Risco imediato',
-        p('O hemograma documenta **180 neutrófilos por microlitro** numa '
-          'mulher febril: agranulocitose. Hemoglobina e plaquetas normais — '
-          'a medula falhou numa linhagem só. A etiologia ainda está aberta; '
-          'reconhecer a síndrome muda a urgência.'),
+        p('O hemograma mostra **180 neutrófilos por microlitro** numa mulher '
+          'febril: agranulocitose. Hemoglobina e plaquetas normais, esfregaço '
+          'sem blastos. A causa ainda está aberta; reconhecer a síndrome muda '
+          'a urgência.'),
         fundo=CENA, segue='q4'),
     q('q4', 3,
-      'Neutrófilos de 180/µL, com hemoglobina e plaquetas normais, em mulher '
-      'de 34 anos previamente hígida e febril. **Quais quatro** causas devem '
-      'ser consideradas?', [
-      ('Agranulocitose por droga ou tóxico',
-       'Dipirona, propiltiouracila, clozapina, sulfa — e levamisol. Uma '
-       'linhagem só, início abrupto, recuperação em uma a três semanas '
-       'após retirar o agente. Pergunte por tudo, inclusive o que ela não '
-       'chama de remédio.', True),
-      ('Leucemia aguda',
-       'Neutropenia isolada pode ser a primeira manifestação, e o '
-       'esfregaço sem blasto não exclui. Se não recuperar em duas '
-       'semanas, medula.', True),
-      ('Neutropenia étnica benigna',
-       'Contagens entre 1.000 e 1.500, estáveis, sem febre e sem '
-       'infecção, em pessoa de ascendência africana ou do Oriente Médio. '
-       '180 com febre não é isso.', False),
-      ('Sepse com consumo medular',
-       'Infecção grave pode consumir neutrófilos mais rápido do que a '
-       'medula repõe — sobretudo com endotoxina. Neutropenia na sepse é '
-       'sinal de gravidade.', True),
-      ('Síndrome de Felty',
-       'Exige artrite reumatoide de longa data com esplenomegalia. Ela não '
-       'tem nenhuma das duas.', False),
+      'Neutrófilos de 180/µL, hemoglobina e plaquetas normais, esfregaço sem '
+      'blastos, em mulher de 34 anos previamente hígida e febril. **Quais '
+      'quatro** causas são as mais prováveis?', [
+      ('Reação a droga ou tóxico',
+       'Dipirona, antitireoidianos, clozapina e sulfas lideram; início '
+       'abrupto e linhagem única combinam.', True),
+      ('Consumo periférico por sepse',
+       'Infecção grave consome neutrófilos mais rápido do que a medula '
+       'repõe; é sinal de gravidade.', True),
       ('Lúpus eritematoso sistêmico',
-       'Neutropenia autoimune, artralgia, febre e lesão cutânea vascular: '
-       'o lúpus cabe nesta lista e pede FAN, complemento e '
-       'antifosfolípide.', True),
-      ('Deficiência de ferro',
-       'Anemia, não neutropenia. Hemoglobina dela está normal.', False),
-      ('Hipotireoidismo',
-       'Não produz agranulocitose. A mãe tem, ela não.', False),
-      ('Neutropenia cíclica',
-       'Doença da infância, com ciclos de 21 dias e história de aftas '
-       'recorrentes desde criança. Não começa aos 34.', False),
-     ], 'Uma linhagem só, de repente: droga, tóxico, medula, sepse ou lúpus'),
+       'Neutropenia autoimune, artralgia, febre e lesão vascular de pele '
+       'cabem no mesmo quadro.', True),
+      ('Infecção viral aguda',
+       'Soroconversão pelo HIV e outras viroses deprimem neutrófilos; a '
+       'sorologia entra na investigação.', True),
+      ('Leucemia aguda em fase inicial',
+       'Com hemoglobina, plaquetas e esfregaço normais, fica menos provável; '
+       'medula se não recuperar.', False),
+      ('Neutropenia étnica benigna',
+       'Contagens estáveis acima de 1.000, sem infecção associada; não '
+       'explica 180 com febre.', False),
+      ('Síndrome de Felty',
+       'Exige artrite reumatoide de longa data e esplenomegalia; ela não '
+       'tem nenhuma das duas.', False),
+      ('Deficiência de vitamina B12',
+       'Atinge as três linhagens, com macrocitose; aqui só os neutrófilos '
+       'caíram.', False),
+      ('Hiperesplenismo por sequestro',
+       'Sequestra mais de uma linhagem e exige baço palpável; o abdome '
+       'está normal.', False),
+      ('Neutropenia cíclica hereditária',
+       'Começa na infância, com ciclos de cerca de 21 dias e aftas; não '
+       'surge aos 34.', False),
+     ], 'Neutropenia grave e isolada: causas adquiridas'),
 
     bifurcacao('b1', 'Decisão', 'Primeiras horas',
         'Marina continua febril, com 180 neutrófilos. O que você faz?', [
         caminho('Internar, colher e iniciar antibiótico endovenoso de amplo '
                 'espectro em até uma hora', 'protecao',
-                'Neutropenia febril profunda é emergência com relógio: '
-                'antibiótico antipseudomonas na primeira hora, depois se '
-                'discute a causa.', rotulo_curto='Tratar'),
+                'Neutropenia febril profunda é emergência: antibiótico '
+                'antipseudomonas na primeira hora, depois se discute a causa.',
+                rotulo_curto='Tratar'),
         caminho('Adiar a abordagem sistêmica e observar as lesões', 'b2',
                 'A hipótese de dermatose não afasta deterioração. O atraso '
                 'aumenta risco, mas não determina o desfecho.',
@@ -328,45 +326,45 @@ ETAPAS = [
         fundo=CENA, segue='q5'),
 
     q('q5', 4,
-      'Febre de 38,6 °C com 180 neutrófilos e lesão necrótica de pele. '
-      '**Quais três** afirmações sobre o antibiótico estão corretas?', [
-      ('A primeira dose deve entrar em até 60 minutos, depois das culturas',
-       'Cada hora de atraso na neutropenia febril aumenta a mortalidade. '
-       'Cultura sim, mas a cultura não pode atrasar a dose.', True),
+      'Febre com 180 neutrófilos e necrose cutânea em progressão. **Quais '
+      'três** afirmações sobre o antibiótico estão corretas?', [
+      ('A primeira dose entra em até 60 minutos, colhidas as culturas',
+       'Atraso na neutropenia febril aumenta a mortalidade; a coleta não '
+       'pode atrasar a dose.', True),
       ('Um betalactâmico antipseudomonas em monoterapia é a base',
-       'Cefepima, piperacilina-tazobactam ou meropeném: a cobertura de '
-       '//Pseudomonas// é o que define o esquema da neutropenia febril.',
-       True),
-      ('Vancomicina empírica está indicada em toda neutropenia febril',
-       'Não: só com instabilidade, cateter, pneumonia grave, colonização '
-       'por MRSA ou **lesão de pele e partes moles** — que é o caso dela.',
-       False),
-      ('Vancomicina deve ser acrescentada pela lesão de pele e partes moles',
-       'É exatamente o critério de acréscimo do consenso: infecção de '
-       'pele e partes moles suspeita, com necrose.', True),
-      ('É prudente aguardar o hemograma de controle antes da primeira dose',
-       'O número já está na mão. Esperar outro é esperar a sepse.', False),
-      ('Isolamento reverso e dieta neutropênica reduzem a infecção',
-       'Sem evidência de benefício para os dois. Higiene de mãos, sim.',
-       False),
-      ('Fator estimulador de colônias substitui o antibiótico',
-       'G-CSF pode encurtar a agranulocitose por droga; não trata a '
-       'infecção que já está lá.', False),
-     ], 'Uma hora, um betalactâmico antipseudomonas — e a pele pede vancomicina'),
+       'Cefepima, piperacilina-tazobactam ou meropeném; a cobertura de '
+       '//Pseudomonas// define o esquema.', True),
+      ('A lesão de pele e partes moles justifica acrescentar vancomicina',
+       'É um dos critérios de acréscimo do consenso, ao lado de '
+       'instabilidade e cateter.', True),
+      ('Vancomicina empírica entra em toda neutropenia febril',
+       'Só com critério específico: instabilidade, cateter, pneumonia, MRSA '
+       'ou pele e partes moles.', False),
+      ('O escore MASCC de baixo risco permite antibiótico oral em casa',
+       'O escore foi validado em câncer e não pesa necrose cutânea em '
+       'progressão.', False),
+      ('Um aminoglicosídeo deve ser associado de rotina',
+       'Não reduz mortalidade e soma nefrotoxicidade; fica para '
+       'instabilidade ou suspeita de resistência.', False),
+      ('O fator estimulador de colônias substitui o antibiótico',
+       'Pode encurtar a agranulocitose por droga, mas não trata a infecção '
+       'presente.', False),
+     ], 'Neutropenia febril: tempo e espectro'),
 
     pagina('evolucao', 'Segundo momento', 'Evolução',
-        p('Na internação, Marina dorme após analgesia, mas refere dor ao '
-          'trocar os curativos. Algumas placas ganharam contornos mais '
-          'ramificados e centro mais escuro, sem crepitação. Sem falta de ar.'),
-        p('Ao levantar para o banheiro, percebe a **urina mais escura** pela '
-          'primeira vez e avisa a enfermagem. Não sabe estimar o volume e '
-          'não identifica sangue vivo. A equipe registra "urina escura", '
-          'sem convertê-la automaticamente em hematúria.'),
+        p('Na internação, Marina dorme após analgesia, mas sente dor na troca '
+          'dos curativos. Algumas placas ficaram mais ramificadas e com centro '
+          'mais escuro, sem crepitação. No reexame da manhã há uma placa '
+          'purpúrica pequena e dolorosa na hélice da orelha esquerda, que não '
+          'estava lá na admissão.'),
+        p('Ao levantar para o banheiro, percebe a urina mais escura e avisa '
+          'a enfermagem. A equipe registra "urina escura", sem convertê-la '
+          'automaticamente em hematúria.'),
         fundo=CENA),
 
     painel('p2', 'Mecanismo e extensão', 'O que a equipe pediu',
-        'As placas mudaram e apareceu urina escura: tecido, anticorpo, rim '
-        'e os diferenciais da oclusão.', [
+        'As placas mudaram, surgiu lesão na orelha e a urina escureceu: '
+        'tecido, anticorpos, rim e os diferenciais da oclusão.', [
         grupo('Tecido e marcadores', 'pele', [
             op('Biópsia cutânea',
                resultado='Trombos em pequenos vasos dérmicos · Necrose '
@@ -404,50 +402,50 @@ ETAPAS = [
     pagina('tecido', 'Interpretação', 'Mecanismo',
         p('A biópsia sustenta lesão vascular com componente trombótico e '
           'leucocitoclasia focal. O tecido não identifica a substância '
-          'causal e não define, sozinho, anticoagulação ou imunossupressão.'),
+          'causal e não define, sozinho, anticoagulação ou imunossupressão. '
+          'A creatinina subiu de 0,9 para 1,6 mg/dL, com cilindros '
+          'hemáticos.'),
         fundo=CENA, segue='q6'),
     q('q6', 5,
-      'p-ANCA 1:1.280 com **anti-MPO 128 e anti-PR3 46 U/mL, os dois '
-      'positivos**. Qual a interpretação mais adequada?', [
-      ('Confirma granulomatose com poliangeíte, pelo anti-PR3',
-       'GPA é anti-PR3 com padrão citoplasmático — e quase nunca com '
-       'anti-MPO junto.', False),
+      'p-ANCA 1:1.280 com anti-MPO de 128 e anti-PR3 de 46 U/mL, C3 normal '
+      'e crioglobulinas não detectadas em amostra transportada aquecida. '
+      '**Quais duas** afirmações estão corretas?', [
+      ('A dupla positividade é incomum nas vasculites primárias',
+       'MPO e PR3 juntos aparecem em poucos por cento delas e são mais '
+       'frequentes na forma induzida.', True),
+      ('O padrão pede história de exposição a droga ou tóxico',
+       'É a assinatura das vasculites induzidas; a história de exposição '
+       'precisa ser refeita, a sós.', True),
+      ('Confirma granulomatose com poliangeíte, pelo anti-PR3 positivo',
+       'GPA costuma ter c-ANCA anti-PR3 isolado; anti-MPO junto foge do '
+       'padrão.', False),
       ('Confirma poliangeíte microscópica, pelo anti-MPO alto',
-       'PAM é anti-MPO, sem anti-PR3. A dupla positividade não é o padrão '
+       'PAM é anti-MPO sem anti-PR3; a dupla positividade não é o perfil '
        'dela.', False),
-      ('Sugere exposição a droga ou tóxico, como o levamisol',
-       'Menos de 5% das vasculites primárias têm os dois anticorpos. '
-       'Quando têm — sobretudo com anti-elastase —, a pergunta é "o que '
-       'você usou", não "qual vasculite".', True),
-      ('Indica doença anti-membrana basal concomitante',
-       'Anti-MBG é outro anticorpo, contra outro alvo. Não está na frase.',
-       False),
-      ('É artefato do ensaio e deve ser repetido',
-       'Título de 1:1.280 com dois ELISA positivos não é artefato.', False),
-     ], 'Dois alvos ao mesmo tempo é pergunta de exposição'),
-
-    pagina('evolucao_urinaria', 'Durante a internação', 'O rim entra em cena',
-        p('A creatinina de controle da manhã, colhida na rotina, voltou '
-          '**1,6 mg/dL** — era 0,9 três dias antes. A urina continua escura. '
-          'Pressão arterial 122/78, sem edema.'),
-        fundo=CENA),
+      ('O C3 normal exclui crioglobulinemia nesta paciente',
+       'O consumo típico é de C4; quem afasta aqui é a crioglobulina colhida '
+       'a 37 °C.', False),
+      ('O título de 1:1.280 indica vasculite mais grave e extensa',
+       'Título de ANCA não mede atividade nem extensão; o órgão acometido '
+       'mede.', False),
+     ], 'ANCA com dois alvos'),
 
     pagina('preparo_entrevista', 'Evolução', 'Entrevista individual',
-        p('No intervalo entre os cuidados, Marina pede para conversar sem a '
-          'irmã. Parece receosa ao retomar o episódio anterior de manchas e '
+        p('Com os anticorpos em mãos, a médica volta ao quarto para refazer a '
+          'história de exposição. Marina pede para conversar sem a irmã. '
+          'Parece receosa ao retomar o episódio anterior de manchas e '
           'pergunta quem terá acesso às informações.'),
         p('A equipe oferece privacidade e explica como os dados serão usados '
-          'no cuidado. Quando fica sozinha com a médica, conta que há um '
-          'aspecto da história que preferiu não mencionar.'),
+          'no cuidado. Sozinha com a médica, Marina conta que há um aspecto '
+          'da história que preferiu não mencionar.'),
         fundo=CENA),
 
     pagina('entrevista', 'Terceiro momento', 'Entrevista privada',
-        p('Marina relata uso **intranasal de cocaína cerca de 72 horas antes '
-          'da admissão** e, reconstruindo a cronologia, associa o episódio '
-          'anterior de manchas ao mesmo contexto. Não conhece a composição '
-          'do produto. No reexame, observa-se **pequena placa purpúrica no '
-          'pavilhão da orelha esquerda**.'),
-        p('O relato muda a probabilidade das hipóteses; não confirma '
+        p('Marina relata **uso intranasal de cocaína** cerca de 72 horas antes '
+          'da admissão e, reconstruindo a cronologia, associa o episódio '
+          'anterior de manchas ao mesmo contexto. Não conhece a composição do '
+          'produto. Nega uso injetável.'),
+        p('O relato muda a probabilidade das hipóteses, mas não confirma '
           'adulteração. A urina escura persiste, sem dispneia ou hemoptise.'),
         fundo=CENA),
 
@@ -511,75 +509,66 @@ ETAPAS = [
           'a detecção depende de tempo, método e limite analítico.'),
         fundo=CENA, segue='q9'),
     q('q9', 6,
-      'Cocaína 72 horas antes, orelha com púrpura, 180 neutrófilos, '
-      'anti-MPO e anti-PR3. Sobre a síndrome do levamisol, **quais quatro** '
-      'afirmações estão corretas?', [
-      ('Exame de urina negativo após 48 horas não exclui levamisol',
-       'Meia-vida de 5,6 horas. A amostra de 96 horas era tarde demais — '
-       'e é por isso que se pede no primeiro dia.', True),
-      ('A benzoilecgonina na urina identifica o adulterante',
-       'Identifica cocaína. O que estava misturado a ela só a '
-       'espectrometria de massa diz.', False),
-      ('Púrpura de orelhas, neutropenia e ANCA duplo formam a tríade',
-       'É a assinatura descrita desde 2009–2010, quando o levamisol '
-       'passou a estar em mais de dois terços da cocaína apreendida nos '
-       'Estados Unidos.', True),
-      ('A lesão de orelha é patognomônica da síndrome',
-       'Crioglobulinemia, antifosfolípide, lúpus pérnio e congelamento '
-       'também acometem orelha. Sugestiva, não exclusiva.', False),
+      'Cocaína intranasal 72 horas antes da admissão, púrpura de orelha, 180 '
+      'neutrófilos, anti-MPO e anti-PR3. Sobre a síndrome associada ao '
+      'levamisol, **quais quatro** afirmações estão corretas?', [
+      ('Urina negativa após 96 horas não exclui a exposição',
+       'Meia-vida de cerca de 5,6 horas; a urina só é útil nas primeiras 48 '
+       'horas.', True),
+      ('A benzoilecgonina urinária positiva identifica também o adulterante',
+       'Identifica cocaína; o adulterante exige cromatografia com '
+       'espectrometria de massa.', False),
       ('A agranulocitose é idiossincrática e associada ao HLA-B27',
-       'Descrita desde o uso do levamisol como imunomodulador nos anos '
-       '1970: agranulocitose em 2,5 a 13% dos tratados, com o HLA-B27 como '
+       'Foi descrita no uso terapêutico do levamisol, com HLA-B27 como '
        'fator de risco.', True),
-      ('A neutropenia se deve a hiperesplenismo',
-       'Não há esplenomegalia. É toxicidade medular, imunomediada.',
-       False),
-      ('Melhora com abstinência e volta com reexposição',
-       'Duas a três semanas de abstinência resolvem a maioria das lesões '
-       'cutâneas; o ANCA leva meses. Cada nova exposição reabre.', True),
-      ('Imunossupressão intensa é sempre necessária',
-       'Só quando há órgão ameaçado — rim, pulmão. Pele e neutropenia '
-       'respondem à abstinência.', False),
-      ('A síndrome só ocorre com a cocaína aspirada',
-       'Fumada, injetada ou aspirada: o levamisol chega do mesmo jeito.',
-       False),
-     ], 'Quarenta e oito horas para detectar; três semanas para melhorar'),
+      ('A orelha é sítio típico, mas não exclusivo',
+       'Orelhas, bochechas, nariz e coxas; crioglobulinemia e antifosfolípide '
+       'também atingem a orelha.', True),
+      ('Regride com abstinência e volta com reexposição',
+       'A pele melhora em duas a três semanas; o ANCA pode levar meses.',
+       True),
+      ('A neutropenia decorre de sequestro esplênico por hiperesplenismo',
+       'Não há baço palpável; o mecanismo é toxicidade medular '
+       'imunomediada.', False),
+      ('Imunossupressão intensa é necessária em todos os casos',
+       'Fica para órgão ameaçado; pele e neutropenia costumam responder à '
+       'abstinência.', False),
+      ('A síndrome só ocorre quando a cocaína é aspirada',
+       'Fumada, aspirada ou injetada, a cocaína adulterada leva o levamisol '
+       'do mesmo modo.', False),
+     ], 'Levamisol: detecção curta e curso reversível'),
 
     pareamento('q10', 'Pergunta 7',
-      'Substâncias que fabricam vasculite. Associe cada exposição à síndrome '
-      'que ela produz.', [
+      'Exposições que produzem vasculite ou vasculopatia. Associe cada uma à '
+      'síndrome que ela costuma produzir.', [
       par('Levamisol, adulterando cocaína',
           'Púrpura retiforme de orelhas, agranulocitose e ANCA duplo',
-          'A tríade deste caso. A pele fecha em semanas de abstinência; o '
-          'anticorpo, em meses.'),
-      par('Cocaína pura, inalada por anos',
-          'Lesão destrutiva de linha média nasal, com anti-elastase',
-          'A cocaína sem adulterante corrói septo e palato — a lesão '
-          'destrutiva de linha média — e produz ANCA contra a elastase de '
-          'neutrófilo, que imita a granulomatose com poliangeíte.'),
+          'O quadro deste caso; a pele regride em semanas de abstinência, o '
+          'anticorpo em meses.'),
+      par('Cocaína inalada por anos',
+          'Lesão destrutiva de linha média, com ANCA anti-elastase',
+          'Destrói septo e palato e imita a granulomatose com poliangeíte.'),
       par('Propiltiouracila por meses',
-          'Vasculite ANCA anti-MPO induzida por droga',
-          'A tionamida é a droga que mais produz ANCA: anti-MPO em título '
-          'alto, glomerulonefrite e hemorragia alveolar. Suspender é o '
-          'tratamento.'),
+          'Vasculite anti-MPO com glomerulonefrite',
+          'É a droga que mais induz ANCA; suspender é a base do tratamento.'),
       par('Hidralazina por anos',
-          'Lúpus induzido por droga, com anti-histona',
-          'Lúpus com anti-histona e, numa parte, vasculite ANCA anti-MPO '
-          'com glomerulonefrite. Dose e acetilação lenta pesam.'),
+          'Lúpus induzido, com anti-histona',
+          'Dose alta e acetilação lenta aumentam o risco; parte tem também '
+          'ANCA anti-MPO.'),
       par('Anfetaminas e metanfetamina',
-          'Vasculite necrosante de vaso médio, tipo poliarterite nodosa',
-          'Vasculite necrosante cerebral e sistêmica, de vaso médio, sem '
-          'ANCA — a poliarterite das drogas simpaticomiméticas.'),
+          'Vasculite necrosante de vaso médio, tipo poliarterite',
+          'Descrita em usuários, sem ANCA, com acometimento cerebral e '
+          'sistêmico.'),
       ], opcoes=[
       'Púrpura retiforme de orelhas, agranulocitose e ANCA duplo',
-      'Lesão destrutiva de linha média nasal, com anti-elastase',
-      'Vasculite ANCA anti-MPO induzida por droga',
-      'Lúpus induzido por droga, com anti-histona',
-      'Vasculite necrosante de vaso médio, tipo poliarterite nodosa',
-      'Síndrome serotoninérgica',
-      ], titulo_resposta='Cada droga escolhe seu vaso e seu anticorpo',
-      nota='A opção que sobrou, síndrome serotoninérgica, não é vasculite '
-           'de espécie alguma.',
+      'Lesão destrutiva de linha média, com ANCA anti-elastase',
+      'Vasculite anti-MPO com glomerulonefrite',
+      'Lúpus induzido, com anti-histona',
+      'Vasculite necrosante de vaso médio, tipo poliarterite',
+      'Arterite de células gigantes',
+      ], titulo_resposta='Exposição, vaso e anticorpo',
+      nota='A opção que sobrou, arterite de células gigantes, não se associa '
+           'a essas exposições e é rara antes dos 50 anos.',
       fundo=CENA),
 
     bifurcacao('b3', 'Decisão', 'Plano integrado',
@@ -627,42 +616,37 @@ ETAPAS = [
             ['Hemoglobina', '12,1 g/dL', '11,7 g/dL', '12–16 g/dL'],
             ['Plaquetas', '238.000/µL', '226.000/µL', '150.000–450.000/µL'],
             ['Creatinina', '0,9 mg/dL', '2,6 mg/dL', '0,6–1,1 mg/dL'],
-            ['Proteína/creatinina urinária', '—', '1,2 g/g', '<0,2 g/g'],
+            ['Proteína/creatinina urinária', 'não dosada', '1,2 g/g', '<0,2 g/g'],
             ['Hemoculturas', 'Negativas', 'Negativas em 48 h', 'Negativas'],
         ]) + '</div>',
         fundo=CENA, so_kicker=True),
 
     q('q11', 8,
-      'Glomerulonefrite crescêntica pauci-imune, neutrófilos de 420, '
-      'culturas negativas, abstinência há cinco dias. **Quais três** '
-      'afirmações orientam o tratamento?', [
-      ('A abstinência é o que mais melhora pele e neutropenia',
-       'Nas séries, a interrupção da exposição resolve as lesões em duas a '
-       'três semanas sem imunossupressor. É o tratamento de base.', True),
-      ('Rituximabe está contraindicado com neutrófilos abaixo de 500',
-       'Não é contraindicação absoluta: com órgão ameaçado e infecção '
-       'controlada, a depleção de células B pode entrar — com G-CSF e '
-       'vigilância.', False),
-      ('Rim crescêntico justifica imunossupressão, com cobertura '
+      'Glomerulonefrite crescêntica pauci-imune, creatinina de 2,6, '
+      'neutrófilos de 420 em alta, culturas negativas, abstinência há cinco '
+      'dias. **Quais três** afirmações orientam o tratamento?', [
+      ('A abstinência é a base para pele e medula',
+       'Nas séries, lesões e neutropenia regridem sem imunossupressor quando '
+       'a exposição cessa.', True),
+      ('Crescentes celulares justificam imunossupressão, com cobertura '
        'infecciosa',
-       'A pele espera; o glomérulo não. Crescente celular é a única '
-       'indicação consistente de imunossupressão nesta síndrome.', True),
-      ('Troca plasmática deve ser feita de rotina',
-       'Não há evidência para plasmaférese na vasculopatia por levamisol; '
-       'entraria só com anti-MBG ou hemorragia alveolar grave.', False),
-      ('G-CSF pode encurtar a agranulocitose enquanto há infecção ativa',
-       'Séries da agranulocitose induzida por droga mostram recuperação '
-       'mais rápida com fator estimulador. Não trata a causa; ganha '
-       'tempo.', True),
-      ('Manutenção por dois anos, como na granulomatose com poliangeíte',
-       'Vasculite induzida por exposição não pede manutenção prolongada: '
-       'retira-se a exposição e trata-se o órgão. A recidiva vem da '
-       'droga, não do tempo.', False),
-      ('Anticoagulação plena pela vasculopatia trombótica',
-       'Trombo de pequeno vaso por levamisol não responde a heparina; a '
-       'anticoagulação só entra se houver antifosfolípide comprovado.',
-       False),
-     ], 'Abstinência trata a pele; o glomérulo pede mais'),
+       'A pele pode esperar; o glomérulo com crescente ativo, não.', True),
+      ('O ANCA persiste por meses e não guia a duração',
+       'O anticorpo persiste após a remissão; creatinina, sedimento e '
+       'proteinúria guiam o seguimento.', True),
+      ('Troca plasmática de rotina pela creatinina de 2,6',
+       'Sem evidência nesta síndrome; na vasculite primária, o PEXIVAS não '
+       'mostrou benefício de rotina.', False),
+      ('Manutenção por dois anos, como na vasculite primária',
+       'Na forma induzida, a recidiva vem da reexposição; manutenção longa '
+       'não tem base.', False),
+      ('Anticoagulação plena pela trombose de pequeno vaso',
+       'Sem antifosfolípide comprovado não há indicação, e ela acabou de '
+       'fazer biópsia renal.', False),
+      ('Ciclofosfamida em dose plena, sem ajuste pelos leucócitos',
+       'Os protocolos ajustam a dose pela contagem de leucócitos; ela ainda '
+       'está neutropênica.', False),
+     ], 'Tratamento guiado pelo órgão ameaçado'),
 
     pagina('plano_conjunto', 'Evolução', 'Avaliação conjunta',
         p('Nefrologia, infectologia e reumatologia discutem gravidade, '
@@ -674,8 +658,7 @@ ETAPAS = [
     pagina('renal', 'Plano', 'Tratamento dirigido',
         p('Com biópsia renal disponível, a equipe define a imunossupressão '
           'pela lesão glomerular e mantém a cobertura infecciosa enquanto '
-          'os neutrófilos sobem. Sem a biópsia, a decisão permanece em '
-          'aberto — e o caso segue assim.'),
+          'os neutrófilos sobem. Sem a biópsia, a decisão ficaria em aberto.'),
         fundo=CENA, segue='seguimento_recuperacao'),
 
     pagina('reavaliacao_suporte', 'Evolução', 'Reavaliação das lesões',
@@ -740,6 +723,10 @@ ETAPAS = [
           'provavelmente associada à cocaína, com suspeita de participação '
           'do levamisol. O grau de sustentação depende dos exames '
           'escolhidos. A exposição ao adulterante não foi confirmada.'),
+        p('Olhando para trás: púrpura retiforme com febre, agranulocitose '
+          'isolada, lesão nova na orelha e ANCA com dois alvos já pediam a '
+          'história de exposição refeita a sós, antes de a creatinina chegar a '
+          '2,6 mg/dL.'),
         fundo=CENA),
 
     pagina('continuidade_cuidado', 'Evolução', 'Continuidade do cuidado',
@@ -765,11 +752,14 @@ ETAPAS = [
           'target="_blank" rel="noopener">Carlson 2014</a>; '
           '<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9154317/" '
           'target="_blank" rel="noopener">Ensaio de neutropenia febril 2022</a>.'),
-        p('Neutropenia febril: IDSA 2010 (Freifeld e cols.). Séries e relatos '
-          'não demonstram superioridade da imunossupressão ou do G-CSF nesta '
-          'síndrome; o manejo antimicrobiano é extrapolado da neutropenia '
-          'febril oncológica. Dados, cronologia e desfechos são ficcionais; '
-          'a cena é ilustrativa.'),
+        p('Neutropenia febril: IDSA 2010 (Freifeld e cols.) e ASCO/IDSA 2018 '
+          '(Taplitz e cols.). Troca plasmática: PEXIVAS (Walsh e cols., 2020). '
+          'Levamisol: meia-vida de cerca de 5,6 h; a pesquisa urinária é útil '
+          'até cerca de 48 h após o uso. Séries e relatos não demonstram '
+          'superioridade da imunossupressão ou do G-CSF nesta síndrome; o '
+          'manejo antimicrobiano é extrapolado da neutropenia febril '
+          'oncológica. Dados, cronologia e desfechos são ficcionais; a cena '
+          'é ilustrativa.'),
         fundo=CENA),
 ]
 

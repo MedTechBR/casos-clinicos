@@ -17,49 +17,49 @@ CASOS = [
          # O cartão precisa deixar você escolher o caso sem entregar o
          # diagnóstico ao aluno: o subtítulo diz de quem se trata e o que
          # aconteceu, em sinais e sintomas.
-         subtitulo="Homem de 63 anos, oito semanas de doença tratada duas "
-                   "vezes como outra coisa, e uma piora que começou três "
-                   "dias antes da internação.",
+         subtitulo="Homem de 63 anos com oito semanas de sintomas nasais que "
+                   "não melhoraram e uma piora nos três dias antes da "
+                   "internação.",
          # "Nefrologia · Pneumologia" no cartão entrega a síndrome antes de o
          # aluno abrir o caso, do mesmo jeito que o título entregava.
          especialidade="Clínica médica · Emergência",
          minutos=50, decisoes=8, desfechos=4, nivel="os dois", cor="vermelho",
-         capa="cena_admissao.jpg", arquivo="pulmao-rim.html?v=20260924-viva"),
+         capa="cena_admissao.jpg", arquivo="pulmao-rim.html?v=20260926-pistas"),
 
     caso(slug="cocaina_levamisol", titulo="À flor da pele",
-         subtitulo="Uma mulher de 34 anos volta ao atendimento após uma mudança nas lesões da pele.",
+         subtitulo="Uma vendedora de 34 anos chega ao pronto-socorro com manchas dolorosas nas coxas e febre.",
          especialidade="Clínica médica · Emergência", minutos=45, decisoes=8,
          desfechos=4, nivel="os dois", cor="roxo",
-         capa="../../cocaina_levamisol/img/cena.png", arquivo="cocaina-levamisol.html?v=20260924-viva"),
+         capa="../../cocaina_levamisol/img/cena.png", arquivo="cocaina-levamisol.html?v=20260926-pistas"),
     caso(slug="west_nile", titulo="O peso dos dias",
          subtitulo="Um homem de 71 anos com febre passa a precisar de ajuda para caminhar.",
          especialidade="Clínica médica · Emergência", minutos=45, decisoes=8,
          desfechos=3, nivel="os dois", cor="azul",
-         capa="../../west_nile/img/cena.png", arquivo="west-nile.html?v=20260924-viva"),
+         capa="../../west_nile/img/cena.png", arquivo="west-nile.html?v=20260926-pistas"),
     caso(slug="kikuchi", titulo="O que ficou no pescoço",
          subtitulo="Uma professora volta à consulta porque a febre e o desconforto no pescoço persistem.",
          especialidade="Clínica médica", minutos=50, decisoes=9,
-         desfechos=2, nivel="os dois", cor="laranja", capa="../../kikuchi/img/cena.png", arquivo="kikuchi.html?v=20260924-viva"),
+         desfechos=2, nivel="os dois", cor="laranja", capa="../../kikuchi/img/cena.png", arquivo="kikuchi.html?v=20260926-pistas"),
     caso(slug="sarcoidose", titulo="Entre a sede e o fôlego",
-         subtitulo="Um homem que vinha se cansando nas caminhadas passa a sentir sede durante toda a noite.",
+         subtitulo="Um analista administrativo chega ao pronto-socorro nauseado, confuso e com o intestino preso há cinco dias.",
          especialidade="Clínica médica", minutos=50, decisoes=9,
-         desfechos=2, nivel="os dois", cor="verde", capa="../../sarcoidose/img/cena.png", arquivo="sarcoidose.html?v=20260924-viva"),
+         desfechos=2, nivel="os dois", cor="verde", capa="../../sarcoidose/img/cena.png", arquivo="sarcoidose.html?v=20260926-pistas"),
     caso(slug="leptospirose", titulo="Febre de abril",
-         subtitulo="Um agente de limpeza urbana volta à emergência no sexto dia de febre, amarelo e sem fôlego.",
+         subtitulo="Um homem de 38 anos volta à emergência no sexto dia de febre, amarelo e sem fôlego.",
          especialidade="Clínica médica · Emergência", minutos=45, decisoes=8,
          desfechos=3, nivel="os dois", cor="azul", capa="../../leptospirose/img/cena.png", arquivo="leptospirose.html?v=20260924-imagens"),
     caso(slug="endocardite", titulo="Pequenos sinais",
-         subtitulo="Uma costureira de 59 anos tem febre baixa há cinco semanas, que volta sempre que o antibiótico acaba.",
-         especialidade="Clínica médica · Cardiologia", minutos=45, decisoes=8,
+         subtitulo="Uma costureira de 59 anos perdeu 5 kg em cinco semanas de febre no fim da tarde.",
+         especialidade="Clínica médica · Ambulatório", minutos=45, decisoes=8,
          desfechos=3, nivel="os dois", cor="vermelho", capa="../../endocardite/img/cena.png", arquivo="endocardite.html?v=20260924-imagens"),
-    caso(slug="adrenal", titulo="Mais escura a cada verão",
-         subtitulo="Uma professora de 44 anos chega à emergência sem conseguir ficar de pé no terceiro dia de vômitos.",
+    caso(slug="adrenal", titulo="Oito meses de cansaço",
+         subtitulo="Uma professora de 44 anos emagrece e se cansa há oito meses, e o sódio vem um pouco baixo.",
          especialidade="Clínica médica · Emergência", minutos=40, decisoes=8,
          desfechos=3, nivel="os dois", cor="ocre", capa="../../adrenal/img/cena.png", arquivo="adrenal.html?v=20260924-imagens"),
     caso(slug="cmv", titulo="Depois da travessia",
          subtitulo="Depois de retomar a rotina, uma mulher precisa voltar ao hospital por febre e diarreia.",
          especialidade="Clínica médica", minutos=50, decisoes=9,
-         desfechos=3, nivel="residente", cor="ocre", capa="../../cmv/img/cena.png", arquivo="cmv.html?v=20260924-viva"),
+         desfechos=3, nivel="residente", cor="ocre", capa="../../cmv/img/cena.png", arquivo="cmv.html?v=20260926-pistas"),
 ]
 
 RODAPE = (
