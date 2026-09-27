@@ -12,11 +12,14 @@ PUBLICO = {
     'west_nile': 'o-peso-dos-dias',
     'kikuchi': 'o-que-ficou-no-pescoco',
     'sarcoidose': 'entre-a-sede-e-o-folego',
-    'leptospirose': 'febre-de-abril',
+    'leptospirose': 'o-sexto-dia',
     'endocardite': 'pequenos-sinais',
     'adrenal': 'oito-meses-de-cansaco',
     'cmv': 'depois-da-travessia',
 }
+
+# Endereços públicos antigos que também redirecionam (título trocado).
+APELIDOS = {'febre-de-abril': 'o-sexto-dia'}
 
 RAIZ = Path(__file__).resolve().parent
 
@@ -38,6 +41,13 @@ def publicar_local():
             f'<meta http-equiv="refresh" content="0;url={nome}.html">'
             f'<script>location.replace("{nome}.html"+location.hash)</script>'
             f'<a href="{nome}.html">Abrir o caso</a>', encoding='utf-8')
+    for velho, novo in APELIDOS.items():
+        (RAIZ / (velho + '.html')).write_text(
+            '<!doctype html><meta charset="utf-8"><title>Casos clínicos</title>'
+            '<meta name="robots" content="noindex">'
+            f'<meta http-equiv="refresh" content="0;url={novo}.html">'
+            f'<script>location.replace("{novo}.html"+location.hash)</script>'
+            f'<a href="{novo}.html">Abrir o caso</a>', encoding='utf-8')
     (RAIZ / 'index.html').write_bytes((RAIZ / 'saida' / 'biblioteca.html').read_bytes())
 
 

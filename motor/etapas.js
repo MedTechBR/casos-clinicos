@@ -294,7 +294,7 @@ function pintar(){
 function explicacaoDe(e){
   // no meio da frase, a alternativa perde a maiúscula inicial, mas não a
   // de siglas ("PCR", "HLA-B27")
-  const minus = s => s.replace(/^([A-ZÁÉÍÓÚÂÊÔÃÕÇ])(?=[a-záéíóúâêôãõç])/, c => c.toLowerCase());
+  const minus = s => s.replace(/^([A-ZÁÉÍÓÚÂÊÔÃÕÇ])(?=[a-záéíóúâêôãõç]|\s+[a-záéíóúâêôãõç])/, c => c.toLowerCase());
   const certas = e.alts.filter(a => a.ok).map(a => '<b>' + minus(a.t) + '</b>');
   const lista = certas.length === 1 ? certas[0]
     : certas.slice(0, -1).join(', ') + ' e ' + certas[certas.length - 1];

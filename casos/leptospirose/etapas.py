@@ -21,7 +21,7 @@ from motor.etapas import (alt, bifurcacao, caminho, capa, desfecho, op, p,
                           pagina, painel, par, pareamento, pergunta, pontos,
                           topicos, vitais, lamina)
 
-TITULO = 'Febre de abril'
+TITULO = 'O sexto dia'
 RODAPE = 'Paciente ficcional · evoluções simuladas para ensino'
 COR = '#0891b2'
 IMG = Path(__file__).parent / 'img'
@@ -58,15 +58,14 @@ ETAPAS = [
 
     pg('historia', 'Apresentação',
        'Um homem de 38 anos, morador de Fortaleza, chega à emergência trazido '
-       'pelo irmão no sexto dia de uma febre que começou de repente, com '
-       'calafrios, dor de cabeça e dor no corpo todo, forte a ponto de '
-       'atrapalhar a marcha.',
+       'pelo irmão no sexto dia de febre, com calafrios, dor de cabeça e dor no '
+       'corpo. Há dois dias a tosse, até então seca, passou a ter raias de '
+       'sangue, e desde ontem ele fica sem ar para ir ao banheiro.',
        'No segundo dia foi a uma unidade de pronto atendimento, onde '
-       'disseram que era dengue: soro oral, paracetamol e repouso. A febre '
-       'cedeu no quarto dia e voltou. Há dois dias está amarelo, a urina ficou '
-       'escura e escassa, e desde a noite passada tosse com raias de sangue e '
-       'fica sem ar para ir ao banheiro.',
-       'Nega dor abdominal forte, diarreia, manchas na pele antes da febre, '
+       'disseram que era virose: soro oral, paracetamol e repouso. A febre '
+       'cedeu no quarto dia e voltou. O irmão acha que ele está com os olhos '
+       'amarelados desde ontem e que urinou pouco hoje.',
+       'Nega dor torácica, dor abdominal forte, diarreia, manchas na pele, '
        'viagem, transfusão e uso de remédios além do paracetamol.'),
 
     pagina('ficha', 'Ficha do paciente', '',
@@ -85,46 +84,69 @@ ETAPAS = [
            so_kicker=True),
 
     pagina('exame', 'Exame físico', '',
-           vitais(('Temperatura', '38,4 °C', True), ('Pressão arterial', '94/56', True),
-                  ('Frequência cardíaca', '116', True), ('Frequência respiratória', '28', True),
-                  ('SpO₂ em ar ambiente', '90%', True)),
-           topicos(('Estado geral', 'Prostrado, sonolento mas orientado. Icterícia '
-                    'intensa.'),
-                   ('Olhos', 'Escleras ictéricas. Conjuntivas hiperemiadas dos dois '
-                    'lados, sem secreção.'),
+           topicos(('Sinais vitais', 'Temperatura 38,4 °C · pressão 94/56 mmHg · '
+                    'frequência cardíaca 116 · frequência respiratória 28 · SpO₂ '
+                    '90% em ar ambiente.'),
+                   ('Estado geral', 'Prostrado, sonolento, orientado no tempo e no '
+                    'espaço. Escleras ictéricas.'),
                    ('Respiratório', 'Crepitações nas bases dos dois pulmões.'),
                    ('Coração', 'Rítmico, taquicárdico, sem sopros.'),
                    ('Abdome', 'Fígado a 2 cm do rebordo, doloroso. Baço não palpável. '
                     'Sem sinal de Murphy.'),
-                   ('Membros', 'Petéquias nas pernas. Massas musculares dolorosas à '
-                    'palpação.'),
+                   ('Pele e membros', 'Algumas petéquias nas pernas. Sem edema.'),
                    ('Neurológico', 'Sem rigidez de nuca, sem déficit focal.')),
            so_kicker=True),
 
-    painel('res1', 'Primeiros exames', 'Na emergência', [
-        ex('Hemoglobina / hematócrito', '11,6 g/dL / 34%', 'Hb 13,5–17,5 g/dL', True),
-        ex('Leucócitos', '14.800/mm³ · neutrófilos 88%', '4.000–11.000/mm³', True),
-        ex('Plaquetas', '52.000/mm³ {{(145.000 na UPA)}}', '150.000–450.000/mm³', True),
-        ex('Creatinina / ureia', '3,9 / 148 mg/dL {{(creatinina 1,0 na UPA)}}', 'até 1,3 / 45 mg/dL', True),
+    painel('res1', 'Primeiros exames', 'Sangue', [
+        ex('Hemoglobina / hematócrito', '12,8 g/dL / 38%', 'Hb 13,5–17,5 g/dL', True),
+        ex('Leucócitos', '15.600/mm³ · neutrófilos 90%', '4.000–11.000/mm³', True),
+        ex('Plaquetas', '88.000/mm³ {{(145.000 na UPA)}}', '150.000–450.000/mm³', True),
+        ex('Ureia / creatinina', '148 / 2,6 mg/dL {{(creatinina 1,0 na UPA)}}', 'até 42 / 1,3 mg/dL', True),
         ex('Sódio / potássio / cloro', '133 / 3,1 / 100 mmol/L', 'Na 135–145 · K 3,5–5,0 · Cl 98–107', True),
-        ex('Bilirrubina total / direta', '17,8 / 15,2 mg/dL', 'até 1,2 / 0,3 mg/dL', True),
-        ex('AST / ALT', '112 / 84 U/L', 'até 40 / 41 U/L', True),
-        ex('Fosfatase alcalina / GGT', '210 / 185 U/L', 'até 129 / 60 U/L', True),
-        ex('Creatinoquinase', '4.260 U/L', 'até 190 U/L', True),
-        ex('INR', '1,3', 'até 1,2', True),
-        ex('Urina', 'Densidade 1.012 · sangue ++ · proteína + · 3 a 5 hemácias e cilindros granulosos por campo · sem cilindros hemáticos', '—', True),
-        ex('Sódio / creatinina / potássio urinários', '52 mmol/L / 62 mg/dL / 38 mmol/L · FENa 2,5%', '—', True),
-        ex('Gasometria arterial em ar ambiente', 'pH 7,32 · pCO₂ 30 · HCO₃ 15 · pO₂ 58 mmHg · lactato 3,6 mmol/L', '—', True),
-        ex('Ultrassonografia de abdome', 'Fígado discretamente aumentado, vias biliares sem dilatação, rins de tamanho normal, sem hidronefrose', '—', True),
-        ex('Radiografia de tórax', 'Infiltrado alveolar bilateral, predominando em bases e periferia', '—', True),
-        ex('Dengue (NS1, IgM) e hepatites (anti-HAV IgM, HBsAg, anti-HBc IgM)', 'Enviadas ao laboratório central · pendentes', '—'),
+        ex('Bilirrubina total / direta', '6,4 / 5,3 mg/dL', 'até 1,2 / 0,3 mg/dL', True),
+        ex('AST / ALT', '96 / 70 U/L', 'até 40 / 41 U/L', True),
+        ex('Fosfatase alcalina / GGT', '190 / 160 U/L', 'até 129 / 60 U/L', True),
+        ex('Creatinoquinase', '2.380 U/L', 'até 190 U/L', True),
     ], introducao='Duas hemoculturas foram colhidas antes de qualquer antibiótico, e '
-                  'uma alíquota de sangue da admissão ficou guardada no laboratório.',
-       laminas={'Radiografia de tórax': lamina('rx_torax_alveolar.jpg', 'Radiografia de tórax',
-                'Imagem ilustrativa de outro paciente; o padrão alveolar não '
-                'distingue sangue de água ou de pus.', CREDITO_RX)}),
+                  'uma alíquota de sangue da admissão ficou guardada no laboratório.'),
+
+    painel('res1b', 'Primeiros exames', 'Gasometria, urina e imagem', [
+        ex('Gasometria arterial em ar ambiente', 'pH 7,33 · pCO₂ 31 · HCO₃ 16 · pO₂ 58 mmHg · lactato 3,1 mmol/L', '—', True),
+        ex('Urina', 'Densidade 1.012 · sangue ++ · proteína + · 3 a 5 hemácias e cilindros granulosos por campo · sem cilindros hemáticos', '—', True),
+        ex('Sódio / creatinina / potássio urinários', '64 mmol/L / 50 mg/dL / 38 mmol/L · FENa 2,5%', '—', True),
+        ex('Radiografia de tórax', 'Opacidades alveolares nas bases dos dois pulmões, sem derrame', '—', True),
+        ex('Ultrassonografia de abdome', 'Fígado discretamente aumentado, vias biliares sem dilatação, rins de tamanho normal, sem hidronefrose', '—', True),
+        ex('Sorologias de dengue (NS1, IgM) e hepatites (anti-HAV IgM, HBsAg, anti-HBc IgM)', 'Enviadas ao laboratório central · pendentes', '—'),
+    ], introducao='A equipe registra a hipótese de pneumonia comunitária grave com '
+                  'sepse.'),
 
     Q('p1', 1,
+      'Pelos critérios menores de pneumonia comunitária grave da IDSA/ATS, '
+      '**quais três** ele preenche?', [
+      ('Ureia acima de 42 mg/dL', True),
+      ('Plaquetas abaixo de 100.000/mm³', True),
+      ('Infiltrados multilobares', True),
+      ('Frequência respiratória de 30 ou mais', False),
+      ('PaO₂/FiO₂ de 250 ou menos', False),
+      ('Confusão ou desorientação', False),
+      ('Leucócitos acima de 12.000/mm³', False),
+     ], [
+      ('Os critérios', 'Os critérios menores são frequência respiratória de 30 '
+       'ou mais, PaO₂/FiO₂ de 250 ou menos, infiltrados multilobares, confusão, '
+       'ureia elevada (BUN de 20 mg/dL ou mais, ureia acima de cerca de 42), '
+       'leucócitos abaixo de 4.000, plaquetas abaixo de 100.000, temperatura '
+       'abaixo de 36 °C e hipotensão que exige reposição agressiva.'),
+      ('Contando com cuidado', 'Ureia de 148, plaquetas de 88.000 e opacidades '
+       'nos dois pulmões preenchem três. A frequência é 28, a PaO₂/FiO₂ é 58 '
+       'dividido por 0,21, igual a 276, e ele está sonolento mas orientado. '
+       'Leucocitose não é critério; leucopenia é.'),
+      ('O que muda', 'Três ou mais critérios menores indicam internação em '
+       'terapia intensiva. A regra orienta o local de tratamento, não a causa: '
+       'ureia alta, plaquetas baixas e icterícia pedem que se pergunte se a '
+       'pneumonia explica tudo.'),
+     ]),
+
+    Q('p2', 2,
       'Qual padrão descreve melhor as alterações das provas hepáticas?', [
       ('Hepatocelular', False),
       ('Colestase intra-hepática', True),
@@ -132,25 +154,23 @@ ETAPAS = [
       ('Hemólise', False),
       ('Infiltração hepática', False),
      ], [
-      ('O padrão', 'A bilirrubina é de 17,8 mg/dL, 85% dela direta, com '
+      ('O padrão', 'A bilirrubina é de 6,4 mg/dL, 83% dela direta, com '
        'fosfatase alcalina e GGT elevadas e transaminases abaixo de três vezes '
        'o limite. A icterícia é desproporcional à lesão do hepatócito: é '
        'colestase, e o ultrassom sem dilatação das vias biliares a coloca '
        'dentro do fígado.'),
       ('Por que não as outras', 'Hepatite viral, isquêmica ou tóxica com essa '
-       'icterícia teria transaminases na casa dos milhares. Obstrução '
-       'extra-hepática dilataria as vias biliares. Hemólise eleva a fração '
-       'indireta, e aqui a direta domina. Infiltração costuma subir a '
-       'fosfatase alcalina muito mais que a bilirrubina.'),
-      ('O que esse padrão pede', 'Colestase intra-hepática em doença febril '
-       'aguda aparece na sepse, em infecções sistêmicas e em lesão por '
-       'fármacos. O paracetamol em dose usual não produz esse quadro. A '
-       'pergunta passa a ser qual infecção sistêmica faz isso junto com rim e '
-       'pulmão.'),
+       'icterícia teria transaminases na casa das centenas altas ou dos '
+       'milhares. Obstrução extra-hepática dilataria as vias biliares. Hemólise '
+       'eleva a fração indireta, e aqui a direta domina. Infiltração costuma '
+       'subir a fosfatase alcalina muito mais que a bilirrubina.'),
+      ('O que esse padrão pede', 'Colestase intra-hepática aparece na sepse de '
+       'qualquer foco, inclusive pulmonar, e em infecções sistêmicas e lesão '
+       'por fármacos. Sozinha, ainda cabe na hipótese de pneumonia com sepse.'),
      ]),
 
-    Q('p2', 2,
-      'Creatinina de 3,9 mg/dL, que era 1,0 há quatro dias. Qual a '
+    Q('p3', 3,
+      'Creatinina de 2,6 mg/dL, que era 1,0 há quatro dias. Qual a '
       'interpretação mais adequada da lesão renal?', [
       ('Pré-renal por hipovolemia', False),
       ('Lesão tubular aguda', True),
@@ -158,55 +178,29 @@ ETAPAS = [
       ('Obstrução urinária', False),
       ('Doença renal crônica agudizada', False),
      ], [
-      ('A classificação', 'A lesão renal aguda se divide primeiro em '
-       'pré-renal, intrínseca e pós-renal. Com densidade urinária de 1.012, '
-       'sódio urinário de 52 mmol/L, fração de excreção de sódio de 2,5% e '
-       'cilindros granulosos, o túbulo já não reabsorve sódio: é lesão '
-       'intrínseca tubular. Na pré-renal, a FENa fica abaixo de 1% e a urina '
-       'vem concentrada.'),
+      ('A classificação', 'Com densidade urinária de 1.012, sódio urinário de '
+       '64 mmol/L, fração de excreção de sódio de 2,5% e cilindros granulosos, '
+       'o túbulo já não reabsorve sódio: é lesão intrínseca tubular. Na '
+       'pré-renal, a FENa fica abaixo de 1% e a urina vem concentrada.'),
       ('Por que não as outras', 'Sem cilindros hemáticos nem proteinúria '
        'importante, glomerulonefrite é pouco provável. O ultrassom sem '
        'hidronefrose afasta obstrução, e a creatinina normal quatro dias antes '
        'afasta doença crônica.'),
-      ('Dois achados que chamam atenção', 'O potássio está baixo, 3,1, com '
-       'potássio urinário de 38 mmol/L: o rim está perdendo potássio, quando '
-       'na lesão renal habitual ele o retém. E a fita mostra sangue ++ com '
-       'poucas hemácias, o que, com CK de 4.260, indica pigmento muscular na '
-       'urina.'),
-     ]),
-
-    Q('p3', 3,
-      'Gasometria em ar ambiente: pH 7,32, pCO₂ 30, HCO₃ 15, pO₂ 58; sódio '
-      '133, cloro 100, lactato 3,6. **Quais três** afirmações estão '
-      'corretas?', [
-      ('Acidose metabólica com ânion gap elevado', True),
-      ('Compensação respiratória adequada', True),
-      ('PaO₂/FiO₂ de lesão pulmonar relevante', True),
-      ('Alcalose respiratória primária dominante', False),
-      ('Acidose explicada pelos vômitos', False),
-      ('Indicação de bicarbonato endovenoso', False),
-      ('Dispensa de oxigênio suplementar', False),
-     ], [
-      ('O distúrbio', 'Ânion gap de 133 menos 115, igual a 18: há ácidos não '
-       'medidos, que aqui são o lactato e a uremia. Pela fórmula de Winter, '
-       '1,5 × 15 + 8 dá cerca de 30, a pCO₂ encontrada: a compensação é a '
-       'esperada, sem distúrbio respiratório somado.'),
-      ('A troca gasosa', 'PaO₂ de 58 dividida por 0,21 dá 276. Com infiltrado '
-       'bilateral, é lesão pulmonar já relevante, num paciente com '
-       'frequência respiratória de 28. O alvo de saturação é de 92 a 96%.'),
-      ('Por que não as outras', 'Vômito causa alcalose metabólica, não '
-       'acidose. Com pH acima de 7,2, bicarbonato endovenoso não traz '
-       'benefício e soma sódio e volume a um pulmão que já não troca bem.'),
+      ('Dois achados que não combinam com a sepse comum', 'O potássio está '
+       'baixo, 3,1, com potássio urinário de 38 mmol/L: o rim está perdendo '
+       'potássio, quando na lesão renal habitual ele o retém. E a fita mostra '
+       'sangue ++ com poucas hemácias, o que, com CK de 2.380, indica pigmento '
+       'muscular na urina.'),
      ]),
 
     bifurcacao('b1', 'Decisão', 'As primeiras horas',
-      'Ele está hipotenso, ictérico e hipoxêmico, com lesão tubular e '
-      'colestase. As hemoculturas já foram colhidas e as sorologias estão '
-      'pendentes. Como você conduz?', [
-      caminho('Oxigênio, leito monitorizado e ceftriaxona 2 g endovenosa agora',
+      'Hipotenso, hipoxêmico, com lesão tubular e colestase, três critérios '
+      'menores de gravidade. As hemoculturas já foram colhidas e as sorologias '
+      'estão pendentes. Como você conduz?', [
+      caminho('Ceftriaxona 2 g e azitromicina agora, oxigênio e vaga de UTI',
               'tratado',
-              'Numa infecção sistêmica grave ainda sem agente, o antibiótico '
-              'empírico de amplo espectro vem no primeiro atendimento.'),
+              'Pneumonia grave com sepse pede betalactâmico com macrolídeo no '
+              'primeiro atendimento, e três critérios menores indicam UTI.'),
       caminho('Oxigênio e hidratação; escolher o antibiótico quando saírem as '
               'sorologias', 'espera',
               'Sorologias e culturas levam dias, e a mortalidade da sepse sobe '
@@ -221,33 +215,34 @@ ETAPAS = [
        'Depois de três litros de cristaloide, a pressão sobe para 102/60, mas '
        'a saturação cai para 84% com cateter nasal e as crepitações chegam '
        'aos terços médios. A plantonista suspende o volume e inicia '
-       'ceftriaxona com quatro horas de atraso.',
+       'ceftriaxona e azitromicina com quatro horas de atraso.',
        segue='tratado'),
 
     pg('espera', 'Dezoito horas depois',
        'Sob soro e oxigênio, a saturação cai para 85% e a urina para 20 mL '
        'por hora. As sorologias ainda não saíram. A plantonista inicia '
-       'ceftriaxona com dezoito horas de atraso.',
+       'ceftriaxona e azitromicina com dezoito horas de atraso.',
        segue='tratado'),
 
     pg('tratado', 'Primeiras horas de antibiótico',
        'Duas horas depois da primeira dose, ele tem calafrios, febre de 40 °C '
        'e queda da pressão para 84/50. Com 500 mL de cristaloide e '
-       'antitérmico, melhora em quatro horas. A equipe mantém a ceftriaxona.',
+       'antitérmico, melhora em quatro horas. A equipe mantém os antibióticos.',
        'Na madrugada, a tosse fica úmida e ele expectora sangue vivo.'),
 
     pg('hemorragia', 'Segundo dia de internação',
        'Saturação de 83% com máscara com reservatório, frequência '
        'respiratória de 36, hemoptise de 150 mL em seis horas. Diurese de 280 '
-       'mL em 24 horas. Creatinina 5,8 mg/dL, potássio 3,4. A hemoglobina '
-       'caiu de 11,6 para 9,1 g/dL, sem outro sangramento visível.',
-       'A nova radiografia mostra opacidades alveolares confluentes nos dois '
-       'pulmões.'),
+       'mL em 24 horas.',
+       'Hemoglobina 9,6 g/dL (12,8 na admissão), plaquetas 38.000/mm³, INR '
+       '1,4, fibrinogênio 390 mg/dL, esfregaço sem esquizócitos. Bilirrubina '
+       'total 17,8 mg/dL, creatinina 4,6 mg/dL, potássio 3,0 mmol/L. A '
+       'radiografia é repetida.'),
 
     estudo('rx_hemorragia', 'Radiografia de tórax',
            'Radiografia ilustrativa de outro paciente, com o padrão descrito '
-           'no laudo dele. Descreva a distribuição antes de propor o '
-           'mecanismo.',
+           'no laudo dele no segundo dia. Compare com a da admissão, que '
+           'mostrava opacidades só nas bases.',
            IMG / 'rx_torax_alveolar.jpg',
            'Radiografia de outro paciente · comparação didática.',
            CREDITO_RX,
@@ -256,29 +251,33 @@ ETAPAS = [
          ((704, 430), (912, 320), 'O mesmo padrão no **pulmão esquerdo**: a doença é bilateral.', -12),
          ((620, 160), (760, 60), '**Ápices relativamente poupados**: o predomínio é central e inferior.', 12),
         ],
-        ['Opacidades alveolares bilaterais, confluentes, com predomínio central e inferior.',
-         'O padrão alveolar não distingue sangue, água e pus; quem decide é a clínica.']),
+        ['Opacidades alveolares bilaterais e confluentes, que avançaram das bases '
+         'para os campos médios em 24 horas.',
+         'Com hemoptise e queda de 3,2 g/dL na hemoglobina, o que enche os '
+         'alvéolos é sangue: hemorragia alveolar difusa.']),
 
     Q('p4', 4,
-      'Hemoptise, queda de 2,5 g/dL na hemoglobina e opacidades alveolares '
-      'bilaterais. Qual o mecanismo mais provável da piora da hipoxemia?', [
-      ('Hemorragia alveolar difusa', True),
-      ('Edema pulmonar cardiogênico', False),
-      ('Pneumonia bacteriana sobreposta', False),
-      ('Tromboembolismo pulmonar', False),
-      ('Sobrecarga de volume', False),
+      'Hemorragia alveolar com plaquetas de 38.000, INR de 1,4, fibrinogênio '
+      'de 390 e esfregaço sem esquizócitos. **Quais três** afirmações estão '
+      'corretas?', [
+      ('Não há coagulação intravascular disseminada', True),
+      ('O sangramento é sobretudo de lesão capilar', True),
+      ('Transfundir plaquetas se abaixo de 50.000', True),
+      ('As plaquetas explicam sozinhas a hemorragia', False),
+      ('Plasma fresco pelo INR de 1,4', False),
+      ('Microangiopatia trombótica provável', False),
      ], [
-      ('A tríade', 'Hemoptise, queda de hemoglobina sem outra perda e '
-       'infiltrado alveolar difuso formam a tríade da hemorragia alveolar. Nem '
-       'toda hemorragia alveolar tem hemoptise volumosa; a queda da '
-       'hemoglobina costuma ser o sinal mais confiável.'),
-      ('Por que não as outras', 'Edema cardiogênico e sobrecarga não explicam '
-       'a queda da hemoglobina, e ele recebeu pouco volume. Pneumonia não '
-       'anda com 2,5 g/dL de hemoglobina a menos em um dia. TEP não produz '
-       'opacidade alveolar bilateral difusa.'),
-      ('O que muda', 'Hemorragia alveolar com lesão renal aguda é uma síndrome '
-       'pulmão-rim, e na febre aguda ela é a complicação que mais mata. O '
-       'suporte vem antes do diagnóstico etiológico.'),
+      ('A coagulação', 'Fibrinogênio normal, INR pouco alterado e esfregaço '
+       'sem esquizócitos afastam CIVD descompensada e microangiopatia '
+       'trombótica. Esquizócitos seriam o achado da microangiopatia, não a '
+       'ausência deles.'),
+      ('O mecanismo', 'Plaquetas de 38.000 raramente causam sangramento '
+       'espontâneo grave; o risco sobe abaixo de 10 a 20 mil. Um sangramento '
+       'alveolar difuso com esses números aponta para lesão do endotélio '
+       'capilar, em que a plaquetopenia soma, mas não causa.'),
+      ('A transfusão', 'No sangramento ativo, a meta é manter plaquetas acima '
+       'de 50.000. Plasma com INR de 1,4 não corrige nada que importe e soma '
+       'volume a um pulmão que já está cheio.'),
      ]),
 
     bifurcacao('b2', 'Decisão', 'O pulmão que sangra',
@@ -336,9 +335,10 @@ ETAPAS = [
        'trabalho. Ele é agente de limpeza urbana. Doze dias antes da febre, '
        'depois de três dias de chuva forte, passou um turno dentro de um canal '
        'alagado, desobstruindo a passagem da água, com uma bota furada.',
-       'Revisto com calma, o exame mostra que a dor à compressão é muito '
-       'maior nas panturrilhas, e há um corte cicatrizado na planta do pé '
-       'direito. Os colegas dizem que o depósito da equipe tem ratos.',
+       'Revisto com calma, o exame mostra conjuntivas hiperemiadas, sem '
+       'secreção, dor à compressão muito maior nas panturrilhas e um corte '
+       'cicatrizado na planta do pé direito. Os colegas dizem que o depósito '
+       'da equipe tem ratos.',
        'As hemoculturas seguem sem crescimento em 48 horas, e as sorologias '
        'de dengue e hepatites voltam não reagentes.'),
 
@@ -374,12 +374,12 @@ ETAPAS = [
        'necrose, lesão tubular com perda de potássio, miosite e sangramento '
        'alveolar. A hemorragia pulmonar é a complicação que mais mata, com '
        'letalidade acima de 50% em várias séries.',
-       'A ceftriaxona do primeiro atendimento já tratava a doença, e a febre '
+       'A ceftriaxona dada para a pneumonia já tratava a doença, e a febre '
        'com hipotensão duas horas depois da primeira dose ganha agora outro '
        'sentido.'),
 
     pareamento('p6', 'Pergunta 6',
-      'As febres ictéricas e hemorrágicas do Nordeste se sobrepõem. Associe '
+      'As febres ictéricas e hemorrágicas do Brasil se sobrepõem. Associe '
       'cada quadro à doença que ele sugere.', [
       par('Sufusão conjuntival, dor na panturrilha e contato com enchente',
           'Leptospirose',
@@ -402,6 +402,13 @@ ETAPAS = [
     nota='A opção que sobrou, hantavirose, é cardiopulmonar, de exposição '
          'rural, com hemoconcentração e sem icterícia importante.'),
 
+    pg('recuperacao', 'Segunda semana',
+       'A diurese volta com poliúria de 4 litros por dia. O potássio cai para '
+       '2,9 mmol/L apesar de 80 mEq por dia de reposição, e o magnésio para '
+       '1,4 mg/dL. A icterícia regride devagar. A segunda amostra, no 14.º '
+       'dia, tem ELISA IgM reagente e microaglutinação com título de 1:1.600 '
+       'para o sorogrupo Icterohaemorrhagiae.'),
+
     Q('p7', 7,
       'Sobre o tratamento, **quais três** afirmações estão corretas?', [
       ('Antibiótico endovenoso por pelo menos 7 dias', True),
@@ -422,17 +429,14 @@ ETAPAS = [
        'antibiótico continua.'),
       ('O rim', 'Diálise precoce e diária reduziu a mortalidade frente à '
        'diálise em dias alternados num ensaio brasileiro. Furosemida não muda '
-       'a necessidade de diálise. A perda tubular de potássio continua, '
-       'sobretudo na fase poliúrica.'),
+       'a necessidade de diálise.'),
+      ('O potássio', 'A perda tubular de potássio continua na fase poliúrica, '
+       'como o potássio de 2,9 com 80 mEq por dia mostrou. A reposição segue '
+       'os controles, e o magnésio baixo precisa ser corrigido junto, ou o '
+       'potássio não se sustenta.'),
       ('O que não entra', 'Não há evidência que sustente corticoide de rotina '
        'na forma grave.'),
      ]),
-
-    pg('recuperacao', 'Segunda semana',
-       'A diurese volta com poliúria de 4 litros por dia, e o potássio '
-       'precisa de reposição. A icterícia regride devagar. A segunda '
-       'amostra, no 14.º dia, tem ELISA IgM reagente e microaglutinação com '
-       'título de 1:1.600 para o sorogrupo Icterohaemorrhagiae.'),
 
     Q('p8', 8,
       'Na alta, **quais três** medidas estão corretas?', [

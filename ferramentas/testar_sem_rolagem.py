@@ -24,6 +24,8 @@ with sync_playwright() as pw:
       page.evaluate('(n)=>{parteTela=n;aplicarParte();pintarPe()}',n)
       bounds=page.evaluate('''()=>{let a=areaTela,r=a?.getBoundingClientRect();return a?[a.scrollHeight-a.clientHeight,a.scrollWidth-a.clientWidth,r.bottom-document.querySelector('#pe').getBoundingClientRect().top]:[0,0,0]}''')
       assert max(bounds)<=2,(w,slug,e['k'],state,n,bounds)
+      corte=page.evaluate('''()=>{const a=areaTela;if(!a)return '';const el=[...a.querySelectorAll('*')].find(el=>el.clientHeight>0&&el.scrollHeight>el.clientHeight+2&&!el.closest('.vv-est-fig')&&!el.closest('[data-fora]')&&/hidden|auto|scroll|clip/.test(getComputedStyle(el).overflowY));return el?el.className+' '+el.scrollHeight+'/'+el.clientHeight:''}''')
+      assert not corte,(w,slug,e['k'],state,n,'conteúdo cortado',corte)
       assert page.evaluate('document.documentElement.scrollWidth<=innerWidth'),(w,slug,e['k'],'largura')
       total+=1
    page.evaluate('mostrarRevisao()')

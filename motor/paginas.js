@@ -37,7 +37,10 @@ function montarFolhas(){
   if(area.matches('.qexp,.alts,.res,.cams,.painel-lab,.par,.observacao-imagem')){
     root.classList.add('tela-unica');
     if(area.matches('.painel-lab,.observacao-imagem'))root.classList.add('paginavel');
-    const cabe=()=>area.scrollHeight<=area.clientHeight+1&&area.scrollWidth<=area.clientWidth+1;
+    // Um quadro interno com overflow escondido (a tabela de exames, por
+    // exemplo) pode cortar conteúdo sem que a área transborde: conta também.
+    const cortado=()=>[...area.querySelectorAll('*')].some(el=>el.clientHeight>0&&el.scrollHeight>el.clientHeight+2&&!el.closest('.vv-est-fig')&&/hidden|auto|scroll|clip/.test(getComputedStyle(el).overflowY));
+    const cabe=()=>area.scrollHeight<=area.clientHeight+1&&area.scrollWidth<=area.clientWidth+1&&!cortado();
     let fator=1;
     root.style.setProperty('--compacto',fator);
     while(!cabe()&&fator>0.25){fator=Math.max(0.25,fator-0.015);root.style.setProperty('--compacto',fator.toFixed(3));}
