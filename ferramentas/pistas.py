@@ -68,7 +68,7 @@ def analisar(slug):
             if pat.search(s):
                 locais.append((n, e['k'], onde))
                 if primeira is None: primeira = (n, e['k'], onde)
-    coms = [len(a['c'].split()) for e in r if e['t'] == 'pergunta' for a in e.get('alts', []) if a.get('c')]
+    coms = [len(a['c'].split()) for e in r if e['t'] == 'pergunta' for a in e.get('alts', []) if a.get('c')] or [0]
     pergs = [n for n, e in enumerate(r) if e['t'] in ('pergunta', 'pareamento')]
     return dict(paginas=len(r), primeira=primeira,
                 fracao=round(primeira[0] / len(r), 2) if primeira else None,
@@ -79,10 +79,30 @@ def analisar(slug):
 CORTE = 0.45          # fração do percurso antes da qual o nome não aparece
 MEDIA_MAX, MAX_COMENT = 16, 26
 
+def conferir_nejm(slug, m, r):
+    """Molde do NEJM lido em 26/09/2026: o nome não aparece antes da metade
+    do percurso, nem como alternativa; alternativas curtas; uma explicação
+    por pergunta, de 50 a 280 palavras."""
+    pat = re.compile(DX[slug], re.I); falhas = []
+    for n, e in enumerate(r):
+        if n >= len(r) * 0.5: break
+        for onde, s in textos(e):
+            if pat.search(s): falhas.append(f'pág {n} {e["k"]}: nome em {onde}')
+    for e in r:
+        if e['t'] != 'pergunta': continue
+        if not e.get('exp'): falhas.append(f'{e["k"]}: sem explicação única'); continue
+        n = sum(len(TAG.sub(' ', x['t']).split()) for x in e['exp'])
+        if not 50 <= n <= 280: falhas.append(f'{e["k"]}: explicação com {n} palavras')
+        longas = [a['t'] for a in e['alts'] if len(TAG.sub(' ', a['t']).split()) > 8]
+        if longas: falhas.append(f'{e["k"]}: alternativa longa: {longas[0][:50]}')
+    return sorted(set(falhas))
+
+
 def conferir(slug, a):
     """Regras: antes do corte, o nome só pode aparecer como TEXTO de
     alternativa, e numa única pergunta (o diferencial). Comentários curtos."""
     m = importlib.import_module('casos.' + slug + '.etapas'); r = rota(m.ETAPAS)
+    if getattr(m, 'MOLDE', '') == 'nejm': return conferir_nejm(slug, m, r)
     pat = re.compile(DX[slug], re.I); corte = len(r) * CORTE; falhas = []
     pergs_com_nome = set()
     for n, e in enumerate(r):

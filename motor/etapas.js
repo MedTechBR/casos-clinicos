@@ -289,6 +289,21 @@ function pintar(){
   pintarPe();
 }
 
+/* A resposta no molde do //New England//: o gabarito numa frase e a
+   explicação em seções com subtítulo, uma só para a pergunta inteira. */
+function explicacaoDe(e){
+  // no meio da frase, a alternativa perde a maiúscula inicial, mas não a
+  // de siglas ("PCR", "HLA-B27")
+  const minus = s => s.replace(/^([A-ZÁÉÍÓÚÂÊÔÃÕÇ])(?=[a-záéíóúâêôãõç])/, c => c.toLowerCase());
+  const certas = e.alts.filter(a => a.ok).map(a => '<b>' + minus(a.t) + '</b>');
+  const lista = certas.length === 1 ? certas[0]
+    : certas.slice(0, -1).join(', ') + ' e ' + certas[certas.length - 1];
+  return '<div class="explica"><p class="gab">' + (certas.length === 1
+      ? 'A resposta correta é ' : 'As respostas corretas são ') + lista + '.</p>'
+    + e.exp.map(s => '<div class="ex-sec">' + (s.h ? '<h4>' + s.h + '</h4>' : '')
+      + '<p>' + s.t + '</p></div>').join('') + '</div>';
+}
+
 const DESENHO = {
 
   /* Título e imagem. A imagem sobe do chão para a tela inteira, sem véu de
@@ -412,8 +427,9 @@ const DESENHO = {
           : (e.escolhas === 1 ? 'selecione uma'
              : 'selecione ' + e.escolhas + ' · marcadas ' + r.marcadas.length))
       + '</div>'
+      + (e.exp ? '<div class="qexp' + (r.feita ? ' feita' : '') + '">' : '')
       + '<ul class="alts' + (r.feita ? ' feita' : '')
-          + (e.alts.length > 6 ? ' muitas' : '') + '">'
+          + (e.alts.length > 6 ? ' muitas' : '') + (e.exp ? ' semcm' : '') + '">'
       + e.alts.map((a, k) =>
           '<li data-k="' + k + '" class="' + (a.ok ? 'certa' : 'errada')
           + (r.marcadas.includes(k) ? ' marcada' : '') + '">'
@@ -421,6 +437,7 @@ const DESENHO = {
           + '<span class="tx">' + a.t + '</span>'
           + '<span class="cm">' + (r.feita ? '<span class="estado-resposta">' + (e.comentado ? a.situacao : (a.ok ? 'Correta' : 'Incorreta')) + (r.marcadas.includes(k) ? ' · sua seleção' : '') + '</span>' : '') + a.c + '</span></li>').join('')
       + '</ul>'
+      + (e.exp ? (r.feita ? explicacaoDe(e) : '') + '</div>' : '')
       + (r.feita ? '' : '<button class="conf" id="conf"'
           + (r.marcadas.length >= e.escolhas ? '' : ' disabled') + '>'
           + 'Confirmar resposta</button>')

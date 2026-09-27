@@ -127,6 +127,12 @@ def quadro(titulo, *blocos, sistema="geral") -> str:
             f'{"".join(blocos)}</div>')
 
 
+def pontos(*itens) -> str:
+    """Os pontos de ensino do fim do caso, numerados, como no NEJM."""
+    return '<ol class="pontos">' + "".join(
+        '<li data-n="%d">' % (n + 1) + p(t) + "</li>" for n, t in enumerate(itens)) + "</ol>"
+
+
 def tabela(cabecalho, linhas) -> str:
     th = "".join(f"<th>{texto(c)}</th>" for c in cabecalho)
     tr = "".join("<tr>" + "".join(f"<td>{texto(c)}</td>" for c in l) + "</tr>"
@@ -341,14 +347,14 @@ def _embaralhar(lista, semente):
     return lista
 
 
-def alt(txt, porque, *, certa=False) -> dict:
-    if not porque.strip():
-        raise ValueError(f"alternativa sem comentário: {txt!r}")
+def alt(txt, porque="", *, certa=False) -> dict:
+    """`porque` é o comentário da alternativa. No molde do //New England//
+    (pergunta com `explicacao`), fica vazio: a resposta é uma explicação só."""
     return {"t": texto(txt), "c": texto(porque), "ok": 1 if certa else 0}
 
 
 def pergunta(ident, kicker, enunciado, alternativas, *, fundo="",
-             titulo_resposta="", nota="", segue="") -> dict:
+             titulo_resposta="", nota="", segue="", explicacao=None) -> dict:
     """A pergunta do //New England// é, na maioria das vezes, de MÚLTIPLA
     seleção a partir de uma lista longa: "quais três são as causas mais
     prováveis", "quais sete diagnósticos considerar". Ler as 333 perguntas dos
@@ -362,15 +368,27 @@ def pergunta(ident, kicker, enunciado, alternativas, *, fundo="",
     certas = [a for a in alternativas if a["ok"]]
     if not 1 <= len(certas) <= 5:
         raise ValueError(f"pergunta {ident!r}: use de 1 a 5 corretas")
-    if not 4 <= len(alternativas) <= 10:
-        raise ValueError(f"pergunta {ident!r}: use de 4 a 10 alternativas")
+    minimo = 2 if explicacao else 4
+    if not minimo <= len(alternativas) <= 10:
+        raise ValueError(f"pergunta {ident!r}: use de {minimo} a 10 alternativas")
     if len(certas) == len(alternativas):
         raise ValueError(f"pergunta {ident!r}: todas corretas não é pergunta")
-    if not titulo_resposta.strip():
-        raise ValueError(f"pergunta {ident!r}: sem título de resposta")
+    exp = None
+    if explicacao:
+        # Uma explicação por pergunta, em seções com subtítulo, como o NEJM
+        # faz: "Causas prováveis", "Causas improváveis", "Outras opções".
+        exp = []
+        for sec in explicacao:
+            h, t = sec if isinstance(sec, tuple) else ("", sec)
+            exp.append({"h": texto(h), "t": texto(t)})
+    else:
+        if any(not a["c"].strip() for a in alternativas):
+            raise ValueError(f"pergunta {ident!r}: alternativa sem comentário")
+        if not titulo_resposta.strip():
+            raise ValueError(f"pergunta {ident!r}: sem título de resposta")
     return _pag("pergunta", ident, kicker=texto(kicker),
                 enunciado=texto(enunciado), alts=alternativas,
-                escolhas=len(certas), fundo=fundo,
+                escolhas=len(certas), fundo=fundo, exp=exp,
                 tr=texto(titulo_resposta), nota=texto(nota), segue=segue)
 
 

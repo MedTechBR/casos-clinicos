@@ -21,7 +21,7 @@ function montarFolhas(){
     const figura = document.querySelector('#palco .lamina');
     if (figura) root.append(figura);
   }
-  let area = root.querySelector(':scope > .alts,:scope > .grupos,:scope > .res,:scope > .cams,:scope > .painel-lab,:scope > .par,:scope > .observacao-imagem');
+  let area = root.querySelector(':scope > .qexp,:scope > .alts,:scope > .grupos,:scope > .res,:scope > .cams,:scope > .painel-lab,:scope > .par,:scope > .observacao-imagem');
   if (!area){
     root.classList.add('paginavel');
     area = document.createElement('div'); area.className = 'conteudo-paginado';
@@ -34,7 +34,7 @@ function montarFolhas(){
   if(mobile)root.querySelectorAll('table').forEach(t=>{const nomes=[...t.querySelectorAll('thead th')].map(x=>x.textContent);t.querySelectorAll('tbody tr').forEach(tr=>[...tr.children].forEach((td,n)=>td.dataset.col=nomes[n]||''));});
   area.classList.add('area-paginada'); areaTela = area;
   // Respostas e resultados permanecem inteiros: a densidade se adapta à tela.
-  if(area.matches('.alts,.res,.cams,.painel-lab,.par,.observacao-imagem')){
+  if(area.matches('.qexp,.alts,.res,.cams,.painel-lab,.par,.observacao-imagem')){
     root.classList.add('tela-unica');
     if(area.matches('.painel-lab,.observacao-imagem'))root.classList.add('paginavel');
     const cabe=()=>area.scrollHeight<=area.clientHeight+1&&area.scrollWidth<=area.clientWidth+1;
@@ -54,7 +54,7 @@ function montarFolhas(){
     if (el.matches('.gr')){
       filhos = [...el.querySelectorAll(':scope > .it')];
       criar = () => { const c=el.cloneNode(false);c.append(el.querySelector('b').cloneNode(true));return c; };
-    } else if (el.matches('.tops,.grade,.vit,.corpo .lg,aside,.cons,.rev,.bal,.painel-lab')){
+    } else if (el.matches('.tops,.grade,.vit,.corpo .lg,aside,.cons,.rev,.bal,.painel-lab,.pontos')){
       filhos = [...el.children]; criar=()=>el.cloneNode(false);
     } else if (el.matches('.estudo-imagem') && mobile){
       filhos=[...el.children];criar=()=>el.cloneNode(false);
