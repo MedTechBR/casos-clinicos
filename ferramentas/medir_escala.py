@@ -1,7 +1,7 @@
 """Mede a escala do texto (--compacto) em cada tela de um caso, a 1366×768.
 
 Telas de pergunta, pareamento, resultados e imagem encolhem o texto para
-caber sem rolagem. Abaixo de 0,85 a letra fica pequena demais para projetar:
+caber sem rolagem. Abaixo de 0,80 a letra fica pequena demais para projetar:
 a tela deve ser dividida (painel em dois, explicação mais curta, menos
 alternativas). Responde as perguntas certo antes de medir, porque a
 explicação só aparece depois da resposta.
@@ -14,7 +14,7 @@ from playwright.sync_api import sync_playwright
 ROOT = Path(__file__).resolve().parents[1]; sys.path.insert(0, str(ROOT))
 from nomes_publicos import PUBLICO
 
-slug = sys.argv[1]; limite = float(sys.argv[2]) if len(sys.argv) > 2 else 0.85
+slug = sys.argv[1]; limite = float(sys.argv[2]) if len(sys.argv) > 2 else 0.80
 arq = ROOT / (PUBLICO[slug] + '.html'); ruins = 0
 with sync_playwright() as p:
     b = p.chromium.launch(); pg = b.new_page(viewport={'width': 1366, 'height': 768})
