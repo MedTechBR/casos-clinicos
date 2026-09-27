@@ -28,6 +28,13 @@ IMG = Path(__file__).parent / 'img'
 BANCO = []
 MOLDE = 'nejm'
 CREDITO_RX = 'Samir · Wikimedia Commons · CC BY-SA 3.0'
+CREDITO_RX_ADM = 'Mikael Häggström · Wikimedia Commons · CC0'
+
+
+def credito_meta(meta):
+    import json
+    m = json.loads(Path(meta).read_text())
+    return m['autor'] + ' · Wikimedia Commons · ' + m['licenca'] + ' · setas adicionadas'
 
 
 def pg(k, titulo, *textos, segue='', conforme=None):
@@ -85,7 +92,7 @@ ETAPAS = [
 
     pagina('exame', 'Exame físico', '',
            topicos(('Sinais vitais', 'Temperatura 38,4 °C · pressão 94/56 mmHg · '
-                    'frequência cardíaca 116 · frequência respiratória 28 · SpO₂ '
+                    'frequência cardíaca 116 · frequência respiratória 30 · SpO₂ '
                     '90% em ar ambiente.'),
                    ('Estado geral', 'Prostrado, sonolento, orientado no tempo e no '
                     'espaço. Escleras ictéricas.'),
@@ -116,24 +123,45 @@ ETAPAS = [
         ex('Sódio / creatinina / potássio urinários', '64 mmol/L / 50 mg/dL / 38 mmol/L · FENa 2,5%', '—', True),
     ]),
 
-    pagina('imagem_adm', 'Exames de imagem', '',
-           topicos(('Radiografia de tórax', 'Opacidades alveolares nas bases dos '
-                    'dois pulmões, sem derrame pleural e sem aumento da área '
-                    'cardíaca.'),
-                   ('Ultrassonografia de abdome', 'Fígado discretamente aumentado, de '
-                    'ecotextura homogênea. Vesícula sem cálculos, vias biliares sem '
-                    'dilatação. Rins de tamanho normal, sem hidronefrose.')),
-           p('A equipe registra a hipótese de pneumonia comunitária grave com '
-             'sepse.'),
-           so_kicker=True),
+    estudo('rx_adm', 'Radiografia de tórax na admissão',
+           'Radiografia feita na chegada. Descreva a localização e o tipo da '
+           'opacidade antes de ler os achados.',
+           IMG / 'rx_consolidacao.jpg',
+           'Radiografia de outro paciente · comparação didática.',
+           CREDITO_RX_ADM,
+        [
+         ((190, 478), (70, 330), '**Consolidação alveolar** no terço inferior do pulmão direito.', 12),
+         ((68, 622), (175, 745), '**Seio costofrênico** direito livre: sem derrame.', -12),
+         ((690, 290), (900, 200), '**Pulmão esquerdo** sem opacidades.', 12),
+        ],
+        ['Consolidação alveolar em base direita, sem derrame pleural e sem '
+         'aumento da área cardíaca.',
+         'Com febre, tosse, leucocitose e neutrofilia, é o quadro de uma '
+         'pneumonia comunitária, e é essa a hipótese que a equipe registra.']),
+
+    estudo('us_adm', 'Ultrassonografia de abdome',
+           'Ultrassonografia feita na chegada, pela icterícia e pela dor no '
+           'hipocôndrio direito.',
+           IMG / 'us_vias_biliares.jpg',
+           'Ultrassonografia de outro paciente · comparação didática.',
+           credito_meta(IMG / 'us_vias_biliares.jpg.json'),
+        [
+         ((447, 150), (330, 60), '**Parênquima hepático** de ecotextura homogênea.', 12),
+         ((600, 215), (790, 110), '**Vesícula** de parede fina, sem cálculos nem lama.', -12),
+        ],
+        ['Fígado discretamente aumentado e homogêneo. Vesícula normal, vias '
+         'biliares intra e extra-hepáticas sem dilatação. Rins de tamanho '
+         'normal, sem hidronefrose.',
+         'Sem obstrução biliar nem urinária: a icterícia e a lesão renal são '
+         'de dentro do fígado e do rim.']),
 
     Q('p1', 1,
       'Pelos critérios menores de pneumonia comunitária grave da IDSA/ATS, '
       '**quais três** ele preenche?', [
       ('Ureia acima de 42 mg/dL', True),
       ('Plaquetas abaixo de 100.000/mm³', True),
-      ('Infiltrados multilobares', True),
-      ('Frequência respiratória de 30 ou mais', False),
+      ('Frequência respiratória de 30 ou mais', True),
+      ('Infiltrados multilobares', False),
       ('PaO₂/FiO₂ de 250 ou menos', False),
       ('Confusão ou desorientação', False),
       ('Leucócitos acima de 12.000/mm³', False),
@@ -142,10 +170,10 @@ ETAPAS = [
        'infiltrados multilobares, confusão, ureia acima de cerca de 42 (BUN de '
        '20), leucócitos abaixo de 4.000, plaquetas abaixo de 100.000, '
        'temperatura abaixo de 36 °C e hipotensão que exige volume agressivo.'),
-      ('Contando com cuidado', 'Ureia de 148, plaquetas de 88.000 e opacidades '
-       'nos dois pulmões preenchem três. A frequência é 28, a PaO₂/FiO₂ é 58 '
-       'dividido por 0,21, igual a 276, e ele está sonolento mas orientado. '
-       'Leucocitose não é critério; leucopenia é.'),
+      ('Contando com cuidado', 'Ureia de 148, plaquetas de 88.000 e frequência '
+       'respiratória de 30 preenchem três. A consolidação ocupa um lobo só, a '
+       'PaO₂/FiO₂ é 58 dividido por 0,21, igual a 276, e ele está sonolento '
+       'mas orientado. Leucocitose não é critério; leucopenia é.'),
       ('O que muda', 'Três ou mais critérios menores indicam internação em '
        'terapia intensiva. A regra orienta o local de tratamento, não a causa: '
        'ureia alta, plaquetas baixas e icterícia pedem que se pergunte se a '
@@ -248,7 +276,7 @@ ETAPAS = [
     estudo('rx_hemorragia', 'Radiografia de tórax',
            'Radiografia ilustrativa de outro paciente, com o padrão descrito '
            'no laudo dele no segundo dia. Compare com a da admissão, que '
-           'mostrava opacidades só nas bases.',
+           'mostrava consolidação só na base direita.',
            IMG / 'rx_torax_alveolar.jpg',
            'Radiografia de outro paciente · comparação didática.',
            CREDITO_RX,
@@ -257,8 +285,8 @@ ETAPAS = [
          ((704, 430), (912, 320), 'O mesmo padrão no **pulmão esquerdo**: a doença é bilateral.', -12),
          ((620, 160), (760, 60), '**Ápices relativamente poupados**: o predomínio é central e inferior.', 12),
         ],
-        ['Opacidades alveolares bilaterais e confluentes, que avançaram das bases '
-         'para os campos médios em 24 horas.',
+        ['Opacidades alveolares bilaterais e confluentes, que em 24 horas '
+         'passaram da base direita para os dois pulmões.',
          'Com hemoptise e queda de 3,2 g/dL na hemoglobina, o que enche os '
          'alvéolos é sangue: hemorragia alveolar difusa.']),
 
@@ -524,8 +552,11 @@ ETAPAS = [
        'confirmação e antibioticoterapia), e Leptospirose: diagnóstico e '
        'manejo clínico, 2014. Andrade e cols., Clin J Am Soc Nephrol 2007 '
        '(diálise diária). Spichler e cols., Am J Trop Med Hyg 2008 '
-       '(preditores de mortalidade). Radiografia: Samir, Wikimedia Commons, '
-       'CC BY-SA 3.0, de outro paciente.'),
+       '(preditores de mortalidade). Radiografias: Mikael Häggström, '
+       'Wikimedia Commons, CC0 (admissão), e Samir, Wikimedia Commons, CC '
+       'BY-SA 3.0 (segundo dia). Ultrassonografia: Ptrump16, Wikimedia '
+       'Commons, CC BY-SA 4.0. Todas de outros pacientes, com setas '
+       'adicionadas.'),
 ]
 
 REVISAO = []
