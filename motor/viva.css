@@ -465,12 +465,12 @@ h2.do-kicker::before{display:none}
 #palco .explica p{margin:0;font-size:calc(clamp(15.5px,1.12vw,18px) * var(--compacto));line-height:1.45;color:#2b3346}
 @media (max-width:900px){#palco .qexp.feita{grid-template-columns:minmax(0,1fr)}}
 /* pontos de ensino e página que ensina a doença */
-#palco .pontos{list-style:none;margin:0;padding:0;display:grid;gap:calc(10px * var(--compacto))}
-#palco .pontos li{display:grid;grid-template-columns:calc(30px * var(--compacto)) minmax(0,1fr);gap:calc(12px * var(--compacto));
-  align-items:start;background:var(--cartao);border-radius:16px;padding:calc(12px * var(--compacto)) calc(16px * var(--compacto));box-shadow:var(--som1)}
-#palco .pontos li::before{content:attr(data-n);width:calc(30px * var(--compacto));height:calc(30px * var(--compacto));
-  border-radius:50%;background:var(--ac);color:#fff;display:grid;place-items:center;font:800 calc(14px * var(--compacto))/1 var(--sans)}
-#palco .pontos li p{margin:0;font-size:calc(clamp(16px,1.2vw,19px) * var(--compacto));line-height:1.42}
+#palco .pontos{list-style:none;margin:0;padding:0;display:grid;gap:calc(10px * var(--compacto,1))}
+#palco .pontos li{display:grid;grid-template-columns:calc(30px * var(--compacto,1)) minmax(0,1fr);gap:calc(12px * var(--compacto,1));
+  align-items:start;background:var(--cartao);border-radius:16px;padding:calc(12px * var(--compacto,1)) calc(16px * var(--compacto,1));box-shadow:var(--som1)}
+#palco .pontos li::before{content:attr(data-n);width:calc(30px * var(--compacto,1));height:calc(30px * var(--compacto,1));
+  border-radius:50%;background:var(--ac);color:#fff;display:grid;place-items:center;font:800 calc(14px * var(--compacto,1))/1 var(--sans)}
+#palco .pontos li p{margin:0;font-size:calc(clamp(16px,1.2vw,19px) * var(--compacto,1));line-height:1.42}
 
 /* o que o paginador esconde fica escondido, qualquer que seja o display acima */
 #palco [data-fora]{display:none!important}
