@@ -110,15 +110,22 @@ ETAPAS = [
     ], introducao='Duas hemoculturas foram colhidas antes de qualquer antibiótico, e '
                   'uma alíquota de sangue da admissão ficou guardada no laboratório.'),
 
-    painel('res1b', 'Primeiros exames', 'Gasometria, urina e imagem', [
+    painel('res1b', 'Primeiros exames', 'Gasometria e urina', [
         ex('Gasometria arterial em ar ambiente', 'pH 7,33 · pCO₂ 31 · HCO₃ 16 · pO₂ 58 mmHg · lactato 3,1 mmol/L', '—', True),
         ex('Urina', 'Densidade 1.012 · sangue ++ · proteína + · 3 a 5 hemácias e cilindros granulosos por campo · sem cilindros hemáticos', '—', True),
         ex('Sódio / creatinina / potássio urinários', '64 mmol/L / 50 mg/dL / 38 mmol/L · FENa 2,5%', '—', True),
-        ex('Radiografia de tórax', 'Opacidades alveolares nas bases dos dois pulmões, sem derrame', '—', True),
-        ex('Ultrassonografia de abdome', 'Fígado discretamente aumentado, vias biliares sem dilatação, rins de tamanho normal, sem hidronefrose', '—', True),
-        ex('Sorologias de dengue (NS1, IgM) e hepatites (anti-HAV IgM, HBsAg, anti-HBc IgM)', 'Enviadas ao laboratório central · pendentes', '—'),
-    ], introducao='A equipe registra a hipótese de pneumonia comunitária grave com '
-                  'sepse.'),
+    ]),
+
+    pagina('imagem_adm', 'Exames de imagem', '',
+           topicos(('Radiografia de tórax', 'Opacidades alveolares nas bases dos '
+                    'dois pulmões, sem derrame pleural e sem aumento da área '
+                    'cardíaca.'),
+                   ('Ultrassonografia de abdome', 'Fígado discretamente aumentado, de '
+                    'ecotextura homogênea. Vesícula sem cálculos, vias biliares sem '
+                    'dilatação. Rins de tamanho normal, sem hidronefrose.')),
+           p('A equipe registra a hipótese de pneumonia comunitária grave com '
+             'sepse.'),
+           so_kicker=True),
 
     Q('p1', 1,
       'Pelos critérios menores de pneumonia comunitária grave da IDSA/ATS, '
@@ -131,11 +138,10 @@ ETAPAS = [
       ('Confusão ou desorientação', False),
       ('Leucócitos acima de 12.000/mm³', False),
      ], [
-      ('Os critérios', 'Os critérios menores são frequência respiratória de 30 '
-       'ou mais, PaO₂/FiO₂ de 250 ou menos, infiltrados multilobares, confusão, '
-       'ureia elevada (BUN de 20 mg/dL ou mais, ureia acima de cerca de 42), '
-       'leucócitos abaixo de 4.000, plaquetas abaixo de 100.000, temperatura '
-       'abaixo de 36 °C e hipotensão que exige reposição agressiva.'),
+      ('Os critérios', 'FR de 30 ou mais, PaO₂/FiO₂ de 250 ou menos, '
+       'infiltrados multilobares, confusão, ureia acima de cerca de 42 (BUN de '
+       '20), leucócitos abaixo de 4.000, plaquetas abaixo de 100.000, '
+       'temperatura abaixo de 36 °C e hipotensão que exige volume agressivo.'),
       ('Contando com cuidado', 'Ureia de 148, plaquetas de 88.000 e opacidades '
        'nos dois pulmões preenchem três. A frequência é 28, a PaO₂/FiO₂ é 58 '
        'dividido por 0,21, igual a 276, e ele está sonolento mas orientado. '
@@ -195,16 +201,16 @@ ETAPAS = [
 
     bifurcacao('b1', 'Decisão', 'As primeiras horas',
       'Hipotenso, hipoxêmico, com lesão tubular e colestase, três critérios '
-      'menores de gravidade. As hemoculturas já foram colhidas e as sorologias '
-      'estão pendentes. Como você conduz?', [
+      'menores de gravidade. As hemoculturas já foram colhidas. Como você '
+      'conduz?', [
       caminho('Ceftriaxona 2 g e azitromicina agora, oxigênio e vaga de UTI',
               'tratado',
               'Pneumonia grave com sepse pede betalactâmico com macrolídeo no '
               'primeiro atendimento, e três critérios menores indicam UTI.'),
       caminho('Oxigênio e hidratação; escolher o antibiótico quando saírem as '
-              'sorologias', 'espera',
-              'Sorologias e culturas levam dias, e a mortalidade da sepse sobe '
-              'a cada hora sem antibiótico.'),
+              'hemoculturas', 'espera',
+              'Culturas levam dias, e a mortalidade da sepse sobe a cada hora '
+              'sem antibiótico.'),
       caminho('Conduzir como dengue grave: cristaloide 20 mL/kg em bolus '
               'repetidos, sem antibiótico', 'volume',
               'Crepitações e hipoxemia pedem cautela com volume, e a colestase '
@@ -220,7 +226,7 @@ ETAPAS = [
 
     pg('espera', 'Dezoito horas depois',
        'Sob soro e oxigênio, a saturação cai para 85% e a urina para 20 mL '
-       'por hora. As sorologias ainda não saíram. A plantonista inicia '
+       'por hora. As hemoculturas ainda não cresceram. A plantonista inicia '
        'ceftriaxona e azitromicina com dezoito horas de atraso.',
        segue='tratado'),
 
@@ -339,8 +345,7 @@ ETAPAS = [
        'secreção, dor à compressão muito maior nas panturrilhas e um corte '
        'cicatrizado na planta do pé direito. Os colegas dizem que o depósito '
        'da equipe tem ratos.',
-       'As hemoculturas seguem sem crescimento em 48 horas, e as sorologias '
-       'de dengue e hepatites voltam não reagentes.'),
+       'As hemoculturas seguem sem crescimento em 48 horas.'),
 
     Q('p5', 5,
       'Com essa exposição, a equipe quer confirmar a hipótese a partir da '
