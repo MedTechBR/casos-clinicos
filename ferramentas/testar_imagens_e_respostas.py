@@ -3,12 +3,15 @@ from pathlib import Path
 from ui_paginas import mostrar, ultima
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
+import sys as _s;_s.path.insert(0,str(ROOT))
+from nomes_publicos import PUBLICO as _P
+PUBLICO_HIFEN={k.replace('_','-'):v for k,v in _P.items()}
 with sync_playwright() as pw:
  b=pw.chromium.launch();page=b.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
  for w,h in [(1600,900),(1366,768),(375,812)]:
   page.set_viewport_size({'width':w,'height':h});questions=0
   for slug,exam in [('pulmao-rim','rx'),('west-nile','tc'),('cocaina-levamisol','us')]:
-   page.goto((ROOT/(slug+'.html')).as_uri())
+   page.goto((ROOT/(PUBLICO_HIFEN.get(slug,slug)+'.html')).as_uri())
    for q in page.evaluate('ETAPAS.filter(e=>e.t==="pergunta").map(e=>({k:e.k,n:e.escolhas}))'):
     page.evaluate('(k)=>ir(porId(k))',q['k'])
     for n in range(q['n']):mostrar(page,'.alts li',n).click()

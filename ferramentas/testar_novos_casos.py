@@ -3,11 +3,14 @@ from pathlib import Path
 from itertools import product
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
+import sys as _s;_s.path.insert(0,str(ROOT))
+from nomes_publicos import PUBLICO as _P
+PUBLICO_HIFEN={k.replace('_','-'):v for k,v in _P.items()}
 SLUGS=('kikuchi','sarcoidose','cmv')
 with sync_playwright() as pw:
  b=pw.chromium.launch();page=b.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)));total=0
  for slug in SLUGS:
-  page.goto((ROOT/(slug+'.html')).as_uri())
+  page.goto((ROOT/(PUBLICO_HIFEN.get(slug,slug)+'.html')).as_uri())
   # Cliques reais: alternativa, confirmação e escolha de ramo.
   page.evaluate('ir(porId("p1"))')
   assert page.locator('#conf').is_disabled()

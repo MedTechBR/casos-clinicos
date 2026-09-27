@@ -72,7 +72,8 @@ def caso(*, slug, titulo, subtitulo, especialidade, minutos, decisoes,
         raise ValueError(f"cor desconhecida: {cor!r}; use {sorted(CORES)}")
     if nivel not in ("interno", "residente", "os dois"):
         raise ValueError("nível: 'interno', 'residente' ou 'os dois'")
-    return {"slug": slug, "tt": texto(titulo), "sub": texto(subtitulo),
+    from motor.etapas import _nome_publico
+    return {"slug": _nome_publico(slug), "tt": texto(titulo), "sub": texto(subtitulo),
             "esp": texto(especialidade), "min": minutos, "dec": decisoes,
             "des": desfechos, "niv": nivel, "cor": CORES[cor],
             "capa": capa, "arq": arquivo, "pronto": 1 if pronto else 0,

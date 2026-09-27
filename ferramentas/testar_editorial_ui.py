@@ -3,6 +3,9 @@ from pathlib import Path
 from ui_paginas import mostrar
 from playwright.sync_api import sync_playwright
 r=Path(__file__).resolve().parents[1]
+import sys as _s;_s.path.insert(0,str(r))
+from nomes_publicos import PUBLICO as _P
+PUBLICO_HIFEN={k.replace('_','-'):v for k,v in _P.items()}
 with sync_playwright() as pw:
  b=pw.chromium.launch();p=b.new_page();errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
  for w,h in [(1600,900),(1366,768),(375,812)]:
@@ -11,7 +14,7 @@ with sync_playwright() as pw:
   p.locator('#busca').fill('xyzxyz');assert p.locator('a.cs').count()==0
   p.locator('#busca').fill('');assert p.evaluate('document.documentElement.scrollWidth<=innerWidth')
   for slug in ['pulmao-rim','cocaina-levamisol','west-nile']:
-   p.goto((r/(slug+'.html')).as_uri());steps=p.evaluate('ETAPAS.map(e=>({k:e.k,t:e.t}))');images=0
+   p.goto((r/(PUBLICO_HIFEN.get(slug,slug)+'.html')).as_uri());steps=p.evaluate('ETAPAS.map(e=>({k:e.k,t:e.t}))');images=0
    for e in steps:
     p.evaluate('(k)=>ir(porId(k))',e['k'])
     assert p.evaluate('Array.from(document.querySelectorAll("#palco img")).every(i=>i.complete&&i.naturalWidth>0)'),(slug,e['k'],'image')

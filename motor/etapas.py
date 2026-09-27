@@ -496,6 +496,15 @@ def desfecho(ident, titulo, *blocos, qualidade, porque, fundo="",
 # ─────────────────────────── montagem ───────────────────────────
 
 
+def _nome_publico(modulo):
+    """Chave do progresso salvo: o nome público, não o diagnóstico."""
+    try:
+        from nomes_publicos import PUBLICO
+        return PUBLICO.get(modulo, modulo)
+    except ImportError:
+        return modulo
+
+
 def montar(caso) -> str:
     raiz = Path(__file__).parent
     css = "\n".join((raiz / f).read_text(encoding="utf-8")
@@ -550,7 +559,7 @@ def montar(caso) -> str:
     carimbo = datetime.datetime.now().strftime("%d/%m %H:%M")
     dados = {
         "caso": {"titulo": caso.TITULO,
-                 "slug": caso.__name__.split(".")[-2],
+                 "slug": _nome_publico(caso.__name__.split(".")[-2]),
                  "cor": getattr(caso, "COR", "#4f46e5"),
                  "rodape": caso.RODAPE + " · versão de " + carimbo,
                  "sistemas": SISTEMAS},

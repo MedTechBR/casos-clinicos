@@ -3,12 +3,15 @@ from pathlib import Path
 from ui_paginas import mostrar
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
+import sys as _s;_s.path.insert(0,str(ROOT))
+from nomes_publicos import PUBLICO as _P
+PUBLICO_HIFEN={k.replace('_','-'):v for k,v in _P.items()}
 with sync_playwright() as pw:
  b=pw.chromium.launch();page=b.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)));total=0
  for w,h in [(1366,768),(1600,900),(375,812)]:
   page.set_viewport_size({'width':w,'height':h})
   for slug in ['pulmao-rim','west-nile','cocaina-levamisol','kikuchi','sarcoidose','cmv','leptospirose','endocardite','adrenal']:
-   page.goto((ROOT/(slug+'.html')).as_uri())
+   page.goto((ROOT/(PUBLICO_HIFEN.get(slug,slug)+'.html')).as_uri())
    steps=page.evaluate('ETAPAS.map(e=>({k:e.k,t:e.t}))')
    page.evaluate('ETAPAS.filter(e=>e.t==="pedido").forEach(e=>{const res=ETAPAS.find(x=>x.de===e.k&&x.t==="resultados");let opts=e.grupos.flatMap(g=>g.o).sort((a,b)=>Number(!!res?.laminas[b.e])-Number(!!res?.laminas[a.e]));marcados[e.k]=new Set(opts.slice(0,e.limite).map(o=>o.e))})')
    for e in steps:
@@ -29,7 +32,7 @@ with sync_playwright() as pw:
     assert page.evaluate('areaTela.scrollHeight<=areaTela.clientHeight+2')
    page.locator('#reiniciar').click();assert page.evaluate('etapa().t')=='capa'
   print(w,h,'todas as páginas e estados OK',flush=True)
- page.set_viewport_size({'width':1366,'height':768});page.goto((ROOT/'pulmao-rim.html').as_uri())
+ page.set_viewport_size({'width':1366,'height':768});page.goto((ROOT/(PUBLICO_HIFEN['pulmao-rim']+'.html')).as_uri())
  # Abertura e fechamento da discussão conservam estado após repaginar.
  page.evaluate('ir(porId("crescente"))');mostrar(page,'details summary').click()
  page.wait_for_function('detalhesAbertos.has("crescente::0")')
