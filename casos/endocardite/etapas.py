@@ -20,7 +20,7 @@ from pathlib import Path
 from motor.estudo_imagem import estudo
 from motor.etapas import (alt, bifurcacao, caminho, capa, desfecho, op, p,
                           pagina, painel, par, pareamento, pergunta, pontos,
-                          topicos)
+                          topicos, vitais)
 
 TITULO = 'Pequenos sinais'
 RODAPE = 'Paciente ficcional · evoluções simuladas para ensino'
@@ -95,10 +95,13 @@ ETAPAS = [
            so_kicker=True),
 
     pagina('exame', 'Exame físico', '',
-           topicos(('Sinais vitais', 'Temperatura 38,1 °C · pressão 132/70 mmHg · '
-                    'frequência cardíaca 98 · frequência respiratória 18 · SpO₂ 96% '
-                    'em ar ambiente · peso 54 kg.'),
-                   ('Estado geral', 'Emagrecida, mucosas descoradas, anictérica.'),
+           vitais(('Temperatura', '38,1 °C', True),
+                  ('Pressão arterial', '132/70', False),
+                  ('Frequência cardíaca', '98', False),
+                  ('Frequência respiratória', '18', False),
+                  ('SpO₂ em ar ambiente', '96%', False),
+                  ('Peso', '54 kg', False)),
+           topicos(('Estado geral', 'Emagrecida, mucosas descoradas, anictérica.'),
                    ('Linfonodos', 'Sem adenomegalias cervicais, supraclaviculares, '
                     'axilares ou inguinais.'),
                    ('Coração', 'Ritmo regular. Sopro holossistólico 3+/6 no foco '
@@ -322,6 +325,46 @@ ETAPAS = [
                     'vistas só com a pálpebra evertida. Fundo de olho sem '
                     'hemorragias.')),
            so_kicker=True),
+
+    estudo('unhas', 'Hemorragias sob a unha',
+           'Fotografia de outro paciente, com o mesmo tipo de lesão que o '
+           'residente encontrou sob as unhas de Lúcia. Olhe a direção dos traços '
+           'e onde eles ficam no leito ungueal.',
+           IMG / 'unhas_hemorragia.jpg',
+           'Fotografia de outro paciente · comparação didática · recortada na unha.',
+           credito_meta(IMG / 'unhas_hemorragia.jpg.json'),
+        [
+         ((437, 690), (215, 560), '**Traços finos**, vermelho-escuros, no terço distal do leito '
+          'ungueal, alinhados no sentido em que a unha cresce.', 12),
+         ((684, 727), (870, 590), 'Outro **traço isolado** do mesmo tipo, junto à faixa branca da '
+          'borda livre.', -12),
+         ((560, 390), (800, 200), '**Leito ungueal** rosado e liso no restante: a lesão é linear e '
+          'pontual, não uma mancha difusa.', 12),
+        ],
+        ['No exame de Lúcia: três hemorragias lineares, finas e avermelhadas, sob as '
+         'unhas do segundo e do terceiro dedos da mão direita.',
+         'São capilares do leito ungueal que se rompem. Trauma das mãos, comum em '
+         'quem costura, produz o mesmo traço; sozinho, o achado pesa pouco.']),
+
+    estudo('plantas', 'Máculas sem dor',
+           'Fotografia de outro paciente, na palma da mão, com o mesmo tipo de '
+           'lesão que Lúcia tem na planta do pé esquerdo. Repare no relevo e na '
+           'cor, e lembre que ela não sente dor ao apertá-las.',
+           IMG / 'palma_maculas.jpg',
+           'Fotografia de outro paciente · comparação didática.',
+           credito_meta(IMG / 'palma_maculas.jpg.json'),
+        [
+         ((421, 346), (200, 225), '**Mácula eritematosa** de poucos milímetros, plana, de borda '
+          'irregular, na base da palma.', 12),
+         ((529, 381), (470, 575), 'Outra **mácula** do mesmo tipo, separada da primeira por pele '
+          'de cor normal.', -12),
+         ((607, 371), (790, 250), 'Mais uma, perto da borda da mão: as lesões se espalham sem se '
+          'juntar e sem relevo.', 12),
+        ],
+        ['No exame de Lúcia: duas máculas eritematosas de 3 mm na planta esquerda, '
+         'indolores à pressão.',
+         'Plana e indolor é o que a separa do nódulo da polpa digital, que tem '
+         'relevo e dói.']),
 
     estudo('eco', 'Ecocardiograma transtorácico',
            'Bacteremia contínua por um estreptococo de origem intestinal, numa '
@@ -647,7 +690,10 @@ ETAPAS = [
        'de tórax normal, Mikael Häggström, Wikimedia Commons, CC0; '
        'ecocardiograma apical de quatro câmaras, CardioNetworks ECHOpedia (AMC '
        'Echolab), Wikimedia Commons, CC BY-SA 3.0, quadro extraído do vídeo '
-       'E00405; radiografia de tórax no leito, Jeremy Jones (Radiopaedia), '
+       'E00405; hemorragias sob a unha, Splarka, Wikimedia Commons, domínio '
+       'público, recortada (commons.wikimedia.org/wiki/File:Splinter_hemorrhage.jpg); '
+       'máculas palmares, Warfieldian, Wikimedia Commons, CC BY-SA 4.0 '
+       '(commons.wikimedia.org/wiki/File:Janeway_lesion.JPG); radiografia de tórax no leito, Jeremy Jones (Radiopaedia), '
        'Wikimedia Commons, CC BY-SA 3.0; micrografia de adenoma tubuloviloso, '
        'Mikael Häggström, Wikimedia Commons, CC0.'),
 ]

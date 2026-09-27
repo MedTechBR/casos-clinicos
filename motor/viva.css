@@ -474,3 +474,6 @@ h2.do-kicker::before{display:none}
 
 /* o que o paginador esconde fica escondido, qualquer que seja o display acima */
 #palco [data-fora]{display:none!important}
+
+/* Endereços longos (fontes, créditos) quebram em vez de alargar a tela. */
+p, li { overflow-wrap: break-word; }

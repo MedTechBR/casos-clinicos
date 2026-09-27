@@ -29,3 +29,8 @@ A chave numérica de `Renal corpuscle.svg` foi traduzida da [fonte original](htt
 - `purpura.jpg` (Hektor, CC BY-SA 3.0) passa a ser tela `estudo` de comparação, com três setas adicionadas sob a mesma licença (lesão arredondada, lesões confluentes, pele normal entre elas). Não documenta as placas da paciente, que são retiformes.
 - `rx_torax_normal.jpg` (Mikael Häggström, CC0) passa a ser tela `estudo` com três setas (pulmão direito, seio costofrênico direito, contorno cardíaco esquerdo); saiu do painel de exames.
 - `corpusculo.svg` deixou de ser usado no caso.
+
+## Fotografia de pele — 27 de setembro de 2026
+
+- `pele_placa.jpg` — Niels Olson. [Fonte](https://commons.wikimedia.org/wiki/File:Calciphylaxis.png) · [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/). Placa por calcifilaxia no abdome de outro paciente (púrpura retiforme de outra causa); reduzida para 1400 px e convertida para JPEG. Três setas adicionadas sob a mesma licença (desenho em rede na periferia, centro necrótico, borda angulada). Não documenta as placas da paciente ficcional.
+- Substitui `purpura.jpg` (Hektor) na tela `pele`: aquela era púrpura comum arredondada, usada só como contraste, e deixou de ser usada no caso.

@@ -21,7 +21,7 @@ from pathlib import Path
 from motor.estudo_imagem import estudo
 from motor.etapas import (alt, bifurcacao, caminho, capa, desfecho, op, p,
                           pagina, painel, par, pareamento, pergunta, pontos,
-                          topicos)
+                          topicos, vitais)
 
 TITULO = 'Oito meses de cansaço'
 RODAPE = 'Paciente ficcional · evoluções simuladas para ensino'
@@ -93,11 +93,14 @@ ETAPAS = [
            so_kicker=True),
 
     pagina('exame', 'Exame físico', '',
-           topicos(('Sinais vitais', 'Pressão 78/42 mmHg deitada · frequência '
-                    'cardíaca 118 · temperatura 37,6 °C · frequência respiratória '
-                    '22 · SpO₂ 97% em ar ambiente · glicemia capilar 58 mg/dL · '
-                    'peso 52 kg.'),
-                   ('Estado geral', 'Emagrecida, sonolenta, responde com '
+           vitais(('Pressão arterial', '78/42 deitada', True),
+                  ('Frequência cardíaca', '118', True),
+                  ('Temperatura', '37,6 °C', False),
+                  ('Frequência respiratória', '22', True),
+                  ('SpO₂ em ar ambiente', '97%', False),
+                  ('Glicemia capilar', '58 mg/dL', True),
+                  ('Peso', '52 kg', False)),
+           topicos(('Estado geral', 'Emagrecida, sonolenta, responde com '
                     'lentidão, orientada. Mucosas secas. Enchimento capilar de '
                     'quatro segundos.'),
                    ('Pele', 'Manchas acrômicas no dorso das mãos. Morena, sem '
@@ -304,6 +307,51 @@ ETAPAS = [
                    ('Hemodinâmica', 'Pressão 82/48, frequência 116. Não consegue '
                     'sentar sem tontura.')),
            so_kicker=True),
+
+    estudo('foto_gengiva', 'A boca',
+           'Com a lanterna, a residente afasta os lábios de Marta e encontra '
+           'manchas acastanhadas na gengiva e na face interna das bochechas. A '
+           'fotografia é de outra pessoa, com o mesmo tipo de pigmento na '
+           'gengiva. Procure onde a cor muda antes de abrir os achados.',
+           IMG / 'gengiva_pigmento.jpg',
+           'Gengiva de outra pessoa, com pigmento acastanhado · comparação didática.',
+           credito_meta(IMG / 'gengiva_pigmento.jpg.json'),
+        [
+         ((307, 150), (190, 50), '**Faixa acastanhada** na gengiva inserida acima '
+          'dos dentes superiores, plana, sem relevo nem ferida.', 12),
+         ((690, 395), (820, 475), 'O mesmo **pigmento** na gengiva inferior, dos '
+          'dois lados da arcada.', -12),
+         ((466, 118), (580, 40), '**Mucosa rósea** do freio labial, sem pigmento: '
+          'o contraste que mostra a mancha.', -12),
+        ],
+        ['Máculas acastanhadas, planas, na gengiva superior e inferior, '
+         'poupando o freio e a margem rósea.',
+         'Em Marta há também manchas na face interna das bochechas, e o marido '
+         'conta que ela escureceu desde o ano passado. O pigmento na boca, '
+         'sozinho, pode ser constitucional; o que pesa é ele ter surgido em '
+         'meses, junto do resto.']),
+
+    estudo('foto_palmas', 'As mãos',
+           'Marta abre as mãos: os sulcos palmares estão escurecidos, em '
+           'contraste com as manchas acrômicas do dorso. A fotografia é de outra '
+           'paciente, com o mesmo achado nas palmas. Olhe as linhas da mão, não '
+           'a cor de fundo.',
+           IMG / 'sulcos_palmares.jpg',
+           'Palmas de outra paciente, com os sulcos escurecidos · comparação didática.',
+           credito_meta(IMG / 'sulcos_palmares.jpg.json'),
+        [
+         ((283, 478), (90, 380), '**Sulco da eminência tenar** escurecido na mão '
+          'esquerda da foto: uma linha mais escura que a pele ao lado.', 12),
+         ((749, 473), (930, 380), 'Os **sulcos palmares** da outra mão, também '
+          'marcados pelo pigmento.', -12),
+         ((400, 540), (470, 400), '**Pele da palma** entre os sulcos, mais clara: o '
+          'pigmento se concentra nas dobras.', -12),
+        ],
+        ['Sulcos palmares escurecidos nas duas mãos, com a pele entre eles mais '
+         'clara.',
+         'Pigmento que se acumula nas dobras das palmas, na cicatriz da '
+         'cesárea e na gengiva não é bronzeado de sol: é pigmentação que vem de '
+         'dentro, em quem quase não sai de casa.']),
 
     Q('p4', 4,
       'A equipe revê o caso inteiro. **Quais quatro** dados a gastroenterite '
@@ -634,7 +682,14 @@ ETAPAS = [
        'in Adults, 2023. Evans e cols. Surviving Sepsis Campaign 2021.',
        'Eletrocardiograma: Michael-Joseph F. Agbayani e Eddieson Gonzales, '
        'Wikimedia Commons, CC BY 4.0. Radiografia de tórax: Mikael Häggström, '
-       'Wikimedia Commons, CC0. Ambas de outras pessoas, com setas adicionadas.'),
+       'Wikimedia Commons, CC0. Gengiva pigmentada: Shaimaa Abdellatif, '
+       'Wikimedia Commons, CC BY-SA 4.0, recortada '
+       '(commons.wikimedia.org/wiki/File:Hyperpigmentation_of_the_gum.jpg). '
+       'Sulcos palmares: Petros Perros, "A 69-Year-Old Female with Tiredness '
+       'and a Persistent Tan", PLoS Medicine, via Wikimedia Commons, CC BY 2.5, '
+       'recortada (commons.wikimedia.org/wiki/File:A_69-Year-Old_Female_with_'
+       'Tiredness_and_a_Persistent_Tan_02.png). Todas de outras pessoas, com '
+       'setas adicionadas.'),
 ]
 
 REVISAO = []

@@ -22,7 +22,7 @@ from pathlib import Path
 from motor.estudo_imagem import estudo
 from motor.etapas import (alt, bifurcacao, caminho, capa, desfecho, op, p,
                           pagina, painel, par, pareamento, pergunta, pontos,
-                          topicos)
+                          topicos, vitais)
 
 TITULO = 'Depois da travessia'
 RODAPE = 'Paciente ficcional · evoluções simuladas para ensino'
@@ -98,10 +98,12 @@ ETAPAS = [
            so_kicker=True),
 
     pagina('exame', 'Exame físico', '',
-           topicos(('Sinais vitais', 'Temperatura 38,2 °C · pressão 100/62 mmHg · '
-                    'frequência cardíaca 108 · frequência respiratória 18 · SpO₂ '
-                    '97% em ar ambiente.'),
-                   ('Estado geral', 'Alerta, orientada, mucosas secas, sem '
+           vitais(('Temperatura', '38,2 °C', True),
+                  ('Pressão arterial', '100/62', False),
+                  ('Frequência cardíaca', '108', True),
+                  ('Frequência respiratória', '18', False),
+                  ('SpO₂ em ar ambiente', '97%', False)),
+           topicos(('Estado geral', 'Alerta, orientada, mucosas secas, sem '
                     'icterícia.'),
                    ('Cardiopulmonar', 'Taquicardia regular, sem sopros. Pulmões '
                     'limpos.'),

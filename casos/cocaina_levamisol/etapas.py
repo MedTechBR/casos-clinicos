@@ -20,7 +20,7 @@ from pathlib import Path
 from motor.estudo_imagem import ecg, estudo
 from motor.etapas import (alt, bifurcacao, caminho, capa, desfecho, op, p,
                           pagina, painel, par, pareamento, pergunta, pontos,
-                          topicos)
+                          topicos, vitais)
 
 TITULO = 'À flor da pele'
 RODAPE = 'Paciente ficcional · evoluções simuladas para ensino'
@@ -88,10 +88,12 @@ ETAPAS = [
            so_kicker=True),
 
     pagina('exame', 'Exame físico', '',
-           topicos(('Sinais vitais', 'Temperatura 38,6 °C · pressão 108/68 mmHg · '
-                    'frequência cardíaca 112 · frequência respiratória 18 · SpO₂ '
-                    '98% em ar ambiente.'),
-                   ('Estado geral', 'Lúcida, orientada, com dor ao movimentar as '
+           vitais(('Temperatura', '38,6 °C', True),
+                  ('Pressão arterial', '108/68', False),
+                  ('Frequência cardíaca', '112', True),
+                  ('Frequência respiratória', '18', False),
+                  ('SpO₂ em ar ambiente', '98%', False)),
+           topicos(('Estado geral', 'Lúcida, orientada, com dor ao movimentar as '
                     'pernas.'),
                    ('Cabeça e pescoço', 'Orofaringe sem aftas nem placas. Mucosa '
                     'nasal com crostas, septo íntegro. Sem linfonodos palpáveis.'),
@@ -106,24 +108,26 @@ ETAPAS = [
            so_kicker=True),
 
     estudo('pele', 'Fotografia de pele',
-           'A equipe fotografa as placas para acompanhar a evolução. Antes de '
-           'classificá-las, compare a descrição do exame com esta púrpura de '
-           'outro paciente.',
-           IMG / 'purpura.jpg',
-           'Fotografia de outro paciente · comparação didática.',
-           'Hektor · Wikimedia Commons · CC BY-SA 3.0 · setas adicionadas',
+           'A equipe fotografa as placas para acompanhar a evolução. Esta '
+           'fotografia é de outro paciente, com o mesmo tipo de lesão, de outra '
+           'causa e em outra região do corpo; a régua está em centímetros.',
+           IMG / 'pele_placa.jpg',
+           'Fotografia de outro paciente, com lesão do mesmo tipo · régua em centímetros.',
+           'Niels Olson · Wikimedia Commons · CC BY-SA 3.0 · setas adicionadas',
         [
-         ((322, 193), (430, 75), 'Lesão pequena e **arredondada**, de borda nítida.', 12),
-         ((636, 505), (520, 640), 'Lesões vizinhas que **confluem**, sem perder o contorno arredondado.', -12),
-         ((903, 370), (950, 210), '**Pele normal** entre as lesões: não há desenho em rede.', 12),
+         ((336, 71), (215, 175), '**Desenho em rede** na periferia: traços violáceos finos e ramificados, que seguem a malha de vasos da derme.', 12),
+         ((684, 345), (560, 560), '**Centro enegrecido**: a pele que dependia do vaso ocluído necrosou.', -12),
+         ((714, 441), (860, 560), '**Borda angulada**, que termina em ponta, sem o contorno arredondado da púrpura comum.', 12),
         ],
-        ['Púrpura de muitas lesões pequenas e arredondadas, sem ramificação e '
-         'sem necrose central.',
-         'As placas de Marina são poucas, maiores, anguladas, ramificadas e '
-         'com centro escuro: é outro desenho, e outro mecanismo.']),
+        ['Placa violácea de cerca de 4 cm, de borda angulada e '
+         'ramificada, com centro enegrecido e traços em rede na periferia.',
+         'É o desenho descrito nas coxas de Marina: placas violáceas de 2 a '
+         '6 cm, dolorosas, que não clareiam, com bordas anguladas e '
+         'ramificadas, duas com centro enegrecido.']),
 
     Q('q1', 1,
-      'Pela descrição do exame, qual o padrão das lesões de Marina?', [
+      'Pela descrição do exame e pela fotografia, qual o padrão das lesões '
+      'de Marina?', [
       ('Petéquias', False),
       ('Púrpura palpável arredondada', False),
       ('Púrpura retiforme', True),
@@ -132,12 +136,13 @@ ETAPAS = [
       ('Eritema nodoso', False),
      ], [
       ('O padrão', 'Placas purpúricas que não clareiam, de borda angulada e '
-       'ramificada, dolorosas e com centro necrótico são púrpura retiforme. O '
-       'desenho reproduz a rede de vasos da derme profunda e do subcutâneo: o '
-       'sangue sai porque o vaso foi ocluído, e a pele à frente dele necrosa.'),
+       'ramificada, dolorosas e com centro necrótico são púrpura retiforme, '
+       'como na fotografia. O desenho reproduz a rede de vasos da derme '
+       'profunda e do subcutâneo: o sangue sai porque o vaso foi ocluído, e a '
+       'pele que dependia dele necrosa.'),
       ('Por que não as outras', 'Petéquias são pontos planos de até 2 mm. A '
        'púrpura palpável da vasculite de pequeno vaso superficial forma lesões '
-       'arredondadas, como as da fotografia, sem rede. Equimose é mancha plana '
+       'pequenas e arredondadas, sem rede. Equimose é mancha plana '
        'de contorno liso. Livedo reticular é rede violácea que clareia e não '
        'necrosa. Eritema nodoso forma nódulos dolorosos nas pernas, sem púrpura.'),
       ('O que esse padrão pede', 'Púrpura retiforme é oclusão até prova em '
@@ -651,8 +656,11 @@ ETAPAS = [
        'cols., 2020). O manejo antimicrobiano é extrapolado da neutropenia '
        'febril oncológica; não há ensaio que compare imunossupressores nesta '
        'síndrome.',
-       'Imagens de outros pacientes, com setas adicionadas: púrpura, Hektor, '
-       'Wikimedia Commons, CC BY-SA 3.0; radiografia de tórax, Mikael '
+       'Imagens de outros pacientes, com setas adicionadas: fotografia de '
+       'pele, placa por calcifilaxia no abdome, Niels Olson, '
+       '<a href="https://commons.wikimedia.org/wiki/File:Calciphylaxis.png" '
+       'target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 3.0; '
+       'radiografia de tórax, Mikael '
        'Häggström, Wikimedia Commons, CC0; eletrocardiograma, Ewingdo, '
        'Wikimedia Commons, CC BY-SA 4.0; ultrassonografia renal, Hansen, '
        'Nielsen e Ewertsen, Wikimedia Commons, CC BY 4.0.'),

@@ -20,7 +20,7 @@ from pathlib import Path
 from motor.estudo_imagem import estudo
 from motor.etapas import (alt, bifurcacao, caminho, capa, desfecho, op, p,
                           pagina, painel, par, pareamento, pergunta, pontos,
-                          topicos)
+                          topicos, vitais)
 
 TITULO = 'Entre a sede e o fôlego'
 RODAPE = 'Paciente ficcional · evoluções simuladas para ensino'
@@ -103,10 +103,13 @@ ETAPAS = [
            so_kicker=True),
 
     pagina('exame', 'Exame físico', '',
-           topicos(('Sinais vitais', 'Pressão 104/66 mmHg · frequência cardíaca '
-                    '102 · frequência respiratória 20 · temperatura 36,8 °C · '
-                    'SpO₂ 95% em ar ambiente · peso 74 kg.'),
-                   ('Estado geral', 'Mucosas secas. Orientado, com atenção lenta; '
+           vitais(('Pressão arterial', '104/66', False),
+                  ('Frequência cardíaca', '102', True),
+                  ('Frequência respiratória', '20', False),
+                  ('Temperatura', '36,8 °C', False),
+                  ('SpO₂ em ar ambiente', '95%', False),
+                  ('Peso', '74 kg', False)),
+           topicos(('Estado geral', 'Mucosas secas. Orientado, com atenção lenta; '
                     'sem déficit focal.'),
                    ('Pescoço e linfonodos', 'Tireoide normal. Sem adenomegalia '
                     'cervical, supraclavicular, axilar ou inguinal.'),

@@ -21,12 +21,11 @@ associada ao ANCA), EULAR 2022, PEXIVAS, CYCLOPS, RAVE, RITUXVAS.
 
 from pathlib import Path
 
-from motor.desenhos import chave_corpusculo
 from motor.estudo_imagem import estudo
 from motor.etapas import (
     alt, balanco, bifurcacao, caminho, capa, consequencia, desfecho, grade,
     lamina, op, p, pagina, painel, par, pareamento, pergunta, pontos, quadro,
-    tabela, topicos,
+    tabela, topicos, vitais,
 )
 
 from .banco import BANCO  # noqa: F401  (a gaveta de exames é a mesma)
@@ -149,11 +148,13 @@ ETAPAS = [
            so_kicker=True),
 
     pagina('exame', 'Exame físico', '',
-           topicos(('Sinais vitais', 'Temperatura 37,8 °C · pressão 148/92 '
-                    'mmHg · frequência cardíaca 104 · frequência respiratória 28 '
-                    '· SpO₂ 88% em ar ambiente · peso 78 kg (84 kg há dois '
-                    'meses).'),
-                   ('Estado geral', 'Dispneico, prefere ficar sentado, completa '
+           vitais(('Temperatura', '37,8 °C', True),
+                  ('Pressão arterial', '148/92', True),
+                  ('Frequência cardíaca', '104', True),
+                  ('Frequência respiratória', '28', True),
+                  ('SpO₂ em ar ambiente', '88%', True),
+                  ('Peso', '78 kg (84 kg há dois meses)', True)),
+           topicos(('Estado geral', 'Dispneico, prefere ficar sentado, completa '
                     'só frases curtas. Palidez acentuada.'),
                    ('Nariz e orofaringe', 'Crostas hemáticas aderidas ao septo '
                     'nas duas narinas, mucosa friável que sangra ao toque. Septo '
@@ -309,7 +310,7 @@ ETAPAS = [
         'paciente está à direita da imagem.',
         credito_meta(IMG / 'tc_seio_maxilar.jpg.json'),
         [
-         ((640, 185), (820, 90), '**Seio maxilar esquerdo** velado por conteúdo de partes moles, com pequena bolha de ar.', -12),
+         ((596, 176), (820, 90), '**Seio maxilar esquerdo** velado por conteúdo de partes moles, com pequena bolha de ar.', -12),
          ((429, 171), (250, 90), '**Seio maxilar direito** aerado, de paredes finas.', 12),
          ((504, 143), (560, 30), '**Septo nasal** íntegro, sem perfuração.', 12),
         ],
@@ -511,6 +512,27 @@ ETAPAS = [
         ),
         so_kicker=True),
 
+    estudo('purpura', 'A pele das pernas',
+        'Fotografia de outro paciente, com lesões do mesmo tipo das dele. Antes '
+        'de ler os achados, descreva o tamanho, o centro das lesões e onde '
+        'elas se concentram.',
+        IMG / 'purpura_perna.jpg',
+        'Outro paciente, de outra causa. A foto não mostra o relevo nem o teste '
+        'da pressão: a elevação se sente com a polpa do dedo, e a lesão que não '
+        'empalidece sob uma lâmina de vidro é sangue fora do vaso.',
+        credito_meta(IMG / 'purpura_perna.jpg.json'),
+        [
+         ((809, 207), (450, 200), 'Na perna, **pápulas isoladas** de poucos milímetros, com pele normal entre elas.', 12),
+         ((471, 993), (200, 820), 'No dorso do pé, lesão com **centro escurecido** e halo vermelho.', -12),
+         ((857, 657), (450, 560), 'Perto do tornozelo, lesões mais densas que **confluem**, com centro acinzentado de necrose.', 12),
+        ],
+        ['Pápulas purpúricas de 2 a 8 mm que começaram nos pés e subiram para '
+         'as pernas, algumas com centro escurecido, que não desaparecem à '
+         'digitopressão (exame do caso).',
+         'Púrpura que se palpa é sangue fora de um vaso pequeno cuja parede '
+         'está inflamada; a púrpura plana da plaquetopenia não tem relevo. A '
+         'predileção pelas pernas acompanha a pressão hidrostática.']),
+
     Q('p5', 5,
       'Hemorragia alveolar e glomerulonefrite com cilindros hemáticos, no '
       'mesmo mês, com culturas negativas. **Quais três** mecanismos produzem '
@@ -552,21 +574,32 @@ ETAPAS = [
                   'dia passou a correr sem esperar o laudo. A biópsia saiu em '
                   'três dias. Um último anticorpo, colhido junto, levou quatro.'),
 
-    pagina("crescente", "Discussão visual", "Corpúsculo renal",
-        p("Antes de interpretar a microfotografia, localize a cápsula, o "
-          "espaço urinário e o tufo capilar neste esquema. O que significa "
-          "uma proliferação ocorrer fora do tufo?"),
-        '<details class="leitura"><summary>Revelar pontos de discussão</summary>'
-        '<p>O espaço de Bowman está entre o tufo e o epitélio parietal da '
-        'cápsula. Uma crescente ocupa esse espaço. O esquema normal orienta a '
-        'leitura da microfotografia seguinte, mas não demonstra lesão ou '
-        'proporção de glomérulos afetados.</p></details>',
-        chave_corpusculo(),
-        lamina_=lamina("corpusculo.svg", "Corpúsculo renal",
-                       "Esquema normal. 2: camada parietal; 4: espaço urinário; "
-                       "10: capilares.",
-                       "Michał Komorniczak · Wikimedia Commons · CC BY-SA 3.0 · "
-                       "sem alterações.")),
+    estudo("crescente", "Corpúsculo renal",
+        "Antes de interpretar a microfotografia, localize a cápsula, o espaço "
+        "urinário e o tufo capilar neste esquema. O que significa uma "
+        "proliferação ocorrer fora do tufo?",
+        IMG / "corpusculo_setas.jpg",
+        "Esquema de um corpúsculo renal normal, com as estruturas da legenda "
+        "original apontadas pelas setas.",
+        "Michał Komorniczak · Wikimedia Commons · CC BY-SA 3.0 · números "
+        "originais retirados, setas adicionadas",
+        [((722, 178), (830, 70), "**Camada parietal da cápsula de Bowman**: "
+          "epitélio achatado que forra a cápsula por dentro.", -14),
+         ((566, 130), (330, 40), "**Espaço urinário (de Bowman)**: entre o "
+          "tufo e a cápsula, recebe o filtrado.", 14),
+         ((604, 571), (720, 690), "**Podócito**: a camada visceral da cápsula, "
+          "que reveste as alças por fora.", 14),
+         ((436, 214), (250, 130), "**Capilar glomerular**: uma alça do tufo, "
+          "com endotélio e membrana basal.", 14),
+         ((486, 370), (300, 690), "**Célula mesangial**: no eixo do tufo, "
+          "entre as alças.", -14)],
+        ["Tudo o que fica dentro da cápsula e fora das alças é espaço "
+         "urinário. Uma proliferação de células nesse espaço, a partir do "
+         "epitélio parietal e com macrófagos, é a crescente: lesão "
+         "extracapilar, sinal de ruptura da parede capilar.",
+         "O esquema normal orienta a leitura da microfotografia seguinte, mas "
+         "não demonstra lesão nem a proporção de glomérulos afetados."],
+        kicker="Discussão visual"),
 
     estudo("crescente_histologia", "Biópsia renal",
         "Microfotografia de outro paciente, com a mesma lesão descrita no "
@@ -1139,7 +1172,9 @@ ETAPAS = [
        'Kjetil Lenes, domínio público; tomografia de tórax, Hellerhoff, CC '
        'BY-SA 4.0; glomérulo, Nephron, CC BY-SA 3.0; imunofluorescência, Simon '
        'Caulton, CC BY-SA 3.0; corpúsculo renal, Michał Komorniczak, CC BY-SA '
-       '3.0, sem alterações. Todas no Wikimedia Commons.'),
+       '3.0, números originais retirados; pele das pernas, James Heilman, MD, '
+       'CC BY-SA 3.0. Todas no Wikimedia Commons, com setas adicionadas; '
+       'endereços completos em img/CREDITOS.md.'),
 ]
 
 

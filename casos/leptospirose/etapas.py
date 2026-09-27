@@ -91,10 +91,12 @@ ETAPAS = [
            so_kicker=True),
 
     pagina('exame', 'Exame físico', '',
-           topicos(('Sinais vitais', 'Temperatura 38,4 °C · pressão 94/56 mmHg · '
-                    'frequência cardíaca 116 · frequência respiratória 30 · SpO₂ '
-                    '90% em ar ambiente.'),
-                   ('Estado geral', 'Prostrado, sonolento, orientado no tempo e no '
+           vitais(('Temperatura', '38,4 °C', True),
+                  ('Pressão arterial', '94/56', True),
+                  ('Frequência cardíaca', '116', True),
+                  ('Frequência respiratória', '30', True),
+                  ('SpO₂ em ar ambiente', '90%', True)),
+           topicos(('Estado geral', 'Prostrado, sonolento, orientado no tempo e no '
                     'espaço. Escleras ictéricas.'),
                    ('Respiratório', 'Crepitações nas bases dos dois pulmões.'),
                    ('Coração', 'Rítmico, taquicárdico, sem sopros.'),

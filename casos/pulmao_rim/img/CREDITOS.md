@@ -9,6 +9,7 @@
 | `rx_torax_alveolar.jpg` | Radiografia de tórax, opacidades alveolares bilaterais | Samir | Wikimedia Commons | CC BY-SA 3.0 |
 | `us_rim.jpg` | Ultrassonografia de rim adulto normal | Hansen, Nielsen e Ewertsen | Wikimedia Commons | CC BY 4.0 |
 | `sedimento_cilindro.jpg` | Cilindro celular em sedimento urinário | Rian Kabir | Wikimedia Commons | CC BY 2.0 |
+| `purpura_perna.jpg` | Púrpura palpável em pé e perna, algumas lesões com centro escurecido (File:Vasculitis.JPG) | James Heilman, MD | Wikimedia Commons | CC BY-SA 3.0 |
 
 > **Correção de 03/09/2026, sobre `biopsia_renal_cortex.jpg`.** A legenda dela
 > afirmava "hematoxilina-eosina, crescente celular". A coloração é de padrão
@@ -87,8 +88,8 @@ própria, dizendo que não é crescente.
 
 ## Imagens para discussão — revisão editorial
 
-- **Alvéolo**: LadyofHats. Domínio público. [Fonte e licença](https://commons.wikimedia.org/wiki/File:Alveolus_diagram.svg). Arquivo sem alterações. Uso comparativo; não é exame do paciente ficcional.
-- **Corpúsculo renal**: Michał Komorniczak. CC BY-SA 3.0. [Fonte e licença](https://commons.wikimedia.org/wiki/File:Renal_corpuscle.svg). Arquivo sem alterações. Uso comparativo; não é exame do paciente ficcional.
+- **Alvéolo**: LadyofHats. Domínio público. [Fonte e licença](https://commons.wikimedia.org/wiki/File:Alveolus_diagram.svg). Na tela `crescente` entra como `corpusculo_setas.jpg`: rasterizado com os números, letras e linhas de legenda originais ocultados, e setas adicionadas com os nomes da legenda original. Uso comparativo; não é exame do paciente ficcional.
+- **Corpúsculo renal**: Michał Komorniczak. CC BY-SA 3.0. [Fonte e licença](https://commons.wikimedia.org/wiki/File:Renal_corpuscle.svg). Na tela `crescente` entra como `corpusculo_setas.jpg`: rasterizado com os números, letras e linhas de legenda originais ocultados, e setas adicionadas com os nomes da legenda original. Uso comparativo; não é exame do paciente ficcional.
 
 ## Ampliação radiológica
 
@@ -105,7 +106,7 @@ Os dois revisores independentes aceitaram os usos delimitados. Cortes de TC/RM n
 
 ## Revisão das marcações — 8 de setembro de 2026
 
-A chave numérica de `Renal corpuscle.svg` foi traduzida da [fonte original](https://commons.wikimedia.org/wiki/File:Renal_corpuscle.svg) e incluída como legenda revelável. A figura permanece sem alterações. Os diagramas transparentes usam fundo branco também na lupa.
+A chave numérica de `Renal corpuscle.svg` foi traduzida da [fonte original](https://commons.wikimedia.org/wiki/File:Renal_corpuscle.svg) e agora nomeia as setas da tela `crescente` (camada parietal, espaço urinário, podócito, capilar glomerular, célula mesangial). Os diagramas transparentes usam fundo branco também na lupa.
 
 Na microfotografia `glomerulo_crescente.jpg`, foi **revogada a interpretação anterior do quarto marcador como glomérulo esclerosado**. Essa estrutura não sustenta a identificação; a seta e o nome foram removidos. Restam três pontos numerados (tufo, cápsula, proliferação extracapilar), conferidos sobre a imagem e pela ponta real do SVG. O laudo simulado agora ocupa uma página separada e não é apresentado como conclusão extraída de uma única fotografia.
 

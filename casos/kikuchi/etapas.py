@@ -20,7 +20,7 @@ from pathlib import Path
 from motor.estudo_imagem import estudo
 from motor.etapas import (alt, bifurcacao, caminho, capa, desfecho, op, p,
                           pagina, painel, par, pareamento, pergunta, pontos,
-                          topicos)
+                          topicos, vitais)
 
 TITULO = 'O que ficou no pescoço'
 RODAPE = 'Paciente ficcional · evoluções simuladas para ensino'
@@ -94,10 +94,13 @@ ETAPAS = [
            so_kicker=True),
 
     pagina('exame', 'Exame físico', '',
-           topicos(('Sinais vitais', 'Temperatura 38,1 °C · pressão 112/70 mmHg · '
-                    'frequência cardíaca 98 · frequência respiratória 16 · SpO₂ '
-                    '98% em ar ambiente · peso 58 kg.'),
-                   ('Estado geral', 'Alerta, hidratada, corada, sem desconforto '
+           vitais(('Temperatura', '38,1 °C', True),
+                  ('Pressão arterial', '112/70', False),
+                  ('Frequência cardíaca', '98', False),
+                  ('Frequência respiratória', '16', False),
+                  ('SpO₂ em ar ambiente', '98%', False),
+                  ('Peso', '58 kg', False)),
+           topicos(('Estado geral', 'Alerta, hidratada, corada, sem desconforto '
                     'respiratório.'),
                    ('Cabeça e pescoço', 'Orofaringe sem exsudato, dentes sem cárie '
                     'visível, couro cabeludo sem lesões. Três linfonodos na cadeia '
@@ -624,6 +627,26 @@ ETAPAS = [
        'proximais, e eritema malar poupando os sulcos nasolabiais. Pressão '
        '124/80 mmHg, sem edema.'),
 
+    estudo('eritema_face', 'Fotografia: o rosto',
+           'Fotografia de outra paciente com o mesmo tipo de lesão que Bianca '
+           'tem no rosto, com os olhos cobertos. Descreva onde fica o eritema '
+           'e o que acontece com a pele dos sulcos nasolabiais antes de abrir '
+           'os achados.',
+           IMG / 'eritema_facial.jpg',
+           'Fotografia de outra paciente · olhos cobertos · comparação didática.',
+           credito_meta(IMG / 'eritema_facial.jpg.json').replace(
+               'setas adicionadas', 'olhos cobertos, recorte e setas adicionadas'),
+        [
+         ((190, 300), (55, 440), '**Eritema** confluente na região malar direita, plano, sem pápulas nem pústulas.', 12),
+         ((700, 360), (905, 470), '**Eritema** na região malar esquerda, com a mesma cor e a mesma textura: a lesão é simétrica.', -12),
+         ((242, 470), (120, 615), '**Sulco nasolabial poupado**: a pele da dobra, do lado do nariz até o canto da boca, tem a cor normal.', 12),
+        ],
+        ['Eritema malar poupando os sulcos nasolabiais, surgido depois de uma '
+         'tarde de sol.',
+         'Eritema das duas bochechas que respeita os sulcos nasolabiais separa '
+         'esse desenho da dermatite seborreica, que ocupa as dobras, e da '
+         'rosácea, que traz pápulas e pústulas.']),
+
     bifurcacao('b2', 'Decisão', 'Os sintomas novos',
       'Como você conduz esse retorno?', [
       caminho('Investigar doença sistêmica agora, incluindo urina e função '
@@ -735,7 +758,9 @@ ETAPAS = [
        'Imagens de outros pacientes, com setas adicionadas: ultrassonografia, '
        'Nevit Dilmen, Wikimedia Commons, CC BY-SA 3.0; radiografia, Mikael '
        'Häggström, Wikimedia Commons, CC0; lâminas, Nephron, Wikimedia '
-       'Commons, CC BY-SA 3.0.'),
+       'Commons, CC BY-SA 3.0; fotografia do rosto, Doktorinternet, Wikimedia '
+       'Commons, CC BY-SA 4.0, com olhos cobertos e recorte '
+       '(commons.wikimedia.org/wiki/File:Lupusfoto.jpg).'),
 ]
 
 REVISAO = []

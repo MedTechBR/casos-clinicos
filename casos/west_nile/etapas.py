@@ -19,7 +19,7 @@ from pathlib import Path
 from motor.estudo_imagem import ecg, estudo
 from motor.etapas import (alt, bifurcacao, caminho, capa, desfecho, op, p,
                           pagina, painel, par, pareamento, pergunta, pontos,
-                          topicos)
+                          topicos, vitais)
 
 TITULO = 'O peso dos dias'
 RODAPE = 'Paciente ficcional · evoluções simuladas para ensino'
@@ -92,10 +92,13 @@ ETAPAS = [
            so_kicker=True),
 
     pagina('exame', 'Exame físico', '',
-           topicos(('Sinais vitais', 'Temperatura 38,7 °C · pressão 146/84 mmHg '
-                    '· frequência cardíaca 124 · frequência respiratória 20 · '
-                    'SpO₂ 96% em ar ambiente · peso 78 kg.'),
-                   ('Estado geral', 'Sonolento, abre os olhos quando chamado, '
+           vitais(('Temperatura', '38,7 °C', True),
+                  ('Pressão arterial', '146/84', True),
+                  ('Frequência cardíaca', '124', True),
+                  ('Frequência respiratória', '20', False),
+                  ('SpO₂ em ar ambiente', '96%', False),
+                  ('Peso', '78 kg', False)),
+           topicos(('Estado geral', 'Sonolento, abre os olhos quando chamado, '
                     'desorientado no tempo. Mucosas úmidas, jugulares planas, '
                     'sem edema.'),
                    ('Pele', 'Sem exantema, petéquias ou vesículas.'),
