@@ -1,430 +1,276 @@
-"""Doença neuroinvasiva pelo vírus do Nilo Ocidental — paralisia flácida aguda.
+"""Encefalite febril com paresia flácida assimétrica num homem de 71 anos.
 
-Alíquota → pergunta, na gramática do //New England//. Paciente ficcional;
-evoluções autorais, sem pretensão de prognóstico individual.
+Reescrito em 26/09/2026 no molde do //New England// (piloto: leptospirose;
+ver Artifacts/nejm-casos-classicos/GRAMATICA_LIDA_2026-09-26.md). A âncora é
+a meningoencefalite em idoso, herpética até prova em contrário, tratada
+empiricamente como se deve. As primeiras perguntas classificam a
+hiponatremia, leem o líquor, localizam a lesão e leem a ressonância; a
+virada vem depois da metade, com a PCR para herpes negativa e a história da
+viagem contada pela esposa. O nome do diagnóstico aparece pela primeira vez
+na pergunta do exame confirmatório. As decisões de via aérea mudam o
+desfecho.
+
+Paciente ficcional. Vigilância e critérios de caso: Ministério da Saúde,
+Nota Técnica n.º 79/2026-CGARB/DEDT/SVSA/MS; diagnóstico e tratamento: CDC,
+páginas para profissionais consultadas em 26/09/2026.
 """
 from pathlib import Path
+
 from motor.estudo_imagem import ecg, estudo
-from motor.etapas import (alt, bifurcacao, caminho, capa, desfecho, grupo,
-    lamina, op, p, pagina, painel, par, pareamento, pedido, pergunta,
-    resultados, tabela, topicos, vitais)
+from motor.etapas import (alt, bifurcacao, caminho, capa, desfecho, op, p,
+                          pagina, painel, par, pareamento, pergunta, pontos,
+                          topicos)
 
 TITULO = 'O peso dos dias'
-RODAPE = 'Caso ficcional · evoluções simuladas para ensino'
+RODAPE = 'Paciente ficcional · evoluções simuladas para ensino'
 COR = '#2563eb'
 IMG = Path(__file__).parent / 'img'
 BANCO = []
-CENA = 'cena.png'
-CREDITO = ('Ilustração gerada por IA para este paciente ficcional; não é '
-           'documentação de achado clínico.')
+MOLDE = 'nejm'
 
 
-def pg(k, titulo, *blocos, **kw):
-    return pagina(k, titulo, '', *blocos, fundo=CENA, so_kicker=True, **kw)
+def credito_meta(meta):
+    import json
+    m = json.loads(Path(meta).read_text())
+    return m['autor'] + ' · Wikimedia Commons · ' + m['licenca'] + ' · setas adicionadas'
 
 
-def ex(n, r, ref='—', a=False):
-    return op(n, resultado=r, referencia=ref, alterado=a)
+def pg(k, titulo, *textos, segue='', conforme=None):
+    return pagina(k, titulo, '', *(p(t) for t in textos), so_kicker=True,
+                  segue=segue, conforme=conforme)
 
 
-def q(k, n, texto, itens, titulo, segue=''):
-    return pergunta(k, f'Pergunta {n}', texto,
-        [alt(t, c, certa=ok) for t, c, ok in itens],
-        titulo_resposta=titulo, fundo=CENA, segue=segue)
+def Q(k, n, enunciado, opcoes, explicacao, segue=''):
+    """Pergunta no molde do NEJM: alternativas curtas e uma explicação só,
+    em seções (subtítulo, texto)."""
+    return pergunta(k, f'Pergunta {n}', enunciado,
+                    [alt(t, certa=ok) for t, ok in opcoes],
+                    explicacao=explicacao, segue=segue)
 
 
-def fim(k, titulo, texto, porque, qualidade='medio'):
+def ex(nome, valor, ref='—', alt_=False):
+    return op(nome, resultado=valor, referencia=ref, alterado=alt_)
+
+
+def fim(k, titulo, texto, porque, qualidade):
     return desfecho(k, titulo, p(texto), qualidade=qualidade, porque=porque,
-                    fundo=CENA, fecho='retrospectiva')
+                    fecho='retrospectiva')
 
 
 ETAPAS = [
-    capa(TITULO, fundo=CENA,
-         kicker='Caso interativo · 8 perguntas · 3 decisões',
-         procedencia='Paciente ficcional. Curso simulado.'),
+    capa(TITULO, fundo='cena.png', kicker='Caso interativo',
+         selo='Paciente ficcional · procedência e créditos na última tela'),
 
     pg('historia', 'Apresentação',
-       p('Antônio, 71 anos, é levado pela esposa ao pronto atendimento porque, '
-         'naquela manhã, não conseguiu ir sozinho ao banheiro. Há quatro dias '
-         'tem febre e cefaleia. Ao entrar no consultório, diz que está "sem '
-         'firmeza nas pernas" e que deve ter se alimentado mal.'),
-       p('Até a semana anterior caminhava até o mercado, cuidava das próprias '
-         'contas e buscava o neto na escola. A esposa estranhou que ele '
-         'precisasse se apoiar nos móveis e demorasse a responder a perguntas '
-         'simples.'),
-       lamina_=lamina(CENA, 'Antônio, na admissão',
-                      'Ilustração do paciente ficcional.', CREDITO)),
+       'Um homem de 71 anos é trazido pela esposa ao pronto-socorro no quinto '
+       'dia de febre. Tem dor de cabeça desde o início e, desde ontem, demora a '
+       'responder e troca as datas. Hoje de manhã a perna direita cedeu quando '
+       'ele tentou levantar, e ele não conseguiu ir sozinho ao banheiro.',
+       'No segundo dia de febre passou numa unidade básica: o exame de urina foi '
+       'normal, e ele saiu com paracetamol e orientação de beber líquidos. Desde '
+       'então come pouco, mas tem tomado água e chá.',
+       'Nega tosse, dor torácica, ardor ao urinar, diarreia, vômitos, '
+       'convulsão, queda com batida na cabeça, dor nas costas, manchas na pele '
+       'e remédio novo.'),
 
-    q('p1', 1,
-      'Homem de 71 anos, quatro dias de febre e cefaleia, e hoje não '
-      'consegue ir ao banheiro sozinho. **Quais quatro** hipóteses precisam '
-      'ser consideradas de imediato?', [
-      ('Meningoencefalite infecciosa',
-       'Febre, cefaleia e mudança de comportamento em quatro dias. O '
-       'tratamento empírico não espera exame.', True),
-      ('Doença de Alzheimer',
-       'Curso de anos, sem febre. Há uma semana ele cuidava das próprias '
-       'contas.', False),
-      ('Sepse de foco extraneural com delirium',
-       'No idoso, pneumonia ou infecção urinária podem começar por confusão, '
-       'antes do sintoma local.', True),
-      ('Neuropatia periférica crônica',
-       'Sensitiva, distal e lenta. Não explica febre nem lentificação '
-       'instalada em quatro dias.', False),
-      ('Acidente vascular cerebral',
-       'Perna que cede é déficit focal até prova em contrário, e febre não '
-       'exclui AVC.', True),
-      ('Miastenia gravis',
-       'Fraqueza flutuante que piora ao fim do dia, sem febre nem alteração '
-       'cognitiva.', False),
-      ('Hiponatremia ou hipoglicemia',
-       'Idoso febril que come e bebe pouco: glicemia e sódio se conferem '
-       'em minutos.', True),
-      ('Hipotensão postural por medicação',
-       'Explicaria uma queda, não quatro dias de febre com lentificação.',
-       False),
-     ], 'Infecção do sistema nervoso, sepse, AVC e distúrbio metabólico'),
+    pagina('ficha', 'Ficha do paciente', '',
+           topicos(('Antecedentes', 'Hipertensão há 14 anos e diabetes tipo 2 '
+                    'há 7, sem lesão de órgão conhecida. Catarata operada nos '
+                    'dois olhos. Herniorrafia inguinal há 20 anos. Dengue há '
+                    'seis anos, sem internação.'),
+                   ('Medicações', 'Losartana 50 mg pela manhã e metformina 850 '
+                    'mg duas vezes ao dia. Nenhum diurético. Paracetamol desde o '
+                    'início da febre.'),
+                   ('Vacinas', 'Febre amarela em 2018. Gripe e covid-19 em dia.'),
+                   ('Hábitos', 'Parou de fumar há 20 anos. Uma ou duas cervejas '
+                    'no fim de semana. Caminha 40 minutos todas as manhãs.'),
+                   ('Vida social', 'Bancário aposentado, mora com a esposa e '
+                    'cuida do neto duas tardes por semana. Voltaram há nove dias '
+                    'de três semanas na casa da filha, nos Estados Unidos.'),
+                   ('Família', 'Pai morreu de infarto aos 68 anos; a mãe teve '
+                    'AVC aos 80. Um irmão tem doença de Parkinson.')),
+           so_kicker=True),
 
-    pg('hda', 'História da doença atual',
-       p('Quatro dias antes, começou com indisposição e dor de cabeça difusa, '
-         'de instalação gradual, com calafrios. A temperatura chegou a '
-         '38,4 °C em casa. Tomou paracetamol, com alívio por algumas horas, '
-         'mas ficou sem apetite. Sem tosse, coriza, dor torácica ou ardor '
-         'para urinar.'),
-       p('Na véspera da admissão, precisou interromper o banho para sentar-se. '
-         'A esposa percebeu que ele derrubou um copo e perguntou duas vezes '
-         'sobre um compromisso já cancelado. Pela manhã, ao tentar levantar, '
-         'a perna direita cedeu. Não perdeu a consciência e não bateu a '
-         'cabeça. Ela não observou convulsão, desvio da boca ou fala '
-         'arrastada.')),
+    pagina('exame', 'Exame físico', '',
+           topicos(('Sinais vitais', 'Temperatura 38,7 °C · pressão 146/84 mmHg '
+                    '· frequência cardíaca 124 · frequência respiratória 20 · '
+                    'SpO₂ 96% em ar ambiente · peso 78 kg.'),
+                   ('Estado geral', 'Sonolento, abre os olhos quando chamado, '
+                    'desorientado no tempo. Mucosas úmidas, jugulares planas, '
+                    'sem edema.'),
+                   ('Pele', 'Sem exantema, petéquias ou vesículas.'),
+                   ('Cardiopulmonar', 'Ritmo regular, taquicárdico, sem sopros. '
+                    'Murmúrio vesicular presente, sem ruídos adventícios.'),
+                   ('Abdome', 'Flácido e indolor, sem visceromegalias. Bexiga '
+                    'não palpável.'),
+                   ('Neurológico', 'Rigidez de nuca discreta. Pupilas isocóricas, '
+                    'face simétrica, fala lenta, sem afasia. Não sustenta a perna '
+                    'direita elevada no leito; move os outros três membros contra '
+                    'a gravidade. Reflexo cutâneo-plantar em flexão dos dois '
+                    'lados.')),
+           so_kicker=True),
 
-    pg('antecedentes', 'Antecedentes e medicações',
-       p('Hipertensão há catorze anos e diabetes tipo 2 há sete, acompanhados '
-         'na unidade de saúde. Não conhece doença renal, retinopatia ou '
-         'perda de sensibilidade nos pés. Nunca teve acidente vascular '
-         'cerebral, crise convulsiva ou dificuldade semelhante para caminhar. '
-         'Teve dengue há seis anos, sem complicações. Herniorrafia inguinal '
-         'há vinte anos.'),
-       p('Usa losartana 50 mg pela manhã e metformina 850 mg duas vezes '
-         'ao dia. Durante a doença tomou apenas paracetamol e, nos últimos '
-         'dois dias, quase não comeu nem bebeu. Aposentado, mora com a '
-         'esposa. Parou de fumar há vinte anos; bebe cerveja ocasionalmente.')),
+    painel('res1', 'Primeiros exames', 'Sangue', [
+        ex('Hemoglobina', '14,1 g/dL', '13,5–17,5 g/dL'),
+        ex('Leucócitos', '11.800/mm³ · neutrófilos 84% · linfócitos 850/mm³',
+           '4.000–11.000 · linfócitos 1.000–4.000', True),
+        ex('Plaquetas', '176.000/mm³', '150.000–450.000/mm³'),
+        ex('Sódio / potássio', '129 / 4,0 mmol/L', 'Na 135–145 · K 3,5–5,0', True),
+        ex('Ureia / creatinina', '26 / 1,1 mg/dL {{(TFGe 72 mL/min/1,73 m², CKD-EPI 2021)}}',
+           'até 42 / 0,7–1,3 mg/dL'),
+        ex('Glicose', '138 mg/dL', '70–99 mg/dL em jejum', True),
+        ex('Osmolalidade sérica', '270 mOsm/kg', '275–295 mOsm/kg', True),
+        ex('Ácido úrico', '2,6 mg/dL', '3,4–7,0 mg/dL', True),
+        ex('Proteína C reativa', '38 mg/L', 'até 5 mg/L', True),
+    ], introducao='Duas hemoculturas foram colhidas na chegada.'),
 
-    pg('exame', 'Exame físico',
-       vitais(('PA', '146/84 mmHg', False), ('FC', '102 bpm', True),
-              ('FR', '20 irpm', False), ('Temperatura', '38,7 °C', True),
-              ('SpO₂', '96% em ar ambiente', False)),
-       topicos(('Estado geral', 'Desperto, responde lentamente e erra o dia '
-                'do mês. Mucosas discretamente secas.'),
-               ('Cardiopulmonar', 'Ritmo regular, sem sopro; murmúrio '
-                'vesicular presente, sem ruídos adventícios.'),
-               ('Abdome e pele', 'Abdome indolor. Sem lesão cutânea ou '
-                'edema.'),
-               ('Neurológico', 'Sem rigidez de nuca evidente. Face simétrica '
-                'e fala compreensível. Eleva os quatro membros contra a '
-                'gravidade no leito, mas não se mantém em pé sem auxílio. '
-                'Exame motor detalhado será repetido após analgesia.'))),
+    painel('res1b', 'Primeiros exames', 'Urina e outros', [
+        ex('Urina', 'Densidade 1.018 · sem leucócitos · nitrito negativo · sem '
+           'sangue · sem glicose'),
+        ex('Osmolalidade urinária', '456 mOsm/kg', '—', True),
+        ex('Sódio urinário', '52 mmol/L', '—', True),
+        ex('AST / ALT', '34 / 29 U/L', 'até 40 / 41 U/L'),
+        ex('Creatinoquinase', '160 U/L', 'até 190 U/L'),
+        ex('Lactato', '1,3 mmol/L', 'até 2,0 mmol/L'),
+        ex('TSH', '2,1 µUI/mL', '0,4–4,5 µUI/mL'),
+    ]),
+
+    estudo('rx_adm', 'Radiografia de tórax',
+           'Radiografia feita na chegada, à procura de um foco para a febre e a '
+           'confusão.',
+           IMG / 'rx_torax_normal.jpg',
+           'Radiografia de outro paciente · comparação didática.',
+           'Mikael Häggström · Wikimedia Commons · CC0 · setas adicionadas',
+        [
+         ((112, 972), (60, 820), '**Seio costofrênico** direito agudo e livre: sem derrame.', 12),
+         ((300, 700), (160, 560), '**Pulmão direito** com trama vascular normal, sem consolidação.', -12),
+         ((735, 820), (880, 700), '**Silhueta cardíaca** de tamanho normal.', 12),
+        ],
+        ['Campos pulmonares limpos, seios costofrênicos livres, área cardíaca '
+         'normal.',
+         'Sem foco pulmonar e com urina normal, a febre continua sem origem fora '
+         'do sistema nervoso.']),
 
     *ecg('ecg_evolucao',
-         'Durante a observação, Antônio mantém febre e o pulso fica mais '
-         'acelerado. A equipe registra um ECG. O ritmo ajuda a explicar a '
-         'dificuldade para caminhar ou exige uma investigação em paralelo?',
+         'A frequência cardíaca segue em 124 depois do antitérmico. A equipe '
+         'registra um ECG.',
          IMG,
-         'A taquicardia pode acompanhar a febre e o estresse sistêmico. Isso '
-         'não explica por si só o déficit motor e a alteração da atenção; a '
-         'investigação neurológica continua.'),
+         'Com febre de 38,7 °C, a taquicardia sinusal é esperada e não explica a '
+         'confusão nem a perna que cedeu.'),
 
-    q('ex1', 2,
-      'Febre, cefaleia, confusão e uma perna que cedeu, em diabético de 71 '
-      'anos. **Quais quatro** exames são os mais apropriados agora?', [
-      ('Glicemia capilar e sódio',
-       'Hipoglicemia e hiponatremia causam confusão e fraqueza, e se '
-       'corrigem na hora.', True),
-      ('TSH e T4 livre',
-       'Hipotireoidismo não produz febre nem perna que cede de um dia para '
-       'outro.', False),
-      ('Hemoculturas, urina e radiografia',
-       'Procuram o foco extraneural do delirium febril do idoso, antes do '
-       'primeiro antibiótico.', True),
-      ('Vitamina B12 e ácido fólico',
-       'Deficiência de B12 é subaguda, predominantemente sensitiva e sem '
-       'febre.', False),
-      ('Tomografia de crânio e punção lombar',
-       'Déficit focal e confusão pedem imagem antes da agulha; o empírico '
-       'não espera a punção.', True),
-      ('Eletroneuromiografia dos quatro membros',
-       'Nos primeiros dias mostra pouco; hoje não muda a conduta de '
-       'emergência.', False),
-      ('Creatinina e potássio',
-       'Losartana, metformina e pouca ingesta: a função renal define doses '
-       'e riscos imediatos.', True),
-      ('Cortisol sérico matinal',
-       'Cabe se hiponatremia e hipotensão persistirem; não é exame da '
-       'primeira hora.', False),
-      ('Ressonância de coluna lombar',
-       'Sem dor lombar nem nível sensitivo descrito, não é o exame desta '
-       'hora.', False),
-      ('Ecocardiograma transtorácico',
-       'Sem sopro e sem embolia aparente; entra se a hemocultura '
-       'positivar.', False),
-     ], 'Glicemia e sódio, culturas, imagem antes da punção e função renal'),
+    Q('p1', 1,
+      'Sódio de 129 mmol/L. Pelos exames e pelo exame físico, qual a '
+      'classificação mais provável da hiponatremia?', [
+      ('Hipovolêmica, por pouca ingestão', False),
+      ('Secreção inapropriada de ADH', True),
+      ('Pseudo-hiponatremia', False),
+      ('Hiperglicemia com desvio de água', False),
+      ('Baixa ingestão de solutos', False),
+      ('Hipervolêmica', False),
+     ], [
+      ('Passo a passo', 'A osmolalidade sérica de 270 mOsm/kg confirma '
+       'hiponatremia hipotônica, o que afasta a pseudo-hiponatremia, e a glicose '
+       'de 138 mg/dL muda o sódio em menos de 1 mmol/L. A urina com 456 mOsm/kg '
+       'mostra que o ADH está agindo: na polidipsia e na dieta pobre em solutos, '
+       'ela viria abaixo de 100.'),
+      ('O volume', 'Mucosas úmidas, jugulares planas e nenhum edema indicam '
+       'euvolemia. Sódio urinário de 52 mmol/L sem diurético e ácido úrico baixo, '
+       'de 2,6 mg/dL, tornam a hipovolemia improvável: nela o rim poupa sódio, '
+       'abaixo de 30 mmol/L. O TSH normal ajuda; a insuficiência adrenal ainda '
+       'precisa ser afastada com cortisol.'),
+      ('O que muda', 'Restrição de água livre, nada de soro hipotônico e '
+       'correção de no máximo 8 a 10 mmol/L em 24 horas. E a causa: no idoso '
+       'febril e confuso, a secreção inapropriada aponta para o sistema nervoso '
+       'ou para o pulmão, e a radiografia está limpa.'),
+     ]),
 
-    painel('res1', 'Resultados', 'O que a equipe pediu', [
-        ex('Hemograma', 'Hb 13,2 g/dL · leucócitos 10.900/mm³ · plaquetas 181.000/mm³',
-           'Hb 13–17 · leucócitos 4.000–11.000 · plaquetas 150.000–450.000'),
-        ex('Glicemia', '132 mg/dL', '70–140 (valor casual adotado no caso)'),
-        ex('Eletrólitos e função renal', 'Na 131 mmol/L · K 4,1 mmol/L · creatinina 1,1 mg/dL',
-           'Na 135–145 · K 3,5–5,0 · Cr 0,7–1,3', True),
-        ex('Proteína C reativa', '42 mg/L', 'Menor que 5', True),
-        ex('Urina tipo 1', '0–2 leucócitos/campo · nitrito negativo · sem sangue'),
-        ex('Radiografia de tórax', 'Sem opacidade focal ou derrame pleural.'),
-        ex('Hemoculturas iniciais', 'Coletadas; em processamento nesta etapa.'),
-      ], fundo=CENA,
-      introducao='Sódio de 131 com mucosas secas e pouca ingesta: a equipe '
-                 'repõe volume com cautela. A tomografia e a punção ficam '
-                 'para depois do reexame neurológico.',
-      laminas={'Radiografia de tórax': lamina('rx_torax_normal.jpg',
-               'Radiografia de tórax',
-               'Imagem comparativa de outro adulto. Ausência de opacidade '
-               'focal evidente não exclui infecção precoce.',
-               'Mikael Häggström · Wikimedia Commons · CC0. Imagem ilustrativa.')}),
+    bifurcacao('b1', 'Decisão', 'Antes da tomografia',
+      'Febre, confusão, rigidez de nuca discreta e uma perna fraca. A tomografia '
+      'vai levar uma hora. O que você faz enquanto isso?', [
+      caminho('Ceftriaxona, ampicilina e aciclovir agora, antes da tomografia',
+              'tratado',
+              'Com déficit focal, a punção espera a imagem, mas o tratamento '
+              'empírico não. Acima dos 50 anos, a ampicilina cobre Listeria; o '
+              'aciclovir cobre o herpes simples.'),
+      caminho('Tomografia e punção primeiro; tratar conforme o líquor',
+              'atraso',
+              'O líquor fica pronto horas depois, e cada hora de atraso do '
+              'antibiótico na meningite bacteriana aumenta a mortalidade.'),
+      caminho('Ceftriaxona agora; aciclovir só se a ressonância mostrar o lobo '
+              'temporal', 'sem_aciclovir',
+              'A ressonância pode demorar um dia, e o atraso do aciclovir piora '
+              'o prognóstico da encefalite herpética.'),
+    ]),
 
-    pg('reexame', 'Reavaliação',
-       p('Depois de analgesia e hidratação cautelosa, continua desorientado. '
-         'A perna direita não vence a gravidade; a esquerda vence '
-         'resistência leve. O braço direito está discretamente mais fraco '
-         'que o esquerdo. A sensibilidade ao toque e à picada permanece '
-         'simétrica.'),
-       p('Os reflexos patelar e aquileu direitos estão abolidos; à '
-         'esquerda, diminuídos. Não há nível sensitivo. Sem sinal de '
-         'Babinski. Surge rigidez de nuca discreta. Tremor de ação nas '
-         'mãos.')),
-
-    q('p6', 3,
-      'Paresia flácida assimétrica, arreflexia do lado mais fraco, '
-      'sensibilidade preservada, sem nível sensitivo, sem Babinski. '
-      '**Onde está a lesão?**', [
-      ('Corno anterior da medula espinal',
-       'Motor inferior puro, assimétrico, com sensibilidade poupada e sem '
-       'nível: topografia de corno anterior.', True),
-      ('Raiz e nervo periférico, com desmielinização',
-       'Guillain-Barré costuma ser simétrico, com parestesias. Assimetria '
-       'marcada e febre ativa falam contra.', False),
-      ('Cápsula interna',
-       'Motor superior: passado o choque inicial, hiperreflexia e Babinski. '
-       'Os reflexos dele estão abolidos.', False),
-      ('Junção neuromuscular',
-       'Miastenia e botulismo preservam reflexos e costumam ser '
-       'simétricos.', False),
-      ('Medula transversa, na altura torácica',
-       'Exigiria nível sensitivo, disfunção esfincteriana e paraparesia '
-       'mais simétrica. Não há nível.', False),
-     ], 'Flácida, arrefléxica, assimétrica e sem déficit sensitivo: corno anterior'),
-
-    q('p7', 4,
-      'Encefalopatia febril com paresia flácida, arrefléxica e assimétrica, '
-      'sem déficit sensitivo. **Quais quatro** causas explicam o quadro '
-      'inteiro?', [
-      ('Vírus varicela-zóster',
-       'Causa encefalite, mielite e paresia segmentar de neurônio motor '
-       'inferior, às vezes sem vesículas.', True),
-      ('Enterovírus neurotrópicos (EV-A71, EV-D68, poliovírus)',
-       'Mielite de corno anterior com pródromo febril; mais comum em '
-       'crianças, mas ocorre em adultos.', True),
-      ('Arbovírus (Nilo Ocidental, Saint Louis, dengue, Zika)',
-       'Vários causam encefalite com mielite; exposição e sorologia separam '
-       'uns dos outros.', True),
-      ('Raiva paralítica',
-       'Até um terço das raivas humanas é paralítica, febril e sem '
-       'hidrofobia. Pergunte por morcegos.', True),
-      ('Encefalite por herpes simples tipo 1',
-       'Encefalite temporal sem lesão de neurônio motor inferior. O '
-       'aciclovir continua até a PCR.', False),
-      ('Guillain-Barré, variante axonal motora',
-       'Explica a paralisia, mas não a febre ativa nem a encefalopatia. '
-       'Exigiria duas doenças.', False),
-      ('AVC de tronco encefálico',
-       'Neurônio motor superior e nervos cranianos; não produz flacidez '
-       'arrefléxica persistente.', False),
-      ('Abscesso cerebral',
-       'Febre e déficit focal cabem, mas o déficit seria de neurônio motor '
-       'superior.', False),
-      ('Botulismo',
-       'Descendente, simétrico, com ptose, sem febre e com sensório '
-       'preservado.', False),
-      ('Polineuropatia do doente crítico',
-       'Exige dias de terapia intensiva e sepse grave; é simétrica e '
-       'distal.', False),
-     ], 'Quatro infecções explicam o conjunto; as demais explicam só uma parte'),
-
-    pg('imagem_localizacao', 'Discussão de imagem',
-       p('Observe o corte transversal da medula. Que estruturas você '
-         'relacionaria à força, à sensibilidade e aos reflexos? Localize-as '
-         'antes de abrir a discussão.'),
-       '<details class="leitura"><summary>Revelar pontos de discussão</summary>'
-       '<p>Os cornos anteriores abrigam corpos celulares motores; as raízes '
-       'ventrais levam axônios motores para a periferia. O comprometimento '
-       'dessas estruturas produz fraqueza e hiporreflexia sem o padrão '
-       'sensitivo de uma lesão medular transversa. O esquema não identifica '
-       'a etiologia.</p></details>',
-       lamina_=lamina('medula.svg', 'Medula espinal',
-                      'Esquema anatômico comparativo; não é exame do paciente. '
-                      'Rótulos originais em inglês.',
-                      'Polarlys · Wikimedia Commons · CC BY 2.5 · sem alterações.')),
-
-    bifurcacao('b1', 'Decisão', 'Conduta inicial',
-      'Qual caminho você escolhe diante da reavaliação?', [
-      caminho('Internar, colher amostras e iniciar cobertura empírica para '
-              'meningoencefalite.', 'r_interna',
-              'A coleta é importante, mas não deve atrasar antimicrobianos '
-              'quando a suspeita é relevante.'),
-      caminho('Conduzir como polirradiculoneuropatia e priorizar '
-              'imunoglobulina.', 'r_ig',
-              'Guillain-Barré é um diferencial, mas febre ativa e '
-              'encefalopatia tornam insuficiente essa hipótese isolada.'),
-      caminho('Manter observação com hidratação antes de ampliar a '
-              'investigação.', 'r_observa',
-              'A observação sem investigação dirigida pode retardar o '
-              'reconhecimento da progressão neurológica.')], fundo=CENA),
-
-    pg('r_interna', 'Primeiro dia',
-       p('Antônio é internado em leito monitorizado. São iniciados aciclovir '
-         'e cobertura para meningite bacteriana, incluindo //Listeria// pela '
-         'idade, com ajuste à função renal. A coleta de amostras e a '
-         'avaliação de segurança da punção são organizadas sem atrasar o '
-         'tratamento. A esposa fica para complementar a história.'),
-       segue='reavaliacao_internacao'),
-    pg('r_ig', 'Primeiro dia',
-       p('A imunoglobulina é iniciada sob a hipótese de '
-         'polirradiculoneuropatia. Ele mantém febre e confusão e o tremor de '
-         'ação piora. Na revisão conjunta, a equipe amplia a abordagem para '
-         'meningoencefalite e inicia cobertura empírica, doze horas depois '
-         'do que poderia.'),
-       segue='reavaliacao_internacao'),
-    pg('r_observa', 'Primeiro dia',
-       p('Durante a observação, a perna direita passa a apresentar apenas '
-         'contração, sem movimento, e ele fica mais sonolento. É transferido '
-         'para leito monitorizado, e a equipe inicia a abordagem empírica de '
-         'meningoencefalite com um dia de atraso.'),
-       segue='reavaliacao_internacao'),
-
-    pg('reavaliacao_internacao', 'Reavaliação na internação',
-       p('Na transferência para o leito, precisa de duas pessoas para se '
-         'acomodar. Ao tentar ajustar o lençol, usa mais a mão esquerda. '
-         'Mantém sensibilidade ao toque e responde quando chamado, mas '
-         'alterna períodos de conversa com sonolência.'),
-       p('A esposa lembra que os dois tinham voltado de uma viagem para '
-         'visitar a filha pouco antes de ele adoecer, e que ninguém ficou '
-         'doente por lá. A cefaleia permanece. A equipe revê a evolução da '
-         'consciência e o déficit focal antes de definir a segurança da '
-         'punção.'),
+    pg('atraso', 'Seis horas depois',
+       'A fila da tomografia leva uma hora e meia, e a punção só sai no fim da '
+       'tarde. Nesse tempo ele fica mais sonolento. Ceftriaxona, ampicilina e '
+       'aciclovir começam seis horas depois da chegada, quando chega a '
+       'citologia do líquor.',
        segue='tc_evolucao'),
 
+    pg('sem_aciclovir', 'Primeiras horas',
+       'Ceftriaxona 2 g e ampicilina 2 g entram antes da tomografia. O aciclovir '
+       'fica esperando a ressonância, marcada para o dia seguinte, até que o '
+       'plantonista da noite o inicia, 14 horas depois da chegada.',
+       segue='tc_evolucao'),
+
+    pg('tratado', 'Primeiras horas',
+       'Ceftriaxona 2 g, ampicilina 2 g e aciclovir 780 mg (10 mg/kg) pela veia '
+       'em 40 minutos. Com a TFG estimada de 72, o aciclovir não precisa de '
+       'ajuste. A água livre fica restrita a um litro por dia, e o soro '
+       'fisiológico, só para diluir as medicações.'),
+
     estudo('tc_evolucao', 'Tomografia de crânio',
-        'Diante do déficit focal e da alteração da consciência, a equipe '
-        'solicita TC de crânio antes de definir a segurança da punção. O '
-        'tratamento empírico é mantido enquanto o exame é realizado.',
+        'Tomografia sem contraste antes da punção, pelo déficit focal e pela '
+        'sonolência.',
         IMG / 'tc_cranio.png',
-        'Corte axial e localizador de outro adulto. Figura ilustrativa; não '
-        'substitui a leitura do exame completo.',
-        'Mikael Häggström · Wikimedia Commons · CC0. Setas adicionadas.',
+        'Corte axial e localizador de outro adulto · comparação didática.',
+        'Mikael Häggström · Wikimedia Commons · CC0 · setas adicionadas',
         [
-         ((268, 380), (35, 340), '**Ventrículos laterais**, escuros neste corte, sem dilatação grosseira.', 12),
-         ((282, 210), (400, 100), '**Fissura inter-hemisférica** anterior, na linha média: sem desvio.', -12),
+         ((268, 380), (35, 340), '**Ventrículos laterais**, escuros neste corte, sem dilatação.', 12),
+         ((282, 210), (400, 100), '**Fissura inter-hemisférica** anterior na linha média: sem desvio.', -12),
          ((766, 466), (560, 250), '**Localizador**: a linha amarela marca o nível do corte, que passa pelos ventrículos laterais.', 12),
         ],
-        ['O laudo ficcional do estudo completo não mostra hemorragia, hidrocefalia ou efeito de massa.', 'Isso não exclui encefalite nem isquemia precoce; a tomografia sem alteração permite seguir para a punção.']),
+        ['Sem hemorragia, hidrocefalia, efeito de massa ou desvio da linha média.',
+         'A tomografia libera a punção; não afasta encefalite nem isquemia '
+         'recente.']),
 
-    q('ex2', 5,
-      'Paresia flácida assimétrica com febre e confusão; a tomografia de '
-      'crânio não mostra alteração. **Quais quatro** exames são os mais '
-      'apropriados agora?', [
-      ('Análise completa do líquor',
-       'Célula, proteína, glicose e Gram separam bactéria, vírus, '
-       'tuberculose e Guillain-Barré.', True),
-      ('PCR para HSV, VZV e enterovírus no líquor',
-       'Herpes e varicela-zóster têm tratamento; o enterovírus é causa '
-       'conhecida de mielite flácida.', True),
-      ('Eletroencefalograma de rotina',
-       'Útil se houver crise ou suspeita de estado não convulsivo; não '
-       'localiza a fraqueza.', False),
-      ('Ressonância de encéfalo e medula',
-       'Procura lesão temporal, infarto não visto na tomografia e sinal nos '
-       'cornos anteriores.', True),
-      ('Amônia sérica e função hepática',
-       'Sem hepatopatia nem asterixe, não há motivo para esta dosagem.',
-       False),
-      ('Eletroneuromiografia',
-       'Separa corno anterior, axônio e mielina; respostas sensitivas '
-       'preservadas já orientam cedo.', True),
-      ('Anticorpos antigangliosídeo GM1',
-       'Só se a eletroneuromiografia sugerir neuropatia axonal motora.',
-       False),
-      ('Biópsia de nervo sural',
-       'Sem papel numa paralisia aguda febril com sensibilidade '
-       'preservada.', False),
-      ('Angiotomografia de vasos cervicais e cerebrais',
-       'Sem sinal de neurônio motor superior nem território arterial '
-       'definido.', False),
-      ('Cortisol matinal',
-       'Não distingue os mecanismos da fraqueza; cabe se a hiponatremia '
-       'persistir.', False),
-     ], 'Líquor, PCR viral, ressonância e eletroneuromiografia'),
+    painel('lcr', 'Líquor', 'Punção lombar', [
+        ex('Pressão de abertura', '19 cmH₂O', '10–20 cmH₂O'),
+        ex('Aspecto', 'Límpido, incolor'),
+        ex('Células', '86/mm³ · neutrófilos 58% · linfócitos 42%', 'até 5/mm³', True),
+        ex('Hemácias', '4/mm³'),
+        ex('Proteína', '92 mg/dL', '15–45 mg/dL', True),
+        ex('Glicose', '74 mg/dL {{(sérica 138 · relação 0,54)}}', 'relação acima de 0,4'),
+        ex('Gram', 'Sem bactérias'),
+    ], introducao='Punção lombar feita logo depois da tomografia.'),
 
-    painel('res2', 'Resultados', 'O que a equipe pediu', [
-        ex('Líquor: celularidade, proteína, glicose e Gram',
-           '86 células/mm³ (58% neutrófilos) · proteína 92 mg/dL · glicose 68 '
-           'mg/dL, sérica 120 · Gram sem bactérias',
-           'Até 5 células · proteína 15–45 · relação glicose >0,4', True),
-        ex('Cultura e PCR bacteriana do líquor',
-           'Sem crescimento até o momento · painel bacteriano negativo.'),
-        ex('PCR para HSV, VZV e enterovírus no líquor',
-           'Não detectados em amostra colhida com mais de 72 horas de '
-           'sintomas.'),
-        ex('Ressonância de encéfalo e medula',
-           'Sem infarto, compressão medular ou lesão temporal. Discreto '
-           'hipersinal em T2 na substância cinzenta anterior da medula '
-           'cervical baixa e lombar, predominando à direita.'),
-        ex('Eletroneuromiografia',
-           'Respostas motoras reduzidas, assimétricas; respostas sensitivas '
-           'preservadas. Sem critérios de desmielinização.', '—', True),
-      ], fundo=CENA,
-      introducao='A punção foi feita depois da tomografia, com o antibiótico e '
-                 'o aciclovir já correndo.',
-      laminas={'Ressonância de encéfalo e medula': lamina('rm_encefalo.png',
-               'RM do encéfalo',
-               'A figura ilustra somente um corte axial T2 do encéfalo de '
-               'outro adulto. Não mostra a medula nem todas as sequências do '
-               'estudo.',
-               'Sean Novak · Wikimedia Commons · CC BY-SA 4.0 · sem alterações.')}),
-
-    pareamento('p8', 'Pergunta 6',
-      'O líquor dele: 86 células, 58% neutrófilos, proteína 92, glicose '
-      '68 com sérica 120. Associe cada perfil de líquor ao diagnóstico que '
-      'ele sugere.', [
-      par('86 células, 58% neutrófilos, proteína 92, glicose 68/120, Gram '
+    pareamento('p2', 'Pergunta 2',
+      'O líquor dele e o de outros quatro pacientes. Associe cada perfil ao '
+      'diagnóstico que ele sugere.', [
+      par('86 células, 58% neutrófilos, proteína 92, glicose 74/138, Gram '
           'negativo (o dele)',
           'Meningoencefalite viral em fase inicial',
-          'Pleocitose modesta, glicose preservada e Gram negativo. '
-          'Neutrófilos nos primeiros dias ocorrem em várias viroses.'),
+          'Dezenas de células, glicose preservada e Gram negativo. Neutrófilos '
+          'nos primeiros dias ocorrem em várias viroses.'),
       par('2.400 células, 95% neutrófilos, proteína 240, glicose 20/110',
           'Meningite bacteriana',
-          'Milhares de neutrófilos, proteína alta e relação de glicose '
-          'abaixo de 0,4.'),
+          'Milhares de neutrófilos, proteína alta e relação de glicose abaixo '
+          'de 0,4.'),
       par('180 células, 90% linfócitos, proteína 110, glicose 35/100, ADA '
           'elevada',
           'Meningite tuberculosa',
-          'Linfocitário, proteína alta e glicose baixa: separa tuberculose '
-          'e fungo dos vírus.'),
+          'Linfocitário, proteína alta e glicose baixa: separa tuberculose e '
+          'fungo dos vírus.'),
       par('5 células, proteína 180, glicose normal',
           'Guillain-Barré (dissociação albuminocitológica)',
           'Proteína alta sem células; pode levar uma a duas semanas para '
           'aparecer.'),
-      par('60 células, linfócitos, proteína 80, glicose normal, 300 '
-          'hemácias sem punção traumática',
+      par('60 células, linfócitos, proteína 80, glicose normal, 300 hemácias '
+          'sem punção traumática',
           'Encefalite herpética',
-          'Hemácias sem trauma de agulha sugerem necrose hemorrágica '
-          'temporal; aciclovir até PCR adequada.'),
+          'Hemácias sem trauma de agulha sugerem necrose hemorrágica temporal.'),
       ], opcoes=[
       'Meningoencefalite viral em fase inicial',
       'Meningite bacteriana',
@@ -433,268 +279,363 @@ ETAPAS = [
       'Encefalite herpética',
       'Meningite criptocócica',
       ], titulo_resposta='Célula, proteína e glicose, nessa ordem de leitura',
-      nota='A opção que sobrou, criptococo, teria poucas células, pressão '
-           'de abertura alta e tinta da China positiva.',
-      fundo=CENA, segue='historia2'),
+      nota='A opção que sobrou, criptococo, teria poucas células, pressão de '
+           'abertura alta e tinta da China positiva.'),
 
-    pg('historia2', 'História complementar',
-       p('No segundo dia, a equipe volta à viagem com a esposa. Passaram três '
-         'semanas de agosto na casa da filha, na Louisiana, no sul dos '
-         'Estados Unidos, e chegaram doze dias antes da febre. Ele passava o '
-         'fim de tarde no quintal, junto a um canal de drenagem, e os dois '
-         'foram muito picados por mosquitos. Não houve mordida de animal, '
-         'contato com morcegos, água de enchente ou leite cru. Ela '
-         'permaneceu bem.'),
-       p('No mesmo dia, a tosse fica fraca. Ele engasga com água, embora '
-         'mantenha saturação de 96% em ar ambiente. A capacidade vital caiu '
-         'de 24 para **17 mL/kg** entre as duas medidas do dia, e a pressão '
-         'inspiratória máxima piorou.')),
+    pg('reexame', 'Na manhã seguinte',
+       'A equipe registra meningoencefalite viral, herpética até prova em '
+       'contrário, mantém o aciclovir e envia o líquor para PCR. As hemoculturas '
+       'não cresceram. A febre continua, e o sódio subiu para 132 com a '
+       'restrição de água.',
+       'Mais acordado, ele colabora com o exame. Força grau 1 na perna direita, '
+       '4 na esquerda, 4 no braço direito e 5 no esquerdo, com tônus flácido na '
+       'perna direita. Patelar e aquileu abolidos à direita e diminuídos à '
+       'esquerda; bicipitais presentes. Sensibilidade tátil, dolorosa e '
+       'vibratória normais e simétricas, sem nível. Plantar em flexão. Urina '
+       'espontaneamente. Há tremor de ação nas duas mãos.'),
 
-    q('p10', 7,
-      'Capacidade vital de 24 para 17 mL/kg, tosse fraca, engasgo com água, '
-      'saturação de 96%. **Quais três** parâmetros indicam proteção '
-      'eletiva da via aérea na fraqueza neuromuscular?', [
-      ('Capacidade vital abaixo de 20 mL/kg',
-       'Primeiro número da regra 20/30/40. Ele já passou de 24 para 17 '
-       'mL/kg.', True),
-      ('Saturação abaixo de 90% em ar ambiente',
-       'Sinal tardio: na falência de bomba, a saturação cai quando a '
-       'hipoventilação já é grave.', False),
-      ('Pressão inspiratória máxima menos negativa que −30 cmH₂O',
-       'Mede a força inspiratória à beira do leito; é o segundo número da '
-       'regra.', True),
-      ('pCO₂ acima de 45 mmHg na gasometria',
-       'A hipercapnia aparece quando a reserva acabou; confirma a falência, '
-       'não a antecipa.', False),
-      ('Tosse ineficaz e disfagia',
-       'Engasgo com água e tosse fraca indicam risco de aspiração, qualquer '
-       'que seja a espirometria.', True),
-      ('Frequência respiratória acima de 30 por minuto',
-       'Inespecífica: febre e dor também a elevam. Não decide sozinha.',
-       False),
-     ], 'Capacidade vital, força inspiratória e proteção da via aérea'),
+    Q('p3', 3,
+      'Onde está a lesão que explica a fraqueza?', [
+      ('Corno anterior da medula', True),
+      ('Raízes e nervos, por desmielinização', False),
+      ('Cápsula interna', False),
+      ('Junção neuromuscular', False),
+      ('Medula inteira, em nível torácico', False),
+      ('Músculo', False),
+     ], [
+      ('O padrão', 'Flacidez com reflexos abolidos é lesão de neurônio motor '
+       'inferior. Sensibilidade normal nos três modos, sem nível e sem retenção '
+       'urinária, com distribuição assimétrica e salteada, que atinge muito um '
+       'membro e pouco outro: o alvo é o corpo do neurônio motor, no corno '
+       'anterior. É o padrão da poliomielite.'),
+      ('Por que não as outras', 'A polirradiculoneuropatia desmielinizante '
+       'costuma ser simétrica, com parestesias e perda da vibração. Uma lesão '
+       'da cápsula interna daria hiperreflexia e Babinski passados os primeiros '
+       'dias. Miastenia e botulismo preservam os reflexos. A lesão medular '
+       'transversa daria nível sensitivo e bexiga neurogênica. Miosite daria '
+       'fraqueza proximal e simétrica, e a CK é de 160.'),
+      ('O que muda', 'Lesão do corpo neuronal recupera pouco e devagar, ao '
+       'contrário da desmielinização, que se refaz em semanas. A ressonância '
+       'passa a incluir a medula, e a eletroneuromiografia entra no pedido.'),
+     ]),
+
+    estudo('rm_encefalo', 'Ressonância de encéfalo',
+           'Ressonância feita à tarde, à procura do lobo temporal da encefalite '
+           'herpética e de uma causa para a paresia. Sequência FLAIR.',
+           IMG / 'rm_encefalo_flair.png',
+           'Ressonância de outro paciente · FLAIR axial · as setas brancas são '
+           'do original.',
+           credito_meta(IMG / 'rm_encefalo_flair.png.json'),
+        [
+         ((288, 300), (300, 170), '**Substância negra** com hipersinal, dos dois lados do mesencéfalo.', -12),
+         ((342, 272), (450, 190), '**Lobo temporal mesial** esquerdo com hipersinal discreto.', 12),
+         ((690, 300), (800, 175), '**Tálamo posterior** direito com hipersinal.', 12),
+        ],
+        ['Hipersinal em FLAIR na substância negra dos dois lados, no tálamo '
+         'posterior direito e, discreto, no lobo temporal mesial esquerdo. Sem '
+         'sangramento nem efeito de massa.']),
+
+    estudo('rm_medula', 'Ressonância da medula',
+           'No mesmo exame, cortes da medula cervical e lombar, pela paresia de '
+           'neurônio motor inferior.',
+           IMG / 'rm_medula_t2.jpg',
+           'Ressonância de outro paciente · T2 axial da medula cervical · os '
+           'círculos são do original.',
+           credito_meta(IMG / 'rm_medula_t2.jpg.json'),
+        [
+         ((497, 835), (230, 760), '**Hipersinal central** na medula: a substância cinzenta está acometida.', 12),
+         ((500, 255), (220, 140), 'Num nível acima, **medula de sinal normal**, para comparação.', -12),
+        ],
+        ['Hipersinal em T2 na substância cinzenta central da medula cervical, '
+         'sem expansão e sem compressão.',
+         'Na série completa, alteração semelhante na substância cinzenta do '
+         'cone medular, fora destes cortes.']),
+
+    Q('p4', 4,
+      '**Quais três** achados da ressonância pesam contra encefalite '
+      'herpética?', [
+      ('Hipersinal no tálamo', True),
+      ('Hipersinal na substância negra', True),
+      ('Lesão na substância cinzenta medular', True),
+      ('Hipersinal no temporal mesial', False),
+      ('Ausência de efeito de massa', False),
+      ('Tomografia sem alteração', False),
+     ], [
+      ('O território do herpes', 'O herpes simples tipo 1 chega pelo trato '
+       'olfatório e acomete o lobo temporal mesial, a ínsula, o giro do cíngulo '
+       'e a face orbitária do frontal, em geral de forma assimétrica, com edema '
+       'e às vezes sangramento. Tálamo, núcleos da base e tronco costumam ser '
+       'poupados, e a medula quase nunca entra.'),
+      ('Por que não as outras', 'O hipersinal temporal mesial é o achado típico '
+       'do herpes e o mantém na lista. Tomografia normal nos primeiros dias é a '
+       'regra na encefalite herpética, e a falta de efeito de massa não afasta '
+       'a doença.'),
+      ('O que muda', 'Tálamo, substância negra e corno anterior, juntos, são o '
+       'padrão de vírus que infectam neurônios profundos, como alguns arbovírus '
+       'e enterovírus. A substância negra acometida combina com o tremor. O '
+       'aciclovir continua até a PCR, e a história de exposição volta a '
+       'importar.'),
+     ]),
+
+    pg('respiracao', 'Segundo dia de internação',
+       'No fim da tarde, a tosse fica fraca e ele engasga com água. Frequência '
+       'respiratória de 22, SpO₂ de 96% em ar ambiente, gasometria com pH 7,43 '
+       'e pCO₂ de 38 mmHg. A capacidade vital caiu de 24 para 17 mL/kg em oito '
+       'horas; pressão inspiratória máxima de −22 cmH₂O e expiratória de 34 '
+       'cmH₂O.',
+       'A eletroneuromiografia do mesmo dia mostra potenciais motores de '
+       'amplitude reduzida, mais à direita, com velocidades de condução normais '
+       'e potenciais sensitivos preservados.'),
+
+    Q('p5', 5,
+      '**Quais quatro** dados dele indicam intubação eletiva agora?', [
+      ('Capacidade vital de 17 mL/kg', True),
+      ('Pressão inspiratória máxima de −22 cmH₂O', True),
+      ('Pressão expiratória máxima de 34 cmH₂O', True),
+      ('Tosse fraca e engasgo com água', True),
+      ('SpO₂ de 96% em ar ambiente', False),
+      ('pCO₂ de 38 mmHg', False),
+      ('Frequência respiratória de 22', False),
+     ], [
+      ('A regra 20/30/40', 'Na fraqueza neuromuscular, capacidade vital abaixo '
+       'de 20 mL/kg, pressão inspiratória máxima menos negativa que −30 cmH₂O e '
+       'expiratória abaixo de 40 cmH₂O anunciam falência ventilatória. Ele tem '
+       '17, −22 e 34, e a capacidade vital caiu quase 30% em oito horas.'),
+      ('A via aérea', 'Tosse fraca e engasgo com água indicam disfunção bulbar: '
+       'o risco é aspirar, qualquer que seja a espirometria.'),
+      ('O que engana', 'Saturação e pCO₂ normais são a regra até perto do fim. '
+       'A bomba fraca hipoventila tarde, e quando a pCO₂ sobe e a saturação cai '
+       'a intubação já é de emergência. Frequência respiratória de 22 é '
+       'inespecífica.'),
+     ]),
 
     bifurcacao('b2', 'Decisão', 'Suporte respiratório',
       'Como você conduz essa mudança?', [
-      caminho('Transferir para terapia intensiva e proteger a via aérea de '
-              'forma planejada.', 'r_via',
-              'A progressão bulbar e ventilatória permite antecipar uma via '
-              'aérea difícil em vez de esperar o colapso.'),
-      caminho('Tentar ventilação não invasiva com vigilância intensiva.',
-              'r_vni',
-              'Uma tentativa exige seleção e critérios precoces de falha; '
-              'disfagia e secreções reduzem a margem de segurança.'),
-      caminho('Manter oxigênio e vigilância na enfermaria enquanto '
-              'investiga.', 'r_atraso',
+      caminho('UTI e intubação planejada agora', 'r_via',
+              'A progressão bulbar e ventilatória permite antecipar a via aérea '
+              'em vez de esperar o colapso.'),
+      caminho('Ventilação não invasiva com vigilância intensiva', 'r_vni',
+              'Disfagia e secreções tiram a margem de segurança da máscara.'),
+      caminho('Oxigênio e vigilância na enfermaria', 'r_atraso',
               'A saturação não mede a reserva ventilatória nem a proteção '
-              'contra aspiração.')], fundo=CENA),
+              'contra aspiração.'),
+    ]),
+
+    pg('r_vni', 'Na UTI, com máscara',
+       'Com ventilação não invasiva, acumula secreções e não consegue '
+       'expectorar. Engasga de novo. A oxigenação se mantém, mas a proteção da '
+       'via aérea piora.',
+       segue='b_resgate'),
+
+    pg('r_atraso', 'Na enfermaria',
+       'De madrugada, engasga e passa a respirar com esforço. É levado à sala de '
+       'emergência com saturação de 88%.',
+       segue='b_resgate'),
+
+    bifurcacao('b_resgate', 'Decisão', 'A estratégia falhou',
+      'Ele não elimina secreções e já aspirou uma vez. Qual a próxima conduta?', [
+      caminho('Intubar agora', 'r_resgate',
+              'A falha em proteger a via aérea é a indicação.'),
+      caminho('Manter o suporte não invasivo e reavaliar', 'f_obito',
+              'Insistir num suporte que já falhou numa via aérea desprotegida.'),
+    ]),
+
+    pg('r_resgate', 'Terceiro dia',
+       'Intubado em urgência, depois de aspirar, e tratado para pneumonia '
+       'aspirativa. Precisa de pressão expiratória alta por três dias.',
+       segue='exposicao'),
 
     pg('r_via', 'Terceiro dia',
-       p('É intubado de forma planejada por progressão da disfunção bulbar e '
-         'fraqueza ventilatória. Não há aspiração. A febre começa a ceder, '
-         'mas a paresia permanece. Ao reduzir a sedação, reconhece a esposa '
-         'e segue comandos; movimenta menos o lado direito. A família '
-         'pergunta se a melhora da febre significa que voltará a andar.'),
-       segue='visita_dia4'),
-    pg('r_vni', 'Reavaliação respiratória',
-       p('Com ventilação não invasiva, acumula secreções e não consegue '
-         'expectorar. Mantém episódios de engasgo. A oxigenação segue '
-         'preservada, mas a proteção da via aérea piora.'),
-       segue='b_resgate'),
-    pg('r_atraso', 'Reavaliação respiratória',
-       p('Na enfermaria, apresenta engasgo seguido de aumento do esforço '
-         'respiratório. É levado à sala de emergência. O cenário agora exige '
-         'decidir sobre proteção da via aérea e suporte intensivo.'),
-       segue='b_resgate'),
+       'Intubação planejada, sem aspiração, e ventilação protetora na UTI. A '
+       'febre começa a ceder; a força não muda.'),
 
-    bifurcacao('b_resgate', 'Decisão', 'Reavaliação da conduta',
-      'Diante da falha de eliminação de secreções, qual é a próxima conduta?', [
-      caminho('Interromper a estratégia inicial e realizar intubação.',
-              'r_resgate',
-              'A mudança de plano responde à evolução e não precisa '
-              'esperar falência completa.'),
-      caminho('Prolongar o suporte não invasivo e reavaliar após a '
-              'investigação.', 'f_obito',
-              'A incapacidade de proteger a via aérea torna perigoso adiar o '
-              'suporte invasivo.')], fundo=CENA),
+    pg('exposicao', 'A esposa conta a viagem',
+       'Com ele sedado, a esposa conta a viagem com calma. A filha mora nos '
+       'arredores de Baton Rouge, na Louisiana, no sul dos Estados Unidos. Era '
+       'agosto, fazia calor, e ele passava o fim de tarde no quintal, ao lado '
+       'de um canal de drenagem, sem repelente. Os dois foram muito picados por '
+       'mosquitos. Na última semana, a filha achou dois pássaros mortos no '
+       'gramado.',
+       'Não houve contato com morcegos nem mordida de animal, e ninguém na '
+       'família adoeceu. A PCR do líquor para herpes simples, colhida no quinto '
+       'dia de sintomas, veio negativa, assim como as PCR para varicela-zóster e '
+       'enterovírus. As hemoculturas seguem negativas em 72 horas.'),
 
-    pg('r_resgate', 'Quarto dia',
-       p('Após intubação de resgate, necessita de suporte ventilatório '
-         'prolongado. Quando desperto, tenta comunicar-se por gestos e '
-         'demonstra frustração por não conseguir elevar a perna direita. O '
-         'episódio de aspiração motiva investigação e tratamento de '
-         'pneumonia. A fraqueza assimétrica continua presente quando a '
-         'sedação é reduzida.'),
-       segue='visita_dia4'),
+    Q('p6', 6,
+      'A equipe suspeita de infecção pelo vírus do Nilo Ocidental adquirida na '
+      'viagem. No sétimo dia de doença, qual exame sustenta melhor o '
+      'diagnóstico?', [
+      ('IgM específica no líquor', True),
+      ('RT-PCR no líquor', False),
+      ('RT-PCR no sangue', False),
+      ('IgG específica no soro', False),
+      ('Cultura viral do líquor', False),
+      ('Pesquisa do antígeno NS1', False),
+     ], [
+      ('O tempo da doença', 'A viremia é curta e costuma acabar quando os '
+       'sintomas neurológicos começam, por isso a RT-PCR tem sensibilidade baixa '
+       'no imunocompetente: positiva, confirma; negativa, não afasta. A IgM '
+       'aparece entre o terceiro e o oitavo dia de doença.'),
+      ('Por que no líquor', 'A IgM não atravessa a barreira hematoencefálica: '
+       'no líquor, foi produzida ali, o que indica doença neuroinvasiva. No '
+       'soro, pode persistir por meses depois de uma infecção antiga.'),
+      ('A armadilha deste paciente', 'Ele teve dengue e tomou a vacina de febre '
+       'amarela, e os flavivírus dão reação cruzada. Pela Nota Técnica 79/2026 '
+       'do Ministério da Saúde, IgM no líquor confirma o caso quando os outros '
+       'flavivírus testados são não reagentes; havendo reatividade cruzada, '
+       'decide o teste de neutralização por redução de placas, com título pelo '
+       'menos quatro vezes maior para o vírus do Nilo Ocidental.'),
+      ('Por que não as outras', 'IgG sozinha não data a infecção, a cultura '
+       'viral é lenta e pouco sensível, e o NS1 é antígeno da dengue.'),
+     ]),
 
-    pg('visita_dia4', 'Quarto dia',
-       p('Quando a sedação é reduzida, acompanha a esposa com o olhar e '
-         'responde por gestos. Consegue apertar a mão dela, mas não eleva a '
-         'perna direita do leito. A família percebe que ele está mais '
-         'presente na conversa, embora o movimento não tenha melhorado na '
-         'mesma proporção.'),
-       p('A equipe organiza a cronologia com os familiares: início da febre, '
-         'a dificuldade para caminhar, a mudança do comportamento e a piora '
-         'da tosse.'),
-       segue='res3'),
+    pg('virada', 'O diagnóstico',
+       'Laboratório de referência: **IgM contra o vírus do Nilo Ocidental '
+       'reagente no líquor e no soro**; IgM para dengue, febre amarela e '
+       'encefalite de Saint Louis não reagentes. Dez dias depois, o teste de '
+       'neutralização mostra título oito vezes maior para o vírus do Nilo '
+       'Ocidental que para a dengue.',
+       'É doença neuroinvasiva pelo vírus do Nilo Ocidental, com encefalite e '
+       'poliomielite. O vírus circula entre aves e mosquitos do gênero Culex, e '
+       'o homem é hospedeiro acidental. Cerca de uma infecção em 150 atinge o '
+       'sistema nervoso, com risco maior depois dos 60 anos e em diabéticos e '
+       'hipertensos; na forma neuroinvasiva, cerca de um em cada dez morre. O '
+       'vírus prefere neurônios profundos, do tálamo, da substância negra e do '
+       'corno anterior: daí o tremor e a paralisia flácida assimétrica.',
+       'Nas Américas desde 1999, é endêmico nos Estados Unidos, com pico no fim '
+       'do verão. No Brasil, o Ministério da Saúde confirmou 17 casos humanos '
+       'entre 2014 e 2026, a maioria no Piauí, e em 2026 houve transmissão local '
+       'em Santa Catarina e em São Paulo.'),
 
-    painel('res3', 'Resultados', 'A investigação etiológica', [
-        ex('IgM para vírus do Nilo Ocidental em soro e líquor',
-           'Reagente nas duas amostras; resultado presuntivo, sujeito a '
-           'reação cruzada com outros flavivírus.', 'Não reagente', True),
-        ex('Teste de neutralização por redução de placas (laboratório de referência)',
-           'Enviado; resultado em dez dias.'),
-        ex('PCR para enterovírus no líquor', 'Não detectado.'),
-        ex('Sorologia para encefalite de Saint Louis', 'IgM não reagente.'),
-        ex('Dengue: NS1 e IgM', 'Não reagentes.'),
-        ex('Nova eletroneuromiografia',
-           'Denervação ativa assimétrica, respostas motoras reduzidas e '
-           'sensitivas preservadas; sem desmielinização.', '—', True),
-      ], fundo=CENA,
-      introducao='Com a viagem esclarecida, a equipe pede sorologias para os '
-                 'arbovírus da região visitada. Como ele já teve dengue, a '
-                 'amostra também segue para neutralização.'),
-
-    pg('confirmado', 'Resultado complementar',
-       p('O laboratório de referência informa neutralização compatível com '
-         'vírus do Nilo Ocidental, sem padrão cruzado que explique o '
-         'resultado. A investigação sustenta doença neuroinvasiva com '
-         'comprometimento motor.'),
-       segue='p12'),
-    q('p12', 8,
-      'Sexto dia de internação. Sobre o tratamento da doença neuroinvasiva '
-      'pelo vírus do Nilo Ocidental, **quais três** afirmações estão '
+    Q('p7', 7,
+      'Sobre o tratamento a partir de agora, **quais três** afirmações estão '
       'corretas?', [
-      ('Não há antiviral com benefício demonstrado',
-       'Ribavirina e interferon não mostraram benefício; o tratamento é de '
-       'suporte.', True),
-      ('Imunoglobulina endovenosa tem benefício comprovado',
-       'O ensaio randomizado com imunoglobulina rica em anticorpos foi '
-       'inconclusivo; não é tratamento estabelecido.', False),
-      ('Suporte e reabilitação são o tratamento ativo',
-       'Evitar aspiração, trombose e lesão por pressão, e reabilitar cedo, '
-       'muda a funcionalidade.', True),
-      ('Corticoide em altas doses acelera a recuperação motora',
-       'Sem evidência de benefício; a lesão é do corpo neuronal, não '
-       'inflamação reversível.', False),
-      ('Os antibacterianos podem ser suspensos com culturas negativas',
-       'Culturas negativas por 48 a 72 horas e diagnóstico definido '
-       'permitem suspender.', True),
-      ('O aciclovir deve ser mantido por 14 dias mesmo com PCR para HSV '
-       'negativa',
-       'PCR negativa após 72 horas de sintomas, com outro diagnóstico '
-       'definido, autoriza suspender.', False),
-     ], 'Suporte, reabilitação e suspensão dos empíricos'),
+      ('Suspender aciclovir e antibióticos', True),
+      ('Não há antiviral com benefício comprovado', True),
+      ('Reabilitação motora e respiratória desde a UTI', True),
+      ('Imunoglobulina endovenosa muda o desfecho', False),
+      ('Corticoide em dose alta acelera a recuperação', False),
+      ('Ribavirina pela gravidade', False),
+      ('Manter o aciclovir por 14 dias', False),
+     ], [
+      ('O que sai', 'PCR para herpes negativa em líquor colhido depois de 72 '
+       'horas de sintomas, com outro diagnóstico confirmado, permite suspender '
+       'o aciclovir. Hemoculturas negativas em 72 horas e um líquor que não é '
+       'bacteriano permitem suspender ceftriaxona e ampicilina.'),
+      ('O que não entra', 'Ribavirina, interferon, corticoide e imunoglobulina '
+       'foram testados ou usados sem benefício conclusivo. O único ensaio '
+       'randomizado de imunoglobulina rica em anticorpos contra o vírus foi '
+       'inconclusivo (Gnann e cols., 2019). Não há antiviral específico.'),
+      ('O que muda o desfecho', 'O suporte: ventilação, prevenção de '
+       'aspiração, trombose e úlcera por pressão, nutrição por via segura, '
+       'controle do sódio e fisioterapia desde a UTI. A recuperação motora da '
+       'poliomielite é lenta e muitas vezes incompleta.'),
+     ]),
 
-    pg('tratamento', 'Tratamento e seguimento',
-       p('O suporte inclui ventilação conforme necessidade, manejo de '
-         'secreções, nutrição por via segura, prevenção de trombose e lesão '
-         'por pressão e mobilização progressiva. Os antibacterianos '
-         'empíricos são suspensos com cultura e PCR negativas; o aciclovir, '
-         'com a PCR negativa e o diagnóstico definido.'),
-       p('Neurologia, fisioterapia e fonoaudiologia acompanham recuperação e '
-         'limitações. A esposa nota que ele se cansa com visitas longas; são '
-         'combinados períodos de descanso e participação gradual nos '
-         'cuidados.'),
-       segue='imagem_neuronio'),
+    pg('recuperacao', 'Segunda e terceira semanas',
+       'A febre acaba no sexto dia de internação. O tremor diminui, e ele volta '
+       'a conversar, lúcido. O braço direito recupera força; a perna direita '
+       'continua sem vencer a gravidade. A eletroneuromiografia da terceira '
+       'semana mostra fibrilações na perna direita, sinal de denervação.'),
 
-    pg('imagem_neuronio', 'Discussão de imagem',
-       p('Compare o corpo celular, o axônio e a bainha de mielina. Por que '
-         'quadros com fraqueza semelhante podem ter tempos de recuperação '
-         'diferentes?'),
-       '<details class="leitura"><summary>Revelar pontos de discussão</summary>'
-       '<p>Bloqueio de condução, perda de mielina e destruição do neurônio '
-       'não são equivalentes. A desmielinização do Guillain-Barré se refaz '
-       'em semanas; o corpo celular destruído pelo vírus, não. Por isso a '
-       'topografia de corno anterior já indicava um prognóstico motor '
-       'reservado.</p></details>',
-       lamina_=lamina('neuronio.svg', 'Neurônio',
-                      'Diagrama anatômico, sem achados específicos deste caso.',
-                      'LadyofHats · Wikimedia Commons · domínio público · sem '
-                      'alterações.'),
-       conforme=('b2', ['pre_reabilitacao', 'pre_prolongada', 'pre_prolongada'])),
+    Q('p8', 8,
+      'Sobre vigilância e orientação na alta, **quais três** medidas estão '
+      'corretas?', [
+      ('Notificação imediata, já na suspeita', True),
+      ('Não doar sangue por 120 dias', True),
+      ('Reabilitação continuada depois da alta', True),
+      ('Isolamento de contato em casa', False),
+      ('Vacinar a esposa', False),
+      ('Sorologia de rotina para a esposa', False),
+      ('Antiviral profilático para a família', False),
+     ], [
+      ('Vigilância', 'A febre do Nilo Ocidental é de notificação compulsória '
+       'imediata no Brasil: todo caso suspeito vai à vigilância em até 24 horas, '
+       'antes da sorologia. Mesmo num caso importado, a vigilância investiga se '
+       'houve exposição local, porque o vírus já circula no país.'),
+      ('Transmissão', 'Não há transmissão por contato. Ela ocorre pela picada '
+       'e, raramente, por transfusão, transplante e via transplacentária; por '
+       'isso ele não deve doar sangue por 120 dias, como recomenda o CDC. Não '
+       'há vacina humana, e a esposa, sem sintomas, não precisa de exame.'),
+      ('Seguimento', 'Fisioterapia, fonoaudiologia e acompanhamento neurológico '
+       'continuam depois da alta; fraqueza e cansaço podem durar meses.'),
+     ]),
 
-    pg('pre_reabilitacao', 'Terceira semana',
-       p('Com a redução do suporte, Antônio volta a conversar sobre a casa e '
-         'pergunta pelo neto. Senta-se na borda do leito com assistência. Ao '
-         'tentar ficar em pé, a perna direita não sustenta o peso.'),
-       p('A família recebe orientação sobre transferências e prevenção de '
-         'quedas. A alta será articulada com um serviço capaz de continuar a '
-         'reabilitação.'),
-       segue='f_reabilita'),
-    pg('pre_prolongada', 'Internação prolongada',
-       p('A retirada do suporte progride mais lentamente. Antônio compreende '
-         'as orientações nos períodos de vigília, mas precisa de ajuda para '
-         'se posicionar e eliminar secreções. A pneumonia aspirativa custou '
-         'dez dias de antibiótico e uma traqueostomia.'),
-       p('A equipe conversa com a família sobre transferência para cuidados '
-         'de continuidade.'),
-       segue='f_longa'),
+    pg('alta', 'Preparando a alta',
+       'A equipe revê com ele e a esposa o que aconteceu: a viagem, a doença, a '
+       'intubação e o que esperar da perna direita nos próximos meses.',
+       conforme=('b2', ['f_reab', 'f_longa', 'f_longa'])),
 
-    fim('f_reabilita', 'Reabilitação',
-        'Na terceira semana está desperto, sem suporte invasivo e com '
-        'deglutição em recuperação. Continua sem caminhar sozinho. Segue '
-        'para reabilitação; aos três meses usa auxílio para marcha e mantém '
-        'fraqueza maior à direita.',
-        'O suporte antecipado evitou a aspiração e a pneumonia, mas não '
-        'devolve o neurônio motor. Este é um desfecho ficcional possível.',
-        'melhor'),
+    fim('f_reab', 'Alta para reabilitação',
+        'Extubado no nono dia, sem pneumonia, ele sai no 21.º dia para um centro '
+        'de reabilitação. Aos três meses anda com andador; a perna direita vence '
+        'a gravidade, mas não a resistência.',
+        'A intubação planejada evitou aspiração e pneumonia. O suporte não '
+        'devolve o neurônio motor destruído; a força que volta vem dos que '
+        'sobreviveram.', 'melhor'),
+
     fim('f_longa', 'Internação prolongada',
-        'A complicação respiratória prolonga a internação. Necessita de '
-        'suporte ventilatório e reabilitação por mais tempo. Na '
-        'transferência, mantém dependência para mobilidade e alimentação por '
-        'via alternativa.',
+        'A pneumonia aspirativa custou dez dias de antibiótico e uma '
+        'traqueostomia. Ele sai no 38.º dia para cuidados de continuidade, '
+        'dependente para se mover e com alimentação por sonda.',
         'Aspiração e falência ventilatória somaram morbidade à lesão '
-        'neurológica. A duração e a recuperação deste roteiro não são '
-        'previsões individuais.'),
-    fim('f_obito', 'Evolução desfavorável',
-        'A manutenção da estratégia apesar da piora bulbar é seguida, neste '
-        'ramo simulado, de aspiração maciça e parada hipóxica. O paciente '
-        'não sobrevive. A causa infecciosa não chegou a ser definida neste '
-        'percurso.',
-        'Este ramo ilustra o risco de adiar a proteção da via aérea quando '
-        'a saturação ainda está normal. Não é uma consequência inevitável.',
-        'pior'),
+        'neurológica, que já era grave.', 'medio'),
 
-    pg('retrospectiva', 'Retrospectiva',
-       tabela(['Quando', 'O que estava à mão', 'O que decidiu'], [
-         ['Na chegada',
-          'Uma perna que cedeu, num homem febril e confuso',
-          'Graduar a força lado a lado separou déficit focal de prostração '
-          'e levou à topografia de corno anterior'],
-         ['No reexame',
-          'Paresia flácida, arrefléxica e assimétrica, com sensibilidade '
-          'preservada',
-          'Lesão do corpo do neurônio motor recupera pouco; o prognóstico '
-          'motor já era reservado'],
-         ['No segundo dia',
-          'Capacidade vital de 17 mL/kg com saturação de 96%',
-          'A indicação de via aérea veio da mecânica respiratória e da '
-          'deglutição, não da oximetria'],
-         ['Na história complementar',
-          'Verão no sul dos Estados Unidos, com muitas picadas de mosquito',
-          'Perguntar pelo destino da viagem no primeiro dia teria posto os '
-          'arbovírus da região na lista antes do líquor'],
-       ]),
-       p('O diagnóstico etiológico e o suporte respiratório correram em '
-         'paralelo. A proteção da via aérea não dependeu do nome do agente, '
-         'e a confirmação sorológica não mudou o prognóstico motor.')),
+    fim('f_obito', 'Óbito no quarto dia',
+        'Mantido na máscara, ele aspira de novo, tem parada hipóxica e não '
+        'sobrevive. A causa da encefalite não chegou a ser definida.',
+        'Manter um suporte não invasivo numa via aérea que já não se protege '
+        'levou à parada. Na fraqueza bulbar, a intubação vem antes da queda da '
+        'saturação.', 'pior'),
 
-    pg('fontes', 'Procedência e referências',
-       p('Paciente, valores e evoluções são autorais e ficcionais. A cena é '
-         'uma ilustração gerada por IA. Os diferentes finais não estimam o '
-         'efeito causal ou a probabilidade de cada conduta.'),
+    pagina('retrospectiva', 'Pontos de ensino', '',
+        pontos(
+            'Na hiponatremia do paciente neurológico, osmolalidade sérica, '
+            'osmolalidade e sódio urinários e o volume classificam; secreção '
+            'inapropriada de ADH num idoso febril e confuso aponta para o '
+            'sistema nervoso.',
+            'Com déficit focal, a tomografia vem antes da punção, e o '
+            'antibiótico e o aciclovir vêm antes da tomografia.',
+            'Paresia flácida, arrefléxica e assimétrica, com sensibilidade '
+            'normal e sem nível, localiza no corno anterior: é poliomielite até '
+            'que se ache a causa.',
+            'Tálamo, substância negra e corno anterior na ressonância não são '
+            'território do herpes e pedem a história de exposição, a começar '
+            'pelo destino da viagem.',
+            'Na fraqueza neuromuscular, a intubação é indicada pela regra '
+            '20/30/40 e pela tosse, não pela saturação.',
+            'Na doença neuroinvasiva pelo vírus do Nilo Ocidental, a IgM no '
+            'líquor sustenta o diagnóstico; dengue prévia e vacina de febre '
+            'amarela exigem a neutralização. O tratamento é suporte, e a '
+            'notificação é imediata.'),
+        so_kicker=True),
+
+    pagina('referencias', 'Fontes e limites', '',
+       p('Paciente, valores e percursos são ficcionais. A cena de abertura é '
+         'uma ilustração gerada por inteligência artificial para este caso; não '
+         'é fotografia nem documentação clínica.'),
+       p('Ministério da Saúde, Nota Técnica n.º 79/2026-CGARB/DEDT/SVSA/MS '
+         '(cenário epidemiológico, notificação imediata e critérios de caso). '
+         'CDC, páginas para profissionais sobre diagnóstico e tratamento, '
+         'consultadas em 26/09/2026. Sejvar e cols., //Emerg Infect Dis// 2003 '
+         '(paralisia flácida). Tunkel e cols., IDSA, //Clin Infect Dis// 2004 e '
+         '2008 (meningite bacteriana e encefalite). Lawn e cols., //Arch '
+         'Neurol// 2001 (regra 20/30/40). Gnann e cols., //Clin Infect Dis// '
+         '2019 (imunoglobulina). Spasovski e cols., //Eur J Endocrinol// 2014 '
+         '(hiponatremia).'),
        '<p><a href="https://www.cdc.gov/west-nile-virus/hcp/diagnosis-testing/index.html" '
        'target="_blank" rel="noopener">CDC: diagnóstico</a> · '
        '<a href="https://www.cdc.gov/west-nile-virus/hcp/treatment-prevention/index.html" '
        'target="_blank" rel="noopener">CDC: tratamento</a> · '
-       '<a href="https://wwwnc.cdc.gov/eid/article/9/7/03-0129_article" '
-       'target="_blank" rel="noopener">Sejvar et al., 2003: paralisia flácida</a> · '
-       '<a href="https://www.idsociety.org/practice-guideline/encephalitis" '
-       'target="_blank" rel="noopener">IDSA: encefalite</a></p>',
-       p('Regra 20/30/40 e sinais meníngeos no idoso: Lawn e Wijdicks, //Arch '
-         'Neurol// 2001; Thomas e cols., //Clin Infect Dis// 2002. '
-         'Imunoglobulina: Gnann e cols., //Clin Infect Dis// 2019.')),
+       '<a href="https://www.gov.br/saude/pt-br/centrais-de-conteudo/publicacoes/notas-tecnicas/2026/nota-tecnica-no-79-2026.pdf" '
+       'target="_blank" rel="noopener">Nota Técnica 79/2026</a></p>',
+       p('Imagens, todas de outros pacientes, com setas adicionadas: '
+         'radiografia de tórax e tomografia de crânio, Mikael Häggström, '
+         'Wikimedia Commons, CC0; ressonância de encéfalo, James J. Sejvar '
+         '(//Viruses// 2014), Wikimedia Commons, CC BY 3.0; ressonância da '
+         'medula, JasonRobertYoungMD, Wikimedia Commons, CC BY-SA 4.0; '
+         'eletrocardiograma, Ewingdo, Wikimedia Commons, CC BY-SA 4.0.'),
+       so_kicker=True),
 ]
 
 REVISAO = []

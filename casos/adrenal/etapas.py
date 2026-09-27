@@ -1,26 +1,40 @@
-"""Crise adrenal em insuficiência adrenal primária autoimune (síndrome poliglandular tipo 2).
+"""Choque depois de uma gastroenterite, em quem se cansava havia oito meses.
 
-Alíquota → pergunta, no molde dos casos interativos do //New England//. O caso
-abre no ambulatório, com meses de cansaço, perda de peso e sódio discretamente
-baixo, e o diagnóstico só é nomeado na crise, depois de uma gastroenterite.
-Oito perguntas, uma rodada de exames sindrômicos com gabarito e painel, um
-painel de virada, um pareamento das causas de insuficiência adrenal primária
-no Brasil e duas decisões de conduta, uma delas com óbito. Paciente
-ficcional; doses segundo a diretriz da Endocrine Society de 2016 e a
-orientação de emergência da Society for Endocrinology de 2016.
+Refeito em 26/09/2026 no molde do //New England// (piloto: leptospirose;
+gramática em Artifacts/nejm-casos-classicos/GRAMATICA_LIDA_2026-09-26.md).
+O caso abre na emergência, no terceiro dia de vômitos e diarreia, e segue a
+âncora que a equipe registrou: gastroenterite com choque hipovolêmico, lesão
+renal pré-renal e hipercalemia. As primeiras perguntas leem os números
+(gasometria e ânion gap urinário, tonicidade da hiponatremia, sódio e potássio
+urinários); a pressão que o volume não segura, a conversa com o marido e o
+reexame da boca viram o caso, e o nome do diagnóstico só aparece na decisão da
+madrugada, depois da metade. As decisões de conduta mudam o desfecho, a pedido
+do Matheus.
+
+Paciente ficcional. Doses e critérios: Endocrine Society 2016 (insuficiência
+adrenal primária), Society for Endocrinology 2016 (crise adrenal), diretriz
+europeia de hiponatremia 2014, UK Kidney Association 2023 (hipercalemia) e
+Surviving Sepsis Campaign 2021.
 """
 from pathlib import Path
 
+from motor.estudo_imagem import estudo
 from motor.etapas import (alt, bifurcacao, caminho, capa, desfecho, op, p,
-                          pagina, painel, par, pareamento, pergunta, tabela,
-                          topicos, vitais, lamina)
+                          pagina, painel, par, pareamento, pergunta, pontos,
+                          topicos)
 
 TITULO = 'Oito meses de cansaço'
 RODAPE = 'Paciente ficcional · evoluções simuladas para ensino'
 COR = '#ca8a04'
 IMG = Path(__file__).parent / 'img'
 BANCO = []
-CREDITO_ECG = 'Ewingdo · Wikimedia Commons · CC BY-SA 4.0'
+MOLDE = 'nejm'
+
+
+def credito_meta(meta):
+    import json
+    m = json.loads(Path(meta).read_text())
+    return m['autor'] + ' · Wikimedia Commons · ' + m['licenca'] + ' · setas adicionadas'
 
 
 def pg(k, titulo, *textos, segue='', conforme=None):
@@ -28,10 +42,12 @@ def pg(k, titulo, *textos, segue='', conforme=None):
                   segue=segue, conforme=conforme)
 
 
-def Q(k, n, enunciado, itens, titulo, segue=''):
+def Q(k, n, enunciado, opcoes, explicacao, segue=''):
+    """Pergunta no molde do NEJM: alternativas curtas, sem comentário cada
+    uma, e uma explicação só, em seções (subtítulo, texto)."""
     return pergunta(k, f'Pergunta {n}', enunciado,
-                    [alt(t, c, certa=ok) for t, c, ok in itens],
-                    titulo_resposta=titulo, segue=segue)
+                    [alt(t, certa=ok) for t, ok in opcoes],
+                    explicacao=explicacao, segue=segue)
 
 
 def ex(nome, valor, ref='—', alt_=False):
@@ -47,354 +63,427 @@ ETAPAS = [
     capa(TITULO, fundo='cena.png', kicker='Caso interativo',
          selo='Paciente ficcional · procedência e créditos na última tela'),
 
-    # ───────────── ambulatório: dados inespecíficos ─────────────
-
     pg('historia', 'Apresentação',
-       'Marta, 44 anos, professora em Crateús, chega ao ambulatório de clínica '
-       'médica encaminhada pela unidade básica. Há oito meses acorda cansada, '
-       'perdeu 6 kg sem dieta e tem enjoo quase todas as manhãs, às vezes com '
-       'dor abdominal vaga. Na sala de aula, quando levanta depressa, "a vista '
-       'escurece".',
-       'Há três meses, depois que a filha foi estudar em Fortaleza, o médico da '
-       'unidade atribuiu o quadro a depressão e iniciou fluoxetina 20 mg. O '
-       'ânimo melhorou um pouco; o cansaço, nada. Queixa ainda dores '
-       'musculares difusas e menstruação irregular no último ano.'),
+       'Uma professora de 44 anos, moradora de Crateús, no sertão do Ceará, '
+       'chega à emergência no sábado à noite, trazida pelo marido, no terceiro '
+       'dia de vômitos e diarreia. Na quinta-feira ela e o filho de 9 anos '
+       'comeram salpicão numa festa da escola; os dois adoeceram na mesma '
+       'noite, e o menino melhorou em um dia.',
+       'Ontem foi a uma unidade de pronto atendimento: soro, ondansetrona e '
+       'alta. Hoje não consegue ficar de pé: "a vista escurece e as pernas '
+       'somem". O marido conta que ela anda cansada e mais magra há meses.',
+       'Nega sangue nas fezes, febre alta, dor torácica, viagem, antibiótico '
+       'recente e uso de diurético ou laxante.'),
 
-    pg('antecedentes', 'Antecedentes',
-       'Vitiligo desde os 34 anos, nas mãos e em volta da boca, sem '
-       'tratamento. Dois partos, o último por cesárea. A mãe trata '
-       'hipotireoidismo. O pai tratou uma "mancha no pulmão" há vinte anos.',
-       'Não fuma nem bebe. Além da fluoxetina, nega outros remédios, chás ou '
-       'fitoterápicos. Tem fezes amolecidas duas ou três vezes por semana e '
-       'nunca fez restrição de glúten.'),
+    pagina('ficha', 'Ficha do paciente', '',
+           topicos(('Antecedentes', 'Cansaço e desânimo há oito meses, com perda '
+                    'de 6 kg sem dieta. Há três meses a unidade básica '
+                    'diagnosticou depressão, depois que a filha foi estudar em '
+                    'Fortaleza. Vitiligo nas mãos desde os 34 anos. Menstruação '
+                    'irregular no último ano. Dois partos, o último por cesárea.'),
+                   ('Medicações', 'Fluoxetina 20 mg por dia há três meses. '
+                    'Ondansetrona desde ontem. Nenhuma outra, nem chás.'),
+                   ('Hábitos', 'Não fuma nem bebe. Parou as caminhadas há meses, '
+                    'por cansaço.'),
+                   ('Vida social', 'Professora do ensino fundamental, casada, dois '
+                    'filhos. Sai pouco de casa além da escola.'),
+                   ('Família', 'A mãe trata hipotireoidismo. O pai tratou '
+                    'tuberculose pulmonar há vinte anos. Uma tia usa insulina '
+                    'desde a juventude.')),
+           so_kicker=True),
 
     pagina('exame', 'Exame físico', '',
-           vitais(('Pressão deitada', '104/66', False), ('Pressão em pé', '86/54', True),
-                  ('Frequência deitada', '84', False), ('Frequência em pé', '108', True),
-                  ('Índice de massa corporal', '19,8 kg/m²', False)),
-           topicos(('Estado geral', 'Emagrecida, colaborativa, humor um pouco '
-                    'deprimido. Mucosas úmidas.'),
-                   ('Pele', 'Manchas acrômicas de vitiligo no dorso das mãos e '
-                    'em volta da boca. Sem icterícia.'),
-                   ('Pescoço', 'Tireoide palpável, discretamente aumentada, '
-                    'fibroelástica, sem nódulos. Sem linfonodos.'),
-                   ('Abdome', 'Flácido, indolor, sem massas nem visceromegalias.'),
-                   ('Neurológico', 'Sem déficit focal. Força preservada.')),
+           topicos(('Sinais vitais', 'Pressão 78/42 mmHg deitada · frequência '
+                    'cardíaca 118 · temperatura 37,6 °C · frequência respiratória '
+                    '22 · SpO₂ 97% em ar ambiente · glicemia capilar 58 mg/dL · '
+                    'peso 52 kg.'),
+                   ('Estado geral', 'Emagrecida, sonolenta, responde com '
+                    'lentidão, orientada. Mucosas secas. Enchimento capilar de '
+                    'quatro segundos.'),
+                   ('Pele', 'Manchas acrômicas no dorso das mãos. Morena, sem '
+                    'icterícia nem petéquias.'),
+                   ('Pescoço', 'Jugulares planas. Tireoide discretamente '
+                    'aumentada, fibroelástica, sem nódulos.'),
+                   ('Coração e pulmões', 'Rítmico, taquicárdico, sem sopros. '
+                    'Murmúrio presente, sem ruídos adventícios.'),
+                   ('Abdome', 'Doloroso de forma difusa, sem defesa, ruídos '
+                    'aumentados, sem visceromegalias.'),
+                   ('Neurológico', 'Sem rigidez de nuca, sem déficit focal.')),
            so_kicker=True),
 
-    pagina('exames_ubs', 'Os exames da unidade básica', '',
-           tabela(['Exame', 'Resultado', 'Referência'], [
-               ['Hemoglobina', '11,6 g/dL · VCM 88 fL', '12–16 g/dL'],
-               ['Leucócitos', '5.900/mm³ · eosinófilos 7% (410/mm³)', 'eosinófilos até 500'],
-               ['Sódio', '131 mEq/L', '135–145'],
-               ['Potássio', '5,0 mEq/L', '3,5–5,0'],
-               ['Ureia / creatinina', '44 / 1,0 mg/dL', 'até 40 / 0,6–1,1'],
-               ['Glicemia de jejum', '71 mg/dL', '70–99'],
-           ]),
-           p('Colhidos há três semanas. O médico da unidade leu o sódio como '
-             'efeito da fluoxetina e o restante como normal.'),
-           so_kicker=True),
+    painel('res1', 'Primeiros exames', 'Sangue', [
+        ex('Hemoglobina / hematócrito', '13,4 g/dL / 40% {{(Hb 11,6 há três semanas)}}', 'Hb 12–16 g/dL'),
+        ex('Leucócitos', '9.600/mm³ · neutrófilos 52% · eosinófilos 8% (770/mm³)', '4.000–11.000 · eosinófilos até 500', True),
+        ex('Plaquetas', '262.000/mm³', '150.000–450.000/mm³'),
+        ex('Ureia / creatinina', '88 / 1,8 mg/dL {{(creatinina 1,0 há três semanas)}}', 'até 40 / 0,6–1,1 mg/dL', True),
+        ex('Sódio / potássio / cloro', '124 / 6,1 / 96 mmol/L {{(sódio 131 e potássio 5,0 há três semanas)}}', 'Na 135–145 · K 3,5–5,0 · Cl 98–107', True),
+        ex('Glicose', '56 mg/dL', '70–99 mg/dL', True),
+        ex('Albumina', '4,2 g/dL', '3,5–5,0 g/dL'),
+        ex('AST / ALT / bilirrubina total', '32 / 28 U/L / 0,6 mg/dL', 'até 40 / 41 U/L / 1,2'),
+        ex('Proteína C reativa', '1,2 mg/dL', 'até 0,5 mg/dL', True),
+    ], introducao='Colhidos na chegada, antes do soro. Entre parênteses, os exames '
+                  'da unidade básica de três semanas antes. Depois de 50 mL de '
+                  'glicose a 50%, ela fica desperta e conversa.'),
+
+    painel('res1b', 'Primeiros exames', 'Gasometria e urina', [
+        ex('Gasometria arterial em ar ambiente', 'pH 7,31 · pCO₂ 33 mmHg · HCO₃ 16 mmol/L · pO₂ 92 mmHg · lactato 2,4 mmol/L', '—', True),
+        ex('Osmolalidade sérica', '264 mOsm/kg', '275–295 mOsm/kg', True),
+        ex('Urina', 'Densidade 1.022 · sem proteína, sangue ou leucócitos · raros cilindros hialinos', '—'),
+        ex('Osmolalidade urinária', '418 mOsm/kg', '—'),
+        ex('Sódio / potássio / cloro urinários', '62 / 14 / 58 mmol/L', '—'),
+        ex('Creatinina urinária · FENa', '64 mg/dL · 1,4%', '—'),
+    ]),
 
     Q('p1', 1,
-      'Oito meses de cansaço, 6 kg a menos, náusea, queda de pressão ao ficar '
-      'de pé e sódio de 131. **Quais cinco** hipóteses devem ficar no '
-      'diferencial agora?', [
-      ('Hipotireoidismo primário',
-       'Mãe com hipotireoidismo, vitiligo e tireoide aumentada; se grave, baixa '
-       'o sódio.', True),
-      ('Doença celíaca',
-       'Emagrece, cansa, dá anemia e fezes amolecidas, e anda junto com o '
-       'vitiligo.', True),
-      ('Neoplasia oculta',
-       'Seis quilos em oito meses, aos 44 anos, obrigam a procurá-la.', True),
-      ('Tuberculose',
-       'Pai tratado de "mancha no pulmão" e consumo lento: no Brasil, entra '
-       'sempre.', True),
-      ('Insuficiência adrenal primária',
-       'Queda postural da pressão, náusea e sódio baixo cabem nela; ainda sem '
-       'dado que a separe.', True),
-      ('Depressão como explicação suficiente',
-       'Não explica a hipotensão postural nem o sódio baixo, que são achados '
-       'objetivos.', False),
-      ('SIADH pela fluoxetina',
-       'O cansaço começou cinco meses antes do remédio, e SIADH não derruba a '
-       'pressão em pé.', False),
-      ('Anorexia nervosa',
-       'Ela quer comer e o enjoo atrapalha; não há medo de engordar nem '
-       'restrição.', False),
-      ('Hiperaldosteronismo primário',
-       'Faz hipertensão e potássio baixo, o contrário do que ela tem.', False),
-     ], 'Os achados que a depressão não explica'),
+      'Sobre o distúrbio acidobásico, **quais três** afirmações estão '
+      'corretas?', [
+      ('Acidose metabólica de ânion gap normal', True),
+      ('Compensação respiratória adequada', True),
+      ('Acidificação urinária insuficiente para a acidose', True),
+      ('Acidose láctica como causa principal', False),
+      ('Acidose respiratória associada', False),
+      ('Bicarbonato endovenoso indicado agora', False),
+     ], [
+      ('As contas', 'O ânion gap é 124 menos 96 mais 16, igual a 12: normal, com '
+       'albumina de 4,2. Pela fórmula de Winter, a pCO₂ esperada é 1,5 × 16 + 8 '
+       '= 32 ± 2; a medida, 33, está dentro, e não há distúrbio respiratório '
+       'somado. O lactato de 2,4 responde por pouco do bicarbonato que falta.'),
+      ('O rim', 'Na acidose da diarreia, o rim excreta amônio, e o ânion gap '
+       'urinário (sódio mais potássio menos cloro) fica negativo. O dela é 62 + '
+       '14 − 58 = +18: o rim não está acidificando a urina como deveria. Com '
+       'sódio urinário acima de 20 mmol/L, a conta é válida.'),
+      ('O que muda', 'Acidose de ânion gap normal vem do intestino, que perde '
+       'bicarbonato, ou do rim, que não excreta ácido. A diarreia explica a '
+       'primeira parte; o ânion gap urinário positivo diz que há também a '
+       'segunda. Com pH de 7,31, bicarbonato endovenoso não tem indicação.'),
+     ]),
 
-    Q('ex1', 2,
-      'A clínica decide investigar antes de rotular. **Quais cinco** exames '
-      'são os mais apropriados nesta consulta?', [
-      ('TSH e T4 livre',
-       'Tireoide aumentada e mãe com hipotireoidismo; se grave, baixa o sódio.',
-       True),
-      ('Osmolalidade sérica e urinária, com sódio urinário',
-       'Classificam a hiponatremia antes de culpar a fluoxetina.', True),
-      ('Antitransglutaminase IgA com IgA total',
-       'Rastreia doença celíaca; a IgA total evita o falso negativo da '
-       'deficiência de IgA.', True),
-      ('Radiografia de tórax',
-       'Barata, procura tuberculose e massa pulmonar num emagrecimento sem '
-       'causa.', True),
-      ('Sorologia anti-HIV',
-       'Emagrecimento sem causa aparente pede a sorologia; o resultado muda '
-       'toda a investigação.', True),
-      ('Tomografia de tórax, abdome e pelve',
-       'Sem alvo, rende achado incidental; entra se os exames básicos não '
-       'explicarem.', False),
-      ('Marcadores tumorais: CEA, CA-125 e CA 19-9',
-       'Não servem para rastrear neoplasia oculta; o falso positivo é '
-       'frequente.', False),
-      ('Ressonância de sela túrcica',
-       'Sem cefaleia, alteração visual ou outro sinal hipofisário, não há '
-       'indicação agora.', False),
-      ('Vitamina D e ferritina',
-       'Não explicam hipotensão postural nem sódio baixo.', False),
-     ], 'Primeiro, classificar a hiponatremia'),
+    Q('p2', 2,
+      'Sódio de 124, osmolalidade sérica de 264 e urinária de 418. **Quais '
+      'três** afirmações estão corretas?', [
+      ('Hiponatremia hipotônica', True),
+      ('ADH ativo, estimulado pela hipovolemia', True),
+      ('Subir no máximo 8 mmol/L em 24 h', True),
+      ('SIADH pela fluoxetina', False),
+      ('Hiponatremia aguda, de menos de 48 horas', False),
+      ('Salina a 3% em bolus agora', False),
+      ('Restrição hídrica como primeira medida', False),
+     ], [
+      ('A classificação', 'A osmolalidade de 264 confirma a hiponatremia '
+       'hipotônica. Urina a 418 mOsm/kg mostra que o ADH está agindo. Com '
+       'mucosas secas, jugulares planas e pressão de 78, o estímulo é o volume '
+       'baixo, e a secreção de ADH é apropriada.'),
+      ('Por que não SIADH', 'SIADH exige euvolemia, e o diagnóstico só se faz '
+       'depois de excluir hipovolemia, hipotireoidismo e deficiência de '
+       'glicocorticoide. A fluoxetina pode baixar o sódio, mas não derruba a '
+       'pressão.'),
+      ('O ritmo da correção', 'O sódio era 131 há três semanas: a hiponatremia '
+       'é crônica. Desnutrição e hipovolemia aumentam o risco de desmielinização '
+       'osmótica, e quando o volume volta o ADH cai e o rim passa a eliminar '
+       'água livre, o que pode subir o sódio depressa. A meta é não passar de 8 '
+       'mmol/L em 24 horas. Salina a 3% fica para convulsão ou coma, e '
+       'restringir água num paciente em choque piora o choque.'),
+     ]),
 
-    painel('res1', 'Resultados', 'O que a equipe pediu', [
-        ex('TSH / T4 livre', '4,6 µUI/mL / 1,0 ng/dL', '0,4–4,0 / 0,9–1,7', True),
-        ex('Osmolalidade sérica', '268 mOsm/kg', '275–295', True),
-        ex('Osmolalidade urinária', '412 mOsm/kg', 'varia com a ingestão'),
-        ex('Sódio urinário', '64 mEq/L', 'varia com a ingestão'),
-        ex('Sódio / potássio séricos', '130 / 5,4 mEq/L', '135–145 / 3,5–5,0', True),
-        ex('Creatinina', '1,0 mg/dL', '0,6–1,1'),
-        ex('Antitransglutaminase IgA / IgA total', 'Não reagente / 210 mg/dL', 'não reagente / 70–400'),
-        ex('Sorologia anti-HIV', 'Não reagente', 'não reagente'),
-        ex('Radiografia de tórax', 'Campos pulmonares limpos · silhueta cardíaca estreita', '—'),
-    ], introducao='Colhidos pela manhã e trazidos ao retorno, duas semanas '
-                  'depois. Ela seguia com a fluoxetina.'),
+    estudo('ecg', 'Eletrocardiograma',
+           'Feito à beira do leito pelo potássio de 6,1, com ela em taquicardia '
+           'sinusal de 118. O traçado mostrado é de outro paciente, com o mesmo '
+           'achado. Olhe a forma da onda T antes de abrir os achados.',
+           IMG / 'ecg_hipercalemia.jpg',
+           'Eletrocardiograma de outro paciente, com hipercalemia mais intensa · comparação didática.',
+           credito_meta(IMG / 'ecg_hipercalemia.jpg.json'),
+        [
+         ((807, 316), (930, 250), '**Onda T** alta, pontiaguda e de base estreita em V4.', -12),
+         ((129, 172), (60, 250), 'O mesmo formato da **onda T** em DII.', 12),
+         ((396, 648), (300, 725), '**QRS estreito** na tira longa de DII.', 12),
+        ],
+        ['Ondas T altas, simétricas e de base estreita, mais evidentes de V3 a '
+         'V5, com QRS estreito.',
+         'É a primeira alteração da hipercalemia. Com potássio de 6,1 e '
+         'alteração no traçado, o cálcio endovenoso protege a membrana '
+         'cardíaca enquanto a causa é tratada.']),
 
     Q('p3', 3,
-      'Osmolalidade sérica de 268, urinária de 412, sódio urinário de 64 e '
-      'potássio de 5,4, com queda de 18 mmHg na pressão sistólica ao ficar de '
-      'pé. **Quais três** conclusões estão corretas?', [
-      ('A hiponatremia é hipotônica e o ADH está ativo',
-       'Osmolalidade abaixo de 275 com urina acima de 100 afasta pseudo-hiponatremia '
-       'e polidipsia.', True),
-      ('Há perda renal de sal, com hipovolemia',
-       'Perda digestiva ou pouca ingestão reteriam sódio, com urinário abaixo '
-       'de 30.', True),
-      ('O potássio alto sugere falta de mineralocorticoide',
-       'Sem insuficiência renal nem remédio que retenha potássio, falta ação '
-       'da aldosterona.', True),
-      ('O sódio urinário alto afasta hipovolemia',
-       'Não afasta: perda renal de sal é hipovolemia com sódio urinário alto.',
-       False),
-      ('Os achados confirmam SIADH pela fluoxetina',
-       'SIADH é euvolêmica, não sobe o potássio e exige excluir tireoide e '
-       'glicocorticoide.', False),
-      ('Hipotireoidismo explica o sódio e o potássio',
-       'TSH de 4,6 com T4 livre normal não baixa o sódio nem sobe o potássio.',
-       False),
-      ('Restrição hídrica de 800 mL por dia é a conduta inicial',
-       'Com hipovolemia e perda de sal, restringir água derruba mais a pressão.',
-       False),
-      ('Salina a 3% para corrigir o sódio de 130 no ambulatório',
-       'Sem sintoma grave, não há indicação; corrigir rápido arrisca '
-       'desmielinização osmótica.', False),
-     ], 'Sódio que sai pela urina, potássio que fica'),
+      'Creatinina de 1,8 mg/dL, que era 1,0 há três semanas. Qual a leitura '
+      'mais adequada da lesão renal?', [
+      ('Pré-renal, com perda renal de sódio', True),
+      ('Pré-renal da diarreia, com rim normal', False),
+      ('Lesão tubular aguda', False),
+      ('Nefrite intersticial pela medicação', False),
+      ('Doença renal crônica agudizada', False),
+     ], [
+      ('A classificação', 'Urina concentrada, a 418 mOsm/kg, sedimento com '
+       'cilindros hialinos e relação ureia/creatinina alta são de '
+       'hipoperfusão, sem lesão do túbulo. A creatinina normal três semanas '
+       'antes afasta doença crônica. A FENa de 1,4% não vem de necrose '
+       'tubular, que traria cilindros granulosos e urina isostenúrica: é o rim '
+       'deixando sair sódio.'),
+      ('O que não combina com a diarreia', 'Na hipovolemia da diarreia, a '
+       'aldosterona sobe: o rim guarda sódio, com sódio urinário abaixo de 20, '
+       'e perde potássio, que cai no sangue. Aqui acontece o contrário: sódio '
+       'urinário de 62, potássio urinário de 14 e potássio sérico de 6,1.'),
+      ('O que isso pede', 'Hipovolemia com sódio urinário alto e potássio '
+       'retido tem poucas causas: diurético, remédio que bloqueia o eixo '
+       'renina-aldosterona (espironolactona, inibidor da ECA, trimetoprim), '
+       'nefropatia perdedora de sal ou falta do próprio hormônio. Ela não usa '
+       'nenhum desses remédios.'),
+     ]),
 
-    pg('retorno_amb', 'No mesmo retorno',
-       'O marido veio junto pela primeira vez. Conta o que ela não tinha dito: '
-       'há meses Marta come sal puro na palma da mão e salga a comida já '
-       'servida. "Achei que era mania", diz.',
-       'Ao examinar a boca, a residente nota manchas acastanhadas na gengiva e '
-       'na face interna da bochecha. A cicatriz da cesárea está mais escura que '
-       'a pele em volta. A fluoxetina é suspensa, os exames da manhã ficam para '
-       'segunda-feira e a endocrinologia é antecipada.'),
-
-    pg('gastro', 'Cinco dias depois',
-       'Na quinta-feira, Marta e o filho mais novo comem salpicão numa festa da '
-       'escola. Os dois têm vômitos e diarreia na mesma noite. O menino melhora '
-       'em um dia.',
-       'Ela não. No terceiro dia, não consegue ficar de pé: "a vista escurece e '
-       'as pernas somem". O marido a leva à emergência do hospital no sábado à '
-       'noite, antes dos exames de segunda.'),
-
-    pagina('emergencia', 'Na emergência', '',
-           vitais(('Pressão arterial', '78/42', True), ('Frequência cardíaca', '118', True),
-                  ('Temperatura', '37,6 °C', False), ('Frequência respiratória', '22', False),
-                  ('Glicemia capilar', '58 mg/dL', True)),
-           topicos(('Estado geral', 'Sonolenta, responde com lentidão, mucosas secas.'),
-                   ('Pele', 'Sulcos palmares, cotovelos e cicatriz de cesárea '
-                    'escurecidos. Vitiligo nas mãos.'),
-                   ('Abdome', 'Doloroso de forma difusa, sem defesa, ruídos aumentados.'),
-                   ('Neurológico', 'Sem déficit focal, sem rigidez de nuca.')),
-           so_kicker=True),
-
-    pg('beira_leito', 'Os primeiros vinte minutos',
-       'Gasometria venosa: pH 7,29, bicarbonato 17, sódio 124, potássio 6,1, '
-       'lactato 2,4. Ureia 88 e creatinina 1,8. O eletrocardiograma mostra '
-       'taquicardia sinusal com ondas T apiculadas discretas em V2 a V4.',
-       'Depois de 1 litro de soro fisiológico em 20 minutos, a pressão sobe '
-       'para 84/50 e volta a cair. A residente abre no celular os exames do '
-       'ambulatório.'),
-
-    # ───────────── a virada: crise, tratar antes de confirmar ─────────────
-
-    Q('p4', 4,
-      'Choque que não responde a volume, glicemia de 58, sódio de 124 e '
-      'potássio de 6,1 depois de três dias de diarreia. **Quais quatro** '
-      'medidas são as mais apropriadas agora?', [
-      ('Hidrocortisona 100 mg EV em bolo, e 200 mg nas 24 horas seguintes',
-       'Choque, sódio baixo, potássio alto e hipoglicemia nessa paciente são '
-       'crise adrenal até prova em contrário.', True),
-      ('Colher cortisol e ACTH antes da dose, sem atrasá-la',
-       'Um tubo leva um minuto e vale o diagnóstico; se não der, trata-se sem '
-       'ele.', True),
-      ('Soro fisiológico, 1 litro na primeira hora e depois pela resposta',
-       'A crise é também choque hipovolêmico, por perda renal e digestiva de '
-       'sal.', True),
-      ('Glicose endovenosa para a glicemia de 58',
-       'Sonolência com glicemia de 58 não espera o resto.', True),
-      ('Aguardar a cortrosina das 7 horas antes de qualquer corticoide',
-       'O teste confirma depois; esperar por ele com pressão de 78 custa horas '
-       'de choque.', False),
-      ('Fludrocortisona 0,1 mg oral já na emergência, junto com o soro',
-       'Acima de 50 mg por dia, a hidrocortisona cobre o mineralocorticoide; e '
-       'ela vomita.', False),
-      ('Salina a 3% em bolo de 150 mL para o sódio de 124',
-       'Sem convulsão, não entra; com volume e corticoide, o risco é corrigir '
-       'rápido demais.', False),
-      ('Noradrenalina em veia periférica antes de completar o volume',
-       'Sem volume e sem cortisol, o vasopressor rende pouco; entra se o '
-       'choque persistir.', False),
-      ('Insulina regular com glicose para o potássio de 6,1',
-       'Com glicemia de 58, insulina é perigosa; o potássio cai com soro e '
-       'corticoide.', False),
-     ], 'Tratar antes de confirmar'),
-
-    bifurcacao('b1', 'Decisão', 'A primeira hora',
-      'O plantonista da noite hesita: "E se não for adrenal? Não seria melhor '
-      'confirmar antes de dar corticoide?" O que você faz?', [
-      caminho('Colhe cortisol e ACTH, dá hidrocortisona 100 mg agora e segue '
-              'com o soro', 'tratado',
-              'O corticoide não atrapalha a dosagem já colhida, e a crise não '
-              'espera diagnóstico.'),
-      caminho('Mantém soro e glicose, e deixa o teste de cortrosina para as 7 '
-              'horas, antes do corticoide', 'espera',
-              'O teste sem corticoide é mais limpo. O preço é passar a noite '
-              'em choque.'),
-      caminho('Trata como gastroenterite com desidratação: soro, antiemético e '
-              'alta com retorno se piorar', 'retorno',
-              'A pressão melhorou um pouco com o soro, e três dias de diarreia '
+    bifurcacao('b1', 'Decisão', 'As primeiras horas',
+      'Depois de 1 litro de soro fisiológico e da glicose, a pressão é 92/58 e '
+      'ela conversa. A hipótese registrada é gastroenterite aguda com choque '
+      'hipovolêmico, lesão renal pré-renal e hipercalemia. A emergência está '
+      'lotada. Como você conduz?', [
+      caminho('Sala vermelha: soro com reavaliação, gluconato de cálcio, '
+              'glicose contínua e monitor', 'internada',
+              'Choque com potássio de 6,1 e onda T alterada pede monitor, cálcio '
+              'para a membrana e volume guiado pela resposta.'),
+      caminho('Insulina com glicose e bicarbonato para o potássio, e soro com '
+              'cautela', 'insulina',
+              'Trata o número do potássio com insulina numa glicemia que acabou '
+              'de ser 56.'),
+      caminho('Mais soro em observação por seis horas e alta com soro oral',
+              'retorno',
+              'Ela melhorou com o primeiro litro, e três dias de diarreia '
               'explicam a desidratação.'),
     ]),
 
-    pg('retorno', 'Doze horas depois',
-       'Marta é encontrada em casa pelo marido, na madrugada, sem responder. '
-       'O SAMU chega com ela em parada cardiorrespiratória, glicemia de 31 e '
-       'potássio de 7,4.',
+    pg('insulina', 'Quarenta minutos depois',
+       'Depois de 10 unidades de insulina regular com 25 g de glicose, a '
+       'glicemia capilar cai para 34 e ela tem uma crise convulsiva. Recebe '
+       'glicose a 50% e volta a responder. O potássio está em 5,6. A plantonista '
+       'passa a glicose contínua, faz o gluconato de cálcio e a leva para a '
+       'sala vermelha.',
+       segue='internada'),
+
+    pg('retorno', 'Seis horas depois',
+       'Com pressão de 96/60 depois do segundo litro, ela recebe alta com soro '
+       'oral. Na madrugada, o marido a encontra sem responder. O SAMU chega com '
+       'ela em parada cardiorrespiratória; na gasometria da reanimação, '
+       'glicemia de 31 e potássio de 7,4.',
        segue='f_obito'),
 
+    pg('internada', 'Quatro horas depois, na sala vermelha',
+       'Recebeu 3 litros de soro fisiológico, glicose a 10% contínua e 30 mL de '
+       'gluconato de cálcio a 10%. A diurese é de 30 mL por hora. Mesmo assim, '
+       'a pressão voltou a 80/46, e a glicemia caiu a 62 com a glicose correndo.',
+       'Continua sem febre, sem crepitações, com jugulares planas. Antes de '
+       'mais volume, a plantonista pede uma radiografia de tórax.'),
+
+    estudo('rx', 'Radiografia de tórax',
+           'Pedida na sala vermelha, antes de mais volume, para procurar '
+           'congestão, derrame ou um foco de infecção que explique o choque.',
+           IMG / 'rx_torax.jpg',
+           'Radiografia de outra pessoa · comparação didática.',
+           credito_meta(IMG / 'rx_torax.jpg.json'),
+        [
+         ((236, 500), (110, 420), '**Vasos pulmonares** de calibre normal: sem congestão.', 12),
+         ((100, 955), (60, 1060), '**Seio costofrênico** direito livre: sem derrame.', 12),
+         ((721, 786), (880, 700), '**Borda esquerda do coração**: área cardíaca sem aumento.', -12),
+        ],
+        ['Pulmões limpos, sem congestão nem consolidação. Seios costofrênicos '
+         'livres. Área cardíaca normal.',
+         'Nada no tórax explica o choque, e não há sinal de sobrecarga que '
+         'impeça mais volume. A pressão que não se sustenta com 3 litros pede '
+         'outra explicação.']),
+
+    pg('marido', 'O marido volta',
+       'Às duas da manhã, o marido volta com uma muda de roupa e conta o que '
+       'ela não tinha dito à equipe: há meses Marta come sal puro na palma da '
+       'mão e salga a comida já servida. "Achei que era mania."',
+       'Diz também que ela escureceu desde o ano passado, "como quem pegou sol", '
+       'embora quase não saia de casa. A residente volta ao leito.'),
+
+    pagina('reexame', 'Reexame', '',
+           topicos(('Boca', 'Manchas acastanhadas na gengiva e na face interna '
+                    'das bochechas.'),
+                   ('Mãos', 'Sulcos palmares escurecidos, em contraste com as '
+                    'manchas acrômicas do dorso.'),
+                   ('Pele', 'Cicatriz da cesárea mais escura que a pele em volta. '
+                    'Cotovelos e joelhos escurecidos.'),
+                   ('Hemodinâmica', 'Pressão 82/48, frequência 116. Não consegue '
+                    'sentar sem tontura.')),
+           so_kicker=True),
+
+    Q('p4', 4,
+      'A equipe revê o caso inteiro. **Quais quatro** dados a gastroenterite '
+      'não explica?', [
+      ('Potássio de 6,1 com diarreia', True),
+      ('Sódio urinário de 62 na hipovolemia', True),
+      ('Glicemia que cai com glicose correndo', True),
+      ('Pigmentação da gengiva e das cicatrizes', True),
+      ('Creatinina de 1,8 com ureia de 88', False),
+      ('Hematócrito maior que o de três semanas', False),
+      ('Proteína C reativa de 1,2', False),
+     ], [
+      ('O que a diarreia explica', 'Hipovolemia, taquicardia, '
+       'hemoconcentração, creatinina pré-renal, acidose de ânion gap normal e '
+       'a proteína C reativa de 1,2.'),
+      ('O que ela não explica', 'Diarreia baixa o potássio; o dela é 6,1. Na '
+       'hipovolemia o rim guarda sódio; o dela sai a 62. Choque derruba os '
+       'eosinófilos; ela tem 770. Um adulto em jejum mantém a glicemia pela '
+       'gliconeogênese; a dela cai com glicose a 10% correndo. E pigmento na '
+       'gengiva leva meses para aparecer.'),
+      ('Juntando', 'Perda de sódio com potássio retido, eosinofilia, '
+       'hipoglicemia e pressão que o volume não segura, em quem emagrece há '
+       'oito meses e come sal na mão: uma causa única, hormonal, anterior à '
+       'gastroenterite, que foi só o gatilho.'),
+     ]),
+
+    pg('hipotese', 'A hipótese muda',
+       'A residente reescreve a evolução: a gastroenterite não fecha o quadro. '
+       'Perda de sódio, potássio retido, hipoglicemia e pigmento de meses '
+       'apontam para uma glândula que deixou de produzir os dois hormônios '
+       'que seguram a pressão, a glicemia e o sal.',
+       'A confirmação clássica é um teste de estímulo, feito de manhã. Ela '
+       'chama o plantonista.'),
+
+    bifurcacao('b2', 'Decisão', 'A madrugada',
+      'São duas e meia. O plantonista da noite pergunta: "Não seria melhor '
+      'confirmar antes de dar corticoide?" O teste de estímulo só pode ser '
+      'feito às 7 horas. O que você faz?', [
+      caminho('Colher cortisol e ACTH e dar hidrocortisona 100 mg EV agora',
+              'tratado',
+              'O tubo leva um minuto e não atrasa a dose; a crise não espera o '
+              'teste.'),
+      caminho('Manter soro e glicose e fazer o teste da cortrosina às 7 horas',
+              'espera',
+              'O teste sem corticoide é mais limpo. O preço é a noite em '
+              'choque.'),
+      caminho('Tratar como choque séptico: antibiótico, norepinefrina e UTI',
+              'septico',
+              'Choque que não responde a volume, com proteína C reativa alta, '
+              'pode ser sepse de foco intestinal.'),
+    ]),
+
     pg('espera', 'A noite',
-       'Às 2 horas, a pressão cai para 70/38 e ela fica confusa. Começa '
-       'noradrenalina. Às 4 horas, o residente da UTI dá hidrocortisona 100 mg '
-       'sem esperar o teste. Às 7 horas, já sem vasopressor, ela está '
-       'acordada, com horas a mais de choque na conta.',
+       'Às 4 horas a pressão cai para 70/38 e ela fica confusa; começa '
+       'norepinefrina. Às 5 horas o residente da UTI colhe cortisol e ACTH e dá '
+       'hidrocortisona 100 mg sem esperar o teste. Às 8 horas, sem vasopressor, '
+       'ela está acordada, com três horas a mais de choque na conta.',
+       segue='tratado'),
+
+    pg('septico', 'Na UTI',
+       'Ceftriaxona e metronidazol, norepinefrina em dose crescente. Às 7 horas, '
+       'com 0,3 µg/kg/min há quatro horas, o intensivista colhe cortisol e ACTH '
+       'e inicia hidrocortisona 50 mg a cada 6 horas, como no choque séptico '
+       'refratário. Em seis horas o vasopressor é desligado; as hemoculturas '
+       'não crescem.',
        segue='tratado'),
 
     pg('tratado', 'Seis horas depois da hidrocortisona',
-       'Pressão de 108/64, glicemia de 96, diurese boa. O sódio subiu de 124 '
-       'para 128 e o potássio caiu para 5,0. Ela pede água e pergunta onde '
-       'está.'),
+       'Pressão de 108/64 sem vasopressor, glicemia de 96 sem glicose, diurese '
+       'boa. Ela pede água e pergunta onde está. Segue com hidrocortisona 50 mg '
+       'a cada 6 horas.'),
 
     painel('res2', 'Resultados', 'O que a equipe pediu na crise', [
-        ex('Cortisol (antes da hidrocortisona)', '**2,1 µg/dL**', '> 18 µg/dL no estresse', True),
+        ex('Cortisol (antes da primeira dose)', '**2,1 µg/dL**', 'manhã: 5–25 µg/dL', True),
         ex('ACTH', '**480 pg/mL**', '7–63 pg/mL', True),
-        ex('Renina ativa', '185 µUI/mL', '4–46 µUI/mL', True),
+        ex('Renina', '185 µUI/mL', '4–46 µUI/mL', True),
         ex('Aldosterona', '< 3 ng/dL', '3–16 ng/dL', True),
-        ex('Anti-21-hidroxilase', 'Reagente', 'não reagente', True),
+        ex('Anticorpo anti-21-hidroxilase', 'Reagente', 'não reagente', True),
         ex('TSH / T4 livre', '6,8 µUI/mL / 1,0 ng/dL', '0,4–4,0 / 0,9–1,7', True),
-        ex('Anti-TPO', 'Reagente, 340 UI/mL', 'até 35 UI/mL', True),
-        ex('Sódio / potássio (admissão)', '124 / 6,1 mEq/L', '135–145 / 3,5–5,0', True),
-        ex('Ureia / creatinina (admissão)', '88 / 1,8 mg/dL', 'até 40 / 0,6–1,1', True),
-        ex('Hemoglobina / eosinófilos', '11,4 g/dL / 9% (1.100 por mm³)', '12–16 / até 500', True),
-        ex('Eletrocardiograma', 'Taquicardia sinusal, 118 bpm · T apiculada discreta em V2–V4', '—', True),
-    ], introducao='O cortisol e o ACTH são da amostra colhida na chegada, antes da primeira dose.',
-       laminas={'Eletrocardiograma': lamina('ecg_taquicardia.jpg', 'Eletrocardiograma',
-                'Traçado ilustrativo de taquicardia sinusal de outra pessoa; não '
-                'mostra as ondas T de Marta.', CREDITO_ECG)}),
+        ex('Anti-TPO', '340 UI/mL', 'até 35 UI/mL', True),
+        ex('Hemoculturas e coprocultura', 'Sem crescimento em 48 horas', '—'),
+    ], introducao='O cortisol e o ACTH são da amostra colhida antes da primeira '
+                  'dose; o resto, da manhã seguinte.'),
+
+    pg('virada', 'O diagnóstico',
+       'Cortisol de **2,1 µg/dL** em choque, com ACTH de 480, renina alta e '
+       'aldosterona indetectável: **insuficiência adrenal primária**, a doença '
+       'de Addison, que se abriu como crise adrenal depois de uma '
+       'gastroenterite. O anticorpo anti-21-hidroxilase indica a causa '
+       'autoimune, hoje a mais comum.',
+       'Quando mais de 90% do córtex está destruído, faltam os dois hormônios. '
+       'Sem cortisol vêm a hipoglicemia, a eosinofilia, a hipotensão e a '
+       'liberação de ADH que baixa o sódio. Sem aldosterona, o rim perde sódio, '
+       'retém potássio e não acidifica a urina. O ACTH alto, que nasce da mesma '
+       'molécula precursora do hormônio estimulante do melanócito, escurece '
+       'mucosas, dobras e cicatrizes.',
+       'A doença se instala em meses e costuma passar por várias consultas '
+       'antes do nome; infecção, sobretudo gastrointestinal, é o gatilho mais '
+       'comum da crise. Com o vitiligo e a tireoidite (TSH de 6,8, anti-TPO '
+       'reagente), o quadro completa uma síndrome poliglandular autoimune tipo 2.'),
+
+    pg('noite', 'Doze horas depois da primeira dose',
+       'A diurese passou a 350 mL por hora, de urina clara, com osmolalidade '
+       'urinária de 90 mOsm/kg. O sódio, que era 124 na chegada, está em 132; o '
+       'potássio, 4,6. Ela está lúcida e sem queixas, ainda com soro '
+       'fisiológico a 150 mL por hora.'),
 
     Q('p5', 5,
-      'Cortisol de 2,1 no choque confirma a insuficiência. Hiponatremia aparece '
-      'nos dois tipos, primária e secundária. **Quais quatro** achados indicam '
-      'que a dela é primária?', [
-      ('Hiperpigmentação de pele e gengiva',
-       'O ACTH alto e seu precursor estimulam o melanócito; na secundária, a '
-       'pele empalidece.', True),
-      ('Potássio alto desde o ambulatório',
-       'Falta de aldosterona, que só ocorre quando a glândula é destruída.',
-       True),
-      ('Renina alta com aldosterona baixa',
-       'O eixo renina-aldosterona não depende da hipófise.', True),
-      ('ACTH de 480',
-       'A hipófise responde ao cortisol baixo.', True),
-      ('Sódio de 124',
-       'Nas duas: a falta de cortisol libera vasopressina e retém água.',
-       False),
-      ('Glicemia de 58', 'Nas duas: é falta de cortisol.', False),
-      ('Eosinófilos de 1.100', 'Nas duas: também é falta de cortisol.', False),
-      ('Queda da pressão ao ficar de pé',
-       'Mais intensa na primária, mas presente nas duas.', False),
-      ('Seis quilos a menos em oito meses',
-       'Nas duas, e também em metade do diferencial inicial.', False),
-     ], 'O que é do ACTH e o que é da aldosterona'),
+      'O sódio subiu 8 mmol/L em 12 horas, e a diurese é de urina diluída. '
+      '**Quais três** condutas estão corretas?', [
+      ('Trocar o soro por glicose a 5%', True),
+      ('Desmopressina se a diurese aquosa continuar', True),
+      ('Sódio a cada 2 a 4 horas', True),
+      ('Manter o soro fisiológico, ela está bem', False),
+      ('Suspender a hidrocortisona até estabilizar', False),
+      ('Restringir água até a manhã', False),
+     ], [
+      ('O que aconteceu', 'Com volume e cortisol repostos, o estímulo do ADH '
+       'desapareceu e o rim passou a eliminar água livre: 350 mL por hora de '
+       'urina a 90 mOsm/kg. O sódio subiu 8 mmol/L em 12 horas, o limite de 24 '
+       'horas para quem tem hiponatremia crônica e desnutrição, e vai continuar '
+       'subindo.'),
+      ('A conduta', 'Parar de dar sódio e repor a água que sai: glicose a 5% no '
+       'lugar do soro fisiológico e, se a diurese aquosa persistir, '
+       'desmopressina 1 a 2 µg endovenosa, que fecha a saída de água livre. Se '
+       'o limite for ultrapassado, a mesma estratégia serve para baixar o sódio '
+       'de novo. Sódio a cada 2 a 4 horas até estabilizar.'),
+      ('O que não fazer', 'A hidrocortisona não se suspende: a crise voltaria. '
+       'Manter o soro fisiológico ou restringir água sobe mais o sódio. A '
+       'desmielinização osmótica aparece dias depois da correção rápida, e o '
+       'risco é maior na desnutrição, na hipocalemia, no alcoolismo e na '
+       'hiponatremia crônica.'),
+     ]),
 
     pareamento('p6', 'Pergunta 6',
-      'A causa de Marta é autoimune. Associe cada cenário à causa mais '
-      'provável de insuficiência adrenal primária.', [
-      par('Mulher com vitiligo, tireoidite e anti-21-hidroxilase reagente',
+      'Associe cada paciente à causa mais provável da insuficiência adrenal '
+      'primária dele.', [
+      par('Mulher de 30 anos com diabetes tipo 1 e anti-21-hidroxilase reagente',
           'Adrenalite autoimune',
-          'Causa mais comum no Brasil urbano, em geral com outras doenças '
-          'autoimunes.'),
-      par('Homem de 62 anos, tuberculose tratada na juventude, adrenais '
-          'pequenas e calcificadas na tomografia',
-          'Infecção granulomatosa',
-          'A tuberculose destrói as duas adrenais e deixa calcificação.'),
-      par('Lavrador de 55 anos com úlceras orais de fundo granuloso e '
-          'adrenais aumentadas',
-          'Infecção fúngica endêmica',
-          'Paracoccidioidomicose: na forma crônica, as adrenais são acometidas '
-          'com frequência.'),
+          'A causa de Marta, em geral com outras doenças autoimunes.'),
+      par('Homem de 62 anos, tuberculose na juventude, adrenais pequenas e '
+          'calcificadas',
+          'Tuberculose',
+          'Destrói as duas glândulas e deixa calcificação; ainda pesa no Brasil.'),
+      par('Lavrador do interior paulista com úlceras orais e adrenais aumentadas',
+          'Paracoccidioidomicose',
+          'Micose do Sul, Sudeste, Centro-Oeste e Rondônia; a adrenal é '
+          'acometida com frequência na forma crônica.'),
       par('Jovem com púrpura fulminante e choque por meningococo',
           'Hemorragia adrenal bilateral',
           'Síndrome de Waterhouse-Friderichsen.'),
-      par('Idoso anticoagulado, no quarto dia de artroplastia, com dor '
-          'lombar e choque',
-          'Hemorragia adrenal bilateral',
-          'Anticoagulação e estresse pós-operatório são o cenário típico.'),
-      par('Menino de 9 anos com piora escolar, espasticidade e ácidos graxos '
-          'de cadeia muito longa elevados',
-          'Doença genética peroxissomal',
-          'Adrenoleucodistrofia ligada ao X: dosar esses ácidos graxos em todo '
-          'menino com a doença.'),
-    ], opcoes=['Adrenalite autoimune', 'Infecção granulomatosa',
-               'Infecção fúngica endêmica', 'Hemorragia adrenal bilateral',
-               'Doença genética peroxissomal',
-               'Supressão do eixo por corticoide exógeno'],
-    titulo_resposta='Autoimune, infecciosa, hemorrágica, genética',
-    nota='A supressão por corticoide exógeno sobrou: ela é secundária, com '
-         'ACTH baixo, e não entra na lista das primárias.'),
+      par('Fumante de 66 anos com nódulo pulmonar e massas nas duas adrenais',
+          'Metástases bilaterais',
+          'Frequentes, mas só causam insuficiência quando destroem quase toda a '
+          'glândula.'),
+      par('Menino de 9 anos com piora escolar e espasticidade',
+          'Adrenoleucodistrofia ligada ao X',
+          'Dosar ácidos graxos de cadeia muito longa em todo menino com a doença.'),
+    ], opcoes=['Adrenalite autoimune', 'Tuberculose', 'Paracoccidioidomicose',
+               'Hemorragia adrenal bilateral', 'Metástases bilaterais',
+               'Adrenoleucodistrofia ligada ao X',
+               'Supressão por corticoide exógeno'],
+    titulo_resposta='Autoimune, infecciosa, hemorrágica, tumoral, genética',
+    nota='A supressão por corticoide exógeno sobrou: ela é secundária, com ACTH '
+         'baixo, e não entra entre as primárias.'),
 
     pg('evolucao', 'Terceiro dia',
-       'Marta come, anda pelo corredor e já recebe hidrocortisona oral em '
-       'dose decrescente. O sódio é 134 e o potássio 4,6. A equipe planeja a '
+       'Marta come, anda pelo corredor e passa à hidrocortisona oral em dose '
+       'decrescente. O sódio é 134 e o potássio 4,4. A equipe planeja a '
        'reposição de longo prazo.'),
 
-    bifurcacao('b2', 'Decisão', 'A reposição de longo prazo',
+    bifurcacao('b3', 'Decisão', 'A reposição de longo prazo',
       'Qual esquema você prescreve para a alta?', [
       caminho('Hidrocortisona 15 a 25 mg por dia em duas ou três tomadas, '
-              'fludrocortisona 0,1 mg, cartão de identificação e ampola de '
-              'emergência', 'manutencao',
-              'Repõe cortisol no ritmo do dia e aldosterona, e prepara a '
+              'fludrocortisona 0,1 mg, cartão e ampola de emergência',
+              'manutencao',
+              'Repõe o cortisol no ritmo do dia e a aldosterona, e prepara a '
               'paciente para a próxima crise.'),
-      caminho('Prednisona 20 mg uma vez ao dia, sem fludrocortisona', 'prednisona',
+      caminho('Prednisona 20 mg uma vez ao dia, sem fludrocortisona',
+              'prednisona',
               'Uma tomada só é mais simples, e a prednisona tem algum efeito '
               'mineralocorticoide.'),
       caminho('Hidrocortisona 20 mg por dia, sem fludrocortisona', 'sem_fludro',
@@ -412,8 +501,8 @@ ETAPAS = [
        segue='manutencao'),
 
     pg('sem_fludro', 'Seis semanas depois',
-       'Tontura ao levantar, pressão de 96/60 em pé, fissura por sal de volta, '
-       'potássio de 5,4 e renina ainda muito alta. Vinte miligramas de '
+       'Tontura ao levantar, pressão de 96/60 em pé, vontade de comer sal de '
+       'volta, potássio de 5,4 e renina ainda muito alta. Vinte miligramas de '
        'hidrocortisona não cobrem a aldosterona que falta.',
        'A endocrinologia acrescenta fludrocortisona 0,1 mg.',
        segue='manutencao'),
@@ -421,106 +510,115 @@ ETAPAS = [
     pg('manutencao', 'O esquema da alta',
        'Hidrocortisona 10 mg ao acordar, 5 mg ao meio-dia e 5 mg às 16 horas; '
        'fludrocortisona 0,1 mg pela manhã. O ajuste se faz pela clínica, pela '
-       'pressão em pé e pela renina, não pelo cortisol nem pelo ACTH.'),
+       'pressão em pé, pelo potássio e pela renina, não pelo cortisol nem pelo '
+       'ACTH.'),
 
     Q('p7', 7,
       'Antes da alta, a enfermagem ensina a Marta e ao marido as regras dos '
       'dias de doença. **Quais quatro** orientações estão corretas?', [
-      ('Febre acima de 38 °C: dobrar a hidrocortisona; acima de 39 °C, triplicar',
-       'Enquanto durar a febre, em geral dois a três dias, e voltar à dose '
-       'habitual.', True),
-      ('Vômitos ou diarreia intensa: 100 mg intramuscular e emergência',
-       'Foi a gastroenterite que abriu a crise dela; comprimido vomitado não '
-       'protege.', True),
-      ('Cirurgia de grande porte: 100 mg na indução e 200 mg em 24 horas',
-       'O anestesista precisa saber, e o cartão serve para isso.', True),
-      ('Andar com cartão ou pulseira de identificação',
-       'Inconsciente, ela não vai poder dizer que tem Addison.', True),
-      ('Suspender a fludrocortisona enquanto durar a febre, para não reter líquido',
-       'Não há motivo; a fludrocortisona não precisa de ajuste no estresse.',
-       False),
-      ('Dobrar também a fludrocortisona nos dias de febre ou de estresse',
-       'Quem sobe é a hidrocortisona.', False),
-      ('Na gastroenterite leve, manter a dose habitual e observar por 48 horas',
-       'Foi exatamente assim que ela chegou em choque.', False),
-      ('Reduzir a hidrocortisona por conta própria se ganhar peso ou inchar',
-       'O ajuste é com a equipe; reduzir por conta leva à crise.', False),
-     ], 'Dobrar, injetar, avisar'),
+      ('Febre acima de 38 °C: dobrar a hidrocortisona', True),
+      ('Vômitos: 100 mg intramuscular e emergência', True),
+      ('Cartão ou pulseira de identificação sempre', True),
+      ('Cirurgia grande: 100 mg na indução anestésica', True),
+      ('Dobrar também a fludrocortisona na febre', False),
+      ('Gastroenterite leve: manter a dose e observar', False),
+      ('Reduzir a dose por conta própria se inchar', False),
+     ], [
+      ('Os dias de doença', 'Febre acima de 38 °C pede o dobro da dose habitual '
+       'de hidrocortisona, e acima de 39 °C o triplo, enquanto durar a febre, '
+       'em geral dois ou três dias. Cirurgia de grande porte pede 100 mg '
+       'endovenosos na indução e 200 mg nas 24 horas seguintes, e o cartão '
+       'serve para que o anestesista saiba.'),
+      ('A injeção', 'Comprimido vomitado não protege. Vômitos ou diarreia '
+       'intensa pedem hidrocortisona 100 mg intramuscular, aplicada em casa, e '
+       'ida à emergência. Foi uma gastroenterite que abriu a crise dela, e o '
+       'marido precisa saber aplicar a ampola.'),
+      ('O que não entra', 'A fludrocortisona não precisa de ajuste no estresse: '
+       'quem sobe é a hidrocortisona, que em dose alta já cobre o efeito '
+       'mineralocorticoide. Esperar 48 horas numa gastroenterite foi o caminho '
+       'que a trouxe em choque, e reduzir a dose por conta própria leva à '
+       'crise.'),
+     ]),
 
     Q('p8', 8,
-      'Adrenalite autoimune, tireoidite com anti-TPO e vitiligo: síndrome '
-      'poliglandular autoimune tipo 2. O TSH foi 4,6 no ambulatório e 6,8 na '
-      'crise, com T4 livre normal. **Quais quatro** condutas estão corretas?', [
-      ('Repetir TSH e T4 livre após seis a oito semanas de reposição',
-       'A falta de cortisol eleva o TSH, que muitas vezes normaliza com a '
-       'hidrocortisona.', True),
-      ('Glicemia de jejum e hemoglobina glicada periódicas',
-       'Diabetes tipo 1 faz parte da síndrome.', True),
-      ('Vitamina B12 e hemograma no seguimento',
-       'Gastrite atrófica autoimune e anemia perniciosa se associam.', True),
-      ('FSH e estradiol pela irregularidade menstrual',
-       'Insuficiência ovariana autoimune também acompanha a síndrome.', True),
-      ('Iniciar levotiroxina já, pelo TSH de 6,8 e o anti-TPO',
-       'TSH abaixo de 10, dosado na crise, tende a cair; tratar agora é tratar '
-       'um número.', False),
-      ('Paratormônio e cálcio para hipoparatireoidismo',
-       'Hipoparatireoidismo e candidíase são da síndrome tipo 1, da infância.',
-       False),
-      ('Pesquisa de mutação no gene AIRE, para a família',
-       'É o exame da síndrome tipo 1, que ela não tem.', False),
-      ('Cortisol sérico a cada consulta para ajustar a dose',
-       'Com hidrocortisona, o cortisol oscila com a tomada e não guia a dose.',
-       False),
-      ('Anti-21-hidroxilase anual para acompanhar a atividade',
-       'Já é reagente; repetir não muda nada.', False),
-     ], 'O TSH da crise não é o TSH dela'),
+      'TSH de 6,8 na crise, com T4 livre normal. **Quais quatro** condutas '
+      'estão corretas no seguimento?', [
+      ('Repetir TSH após semanas de reposição', True),
+      ('Glicemia e hemoglobina glicada periódicas', True),
+      ('Vitamina B12 e antitransglutaminase no seguimento', True),
+      ('FSH e estradiol pela irregularidade menstrual', True),
+      ('Levotiroxina já, pelo TSH de 6,8', False),
+      ('Paratormônio e cálcio para hipoparatireoidismo', False),
+      ('Pesquisa do gene AIRE para a família', False),
+     ], [
+      ('O TSH da crise', 'A falta de cortisol eleva o TSH, que costuma '
+       'normalizar em seis a oito semanas de hidrocortisona: TSH abaixo de 10 '
+       'com T4 livre normal se repete antes de tratar. Levotiroxina antes do '
+       'glicocorticoide pode precipitar crise.'),
+      ('A síndrome tipo 2', 'Soma à adrenal a tireoide autoimune e o diabetes '
+       'tipo 1, com vitiligo, anemia perniciosa, doença celíaca e insuficiência '
+       'ovariana. O seguimento procura cada uma: glicemia e hemoglobina '
+       'glicada, B12, antitransglutaminase e, com a menstruação irregular, FSH '
+       'e estradiol.'),
+      ('O que não entra', 'Hipoparatireoidismo e candidíase são da síndrome '
+       'tipo 1, da infância, ligada ao gene AIRE.'),
+     ]),
 
     pg('alta', 'Preparando a alta',
-       'Marta sai com o esquema da alta, a ampola de hidrocortisona na bolsa '
-       'e o marido treinado para aplicar.',
-       conforme=('b2', ['alta_cedo', 'f2', 'f2'])),
+       'Marta sai com o esquema de reposição, a ampola de hidrocortisona na '
+       'bolsa e o marido treinado para aplicar.',
+       conforme=('b3', ['alta_cedo', 'f2', 'f2'])),
 
     pg('alta_cedo', 'Na véspera da alta',
        'Ela conta que, pela primeira vez em meses, não sentiu vontade de comer '
-       'sal. A gengiva e as cicatrizes vão clarear devagar, com a queda do '
-       'ACTH.',
+       'sal. A gengiva e as cicatrizes vão clarear devagar, com a queda do ACTH.',
+       conforme=('b2', ['alta_ok', 'f2', 'f2'])),
+
+    pg('alta_ok', 'O resumo de alta',
+       'A residente escreve no resumo o que abriu o caso: o potássio alto com '
+       'diarreia e o sódio que saía pela urina, registrados já na primeira '
+       'hora.',
        conforme=('b1', ['f1', 'f2', 'f2'])),
 
     fim('f1', 'Alta no quinto dia',
         'Marta volta à escola em três semanas. A pele clareia em quatro meses, '
         'e o TSH de controle é 3,1, sem levotiroxina.',
-        'Hidrocortisona na primeira hora, reposição completa desde a alta e '
-        'uma paciente que sabe o que fazer na próxima gastroenterite.',
+        'Monitor e cálcio na primeira hora, hidrocortisona assim que o quadro '
+        'deixou de caber na gastroenterite, correção do sódio vigiada e '
+        'reposição completa na alta.',
         'melhor'),
 
     fim('f2', 'Alta com um percurso mais longo',
-        'Marta sai viva, mas com uma noite a mais de choque ou meses de '
-        'esquema errado até a correção.',
-        'Esperar o teste para dar corticoide, ou repor só metade do que a '
-        'glândula deixou de fazer, cobrou em tempo e em dano.', 'medio'),
+        'Marta sai viva, mas com uma hipoglicemia convulsiva, horas a mais de '
+        'choque ou meses de esquema errado até a correção.',
+        'Insulina numa glicemia baixa, esperar o teste para dar corticoide ou '
+        'repor só metade do que a glândula deixou de fazer cobraram em tempo e '
+        'em dano.', 'medio'),
 
     fim('f_obito', 'Óbito em casa',
-        'Marta morre na madrugada seguinte, em crise adrenal não reconhecida.',
-        'Choque que não responde a volume, sódio baixo, potássio alto e '
-        'hipoglicemia, numa paciente com gengiva escura e fissura por sal, são '
-        'crise adrenal até prova em contrário. Hidrocortisona 100 mg teria '
-        'custado nada.', 'pior'),
+        'Marta morre na madrugada, em crise adrenal não reconhecida.',
+        'Choque que só melhora em parte com volume, potássio alto com diarreia, '
+        'sódio urinário alto e hipoglicemia são crise adrenal até prova em '
+        'contrário. A alta interrompeu o volume, e a hidrocortisona 100 mg, que '
+        'não custaria nada, nunca foi dada.', 'pior'),
 
-    pagina('retrospectiva', 'Retrospectiva', '',
-        tabela(['Momento', 'O dado', 'O que decidiu'], [
-            ['Ambulatório', 'Hipotensão postural e sódio de 131 atribuídos à fluoxetina',
-             'Sinais objetivos que a depressão não explicava'],
-            ['Retorno', 'Sódio urinário de 64 com potássio de 5,4',
-             'Perda renal de sal: pensar na aldosterona'],
-            ['Mesmo retorno', 'Sal na palma da mão, gengiva e cicatriz escurecidas',
-             'O pigmento do ACTH alto'],
-            ['Emergência', 'Pressão 78/42, glicemia 58, sódio 124, potássio 6,1',
-             'Crise adrenal: tratar antes de confirmar'],
-            ['Resultados', 'Cortisol 2,1, ACTH 480, renina alta, anti-21-hidroxilase',
-             'Primária, autoimune, com falta de aldosterona'],
-            ['Alta', 'Regras dos dias de doença e ampola de emergência',
-             'A prevenção da próxima crise'],
-        ]),
+    pagina('retrospectiva', 'Pontos de ensino', '',
+        pontos(
+            'Na diarreia com hipovolemia, o rim guarda sódio e perde potássio. '
+            'Sódio urinário alto com potássio retido é falta de ação da '
+            'aldosterona até prova em contrário.',
+            'Acidose de ânion gap normal com ânion gap urinário positivo indica '
+            'falha renal de acidificação, mesmo quando há diarreia.',
+            'Hipoglicemia em jejum, eosinofilia no choque e pressão que o volume '
+            'não segura apontam para falta de cortisol.',
+            'Na suspeita de crise adrenal, colher cortisol e ACTH e dar '
+            'hidrocortisona 100 mg endovenosa sem esperar o resultado nem o '
+            'teste de estímulo.',
+            'Com volume e cortisol repostos, o ADH cai e o sódio sobe depressa: '
+            'vigiar a cada poucas horas e frear com glicose a 5% e desmopressina.',
+            'Na alta: hidrocortisona fracionada, fludrocortisona, regras dos '
+            'dias de doença com ampola de emergência, e rastreio das outras '
+            'doenças da síndrome poliglandular tipo 2.'),
         so_kicker=True),
 
     pg('referencias', 'Fontes e limites',
@@ -528,10 +626,15 @@ ETAPAS = [
        'Bornstein e cols. Diagnosis and Treatment of Primary Adrenal '
        'Insufficiency: An Endocrine Society Clinical Practice Guideline, J Clin '
        'Endocrinol Metab 2016. Arlt e cols. Society for Endocrinology Endocrine '
-       'Emergency Guidance: emergency management of acute adrenal '
-       'insufficiency in adult patients, Endocr Connect 2016. Husebye e cols. '
-       'Adrenal insufficiency, Lancet 2021. Eletrocardiograma: Ewingdo, '
-       'Wikimedia Commons, CC BY-SA 4.0, traçado de outra pessoa.'),
+       'Emergency Guidance: acute adrenal insufficiency in adults, Endocr '
+       'Connect 2016. Husebye e cols. Adrenal insufficiency, Lancet 2021. '
+       'Spasovski e cols. Clinical practice guideline on diagnosis and '
+       'treatment of hyponatraemia, Eur J Endocrinol 2014. UK Kidney '
+       'Association, Clinical Practice Guideline: Management of Hyperkalaemia '
+       'in Adults, 2023. Evans e cols. Surviving Sepsis Campaign 2021.',
+       'Eletrocardiograma: Michael-Joseph F. Agbayani e Eddieson Gonzales, '
+       'Wikimedia Commons, CC BY 4.0. Radiografia de tórax: Mikael Häggström, '
+       'Wikimedia Commons, CC0. Ambas de outras pessoas, com setas adicionadas.'),
 ]
 
 REVISAO = []

@@ -23,3 +23,9 @@ Os dois revisores independentes aceitaram os usos delimitados. Cortes de TC/RM n
 ## Revisão das marcações — 8 de setembro de 2026
 
 A chave numérica de `Renal corpuscle.svg` foi traduzida da [fonte original](https://commons.wikimedia.org/wiki/File:Renal_corpuscle.svg) e incluída como legenda revelável. A figura permanece sem alterações. Os diagramas transparentes usam fundo branco também na lupa.
+
+## Molde NEJM — 26 de setembro de 2026
+
+- `purpura.jpg` (Hektor, CC BY-SA 3.0) passa a ser tela `estudo` de comparação, com três setas adicionadas sob a mesma licença (lesão arredondada, lesões confluentes, pele normal entre elas). Não documenta as placas da paciente, que são retiformes.
+- `rx_torax_normal.jpg` (Mikael Häggström, CC0) passa a ser tela `estudo` com três setas (pulmão direito, seio costofrênico direito, contorno cardíaco esquerdo); saiu do painel de exames.
+- `corpusculo.svg` deixou de ser usado no caso.

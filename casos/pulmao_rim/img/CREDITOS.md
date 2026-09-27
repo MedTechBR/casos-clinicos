@@ -112,3 +112,10 @@ Na microfotografia `glomerulo_crescente.jpg`, foi **revogada a interpretação a
 O esquema `alveolo.svg` foi retirado da apresentação por conter uma indicação de glândula mucosa na via distal que não é adequada ao ensino dessa anatomia. A página usa agora a TC comparativa previamente conferida. O arquivo original permanece no acervo, sem modificações e sem uso no produto construído.
 
 A legenda de `us_rim.jpg` escreve por extenso a quantidade de asteriscos, evitando que o processador de texto transforme as marcações em negrito.
+
+## Reescrita no molde do New England — 26 de setembro de 2026
+
+- `tc_seio_maxilar.jpg` (nova): 511KeV, [Left Maxillary Sinusitis on CT Slice](https://commons.wikimedia.org/wiki/File:Left_Maxillary_Sinusitis_on_CT_Slice.jpg), CC BY-SA 4.0, tamanho original (942 px). Substitui `tc_seios_face.jpg`, que é anatomia normal e não sustentava achado; o arquivo antigo fica no acervo, sem uso. Setas: seio maxilar esquerdo velado, seio direito aerado, septo íntegro.
+- `eco_4camaras.jpg`: procedência localizada — Kjetil Lenes, Oslo, [Echocardiogram 4chambers](https://commons.wikimedia.org/wiki/File:Echocardiogram_4chambers.jpg), domínio público (PD-self). A fonte diz: coração esquerdo à direita, ápice para baixo. Setas: septo interventricular, valva mitral, valva tricúspide.
+- Setas novas, conferidas com `ferramentas/foto_estudo.py`: `sedimento_cilindro.jpg` (borda, conteúdo, extremidade do cilindro), `tc_torax_vidro_fosco.jpg` (vidro fosco no lobo superior direito, nas bases e no pulmão direito da coronal), `panca_imunofluorescencia.jpg` (contorno perinuclear em dois neutrófilos). `rx_torax_alveolar.jpg`, `us_rim.jpg` e `glomerulo_crescente.jpg` mantêm as setas já auditadas.
+- Deixaram de ser usadas no caso: `ecg_taquicardia.jpg`, `esfregaco_sangue.jpg` (sem procedência registrada), `biopsia_renal_cortex.jpg`, `rx_torax_normal.jpg`, `rx_consolidacao.jpg`, `tc_cavidade.jpg`, `tc_seios_face.jpg`. Cada imagem usada aparece uma vez só; a cena gerada por IA ficou só na capa.

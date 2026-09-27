@@ -20,3 +20,10 @@ Os dois revisores independentes aceitaram os usos delimitados. Cortes de TC/RM n
 - `ecg_taquicardia.jpg`: Ewingdo, [arquivo original](https://commons.wikimedia.org/wiki/File:ECG_Sinus_Tachycardia_125_bpm.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Traçado de outra pessoa, 125 bpm, sem alteração do arquivo. As setas da segunda página são uma adaptação sob CC BY-SA 4.0. O mesmo traçado comparativo é usado nos três casos; não representa três registros independentes nem os ECGs dos pacientes ficcionais.
 - Discussão de ritmo e causas sistêmicas: [ESC, diretriz de taquicardias supraventriculares, seção de taquicardia sinusal](https://academic.oup.com/eurheartj/article/41/5/655/5556821). Não se atribui causa ou diagnóstico etiológico pelo traçado isolado.
 - As figuras de radiologia/ultrassom nesta sequência mantêm seus arquivos e créditos prévios. Setas sobrepostas por SVG na página seguinte são adições editoriais; em obras BY-SA, a adaptação conserva a licença original.
+
+## Molde NEJM — 26 de setembro de 2026
+
+- `rm_encefalo_flair.png` — James J. Sejvar (Viruses 2014;6:606-623, figura 2). [Fonte](https://commons.wikimedia.org/wiki/File:Viruses-06-00606-g002-1024.png) · CC BY 3.0. FLAIR axial de outro paciente: substância negra, lobo temporal mesial e tálamo posterior direito. As setas brancas são do original; as numeradas, sobrepostas no caso.
+- `rm_medula_t2.jpg` — JasonRobertYoungMD. [Fonte](https://commons.wikimedia.org/wiki/File:Transverse_Myelitis.PNG) · CC BY-SA 4.0. T2 axial da medula cervical de outro paciente, convertido de PNG para JPEG; círculos do original, setas sobrepostas no caso (adaptação sob a mesma licença).
+- `rx_torax_normal.jpg`, `tc_cranio.png` e `ecg_taquicardia.jpg` passam a ser telas de estudo próprias, com setas sobrepostas.
+- `rm_encefalo.png`, `medula.svg` e `neuronio.svg` ficaram sem uso nesta versão.

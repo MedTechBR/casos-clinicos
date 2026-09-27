@@ -1,25 +1,40 @@
-"""Linfadenite necrosante histiocítica (doença de Kikuchi–Fujimoto).
+"""Febre com linfonodos cervicais dolorosos numa professora de 27 anos.
 
-Alíquota → pergunta, na gramática dos casos interativos do //New England//:
-oito perguntas no percurso principal, uma rodada de exames com gabarito e
-painel, um pareamento de histologia e uma extensão opcional de seguimento.
-Paciente e valores são ficcionais.
+Reescrito em 26/09/2026 no molde do //New England// aprovado no piloto da
+leptospirose (ver Artifacts/nejm-casos-classicos/GRAMATICA_LIDA_2026-09-26.md):
+apresentação curta, ficha do paciente, exame por sistema e primeiros exames
+entregues prontos. As primeiras perguntas classificam (linfadenopatia
+localizada ou generalizada, sinais que pedem tecido, leitura do hemograma,
+sorologias) sem nomear doença. O caso segue duas âncoras que a equipe
+registra e que eram razoáveis no momento: síndrome mononucleose-símile e,
+depois, tuberculose ganglionar. A biópsia vira o caso depois da metade, e o
+nome do diagnóstico aparece pela primeira vez no pareamento da histologia.
+Uma extensão opcional acompanha o seguimento e o aparecimento de lúpus.
+
+Paciente ficcional. Critérios e condutas: Gaddey e Riegel, Am Fam Physician
+2016 (linfadenopatia); Manual de Recomendações para o Controle da
+Tuberculose no Brasil, 2.ª ed., 2019; HLH-2004; KDIGO 2024 (nefrite lúpica).
 """
 from pathlib import Path
 
 from motor.estudo_imagem import estudo
-
 from motor.etapas import (alt, bifurcacao, caminho, capa, desfecho, op, p,
-                          pagina, painel, par, pareamento, pergunta, tabela,
-                          topicos, vitais, lamina)
-from casos.novos import imagem, referencia_imagem
+                          pagina, painel, par, pareamento, pergunta, pontos,
+                          topicos)
 
 TITULO = 'O que ficou no pescoço'
 RODAPE = 'Paciente ficcional · evoluções simuladas para ensino'
 COR = '#ea580c'
 IMG = Path(__file__).parent / 'img'
 BANCO = []
+MOLDE = 'nejm'
 CENA = 'cena.png'
+
+
+def credito_meta(meta):
+    import json
+    m = json.loads(Path(meta).read_text())
+    return m['autor'] + ' · Wikimedia Commons · ' + m['licenca'] + ' · setas adicionadas'
 
 
 def pg(k, titulo, *textos, segue='', conforme=None):
@@ -27,19 +42,21 @@ def pg(k, titulo, *textos, segue='', conforme=None):
                   segue=segue, conforme=conforme)
 
 
-def Q(k, n, enunciado, itens, titulo, segue=''):
+def Q(k, n, enunciado, opcoes, explicacao, segue=''):
+    """Pergunta no molde do NEJM: alternativas curtas, sem comentário cada
+    uma, e uma explicação só, em seções (subtítulo, texto)."""
     return pergunta(k, f'Pergunta {n}', enunciado,
-                    [alt(t, c, certa=ok) for t, c, ok in itens],
-                    titulo_resposta=titulo, segue=segue)
+                    [alt(t, certa=ok) for t, ok in opcoes],
+                    explicacao=explicacao, segue=segue)
 
 
 def ex(nome, valor, ref='—', alt_=False):
     return op(nome, resultado=valor, referencia=ref, alterado=alt_)
 
 
-def fim(k, titulo, texto, porque, qualidade):
+def fim(k, titulo, texto, porque, qualidade, fecho='retrospectiva'):
     return desfecho(k, titulo, p(texto), qualidade=qualidade, porque=porque,
-                    fecho='retrospectiva')
+                    fecho=fecho)
 
 
 ETAPAS = [
@@ -48,288 +65,353 @@ ETAPAS = [
 
     pg('historia', 'Apresentação',
        'Bianca, 27 anos, professora do ensino fundamental, procura o '
-       'ambulatório por febre no fim da tarde há doze dias. Começou com dor de '
-       'garganta e desconforto ao virar o pescoço. Continuou trabalhando na '
-       'primeira semana; agora precisa sentar-se no meio da aula.',
-       'Notou um caroço doloroso abaixo e atrás da orelha esquerda. A dor de '
-       'garganta passou; o caroço ficou. Tomou amoxicilina por sete dias, '
-       'prescrita numa unidade de pronto atendimento, e a febre não cedeu.'),
+       'ambulatório por febre no fim da tarde há 12 dias e um caroço doloroso '
+       'no lado esquerdo do pescoço. Tudo começou com dor de garganta, que '
+       'passou; o caroço ficou.',
+       'No quarto dia foi a uma unidade de pronto atendimento e saiu com '
+       'amoxicilina por sete dias, já concluída, sem efeito sobre a febre. '
+       'Nas últimas três noites acordou com a camiseta molhada de suor e '
+       'perdeu 2 kg no mês, por falta de apetite.',
+       'Nega tosse, falta de ar, dor de dente, lesões na pele, dor nas '
+       'articulações, feridas na boca, disúria e diarreia.'),
 
-    pg('hda', 'História da doença atual',
-       'A temperatura medida em casa variou entre 37,8 e 38,6 °C. Nas últimas '
-       'três noites trocou a camiseta por suor. Perdeu 2 kg por falta de '
-       'apetite, sem disfagia, diarreia ou vômitos. A dor no pescoço é '
-       'contínua e piora ao toque; ela não percebeu o caroço amolecer.',
-       'Nega tosse, dispneia, disúria, dor de dente, artralgia e lesões de '
-       'pele. Uma colega de escola teve uma síndrome febril na semana '
-       'anterior.'),
-
-    pg('antecedentes', 'Antecedentes e exposições',
-       'Sem doenças crônicas nem internações. Usa anticoncepcional oral há '
-       'quatro anos; durante a febre, só paracetamol e a amoxicilina já '
-       'concluída. Não fuma e nega drogas. Mora em área urbana e não viajou '
-       'nos últimos seis meses.',
-       'Convive com um gato adulto e não lembra de arranhadura. Tem parceiro '
-       'fixo; o último teste de HIV foi há três anos. Não conhece contato com '
-       'tuberculose. A mãe tem hipotireoidismo; não há linfoma ou doença '
-       'reumatológica na família.'),
+    pagina('ficha', 'Ficha do paciente', '',
+           topicos(('Antecedentes', 'Nenhuma doença crônica, nenhuma internação. '
+                    'BCG na infância. Último teste de HIV há três anos, não '
+                    'reagente.'),
+                   ('Medicações', 'Anticoncepcional oral combinado há quatro anos. '
+                    'Paracetamol 750 mg quando tem febre. Amoxicilina 500 mg de '
+                    '8 em 8 horas, sete dias, terminada há dois dias.'),
+                   ('Hábitos', 'Não fuma. Bebe vinho em encontros, raramente. '
+                    'Nega drogas. Corre duas vezes por semana, parou há dez dias.'),
+                   ('Vida social', 'Mora em São Paulo com o companheiro, parceiro '
+                    'único há cinco anos, e um gato adulto; não lembra de '
+                    'arranhadura. Não viajou nos últimos seis meses. Duas '
+                    'crianças da turma dela faltaram com febre no mês passado.'),
+                   ('Família', 'Mãe com hipotireoidismo. Pai hipertenso, filho de '
+                    'imigrantes japoneses. Sem câncer, tuberculose ou doença '
+                    'reumatológica conhecida na família.')),
+           so_kicker=True),
 
     pagina('exame', 'Exame físico', '',
-           vitais(('Temperatura', '38,1 °C', True), ('Pressão arterial', '112/70', False),
-                  ('Frequência cardíaca', '98', False), ('Frequência respiratória', '16', False),
-                  ('SpO₂ em ar ambiente', '98%', False)),
-           topicos(('Estado geral', 'Alerta, hidratada, sem desconforto respiratório.'),
-                   ('Cabeça e pescoço', 'Orofaringe sem exsudato. Três linfonodos '
-                    'cervicais posteriores à esquerda, móveis e dolorosos, o maior '
-                    'de 2 cm, sem rubor nem flutuação. Parótidas e tireoide normais.'),
-                   ('Cardiopulmonar', 'Ritmo regular, sem sopros. Ausculta pulmonar normal.'),
-                   ('Abdome', 'Indolor, sem hepatomegalia ou esplenomegalia.'),
-                   ('Pele e articulações', 'Sem exantema, sem sinovite. Sem linfonodos '
-                    'axilares ou inguinais palpáveis.')),
+           topicos(('Sinais vitais', 'Temperatura 38,1 °C · pressão 112/70 mmHg · '
+                    'frequência cardíaca 98 · frequência respiratória 16 · SpO₂ '
+                    '98% em ar ambiente · peso 58 kg.'),
+                   ('Estado geral', 'Alerta, hidratada, corada, sem desconforto '
+                    'respiratório.'),
+                   ('Cabeça e pescoço', 'Orofaringe sem exsudato, dentes sem cárie '
+                    'visível, couro cabeludo sem lesões. Três linfonodos na cadeia '
+                    'cervical posterior esquerda, móveis, elásticos e dolorosos, o '
+                    'maior com cerca de 2 cm, sem rubor e sem flutuação. Tireoide e '
+                    'parótidas normais. Fossas supraclaviculares livres.'),
+                   ('Outras cadeias', 'Sem linfonodos axilares, epitrocleares ou '
+                    'inguinais palpáveis.'),
+                   ('Tórax e abdome', 'Ausculta cardíaca e pulmonar normais. Fígado '
+                    'no rebordo, baço não palpável.'),
+                   ('Pele e articulações', 'Sem exantema, sem úlceras orais, sem '
+                    'sinovite.')),
            so_kicker=True),
 
     Q('p1', 1,
-      'Febre há doze dias e linfonodos cervicais posteriores dolorosos numa '
-      'mulher de 27 anos, sem resposta à amoxicilina. **Quais cinco** '
-      'diagnósticos precisam ser considerados?', [
-      ('Síndrome mononucleose-símile por EBV ou CMV',
-       'Faringite, febre e linfonodo cervical posterior em adulto jovem abrem '
-       'a lista.', True),
-      ('Faringite estreptocócica não tratada',
-       'A dor de garganta passou com amoxicilina. Febre persistente seria '
-       'complicação supurativa, que o exame não mostra.', False),
-      ('Linfadenite tuberculosa',
-       'Febre, sudorese noturna e linfonodo que não cede justificam a '
-       'hipótese no Brasil.', True),
-      ('Tireoidite subaguda',
-       'Dói sobre a tireoide, na face anterior, e a tireoide dela é normal.',
-       False),
-      ('Linfoma',
-       'Sudorese noturna, perda de peso e linfonodo persistente: não pode '
-       'ficar de fora.', True),
-      ('Parotidite',
-       'As parótidas estão normais; o exame localiza linfonodos cervicais '
-       'posteriores.', False),
-      ('Lúpus eritematoso sistêmico',
-       'Febre e linfadenopatia em mulher jovem cabem no lúpus, mesmo sem '
-       'artrite ou lesão de pele.', True),
-      ('Infecção aguda pelo HIV',
-       'A síndrome retroviral aguda dá febre, faringite e linfadenopatia; um '
-       'teste de três anos não a exclui.', True),
-      ('Tromboflebite séptica da jugular após faringite',
-       'Segue uma faringite, mas ela está estável, sem toxemia e sem dor ao '
-       'longo da jugular.', False),
-      ('Cisto branquial infectado',
-       'Seria massa única, anterior ao esternocleidomastóideo e flutuante. '
-       'Ela tem três linfonodos posteriores móveis.', False),
-     ], 'Infecção viral, micobactéria, linfoma e autoimunidade seguem na lista'),
+      'Antes dos exames, a equipe classifica a linfadenopatia. **Quais três** '
+      'afirmações sobre a de Bianca estão corretas?', [
+      ('É localizada: uma só região acometida', True),
+      ('Sintomas constitucionais aumentam a preocupação', True),
+      ('Dor à palpação não afasta neoplasia', True),
+      ('É generalizada, pelo número de linfonodos', False),
+      ('A cadeia posterior é sítio de alto risco', False),
+      ('A idade dela é fator de risco', False),
+      ('Por ser dolorosa, dispensa seguimento', False),
+     ], [
+      ('A classificação', 'Linfadenopatia generalizada é a que acomete duas ou '
+       'mais regiões não contíguas, e aponta para doença sistêmica. Três '
+       'linfonodos na mesma cadeia cervical, com axilas, virilhas e baço '
+       'normais, são uma linfadenopatia localizada: o primeiro passo é olhar a '
+       'área que aquela cadeia drena, e aqui orofaringe, dentes e couro '
+       'cabeludo estão limpos.'),
+      ('Os sinais que pedem tecido', 'Idade acima de 40 anos, localização '
+       'supraclavicular, tamanho acima de 2 cm, consistência endurecida, '
+       'fixação aos planos, duração acima de quatro semanas ou crescimento, e '
+       'sintomas constitucionais: febre, sudorese noturna e perda de peso. '
+       'Bianca tem o último e um tamanho no limite. A cadeia supraclavicular é '
+       'a de maior risco; a posterior, não.'),
+      ('O que muda', 'Dor sugere distensão rápida da cápsula, mais comum na '
+       'inflamação, mas necrose ou hemorragia dentro de um linfoma também doem. '
+       'Com 12 dias e um sinal de alarme, cabem exames de sangue, ultrassom e '
+       'reavaliação curta. Linfadenopatia localizada sem explicação que não '
+       'regride em três a quatro semanas, ou que cresce, vai para biópsia.'),
+     ]),
 
-    Q('ex1', 2,
-      'Nesta primeira consulta, **quais quatro** exames são os mais '
-      'apropriados?', [
-      ('Hemograma completo com esfregaço',
-       'Linfocitose atípica, citopenia ou blastos mudam a direção e a pressa.',
-       True),
-      ('PET-CT',
-       'Estadia linfoma já diagnosticado; não substitui tecido e irradia sem '
-       'pergunta definida.', False),
-      ('Sorologias para EBV e CMV',
-       'VCA IgM, VCA IgG e EBNA datam a infecção por EBV; a IgM de CMV '
-       'completa.', True),
-      ('Punção aspirativa por agulha fina do maior linfonodo',
-       'Citologia não mostra arquitetura, que é o que separa linfoma de '
-       'linfadenite reativa.', False),
-      ('Teste de quarta geração para HIV',
-       'Antígeno p24 e anticorpo encurtam a janela da infecção aguda.', True),
-      ('FAN e anti-DNA nativo',
-       'Sem artrite, lesão de pele ou alteração urinária, o FAN isolado agora '
-       'confunde mais do que esclarece.', False),
-      ('Ultrassonografia cervical',
-       'Número, tamanho, hilo e coleção; orienta a espera e, se preciso, qual '
-       'linfonodo tirar.', True),
-      ('Tomografia de tórax com contraste',
-       'Sem sintoma respiratório, a radiografia simples vem antes.', False),
-      ('Antiestreptolisina O',
-       'Mede exposição passada ao estreptococo e não explica febre '
-       'persistente.', False),
-      ('Ferritina e triglicerídeos',
-       'Rastreiam hemofagocitose, e nada na primeira consulta a sugere.',
-       False),
-     ], 'A equipe pede os quatro, e mais a radiografia de tórax'),
-
-    painel('res1', 'Primeiros resultados', 'O que a equipe pediu', [
-        ex('Hemoglobina', '11,7 g/dL', '12–16 g/dL', True),
-        ex('Leucócitos', '2.900/mm³ · linfócitos atípicos 6% · sem blastos', '4.000–11.000/mm³', True),
-        ex('Plaquetas', '188.000/mm³', '150.000–400.000/mm³'),
-        ex('Proteína C reativa', '24 mg/L', 'até 5 mg/L', True),
+    painel('res1', 'Primeiros exames', 'Sangue', [
+        ex('Hemoglobina / VCM', '11,7 g/dL / 86 fL', 'Hb 12–16 g/dL · VCM 80–100 fL', True),
+        ex('Leucócitos', '2.900/mm³', '4.000–11.000/mm³', True),
+        ex('Neutrófilos / linfócitos / monócitos', '1.450 / 1.100 / 260 por mm³',
+           'N 1.800–7.500 · L 1.000–4.000', True),
+        ex('Esfregaço', 'Linfócitos reativos ocasionais, 4% · sem blastos',
+           '—'),
+        ex('Plaquetas', '188.000/mm³', '150.000–450.000/mm³'),
+        ex('VHS / proteína C reativa', '46 mm/h / 24 mg/L', 'até 20 mm/h · até 5 mg/L', True),
         ex('Desidrogenase láctica', '330 U/L', '120–250 U/L', True),
-        ex('AST / ALT', '42 / 47 U/L', 'até 35 / 35 U/L', True),
-        ex('EBV', 'VCA IgG reagente · VCA IgM não reagente · EBNA reagente', 'VCA IgM não reagente'),
-        ex('CMV', 'IgG reagente · IgM não reagente', 'IgM não reagente'),
-        ex('HIV, teste de quarta geração', 'Não reagente', 'Não reagente'),
-        ex('Ultrassonografia cervical', 'Múltiplos linfonodos cervicais posteriores à '
-           'esquerda, o maior de 2,4 × 1,3 cm, com hilo preservado e área '
-           'hipoecoica cortical · sem coleção', '—', True),
-        ex('Radiografia de tórax', 'Sem alterações', 'normal'),
-    ], introducao='Clique na imagem para ampliar; o laudo abre no botão.',
-       laminas={'Radiografia de tórax': lamina('rx_torax_normal.jpg',
-                'Radiografia de tórax', 'Imagem ilustrativa de outro adulto; não '
-                'pertence a esta paciente.', 'Mikael Häggström · Wikimedia Commons · CC0')}),
+    ], introducao='Colhidos na primeira consulta, no mesmo dia da '
+                  'ultrassonografia do pescoço e da radiografia de tórax.'),
 
-    Q('p2', 3,
-      'EBV com VCA IgG reagente, VCA IgM não reagente e EBNA reagente; CMV com '
-      'IgG reagente e IgM não reagente. Leucócitos 2.900/mm³, linfócitos '
-      'atípicos 6%. **Quais duas** conclusões estão corretas?', [
-      ('Houve infecção por EBV no passado',
-       'O EBNA só surge dois a quatro meses após o início; IgM negativa '
-       'completa o perfil antigo.', True),
-      ('O CMV também é contato antigo',
-       'IgG sem IgM indica infecção passada; a síndrome mononucleose-símile '
-       'perde a causa habitual.', True),
-      ('É mononucleose aguda por EBV',
-       'Na fase aguda, o VCA IgM é positivo e o EBNA ainda negativo; aqui é o '
-       'oposto.', False),
-      ('Uma reativação do EBV explica a febre',
-       'Reativação não tem assinatura sorológica confiável no imunocompetente '
-       'e não se lê neste perfil.', False),
-      ('A coleta foi precoce demais para a IgM',
-       'Com doze dias de febre, o VCA IgM já seria positivo, e o EBNA não se '
-       'explica por janela.', False),
-      ('Linfócitos atípicos em 6% confirmam infecção viral aguda',
-       'Até 10% é inespecífico; mononucleose costuma dar linfocitose, não '
-       'leucopenia.', False),
-      ('A leucopenia torna linfoma improvável',
-       'Linfoma pode cursar com citopenia, por infiltração medular ou por '
-       'citocinas.', False),
-     ], 'EBV e CMV antigos: a febre continua sem causa'),
-
-    pg('evolucao1', 'Terceira semana',
-       'A febre persiste. Um segundo grupo de linfonodos surge à direita, e o '
-       'maior à esquerda chega a 2,8 cm. Bianca continua estável, mas falta ao '
-       'trabalho. Os leucócitos caem para 2.500/mm³.',
-       'A hemocultura não cresceu. As sorologias para toxoplasmose e para '
-       '//Bartonella// não mostram infecção recente. O esfregaço não tem '
-       'blastos.'),
-
-    Q('p3', 4,
-      'O linfonodo cresce há três semanas, com febre, perda de peso e '
-      'leucopenia progressiva. Se a investigação seguir para tecido, **quais '
-      'três** medidas tornam a amostra mais útil?', [
-      ('Retirar o linfonodo inteiro, por excisão',
-       'A arquitetura separa linfoma de reação; fragmento e agulha podem não '
-       'mostrá-la.', True),
-      ('Escolher o linfonodo maior e mais alterado ao ultrassom',
-       'O mais alterado tem mais chance de conter a lesão; o mais fácil pode '
-       'ser só reativo.', True),
-      ('Enviar parte do tecido a fresco',
-       'Citometria de fluxo e cultura de micobactéria exigem tecido sem '
-       'formol.', True),
-      ('Fixar todo o material em formol',
-       'Preserva a morfologia, mas elimina citometria de fluxo e cultura.',
-       False),
-      ('Fazer punção aspirativa antes, para evitar cirurgia',
-       'Um laudo de "linfócitos reativos" não exclui linfoma e atrasa o '
-       'tecido.', False),
-      ('Dar corticoide antes, para reduzir o linfonodo',
-       'Corticoide reduz a celularidade e pode tornar a lâmina inconclusiva.',
-       False),
-      ('Confiar na congelação intraoperatória para o diagnóstico',
-       'A congelação diz se a amostra é adequada; o diagnóstico sai da '
-       'parafina e da imuno-histoquímica.', False),
-      ('Preferir o linfonodo menor, mais simples de retirar',
-       'O menor e mais acessível tende a ser reativo e pode não conter a '
-       'lesão.', False),
-     ], 'Linfonodo inteiro, o mais alterado, e parte a fresco'),
-
-    bifurcacao('b1', 'Decisão', 'O linfonodo de 2,8 cm',
-      'Bianca está estável, mas cansada de esperar. O que você faz?', [
-      caminho('Encaminhar para biópsia excisional nesta semana', 'tecido',
-              'Preserva a arquitetura e investiga as hipóteses de uma vez. '
-              'Reserva material para micobactéria e fungo.'),
-      caminho('Iniciar prednisona 40 mg/dia pela persistência dos sintomas',
-              'corticoide',
-              'Alivia a febre, e o alívio parece resposta. Mas trata sem '
-              'diagnóstico e pode esconder um linfoma na lâmina.'),
-      caminho('Observar mais uma semana, com critérios de alarme', 'observacao',
-              'A estabilidade permite um retorno curto; o crescimento e a '
-              'citopenia já tinham mudado o risco da espera.'),
+    painel('res1b', 'Primeiros exames', 'Bioquímica e urina', [
+        ex('AST / ALT', '42 / 47 U/L', 'até 32 / 33 U/L', True),
+        ex('Fosfatase alcalina / GGT', '88 / 30 U/L', 'até 104 / 40 U/L'),
+        ex('Creatinina', '0,7 mg/dL', '0,5–1,1 mg/dL'),
+        ex('Urina tipo 1', 'Densidade 1.018 · sem proteína, hemácias ou leucócitos', 'normal'),
     ]),
 
+    Q('p2', 2,
+      '**Quais três** leituras do hemograma de Bianca estão corretas?', [
+      ('Leucopenia com neutropenia leve', True),
+      ('Sem linfocitose, o que pesa contra EBV', True),
+      ('Anemia leve e normocítica', True),
+      ('Pancitopenia, com indicação de mielograma', False),
+      ('Neutropenia grave, com risco infeccioso', False),
+      ('Padrão de infecção bacteriana', False),
+      ('Linfocitose atípica de mononucleose', False),
+     ], [
+      ('O padrão', 'Leucócitos de 2.900 com 1.450 neutrófilos: neutropenia '
+       'leve, que vai de 1.000 a 1.500. Os linfócitos, 1.100, estão no limite '
+       'inferior, e só 4% são reativos. Hemoglobina de 11,7 com VCM de 86 é '
+       'anemia leve normocítica. As plaquetas estão normais, então são duas '
+       'linhagens discretamente baixas, e não pancitopenia.'),
+      ('Por que não as outras', 'Neutropenia grave é abaixo de 500. Infecção '
+       'bacteriana daria neutrofilia com desvio, e a amoxicilina não mudou '
+       'nada. A mononucleose por EBV na segunda semana costuma ter linfocitose, '
+       'com linfócitos acima de 50% e atípicos acima de 10%; leucopenia não '
+       'exclui, mas pesa contra. Sem blastos e com plaquetas normais, o '
+       'mielograma não é o próximo passo.'),
+      ('O que o padrão sugere', 'Febre, linfonodo e leucopenia num adulto '
+       'jovem cabem em infecção viral aguda, inclusive HIV, em tuberculose, em '
+       'doença autoimune e em linfoma. A desidrogenase láctica alta e a PCR '
+       'modesta não escolhem entre elas.'),
+     ]),
+
+    estudo('us_cervical', 'Ultrassonografia do pescoço',
+           'Pedida na primeira consulta, com os exames de sangue, para contar e '
+           'medir os linfonodos, ver o hilo e procurar coleção. Descreva a '
+           'forma do linfonodo e o que há no centro dele antes de abrir os '
+           'achados.',
+           IMG / 'us_linfonodo_cervical.jpg',
+           'Ultrassonografia com Doppler colorido de outro paciente · comparação didática.',
+           credito_meta(IMG / 'us_linfonodo_cervical.jpg.json'),
+        [
+         ((442, 215), (330, 150), '**Córtex** hipoecoico, regular, em volta de todo o linfonodo.', 12),
+         ((386, 312), (140, 250), '**Hilo** central ecogênico, com o vaso hilar se ramificando a partir dele.', -12),
+         ((643, 529), (850, 650), '**Vaso** adjacente, fora do linfonodo, com fluxo ao Doppler.', 12),
+        ],
+        ['Três linfonodos na cadeia cervical posterior esquerda, o maior de 2,2 '
+         '× 0,9 cm, ovalados, com hilo ecogênico preservado e fluxo de padrão '
+         'hilar. Sem coleção, sem calcificação e sem necrose liquefeita.',
+         'Forma oval, hilo preservado e fluxo hilar são o aspecto de um '
+         'linfonodo reacional. O ultrassom tranquiliza, mas não afasta linfoma '
+         'nem tuberculose no início.']),
+
+    estudo('rx_torax', 'Radiografia de tórax',
+           'Pedida na mesma consulta pela febre com sudorese e perda de peso: '
+           'procurar linfonodos no mediastino e lesão no pulmão.',
+           IMG / 'rx_torax_normal.jpg',
+           'Radiografia de outra pessoa · comparação didática.',
+           credito_meta(IMG / 'rx_torax_normal.jpg.json'),
+        [
+         ((350, 500), (170, 450), '**Hilo direito** de tamanho e densidade normais.', 12),
+         ((575, 385), (720, 290), '**Botão aórtico** e mediastino superior de largura normal.', -12),
+         ((665, 500), (850, 560), '**Hilo esquerdo** sem massa.', 12),
+        ],
+        ['Pulmões sem opacidades, mediastino e hilos normais, seios '
+         'costofrênicos livres.',
+         'Não há adenomegalia mediastinal visível nem lesão pulmonar que '
+         'aponte tuberculose ou linfoma. A radiografia simples não vê '
+         'linfonodos pequenos.']),
+
+    pg('hipotese', 'A primeira hipótese',
+       'Com febre, faringite no início, linfonodos cervicais posteriores e '
+       'linfócitos reativos, a equipe registra síndrome mononucleose-símile. '
+       'Pede sorologias para vírus Epstein-Barr (EBV), citomegalovírus (CMV) '
+       'e toxoplasmose, teste de quarta geração para HIV e VDRL.',
+       'Mantém paracetamol, não repete antibiótico e marca retorno em uma '
+       'semana, com orientação de voltar antes se a febre subir ou surgir '
+       'falta de ar.'),
+
+    painel('res2', 'Retorno', 'Sorologias', [
+        ex('EBV: VCA IgM', 'Não reagente', 'não reagente'),
+        ex('EBV: VCA IgG', 'Reagente', '—', True),
+        ex('EBV: EBNA IgG', 'Reagente', '—', True),
+        ex('CMV: IgM / IgG', 'Não reagente / reagente', '—', True),
+        ex('Toxoplasmose: IgM / IgG', 'Não reagente / não reagente', 'não reagente'),
+        ex('HIV, teste de quarta geração', 'Não reagente', 'não reagente'),
+        ex('VDRL', 'Não reagente', 'não reagente'),
+    ], introducao='Colhidas na primeira consulta, no 12.º dia de febre.'),
+
+    Q('p3', 3,
+      'Com esse perfil sorológico, **quais três** conclusões estão corretas?', [
+      ('Infecção passada por EBV', True),
+      ('Infecção passada por CMV', True),
+      ('Toxoplasmose aguda improvável', True),
+      ('Mononucleose aguda por EBV', False),
+      ('Coleta precoce demais para a IgM', False),
+      ('Reativação do EBV explica a febre', False),
+      ('HIV agudo definitivamente excluído', False),
+     ], [
+      ('O EBV', 'O VCA IgM aparece com os sintomas e some em semanas; o EBNA '
+       'só surge dois a quatro meses depois do início e fica para sempre. VCA '
+       'IgG e EBNA reagentes, com IgM negativa, é infecção antiga. Na '
+       'mononucleose aguda o perfil é o inverso: VCA IgM positiva e EBNA '
+       'negativo. Com 12 dias de febre, a IgM já teria aparecido. Reativação '
+       'não tem assinatura sorológica confiável no imunocompetente.'),
+      ('CMV e toxoplasma', 'IgG sem IgM é contato passado com CMV. Para o '
+       'toxoplasma, as duas negativas no 12.º dia afastam infecção aguda, '
+       'porque a IgM surge na primeira semana.'),
+      ('O HIV', 'O teste de quarta geração detecta o antígeno p24 cerca de '
+       'duas semanas depois da infecção, e a janela pode passar disso. Com '
+       'risco baixo, parceiro único e teste não reagente, a hipótese perde '
+       'força; com suspeita alta, repete-se o teste ou pede-se carga viral.'),
+      ('O que muda', 'As causas habituais da síndrome mononucleose-símile '
+       'ficaram sem sustentação, e a febre continua sem explicação.'),
+     ]),
+
+    pg('evolucao1', 'Terceira semana',
+       'No retorno, no 19.º dia, a febre chega a 38,8 °C e a sudorese é quase '
+       'diária. O maior linfonodo cresceu para 2,8 cm, e dois menores '
+       'apareceram na cadeia cervical posterior direita. Perdeu mais 1 kg. '
+       'Leucócitos 2.500/mm³, neutrófilos 1.300/mm³, desidrogenase láctica '
+       '360 U/L.',
+       'Febre arrastada, sudorese, emagrecimento e linfonodo cervical que '
+       'cresce, numa cidade com muita tuberculose: a equipe passa a registrar '
+       'linfadenite tuberculosa como hipótese principal. A prova '
+       'tuberculínica, lida em 72 horas, mede 14 mm. Ela não tem tosse nem '
+       'escarro para pesquisa de bacilo.'),
+
+    Q('p4', 4,
+      'Se a investigação seguir para tecido, **quais três** medidas tornam a '
+      'amostra mais útil?', [
+      ('Retirar o linfonodo inteiro', True),
+      ('Escolher o mais alterado ao exame', True),
+      ('Enviar parte do tecido a fresco', True),
+      ('Fixar todo o material em formol', False),
+      ('Punção aspirativa em vez da excisão', False),
+      ('Corticoide antes, para reduzir o linfonodo', False),
+      ('Preferir o menor, mais fácil de tirar', False),
+     ], [
+      ('A excisão', 'O que separa linfoma de linfadenite reativa é a '
+       'arquitetura, e só o linfonodo inteiro a mostra. A biópsia por agulha '
+       'grossa guiada por ultrassom é a alternativa quando a excisão não é '
+       'possível. A punção aspirativa, com teste rápido molecular e cultura, '
+       'pode confirmar tuberculose, mas um resultado negativo ou "linfócitos '
+       'reativos" não afasta linfoma.'),
+      ('O que vai a fresco', 'Citometria de fluxo, teste rápido molecular '
+       'para tuberculose (TRM-TB) e cultura de micobactérias e fungos precisam '
+       'de tecido em soro fisiológico, sem formol. O formol preserva a '
+       'morfologia e mata o resto.'),
+      ('O que atrapalha', 'Corticoide reduz a celularidade e pode deixar a '
+       'lâmina inconclusiva. O linfonodo menor e mais acessível tende a ser o '
+       'menos alterado.'),
+     ]),
+
+    bifurcacao('b1', 'Decisão', 'O linfonodo de 2,8 cm',
+      'Três semanas de febre, prova tuberculínica de 14 mm e linfonodos '
+      'crescendo. Bianca está estável e quer uma resposta. O que você faz?', [
+      caminho('Biópsia excisional nesta semana, com parte a fresco', 'tecido',
+              'Uma amostra responde às duas hipóteses: arquitetura para '
+              'linfoma, cultura e TRM-TB para tuberculose.'),
+      caminho('Iniciar o esquema básico para tuberculose sem tecido', 'ripe',
+              'A prova tuberculínica mede infecção, não doença. Seis meses de '
+              'tratamento sem confirmação expõem a hepatotoxicidade e podem '
+              'mascarar outra causa.'),
+      caminho('Prednisona 40 mg ao dia pela febre persistente', 'corticoide',
+              'Alivia a febre, e o alívio parece resposta. Trata sem '
+              'diagnóstico e pode apagar um linfoma na lâmina.'),
+    ]),
+
+    pg('ripe', 'Três semanas de esquema básico',
+       'Rifampicina, isoniazida, pirazinamida e etambutol em comprimidos '
+       'combinados. A febre cede na segunda semana, e a equipe anota boa '
+       'resposta. Na terceira, Bianca tem náuseas e vômitos, com ALT de 310 '
+       'U/L e bilirrubina normal.',
+       'ALT acima de três vezes o limite com sintomas manda suspender o '
+       'esquema, e ele é suspenso. O maior linfonodo não mudou de tamanho. Sem '
+       'tecido, ninguém sabe se a febre cedeu pelo remédio ou sozinha. A '
+       'equipe marca a biópsia e avisa o patologista das três semanas de '
+       'tratamento, que reduzem a chance de a cultura crescer.',
+       segue='tecido'),
+
     pg('corticoide', 'Duas semanas de prednisona',
-       'A febre cede em quatro dias e o linfonodo fica menos doloroso. Na '
-       'redução, a febre volta e o linfonodo cresce de novo. Bianca pergunta '
-       'se a melhora confirma uma doença inflamatória.',
-       'Ainda não há diagnóstico. E o corticoide pode reduzir a celularidade '
-       'de um linfoma a ponto de tornar a biópsia inconclusiva.'),
+       'A febre cede em quatro dias e o linfonodo dói menos. Na redução da '
+       'dose, a febre volta e o linfonodo cresce de novo. Bianca pergunta se '
+       'a melhora confirma uma doença inflamatória.',
+       'Ainda não há diagnóstico. Se for tuberculose, o corticoide sem '
+       'tratamento a agrava; se for linfoma, pode reduzir a celularidade a '
+       'ponto de deixar a biópsia inconclusiva.'),
 
     bifurcacao('resgate', 'Decisão', 'A febre voltou',
       'O alívio sob prednisona foi transitório. Qual é o próximo passo?', [
-      caminho('Reduzir o corticoide e organizar a biópsia, informando o '
+      caminho('Reduzir o corticoide e marcar a biópsia, avisando o '
               'patologista', 'tecido',
               'A resposta foi inespecífica. O patologista precisa saber do '
-              'corticoide para interpretar a lâmina.'),
+              'corticoide para ler a lâmina.'),
       caminho('Repetir o ciclo que havia aliviado a febre', 'novo_ciclo',
-              'Mais um ciclo empurra o diagnóstico para frente sem tratar '
-              'nenhuma causa demonstrada.'),
+              'Mais um ciclo empurra o diagnóstico sem tratar nenhuma causa '
+              'demonstrada.'),
     ]),
 
     pg('novo_ciclo', 'Mais duas semanas',
        'A febre melhora de novo e volta na redução. Bianca está afastada do '
-       'trabalho há um mês e tem insônia pelo corticoide. O linfonodo mede 3 '
-       'cm. A equipe abandona os ciclos empíricos e obtém tecido; o laudo '
-       'demora mais porque a primeira amostra vem pouco celular, e é preciso '
-       'um segundo linfonodo.',
-       segue='tecido'),
-
-    pg('observacao', 'Três dias depois',
-       'A temperatura chega a 39 °C, e a dor limita a alimentação. Os '
-       'leucócitos caem para 2.300/mm³. A equipe encaminha para biópsia '
-       'excisional em regime de prioridade.',
+       'trabalho há um mês, dorme mal e ganhou 4 kg. O linfonodo mede 3 cm. '
+       'A equipe abandona os ciclos, reduz a prednisona e marca a biópsia.',
        segue='tecido'),
 
     pg('tecido', 'A biópsia',
        'O cirurgião de cabeça e pescoço retira inteiro o maior linfonodo '
-       'cervical posterior esquerdo, de 2,6 cm. Uma parte vai fresca para '
-       'citometria de fluxo, outra para cultura de micobactérias e fungos.',
+       'cervical posterior esquerdo, de 2,6 cm. Uma parte vai a fresco para '
+       'citometria de fluxo, TRM-TB e cultura de micobactérias e fungos; o '
+       'resto, para formol.',
        'A citometria não encontra população clonal de linfócitos B ou T. O '
-       'patologista chama a equipe ao microscópio antes de liberar o laudo.'),
+       'TRM-TB não detecta //Mycobacterium tuberculosis//. O patologista chama '
+       'a equipe ao microscópio antes de liberar o laudo.'),
 
     estudo('arquitetura', 'Biópsia: pequeno aumento',
-           'Esta lâmina é de outro paciente com o mesmo diagnóstico que a '
-           'patologia vai propor. Descreva a distribuição das áreas claras e '
-           'das áreas celulares antes de ler a interpretação.',
+           'Lâmina de referência de outro paciente, com o padrão que o '
+           'patologista mostra na de Bianca. Descreva a distribuição das áreas '
+           'claras e das áreas celulares antes de abrir os achados.',
            IMG / 'linfonodo_baixo.jpg',
            'Hematoxilina-eosina, pequeno aumento · outro paciente.',
-           referencia_imagem(IMG / 'linfonodo_baixo.jpg.json'),
+           credito_meta(IMG / 'linfonodo_baixo.jpg.json'),
         [
          ((560, 560), (820, 430), '**Área pálida e eosinofílica**, ampla e mal delimitada, que substitui o tecido linfoide.', 12),
          ((200, 520), (90, 390), '**Ilha de linfócitos** residuais, azul-escura, entre as áreas pálidas.', 12),
          ((450, 185), (330, 70), '**Cápsula** com gordura perinodal: o contorno do linfonodo está preservado.', -12),
         ],
-        ['Arquitetura parcialmente apagada por áreas confluentes e pálidas, com cápsula preservada, sem granulomas e sem população linfoide monomórfica.', 'O que ocupa as áreas pálidas só se define no grande aumento.']),
+        ['Arquitetura parcialmente apagada por áreas confluentes e pálidas, com '
+         'cápsula preservada, sem granulomas e sem população linfoide '
+         'monomórfica.',
+         'O que ocupa as áreas pálidas só se define no grande aumento.']),
 
     estudo('celulas', 'Biópsia: grande aumento',
            'A mesma lâmina de referência em grande aumento. Que células povoam '
            'a área pálida, e que célula chama a atenção pela ausência?',
            IMG / 'linfonodo_alto.jpg',
            'Hematoxilina-eosina, grande aumento · outro paciente.',
-           referencia_imagem(IMG / 'linfonodo_alto.jpg.json'),
+           credito_meta(IMG / 'linfonodo_alto.jpg.json'),
         [
          ((325, 452), (150, 330), '**Cariorrexe**: fragmentos nucleares escuros, pequenos e irregulares, espalhados pela área pálida.', 12),
          ((655, 518), (860, 430), '**Histiócito** de núcleo claro, ovalado ou reniforme, com citoplasma pálido.', -12),
          ((560, 330), (760, 250), 'Fundo **eosinofílico e granular** de necrose, sem neutrófilos.', -12),
         ],
-        ['Necrose paracortical com abundante cariorrexe e histiócitos, sem neutrófilos e sem granulomas.', 'Mais de uma doença produz esse padrão; a imuno-histoquímica e a sorologia ajudam a separá-las.']),
+        ['Necrose paracortical com abundante cariorrexe e histiócitos, sem '
+         'neutrófilos e sem granulomas.',
+         'Não é a necrose caseosa da tuberculose, que viria cercada de '
+         'granulomas. Mais de uma doença produz esse padrão.']),
 
-    pareamento('p4', 'Pergunta 5',
-      'A lâmina de Bianca mostra necrose com cariorrexe, sem neutrófilos e sem '
-      'granulomas. Associe cada achado histológico ao diagnóstico que ele '
-      'sugere.', [
+    pareamento('p5', 'Pergunta 5',
+      'Necrose com cariorrexe, sem neutrófilos e sem granulomas. Associe cada '
+      'achado histológico ao diagnóstico que ele sugere.', [
       par('Necrose paracortical com cariorrexe, histiócitos em crescente e '
           'ausência de neutrófilos',
           'Doença de Kikuchi–Fujimoto',
           'É o padrão de Bianca. Histiócitos em crescente sem neutrófilos o '
-          'afastam da linfadenite supurativa.'),
+          'separam da linfadenite supurativa.'),
       par('Granulomas com necrose caseosa e bacilos álcool-ácido resistentes',
           'Linfadenite tuberculosa',
           'Histiócitos epitelioides e células gigantes em volta do caseo. A '
@@ -337,7 +419,7 @@ ETAPAS = [
       par('Granulomas com microabscessos estrelados, cheios de neutrófilos',
           'Doença da arranhadura do gato',
           'O abscesso estrelado é neutrofílico. O gato da casa estava na '
-          'história.'),
+          'ficha.'),
       par('Corpos hematoxilínicos e depósito de DNA nas paredes dos vasos, '
           'com plasmócitos',
           'Linfadenite lúpica',
@@ -354,136 +436,184 @@ ETAPAS = [
     nota='A opção que sobrou, sarcoidose, teria granulomas não necrosantes, '
          'compactos, sem cariorrexe.'),
 
-    painel('res2', 'Investigação complementar', 'O que a equipe pediu', [
+    painel('res3', 'Complemento da biópsia', 'Tecido e autoanticorpos', [
+        ex('Imuno-histoquímica', 'Histiócitos CD68 e mieloperoxidase positivos · '
+           'células dendríticas plasmocitoides CD123 positivas · predomínio de '
+           'linfócitos T CD8', '—', True),
+        ex('Células de Reed-Sternberg (CD15 / CD30)', 'Ausentes', 'ausentes'),
+        ex('Pesquisa de BAAR no tecido', 'Negativa', 'negativa'),
+        ex('Cultura de micobactérias e fungos', 'Em andamento', '—'),
         ex('FAN', 'Não reagente', 'não reagente'),
         ex('Anti-DNA nativo', 'Não reagente', 'não reagente'),
         ex('C3 / C4', '112 / 25 mg/dL', '90–180 / 10–40 mg/dL'),
-        ex('Urina tipo 1', 'Sem hematúria e sem proteinúria', 'normal'),
-        ex('Ferritina', '480 ng/mL', '15–150 ng/mL', True),
-        ex('Triglicerídeos', '126 mg/dL', 'até 150 mg/dL'),
-        ex('Fibrinogênio', '390 mg/dL', '200–400 mg/dL'),
-        ex('Cultura do linfonodo', 'Sem crescimento de micobactérias ou fungos em 6 semanas', 'negativa'),
-        ex('Imuno-histoquímica', 'Histiócitos CD68 e mieloperoxidase positivos · '
-           'células dendríticas plasmocitoides CD123 positivas · sem células de Reed-Sternberg', '—', True),
     ], introducao='Com a lâmina, a equipe fecha as alternativas que ela '
                   'deixou abertas.'),
 
-    pg('patologia', 'O diagnóstico',
-       'A revisão com imuno-histoquímica confirma **linfadenite necrosante '
-       'histiocítica, a doença de Kikuchi–Fujimoto**: necrose paracortical com '
-       'cariorrexe, histiócitos mieloperoxidase-positivos com núcleo em '
-       'crescente, células dendríticas plasmocitoides e ausência de '
-       'neutrófilos.',
-       'Não há corpos hematoxilínicos, e o FAN é negativo. Isso não dispensa o '
-       'seguimento: o lúpus pode preceder, acompanhar ou suceder o quadro.'),
+    pg('diagnostico', 'O diagnóstico',
+       'O laudo é de **linfadenite necrosante histiocítica, a doença de '
+       'Kikuchi–Fujimoto**: necrose paracortical com cariorrexe, histiócitos '
+       'mieloperoxidase-positivos, células dendríticas plasmocitoides e '
+       'ausência de neutrófilos e de granulomas.',
+       'Descrita no Japão em 1972, é mais frequente em adultos jovens e em '
+       'pessoas de ascendência asiática, como o pai de Bianca. A causa é '
+       'desconhecida; a hipótese mais aceita é uma resposta imune exagerada, '
+       'mediada por linfócitos T, a um gatilho que não se identifica. O quadro '
+       'típico é o dela: linfonodos cervicais posteriores dolorosos, febre e, '
+       'em boa parte dos casos, leucopenia; alguns têm exantema.',
+       'O risco está na confusão. A lâmina lembra linfoma, e a febre com '
+       'emagrecimento lembra tuberculose. Por isso o diagnóstico é '
+       'histológico, e o FAN negativo afasta hoje a linfadenite lúpica, que '
+       'tem a mesma aparência.'),
 
-    Q('p5', 6,
-      'Sobre a doença de Kikuchi–Fujimoto, **quais três** afirmações estão '
-      'corretas?', [
-      ('Regride sozinha em semanas a poucos meses',
-       'Febre e linfonodos regridem sem tratamento específico, em geral em um '
-       'a quatro meses.', True),
-      ('Pode se associar a lúpus, antes, junto ou depois',
-       'Uma minoria desenvolve lúpus, às vezes anos depois; é o motivo do '
-       'seguimento.', True),
-      ('Recorre numa minoria dos pacientes',
-       'A recorrência é incomum e costuma repetir o quadro autolimitado.',
-       True),
-      ('Leucopenia fala contra o diagnóstico',
-       'Leucopenia é achado frequente nessa doença, como em Bianca.', False),
-      ('Linfonodo doloroso sugere outro diagnóstico',
-       'Dor e sensibilidade no linfonodo são comuns, como no caso dela.',
-       False),
-      ('Histiócitos mieloperoxidase-positivos sugerem infiltração por '
-       'leucemia mieloide',
-       'São típicos do Kikuchi; sarcoma mieloide mostraria blastos, não '
-       'histiócitos em crescente.', False),
-      ('Antibiótico encurta a duração',
-       'Nenhum agente bacteriano foi demonstrado; antibiótico só acrescenta '
-       'efeito adverso.', False),
-      ('Evolui para linfoma com frequência',
-       'Não é doença pré-linfomatosa; o risco é confundi-la com linfoma na '
-       'lâmina.', False),
-      ('Corticoide é obrigatório para todos',
-       'Fica para doença grave, arrastada ou complicada.', False),
-     ], 'Autolimitada, recorre pouco e pede vigilância para lúpus'),
+    painel('res3b', 'No dia do laudo', 'Sangue', [
+        ex('Hemoglobina', '11,4 g/dL', '12–16 g/dL', True),
+        ex('Leucócitos / neutrófilos', '2.600 / 1.350 por mm³', 'L 4.000–11.000 · N 1.800–7.500', True),
+        ex('Plaquetas', '176.000/mm³', '150.000–450.000/mm³'),
+        ex('Ferritina', '480 ng/mL', '15–150 ng/mL', True),
+        ex('Triglicerídeos, em jejum', '126 mg/dL', 'até 150 mg/dL'),
+        ex('Fibrinogênio', '390 mg/dL', '200–400 mg/dL'),
+    ], introducao='Febre de semanas com leucopenia persistente: a equipe '
+                  'procura uma complicação rara dessa doença.'),
 
-    Q('p6', 7,
-      'Febre por semanas, leucopenia e ferritina de 480 ng/mL levantam a '
-      'dúvida de síndrome hemofagocítica, complicação rara dessa doença. Pelos '
-      'critérios HLH-2004, **quais duas** afirmações estão corretas?', [
-      ('Dos critérios medidos, ela preenche só a febre',
-       'Febre de 38,6 °C conta; ferritina, citopenias, baço e lipídios não '
-       'atingem os cortes.', True),
-      ('Sem teste molecular, exigem-se cinco dos oito',
-       'Sem mutação que o confirme, o HLH-2004 pede cinco dos oito.', True),
-      ('A ferritina de 480 ng/mL já conta como critério',
-       'O corte é 500 ng/mL; a dela fica abaixo.', False),
-      ('A leucopenia isolada, sem anemia nem plaquetopenia, já conta como citopenia',
-       'O critério exige duas linhagens: Hb abaixo de 9, plaquetas abaixo de '
-       '100.000 ou neutrófilos abaixo de 1.000.', False),
-      ('Transaminases elevadas são critério',
-       'São comuns na hemofagocitose, mas ficam fora do HLH-2004.', False),
-      ('Desidrogenase láctica elevada é critério',
-       'Acompanha a inflamação, sem entrar nos critérios.', False),
-      ('Hemofagocitose no aspirado de medula é obrigatória para o diagnóstico',
-       'É um dos oito critérios, nem necessária nem suficiente.', False),
-      ('O CD25 solúvel não faz parte dos critérios',
-       'CD25 solúvel de 2.400 U/mL ou mais é um dos oito critérios.', False),
-     ], 'Ela preenche um dos oito critérios'),
+    Q('p6', 6,
+      'A dúvida é síndrome hemofagocítica. Pelos critérios HLH-2004, **quais '
+      'duas** afirmações estão corretas?', [
+      ('Ela preenche um critério: a febre', True),
+      ('Sem diagnóstico molecular, exigem-se cinco de oito', True),
+      ('A ferritina de 480 já conta', False),
+      ('A leucopenia isolada conta como citopenia', False),
+      ('Transaminases elevadas são critério', False),
+      ('Hemofagocitose na medula é obrigatória', False),
+      ('CD25 solúvel não entra nos critérios', False),
+     ], [
+      ('Os oito critérios', 'Febre de 38,5 °C ou mais; esplenomegalia; '
+       'citopenia em duas ou três linhagens (hemoglobina abaixo de 9 g/dL, '
+       'plaquetas abaixo de 100.000, neutrófilos abaixo de 1.000); '
+       'triglicerídeos em jejum de 265 mg/dL ou mais ou fibrinogênio de 150 '
+       'mg/dL ou menos; hemofagocitose em medula, baço ou linfonodo; atividade '
+       'de células NK baixa ou ausente; ferritina de 500 ng/mL ou mais; CD25 '
+       'solúvel de 2.400 U/mL ou mais. Sem mutação que confirme, são '
+       'necessários cinco.'),
+      ('Contando com cuidado', 'A febre de 38,8 °C conta. O baço não é '
+       'palpável. Hemoglobina de 11,4, plaquetas de 176.000 e neutrófilos de '
+       '1.350 não atingem nenhum corte. Triglicerídeos de 126 e fibrinogênio '
+       'de 390 estão normais, e a ferritina de 480 fica abaixo de 500. É um '
+       'critério de oito.'),
+      ('Por que não as outras', 'Transaminases e desidrogenase láctica sobem '
+       'na hemofagocitose, mas não são critério. A hemofagocitose na medula é '
+       'um critério entre oito, nem necessária nem suficiente.'),
+     ]),
+
+    Q('p7', 7,
+      'Sem hemofagocitose, **quais três** condutas estão corretas agora?', [
+      ('Anti-inflamatório e analgésico para os sintomas', True),
+      ('Nenhum antibiótico ou tuberculostático', True),
+      ('Corticoide só se grave ou arrastada', True),
+      ('Prednisona para todos, por seis semanas', False),
+      ('Hidroxicloroquina desde já', False),
+      ('Retirar os demais linfonodos', False),
+      ('PET-CT para estadiamento', False),
+     ], [
+      ('O tratamento de suporte', 'A doença é autolimitada: febre e '
+       'linfonodos regridem em um a quatro meses, em geral sem tratamento '
+       'específico. Anti-inflamatório não esteroide e analgésico aliviam '
+       'febre e dor. Os linfonodos regridem mais devagar que a febre.'),
+      ('Quando entra o corticoide', 'Febre alta que não cede, sintomas '
+       'incapacitantes, acometimento fora do linfonodo, como meningite '
+       'asséptica ou hepatite, e hemofagocitose. A hidroxicloroquina fica para '
+       'doença recorrente, dependente de corticoide ou com traços de lúpus; '
+       'imunoglobulina, para casos graves e refratários.'),
+      ('O que não entra', 'Não há agente infeccioso a tratar: sem granulomas, '
+       'BAAR negativo e TRM-TB não detectado, o esquema para tuberculose não '
+       'se sustenta, e a cultura final será conferida. Não há linfoma a '
+       'estadiar, e o PET-CT capta nos linfonodos dessa doença, o que só '
+       'confunde.'),
+     ]),
 
     pg('tratamento', 'Tratamento e seguimento',
-       'Bianca recebe analgésico e anti-inflamatório por curto prazo, sem '
-       'antibiótico. A equipe explica que os linfonodos regridem mais devagar '
-       'que a febre, e que corticoide fica guardado para doença grave ou '
-       'arrastada.',
+       'Bianca recebe ibuprofeno por dez dias, sem antibiótico. A equipe '
+       'explica que o linfonodo diminui mais devagar que a febre e que o '
+       'corticoide fica guardado para doença grave ou arrastada.',
        'Quatro semanas depois está afebril há oito dias. O maior linfonodo '
        'mede 1 cm e não dói. Hemoglobina 12,1 g/dL, leucócitos 4.300/mm³, PCR '
-       '4 mg/L. Voltou a trabalhar meio período.'),
+       '4 mg/L. A cultura do linfonodo termina sem crescimento em seis '
+       'semanas. Voltou a trabalhar meio período.'),
 
-    Q('p7', 8,
+    Q('p8', 8,
       'Na alta do acompanhamento agudo, **quais três** orientações estão '
       'corretas?', [
-      ('Voltar se surgir artrite, fotossensibilidade ou edema',
-       'São os sinais de lúpus que o seguimento procura, e ela precisa '
-       'conhecê-los.', True),
-      ('Seguimento clínico por alguns anos',
-       'A associação com lúpus pode surgir anos depois; o acompanhamento é '
-       'clínico.', True),
-      ('Reavaliar linfonodo que não regride, até com nova biópsia',
-       'Linfonodo que persiste além do esperado reabre o diferencial, '
-       'inclusive linfoma.', True),
-      ('PET-CT a cada seis meses por dois anos, para vigiar linfoma',
-       'O diagnóstico é histológico e a doença é benigna; não há o que '
-       'estadiar.', False),
-      ('Antibiótico profilático contra recorrência',
-       'Não há infecção demonstrada a prevenir.', False),
-      ('FAN e anti-DNA todo mês, por tempo indeterminado',
-       'Exame sem sintoma, repetido, gera falso-positivo e ansiedade sem '
-       'mudar conduta.', False),
-      ('Hidroxicloroquina contínua para prevenir o lúpus',
-       'Não previne lúpus em quem não o tem; fica para casos recorrentes ou '
-       'com lúpus.', False),
-      ('Alta definitiva, já que o FAN negativo afasta lúpus futuro',
-       'FAN negativo hoje não prevê o futuro; o lúpus pode vir depois.',
-       False),
-     ], 'Seguimento clínico, atento a lúpus e a linfonodo que persiste'),
+      ('Voltar se surgir artrite, fotossensibilidade ou edema', True),
+      ('Seguimento clínico por alguns anos', True),
+      ('Rebiopsiar linfonodo que não regride', True),
+      ('PET-CT a cada seis meses', False),
+      ('FAN e anti-DNA todo mês', False),
+      ('Hidroxicloroquina para prevenir lúpus', False),
+      ('Alta definitiva: FAN negativo afasta lúpus', False),
+     ], [
+      ('O lúpus', 'Uma minoria dos pacientes tem lúpus antes, junto ou anos '
+       'depois do episódio, e a associação é mais comum em mulheres jovens. '
+       'FAN negativo hoje não prevê o futuro. O seguimento é clínico, e ela '
+       'precisa conhecer os sinais que o motivam: artrite, lesão de pele ao '
+       'sol, úlceras orais, edema e urina espumosa.'),
+      ('A recorrência e o linfonodo', 'A doença recorre em cerca de 3 a 4% '
+       'dos casos, em geral com o mesmo quadro autolimitado. Um linfonodo que '
+       'não regride no tempo esperado reabre o diferencial, inclusive linfoma, '
+       'e pode pedir nova biópsia.'),
+      ('O que não entra', 'Exame sem sintoma, repetido todo mês, gera '
+       'falso-positivo sem mudar conduta. Hidroxicloroquina não previne lúpus '
+       'em quem não o tem, e PET-CT não tem o que vigiar numa doença benigna.'),
+     ]),
 
-    fim('f0', 'Recuperação clínica',
-        'Bianca retoma o trabalho em tempo integral e segue sem sintomas no '
-        'acompanhamento. A doença regrediu sem dano de órgão.',
-        'A biópsia no momento certo respondeu à pergunta que o linfonodo '
-        'fazia, e o seguimento ficou aberto ao que ainda pode vir.',
-        'melhor') | {'fecho': 'extensao'},
+    pg('alta', 'Oito semanas depois',
+       'Bianca está sem febre, com linfonodos de menos de 1 cm, e voltou à '
+       'sala de aula. A equipe revê com ela o que aconteceu, o que esperar e '
+       'quando voltar antes do retorno marcado.',
+       conforme=('b1', ['f0', 'f_ripe', 'alta_cort'])),
+
+    fim('f0', 'Recuperação sem desvios',
+        'Bianca volta ao trabalho em tempo integral na sexta semana de doença, '
+        'depois de dez dias de ibuprofeno e nenhum outro remédio.',
+        'Tecido no momento em que a linfadenopatia passou a crescer, com parte '
+        'a fresco, respondeu às hipóteses de uma vez e poupou tratamento '
+        'empírico.', 'melhor', fecho='extensao'),
+
+    pg('alta_cort', 'Oito semanas depois',
+       'Bianca está sem febre, mas o corticoide deixou marcas: insônia, '
+       'inchaço no rosto e glicemia de jejum de 112 mg/dL, que a equipe vai '
+       'reavaliar depois da retirada.',
+       conforme=('resgate', ['f_cort', 'f_pior'])),
+
+    fim('f_ripe', 'Recuperação depois de uma hepatite medicamentosa',
+        'A ALT volta ao normal três semanas depois da suspensão. Bianca fica '
+        'sete semanas afastada e sai com uma notificação de tuberculose que '
+        'precisou ser encerrada como erro diagnóstico.',
+        'A prova tuberculínica mediu infecção, e a febre que cedeu sob o '
+        'esquema cederia sozinha. Tratar sem tecido trouxe o dano do remédio e '
+        'atrasou o diagnóstico.', 'medio', fecho='extensao'),
+
+    fim('f_cort', 'Recuperação com diagnóstico atrasado',
+        'A biópsia, com o patologista avisado, é conclusiva. A prednisona é '
+        'retirada em três semanas, e Bianca fica seis semanas afastada.',
+        'O corticoide aliviou a febre sem dizer o que ela era. Parar a tempo '
+        'e contar ao patologista preservou a leitura da lâmina.', 'medio',
+        fecho='extensao'),
+
+    fim('f_pior', 'Dois ciclos de corticoide e dez semanas afastada',
+        'Bianca fica dez semanas longe da escola, com 4 kg a mais e a febre '
+        'voltando a cada redução. A lâmina, colhida sob corticoide, precisa de '
+        'revisão por um segundo patologista antes do laudo.',
+        'Ciclos empíricos sem diagnóstico apagam a lâmina e, se a causa fosse '
+        'tuberculose ou linfoma, a teriam agravado ou escondido.', 'pior',
+        fecho='extensao'),
 
     bifurcacao('extensao', 'Extensão opcional', 'Seis meses depois',
       'O caso principal terminou. Quer encerrar ou explorar um cenário de '
       'seguimento?', [
-      caminho('Encerrar e revisar o caso', 'retrospectiva',
-              'Retoma os pontos de decisão da investigação.'),
+      caminho('Encerrar e ver os pontos de ensino', 'retrospectiva',
+              'Retoma o que o caso quis ensinar.'),
       caminho('Explorar um retorno seis meses depois', 'novo_quadro',
               'Cenário independente: não é consequência de nenhuma escolha '
-              'anterior nem a evolução de toda paciente com Kikuchi.'),
+              'anterior nem a evolução de toda paciente com essa doença.'),
     ]),
 
     pg('novo_quadro', 'Seis meses depois',
@@ -491,7 +621,8 @@ ETAPAS = [
        'por manchas vermelhas no rosto depois de uma tarde na praia. Os '
        'linfonodos não voltaram. Sente-se cansada de novo.',
        'Ao exame, sinovite nas metacarpofalângicas e interfalângicas '
-       'proximais, e eritema malar poupando os sulcos nasolabiais.'),
+       'proximais, e eritema malar poupando os sulcos nasolabiais. Pressão '
+       '124/80 mmHg, sem edema.'),
 
     bifurcacao('b2', 'Decisão', 'Os sintomas novos',
       'Como você conduz esse retorno?', [
@@ -499,10 +630,9 @@ ETAPAS = [
               'renal', 'seguimento',
               'Os sintomas são novos e cabem no lúpus que o seguimento '
               'procurava.'),
-      caminho('Atribuir tudo a uma recorrência do Kikuchi e observar',
-              'encerramento',
-              'Kikuchi recorrente faz febre e linfonodo, não sinovite com '
-              'eritema malar.'),
+      caminho('Atribuir tudo a uma recorrência e observar', 'encerramento',
+              'A recorrência faz febre e linfonodo, não sinovite com eritema '
+              'malar.'),
     ]),
 
     painel('seguimento', 'Reavaliação', 'O que a equipe pediu', [
@@ -510,53 +640,35 @@ ETAPAS = [
         ex('Anti-DNA nativo', 'Reagente', 'não reagente', True),
         ex('C3 / C4', '54 / 7 mg/dL', '90–180 / 10–40 mg/dL', True),
         ex('Hemograma', 'Hb 11,2 g/dL · leucócitos 3.100/mm³ · plaquetas 142.000/mm³', '—', True),
-        ex('Creatinina', '0,9 mg/dL', '0,6–1,1 mg/dL'),
+        ex('Creatinina', '0,9 mg/dL', '0,5–1,1 mg/dL'),
         ex('Sedimento urinário', '18 hemácias por campo, 30% dismórficas · sem cilindros', 'sem hemácias', True),
         ex('Relação proteína/creatinina urinária', '0,8 g/g', 'abaixo de 0,2 g/g', True),
     ], introducao='A creatinina é normal. O resto não é.'),
 
-    Q('p_renal', 9,
-      'Lúpus com FAN 1:640, anti-DNA reagente, complemento consumido, '
-      'hematúria dismórfica e proteinúria de 0,8 g/g, com creatinina normal. '
-      '**Quais três** condutas estão corretas?', [
-      ('Biópsia renal',
-       'Proteinúria de 0,5 g/g ou mais com sedimento ativo indica biópsia: a '
-       'classe decide o tratamento.', True),
-      ('Aguardar a creatinina subir para indicar biópsia',
-       'Creatinina normal não exclui nefrite proliferativa. Esperar é perder '
-       'néfron.', False),
-      ('Hidroxicloroquina',
-       'Indicada para todo paciente com lúpus: reduz surtos, trombose e '
-       'mortalidade.', True),
-      ('Anti-inflamatório diário pela artrite',
-       'Com nefrite ativa, anti-inflamatório agrava a lesão renal.', False),
-      ('Repetir a biópsia do linfonodo cervical',
-       'Os linfonodos regrediram. A pergunta agora é o rim.', False),
-      ('Bloqueio do sistema renina-angiotensina pela proteinúria',
-       'Reduz a proteinúria e protege o rim, junto com a imunossupressão.',
-       True),
-      ('Atribuir a proteinúria ao episódio de febre de seis meses atrás',
-       'A urina era normal naquela época.', False),
-     ], 'Proteinúria de lúpus pede tecido, antimalárico e proteção renal'),
-
     pg('nova_doenca', 'O diagnóstico longitudinal',
-       'A biópsia renal mostra nefrite lúpica classe III, e o tratamento de '
-       'indução começa com a nefrologia e a reumatologia. O primeiro episódio '
-       'foi Kikuchi, e o diagnóstico continua válido: a doença de Kikuchi '
-       'pode ser a primeira manifestação de uma doença que só se declara '
-       'depois.',
+       'É lúpus eritematoso sistêmico com nefrite: FAN em título alto, '
+       'anti-DNA reagente, complemento consumido, hematúria dismórfica e '
+       'proteinúria de 0,8 g/g. Proteinúria de 0,5 g/g ou mais com sedimento '
+       'ativo indica biópsia renal mesmo com creatinina normal, porque a '
+       'classe histológica decide o tratamento.',
+       'A biópsia mostra nefrite lúpica classe III. Ela inicia '
+       'hidroxicloroquina, indicada para todo paciente com lúpus, bloqueio do '
+       'sistema renina-angiotensina pela proteinúria e indução com a '
+       'nefrologia e a reumatologia. O primeiro diagnóstico continua válido: '
+       'o episódio de seis meses atrás foi a primeira manifestação de uma '
+       'doença que só se declarou depois.',
        segue='f1'),
 
     fim('f1', 'Lúpus reconhecido cedo',
-        'Bianca inicia tratamento da nefrite com creatinina normal, e a '
+        'Bianca inicia o tratamento da nefrite com creatinina normal, e a '
         'proteinúria cai nos meses seguintes.',
         'Reconhecer manifestações novas evitou que o diagnóstico anterior '
-        'explicasse tudo.',
-        'melhor'),
+        'explicasse tudo.', 'melhor'),
 
     pg('encerramento', 'Dois meses depois',
        'Bianca volta com edema de membros inferiores e urina espumosa. A '
-       'pressão é 150/96. Proteinúria de 2,4 g/g e creatinina de 1,5 mg/dL.',
+       'pressão é 150/96 mmHg. Proteinúria de 2,4 g/g e creatinina de 1,5 '
+       'mg/dL.',
        segue='resgate_renal'),
 
     bifurcacao('resgate_renal', 'Decisão', 'Edema e creatinina subindo',
@@ -569,9 +681,9 @@ ETAPAS = [
     ]),
 
     pg('atraso_renal', 'Um mês depois',
-       'Bianca é internada com creatinina de 2,8 mg/dL e pressão de 170/104. '
-       'A biópsia mostra nefrite lúpica classe IV com crescentes em 30% dos '
-       'glomérulos e algum grau de fibrose.',
+       'Bianca é internada com creatinina de 2,8 mg/dL e pressão de 170/104 '
+       'mmHg. A biópsia mostra nefrite lúpica classe IV com crescentes em 30% '
+       'dos glomérulos e algum grau de fibrose.',
        segue='f3'),
 
     fim('f2', 'Diagnóstico tardio, ainda a tempo',
@@ -585,32 +697,45 @@ ETAPAS = [
         'Sinovite com eritema malar foi atribuída a uma recorrência que não '
         'fazia aquilo. A lesão renal progrediu no intervalo.', 'pior'),
 
-    pagina('retrospectiva', 'Retrospectiva', '',
-        tabela(['Momento', 'O que estava à mão', 'O que decidiu'], [
-            ['Primeira consulta', 'Febre, linfonodo posterior doloroso, amoxicilina '
-             'sem efeito', 'Não repetir antibiótico: o diferencial é infecção viral, '
-             'micobactéria, linfoma e autoimunidade'],
-            ['Sorologias', 'VCA IgG e EBNA reagentes, IgM não reagente; CMV antigo',
-             'EBV e CMV passados não explicam a febre de hoje'],
-            ['Terceira semana', 'Linfonodo crescendo, leucopenia, LDH alta',
-             'Linfonodo inteiro, o mais alterado, parte a fresco, antes de qualquer corticoide'],
-            ['Lâmina', 'Necrose com cariorrexe, sem neutrófilos e sem granulomas',
-             'Kikuchi, com lúpus e linfoma excluídos por FAN e imuno-histoquímica'],
-            ['Seguimento', 'Artrite e eritema malar meses depois',
-             'Sintoma novo é doença nova até prova em contrário'],
-        ]),
+    pagina('retrospectiva', 'Pontos de ensino', '',
+        pontos(
+            'Linfadenopatia localizada manda examinar a área de drenagem; '
+            'generalizada, duas ou mais regiões não contíguas, aponta doença '
+            'sistêmica. Idade acima de 40, sítio supraclavicular, mais de 2 '
+            'cm, consistência dura, fixação, sintomas constitucionais e '
+            'persistência além de quatro semanas pedem tecido.',
+            'Dor no linfonodo sugere inflamação, mas não afasta neoplasia.',
+            'VCA IgG e EBNA reagentes com IgM negativa é EBV antigo: a '
+            'síndrome mononucleose-símile precisa de outra causa.',
+            'Prova tuberculínica reagente mede infecção, não doença. Febre '
+            'que cede sob tratamento empírico não confirma o diagnóstico '
+            'quando a doença pode ceder sozinha.',
+            'Linfonodo inteiro, o mais alterado, com parte a fresco para '
+            'citometria, TRM-TB e cultura, antes de qualquer corticoide.',
+            'Necrose com cariorrexe, histiócitos e nenhum neutrófilo ou '
+            'granuloma, num adulto jovem com leucopenia, é doença de '
+            'Kikuchi–Fujimoto: autolimitada, tratada com sintomáticos, com '
+            'seguimento clínico atento ao lúpus.'),
         so_kicker=True),
 
     pg('referencias', 'Fontes e limites',
        'Paciente, valores e percursos são ficcionais. A extensão de seguimento '
-       'é um cenário separado, não a evolução necessária da doença.',
-       'Dumas e cols. Medicine, 2014: 91 casos de Kikuchi–Fujimoto. Critérios '
-       'HLH-2004: Henter e cols., Pediatric Blood & Cancer, 2007. Sorologia do '
-       'EBV: CDC, Laboratory Testing for Epstein-Barr Virus. Nefrite lúpica: '
-       'KDIGO 2024 Clinical Practice Guideline for the Management of Lupus '
-       'Nephritis, Kidney International, 2024. Lâminas: Nephron, Wikimedia '
-       'Commons, CC BY-SA 3.0. Radiografia: Mikael Häggström, CC0. Cena: '
-       'ilustração gerada por IA, sem valor diagnóstico.'),
+       'é um cenário separado, não a evolução necessária da doença. A cena de '
+       'abertura é uma ilustração gerada por inteligência artificial, sem '
+       'valor diagnóstico.',
+       'Gaddey HL, Riegel AM. Unexplained lymphadenopathy: evaluation and '
+       'differential diagnosis. Am Fam Physician, 2016. Dumas e cols., '
+       'Medicine, 2014: 91 casos de Kikuchi–Fujimoto. Yoo e cols., J '
+       'Ultrasound Med, 2011 (ultrassonografia). Ministério da Saúde, Manual de '
+       'Recomendações para o Controle da Tuberculose no Brasil, 2.ª ed., 2019 '
+       '(prova tuberculínica e hepatotoxicidade). Henter e cols., Pediatr '
+       'Blood Cancer, 2007 (HLH-2004). CDC, Epstein-Barr Virus: Laboratory '
+       'Testing. KDIGO 2024 Clinical Practice Guideline for the Management of '
+       'Lupus Nephritis.',
+       'Imagens de outros pacientes, com setas adicionadas: ultrassonografia, '
+       'Nevit Dilmen, Wikimedia Commons, CC BY-SA 3.0; radiografia, Mikael '
+       'Häggström, Wikimedia Commons, CC0; lâminas, Nephron, Wikimedia '
+       'Commons, CC BY-SA 3.0.'),
 ]
 
 REVISAO = []
