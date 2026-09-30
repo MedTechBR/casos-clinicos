@@ -3,13 +3,15 @@
 Reescrito em 26/09/2026 no molde do //New England// (piloto: leptospirose;
 ver Artifacts/nejm-casos-classicos/GRAMATICA_LIDA_2026-09-26.md). Apresentação
 curta, ficha, exame com os vitais em primeiro, primeiros exames entregues
-prontos. As primeiras perguntas interpretam números (a anemia, a urina com o
-complemento) e a equipe registra a âncora correta para aquele momento: febre
-prolongada com esplenomegalia e hiperglobulinemia numa moradora de área de
-calazar, com linfoma e tuberculose na mesma linha. A virada é a hemocultura
-colhida antes de mais um antibiótico; o agente manda olhar o cólon antes de
-se nomear a doença, e o nome só aparece no ecocardiograma, depois da metade
-do percurso. As decisões de conduta continuam mudando o desfecho.
+prontos. Revisto em 30/09 ("mais slides de conteúdo e menos de perguntas"):
+seis perguntas, nunca duas telas interativas seguidas, e as duas perguntas
+antes da virada só interpretam e localizam (o mecanismo da anemia, o sítio da
+lesão renal), com alternativas que são categorias. A âncora da equipe
+(calazar, linfoma, tuberculose) fica registrada na evolução, como texto. A
+virada é a hemocultura colhida antes de mais um antibiótico; o agente manda
+olhar o cólon (página de discussão) e o nome só aparece no ecocardiograma,
+depois da metade do percurso. As decisões de conduta continuam mudando o
+desfecho.
 
 Paciente ficcional. Critérios de Duke-ISCVID 2023 (Fowler, Clin Infect Dis
 2023); conduta pela diretriz da ESC de 2023; filtração pelo CKD-EPI 2021.
@@ -126,6 +128,36 @@ ETAPAS = [
     ], introducao='Colhidos na primeira consulta. Três pares de hemoculturas foram '
                   'colhidos por punções separadas, antes de qualquer antibiótico.'),
 
+    Q('p1', 1,
+      'Hemoglobina de 9,8 g/dL, VCM de 76 fL e RDW de 17,8%. A ferritina, de 18 '
+      'ng/mL, está dentro da faixa de referência do laboratório; a saturação da '
+      'transferrina é de 7%, e a proteína C reativa, de 74 mg/L. Qual o '
+      'mecanismo da anemia?', [
+      ('Falta de ferro', True),
+      ('Ferro retido pela inflamação', False),
+      ('Defeito na síntese da globina', False),
+      ('Sequestro no baço', False),
+      ('Destruição periférica das hemácias', False),
+      ('Infiltração da medula', False),
+     ], [
+      ('A leitura', 'A ferritina sobe com a inflamação. Com PCR de 74 mg/L, uma '
+       'ferritina normal não afastaria a falta de ferro; uma ferritina de 18 '
+       'ng/mL, abaixo de 30, a confirma, mesmo dentro da faixa do laboratório. '
+       'A saturação de 7% e o RDW de 17,8% completam o quadro de ferro que '
+       'falta, e não de ferro retido.'),
+      ('Por que não as outras', 'Quando a inflamação retém o ferro, a ferritina '
+       'fica normal ou alta. Defeito da globina dá microcitose com RDW normal e '
+       'ferritina preservada. Sequestro no baço derruba também leucócitos e '
+       'plaquetas, que estão normais. Destruição periférica não é microcítica, e '
+       'infiltração da medula costuma baixar mais de uma linhagem.'),
+      ('O que a falta de ferro abre', 'Numa mulher de 59 anos, depois da '
+       'menopausa, falta de ferro é perda crônica de sangue pelo tubo digestivo '
+       'até prova em contrário. A diretriz da Sociedade Britânica de '
+       'Gastroenterologia de 2021 indica investigação endoscópica alta e baixa '
+       'nessa situação, com ou sem febre. Seis meses de sulfato ferroso sem essa '
+       'investigação deixaram a pergunta aberta.'),
+     ]),
+
     painel('res1b', 'Primeiros exames', 'Urina e outros', [
         ex('Urina', 'Densidade 1.018 · 15 hemácias por campo, 40% dismórficas · proteína 1+ · sem leucocitúria', '—', True),
         ex('Proteína / creatinina na urina', '0,8 g/g', 'até 0,2 g/g', True),
@@ -135,6 +167,34 @@ ETAPAS = [
         ex('TSH', '1,8 mUI/L', '0,4–4,0 mUI/L'),
         ex('Eletrocardiograma', 'Ritmo sinusal, 96 bpm · PR 180 ms · sem outras alterações', '—'),
     ]),
+
+    Q('p2', 2,
+      'Hematúria com 40% de hemácias dismórficas, proteinúria de 0,8 g/g, sem '
+      'leucocitúria, e creatinina de 1,3 mg/dL. Onde está a lesão?', [
+      ('Glomerular', True),
+      ('Pré-renal', False),
+      ('Tubular', False),
+      ('Intersticial', False),
+      ('Obstrutiva', False),
+      ('Via urinária baixa', False),
+     ], [
+      ('A localização', 'Hemácias dismórficas em 40% e proteinúria dizem que o '
+       'sangue atravessou o glomérulo. Sem leucocitúria, a urina não tem o '
+       'padrão da lesão intersticial. Sangramento de bexiga, ureter ou cálculo dá '
+       'hemácias de forma normal, e lesão pré-renal, tubular ou obstrutiva não '
+       'produz hemácias dismórficas.'),
+      ('O complemento', 'C3 de 58 mg/dL com C4 normal é consumo pela via '
+       'alternativa, o que acontece quando imunocomplexos se depositam no '
+       'glomérulo; o fator reumatoide de 64 UI/mL aponta no mesmo sentido. A '
+       'creatinina de 1,3 mg/dL, que parece pouco, já corresponde a uma '
+       'filtração de 47 mL/min/1,73 m² pelo CKD-EPI 2021.'),
+      ('O que a categoria abre', 'Glomerulonefrite com consumo de complemento '
+       'vem de doença autoimune sistêmica, de crioglobulinas ou de infecção de '
+       'curso longo, que produz antígeno todos os dias. Com fator antinuclear '
+       'não reagente, a autoimune fica menos provável, e a crioglobulinemia '
+       'costuma derrubar também o C4. Com cinco semanas de febre, a infecção '
+       'persistente vai para a frente da lista.'),
+     ]),
 
     estudo('rx_adm', 'Radiografia de tórax',
            'Radiografia da primeira consulta, parte da rodada inicial de febre '
@@ -152,90 +212,24 @@ ETAPAS = [
          'Uma radiografia normal não afasta tuberculose extrapulmonar ou '
          'disseminada, nem linfoma restrito ao abdome.']),
 
-    Q('p1', 1,
-      'Hemoglobina de 9,8 g/dL, VCM de 76 fL, ferritina de 18 ng/mL e saturação '
-      'da transferrina de 7%, com proteína C reativa de 74 mg/L. Como '
-      'interpretar a anemia?', [
-      ('Deficiência absoluta de ferro', True),
-      ('Anemia da inflamação isolada', False),
-      ('Traço talassêmico', False),
-      ('Hiperesplenismo', False),
-      ('Anemia sideroblástica', False),
-      ('Hemólise crônica', False),
-     ], [
-      ('A leitura', 'A ferritina sobe com a inflamação. Com PCR de 74 mg/L, uma '
-       'ferritina normal não afastaria a falta de ferro; uma ferritina de 18 '
-       'ng/mL, abaixo de 30, a confirma. A saturação de 7% e o RDW de 17,8% '
-       'completam o quadro de ferro que falta, e não de ferro retido.'),
-      ('Por que não as outras', 'Na anemia da inflamação a ferritina fica normal '
-       'ou alta. O traço talassêmico dá microcitose com RDW normal e ferritina '
-       'preservada. Hiperesplenismo derruba também leucócitos e plaquetas, que '
-       'estão normais. Na sideroblástica sobra ferro, e hemólise não é '
-       'microcítica.'),
-      ('O que muda', 'Numa mulher de 59 anos, depois da menopausa, falta de ferro '
-       'é perda de sangue pelo tubo digestivo até prova em contrário. A diretriz '
-       'da Sociedade Britânica de Gastroenterologia de 2021 indica endoscopia '
-       'alta e colonoscopia nessa situação, com ou sem febre. Seis meses de '
-       'sulfato ferroso sem essa investigação deixaram a pergunta aberta.'),
-     ]),
-
-    Q('p2', 2,
-      'Hematúria com 40% de hemácias dismórficas, proteinúria de 0,8 g/g, C3 de '
-      '58 mg/dL e C4 normal. Onde está a lesão renal, e por qual mecanismo?', [
-      ('Glomerulonefrite por imunocomplexo', True),
-      ('Nefrite intersticial pelo ciprofloxacino', False),
-      ('Necrose tubular aguda', False),
-      ('Sangramento da via urinária', False),
-      ('Doença antimembrana basal glomerular', False),
-      ('Nefropatia por IgA', False),
-     ], [
-      ('A localização', 'Hemácias dismórficas em 40% e proteinúria dizem que o '
-       'sangue atravessou o glomérulo. Sem leucocitúria, a urina não tem o '
-       'padrão da nefrite intersticial; sangramento de bexiga ou de cálculo dá '
-       'hemácias de forma normal.'),
-      ('O mecanismo', 'C3 baixo com C4 normal é consumo pela via alternativa, o '
-       'que acontece quando imunocomplexos se depositam no glomérulo. Doença '
-       'antimembrana basal e nefropatia por IgA não consomem complemento. A '
-       'creatinina de 1,3 mg/dL, que parece pouco, já corresponde a uma '
-       'filtração de 47 mL/min/1,73 m² pelo CKD-EPI 2021.'),
-      ('De onde vem o imunocomplexo', 'Com FAN não reagente, lúpus fica '
-       'improvável, e a crioglobulinemia costuma derrubar o C4. Sobram as '
-       'infecções de curso longo, que produzem antígeno todos os dias: bactérias '
-       'que persistem em algum lugar do corpo e também a leishmaniose visceral, '
-       'que ainda eleva as globulinas e o fator reumatoide.'),
-     ]),
-
-    Q('p3', 3,
-      'Febre há cinco semanas, baço palpável, globulinas de 4,8 g/dL e '
-      'glomerulonefrite por imunocomplexo, numa moradora de Sobral. **Quais '
-      'três** hipóteses a equipe precisa perseguir primeiro?', [
-      ('Leishmaniose visceral', True),
-      ('Linfoma', True),
-      ('Tuberculose disseminada', True),
-      ('Malária por Plasmodium vivax', False),
-      ('Hipertireoidismo', False),
-      ('Doença de Still do adulto', False),
-     ], [
-      ('As prováveis', 'Sobral é área de leishmaniose visceral, com cães na '
-       'vizinhança: febre longa, baço grande, anemia e hiperglobulinemia são o '
-       'quadro clássico. Linfoma dá febre, suor noturno e baço palpável, mesmo '
-       'sem linfonodo periférico. Tuberculose disseminada dá febre vespertina e '
-       'emagrecimento, com radiografia normal.'),
-      ('As improváveis', 'No Ceará, malária é quase sempre importada da '
-       'Amazônia, e ela não viajou. O TSH de 1,8 afasta hipertireoidismo. Still '
-       'dá picos acima de 39 °C e ferritina muito alta; a dela é 18.'),
-      ('Em paralelo', 'As hemoculturas incubam, colhidas seis dias depois do '
-       'último antibiótico: dois cursos curtos que baixaram a febre e a deixaram '
-       'voltar podem ter escondido uma bacteremia.'),
-     ]),
-
     pg('plano', 'O que a equipe registra',
        'Lúcia é internada na enfermaria de clínica médica. Na evolução do '
        'primeiro dia, a equipe escreve: "Febre prolongada a esclarecer, com '
        'esplenomegalia, hiperglobulinemia e glomerulonefrite por imunocomplexo. '
        'Hipóteses: leishmaniose visceral, linfoma, tuberculose disseminada."',
-       'Pede o teste rápido rK39, mielograma com pesquisa de formas amastigotas '
-       'e cultura do aspirado para micobactérias. Mantém sem antibiótico. A '
+       'O raciocínio da evolução: Sobral é área de leishmaniose visceral, com '
+       'cães na vizinhança, e febre longa com baço palpável, anemia e globulinas '
+       'de 4,8 g/dL é o quadro clássico do calazar. Linfoma dá febre, suor '
+       'noturno e baço palpável, mesmo sem linfonodo periférico. Tuberculose '
+       'disseminada dá febre vespertina e emagrecimento com radiografia normal, '
+       'e há um irmão tratado.',
+       'Ficam de lado a malária, que no Ceará é quase sempre importada da '
+       'Amazônia, numa paciente que não viajou; o hipertireoidismo, com TSH de '
+       '1,8 mUI/L; e a doença de Still, que dá picos acima de 39 °C e ferritina '
+       'muito alta, quando a dela é 18 ng/mL.',
+       'A equipe pede o teste rápido rK39, mielograma com pesquisa de formas '
+       'amastigotas e cultura do aspirado para micobactérias. Mantém sem '
+       'antibiótico, e as hemoculturas da consulta seguem incubando. A '
        'endoscopia e a colonoscopia da anemia ficam "para depois de esclarecida '
        'a febre".'),
 
@@ -254,7 +248,7 @@ ETAPAS = [
        'gram-positivos em cadeia. A identificação e o antibiograma estão em '
        'curso.'),
 
-    Q('p4', 4,
+    Q('p4', 3,
       'Três de três pares positivos, com cocos gram-positivos em cadeia, entre '
       '16 e 22 horas de incubação. **Quais três** afirmações estão corretas?', [
       ('Bacteremia contínua, de fonte intravascular', True),
@@ -286,30 +280,22 @@ ETAPAS = [
        'fezes às vezes vêm mais escuras. Atribuía ao sulfato ferroso, mas o '
        'ferro foi suspenso há dois meses e as fezes escuras continuaram.'),
 
-    Q('p5', 5,
-      '//Streptococcus gallolyticus// na corrente sanguínea. **Qual** '
-      'investigação ele torna obrigatória?', [
-      ('Colonoscopia', True),
-      ('Endoscopia digestiva alta isolada', False),
-      ('Pesquisa de sangue oculto nas fezes', False),
-      ('Tomografia de abdome no lugar da colonoscopia', False),
-      ('Biópsia de medula óssea', False),
-      ('Tomografia de crânio', False),
-     ], [
-      ('A associação', 'O //S. gallolyticus// vive no cólon e chega ao sangue '
-       'por uma mucosa doente. Entre os pacientes com bacteremia por ele, '
-       'adenomas avançados e câncer colorretal aparecem muito mais que na '
-       'população geral, e a associação justifica colonoscopia em todos, mesmo '
-       'sem sintoma intestinal.'),
-      ('Aqui, três pistas somadas', 'A falta de ferro com ferritina de 18, o '
-       'ferro medular ausente e as fezes escuras que continuaram sem o sulfato '
-       'ferroso apontavam para o tubo digestivo meses antes. A anemia sozinha já '
-       'pedia colonoscopia; o agente a torna inadiável.'),
-      ('Por que não as outras', 'A endoscopia alta pode entrar pelas fezes '
-       'escuras, mas não substitui o cólon. Sangue oculto negativo não afasta '
-       'adenoma. A tomografia perde lesões pequenas e não permite biopsiar nem '
-       'ressecar. Medula e crânio não respondem à pergunta que o agente faz.'),
-     ]),
+    pagina('agente', 'Discussão', 'O agente e o intestino',
+      p('O //S. gallolyticus// vive no cólon e chega ao sangue por uma mucosa '
+        'doente. Entre os pacientes com bacteremia por ele, adenomas avançados e '
+        'câncer colorretal aparecem muito mais que na população geral, e a '
+        'associação justifica colonoscopia em todos, mesmo sem sintoma '
+        'intestinal.'),
+      p('Em Lúcia, o agente se soma a três pistas que já estavam no prontuário: '
+        'a falta de ferro com ferritina de 18 ng/mL, o ferro medular ausente no '
+        'mielograma e as fezes escuras que continuaram depois de suspenso o '
+        'sulfato ferroso. A anemia sozinha já pedia colonoscopia; com o agente, '
+        'ela deixa de esperar o fim da febre.'),
+      p('A endoscopia alta pode entrar pelas fezes escuras, mas não examina o '
+        'cólon. Sangue oculto negativo não afasta adenoma, e a tomografia perde '
+        'lesões pequenas e não permite biopsiar nem ressecar. A equipe marca a '
+        'colonoscopia para esta internação, assim que a infecção estiver '
+        'controlada.')),
 
     pagina('beira_leito', 'À beira do leito', '',
            p('Com o agente em mãos, o residente volta ao leito e examina mãos, pés '
@@ -383,24 +369,7 @@ ETAPAS = [
          'mitral importante ao Doppler, com jato excêntrico. Ventrículo esquerdo '
          'de tamanho normal, fração de ejeção de 62%. Sem derrame pericárdico.']),
 
-    pg('virada', 'O diagnóstico',
-       'É **endocardite infecciosa** de valva mitral nativa, sobre cardiopatia '
-       'reumática, por //Streptococcus gallolyticus//.',
-       'A valva deformada pela febre reumática tem endotélio irregular, onde '
-       'plaquetas e fibrina formam um trombo estéril. Uma bacteremia coloniza '
-       'esse trombo, e a vegetação cresce protegida dos neutrófilos, soltando '
-       'bactérias no sangue o tempo todo: daí a bacteremia contínua. Os '
-       'imunocomplexos explicam o fator reumatoide, o consumo de C3, a '
-       'glomerulonefrite e o nódulo doloroso da polpa digital (nódulo de '
-       'Osler); os microêmbolos explicam as máculas plantares (lesões de '
-       'Janeway) e as petéquias conjuntivais.',
-       'O curso subagudo, de semanas, é o dos estreptococos. Os dois '
-       'antibióticos curtos baixaram a carga bacteriana a ponto de a febre '
-       'ceder, sem esterilizar a vegetação. Calazar, linfoma e tuberculose eram '
-       'as hipóteses certas para febre com baço grande em Sobral; o que as '
-       'desfez foi a hemocultura colhida antes de mais um antibiótico.'),
-
-    pareamento('p6', 'Pergunta 6',
+    pareamento('p6', 'Pergunta 4',
       'Pelos critérios de Duke-ISCVID de 2023, associe cada dado de Lúcia ao '
       'critério em que ele entra.', [
       par('Três de três pares com //S. gallolyticus//',
@@ -430,6 +399,23 @@ ETAPAS = [
     titulo_resposta='Dois maiores fecham o diagnóstico',
     nota='Dois critérios maiores bastam para endocardite definida. A febre acima '
          'de 38 °C soma como menor, e as hemorragias sob as unhas não pontuam.'),
+
+    pg('virada', 'O diagnóstico',
+       'É **endocardite infecciosa** de valva mitral nativa, sobre cardiopatia '
+       'reumática, por //Streptococcus gallolyticus//.',
+       'A valva deformada pela febre reumática tem endotélio irregular, onde '
+       'plaquetas e fibrina formam um trombo estéril. Uma bacteremia coloniza '
+       'esse trombo, e a vegetação cresce protegida dos neutrófilos, soltando '
+       'bactérias no sangue o tempo todo: daí a bacteremia contínua. Os '
+       'imunocomplexos explicam o fator reumatoide, o consumo de C3, a '
+       'glomerulonefrite e o nódulo doloroso da polpa digital (nódulo de '
+       'Osler); os microêmbolos explicam as máculas plantares (lesões de '
+       'Janeway) e as petéquias conjuntivais.',
+       'O curso subagudo, de semanas, é o dos estreptococos. Os dois '
+       'antibióticos curtos baixaram a carga bacteriana a ponto de a febre '
+       'ceder, sem esterilizar a vegetação. Calazar, linfoma e tuberculose eram '
+       'as hipóteses certas para febre com baço grande em Sobral; o que as '
+       'desfez foi a hemocultura colhida antes de mais um antibiótico.'),
 
     bifurcacao('b1', 'Decisão', 'O antibiótico',
       'Endocardite definida por estreptococo sensível à penicilina, em valva '
@@ -475,23 +461,7 @@ ETAPAS = [
        'e surgiu uma terceira bulha. O eletrocardiograma segue com PR de 180 ms. '
        'A radiografia é feita no leito.'),
 
-    estudo('rx_piora', 'Radiografia de tórax no leito',
-           'Incidência anteroposterior, feita no leito na madrugada do sexto dia. '
-           'Compare com a radiografia da admissão, que não tinha opacidades.',
-           IMG / 'rx_edema.jpg',
-           'Radiografia de outro paciente · comparação didática.',
-           credito_meta(IMG / 'rx_edema.jpg.json'),
-        [
-         ((290, 540), (95, 440), '**Opacidades alveolares** confluentes no pulmão direito, a partir do hilo.', 12),
-         ((740, 440), (905, 330), 'O mesmo padrão no **pulmão esquerdo**: a doença é bilateral.', -12),
-         ((290, 210), (120, 120), '**Terço superior** relativamente poupado: o predomínio é central e inferior.', 12),
-        ],
-        ['Opacidades alveolares bilaterais, peri-hilares, que não existiam na '
-         'admissão. Com a queda da saturação e as crepitações, é edema pulmonar.',
-         'A instalação é aguda: a valva que passa a regurgitar de repente joga '
-         'pressão num átrio esquerdo que não teve tempo de se dilatar.']),
-
-    Q('p7', 7,
+    Q('p7', 5,
       'Na endocardite de valva nativa esquerda, **quais quatro** situações '
       'indicam cirurgia precoce?', [
       ('Insuficiência cardíaca por regurgitação grave', True),
@@ -509,15 +479,32 @@ ETAPAS = [
        'ou quando se soma a outra indicação. Edema refratário ou choque pedem '
        'cirurgia de emergência, em 24 horas; regurgitação grave com sintomas '
        'de insuficiência cardíaca, cirurgia urgente, em três a cinco dias.'),
-      ('Para Lúcia', 'Edema pulmonar no sexto dia, com a regurgitação '
-       'importante do laudo, é a indicação mais frequente e a mais urgente: a '
-       'valva perfurada não se refaz com antibiótico. A vegetação de 12 mm soma '
-       'uma segunda razão. O PR de 180 ms, igual ao da admissão, é o que se '
-       'vigia: um bloqueio novo sugere abscesso no anel.'),
+      ('Para Lúcia', 'Crepitações até o terço médio, saturação de 88% e '
+       'terceira bulha no sexto dia, com a regurgitação importante do laudo, '
+       'são insuficiência cardíaca aguda, a indicação mais frequente e a mais '
+       'urgente. A valva perfurada não se refaz com antibiótico. A vegetação de '
+       '12 mm soma uma segunda razão. O PR de 180 ms, igual ao da admissão, é o '
+       'que se vigia: um bloqueio novo sugere abscesso no anel.'),
       ('Por que não as outras', 'A febre leva de cinco a sete dias para ceder e '
        'a PCR cai devagar; nenhuma das duas indica cirurgia por si. A '
        'glomerulonefrite melhora com o controle da infecção.'),
      ]),
+
+    estudo('rx_piora', 'Radiografia de tórax no leito',
+           'Incidência anteroposterior, feita no leito na madrugada do sexto dia. '
+           'Compare com a radiografia da admissão, que não tinha opacidades.',
+           IMG / 'rx_edema.jpg',
+           'Radiografia de outro paciente · comparação didática.',
+           credito_meta(IMG / 'rx_edema.jpg.json'),
+        [
+         ((290, 540), (95, 440), '**Opacidades alveolares** confluentes no pulmão direito, a partir do hilo.', 12),
+         ((740, 440), (905, 330), 'O mesmo padrão no **pulmão esquerdo**: a doença é bilateral.', -12),
+         ((290, 210), (120, 120), '**Terço superior** relativamente poupado: o predomínio é central e inferior.', 12),
+        ],
+        ['Opacidades alveolares bilaterais, peri-hilares, que não existiam na '
+         'admissão. Com a queda da saturação e as crepitações, é edema pulmonar.',
+         'A instalação é aguda: a valva que passa a regurgitar de repente joga '
+         'pressão num átrio esquerdo que não teve tempo de se dilatar.']),
 
     bifurcacao('b2', 'Decisão', 'A valva perfurada',
       'Edema pulmonar por insuficiência mitral aguda, no sexto dia de '
@@ -588,7 +575,7 @@ ETAPAS = [
          'viloso e displasia de alto grau. A anemia de seis meses antes e as '
          'fezes escuras vinham dele.']),
 
-    Q('p8', 8,
+    Q('p8', 6,
       'Sobre o tratamento e o seguimento de Lúcia, **quais quatro** afirmações '
       'estão corretas?', [
       ('Contar a partir da primeira hemocultura negativa', True),

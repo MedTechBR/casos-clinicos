@@ -4,10 +4,13 @@ Reescrito no desenho do piloto da leptospirose (ver
 Artifacts/nejm-casos-classicos/GRAMATICA_LIDA_2026-09-26.md): apresentação
 curta, ficha do paciente com a pista enterrada (a urina e a creatinina do
 ambulatório de seis semanas antes), exame físico por sistema e os primeiros
-exames entregues prontos, sem pergunta antes. As primeiras perguntas
-interpretam números (gasometria, tipo de lesão renal) e testam a âncora da
-equipe: pneumonia multilobar com glomerulonefrite associada à infecção,
-endocardite a afastar. A âncora é correta naquele momento. O caso vira no
+exames entregues prontos, sem pergunta antes. As duas primeiras perguntas
+interpretam números (gasometria; onde está a lesão renal, por categoria), com
+o ultrassom entre elas. A âncora da equipe (pneumonia multilobar com
+glomerulonefrite associada à infecção, endocardite a afastar) é registrada
+como texto, com uma página de discussão, e a hemorragia alveolar também. A
+âncora é correta naquele momento. Seis perguntas no total (revisão de 30/09:
+menos perguntas, nenhuma interativa seguida de outra). O caso vira no
 quinto dia, com as culturas negativas e o reexame (púrpura, pé caído); o
 mecanismo vem por categoria (pauci-imune) e o nome da doença só aparece com o
 anticorpo, depois de 60% do percurso. Cada pergunta tem uma explicação só, em
@@ -102,7 +105,7 @@ def fim(k, titulo, *textos, porque, qualidade):
 ETAPAS = [
 
     capa(TITULO, fundo=CENA,
-         kicker="Caso interativo · 8 perguntas · 3 decisões",
+         kicker="Caso interativo · 6 perguntas · 3 decisões",
          selo="Paciente ficcional · procedência e créditos na última tela"),
 
     # ═══════════════════════════ a abertura ═══════════════════════════
@@ -212,24 +215,6 @@ ETAPAS = [
          'Com febre, leucocitose e proteína C reativa de 186 mg/L, a equipe lê '
          'como pneumonia multilobar.']),
 
-    estudo('us_adm', 'Ultrassonografia renal',
-        'Pedida na chegada, pela creatinina de 3,8 mg/dL. Antes de interpretar '
-        'a urina, a pergunta é se há obstrução ou rim pequeno de doença antiga.',
-        IMG / 'us_rim.jpg',
-        'Rim de outro adulto. Asteriscos da fonte: um, coluna de Bertin; '
-        'dois, pirâmide; três, córtex; quatro, seio renal. Os cálipers também '
-        'são da fonte e não medem este paciente.',
-        'Hansen, Nielsen e Ewertsen · Wikimedia Commons · CC BY 4.0 · recorte prévio e setas adicionadas',
-        [
-         ((495, 288), (620, 105), '**Córtex** renal (três asteriscos), de espessura preservada.', 12),
-         ((462, 345), (330, 160), '**Pirâmide medular** (dois asteriscos), hipoecoica: a diferenciação entre córtex e medula está preservada.', 12),
-         ((447, 400), (720, 550), '**Seio renal** (quatro asteriscos), ecogênico, sem dilatação do sistema coletor.', -12),
-        ],
-        ['Rins de 11,2 e 11,0 cm, córtex de espessura preservada, sem '
-         'hidronefrose (laudo do caso).',
-         'Sem obstrução e sem sinal de doença renal antiga: a lesão é do rim, '
-         'e recente.']),
-
     Q('p1', 1,
       'Gasometria arterial em ar ambiente, com os eletrólitos da mesma coleta. '
       '**Quais três** afirmações estão corretas?', [
@@ -256,29 +241,47 @@ ETAPAS = [
        'renal, que retém sulfato, fosfato e outros ânions.'),
      ]),
 
+    estudo('us_adm', 'Ultrassonografia renal',
+        'Pedida na chegada, pela creatinina de 3,8 mg/dL. Antes de interpretar '
+        'a urina, a pergunta é se há obstrução ou rim pequeno de doença antiga.',
+        IMG / 'us_rim.jpg',
+        'Rim de outro adulto. Asteriscos da fonte: um, coluna de Bertin; '
+        'dois, pirâmide; três, córtex; quatro, seio renal. Os cálipers também '
+        'são da fonte e não medem este paciente.',
+        'Hansen, Nielsen e Ewertsen · Wikimedia Commons · CC BY 4.0 · recorte prévio e setas adicionadas',
+        [
+         ((495, 288), (620, 105), '**Córtex** renal (três asteriscos), de espessura preservada.', 12),
+         ((462, 345), (330, 160), '**Pirâmide medular** (dois asteriscos), hipoecoica: a diferenciação entre córtex e medula está preservada.', 12),
+         ((447, 400), (720, 550), '**Seio renal** (quatro asteriscos), ecogênico, sem dilatação do sistema coletor.', -12),
+        ],
+        ['Rins de 11,2 e 11,0 cm, córtex de espessura preservada, sem '
+         'hidronefrose (laudo do caso).',
+         'Sem obstrução e sem sinal de doença renal antiga: a lesão é do rim, '
+         'e recente.']),
+
     Q('p2', 2,
       'Creatinina de 1,0 há dois meses, 1,4 há seis semanas e 3,8 mg/dL hoje. '
-      'Com a urina e o ultrassom da chegada, qual a interpretação mais '
-      'adequada da lesão renal?', [
-      ('Pré-renal por hipovolemia', False),
-      ('Necrose tubular aguda da sepse', False),
-      ('Nefrite intersticial pela amoxicilina', False),
-      ('Glomerulonefrite rapidamente progressiva', True),
-      ('Obstrução urinária', False),
-      ('Doença renal crônica agudizada', False),
+      'Com a urina e o ultrassom da chegada, onde está a lesão renal?', [
+      ('Pré-renal', False),
+      ('Tubular', False),
+      ('Intersticial', False),
+      ('Glomerular', True),
+      ('Obstrutiva', False),
+      ('Crônica agudizada', False),
      ], [
       ('O padrão', 'Hematúria de 60 hemácias por campo, proteinúria de 1,4 '
        'g/g e perda de função em semanas descrevem síndrome nefrítica de '
        'evolução rápida. Por CKD-EPI 2021, aos 63 anos, a filtração caiu de '
        'cerca de 85 para 17 mL/min/1,73 m² em dois meses. Perder mais da metade '
-       'da filtração em semanas a poucos meses, com sedimento nefrítico, é a '
-       'definição de glomerulonefrite rapidamente progressiva.'),
+       'da filtração em semanas a poucos meses, com sedimento nefrítico, é o '
+       'que se chama glomerulonefrite rapidamente progressiva: uma síndrome, '
+       'com causas infecciosas, imunológicas e vasculares.'),
       ('A armadilha da FENa', 'A fração de excreção de sódio de 0,8% parece '
        'pré-renal. Na glomerulonefrite, porém, o túbulo está íntegro e '
        'reabsorve sódio com avidez, porque recebe pouco filtrado. FENa baixa '
        'com hematúria e proteinúria não é hipovolemia.'),
-      ('Por que não as outras', 'Necrose tubular daria FENa acima de 2% e '
-       'cilindros granulosos. Nefrite intersticial por betalactâmico traria '
+      ('Por que não as outras', 'A lesão tubular daria FENa acima de 2% e '
+       'cilindros granulosos. A intersticial, em geral por fármaco, traria '
        'leucocitúria, e aqui há 6 leucócitos por campo. O ultrassom sem '
        'hidronefrose afasta obstrução, e rins de 11 cm com creatinina de 1,0 '
        'dois meses antes afastam doença crônica.'),
@@ -328,31 +331,22 @@ ETAPAS = [
        'cateter nasal a 4 L/min, e pede ecocardiograma transtorácico, '
        'complemento e antígenos urinários de pneumococo e legionela.'),
 
-    Q('p3', 3,
-      'Sobre a glomerulonefrite associada à infecção no adulto, **quais três** '
-      'afirmações estão corretas?', [
-      ('O estafilococo é hoje o agente mais comum', True),
-      ('Pode surgir com a infecção ainda ativa', True),
-      ('O C3 costuma estar consumido', True),
-      ('Exige latência de duas a três semanas', False),
-      ('Complemento normal a exclui', False),
-      ('Regride com poucos dias de antibiótico', False),
-     ], [
-      ('No adulto', 'Na criança, o modelo é a glomerulonefrite '
-       'pós-estreptocócica, que aparece uma a três semanas depois da faringite '
-       'ou da infecção de pele, quando a infecção já passou. No adulto, '
-       'sobretudo acima dos 60 anos, com diabetes ou câncer, o estafilococo '
-       'passou à frente, e a nefrite costuma surgir com a infecção em curso: '
-       'pele, osso, pulmão, cateter ou endocardite.'),
-      ('O complemento', 'O C3 está baixo na maioria dos casos e é a pista '
-       'sorológica mais útil, mas um C3 normal não exclui, sobretudo nas '
-       'formas estafilocócicas. Quem confirma é a biópsia, com depósitos '
-       'granulares de C3, às vezes com IgA dominante.'),
-      ('O que muda', 'O tratamento é o da infecção, e a recuperação renal leva '
-       'semanas, às vezes incompleta no idoso. Complemento, antígenos '
-       'urinários, hemoculturas e ecocardiograma testam, cada um, um pedaço da '
-       'hipótese.'),
-     ]),
+    pagina('gn_infeccao', 'Discussão', 'A glomerulonefrite associada à infecção',
+        p('Na criança, o modelo é a glomerulonefrite pós-estreptocócica, que '
+          'aparece uma a três semanas depois da faringite ou da infecção de '
+          'pele, quando a infecção já passou. No adulto, sobretudo acima dos 60 '
+          'anos, com diabetes ou câncer, o estafilococo passou à frente, e a '
+          'nefrite costuma surgir com a infecção ainda em curso: pele, osso, '
+          'pulmão, cateter ou endocardite. Por isso a equipe fala em '
+          'glomerulonefrite associada à infecção, e não pós-infecciosa.'),
+        p('O C3 está baixo na maioria dos casos e é a pista sorológica mais '
+          'útil, mas um C3 normal não a exclui, sobretudo nas formas '
+          'estafilocócicas. Quem confirma é a biópsia, com depósitos granulares '
+          'de C3, às vezes com IgA dominante.'),
+        p('O tratamento é o da infecção, e a recuperação renal leva semanas, às '
+          'vezes incompleta no idoso. Cada exame pedido na chegada testa um '
+          'pedaço da hipótese: o complemento, o rim; os antígenos urinários, o '
+          'pulmão; as hemoculturas e o ecocardiograma, a endocardite.')),
 
     estudo('eco', 'Ecocardiograma transtorácico',
         'Feito no primeiro dia, à procura de vegetação. Localize o septo e as '
@@ -409,32 +403,23 @@ ETAPAS = [
          'No vidro fosco cabem sangue, água, pus e células; quem escolhe é a '
          'clínica.']),
 
-    Q('p4', 4,
-      'Com a tomografia e a evolução do segundo dia, **quais quatro** achados '
-      'deste paciente sustentam hemorragia alveolar difusa?', [
-      ('Hemoglobina caindo sem sangramento externo', True),
-      ('Hemoptise', True),
-      ('Hipoxemia que responde mal ao oxigênio', True),
-      ('Vidro fosco difuso e bilateral', True),
-      ('Derrame pleural bilateral', False),
-      ('Nódulos escavados', False),
-      ('Capacidade de difusão reduzida', False),
-     ], [
-      ('O sangue que não saiu', 'Cerca de 110 mL expectorados em dois dias '
-       'não explicam a hemoglobina de 13,9, dois meses antes, para 6,9 g/dL, sem melena, '
-       'hematêmese nem epistaxe volumosa. O sangue ficou no espaço aéreo.'),
-      ('O pulmão', 'Alvéolo cheio de sangue é perfundido e não ventilado: é '
-       'shunt, que responde mal ao aumento do oxigênio ofertado, como na '
-       'passagem para a máscara com reservatório. O vidro fosco difuso é '
-       'compatível e inespecífico. A hemoptise sustenta, mas falta em até um '
-       'terço das hemorragias alveolares.'),
-      ('Por que não as outras', 'Não há derrame nem nódulos escavados na '
-       'tomografia; nódulo escavado apontaria para êmbolo séptico, '
-       'micobactéria ou fungo. Na hemorragia recente, a capacidade de difusão '
-       'do monóxido de carbono sobe, porque a hemoglobina dentro do alvéolo '
-       'capta o gás. Ninguém mede isso em quem está de máscara, mas a lógica '
-       'ensina.'),
-     ]),
+    pagina('alveolo', 'Discussão', 'O sangue que não saiu',
+        p('A equipe junta a tomografia à evolução do segundo dia e registra '
+          'hemorragia alveolar difusa. Cerca de 110 mL expectorados em dois dias '
+          'não explicam a queda da hemoglobina de 13,9, dois meses antes, para '
+          '6,9 g/dL, sem melena, hematêmese nem epistaxe volumosa. O sangue '
+          'ficou no espaço aéreo.'),
+        p('Alvéolo cheio de sangue é perfundido e não ventilado: é shunt, que '
+          'responde mal ao aumento do oxigênio ofertado, como na passagem do '
+          'cateter a 4 L/min para a máscara com reservatório. O vidro fosco '
+          'difuso é compatível e inespecífico. A hemoptise sustenta, mas falta '
+          'em até um terço das hemorragias alveolares.'),
+        p('O que não está na tomografia também conta. Não há derrame, e não há '
+          'nódulos escavados, que apontariam para êmbolo séptico, micobactéria '
+          'ou fungo. Na hemorragia recente, a capacidade de difusão do monóxido '
+          'de carbono sobe, porque a hemoglobina dentro do alvéolo capta o gás; '
+          'ninguém mede isso em quem está de máscara, mas a lógica ajuda a '
+          'separar sangue de água e de pus.')),
 
     bifurcacao("b_dia2", "Decisão",
         "Ele piorou sob antibiótico. O que você faz agora?",
@@ -533,7 +518,7 @@ ETAPAS = [
          'está inflamada; a púrpura plana da plaquetopenia não tem relevo. A '
          'predileção pelas pernas acompanha a pressão hidrostática.']),
 
-    Q('p5', 5,
+    Q('p5', 3,
       'Hemorragia alveolar e glomerulonefrite com cilindros hemáticos, no '
       'mesmo mês, com culturas negativas. **Quais três** mecanismos produzem '
       'esse par?', [
@@ -640,7 +625,7 @@ ETAPAS = [
          'mieloperoxidase, catiônica, migra para perto do núcleo. Quem define o '
          'alvo é o ELISA.']),
 
-    pareamento("p6", "Pergunta 6",
+    pareamento("p6", "Pergunta 4",
         "Associe cada perfil sorológico ao contexto em que ele é "
         "característico.",
         [
@@ -700,36 +685,6 @@ ETAPAS = [
         ]),
         so_kicker=True),
 
-    Q('p7', 7,
-      'Antes e junto da primeira dose da indução, **quais três** medidas '
-      'estão indicadas?', [
-      ('Sorologia completa de hepatite B', True),
-      ('Ivermectina por dois dias', True),
-      ('Sulfametoxazol-trimetoprima profilático', True),
-      ('Vacina de febre amarela', False),
-      ('Fluconazol profilático', False),
-      ('Imunoglobulina endovenosa de rotina', False),
-     ], [
-      ('Hepatite B', 'O anti-HBc isolado reativa sob rituximabe e sob '
-       'glicocorticoide em dose alta, e a reativação pode ser fulminante. O '
-       'HBsAg não basta: HBsAg e anti-HBc antes da primeira dose decidem se '
-       'entra profilaxia antiviral.'),
-      ('Estrongiloidíase', 'Ele trabalhou a vida inteira com terra e cuida da '
-       'horta descalço, no sertão cearense. O glicocorticoide em dose alta '
-       'pode transformar uma infecção silenciosa por //Strongyloides '
-       'stercoralis// em hiperinfecção, de mortalidade alta. Ivermectina 200 '
-       'µg/kg ao dia por dois dias, junto do pulso, é a conduta usual em quem '
-       'tem exposição.'),
-      ('Pneumocistose', 'A profilaxia com sulfametoxazol-trimetoprima '
-       'acompanha a indução com rituximabe ou ciclofosfamida. Com creatinina '
-       'de 4,6 mg/dL, filtração de 14 mL/min/1,73 m² por CKD-EPI 2021, usa-se '
-       'meia dose, e o potássio, que chegou a 5,4 mmol/L, precisa ser '
-       'vigiado.'),
-      ('O que não entra', 'Vacina de vírus vivo é contraindicada sob '
-       'imunossupressão. Fluconazol e imunoglobulina não têm indicação de '
-       'rotina.'),
-     ]),
-
     # ═══════════ o tratamento, e a segunda virada ═══════════
 
     bifurcacao("b1", "Decisão",
@@ -781,7 +736,7 @@ ETAPAS = [
               "linha de base, porque a hipogamaglobulinemia tardia é efeito "
               "dos ciclos seguintes."),
             sistema="sangue"),
-        segue="esquema",
+        segue="p7",
     ),
 
     pagina("t_cfx_ajustada", "A prescrição", "O que foi prescrito: caminho B",
@@ -800,7 +755,7 @@ ETAPAS = [
               "E a conversa sobre fertilidade antes da primeira dose, que aos "
               "63 anos pesa menos, mas não se pula."),
             sistema="sangue"),
-        segue="esquema",
+        segue="p7",
     ),
 
     pagina("t_cfx_plena", "A prescrição", "O que foi prescrito: caminho C",
@@ -810,8 +765,38 @@ ETAPAS = [
           "creatinina entre 300 e 500 µmol/L. Os metabólitos ativos são "
           "eliminados por via renal, e com filtração de 14 mL/min a "
           "exposição a 1,17 g é maior que a dos ensaios."),
-        segue="esquema",
+        segue="p7",
     ),
+
+    Q('p7', 5,
+      'Antes e junto da primeira dose da indução, **quais três** medidas '
+      'estão indicadas?', [
+      ('Sorologia completa de hepatite B', True),
+      ('Ivermectina por dois dias', True),
+      ('Sulfametoxazol-trimetoprima profilático', True),
+      ('Vacina de febre amarela', False),
+      ('Fluconazol profilático', False),
+      ('Imunoglobulina endovenosa de rotina', False),
+     ], [
+      ('Hepatite B', 'O anti-HBc isolado reativa sob rituximabe e sob '
+       'glicocorticoide em dose alta, e a reativação pode ser fulminante. O '
+       'HBsAg não basta: HBsAg e anti-HBc antes da primeira dose decidem se '
+       'entra profilaxia antiviral.'),
+      ('Estrongiloidíase', 'Ele trabalhou a vida inteira com terra e cuida da '
+       'horta descalço, no sertão cearense. O glicocorticoide em dose alta '
+       'pode transformar uma infecção silenciosa por //Strongyloides '
+       'stercoralis// em hiperinfecção, de mortalidade alta. Ivermectina 200 '
+       'µg/kg ao dia por dois dias, junto do pulso, é a conduta usual em quem '
+       'tem exposição.'),
+      ('Pneumocistose', 'A profilaxia com sulfametoxazol-trimetoprima '
+       'acompanha a indução com rituximabe ou ciclofosfamida. Com creatinina '
+       'de 4,6 mg/dL, filtração de 14 mL/min/1,73 m² por CKD-EPI 2021, usa-se '
+       'meia dose, e o potássio, que chegou a 5,4 mmol/L, precisa ser '
+       'vigiado.'),
+      ('O que não entra', 'Vacina de vírus vivo é contraindicada sob '
+       'imunossupressão. Fluconazol e imunoglobulina não têm indicação de '
+       'rotina.'),
+     ], segue='esquema'),
 
     pagina("esquema", "A prescrição", "O que é igual nos três caminhos",
         grade(*_esquema_comum(), colunas=2),
@@ -839,7 +824,7 @@ ETAPAS = [
        "mg/L com a indução, está em 204 mg/L, e a procalcitonina, que era 0,3, "
        "está em 3,1 ng/mL."),
 
-    Q('p8', 8,
+    Q('p8', 6,
       'Febre de 38,9 °C no quinto dia de indução, hipotensão que respondeu a '
       'volume, sem nova hemoptise. **Quais quatro** causas devem entrar na '
       'lista?', [
@@ -864,6 +849,22 @@ ETAPAS = [
        'citomegalovírus exigem semanas de imunossupressão, e a profilaxia da '
        'pneumocistose já corre.'),
      ]),
+
+    pagina('calendario', 'Discussão', 'O calendário da infecção na indução',
+        p('Cada complicação infecciosa da imunossupressão tem a sua janela. Nas '
+          'primeiras semanas, a infecção que aparece é a do hospital: cateter, '
+          'pneumonia associada à assistência, urina, pele e diarreia por '
+          '//Clostridioides difficile//. Os germes esperados são os que entram '
+          'pela pele e pelos dispositivos, e os estafilococos vêm à frente.'),
+        p('A ciclofosfamida derruba os neutrófilos entre o 10º e o 14º dia de '
+          'cada pulso, e a contagem se recupera em cerca de uma semana. O '
+          'rituximabe não produz esse nadir; a queda de imunoglobulinas que ele '
+          'causa é tardia, de meses.'),
+        p('O que depende da imunidade celular vem depois: pneumocistose e '
+          'reativação de citomegalovírus se concentram entre o primeiro e o '
+          'sexto mês, com o linfócito deprimido pelo glicocorticoide em dose '
+          'alta. É a janela que a profilaxia com sulfametoxazol-trimetoprima '
+          'cobre, e por isso ela segue por pelo menos seis meses.')),
 
     bifurcacao("b_febre", "Decisão",
         "Febre no quinto dia de indução. O que você faz?",

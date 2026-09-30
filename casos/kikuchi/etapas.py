@@ -3,9 +3,11 @@
 Reescrito em 26/09/2026 no molde do //New England// aprovado no piloto da
 leptospirose (ver Artifacts/nejm-casos-classicos/GRAMATICA_LIDA_2026-09-26.md):
 apresentação curta, ficha do paciente, exame por sistema e primeiros exames
-entregues prontos. As primeiras perguntas classificam (linfadenopatia
-localizada ou generalizada, sinais que pedem tecido, leitura do hemograma,
-sorologias) sem nomear doença. O caso segue duas âncoras que a equipe
+entregues prontos. Só duas perguntas antes da virada, e as duas
+classificam sem nomear doença (linfadenopatia localizada ou generalizada,
+leitura do hemograma); as sorologias viram uma página lida pela equipe.
+Revisão de ritmo de 30/09: seis perguntas no caminho padrão, nunca duas
+telas interativas seguidas. O caso segue duas âncoras que a equipe
 registra e que eram razoáveis no momento: síndrome mononucleose-símile e,
 depois, tuberculose ganglionar. A biópsia vira o caso depois da metade, e o
 nome do diagnóstico aparece pela primeira vez no pareamento da histologia.
@@ -139,10 +141,10 @@ ETAPAS = [
        'Bianca tem o último e um tamanho no limite. A cadeia supraclavicular é '
        'a de maior risco; a posterior, não.'),
       ('O que muda', 'Dor sugere distensão rápida da cápsula, mais comum na '
-       'inflamação, mas necrose ou hemorragia dentro de um linfoma também doem. '
+       'inflamação, mas necrose ou hemorragia dentro de uma neoplasia também doem. '
        'Com 12 dias e um sinal de alarme, cabem exames de sangue, ultrassom e '
        'reavaliação curta. Linfadenopatia localizada sem explicação que não '
-       'regride em três a quatro semanas, ou que cresce, vai para biópsia.'),
+       'regride em três a quatro semanas, ou que cresce, pede tecido.'),
      ]),
 
     painel('res1', 'Primeiros exames', 'Sangue', [
@@ -168,28 +170,26 @@ ETAPAS = [
     Q('p2', 2,
       '**Quais três** leituras do hemograma de Bianca estão corretas?', [
       ('Leucopenia com neutropenia leve', True),
-      ('Sem linfocitose, o que pesa contra EBV', True),
       ('Anemia leve e normocítica', True),
-      ('Pancitopenia, com indicação de mielograma', False),
+      ('Duas linhagens baixas, plaquetas normais', True),
+      ('Pancitopenia', False),
       ('Neutropenia grave, com risco infeccioso', False),
       ('Padrão de infecção bacteriana', False),
-      ('Linfocitose atípica de mononucleose', False),
+      ('Linfocitose com muitos linfócitos atípicos', False),
      ], [
       ('O padrão', 'Leucócitos de 2.900 com 1.450 neutrófilos: neutropenia '
-       'leve, que vai de 1.000 a 1.500. Os linfócitos, 1.100, estão no limite '
-       'inferior, e só 4% são reativos. Hemoglobina de 11,7 com VCM de 86 é '
+       'leve, que vai de 1.000 a 1.500. Hemoglobina de 11,7 com VCM de 86 é '
        'anemia leve normocítica. As plaquetas estão normais, então são duas '
        'linhagens discretamente baixas, e não pancitopenia.'),
       ('Por que não as outras', 'Neutropenia grave é abaixo de 500. Infecção '
        'bacteriana daria neutrofilia com desvio, e a amoxicilina não mudou '
-       'nada. A mononucleose por EBV na segunda semana costuma ter linfocitose, '
-       'com linfócitos acima de 50% e atípicos acima de 10%; leucopenia não '
-       'exclui, mas pesa contra. Sem blastos e com plaquetas normais, o '
-       'mielograma não é o próximo passo.'),
-      ('O que o padrão sugere', 'Febre, linfonodo e leucopenia num adulto '
-       'jovem cabem em infecção viral aguda, inclusive HIV, em tuberculose, em '
-       'doença autoimune e em linfoma. A desidrogenase láctica alta e a PCR '
-       'modesta não escolhem entre elas.'),
+       'nada. Os linfócitos, 1.100, estão no limite inferior, e só 4% são '
+       'reativos: não há linfocitose. Sem blastos e com plaquetas normais, '
+       'nada aponta doença primária da medula.'),
+      ('O que o padrão abre', 'Febre, linfonodo e leucopenia leve num adulto '
+       'jovem abrem quatro grupos: infecção viral, infecção granulomatosa, '
+       'doença autoimune e neoplasia linfoide. A desidrogenase láctica alta e '
+       'a PCR modesta não escolhem entre eles.'),
      ]),
 
     estudo('us_cervical', 'Ultrassonografia do pescoço',
@@ -248,32 +248,23 @@ ETAPAS = [
         ex('VDRL', 'Não reagente', 'não reagente'),
     ], introducao='Colhidas na primeira consulta, no 12.º dia de febre.'),
 
-    Q('p3', 3,
-      'Com esse perfil sorológico, **quais três** conclusões estão corretas?', [
-      ('Infecção passada por EBV', True),
-      ('Infecção passada por CMV', True),
-      ('Toxoplasmose aguda improvável', True),
-      ('Mononucleose aguda por EBV', False),
-      ('Coleta precoce demais para a IgM', False),
-      ('Reativação do EBV explica a febre', False),
-      ('HIV agudo definitivamente excluído', False),
-     ], [
-      ('O EBV', 'O VCA IgM aparece com os sintomas e some em semanas; o EBNA '
-       'só surge dois a quatro meses depois do início e fica para sempre. VCA '
-       'IgG e EBNA reagentes, com IgM negativa, é infecção antiga. Na '
-       'mononucleose aguda o perfil é o inverso: VCA IgM positiva e EBNA '
-       'negativo. Com 12 dias de febre, a IgM já teria aparecido. Reativação '
-       'não tem assinatura sorológica confiável no imunocompetente.'),
-      ('CMV e toxoplasma', 'IgG sem IgM é contato passado com CMV. Para o '
-       'toxoplasma, as duas negativas no 12.º dia afastam infecção aguda, '
-       'porque a IgM surge na primeira semana.'),
-      ('O HIV', 'O teste de quarta geração detecta o antígeno p24 cerca de '
-       'duas semanas depois da infecção, e a janela pode passar disso. Com '
-       'risco baixo, parceiro único e teste não reagente, a hipótese perde '
-       'força; com suspeita alta, repete-se o teste ou pede-se carga viral.'),
-      ('O que muda', 'As causas habituais da síndrome mononucleose-símile '
-       'ficaram sem sustentação, e a febre continua sem explicação.'),
-     ]),
+    pagina('sorologias_leitura', 'Discussão', 'Como ler as sorologias',
+           p('A equipe lê o painel do EBV pela ordem em que os anticorpos '
+             'aparecem. A IgM contra o capsídeo viral (VCA) surge com os '
+             'sintomas e some em semanas; o EBNA só aparece dois a quatro meses '
+             'depois e fica para sempre. VCA IgG e EBNA reagentes com IgM '
+             'negativa, no 12.º dia de febre, é infecção antiga. Na '
+             'mononucleose aguda o desenho é o inverso, e a reativação não tem '
+             'assinatura sorológica confiável em quem não é imunossuprimido.'),
+           p('No CMV, IgG reagente sem IgM é contato passado. No toxoplasma, '
+             'as duas negativas no 12.º dia afastam infecção aguda, porque a '
+             'IgM surge na primeira semana.'),
+           p('O teste de quarta geração para HIV detecta o antígeno p24 cerca '
+             'de duas semanas depois da infecção, e a janela pode passar disso. '
+             'Com parceiro único e teste não reagente, a hipótese perde força; '
+             'se a suspeita subir, repete-se o teste ou pede-se carga viral.'),
+           p('As causas habituais da síndrome mononucleose-símile ficaram sem '
+             'sustentação, e a febre continua sem explicação.')),
 
     pg('evolucao1', 'Terceira semana',
        'No retorno, no 19.º dia, a febre chega a 38,8 °C e a sudorese é quase '
@@ -286,32 +277,6 @@ ETAPAS = [
        'linfadenite tuberculosa como hipótese principal. A prova '
        'tuberculínica, lida em 72 horas, mede 14 mm. Ela não tem tosse nem '
        'escarro para pesquisa de bacilo.'),
-
-    Q('p4', 4,
-      'Se a investigação seguir para tecido, **quais três** medidas tornam a '
-      'amostra mais útil?', [
-      ('Retirar o linfonodo inteiro', True),
-      ('Escolher o mais alterado ao exame', True),
-      ('Enviar parte do tecido a fresco', True),
-      ('Fixar todo o material em formol', False),
-      ('Punção aspirativa em vez da excisão', False),
-      ('Corticoide antes, para reduzir o linfonodo', False),
-      ('Preferir o menor, mais fácil de tirar', False),
-     ], [
-      ('A excisão', 'O que separa linfoma de linfadenite reativa é a '
-       'arquitetura, e só o linfonodo inteiro a mostra. A biópsia por agulha '
-       'grossa guiada por ultrassom é a alternativa quando a excisão não é '
-       'possível. A punção aspirativa, com teste rápido molecular e cultura, '
-       'pode confirmar tuberculose, mas um resultado negativo ou "linfócitos '
-       'reativos" não afasta linfoma.'),
-      ('O que vai a fresco', 'Citometria de fluxo, teste rápido molecular '
-       'para tuberculose (TRM-TB) e cultura de micobactérias e fungos precisam '
-       'de tecido em soro fisiológico, sem formol. O formol preserva a '
-       'morfologia e mata o resto.'),
-      ('O que atrapalha', 'Corticoide reduz a celularidade e pode deixar a '
-       'lâmina inconclusiva. O linfonodo menor e mais acessível tende a ser o '
-       'menos alterado.'),
-     ]),
 
     bifurcacao('b1', 'Decisão', 'O linfonodo de 2,8 cm',
       'Três semanas de febre, prova tuberculínica de 14 mm e linfonodos '
@@ -366,6 +331,37 @@ ETAPAS = [
        segue='tecido'),
 
     pg('tecido', 'A biópsia',
+       'Bianca é encaminhada ao cirurgião de cabeça e pescoço. Antes de '
+       'marcar a cirurgia, ele combina com a equipe como colher e enviar o '
+       'material, porque as hipóteses em aberto pedem coisas diferentes da '
+       'mesma amostra.'),
+
+    Q('p4', 3,
+      '**Quais três** medidas tornam a amostra mais útil?', [
+      ('Retirar o linfonodo inteiro', True),
+      ('Escolher o mais alterado ao exame', True),
+      ('Enviar parte do tecido a fresco', True),
+      ('Fixar todo o material em formol', False),
+      ('Punção aspirativa em vez da excisão', False),
+      ('Corticoide antes, para reduzir o linfonodo', False),
+      ('Preferir o menor, mais fácil de tirar', False),
+     ], [
+      ('A excisão', 'O que separa linfoma de linfadenite reativa é a '
+       'arquitetura, e só o linfonodo inteiro a mostra. A biópsia por agulha '
+       'grossa guiada por ultrassom é a alternativa quando a excisão não é '
+       'possível. A punção aspirativa, com teste rápido molecular e cultura, '
+       'pode confirmar tuberculose, mas um resultado negativo ou "linfócitos '
+       'reativos" não afasta linfoma.'),
+      ('O que vai a fresco', 'Citometria de fluxo, teste rápido molecular '
+       'para tuberculose (TRM-TB) e cultura de micobactérias e fungos precisam '
+       'de tecido em soro fisiológico, sem formol. O formol preserva a '
+       'morfologia e mata o resto.'),
+      ('O que atrapalha', 'Corticoide reduz a celularidade e pode deixar a '
+       'lâmina inconclusiva. O linfonodo menor e mais acessível tende a ser o '
+       'menos alterado.'),
+     ]),
+
+    pg('tecido2', 'A cirurgia',
        'O cirurgião de cabeça e pescoço retira inteiro o maior linfonodo '
        'cervical posterior esquerdo, de 2,6 cm. Uma parte vai a fresco para '
        'citometria de fluxo, TRM-TB e cultura de micobactérias e fungos; o '
@@ -407,7 +403,7 @@ ETAPAS = [
          'Não é a necrose caseosa da tuberculose, que viria cercada de '
          'granulomas. Mais de uma doença produz esse padrão.']),
 
-    pareamento('p5', 'Pergunta 5',
+    pareamento('p5', 'Pergunta 4',
       'Necrose com cariorrexe, sem neutrófilos e sem granulomas. Associe cada '
       'achado histológico ao diagnóstico que ele sugere.', [
       par('Necrose paracortical com cariorrexe, histiócitos em crescente e '
@@ -478,7 +474,7 @@ ETAPAS = [
     ], introducao='Febre de semanas com leucopenia persistente: a equipe '
                   'procura uma complicação rara dessa doença.'),
 
-    Q('p6', 6,
+    Q('p6', 5,
       'A dúvida é síndrome hemofagocítica. Pelos critérios HLH-2004, **quais '
       'duas** afirmações estão corretas?', [
       ('Ela preenche um critério: a febre', True),
@@ -507,42 +503,31 @@ ETAPAS = [
        'um critério entre oito, nem necessária nem suficiente.'),
      ]),
 
-    Q('p7', 7,
-      'Sem hemofagocitose, **quais três** condutas estão corretas agora?', [
-      ('Anti-inflamatório e analgésico para os sintomas', True),
-      ('Nenhum antibiótico ou tuberculostático', True),
-      ('Corticoide só se grave ou arrastada', True),
-      ('Prednisona para todos, por seis semanas', False),
-      ('Hidroxicloroquina desde já', False),
-      ('Retirar os demais linfonodos', False),
-      ('PET-CT para estadiamento', False),
-     ], [
-      ('O tratamento de suporte', 'A doença é autolimitada: febre e '
-       'linfonodos regridem em um a quatro meses, em geral sem tratamento '
-       'específico. Anti-inflamatório não esteroide e analgésico aliviam '
-       'febre e dor. Os linfonodos regridem mais devagar que a febre.'),
-      ('Quando entra o corticoide', 'Febre alta que não cede, sintomas '
-       'incapacitantes, acometimento fora do linfonodo, como meningite '
-       'asséptica ou hepatite, e hemofagocitose. A hidroxicloroquina fica para '
-       'doença recorrente, dependente de corticoide ou com traços de lúpus; '
-       'imunoglobulina, para casos graves e refratários.'),
-      ('O que não entra', 'Não há agente infeccioso a tratar: sem granulomas, '
-       'BAAR negativo e TRM-TB não detectado, o esquema para tuberculose não '
-       'se sustenta, e a cultura final será conferida. Não há linfoma a '
-       'estadiar, e o PET-CT capta nos linfonodos dessa doença, o que só '
-       'confunde.'),
-     ]),
+    pagina('conduta', 'Discussão', 'Sem hemofagocitose, o que tratar',
+           p('A doença é autolimitada: febre e linfonodos regridem em um a '
+             'quatro meses, em geral sem tratamento específico. '
+             'Anti-inflamatório não esteroide e analgésico aliviam febre e dor.'),
+           p('O corticoide entra com febre alta que não cede, sintomas '
+             'incapacitantes, acometimento fora do linfonodo, como meningite '
+             'asséptica ou hepatite, e hemofagocitose. A hidroxicloroquina fica '
+             'para doença recorrente, dependente de corticoide ou com traços de '
+             'lúpus; a imunoglobulina, para casos graves e refratários.'),
+           p('Não há agente infeccioso a tratar: sem granulomas, com BAAR '
+             'negativo e TRM-TB não detectado, o esquema para tuberculose não se '
+             'sustenta, e a cultura final será conferida. Também não há linfoma '
+             'a estadiar, e o PET-CT capta nos linfonodos dessa doença, o que só '
+             'confunde.')),
 
     pg('tratamento', 'Tratamento e seguimento',
-       'Bianca recebe ibuprofeno por dez dias, sem antibiótico. A equipe '
-       'explica que o linfonodo diminui mais devagar que a febre e que o '
-       'corticoide fica guardado para doença grave ou arrastada.',
+       'Bianca recebe ibuprofeno por dez dias, sem antibiótico, e sai sabendo '
+       'que o linfonodo diminui mais devagar que a febre e que o corticoide '
+       'fica guardado para doença grave ou arrastada.',
        'Quatro semanas depois está afebril há oito dias. O maior linfonodo '
        'mede 1 cm e não dói. Hemoglobina 12,1 g/dL, leucócitos 4.300/mm³, PCR '
        '4 mg/L. A cultura do linfonodo termina sem crescimento em seis '
        'semanas. Voltou a trabalhar meio período.'),
 
-    Q('p8', 8,
+    Q('p8', 6,
       'Na alta do acompanhamento agudo, **quais três** orientações estão '
       'corretas?', [
       ('Voltar se surgir artrite, fotossensibilidade ou edema', True),

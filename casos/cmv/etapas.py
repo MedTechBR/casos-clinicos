@@ -160,36 +160,59 @@ ETAPAS = [
       ('Por que não as outras', 'Osmótica pararia em jejum e teria hiato alto. '
        'Esteatorreia não dá febre nem calprotectina alta. Trânsito acelerado '
        'e diarreia funcional não acordam a paciente nem inflamam a mucosa.'),
-      ('O que esse padrão pede', 'No transplantado, colite quer dizer infecção '
-       'ou fármaco. Com //C. difficile// e painel negativos, o micofenolato, '
-       'que lesa a mucosa do cólon, passa ao primeiro plano.'),
+      ('O que esse padrão pede', 'Diarreia secretora e inflamatória aponta '
+       'para uma colite. É a categoria que a próxima etapa precisa explicar.'),
      ]),
 
+    pagina('colite_tx', 'Discussão', 'Colite no transplantado',
+           p('No receptor de órgão sólido, as causas de colite se dividem em dois '
+             'grupos: infecção e fármaco. A imunossupressão amplia o primeiro e '
+             'muda a apresentação do segundo.'),
+           p('Entre as infecções, os testes de fezes de Helena afastaram '
+             '//C. difficile// e os agentes do painel molecular. Isso reduz a '
+             'lista, mas não a esgota: o painel não cobre todos os agentes, e '
+             'alguns só se mostram na mucosa.'),
+           p('Entre os fármacos, o micofenolato é o mais frequente. Lesa o '
+             'epitélio do cólon de modo dependente da dose e pode surgir em '
+             'qualquer fase do transplante. O diagnóstico é de exclusão, ou vem '
+             'da biópsia.')),
+
     Q('p2', 2,
-      'Creatinina de 2,1 mg/dL (basal 1,2), FENa de 0,3% e tacrolimo de 14 '
-      'ng/mL. **Quais dois** mecanismos explicam melhor a piora do enxerto?', [
-      ('Hipovolemia pela perda intestinal', True),
-      ('Vasoconstrição aferente pelo tacrolimo', True),
-      ('Lesão tubular aguda', False),
-      ('Rejeição aguda celular', False),
-      ('Trimetoprima bloqueando a secreção de creatinina', False),
-      ('Nefrite intersticial pela amoxicilina', False),
-      ('Obstrução do ureter do enxerto', False),
+      'Creatinina de 2,1 mg/dL (basal 1,2), FENa de 0,3%, densidade urinária '
+      'de 1.024 e sedimento sem cilindros. Como se classifica a lesão do '
+      'enxerto?', [
+      ('Pré-renal', True),
+      ('Tubular', False),
+      ('Glomerular', False),
+      ('Intersticial', False),
+      ('Vascular', False),
+      ('Obstrutiva', False),
      ], [
       ('A classificação', 'FENa de 0,3%, urina concentrada e sedimento sem '
        'cilindros mostram um túbulo que ainda reabsorve sódio: a lesão é '
        'pré-renal. Mucosas secas, frequência de 108 e pressão de 100/62 com '
-       'oito evacuações por dia explicam a perda de volume.'),
-      ('O tacrolimo', 'A diarreia reduz o metabolismo do tacrolimo na parede '
-       'do intestino, e o nível sobe sem mudança de dose. Acima do alvo, ele '
-       'contrai a arteríola aferente e também baixa a FENa. Os dois mecanismos '
-       'somam.'),
+       'oito evacuações por dia mostram a perda de volume.'),
       ('Por que não as outras', 'Lesão tubular teria FENa acima de 2% e '
-       'cilindros granulosos. Rejeição só se investiga se a creatinina não '
-       'voltar depois de volume e nível corrigidos. A trimetoprima já era usada '
-       'com creatinina de 1,2. Sem exantema nem leucócitos na urina, nefrite '
-       'intersticial é pouco provável; obstrução se afasta com ultrassom.'),
+       'cilindros granulosos. Glomerular traria proteína e sangue na urina; '
+       'intersticial, leucócitos. Obstrução e causa vascular se procuram no '
+       'ultrassom com Doppler.'),
+      ('O que a categoria abre', 'Pré-renal tem dois mecanismos: menos volume '
+       'chegando ao rim ou arteríola aferente contraída. Podem somar.'),
      ]),
+
+    pagina('enxerto', 'Discussão', 'A creatinina do enxerto',
+           p('A equipe revê os dois mecanismos pré-renais. O volume se explica '
+             'pelas oito evacuações por dia. O segundo está na ficha: o '
+             'tacrolimo de 14 ng/mL, acima do alvo de 5 a 8, sem mudança de '
+             'dose.'),
+           p('A diarreia reduz o metabolismo do tacrolimo na parede do '
+             'intestino, e o nível sobe. Acima do alvo, ele contrai a arteríola '
+             'aferente e também baixa a FENa.'),
+           p('Rejeição só se investiga se a creatinina não voltar depois de '
+             'volume e nível corrigidos. A trimetoprima, que bloqueia a secreção '
+             'de creatinina, já era usada com creatinina de 1,2. A amoxicilina '
+             'de cinco semanas atrás pouco sugere nefrite intersticial sem '
+             'exantema nem leucócitos na urina.')),
 
     pg('ancora', 'O que a equipe registra',
        'Hipótese do plantão: colite pelo micofenolato, com lesão pré-renal do '
@@ -222,30 +245,22 @@ ETAPAS = [
          'É uma pancolite sem complicação. A tomografia localiza a doença no '
          'cólon, mas não diz a causa.']),
 
-    Q('p3', 3,
-      'Nessa colite, **quais três** achados, se aparecessem na tomografia, '
-      'levariam a cirurgia?', [
-      ('Ar livre na cavidade', True),
-      ('Pneumatose com gás na veia porta', True),
-      ('Cólon transverso acima de 6 cm', True),
-      ('Parede do cólon acima de 1 cm', False),
-      ('Densificação da gordura pericólica', False),
-      ('Pequena quantidade de líquido livre', False),
-      ('Linfonodos mesentéricos aumentados', False),
-     ], [
-      ('Sinais cirúrgicos', 'Ar livre é perfuração. Pneumatose com gás no '
-       'sistema porta, num paciente com dor e acidose, indica necrose da '
-       'parede. Cólon transverso acima de 6 cm, com toxemia, é megacólon '
-       'tóxico. Os três pedem cirurgião na hora, qualquer que seja a causa '
-       'da colite.'),
-      ('O que acompanha qualquer colite', 'Espessamento parietal, mesmo acima '
-       'de 1 cm, densificação da gordura, pouco líquido livre e linfonodos '
-       'reativos medem a inflamação. Não definem causa nem indicação '
-       'cirúrgica.'),
-      ('No imunossuprimido', 'A prednisona e os antiproliferativos embotam a '
-       'dor e a defesa abdominal. Perfuração pode chegar com pouca clínica, e '
-       'a tomografia é repetida quando a dor muda ou o lactato sobe.'),
-     ]),
+    pagina('sinais_cirurgicos', 'Discussão', 'Quando a colite é cirúrgica',
+           topicos(('Sinais que pedem cirurgião', 'Ar livre na cavidade é '
+                    'perfuração. Pneumatose com gás no sistema porta, com dor e '
+                    'acidose, indica necrose da parede. Cólon transverso acima '
+                    'de 6 cm, com toxemia, é megacólon tóxico. Valem para '
+                    'qualquer causa de colite.'),
+                   ('O que só mede a inflamação', 'Espessamento parietal, mesmo '
+                    'acima de 1 cm, densificação da gordura, pouco líquido livre '
+                    'e linfonodos reativos. Não definem causa nem indicação '
+                    'cirúrgica.'),
+                   ('No imunossuprimido', 'Prednisona e antiproliferativos embotam '
+                    'a dor e a defesa abdominal. Perfuração pode chegar com pouca '
+                    'clínica, e a tomografia é repetida quando a dor muda ou o '
+                    'lactato sobe.')),
+           p('O laudo de Helena não mostra nenhum dos três: é uma pancolite '
+             'sem complicação.')),
 
     pg('antibiotico', 'Sem sinal cirúrgico',
        'Pela febre numa imunossuprimida com pancolite, a equipe colhe novas '
@@ -261,30 +276,22 @@ ETAPAS = [
        'plaquetas 98.000/mm³, AST 88 e ALT 94 U/L. Não há esplenomegalia nem '
        'linfonodos palpáveis.'),
 
-    Q('p4', 4,
-      'Três linhagens em queda no quinto dia, com febre. **Quais três** causas '
-      'podem estar contribuindo?', [
-      ('Micofenolato mofetil', True),
-      ('Sulfametoxazol-trimetoprima', True),
-      ('Infecção viral sistêmica', True),
-      ('Tacrolimo acima do alvo', False),
-      ('Prednisona de manutenção', False),
-      ('Hiperesplenismo', False),
-      ('Deficiência de folato ou de B12', False),
-     ], [
-      ('As drogas', 'O micofenolato é antiproliferativo e tóxico para a medula '
-       'conforme a dose, e a redução à metade leva dias para aparecer no '
-       'hemograma. O sulfametoxazol-trimetoprima é antifolato e soma a sua '
-       'mielotoxicidade.'),
-      ('O que as drogas não explicam', 'Febre que não cede com 48 horas de '
-       'antibiótico e hemoculturas negativas, transaminases subindo de 62/71 '
-       'para 88/94 e queda de neutrófilos de 1.200 para 950 com o micofenolato '
-       'já reduzido: uma infecção viral sistêmica precisa entrar na lista.'),
-      ('Por que não as outras', 'A toxicidade do tacrolimo é renal, '
-       'neurológica e metabólica; citopenia é rara. Corticoide eleva os '
-       'leucócitos por desmarginação. Sem baço palpável não há hiperesplenismo, '
-       'e carência vitamínica não derruba três linhagens em cinco dias.'),
-     ]),
+    pagina('citopenias', 'Discussão', 'Três linhagens em queda',
+           p('Hemoglobina, neutrófilos e plaquetas caem juntos. Sem baço '
+             'palpável, perda por sequestro fica improvável, e a pergunta passa '
+             'a ser o que está suprimindo a medula.'),
+           p('Duas drogas da prescrição fazem isso. O micofenolato é '
+             'antiproliferativo e tóxico para a medula conforme a dose; a redução '
+             'à metade leva dias para aparecer no hemograma. O '
+             'sulfametoxazol-trimetoprima é antifolato e soma a sua '
+             'mielotoxicidade. Tacrolimo raramente causa citopenia, corticoide '
+             'eleva os leucócitos, e carência vitamínica não derruba três '
+             'linhagens em cinco dias.'),
+           p('O que as drogas não explicam: febre que não cede com 48 horas de '
+             'antibiótico e hemoculturas negativas, transaminases subindo de '
+             '62/71 para 88/94 e neutrófilos caindo de 1.200 para 950 com o '
+             'micofenolato já reduzido. Uma infecção viral sistêmica entra na '
+             'lista.')),
 
     pg('colonoscopia', 'Sexto dia',
        'Para confirmar a colite pelo micofenolato e afastar outra causa, a '
@@ -340,7 +347,7 @@ ETAPAS = [
        'A redução do micofenolato, feita pela hipótese anterior, já era parte '
        'do tratamento.'),
 
-    pareamento('p5', 'Pergunta 5',
+    pareamento('p5', 'Pergunta 3',
       'Na colite do transplantado, a lâmina decide. Associe cada achado '
       'histológico ao diagnóstico.', [
       par('Pseudomembranas com exsudato em jato saindo das criptas',
@@ -381,7 +388,7 @@ ETAPAS = [
     ], introducao='Com o laudo, a equipe pede a carga viral no plasma e resgata as '
                   'sorologias do pré-transplante.'),
 
-    Q('p6', 6,
+    Q('p6', 4,
       'Doença comprovada no tecido e PCR de 18.600 UI/mL no plasma. **Quais '
       'duas** afirmações sobre a carga estão corretas?', [
       ('Será a linha de base da resposta', True),
@@ -405,10 +412,17 @@ ETAPAS = [
        'tratamento, depois de exposição prolongada e resposta ruim.'),
      ]),
 
+    pg('visita7', 'Sétimo dia, na visita',
+       'A creatinina voltou a subir, 1,9 mg/dL, com o tacrolimo no alvo. A '
+       'nefrologia lembra que no quarto mês a rejeição é possível e que ela '
+       'ainda não foi afastada por biópsia.',
+       'A diarreia segue com sete evacuações por dia e a febre com 38,5 °C. Os '
+       'neutrófilos estão em 900/mm³, com o micofenolato já na metade. Helena '
+       'come pouco.'),
+
     bifurcacao('b1', 'Decisão', 'Tratar a doença comprovada',
-      'Sete evacuações por dia, febre, neutrófilos de 900 e creatinina de '
-      'novo em alta, 1,9 mg/dL, com a imunossupressão reduzida. A nefrologia '
-      'lembra que rejeição é possível. Como você conduz?', [
+      'Doença por CMV comprovada no cólon, diarreia intensa e creatinina em '
+      'alta com a imunossupressão reduzida. Como você conduz?', [
       caminho('Ganciclovir endovenoso já, dose pela função renal', 'inicio_antiviral',
               'Doença intestinal grave com diarreia: a absorção oral é incerta, e '
               'a creatinina sobe com a perda de volume.'),
@@ -483,7 +497,7 @@ ETAPAS = [
         ex('Evacuações', 'Quatro por dia, sem sangue · febre em resolução', '—'),
     ], introducao='A carga caiu quase seis vezes em uma semana.'),
 
-    Q('p7', 7,
+    Q('p7', 5,
       'Neutrófilos de 700/mm³ no D7, com febre em resolução e carga em queda. '
       'Qual o próximo passo?', [
       ('Reduzir a dose do ganciclovir', False),
@@ -508,13 +522,11 @@ ETAPAS = [
      ]),
 
     pg('evolucao2', 'D14',
-       'Sem o micofenolato e com a profilaxia trocada, os neutrófilos sobem '
-       'para 1.400/mm³. Creatinina 1,3 mg/dL. Afebril, uma a duas evacuações '
-       'formadas por dia, comendo bem.',
-       'A PCR de CMV do D14 é **620 UI/mL**, ainda quantificável. O residente '
-       'pergunta se já é hora de genotipar o vírus.'),
+       'A PCR de CMV do D14 é **620 UI/mL**, ainda quantificável. A série '
+       'semanal, no mesmo ensaio: 18.600 → 3.200 → 620 UI/mL.',
+       'O residente pergunta se já é hora de genotipar o vírus.'),
 
-    Q('p8', 8,
+    Q('p8', 6,
       '**Quais três** achados, juntos, indicariam genotipagem de resistência '
       'ao ganciclovir?', [
       ('Quatro semanas ou mais de antiviral', True),
@@ -537,6 +549,13 @@ ETAPAS = [
        'acontece pela cinética do vírus e não prediz resistência. Neutropenia '
        'é toxicidade. Carga inicial alta pede tratamento, não genotipagem.'),
      ]),
+
+    pg('visita14', 'D14, na visita',
+       'Sem o micofenolato e com a profilaxia trocada, os neutrófilos sobem '
+       'para 1.400/mm³. Creatinina 1,3 mg/dL. Afebril, uma a duas evacuações '
+       'formadas por dia, comendo bem.',
+       'Faz duas semanas de ganciclovir endovenoso. A equipe discute o que '
+       'falta para terminar o tratamento.'),
 
     bifurcacao('b2', 'Decisão', 'O fim do tratamento',
       'D14, sintomas resolvidos, absorção confiável e carga de 620 UI/mL. '

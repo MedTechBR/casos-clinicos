@@ -4,8 +4,9 @@ Molde do //New England// lido em 26/09/2026 (ver
 Artifacts/nejm-casos-classicos/GRAMATICA_LIDA_2026-09-26.md), no desenho do
 piloto da leptospirose: apresentação curta, ficha do paciente com uma pista
 enterrada (o colírio lubrificante), exame físico com os sinais vitais como
-primeiro item e primeiros exames entregues prontos. As primeiras perguntas
-leem números (o cálcio, a urina diluída) e depois o divisor do PTH. A âncora
+primeiro item e primeiros exames entregues prontos. Antes da metade, só duas
+perguntas, de leitura e de categoria (o cálcio, o divisor do PTH); a urina e
+os exames pedidos com o PTH suprimido são páginas de discussão. A âncora
 é a da equipe naquele momento: adenopatia hilar, perda de peso, DHL alta e
 calcitriol alto num homem de 41 anos são linfoma até a biópsia. O granuloma
 não necrosante do EBUS vira o caso; o nome aparece pela primeira vez na
@@ -48,6 +49,11 @@ def _fonte(meta, rotulo):
 def pg(k, titulo, *textos, segue='', conforme=None):
     return pagina(k, titulo, '', *(p(t) for t in textos), so_kicker=True,
                   segue=segue, conforme=conforme)
+
+
+def disc(k, titulo, *textos, segue=''):
+    """Página didática sem pergunta, no estilo das do NEJM."""
+    return pagina(k, 'Discussão', titulo, *(p(t) for t in textos), segue=segue)
 
 
 def Q(k, n, enunciado, opcoes, explicacao, segue=''):
@@ -167,12 +173,12 @@ ETAPAS = [
       ('QT curto como efeito do cálcio', True),
       ('Grave, por passar de 13 mg/dL', False),
       ('A correção pela albumina muda a leitura', False),
-      ('Pseudo-hipercalcemia por paraproteína', False),
+      ('Pseudo-hipercalcemia por excesso de proteína', False),
      ], [
       ('Os números', 'Com albumina de 4,0 g/dL, o cálcio corrigido é o próprio '
        'total, 13,6 mg/dL, e o ionizado de 1,72 mmol/L mostra que a fração '
-       'livre, a que age, está alta. Uma paraproteína que liga cálcio subiria o '
-       'total sem mexer no ionizado; aqui os dois sobem juntos.'),
+       'livre, a que age, está alta. Excesso de uma proteína que liga cálcio, '
+       'como uma paraproteína, subiria o total sem mexer no ionizado; aqui os dois sobem juntos.'),
       ('A gravidade', 'Na classificação usual (Walker e Shane, JAMA 2022), até '
        '12 mg/dL é leve, de 12 a 13,9 é moderada e de 14 em diante é grave. Ele '
        'está na faixa moderada, mas com sintomas: sede, poliúria, constipação, '
@@ -185,33 +191,23 @@ ETAPAS = [
        'apenas se houver sobrecarga.'),
      ]),
 
-    Q('p2', 2,
-      'Poliúria de 220 mL/h num paciente desidratado, com osmolalidade '
-      'urinária de 190 mOsm/kg e sódio de 146 mmol/L. Qual a leitura mais '
-      'adequada?', [
-      ('Diabetes insípido nefrogênico pela hipercalcemia', True),
-      ('Diabetes insípido central', False),
-      ('Polidipsia primária', False),
-      ('Diurese osmótica', False),
-      ('Necrose tubular aguda', False),
-      ('Efeito do tiazídico', False),
-     ], [
-      ('O padrão', 'Com mucosas secas e sódio de 146, o rim deveria concentrar '
-       'a urina, e ela sai mais diluída que o plasma. Glicemia de 98 e urina '
-       'sem glicose afastam diurese osmótica. É o defeito de concentração da '
-       'hipercalcemia: o cálcio ativa o receptor sensor de cálcio na alça de '
-       'Henle e no ducto coletor e reduz a resposta ao hormônio antidiurético.'),
-      ('E a creatinina', 'A fração de excreção de ureia de 29% indica '
-       'componente pré-renal; ela serve aqui porque o tiazídico distorce a '
-       'fração de excreção de sódio. A perda de água pela urina e a '
-       'vasoconstrição renal causada pelo cálcio somam. Sedimento sem cilindros '
-       'não sugere necrose tubular.'),
-      ('Por que não as outras', 'Na polidipsia primária o sódio fica normal ou '
-       'baixo, não em 146. O diabetes insípido central também dilui a urina, '
-       'mas o cálcio já explica o quadro, e a poliúria que some quando o cálcio '
-       'cai resolve a dúvida. O tiazídico não dilui a urina; ele é usado, ao '
-       'contrário, para reduzir a poliúria do diabetes insípido nefrogênico.'),
-     ]),
+    disc('urina', 'O que a urina diz',
+         'Rafael está desidratado, com mucosas secas e sódio de 146 mmol/L. '
+         'Nessa situação o rim deveria poupar água, e a urina sai a 220 mL/h, '
+         'com densidade de 1.004 e osmolalidade de 190 mOsm/kg, mais diluída '
+         'que o plasma de 302. Glicemia de 98 mg/dL e urina sem glicose afastam '
+         'diurese osmótica; na polidipsia primária o sódio seria normal ou baixo.',
+         'É um defeito de concentração, e o cálcio alto basta para produzi-lo: '
+         'ele ativa o receptor sensor de cálcio na alça de Henle e no ducto '
+         'coletor e reduz a resposta ao hormônio antidiurético. É um diabetes '
+         'insípido nefrogênico, que regride quando o cálcio cai. O tiazídico não '
+         'explica a urina diluída; ele é usado, ao contrário, para reduzir esse '
+         'tipo de poliúria.',
+         'A creatinina dobrou em relação à de um ano atrás. A fração de excreção '
+         'de ureia de 29% indica componente pré-renal e substitui a de sódio, que '
+         'o tiazídico distorce. Somam-se a água perdida na urina e a '
+         'vasoconstrição renal causada pelo cálcio. Sedimento sem cilindros não '
+         'sugere necrose tubular.'),
 
     pg('evolucao1', 'Primeiras 24 horas',
        'Com soro fisiológico guiado pela diurese e sem hidroclorotiazida nem '
@@ -219,29 +215,45 @@ ETAPAS = [
        'a creatinina para 1,6 mg/dL e o sódio para 141 mmol/L.',
        'O PTH, colhido na chegada, é de 6 pg/mL (referência 15 a 65).'),
 
-    Q('p3', 3,
-      'Cálcio de 12,4 mg/dL com PTH de 6 pg/mL. **Quais quatro** exames são '
-      'os mais apropriados agora?', [
-      ('Peptídeo relacionado ao PTH (PTHrP)', True),
-      ('25-hidroxi e 1,25-di-hidroxivitamina D', True),
-      ('Eletroforese de proteínas e cadeias leves livres', True),
-      ('Tomografia de tórax e abdome', True),
-      ('Cintilografia das paratireoides com sestamibi', False),
-      ('Cintilografia óssea', False),
-      ('Calcitonina sérica', False),
+    Q('p3', 2,
+      'Cálcio de 12,4 mg/dL com PTH de 6 pg/mL. **Quais duas** leituras estão '
+      'corretas?', [
+      ('Hipercalcemia independente do PTH', True),
+      ('A paratireoide responde ao cálcio alto como deveria', True),
+      ('Hipercalcemia dependente do PTH', False),
+      ('PTH inapropriadamente normal para o cálcio', False),
+      ('A causa provável está na paratireoide', False),
+      ('O PTH baixo indica falência da paratireoide', False),
      ], [
-      ('PTH suprimido', 'Com cálcio alto, um PTH de 6 pg/mL está '
-       'suprimido: a paratireoide não é a causa, e o sestamibi procuraria um '
-       'adenoma que esse PTH já afasta.'),
-      ('Os quatro', 'PTHrP para a hipercalcemia humoral dos tumores sólidos. '
-       'As duas vitaminas D juntas separam excesso de suplemento (25-hidroxi '
-       'alta) de calcitriol produzido sem controle (1,25 alta). Eletroforese e '
-       'cadeias leves procuram mieloma. A tomografia estuda os hilos e escolhe '
-       'onde biopsiar.'),
-      ('O que não entra', 'Cintilografia óssea vê mal a lesão lítica do '
-       'mieloma. Calcitonina marca carcinoma medular de tireoide e não explica '
-       'hipercalcemia.'),
+      ('O divisor', 'Com o cálcio alto, a paratireoide normal para de '
+       'secretar. Um PTH abaixo de cerca de 20 pg/mL é a resposta esperada, e o '
+       'de 6 pg/mL está suprimido: a hipercalcemia é independente do PTH, e a '
+       'glândula sai da lista de causas.'),
+      ('A outra categoria', 'Na hipercalcemia dependente do PTH, o PTH vem alto '
+       'ou, o que engana, dentro da referência: com o cálcio alto, um PTH de 40 '
+       'já é inapropriado. PTH baixo não é falência da glândula; a falência '
+       'daria cálcio baixo.'),
+      ('O que a categoria abre', 'Sem o PTH, o cálcio a mais vem de três '
+       'lugares: de um fator que imita o PTH no osso e no rim, do excesso de '
+       'vitamina D ativa, que aumenta a absorção intestinal, ou do osso '
+       'destruído diretamente. Somam-se medicamentos e ingestão de cálcio. A '
+       'próxima rodada de exames separa essas frentes.'),
      ]),
+
+    disc('pedidos', 'O que se pede com o PTH suprimido',
+         'A equipe pede as frentes de uma vez. O peptídeo relacionado ao PTH '
+         '(PTHrP) procura a hipercalcemia humoral, a dos tumores sólidos. As '
+         'duas formas da vitamina D, dosadas juntas, separam o excesso de '
+         'suplemento, que eleva a 25-hidroxi, da produção de calcitriol sem '
+         'controle, que eleva a 1,25-di-hidroxi com a 25-hidroxi normal.',
+         'Eletroforese de proteínas e cadeias leves livres procuram mieloma, que '
+         'libera cálcio do osso. A tomografia de tórax e abdome estuda os hilos '
+         'da radiografia e escolhe onde biopsiar, se for preciso. A calciúria '
+         'de 24 horas mede quanto cálcio o rim está eliminando.',
+         'Três exames ficam de fora. A cintilografia das paratireoides com '
+         'sestamibi procuraria um adenoma que esse PTH já afastou. A '
+         'cintilografia óssea vê mal a lesão lítica do mieloma. A calcitonina '
+         'marca carcinoma medular de tireoide e não explica hipercalcemia.'),
 
     painel('res2', 'Investigação', 'Segundo e terceiro dias', [
         ex('PTHrP', 'Não detectado', 'não detectado'),
@@ -252,7 +264,17 @@ ETAPAS = [
         ex('Calciúria de 24 horas', '410 mg', 'abaixo de 300 mg', True),
     ]),
 
-    pareamento('p4', 'Pergunta 4',
+    disc('leitura', 'O que voltou',
+         'PTHrP não detectado torna improvável a hipercalcemia humoral. '
+         'Eletroforese sem componente monoclonal e relação kappa/lambda de 1,3, '
+         'dentro da referência, afastam mieloma com razoável segurança; a '
+         'gamaglobulina policlonal discretamente alta é inespecífica.',
+         'A calciúria de 410 mg em 24 horas, acima de 300 mg, mostra que o rim '
+         'está eliminando muito cálcio: o excesso está entrando no sangue, pelo '
+         'intestino, pelo osso ou pelos dois. Falta ler a vitamina D, com a '
+         '25-hidroxi de 38 ng/mL e a 1,25-di-hidroxi de 104 pg/mL.'),
+
+    pareamento('p4', 'Pergunta 3',
       'O 1,25-di-hidroxivitamina D está alto e o 25-hidroxi, normal. Associe '
       'cada perfil de outro paciente ao mecanismo da hipercalcemia.', [
       par('PTH 95 pg/mL, fósforo 2,2 mg/dL, calciúria alta',
@@ -382,7 +404,7 @@ ETAPAS = [
          'A lâmina descreve uma forma de reação, não a causa. O diagnóstico '
          'junta a lâmina, as culturas e a história.']),
 
-    Q('p5', 5,
+    Q('p5', 4,
       'Granulomas não necrosantes, citometria sem clone, pesquisas '
       'negativas e culturas pendentes. Qual a interpretação mais adequada?', [
       ('Sarcoidose provável, a confirmar pelas culturas', True),
@@ -421,7 +443,7 @@ ETAPAS = [
        'substrato, e o tiazídico impediu o rim de eliminar o excesso: os dois '
        'descompensaram uma produção de calcitriol que vinha de antes.'),
 
-    Q('p6', 6,
+    Q('p6', 5,
       'Pela ATS, **quais três** avaliações se fazem em todo paciente ao '
       'diagnóstico, mesmo sem sintomas?', [
       ('Eletrocardiograma de 12 derivações', True),
@@ -460,7 +482,7 @@ ETAPAS = [
        'Uveíte anterior granulomatosa bilateral: colírio de prednisolona 1% e '
        'cicloplégico.'),
 
-    Q('p7', 7,
+    Q('p7', 6,
       'A prednisona vai começar. **Quais quatro** afirmações estão corretas?', [
       ('A indicação é o cálcio com lesão renal', True),
       ('Dose inicial de 20 a 40 mg/dia', True),
@@ -486,6 +508,19 @@ ETAPAS = [
        'agora, com alguém responsável por conferir o resultado final.'),
      ]),
 
+    disc('reducao', 'O plano da redução',
+         'A prednisona sai devagar, ao longo de meses, e a doença pode voltar '
+         'no caminho. Antes de chamar de recidiva e escalar, confere-se a '
+         'adesão, sobretudo ao tratamento local, e se exclui infecção, que o '
+         'corticoide facilita e que pode imitar inflamação.',
+         'Recidiva ou dependência de corticoide pede um poupador. Pela ERS '
+         '(2021), o metotrexato é a segunda linha, com ácido fólico e controle de '
+         'hemograma e função hepática; o anti-TNF, como o infliximabe, vem '
+         'depois dele. A hidroxicloroquina tem papel na pele e na '
+         'hipercalcemia, não na uveíte.',
+         'Voltar a doses altas por tempo indefinido é o que o poupador evita: '
+         'perda óssea, hiperglicemia, catarata e glaucoma.'),
+
     pg('evolucao2', 'Oito semanas depois',
        'Cálcio 9,8 mg/dL, creatinina 1,1 mg/dL. Culturas finais sem '
        'crescimento. A inflamação ocular está controlada e Rafael voltou a '
@@ -493,29 +528,6 @@ ETAPAS = [
        'Quatro semanas depois, durante a redução, a dor no olho direito '
        'volta. Os exames de sangue estão normais, e Rafael quer manter o '
        'esquema porque o resto melhorou.'),
-
-    Q('p8', 8,
-      'A dor ocular voltou durante a redução. Se for recidiva da uveíte, '
-      '**quais duas** estratégias são as mais adequadas?', [
-      ('Metotrexato como poupador de corticoide', True),
-      ('Conferir adesão ao colírio e excluir infecção', True),
-      ('Prednisona 40 mg/dia por tempo indefinido', False),
-      ('Infliximabe antes do metotrexato', False),
-      ('Suspender o sistêmico pela espirometria boa', False),
-      ('Hidroxicloroquina para a uveíte', False),
-     ], [
-      ('A recidiva', 'Dor ocular durante a redução do corticoide é recidiva '
-       'até prova em contrário. Antes de escalar, confere-se o colírio, que pode '
-       'ter acabado ou sido suspenso, e se exclui infecção ocular, que imita '
-       'inflamação.'),
-      ('O poupador', 'Recidiva ou dependência de corticoide pede um poupador. '
-       'Metotrexato é a segunda linha da ERS, com ácido fólico e controle de '
-       'hemograma e função hepática. Anti-TNF vem depois dele.'),
-      ('Por que não as outras', 'Prednisona alta por tempo indefinido é o que '
-       'o poupador evita: osso, glicemia, catarata e glaucoma. Cada órgão tem a '
-       'sua meta, e a espirometria boa não diz nada da câmara anterior. '
-       'Hidroxicloroquina tem papel na pele e na hipercalcemia, não na uveíte.'),
-     ]),
 
     bifurcacao('b2', 'Decisão', 'O olho durante a redução',
       'Como responder à volta da dor ocular?', [

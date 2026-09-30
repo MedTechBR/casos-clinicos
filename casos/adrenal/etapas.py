@@ -4,12 +4,12 @@ Refeito em 26/09/2026 no molde do //New England// (piloto: leptospirose;
 gramática em Artifacts/nejm-casos-classicos/GRAMATICA_LIDA_2026-09-26.md).
 O caso abre na emergência, no terceiro dia de vômitos e diarreia, e segue a
 âncora que a equipe registrou: gastroenterite com choque hipovolêmico, lesão
-renal pré-renal e hipercalemia. As primeiras perguntas leem os números
-(gasometria e ânion gap urinário, tonicidade da hiponatremia, sódio e potássio
-urinários); a pressão que o volume não segura, a conversa com o marido e o
-reexame da boca viram o caso, e o nome do diagnóstico só aparece na decisão da
-madrugada, depois da metade. As decisões de conduta mudam o desfecho, a pedido
-do Matheus.
+renal pré-renal e hipercalemia. A primeira pergunta lê a gasometria; o sódio e
+a urina viram páginas de leitura (revisão de 30/09: menos perguntas, mais
+conteúdo, nada de doença específica no começo). A pressão que o volume não
+segura, a conversa com o marido e o reexame da boca viram o caso, e o nome do
+diagnóstico só aparece na decisão da madrugada, depois da metade. As decisões
+de conduta mudam o desfecho, a pedido do Matheus.
 
 Paciente ficcional. Doses e critérios: Endocrine Society 2016 (insuficiência
 adrenal primária), Society for Endocrinology 2016 (crise adrenal), diretriz
@@ -40,6 +40,11 @@ def credito_meta(meta):
 def pg(k, titulo, *textos, segue='', conforme=None):
     return pagina(k, titulo, '', *(p(t) for t in textos), so_kicker=True,
                   segue=segue, conforme=conforme)
+
+
+def aula(k, titulo, *textos):
+    """Página didática do NEJM, sem pergunta, entre as alíquotas."""
+    return pagina(k, 'Discussão', titulo, *(p(t) for t in textos))
 
 
 def Q(k, n, enunciado, opcoes, explicacao, segue=''):
@@ -145,12 +150,14 @@ ETAPAS = [
       ('Acidificação urinária insuficiente para a acidose', True),
       ('Acidose láctica como causa principal', False),
       ('Acidose respiratória associada', False),
-      ('Bicarbonato endovenoso indicado agora', False),
+      ('Alcalose metabólica associada', False),
      ], [
       ('As contas', 'O ânion gap é 124 menos 96 mais 16, igual a 12: normal, com '
        'albumina de 4,2. Pela fórmula de Winter, a pCO₂ esperada é 1,5 × 16 + 8 '
        '= 32 ± 2; a medida, 33, está dentro, e não há distúrbio respiratório '
-       'somado. O lactato de 2,4 responde por pouco do bicarbonato que falta.'),
+       'somado. O lactato de 2,4 responde por pouco do bicarbonato que falta, '
+       'e nada sugere alcalose metabólica somada, que deixaria o bicarbonato '
+       'acima do esperado para o ânion gap.'),
       ('O rim', 'Na acidose da diarreia, o rim excreta amônio, e o ânion gap '
        'urinário (sódio mais potássio menos cloro) fica negativo. O dela é 62 + '
        '14 − 58 = +18: o rim não está acidificando a urina como deveria. Com '
@@ -158,35 +165,26 @@ ETAPAS = [
       ('O que muda', 'Acidose de ânion gap normal vem do intestino, que perde '
        'bicarbonato, ou do rim, que não excreta ácido. A diarreia explica a '
        'primeira parte; o ânion gap urinário positivo diz que há também a '
-       'segunda. Com pH de 7,31, bicarbonato endovenoso não tem indicação.'),
+       'segunda.'),
      ]),
 
-    Q('p2', 2,
-      'Sódio de 124, osmolalidade sérica de 264 e urinária de 418. **Quais '
-      'três** afirmações estão corretas?', [
-      ('Hiponatremia hipotônica', True),
-      ('ADH ativo, estimulado pela hipovolemia', True),
-      ('Subir no máximo 8 mmol/L em 24 h', True),
-      ('SIADH pela fluoxetina', False),
-      ('Hiponatremia aguda, de menos de 48 horas', False),
-      ('Salina a 3% em bolus agora', False),
-      ('Restrição hídrica como primeira medida', False),
-     ], [
-      ('A classificação', 'A osmolalidade de 264 confirma a hiponatremia '
-       'hipotônica. Urina a 418 mOsm/kg mostra que o ADH está agindo. Com '
-       'mucosas secas, jugulares planas e pressão de 78, o estímulo é o volume '
-       'baixo, e a secreção de ADH é apropriada.'),
-      ('Por que não SIADH', 'SIADH exige euvolemia, e o diagnóstico só se faz '
-       'depois de excluir hipovolemia, hipotireoidismo e deficiência de '
-       'glicocorticoide. A fluoxetina pode baixar o sódio, mas não derruba a '
-       'pressão.'),
-      ('O ritmo da correção', 'O sódio era 131 há três semanas: a hiponatremia '
-       'é crônica. Desnutrição e hipovolemia aumentam o risco de desmielinização '
-       'osmótica, e quando o volume volta o ADH cai e o rim passa a eliminar '
-       'água livre, o que pode subir o sódio depressa. A meta é não passar de 8 '
-       'mmol/L em 24 horas. Salina a 3% fica para convulsão ou coma, e '
-       'restringir água num paciente em choque piora o choque.'),
-     ]),
+    aula('sodio', 'Como ler este sódio',
+       'A osmolalidade sérica de 264 confirma que a hiponatremia é hipotônica: '
+       'há água demais para o sódio que existe. A urina, a 418 mOsm/kg, mostra '
+       'que o ADH está agindo e que o rim não consegue eliminar essa água.',
+       'O passo seguinte é o volume. Com mucosas secas, jugulares planas e '
+       'pressão de 78, ela está hipovolêmica, e a hipovolemia é um estímulo '
+       'para o ADH mais forte que a própria osmolalidade: a secreção é '
+       'apropriada ao choque. A fluoxetina da ficha também pode baixar o sódio, '
+       'mas por um mecanismo que pressupõe volume normal.',
+       'O sódio era 131 há três semanas, e a hiponatremia é tratada como '
+       'crônica. O cérebro já se adaptou, e subir o sódio depressa arrisca '
+       'desmielinização osmótica, sobretudo na desnutrição: o limite é 8 mmol/L '
+       'em 24 horas. Salina a 3% fica para convulsão ou coma, e restringir água '
+       'em quem está em choque piora o choque.',
+       'Quando o volume volta, o estímulo do ADH desaparece e o rim passa a '
+       'eliminar água livre. O sódio pode então subir rápido sem que ninguém dê '
+       'sódio, e por isso é medido a cada poucas horas.'),
 
     estudo('ecg', 'Eletrocardiograma',
            'Feito à beira do leito pelo potássio de 6,1, com ela em taquicardia '
@@ -206,31 +204,22 @@ ETAPAS = [
          'alteração no traçado, o cálcio endovenoso protege a membrana '
          'cardíaca enquanto a causa é tratada.']),
 
-    Q('p3', 3,
-      'Creatinina de 1,8 mg/dL, que era 1,0 há três semanas. Qual a leitura '
-      'mais adequada da lesão renal?', [
-      ('Pré-renal, com perda renal de sódio', True),
-      ('Pré-renal da diarreia, com rim normal', False),
-      ('Lesão tubular aguda', False),
-      ('Nefrite intersticial pela medicação', False),
-      ('Doença renal crônica agudizada', False),
-     ], [
-      ('A classificação', 'Urina concentrada, a 418 mOsm/kg, sedimento com '
-       'cilindros hialinos e relação ureia/creatinina alta são de '
-       'hipoperfusão, sem lesão do túbulo. A creatinina normal três semanas '
-       'antes afasta doença crônica. A FENa de 1,4% não vem de necrose '
-       'tubular, que traria cilindros granulosos e urina isostenúrica: é o rim '
-       'deixando sair sódio.'),
-      ('O que não combina com a diarreia', 'Na hipovolemia da diarreia, a '
-       'aldosterona sobe: o rim guarda sódio, com sódio urinário abaixo de 20, '
-       'e perde potássio, que cai no sangue. Aqui acontece o contrário: sódio '
-       'urinário de 62, potássio urinário de 14 e potássio sérico de 6,1.'),
-      ('O que isso pede', 'Hipovolemia com sódio urinário alto e potássio '
-       'retido tem poucas causas: diurético, remédio que bloqueia o eixo '
+    aula('urina', 'O que a urina diz',
+       'A creatinina foi de 1,0 a 1,8 em três semanas, uma lesão renal aguda. '
+       'Urina concentrada, a 418 mOsm/kg, raros cilindros hialinos e '
+       'ureia de 88 alta para a creatinina são de hipoperfusão. Lesão do túbulo '
+       'traria cilindros granulosos e urina com osmolalidade próxima à do '
+       'plasma.',
+       'O que não se encaixa é o sódio. Na hipovolemia da diarreia, a '
+       'aldosterona sobe: o rim guarda sódio, com sódio urinário abaixo de 20 '
+       'mmol/L e FENa abaixo de 1%, e perde potássio, que cai no sangue. Aqui o '
+       'sódio urinário é 62, a FENa 1,4%, o potássio urinário 14 e o sérico '
+       '6,1. No meio de um choque, o rim deixa sair sódio e segura potássio.',
+       'É o mesmo néfron distal do ânion gap urinário positivo, que também não '
+       'acidifica a urina. Hipovolemia com perda renal de sódio e potássio '
+       'retido abre uma lista curta: diurético, remédio que bloqueia o eixo '
        'renina-aldosterona (espironolactona, inibidor da ECA, trimetoprim), '
-       'nefropatia perdedora de sal ou falta do próprio hormônio. Ela não usa '
-       'nenhum desses remédios.'),
-     ]),
+       'nefropatia perdedora de sal e falta de ação da aldosterona.'),
 
     bifurcacao('b1', 'Decisão', 'As primeiras horas',
       'Depois de 1 litro de soro fisiológico e da glicose, a pressão é 92/58 e '
@@ -353,29 +342,30 @@ ETAPAS = [
          'cesárea e na gengiva não é bronzeado de sol: é pigmentação que vem de '
          'dentro, em quem quase não sai de casa.']),
 
-    Q('p4', 4,
-      'A equipe revê o caso inteiro. **Quais quatro** dados a gastroenterite '
-      'não explica?', [
-      ('Potássio de 6,1 com diarreia', True),
-      ('Sódio urinário de 62 na hipovolemia', True),
+    Q('p4', 2,
+      'A equipe revê o caso inteiro. Além da urina, **quais três** dados a '
+      'gastroenterite não explica?', [
+      ('Eosinófilos de 770 em pleno choque', True),
       ('Glicemia que cai com glicose correndo', True),
       ('Pigmentação da gengiva e das cicatrizes', True),
       ('Creatinina de 1,8 com ureia de 88', False),
       ('Hematócrito maior que o de três semanas', False),
       ('Proteína C reativa de 1,2', False),
+      ('Frequência cardíaca de 118', False),
      ], [
       ('O que a diarreia explica', 'Hipovolemia, taquicardia, '
-       'hemoconcentração, creatinina pré-renal, acidose de ânion gap normal e '
-       'a proteína C reativa de 1,2.'),
-      ('O que ela não explica', 'Diarreia baixa o potássio; o dela é 6,1. Na '
-       'hipovolemia o rim guarda sódio; o dela sai a 62. Choque derruba os '
-       'eosinófilos; ela tem 770. Um adulto em jejum mantém a glicemia pela '
-       'gliconeogênese; a dela cai com glicose a 10% correndo. E pigmento na '
-       'gengiva leva meses para aparecer.'),
-      ('Juntando', 'Perda de sódio com potássio retido, eosinofilia, '
-       'hipoglicemia e pressão que o volume não segura, em quem emagrece há '
-       'oito meses e come sal na mão: uma causa única, hormonal, anterior à '
-       'gastroenterite, que foi só o gatilho.'),
+       'hemoconcentração (hemoglobina de 13,4, que era 11,6), creatinina '
+       'pré-renal com ureia alta e a proteína C reativa de 1,2 de uma infecção '
+       'intestinal.'),
+      ('O que ela não explica', 'Choque e estresse derrubam os eosinófilos; '
+       'ela tem 770. Um adulto em jejum mantém a glicemia pela gliconeogênese; '
+       'a dela cai a 62 com glicose a 10% correndo. E pigmento na gengiva, nos '
+       'sulcos palmares e na cicatriz leva meses para aparecer, em quem quase '
+       'não sai de casa.'),
+      ('Juntando', 'Somados à urina que perde sódio e retém potássio e à '
+       'pressão que o volume não segura, em quem emagrece há oito meses e come '
+       'sal na mão: uma causa única, hormonal, anterior à gastroenterite, que '
+       'foi só o gatilho.'),
      ]),
 
     pg('hipotese', 'A hipótese muda',
@@ -453,40 +443,7 @@ ETAPAS = [
        'comum da crise. Com o vitiligo e a tireoidite (TSH de 6,8, anti-TPO '
        'reagente), o quadro completa uma síndrome poliglandular autoimune tipo 2.'),
 
-    pg('noite', 'Doze horas depois da primeira dose',
-       'A diurese passou a 350 mL por hora, de urina clara, com osmolalidade '
-       'urinária de 90 mOsm/kg. O sódio, que era 124 na chegada, está em 132; o '
-       'potássio, 4,6. Ela está lúcida e sem queixas, ainda com soro '
-       'fisiológico a 150 mL por hora.'),
-
-    Q('p5', 5,
-      'O sódio subiu 8 mmol/L em 12 horas, e a diurese é de urina diluída. '
-      '**Quais três** condutas estão corretas?', [
-      ('Trocar o soro por glicose a 5%', True),
-      ('Desmopressina se a diurese aquosa continuar', True),
-      ('Sódio a cada 2 a 4 horas', True),
-      ('Manter o soro fisiológico, ela está bem', False),
-      ('Suspender a hidrocortisona até estabilizar', False),
-      ('Restringir água até a manhã', False),
-     ], [
-      ('O que aconteceu', 'Com volume e cortisol repostos, o estímulo do ADH '
-       'desapareceu e o rim passou a eliminar água livre: 350 mL por hora de '
-       'urina a 90 mOsm/kg. O sódio subiu 8 mmol/L em 12 horas, o limite de 24 '
-       'horas para quem tem hiponatremia crônica e desnutrição, e vai continuar '
-       'subindo.'),
-      ('A conduta', 'Parar de dar sódio e repor a água que sai: glicose a 5% no '
-       'lugar do soro fisiológico e, se a diurese aquosa persistir, '
-       'desmopressina 1 a 2 µg endovenosa, que fecha a saída de água livre. Se '
-       'o limite for ultrapassado, a mesma estratégia serve para baixar o sódio '
-       'de novo. Sódio a cada 2 a 4 horas até estabilizar.'),
-      ('O que não fazer', 'A hidrocortisona não se suspende: a crise voltaria. '
-       'Manter o soro fisiológico ou restringir água sobe mais o sódio. A '
-       'desmielinização osmótica aparece dias depois da correção rápida, e o '
-       'risco é maior na desnutrição, na hipocalemia, no alcoolismo e na '
-       'hiponatremia crônica.'),
-     ]),
-
-    pareamento('p6', 'Pergunta 6',
+    pareamento('p6', 'Pergunta 3',
       'Associe cada paciente à causa mais provável da insuficiência adrenal '
       'primária dele.', [
       par('Mulher de 30 anos com diabetes tipo 1 e anti-21-hidroxilase reagente',
@@ -517,6 +474,39 @@ ETAPAS = [
     titulo_resposta='Autoimune, infecciosa, hemorrágica, tumoral, genética',
     nota='A supressão por corticoide exógeno sobrou: ela é secundária, com ACTH '
          'baixo, e não entra entre as primárias.'),
+
+    pg('noite', 'Doze horas depois da primeira dose',
+       'A diurese passou a 350 mL por hora, de urina clara, com osmolalidade '
+       'urinária de 90 mOsm/kg. O sódio, que era 124 na chegada, está em 132; o '
+       'potássio, 4,6. Ela está lúcida e sem queixas, ainda com soro '
+       'fisiológico a 150 mL por hora.'),
+
+    Q('p5', 4,
+      'O sódio subiu 8 mmol/L em 12 horas, e a diurese é de urina diluída. '
+      '**Quais três** condutas estão corretas?', [
+      ('Trocar o soro por glicose a 5%', True),
+      ('Desmopressina se a diurese aquosa continuar', True),
+      ('Sódio a cada 2 a 4 horas', True),
+      ('Manter o soro fisiológico, ela está bem', False),
+      ('Suspender a hidrocortisona até estabilizar', False),
+      ('Restringir água até a manhã', False),
+     ], [
+      ('O que aconteceu', 'Com volume e cortisol repostos, o estímulo do ADH '
+       'desapareceu e o rim passou a eliminar água livre: 350 mL por hora de '
+       'urina a 90 mOsm/kg. O sódio subiu 8 mmol/L em 12 horas, o limite de 24 '
+       'horas para quem tem hiponatremia crônica e desnutrição, e vai continuar '
+       'subindo.'),
+      ('A conduta', 'Parar de dar sódio e repor a água que sai: glicose a 5% no '
+       'lugar do soro fisiológico e, se a diurese aquosa persistir, '
+       'desmopressina 1 a 2 µg endovenosa, que fecha a saída de água livre. Se '
+       'o limite for ultrapassado, a mesma estratégia serve para baixar o sódio '
+       'de novo. Sódio a cada 2 a 4 horas até estabilizar.'),
+      ('O que não fazer', 'A hidrocortisona não se suspende: a crise voltaria. '
+       'Manter o soro fisiológico ou restringir água sobe mais o sódio. A '
+       'desmielinização osmótica aparece dias depois da correção rápida, e o '
+       'risco é maior na desnutrição, na hipocalemia, no alcoolismo e na '
+       'hiponatremia crônica.'),
+     ]),
 
     pg('evolucao', 'Terceiro dia',
        'Marta come, anda pelo corredor e passa à hidrocortisona oral em dose '
@@ -561,7 +551,7 @@ ETAPAS = [
        'pressão em pé, pelo potássio e pela renina, não pelo cortisol nem pelo '
        'ACTH.'),
 
-    Q('p7', 7,
+    Q('p7', 5,
       'Antes da alta, a enfermagem ensina a Marta e ao marido as regras dos '
       'dias de doença. **Quais quatro** orientações estão corretas?', [
       ('Febre acima de 38 °C: dobrar a hidrocortisona', True),
@@ -588,7 +578,20 @@ ETAPAS = [
        'crise.'),
      ]),
 
-    Q('p8', 8,
+    aula('ampola', 'A ampola de emergência',
+       'A hidrocortisona injetável vem em pó, em frasco de 100 mg, com o '
+       'diluente. Em casa, o marido dissolve o pó, aspira todo o conteúdo e '
+       'aplica no músculo da face lateral da coxa, o local mais fácil para quem '
+       'não é da saúde.',
+       'A injeção não substitui a emergência. Depois dela, Marta vai ao '
+       'hospital, onde a hidrocortisona segue endovenosa e o soro repõe o '
+       'volume. Vômitos que impedem o comprimido, diarreia intensa, desmaio ou '
+       'confusão são motivo para aplicar sem esperar a piora.',
+       'O kit fica num lugar que a família conhece: frasco, diluente, seringa, '
+       'agulha intramuscular e o cartão que diz que ela depende de '
+       'glicocorticoide. A validade do frasco se confere a cada consulta.'),
+
+    Q('p8', 6,
       'TSH de 6,8 na crise, com T4 livre normal. **Quais quatro** condutas '
       'estão corretas no seguimento?', [
       ('Repetir TSH após semanas de reposição', True),

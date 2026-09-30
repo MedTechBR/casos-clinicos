@@ -4,9 +4,10 @@ Reescrito no molde do //New England// lido em 26/09/2026 (ver
 Artifacts/nejm-casos-classicos/GRAMATICA_LIDA_2026-09-26.md), no desenho do
 piloto aprovado (casos/leptospirose): apresentação curta, ficha do paciente,
 exame por sistema com os sinais vitais primeiro e primeiros exames entregues
-prontos. As primeiras perguntas classificam (padrão da lesão de pele,
-mecanismo da neutropenia, leitura da coagulação, tipo de lesão renal) sem
-nomear doença. A âncora é a registrada pela equipe e correta naquele
+prontos. Seis perguntas, nunca duas telas interativas seguidas: as duas
+primeiras classificam (padrão da lesão de pele, mecanismo da neutropenia)
+sem nomear doença; a leitura da coagulação, da biópsia renal e do
+tratamento são páginas de discussão. A âncora é a registrada pela equipe e correta naquele
 momento: agranulocitose por dipirona com lesão necrótica de provável causa
 infecciosa num neutropênico febril. No terceiro dia, a orelha, a urina e o
 ANCA viram o caso; a exposição aparece na entrevista a sós e o nome da causa
@@ -200,50 +201,43 @@ ETAPAS = [
       ('Reação idiossincrática a fármaco', True),
       ('Infiltração da medula óssea', False),
       ('Sequestro esplênico', False),
-      ('Deficiência de vitamina B12', False),
+      ('Carência nutricional da medula', False),
       ('Neutropenia constitucional', False),
       ('Consumo periférico pela infecção', False),
      ], [
       ('A contagem', 'Neutrófilos absolutos são leucócitos vezes a fração de '
        'neutrófilos: 900 × 0,20 = 180/mm³. Abaixo de 500 a neutropenia é '
        'grave, e febre com essa contagem é neutropenia febril, uma emergência.'),
-      ('Por que um fármaco', 'Queda de uma linhagem só, abrupta, numa adulta '
+      ('O mecanismo', 'Queda de uma linhagem só, abrupta, numa adulta '
        'hígida, com hemoglobina, plaquetas, VCM e esfregaço normais, é o '
-       'retrato da agranulocitose idiossincrática. No Brasil, a dipirona está '
-       'entre as causas mais frequentes, e Marina tomou 1 g há cinco dias. A '
-       'equipe a suspende e registra como suspeita de reação.'),
+       'retrato da agranulocitose idiossincrática: uma exposição recente '
+       'lesa os precursores ou os neutrófilos maduros. O passo seguinte é '
+       'listar tudo o que ela tomou ou usou nas semanas anteriores e suspender '
+       'o que for suspeito.'),
       ('Por que não as outras', 'Infiltração medular derruba mais de uma '
-       'linhagem e costuma mostrar blastos. O baço não é palpável. A falta de '
-       'B12 aumenta o VCM e atinge as três séries. A neutropenia constitucional '
+       'linhagem e costuma mostrar blastos. O baço não é palpável. A carência '
+       'nutricional aumenta o VCM e atinge as três séries. A neutropenia constitucional '
        'raramente cai abaixo de 1.000 e não surge aos 34 anos com febre. '
        'Consumo pela infecção acontece na sepse grave, com choque, e '
        'raramente isola 180 neutrófilos com lactato normal.'),
      ]),
 
-    Q('q3', 3,
-      'Com esses exames de coagulação e o esfregaço, **quais duas** causas '
-      'de púrpura retiforme ficam improváveis?', [
-      ('Púrpura fulminante com CIVD', True),
-      ('Microangiopatia trombótica', True),
-      ('Infecção que invade o vaso', False),
-      ('Síndrome antifosfolípide', False),
-      ('Crioglobulinemia', False),
-      ('Vasculite de pequeno e médio vaso', False),
-     ], [
-      ('A coagulação', 'Plaquetas de 238.000, INR de 1,0, TTPa de 29 s e '
-       'fibrinogênio de 410 mg/dL mostram que não há consumo de fatores nem de '
-       'plaquetas: afastam a púrpura fulminante, que é CIVD na pele. Sem '
-       'plaquetopenia e sem esquizócitos, microangiopatia trombótica também '
-       'sai da lista.'),
-      ('O que sobra', 'No neutropênico febril, a primeira a excluir é a '
-       'infecção angioinvasiva: ectima gangrenoso por //Pseudomonas// e fungos '
-       'filamentosos, que ocluem o vaso por dentro. Antifosfolípide, '
-       'crioglobulina e vasculite continuam possíveis e pedem anticorpos, '
-       'crioproteína e tecido.'),
-      ('O que a equipe faz', 'Biópsia profunda da borda de uma placa, para '
-       'histologia, colorações para bactérias e fungos e cultura do tecido, '
-       'sem atrasar o antibiótico.'),
-     ]),
+    pagina('coag', 'Discussão', 'O que a coagulação diz',
+      p('Diante de púrpura que oclui vasos, a equipe relê o sangue da chegada '
+        'à procura de consumo. Plaquetas de 238.000/mm³, INR de 1,0, TTPa de '
+        '29 s e fibrinogênio de 410 mg/dL: não há gasto de plaquetas nem de '
+        'fatores, e a oclusão não vem de coagulação intravascular '
+        'disseminada.'),
+      p('O esfregaço sem esquizócitos, com plaquetas normais, afasta a '
+        'hemólise mecânica das microangiopatias trombóticas. O fibrinogênio '
+        'pouco acima do limite acompanha a PCR de 96 mg/L: é inflamação, não '
+        'consumo.'),
+      p('Sobram as oclusões que não gastam fatores: microrganismo que invade '
+        'a parede, anticorpo que trombosa, crioproteína que precipita e '
+        'inflamação da própria parede. No neutropênico febril, a primeira a '
+        'excluir é a infecção que invade o vaso, e isso pede tecido: biópsia '
+        'profunda da borda de uma placa, com colorações e cultura para '
+        'bactérias e fungos, sem atrasar o antibiótico.')),
 
     bifurcacao('b1', 'Decisão', 'As primeiras horas',
       'Febril, com 180 neutrófilos e placas necróticas nas coxas. As '
@@ -327,7 +321,7 @@ ETAPAS = [
          'Sem obstrução e sem rim pequeno de doença antiga: a lesão é aguda e '
          'está dentro do rim.']),
 
-    Q('q4', 4,
+    Q('q4', 3,
       'Qual a interpretação mais adequada da lesão renal?', [
       ('Glomerulonefrite aguda', True),
       ('Necrose tubular pela vancomicina', False),
@@ -364,7 +358,7 @@ ETAPAS = [
         ex('HIV, HBsAg e anti-HCV', 'Não reagentes', 'Não reagentes'),
     ]),
 
-    Q('q5', 5,
+    Q('q5', 4,
       'Qual a interpretação mais provável desse perfil de anticorpos?', [
       ('Poliangeíte microscópica', False),
       ('Granulomatose com poliangeíte', False),
@@ -416,7 +410,7 @@ ETAPAS = [
        'A dipirona continua suspensa, mas a neutropenia que ela explicaria tem '
        'agora outra causa provável.'),
 
-    Q('q6', 6,
+    Q('q6', 5,
       'A urina do terceiro dia, cinco dias depois do último uso, vai para '
       'toxicologia. **Quais duas** afirmações estão corretas?', [
       ('Levamisol negativo agora não exclui exposição', True),
@@ -449,7 +443,7 @@ ETAPAS = [
     ], introducao='A biópsia renal foi feita no quarto dia, com plaquetas e '
                   'coagulação normais.'),
 
-    pareamento('q7', 'Pergunta 7',
+    pareamento('q7', 'Pergunta 6',
       'Exposições que produzem vasculite ou vasculopatia. Associe cada uma à '
       'síndrome que ela costuma produzir.', [
       par('Levamisol, adulterando cocaína',
@@ -481,6 +475,19 @@ ETAPAS = [
       nota='A opção que sobrou, arterite de células gigantes, não se associa '
            'a essas exposições e é rara antes dos 50 anos.'),
 
+    pagina('sobre_biopsia', 'Discussão', 'Sobre a biópsia renal',
+      p('Crescente é a proliferação de células no espaço de Bowman, em torno '
+        'de um tufo glomerular cuja parede se rompeu. Celular, é lesão recente '
+        'e ainda pode regredir; fibrosa, é cicatriz. Em Marina, 5 de 18 '
+        'glomérulos têm crescentes celulares, com fibrose intersticial mínima.'),
+      p('Pauci-imune quer dizer imunofluorescência com pouco ou nenhum '
+        'depósito de imunoglobulina ou complemento. É o padrão das vasculites '
+        'ANCA e combina com o C3 e o C4 normais; a lesão por imunocomplexo ou '
+        'por anticorpo antimembrana basal teria outro desenho.'),
+      p('A creatinina foi de 0,9 na admissão a 1,6 no terceiro dia e a 2,6 '
+        'agora. O ritmo da piora e a proporção de crescentes ativos são o que '
+        'pesa na decisão sobre o rim.')),
+
     bifurcacao('b2', 'Decisão', 'O rim',
       'Glomerulonefrite crescêntica pauci-imune, creatinina de 2,6 mg/dL, '
       'neutrófilos em 1.100 e subindo, culturas negativas, sem cocaína há '
@@ -508,33 +515,25 @@ ETAPAS = [
        'o cuidado à abstinência, e Marina autoriza a irmã a participar do '
        'plano.'),
 
-    Q('q8', 8,
-      'Sobre o tratamento de Marina, **quais três** afirmações estão '
-      'corretas?', [
-      ('A abstinência é a base do tratamento', True),
-      ('Crescentes ativos pedem corticoide e imunossupressor', True),
-      ('O título do ANCA não guia a duração', True),
-      ('Troca plasmática pela creatinina de 2,6', False),
-      ('Anticoagulação plena pelos trombos cutâneos', False),
-      ('Ciclofosfamida plena sem olhar os leucócitos', False),
-      ('Imunossupressão dispensa vigiar infecção', False),
-     ], [
-      ('A exposição', 'Sem nova exposição, a pele e a medula se recuperam na '
-       'maioria dos casos publicados, sem imunossupressor. Cada recaída descrita '
-       'veio de um novo uso.'),
-      ('O rim', 'Crescentes celulares em 28% dos glomérulos, com pouca '
-       'fibrose, são lesão ativa. As séries de glomerulonefrite associada ao '
-       'levamisol trataram com corticoide e rituximabe ou ciclofosfamida, como '
-       'a KDIGO 2024 indica na vasculite ANCA; numa mulher de 34 anos, o '
-       'rituximabe poupa a fertilidade e a medula.'),
-      ('O que não entra', 'A KDIGO 2024 reserva a troca plasmática para '
-       'creatinina acima de 3,4 mg/dL, diálise, queda rápida da função ou '
-       'hemorragia alveolar com hipoxemia. Sem antifosfolípide, trombo de '
-       'pequeno vaso não indica anticoagulação, e ela acaba de fazer biópsia '
-       'renal. A ciclofosfamida é ajustada pela contagem de leucócitos. O ANCA '
-       'persiste meses depois da remissão; quem guia o seguimento é a '
-       'creatinina, o sedimento e a proteinúria.'),
-     ]),
+    pagina('tratamento', 'Discussão', 'O que entra no tratamento',
+      p('A exposição vem primeiro. Sem novo uso, a pele e a medula se '
+        'recuperam na maioria dos casos publicados, sem imunossupressor, e '
+        'cada recaída descrita veio de um novo uso.'),
+      p('O rim não segue a pele. As séries de glomerulonefrite associada ao '
+        'levamisol trataram os crescentes ativos com corticoide e rituximabe ou '
+        'ciclofosfamida, como a KDIGO 2024 indica na vasculite ANCA. Numa '
+        'mulher de 34 anos que acaba de sair da agranulocitose, o rituximabe '
+        'poupa a fertilidade e a medula; a ciclofosfamida, quando usada, é '
+        'ajustada pela contagem de leucócitos.'),
+      topicos(('Troca plasmática', 'A KDIGO 2024 reserva para creatinina '
+               'acima de 3,4 mg/dL, diálise, queda rápida da função ou '
+               'hemorragia alveolar com hipoxemia.'),
+              ('Anticoagulação', 'Sem antifosfolípide, trombo de pequeno vaso '
+               'da pele não a indica, e a biópsia renal é recente.'),
+              ('Seguimento', 'O ANCA persiste meses depois da remissão e não '
+               'guia a duração. Quem guia é a creatinina, o sedimento e a '
+               'proteinúria, com vigilância de infecção durante a '
+               'imunossupressão.'))),
 
     pg('seguimento', 'Segunda semana',
        'Não surgem placas novas. As áreas necróticas das coxas delimitam e '
@@ -566,7 +565,7 @@ ETAPAS = [
     pg('tardio', 'Tratamento tardio',
        'Metilprednisolona por três dias e rituximabe. A creatinina para de '
        'subir no quinto dia de tratamento, em 4,1 mg/dL, sem necessidade de '
-       'diálise.', segue='q8'),
+       'diálise.', segue='tratamento'),
 
     pg('dialise', 'Uma semana depois',
        'A creatinina chega a 6,2 mg/dL, com potássio de 6,1 mmol/L e '

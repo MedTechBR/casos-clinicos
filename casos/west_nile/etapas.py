@@ -138,6 +138,34 @@ ETAPAS = [
         ex('TSH', '2,1 µUI/mL', '0,4–4,5 µUI/mL'),
     ]),
 
+    Q('p1', 1,
+      'Sódio de 129 mmol/L. Pelos exames e pelo exame físico, como se '
+      'classifica a hiponatremia?', [
+      ('Hipertônica, pela glicose', False),
+      ('Isotônica (pseudo-hiponatremia)', False),
+      ('Hipotônica hipovolêmica', False),
+      ('Hipotônica euvolêmica', True),
+      ('Hipotônica hipervolêmica', False),
+      ('Hipotônica com urina diluída', False),
+     ], [
+      ('Passo a passo', 'A osmolalidade sérica de 270 mOsm/kg define '
+       'hiponatremia hipotônica e afasta as formas isotônica e hipertônica; a '
+       'glicose de 138 mg/dL muda o sódio em menos de 1 mmol/L. A urina com 456 '
+       'mOsm/kg mostra que o ADH está agindo: com excesso de água ou pouco '
+       'soluto na dieta, ela viria abaixo de 100.'),
+      ('O volume', 'Mucosas úmidas, jugulares planas e nenhum edema indicam '
+       'euvolemia. Sódio urinário de 52 mmol/L sem diurético e ácido úrico baixo, '
+       'de 2,6 mg/dL, tornam a hipovolemia improvável: nela o rim poupa sódio, '
+       'abaixo de 30 mmol/L.'),
+      ('O que a categoria abre', 'Hipotônica euvolêmica com urina concentrada '
+       'é, na maioria das vezes, secreção inapropriada de ADH; hipotireoidismo e '
+       'insuficiência adrenal completam a lista, e o TSH normal tira o primeiro. '
+       'No idoso febril e confuso, a secreção inapropriada costuma vir do sistema '
+       'nervoso ou do pulmão. A conduta já sai daqui: restrição de água livre, '
+       'nada de soro hipotônico e correção de no máximo 8 a 10 mmol/L em 24 '
+       'horas.'),
+     ]),
+
     estudo('rx_adm', 'Radiografia de tórax',
            'Radiografia feita na chegada, à procura de um foco para a febre e a '
            'confusão.',
@@ -160,32 +188,6 @@ ETAPAS = [
          IMG,
          'Com febre de 38,7 °C, a taquicardia sinusal é esperada e não explica a '
          'confusão nem a perna que cedeu.'),
-
-    Q('p1', 1,
-      'Sódio de 129 mmol/L. Pelos exames e pelo exame físico, qual a '
-      'classificação mais provável da hiponatremia?', [
-      ('Hipovolêmica, por pouca ingestão', False),
-      ('Secreção inapropriada de ADH', True),
-      ('Pseudo-hiponatremia', False),
-      ('Hiperglicemia com desvio de água', False),
-      ('Baixa ingestão de solutos', False),
-      ('Hipervolêmica', False),
-     ], [
-      ('Passo a passo', 'A osmolalidade sérica de 270 mOsm/kg confirma '
-       'hiponatremia hipotônica, o que afasta a pseudo-hiponatremia, e a glicose '
-       'de 138 mg/dL muda o sódio em menos de 1 mmol/L. A urina com 456 mOsm/kg '
-       'mostra que o ADH está agindo: na polidipsia e na dieta pobre em solutos, '
-       'ela viria abaixo de 100.'),
-      ('O volume', 'Mucosas úmidas, jugulares planas e nenhum edema indicam '
-       'euvolemia. Sódio urinário de 52 mmol/L sem diurético e ácido úrico baixo, '
-       'de 2,6 mg/dL, tornam a hipovolemia improvável: nela o rim poupa sódio, '
-       'abaixo de 30 mmol/L. O TSH normal ajuda; a insuficiência adrenal ainda '
-       'precisa ser afastada com cortisol.'),
-      ('O que muda', 'Restrição de água livre, nada de soro hipotônico e '
-       'correção de no máximo 8 a 10 mmol/L em 24 horas. E a causa: no idoso '
-       'febril e confuso, a secreção inapropriada aponta para o sistema nervoso '
-       'ou para o pulmão, e a radiografia está limpa.'),
-     ]),
 
     bifurcacao('b1', 'Decisão', 'Antes da tomografia',
       'Febre, confusão, rigidez de nuca discreta e uma perna fraca. A tomografia '
@@ -250,40 +252,40 @@ ETAPAS = [
     ], introducao='Punção lombar feita logo depois da tomografia.'),
 
     pareamento('p2', 'Pergunta 2',
-      'O líquor dele e o de outros quatro pacientes. Associe cada perfil ao '
-      'diagnóstico que ele sugere.', [
+      'O líquor dele e o de outros quatro pacientes. Associe cada perfil à '
+      'categoria que ele sugere.', [
       par('86 células, 58% neutrófilos, proteína 92, glicose 74/138, Gram '
           'negativo (o dele)',
-          'Meningoencefalite viral em fase inicial',
+          'Viral, em fase inicial',
           'Dezenas de células, glicose preservada e Gram negativo. Neutrófilos '
           'nos primeiros dias ocorrem em várias viroses.'),
       par('2.400 células, 95% neutrófilos, proteína 240, glicose 20/110',
-          'Meningite bacteriana',
+          'Bacteriana',
           'Milhares de neutrófilos, proteína alta e relação de glicose abaixo '
           'de 0,4.'),
       par('180 células, 90% linfócitos, proteína 110, glicose 35/100, ADA '
           'elevada',
-          'Meningite tuberculosa',
-          'Linfocitário, proteína alta e glicose baixa: separa tuberculose e '
-          'fungo dos vírus.'),
+          'Tuberculosa ou fúngica',
+          'Linfocitário, proteína alta e glicose baixa: é o que separa as '
+          'meningites crônicas das virais.'),
       par('5 células, proteína 180, glicose normal',
-          'Guillain-Barré (dissociação albuminocitológica)',
-          'Proteína alta sem células; pode levar uma a duas semanas para '
-          'aparecer.'),
-      par('60 células, linfócitos, proteína 80, glicose normal, 300 hemácias '
-          'sem punção traumática',
-          'Encefalite herpética',
-          'Hemácias sem trauma de agulha sugerem necrose hemorrágica temporal.'),
+          'Dissociação albuminocitológica',
+          'Proteína alta sem células aponta para raízes nervosas ou bloqueio do '
+          'canal, sem infecção das meninges.'),
+      par('2 células, proteína 32, glicose 62/100',
+          'Normal',
+          'Até 5 células, proteína até 45 e relação de glicose de 0,62: febre '
+          'com dor de cabeça nem sempre é meningite.'),
       ], opcoes=[
-      'Meningoencefalite viral em fase inicial',
-      'Meningite bacteriana',
-      'Meningite tuberculosa',
-      'Guillain-Barré (dissociação albuminocitológica)',
-      'Encefalite herpética',
-      'Meningite criptocócica',
+      'Viral, em fase inicial',
+      'Bacteriana',
+      'Tuberculosa ou fúngica',
+      'Dissociação albuminocitológica',
+      'Normal',
+      'Neoplásica',
       ], titulo_resposta='Célula, proteína e glicose, nessa ordem de leitura',
-      nota='A opção que sobrou, criptococo, teria poucas células, pressão de '
-           'abertura alta e tinta da China positiva.'),
+      nota='A opção que sobrou, neoplásica, costuma ter proteína alta, glicose '
+           'baixa e células atípicas na citologia.'),
 
     pg('reexame', 'Na manhã seguinte',
        'A equipe registra meningoencefalite viral, herpética até prova em '
@@ -310,15 +312,17 @@ ETAPAS = [
        'inferior. Sensibilidade normal nos três modos, sem nível e sem retenção '
        'urinária, com distribuição assimétrica e salteada, que atinge muito um '
        'membro e pouco outro: o alvo é o corpo do neurônio motor, no corno '
-       'anterior. É o padrão da poliomielite.'),
-      ('Por que não as outras', 'A polirradiculoneuropatia desmielinizante '
+       'anterior.'),
+      ('Por que não as outras', 'A lesão desmielinizante de raízes e nervos '
        'costuma ser simétrica, com parestesias e perda da vibração. Uma lesão '
        'da cápsula interna daria hiperreflexia e Babinski passados os primeiros '
-       'dias. Miastenia e botulismo preservam os reflexos. A lesão medular '
-       'transversa daria nível sensitivo e bexiga neurogênica. Miosite daria '
-       'fraqueza proximal e simétrica, e a CK é de 160.'),
-      ('O que muda', 'Lesão do corpo neuronal recupera pouco e devagar, ao '
-       'contrário da desmielinização, que se refaz em semanas. A ressonância '
+       'dias. As doenças da junção neuromuscular preservam os reflexos. A '
+       'lesão medular transversa daria nível sensitivo e bexiga neurogênica. '
+       'Doença muscular daria fraqueza proximal e simétrica, e a CK é de 160.'),
+      ('O que muda', 'Paralisia flácida aguda por lesão do corno anterior '
+       'tem várias causas, a maioria infecciosa. Lesão do corpo neuronal '
+       'recupera pouco e devagar, ao contrário da desmielinização, que se '
+       'refaz em semanas. A ressonância '
        'passa a incluir a medula, e a eletroneuromiografia entra no pedido.'),
      ]),
 
@@ -385,10 +389,7 @@ ETAPAS = [
        'respiratória de 22, SpO₂ de 96% em ar ambiente, gasometria com pH 7,43 '
        'e pCO₂ de 38 mmHg. A capacidade vital caiu de 24 para 17 mL/kg em oito '
        'horas; pressão inspiratória máxima de −22 cmH₂O e expiratória de 34 '
-       'cmH₂O.',
-       'A eletroneuromiografia do mesmo dia mostra potenciais motores de '
-       'amplitude reduzida, mais à direita, com velocidades de condução normais '
-       'e potenciais sensitivos preservados.'),
+       'cmH₂O.'),
 
     Q('p5', 5,
       '**Quais quatro** dados dele indicam intubação eletiva agora?', [
@@ -412,8 +413,18 @@ ETAPAS = [
        'inespecífica.'),
      ]),
 
+    pg('enmg', 'A eletroneuromiografia',
+       'Chega o laudo da eletroneuromiografia feita de manhã: potenciais '
+       'motores de amplitude reduzida, mais à direita, com velocidades de '
+       'condução normais e potenciais sensitivos preservados.',
+       'Amplitude baixa com condução normal indica perda de axônios motores; a '
+       'desmielinização reduziria a velocidade. Com os potenciais sensitivos '
+       'normais, a lesão fica no neurônio motor, e o estudo confirma o corno '
+       'anterior que o exame e a ressonância já sugeriam.'),
+
     bifurcacao('b2', 'Decisão', 'Suporte respiratório',
-      'Como você conduz essa mudança?', [
+      'De volta ao leito: tosse fraca, engasgo com água e capacidade vital de '
+      '17 mL/kg, em queda. Como você conduz?', [
       caminho('UTI e intubação planejada agora', 'r_via',
               'A progressão bulbar e ventilatória permite antecipar a via aérea '
               'em vez de esperar o colapso.'),
@@ -510,30 +521,19 @@ ETAPAS = [
        'entre 2014 e 2026, a maioria no Piauí, e em 2026 houve transmissão local '
        'em Santa Catarina e em São Paulo.'),
 
-    Q('p7', 7,
-      'Sobre o tratamento a partir de agora, **quais três** afirmações estão '
-      'corretas?', [
-      ('Suspender aciclovir e antibióticos', True),
-      ('Não há antiviral com benefício comprovado', True),
-      ('Reabilitação motora e respiratória desde a UTI', True),
-      ('Imunoglobulina endovenosa muda o desfecho', False),
-      ('Corticoide em dose alta acelera a recuperação', False),
-      ('Ribavirina pela gravidade', False),
-      ('Manter o aciclovir por 14 dias', False),
-     ], [
-      ('O que sai', 'PCR para herpes negativa em líquor colhido depois de 72 '
-       'horas de sintomas, com outro diagnóstico confirmado, permite suspender '
-       'o aciclovir. Hemoculturas negativas em 72 horas e um líquor que não é '
-       'bacteriano permitem suspender ceftriaxona e ampicilina.'),
-      ('O que não entra', 'Ribavirina, interferon, corticoide e imunoglobulina '
-       'foram testados ou usados sem benefício conclusivo. O único ensaio '
+    pg('tratamento', 'O tratamento a partir de agora',
+       'Com a PCR para herpes negativa em líquor colhido depois de 72 horas de '
+       'sintomas e outro diagnóstico confirmado, o aciclovir é suspenso. '
+       'Hemoculturas negativas em 72 horas e um líquor que não é bacteriano '
+       'permitem suspender ceftriaxona e ampicilina.',
+       'Não há antiviral específico. Ribavirina, interferon, corticoide e '
+       'imunoglobulina foram usados sem benefício conclusivo; o único ensaio '
        'randomizado de imunoglobulina rica em anticorpos contra o vírus foi '
-       'inconclusivo (Gnann e cols., 2019). Não há antiviral específico.'),
-      ('O que muda o desfecho', 'O suporte: ventilação, prevenção de '
-       'aspiração, trombose e úlcera por pressão, nutrição por via segura, '
-       'controle do sódio e fisioterapia desde a UTI. A recuperação motora da '
-       'poliomielite é lenta e muitas vezes incompleta.'),
-     ]),
+       'inconclusivo (Gnann e cols., 2019).',
+       'O desfecho depende do suporte: ventilação, prevenção de aspiração, '
+       'trombose e úlcera por pressão, nutrição por via segura, controle do '
+       'sódio e fisioterapia desde a UTI. A recuperação motora da poliomielite '
+       'é lenta e muitas vezes incompleta.'),
 
     pg('recuperacao', 'Segunda e terceira semanas',
        'A febre acaba no sexto dia de internação. O tremor diminui, e ele volta '
@@ -541,28 +541,18 @@ ETAPAS = [
        'continua sem vencer a gravidade. A eletroneuromiografia da terceira '
        'semana mostra fibrilações na perna direita, sinal de denervação.'),
 
-    Q('p8', 8,
-      'Sobre vigilância e orientação na alta, **quais três** medidas estão '
-      'corretas?', [
-      ('Notificação imediata, já na suspeita', True),
-      ('Não doar sangue por 120 dias', True),
-      ('Reabilitação continuada depois da alta', True),
-      ('Isolamento de contato em casa', False),
-      ('Vacinar a esposa', False),
-      ('Sorologia de rotina para a esposa', False),
-      ('Antiviral profilático para a família', False),
-     ], [
-      ('Vigilância', 'A febre do Nilo Ocidental é de notificação compulsória '
-       'imediata no Brasil: todo caso suspeito vai à vigilância em até 24 horas, '
-       'antes da sorologia. Mesmo num caso importado, a vigilância investiga se '
-       'houve exposição local, porque o vírus já circula no país.'),
-      ('Transmissão', 'Não há transmissão por contato. Ela ocorre pela picada '
-       'e, raramente, por transfusão, transplante e via transplacentária; por '
-       'isso ele não deve doar sangue por 120 dias, como recomenda o CDC. Não '
-       'há vacina humana, e a esposa, sem sintomas, não precisa de exame.'),
-      ('Seguimento', 'Fisioterapia, fonoaudiologia e acompanhamento neurológico '
-       'continuam depois da alta; fraqueza e cansaço podem durar meses.'),
-     ]),
+    pg('vigilancia', 'Vigilância e orientação na alta',
+       'A febre do Nilo Ocidental é de notificação compulsória imediata no '
+       'Brasil: o caso suspeito vai à vigilância em até 24 horas, antes da '
+       'sorologia. Mesmo num caso importado, a vigilância investiga se houve '
+       'exposição local, porque o vírus já circula no país.',
+       'Não há transmissão por contato, e ele não precisa de isolamento em '
+       'casa. A transmissão é pela picada e, raramente, por transfusão, '
+       'transplante e via transplacentária; por isso ele não deve doar sangue '
+       'por 120 dias, como recomenda o CDC. Não há vacina humana, e a esposa, '
+       'sem sintomas, não precisa de exame.',
+       'Fisioterapia, fonoaudiologia e acompanhamento neurológico continuam '
+       'depois da alta; fraqueza e cansaço podem durar meses.'),
 
     pg('alta', 'Preparando a alta',
        'A equipe revê com ele e a esposa o que aconteceu: a viagem, a doença, a '

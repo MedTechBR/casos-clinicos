@@ -4,12 +4,15 @@ PILOTO do molde do //New England// lido em 26/09/2026 (ver
 Artifacts/nejm-casos-classicos/GRAMATICA_LIDA_2026-09-26.md), no desenho de
 "An Unusual Case of Abdominal Pain": apresentação curta, ficha do paciente,
 exame por sistema e primeiros exames entregues prontos; as primeiras
-perguntas classificam os dados (padrão hepático, tipo de lesão renal,
-gasometria, mecanismo da hipoxemia) sem nomear doença; a exposição chega
+leituras classificam os dados sem nomear doença; a exposição chega
 depois, com o irmão; o nome do diagnóstico aparece pela primeira vez na
 pergunta do exame confirmatório, perto de 60% do caso. Cada pergunta tem uma
 explicação só, em seções com subtítulo. As decisões de conduta continuam
 mudando o desfecho, a pedido do Matheus.
+
+Revisão de 30/09: seis perguntas no caminho padrão, nunca duas telas
+interativas seguidas; o padrão hepático e os critérios de gravidade viraram
+páginas de discussão, e a primeira pergunta só classifica a lesão renal.
 
 Paciente ficcional; doses e critérios segundo o Guia de Vigilância em Saúde
 do Ministério da Saúde, 6.ª edição revisada, 2024.
@@ -157,55 +160,22 @@ ETAPAS = [
          'Sem obstrução biliar nem urinária: a icterícia e a lesão renal são '
          'de dentro do fígado e do rim.']),
 
-    Q('p1', 1,
-      'Pelos critérios menores de pneumonia comunitária grave da IDSA/ATS, '
-      '**quais três** ele preenche?', [
-      ('Ureia acima de 42 mg/dL', True),
-      ('Plaquetas abaixo de 100.000/mm³', True),
-      ('Frequência respiratória de 30 ou mais', True),
-      ('Infiltrados multilobares', False),
-      ('PaO₂/FiO₂ de 250 ou menos', False),
-      ('Confusão ou desorientação', False),
-      ('Leucócitos acima de 12.000/mm³', False),
-     ], [
-      ('Os critérios', 'FR de 30 ou mais, PaO₂/FiO₂ de 250 ou menos, '
-       'infiltrados multilobares, confusão, ureia acima de cerca de 42 (BUN de '
-       '20), leucócitos abaixo de 4.000, plaquetas abaixo de 100.000, '
-       'temperatura abaixo de 36 °C e hipotensão que exige volume agressivo.'),
-      ('Contando com cuidado', 'Ureia de 148, plaquetas de 88.000 e frequência '
-       'respiratória de 30 preenchem três. A consolidação ocupa um lobo só, a '
-       'PaO₂/FiO₂ é 58 dividido por 0,21, igual a 276, e ele está sonolento '
-       'mas orientado. Leucocitose não é critério; leucopenia é.'),
-      ('O que muda', 'Três ou mais critérios menores indicam internação em '
-       'terapia intensiva. A regra orienta o local de tratamento, não a causa: '
-       'ureia alta, plaquetas baixas e icterícia pedem que se pergunte se a '
-       'pneumonia explica tudo.'),
-     ]),
+    pagina('figado', 'Discussão', 'O padrão hepático',
+        p('A bilirrubina total é de 6,4 mg/dL, 5,3 dela direta, com fosfatase '
+          'alcalina de 190 e GGT de 160 U/L. As transaminases, 96 e 70 U/L, '
+          'ficam abaixo de três vezes o limite. A icterícia é desproporcional à '
+          'lesão do hepatócito, e esse é o padrão colestático.'),
+        p('O ultrassom sem dilatação das vias biliares põe a colestase dentro do '
+          'fígado. Uma obstrução extra-hepática dilataria as vias, e a hemólise '
+          'elevaria a fração indireta. Uma hepatite viral, isquêmica ou tóxica '
+          'com essa icterícia teria transaminases nas centenas altas ou nos '
+          'milhares, e a infiltração do fígado sobe a fosfatase alcalina muito '
+          'mais que a bilirrubina.'),
+        p('Colestase intra-hepática aparece na sepse de qualquer foco, inclusive '
+          'o pulmonar, em infecções sistêmicas e na lesão por fármacos. Sozinha, '
+          'ainda cabe na hipótese de pneumonia com sepse.')),
 
-    Q('p2', 2,
-      'Qual padrão descreve melhor as alterações das provas hepáticas?', [
-      ('Hepatocelular', False),
-      ('Colestase intra-hepática', True),
-      ('Obstrução biliar extra-hepática', False),
-      ('Hemólise', False),
-      ('Infiltração hepática', False),
-     ], [
-      ('O padrão', 'A bilirrubina é de 6,4 mg/dL, 83% dela direta, com '
-       'fosfatase alcalina e GGT elevadas e transaminases abaixo de três vezes '
-       'o limite. A icterícia é desproporcional à lesão do hepatócito: é '
-       'colestase, e o ultrassom sem dilatação das vias biliares a coloca '
-       'dentro do fígado.'),
-      ('Por que não as outras', 'Hepatite viral, isquêmica ou tóxica com essa '
-       'icterícia teria transaminases na casa das centenas altas ou dos '
-       'milhares. Obstrução extra-hepática dilataria as vias biliares. Hemólise '
-       'eleva a fração indireta, e aqui a direta domina. Infiltração costuma '
-       'subir a fosfatase alcalina muito mais que a bilirrubina.'),
-      ('O que esse padrão pede', 'Colestase intra-hepática aparece na sepse de '
-       'qualquer foco, inclusive pulmonar, e em infecções sistêmicas e lesão '
-       'por fármacos. Sozinha, ainda cabe na hipótese de pneumonia com sepse.'),
-     ]),
-
-    Q('p3', 3,
+    Q('p3', 1,
       'Creatinina de 2,6 mg/dL, que era 1,0 há quatro dias. Qual a '
       'interpretação mais adequada da lesão renal?', [
       ('Pré-renal por hipovolemia', False),
@@ -228,6 +198,22 @@ ETAPAS = [
        'sangue ++ com poucas hemácias, o que, com CK de 2.380, indica pigmento '
        'muscular na urina.'),
      ]),
+
+    pagina('gravidade', 'Discussão', 'A gravidade antes da causa',
+        p('Com a hipótese de pneumonia comunitária, a equipe aplica os critérios '
+          'menores de gravidade da IDSA/ATS: frequência respiratória de 30 ou '
+          'mais, PaO₂/FiO₂ de 250 ou menos, infiltrados multilobares, confusão, '
+          'ureia acima de cerca de 42 mg/dL, leucócitos abaixo de 4.000/mm³, '
+          'plaquetas abaixo de 100.000/mm³, temperatura abaixo de 36 °C e '
+          'hipotensão que exige volume agressivo.'),
+        p('Ele preenche três: ureia de 148, plaquetas de 88.000 e frequência '
+          'respiratória de 30. A PaO₂/FiO₂ é 58 dividido por 0,21, igual a 276, '
+          'a consolidação ocupa um lobo só e ele está sonolento, mas orientado. '
+          'A leucocitose de 15.600 não conta, porque o critério é a leucopenia.'),
+        p('Três ou mais critérios menores indicam terapia intensiva. A regra '
+          'orienta o local de tratamento e nada diz sobre a causa. Ureia alta, '
+          'plaquetas baixas e icterícia num quadro pulmonar pedem que se '
+          'pergunte se a pneumonia explica tudo.')),
 
     bifurcacao('b1', 'Decisão', 'As primeiras horas',
       'Hipotenso, hipoxêmico, com lesão tubular e colestase, três critérios '
@@ -292,7 +278,7 @@ ETAPAS = [
          'Com hemoptise e queda de 3,2 g/dL na hemoglobina, o que enche os '
          'alvéolos é sangue: hemorragia alveolar difusa.']),
 
-    Q('p4', 4,
+    Q('p4', 2,
       'Hemorragia alveolar com plaquetas de 38.000, INR de 1,4, fibrinogênio '
       'de 390 e esfregaço sem esquizócitos. **Quais três** afirmações estão '
       'corretas?', [
@@ -315,6 +301,14 @@ ETAPAS = [
        'de 50.000. Plasma com INR de 1,4 não corrige nada que importe e soma '
        'volume a um pulmão que já está cheio.'),
      ]),
+
+    pg('suporte', 'Uma hora depois',
+       'Ele recebe uma dose de plaquetas e um concentrado de hemácias, sem '
+       'plasma. As plaquetas sobem para 61.000/mm³ e a hemoglobina para 10,4 '
+       'g/dL, mas a hemoptise continua.',
+       'A saturação não passa de 83% com a máscara com reservatório. A '
+       'frequência respiratória é de 38, com uso da musculatura acessória, e a '
+       'sonda vesical drenou 10 mL na última hora.'),
 
     bifurcacao('b2', 'Decisão', 'O pulmão que sangra',
       'Saturação de 83% com máscara, hemoptise e oligúria. O que você faz?', [
@@ -377,7 +371,7 @@ ETAPAS = [
        'da equipe tem ratos.',
        'As hemoculturas seguem sem crescimento em 48 horas.'),
 
-    Q('p5', 5,
+    Q('p5', 3,
       'Com essa exposição, a equipe quer confirmar a hipótese a partir da '
       'alíquota guardada da admissão, colhida no sexto dia e antes do '
       'antibiótico. Qual exame confirma o diagnóstico nessa amostra?', [
@@ -413,7 +407,7 @@ ETAPAS = [
        'com hipotensão duas horas depois da primeira dose ganha agora outro '
        'sentido.'),
 
-    pareamento('p6', 'Pergunta 6',
+    pareamento('p6', 'Pergunta 4',
       'As febres ictéricas e hemorrágicas do Brasil se sobrepõem. Associe '
       'cada quadro à doença que ele sugere.', [
       par('Sufusão conjuntival, dor na panturrilha e contato com enchente',
@@ -444,7 +438,7 @@ ETAPAS = [
        'dia, tem ELISA IgM reagente e microaglutinação com título de 1:1.600 '
        'para o sorogrupo Icterohaemorrhagiae.'),
 
-    Q('p7', 7,
+    Q('p7', 5,
       'Sobre o tratamento, **quais três** afirmações estão corretas?', [
       ('Antibiótico endovenoso por pelo menos 7 dias', True),
       ('Diálise precoce e diária', True),
@@ -473,7 +467,15 @@ ETAPAS = [
        'na forma grave.'),
      ]),
 
-    Q('p8', 8,
+    pg('terceira', 'Terceira semana',
+       'Com o magnésio corrigido, o potássio se sustenta acima de 3,5 mmol/L '
+       'com reposição oral. A bilirrubina e a creatinina caem a cada dia, e ele '
+       'volta a comer.',
+       'Na visita, ele pergunta quando pode voltar ao trabalho e se os colegas '
+       'da equipe correm o mesmo risco. O irmão quer saber se pode ter se '
+       'contaminado cuidando dele.'),
+
+    Q('p8', 6,
       'Na alta, **quais três** medidas estão corretas?', [
       ('Notificar à vigilância epidemiológica', True),
       ('Investigar o local de trabalho', True),
