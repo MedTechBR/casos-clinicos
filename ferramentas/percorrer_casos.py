@@ -43,7 +43,8 @@ CONFIG = {
                  'Hemograma de controle']}),
 }
 
-for _c in ('kikuchi', 'sarcoidose', 'cmv', 'leptospirose', 'endocardite', 'adrenal'):
+for _c in ('kikuchi', 'sarcoidose', 'cmv', 'leptospirose', 'endocardite', 'adrenal',
+           'encefalite_nmda', 'ptt', 'paracoco', 'feocromocitoma'):
   CONFIG.setdefault(_c, dict(full={}))
 args = [a for a in sys.argv[1:] if not a.startswith('--')]
 slugs = args or list(CONFIG)

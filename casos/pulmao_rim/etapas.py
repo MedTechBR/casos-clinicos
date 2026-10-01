@@ -251,7 +251,7 @@ ETAPAS = [
         'Hansen, Nielsen e Ewertsen · Wikimedia Commons · CC BY 4.0 · recorte prévio e setas adicionadas',
         [
          ((495, 288), (620, 105), '**Córtex** renal (três asteriscos), de espessura preservada.', 12),
-         ((462, 345), (330, 160), '**Pirâmide medular** (dois asteriscos), hipoecoica: a diferenciação entre córtex e medula está preservada.', 12),
+         ((472, 357), (330, 160), '**Pirâmide medular** (dois asteriscos), hipoecoica: a diferenciação entre córtex e medula está preservada.', 12),
          ((447, 400), (720, 550), '**Seio renal** (quatro asteriscos), ecogênico, sem dilatação do sistema coletor.', -12),
         ],
         ['Rins de 11,2 e 11,0 cm, córtex de espessura preservada, sem '
@@ -297,7 +297,7 @@ ETAPAS = [
         [
          ((457, 493), (200, 380), '**Borda** lisa e paralela: o cilindro é o molde do lúmen de um túbulo.', 12),
          ((500, 500), (720, 700), '**Conteúdo celular** denso e acastanhado, preso na matriz do cilindro.', -12),
-         ((757, 243), (880, 110), '**Extremidade** arredondada, onde o molde se desprendeu do túbulo.', 12),
+         ((745, 262), (880, 110), '**Extremidade** arredondada, onde o molde se desprendeu do túbulo.', 12),
         ],
         ['Hemácias dismórficas em 40%, com acantócitos, e cilindros hemáticos '
          '(laudo do caso).',
@@ -394,8 +394,8 @@ ETAPAS = [
         'pulmão · comparação didática.',
         'Hellerhoff · Wikimedia Commons · CC BY-SA 4.0 · setas adicionadas',
         [
-         ((115, 165), (330, 40), '**Vidro fosco** no lobo superior direito, entremeado de pulmão aerado.', -12),
-         ((93, 750), (300, 830), 'O mesmo padrão, mais denso, nas **bases**, com áreas de consolidação.', 12),
+         ((100, 186), (330, 40), '**Vidro fosco** no lobo superior direito, entremeado de pulmão aerado.', -12),
+         ((68, 771), (300, 830), 'O mesmo padrão, mais denso, nas **bases**, com áreas de consolidação.', 12),
          ((533, 235), (640, 70), 'Na reconstrução coronal, o **pulmão direito** tomado do ápice à base.', -12),
         ],
         ['Opacidades em vidro fosco difusas e bilaterais, com áreas de '

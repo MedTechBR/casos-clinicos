@@ -16,7 +16,17 @@ PUBLICO = {
     'endocardite': 'pequenos-sinais',
     'adrenal': 'oito-meses-de-cansaco',
     'cmv': 'depois-da-travessia',
+    # casos novos (out/26): nome provisório até o título ser escolhido
+    'encefalite_nmda': 'caso-novo-a',
+    'ptt': 'caso-novo-b',
+    'paracoco': 'caso-novo-c',
+    'feocromocitoma': 'caso-novo-d',
 }
+
+# Só os módulos que já tiveram endereço público pelo nome antigo ganham
+# redirecionamento nesse nome (os novos nunca tiveram, e o nome é o diagnóstico).
+LEGADO = {'pulmao_rim', 'cocaina_levamisol', 'west_nile', 'kikuchi', 'sarcoidose',
+          'leptospirose', 'endocardite', 'adrenal', 'cmv'}
 
 # Endereços públicos antigos que também redirecionam (título trocado).
 APELIDOS = {'febre-de-abril': 'o-sexto-dia'}
@@ -33,7 +43,11 @@ def publicar_local():
     nome antigo um redirecionamento, para links já compartilhados."""
     for mod, nome in PUBLICO.items():
         src = RAIZ / 'saida' / (mod.replace('_', '-') + '-etapas.html')
+        if not src.exists():
+            continue
         (RAIZ / (nome + '.html')).write_bytes(src.read_bytes())
+        if mod not in LEGADO:
+            continue
         antigo = RAIZ / (mod.replace('_', '-') + '.html')
         antigo.write_text(
             '<!doctype html><meta charset="utf-8"><title>Casos clínicos</title>'

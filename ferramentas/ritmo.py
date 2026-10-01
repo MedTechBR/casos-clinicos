@@ -40,6 +40,7 @@ def medir(slug, alts=False):
 
 if __name__ == '__main__':
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
-    slugs = args or ['pulmao_rim', 'cocaina_levamisol', 'west_nile', 'kikuchi', 'sarcoidose', 'cmv', 'leptospirose', 'endocardite', 'adrenal']
+    from nomes_publicos import PUBLICO
+    slugs = args or [s for s in PUBLICO if (ROOT / 'casos' / s / 'etapas.py').exists()]
     ruins = [s for s in slugs if not medir(s, '--alts' in sys.argv)]
     sys.exit(1 if ruins else 0)

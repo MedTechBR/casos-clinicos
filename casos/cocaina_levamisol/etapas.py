@@ -315,7 +315,7 @@ ETAPAS = [
         [
          ((495, 288), (620, 105), '**Córtex** renal (três asteriscos), de espessura preservada.', 12),
          ((447, 400), (720, 550), '**Seio renal** (quatro asteriscos), ecogênico, sem dilatação do sistema coletor.', -12),
-         ((462, 345), (330, 160), '**Pirâmide medular** (dois asteriscos), hipoecoica: a diferenciação entre córtex e medula está preservada.', 12),
+         ((472, 357), (330, 160), '**Pirâmide medular** (dois asteriscos), hipoecoica: a diferenciação entre córtex e medula está preservada.', 12),
         ],
         ['Rins de 11 cm, com córtex preservado e sem hidronefrose.',
          'Sem obstrução e sem rim pequeno de doença antiga: a lesão é aguda e '

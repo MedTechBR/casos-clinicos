@@ -23,6 +23,10 @@ DX = {
  'leptospirose': r'leptosp|\bWeil\b',
  'endocardite': r'endocardite|vegeta[çc]|\bDuke\b',
  'adrenal': r'adrenal|Addison|hidrocortisona|cortisol|ACTH',
+ 'encefalite_nmda': r'NMDA|encefalite autoimune|teratoma|anti-?receptor',
+ 'ptt': r'trombocitop[eê]nica tromb[oó]tica|\bPTT\b|\bTTP\b|ADAMTS|caplacizumab',
+ 'paracoco': r'paracoccid|\bPCM\b|blastomicose sul',
+ 'feocromocitoma': r'feocromocit|paraganglioma|metanefrin|catecolamin',
 }
 TAG = re.compile(r'<[^>]+>')
 
@@ -118,7 +122,7 @@ def conferir(slug, a):
     return sorted(set(falhas))
 
 if __name__ == '__main__':
-    for slug in (sys.argv[1:] or list(DX)):
+    for slug in (sys.argv[1:] or [d for d in DX if (ROOT / 'casos' / d / 'etapas.py').exists()]):
         a = analisar(slug)
         f = conferir(slug, a)
         print(('OK   ' if not f else 'FALHA'), slug)

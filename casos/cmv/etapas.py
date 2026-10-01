@@ -325,7 +325,7 @@ ETAPAS = [
         [
          ((743, 551), (930, 640), '**Inclusão intranuclear** grande e densa, que ocupa quase todo o núcleo.', 12),
          ((765, 420), (910, 300), '**Citomegalia**: célula várias vezes maior que as vizinhas, junto ao vaso.', -12),
-         ((300, 795), (130, 900), '**Infiltrado inflamatório** misto na lâmina própria.', 12),
+         ((400, 930), (130, 900), '**Infiltrado inflamatório** misto na lâmina própria.', 12),
         ],
         ['Efeito citopático viral: células aumentadas, com inclusão '
          'intranuclear cercada de halo, no estroma e no endotélio.',

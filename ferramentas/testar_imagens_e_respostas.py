@@ -10,7 +10,7 @@ with sync_playwright() as pw:
  b=pw.chromium.launch();page=b.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
  for w,h in [(1600,900),(1366,768),(375,812)]:
   page.set_viewport_size({'width':w,'height':h});questions=0;slides=0
-  for slug in PUBLICO_HIFEN:
+  for slug in [k for k in PUBLICO_HIFEN if (ROOT/(PUBLICO_HIFEN[k]+'.html')).exists()]:
    page.goto((ROOT/(PUBLICO_HIFEN[slug]+'.html')).as_uri())
    for q in page.evaluate('ETAPAS.filter(e=>e.t==="pergunta").map(e=>({k:e.k,n:e.escolhas,exp:!!e.exp}))'):
     page.evaluate('(k)=>ir(porId(k))',q['k'])

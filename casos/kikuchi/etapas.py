@@ -396,7 +396,7 @@ ETAPAS = [
         [
          ((325, 452), (150, 330), '**Cariorrexe**: fragmentos nucleares escuros, pequenos e irregulares, espalhados pela área pálida.', 12),
          ((655, 518), (860, 430), '**Histiócito** de núcleo claro, ovalado ou reniforme, com citoplasma pálido.', -12),
-         ((560, 330), (760, 250), 'Fundo **eosinofílico e granular** de necrose, sem neutrófilos.', -12),
+         ((845, 345), (760, 250), 'Fundo **eosinofílico e granular** de necrose, sem neutrófilos.', -12),
         ],
         ['Necrose paracortical com abundante cariorrexe e histiócitos, sem '
          'neutrófilos e sem granulomas.',

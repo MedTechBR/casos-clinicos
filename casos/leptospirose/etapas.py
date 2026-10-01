@@ -136,7 +136,7 @@ ETAPAS = [
            CREDITO_RX_ADM,
         [
          ((190, 478), (70, 330), '**Consolidação alveolar** no terço inferior do pulmão direito.', 12),
-         ((68, 622), (175, 745), '**Seio costofrênico** direito livre: sem derrame.', -12),
+         ((47, 700), (175, 745), '**Seio costofrênico** direito livre: sem derrame.', -12),
          ((690, 290), (900, 200), '**Pulmão esquerdo** sem opacidades.', 12),
         ],
         ['Consolidação alveolar em base direita, sem derrame pleural e sem '
