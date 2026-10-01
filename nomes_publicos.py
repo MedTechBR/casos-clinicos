@@ -16,11 +16,11 @@ PUBLICO = {
     'endocardite': 'pequenos-sinais',
     'adrenal': 'oito-meses-de-cansaco',
     'cmv': 'depois-da-travessia',
-    # casos novos (out/26): nome provisório até o título ser escolhido
-    'encefalite_nmda': 'caso-novo-a',
-    'ptt': 'caso-novo-b',
-    'paracoco': 'caso-novo-c',
-    'feocromocitoma': 'caso-novo-d',
+    # casos novos (out/26)
+    'encefalite_nmda': 'dez-noites',
+    'ptt': 'do-outro-lado-do-plantao',
+    'paracoco': 'a-ferida-do-labio',
+    'feocromocitoma': 'pressao-de-nervoso',
 }
 
 # Só os módulos que já tiveram endereço público pelo nome antigo ganham

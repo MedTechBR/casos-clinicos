@@ -60,13 +60,29 @@ CASOS = [
          subtitulo="Depois de retomar a rotina, uma mulher precisa voltar ao hospital por febre e diarreia.",
          especialidade="Clínica médica", minutos=50, decisoes=6,
          desfechos=3, nivel="residente", cor="ocre", capa="../../cmv/img/cena.png", arquivo="depois-da-travessia.html?v=20260926-nejm"),
+    caso(slug="encefalite_nmda", titulo="Dez noites",
+         subtitulo="Uma estudante de 24 anos chega com dez dias sem dormir, ideias de perseguição e uma fala que a família não reconhece.",
+         especialidade="Neurologia · Psiquiatria", minutos=35, decisoes=6,
+         desfechos=3, nivel="os dois", cor="roxo", capa="../../encefalite_nmda/img/cena.jpg", arquivo="dez-noites.html?v=20261001"),
+    caso(slug="ptt", titulo="Do outro lado do plantão",
+         subtitulo="Uma técnica de enfermagem chega à emergência com febre, dor de cabeça e uma confusão que vai e volta.",
+         especialidade="Clínica médica · Hematologia", minutos=35, decisoes=6,
+         desfechos=4, nivel="os dois", cor="vermelho", capa="../../ptt/img/cena.jpg", arquivo="do-outro-lado-do-plantao.html?v=20261001"),
+    caso(slug="paracoco", titulo="A ferida do lábio",
+         subtitulo="Um lavrador de Rondônia com tosse há quatro meses, voz rouca e uma ferida no lábio que não fecha.",
+         especialidade="Clínica médica · Infectologia", minutos=35, decisoes=6,
+         desfechos=3, nivel="os dois", cor="verde", capa="../../paracoco/img/cena.jpg", arquivo="a-ferida-do-labio.html?v=20261001"),
+    caso(slug="feocromocitoma", titulo="Pressão de nervoso",
+         subtitulo="Uma contadora de 41 anos, tratada há seis meses por crises de pânico, chega à emergência com dor no peito e a pressão em 228/124.",
+         especialidade="Clínica médica · Endocrinologia", minutos=40, decisoes=6,
+         desfechos=4, nivel="os dois", cor="laranja", capa="../../feocromocitoma/img/cena.jpg", arquivo="pressao-de-nervoso.html?v=20261001"),
 ]
 
 RODAPE = (
     "<b>Procedência.</b> Os pacientes são ficcionais e cada caso é autoral, "
     "escrito para ensino: os desfechos dos ramos são inferência fisiológica, "
-    "não extração de artigo. As cenas dos pacientes são ilustrações geradas "
-    "por inteligência artificial a partir da descrição clínica. As imagens de "
+    "não extração de artigo. As capas são ilustrações geradas por inteligência "
+    "artificial a partir da descrição clínica ou fotografias de licença aberta. As imagens de "
     "radiologia, ultrassom, microscopia e anatomia patológica são reais, "
     "ilustrativas, de repositórios de licença aberta, e não pertencem aos "
     "pacientes dos casos — crédito e licença ao pé de cada figura. "
