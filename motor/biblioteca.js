@@ -30,9 +30,9 @@ const soma = k => prontos.reduce((s, c) => s + (c[k] || 0), 0);
 document.getElementById('topo').innerHTML =
   '<nav class="barra"><span class="identidade">' + bola('grade') + 'Casos clínicos</span>'
   + '<span class="edicao">' + bola('capelo') + 'Internato e residência</span></nav>'
-  + '<div class="intro"><div class="entra" style="--i:0"><p class="sobretitulo">' + bola('novo') + 'Investigação, discussão e decisão</p>'
+  + '<div class="intro"><div class="entra" style="--i:0"><p class="sobretitulo">' + bola('novo') + 'Doenças raras e apresentações incomuns</p>'
   + '<h1>Biblioteca de <em>casos</em></h1>'
-  + '<p class="descricao">Escolha uma história. Cada caso avança por dados novos do paciente e pela pergunta que eles abrem. Suas condutas mudam o rumo e o desfecho.</p></div>'
+  + '<p class="descricao">Parta da síndrome, compare hipóteses e acompanhe como cada dado muda a investigação. Casos de doenças raras e apresentações incomuns, com decisões que alteram a evolução.</p></div>'
   + '<div class="numeros">'
   + [['livro', '#4f46e5', prontos.length, 'casos para conduzir'],
      ['pergunta', '#ea580c', soma('perg'), 'perguntas comentadas'],

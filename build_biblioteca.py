@@ -39,7 +39,7 @@ CASOS = [
     caso(slug="kikuchi", titulo="O que ficou no pescoço",
          subtitulo="Uma professora de 27 anos chega no 12º dia de febre, com um caroço doloroso no pescoço que o antibiótico não mudou.",
          especialidade="Clínica médica", minutos=50, decisoes=6,
-         desfechos=3, nivel="os dois", cor="laranja", capa="../../kikuchi/img/cena.png", arquivo="o-que-ficou-no-pescoco.html?v=20260926-nejm"),
+         desfechos=3, nivel="os dois", cor="laranja", capa="../../kikuchi/img/cena.png", arquivo="o-que-ficou-no-pescoco.html?v=20261021-sindromes"),
     caso(slug="sarcoidose", titulo="Entre a sede e o fôlego",
          subtitulo="Um analista administrativo chega ao pronto-socorro nauseado, confuso e com o intestino preso há cinco dias.",
          especialidade="Clínica médica", minutos=50, decisoes=6,
@@ -95,10 +95,8 @@ def construir() -> Path:
     destino.parent.mkdir(parents=True, exist_ok=True)
     destino.write_text(montar(
         titulo="Casos para conduzir, não para ler",
-        subtitulo="Cada caso avança em alíquotas: um dado novo do paciente, e "
-                  "a pergunta que ele abre — o diferencial de um sintoma, a "
-                  "leitura de um resultado, o mecanismo de um achado. Você "
-                  "discute a investigação, e suas condutas mudam o rumo e o desfecho.",
+        subtitulo="Doenças raras e apresentações incomuns abordadas a partir "
+                  "das síndromes: hipóteses, investigação dirigida e evolução clínica.",
         casos=CASOS, rodape=RODAPE,
         img_dir=RAIZ / "casos" / "pulmao_rim" / "img",
     ), encoding="utf-8")
