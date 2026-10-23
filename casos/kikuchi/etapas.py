@@ -190,9 +190,9 @@ ETAPAS = [
        'Bianca mantém sintomáticos e retorna em uma semana. Infecção local, infecção sistêmica, doença inflamatória e neoplasia permanecem no diferencial.'),
 
     painel('res2', 'Retorno', 'Sorologias', [
-        ex('EBV: VCA IgM', 'Não reagente', 'não reagente'),
-        ex('EBV: VCA IgG', 'Reagente', '—', True),
-        ex('EBV: EBNA IgG', 'Reagente', '—', True),
+        ex('EBV IgM (anti-VCA)', 'Não reagente', 'não reagente'),
+        ex('EBV IgG (anti-VCA)', 'Reagente', '—', True),
+        ex('EBV: marcador complementar (EBNA IgG)', 'Reagente', '—', True),
         ex('CMV: IgM / IgG', 'Não reagente / reagente', '—', True),
         ex('Toxoplasmose: IgM / IgG', 'Não reagente / não reagente', 'não reagente'),
         ex('HIV, teste de quarta geração', 'Não reagente', 'não reagente'),
@@ -200,13 +200,15 @@ ETAPAS = [
     ], introducao='Colhidas na primeira consulta, no 12.º dia de febre.'),
 
     Q('sorologias_leitura', 3,
-      'VCA IgG e EBNA IgG são reagentes, mas VCA IgM é negativa. A febre persiste. Qual conclusão é mais bem sustentada?', [
+      'EBV IgG e o marcador complementar EBNA IgG são reagentes; EBV IgM é não reagente. A febre persiste. Qual conclusão é mais bem sustentada?', [
       ('O padrão favorece infecção passada por EBV e não explica o episódio atual', True),
       ('O VCA IgG reagente confirma que a febre atual é mononucleose', False),
       ('A presença de EBNA indica reativação sintomática que requer antiviral', False),
       ('As sorologias negativas excluem todas as causas infecciosas da adenopatia', False),
       ], [
-      ('EBV', 'VCA IgG e EBNA juntos favorecem infecção passada. Na infecção primária, VCA IgM costuma estar presente e EBNA ainda ausente; a interpretação depende do tempo e do método.'),
+      ('O que os testes medem', 'EBV é o vírus Epstein–Barr. Anti-VCA mede anticorpos contra o capsídeo, a estrutura que envolve o material genético viral. A IgM costuma surgir cedo e desaparecer em 4–6 semanas; a IgG aparece na fase aguda e geralmente persiste por toda a vida.'),
+      ('Marcador complementar', 'EBNA é um antígeno nuclear do vírus. O EBNA IgG costuma aparecer 2–4 meses após o início dos sintomas e persistir. Por isso, IgG positiva isolada não data a infecção.'),
+      ('Neste caso', 'IgM não reagente, com VCA IgG e EBNA IgG reagentes, favorece infecção passada. Esse padrão não sustenta mononucleose aguda como explicação da febre atual; a leitura depende da cronologia e do método. Fonte: CDC, Laboratory Testing for EBV.'),
       ('Outras infecções', 'CMV IgG isolada não demonstra doença aguda. Resultados negativos para HIV e toxoplasmose reduzem a probabilidade, mas precisam ser interpretados com a janela e a suspeita clínica; nova exposição pode justificar repetição ou outro método.'),
       ('Consequência', 'A hipótese inicial perdeu sustentação. O próximo passo depende do novo exame físico e da evolução, não de pedir indiscriminadamente mais sorologias.'),
       ]),
