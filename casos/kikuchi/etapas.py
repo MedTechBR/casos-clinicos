@@ -148,8 +148,8 @@ ETAPAS = [
       ]),
 
     estudo('us_cervical', 'Ultrassonografia do pescoço',
-           'Pedida na primeira consulta, com os exames de sangue, para contar e '
-           'medir os linfonodos, ver o hilo e procurar coleção. Descreva a '
+           'Pedida na primeira consulta para avaliar os linfonodos palpados. '
+           'Neste corte, observe um linfonodo. Descreva a '
            'forma do linfonodo e o que há no centro dele antes de abrir os '
            'achados.',
            IMG / 'us_linfonodo_cervical.jpg',
@@ -160,9 +160,10 @@ ETAPAS = [
          ((386, 312), (140, 250), '**Hilo** central ecogênico, com o vaso hilar se ramificando a partir dele.', -12),
          ((643, 529), (850, 650), '**Vaso** adjacente, fora do linfonodo, com fluxo ao Doppler.', 12),
         ],
-        ['Três linfonodos na cadeia cervical posterior esquerda, o maior de 2,2 '
-         '× 0,9 cm, ovalados, com hilo ecogênico preservado e fluxo de padrão '
-         'hilar. Sem coleção, sem calcificação e sem necrose liquefeita.',
+        ['No corte apresentado, observa-se um linfonodo ovalado, com córtex '
+         'hipoecoico, hilo central ecogênico preservado e vascularização hilar '
+         'ao Doppler. Não há área de liquefação visível neste linfonodo. '
+         'A imagem não apresenta medidas assinaladas.',
          'Forma oval, hilo preservado e fluxo hilar são o aspecto de um '
          'linfonodo reacional. O ultrassom tranquiliza, mas não afasta linfoma '
          'nem tuberculose no início.']),
@@ -639,29 +640,6 @@ for _n, _e in enumerate((x for x in ETAPAS if x['t'] in ('pergunta','pareamento'
     _e['kicker'] = f'Pergunta {_n}'
 ETAPAS[-1]['corpo'] += p('Referências da revisão sindrômica: <a href="https://www.cdc.gov/epstein-barr/php/laboratories/index.html">CDC — sorologia para EBV</a>; <a href="https://www.cdc.gov/tb/hcp/testing-diagnosis/index.html">CDC — investigação de tuberculose</a>; <a href="https://www.nice.org.uk/guidance/ng52/chapter/Recommendations">NICE NG52 — amostragem em suspeita de linfoma</a>.')
 
-
-# Mapa do laudo ficcional: não representa estruturas adicionais na imagem de referência.
-_mapa_cervical = """<figure aria-label="Mapa esquemático dos três linfonodos cervicais esquerdos" style="margin:8px 0;padding:10px 14px;background:white;border:1px solid #e2e8f0;border-radius:16px">
-<svg viewBox="0 0 640 160" role="img" aria-labelledby="mapa-linfonodos-titulo" style="display:block;width:100%;max-height:145px">
-<title id="mapa-linfonodos-titulo">Três linfonodos na cadeia cervical posterior esquerda. Maior: 2,2 por 0,9 centímetros. Distribuição esquemática.</title>
-<g fill="none" stroke="#64748b" stroke-width="2.5" stroke-linejoin="round">
-<path d="M80 14 Q53 16 51 44 Q48 66 64 83 L66 112 Q45 124 23 139 M80 14 Q107 16 109 44 Q112 66 96 83 L94 112 Q115 124 137 139"/>
-<path d="M65 84 Q80 94 96 84 M68 98 L48 137 M93 98 L113 137"/>
-</g>
-<text x="80" y="155" text-anchor="middle" fill="#64748b" font-size="12">Vista posterior · E à esquerda</text>
-<g fill="#ede9fe" stroke="#7c3aed" stroke-width="2">
-<ellipse cx="61" cy="98" rx="10" ry="5" transform="rotate(-25 61 98)"/>
-<ellipse cx="55" cy="113" rx="8" ry="4" transform="rotate(-25 55 113)"/>
-<ellipse cx="48" cy="127" rx="7" ry="3.5" transform="rotate(-25 48 127)"/>
-</g>
-<path d="M72 96 L153 49 L180 49" fill="none" stroke="#7c3aed" stroke-width="2"/>
-<text x="188" y="45" fill="#172033" font-size="18" font-weight="700">Cervical posterior esquerda</text>
-<text x="188" y="72" fill="#334155" font-size="18">3 linfonodos · maior: 2,2 × 0,9 cm</text>
-<text x="188" y="100" fill="#64748b" font-size="15">Posições esquemáticas; sem escala.</text>
-<text x="188" y="124" fill="#64748b" font-size="15">Demais medidas não informadas no laudo.</text>
-</svg></figure>"""
-_us = next(e for e in ETAPAS if e['k'] == 'us_cervical')
-_us['corpo'] = _us['corpo'].replace('<details class="leitura-imagem', _mapa_cervical + '<details class="leitura-imagem', 1)
 
 _inserir_antes('conduta', pg('relacao_lupus', 'Relação com o lúpus',
     'A doença de Kikuchi–Fujimoto tem associação descrita com lúpus eritematoso sistêmico (LES). Pode ocorrer antes, ao mesmo tempo ou depois do diagnóstico de LES. Essa associação não significa que toda paciente desenvolverá lúpus nem que o episódio atual já seja uma manifestação dele.',
