@@ -662,3 +662,11 @@ _mapa_cervical = """<figure aria-label="Mapa esquemático dos três linfonodos c
 </svg></figure>"""
 _us = next(e for e in ETAPAS if e['k'] == 'us_cervical')
 _us['corpo'] = _us['corpo'].replace('<details class="leitura-imagem', _mapa_cervical + '<details class="leitura-imagem', 1)
+
+_inserir_antes('conduta', pg('relacao_lupus', 'Relação com o lúpus',
+    'A doença de Kikuchi–Fujimoto tem associação descrita com lúpus eritematoso sistêmico (LES). Pode ocorrer antes, ao mesmo tempo ou depois do diagnóstico de LES. Essa associação não significa que toda paciente desenvolverá lúpus nem que o episódio atual já seja uma manifestação dele.',
+    'O lúpus também pode causar linfadenite com necrose e se parecer com Kikuchi na biópsia. Por isso, o laudo precisa ser integrado à história, ao exame físico e aos exames laboratoriais. Em Bianca, a avaliação atual não sustenta LES; FAN e anti-DNA negativos e complemento normal devem ser interpretados nesse contexto.',
+    'No seguimento, artrite persistente, lesões relacionadas ao sol, úlceras orais, dor pleurítica, edema ou alterações na urina justificam nova avaliação. Conforme os achados, reavaliam-se hemograma, creatinina, urina/proteinúria e autoanticorpos/complemento. O objetivo é reconhecer um novo quadro clínico, sem repetir mensalmente um painel autoimune em quem está bem.'))
+for _e in ETAPAS:
+    if _e.get('segue') == 'conduta':
+        _e['segue'] = 'relacao_lupus'
