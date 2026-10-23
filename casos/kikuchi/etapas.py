@@ -676,3 +676,13 @@ _inserir_antes('res3', Q('hipoteses_tecido', 1,
     ]))
 for _n, _e in enumerate((x for x in ETAPAS if x['t'] in ('pergunta', 'pareamento')), 1):
     _e['kicker'] = f'Pergunta {_n}'
+
+_inserir_antes('diferencial_final', pagina('leitura_imuno', 'Discussão', 'Como interpretar a imuno-histoquímica',
+    p('O patologista usa anticorpos para marcar proteínas nas células do tecido. Isso ajuda a reconhecer quais células participam da lesão. “Positivo” significa que a proteína foi identificada; não significa, por si só, câncer.'),
+    tabela(['Marcador', 'O que ajuda a identificar', 'Significado nesta biópsia'], [
+        ['CD68 e mieloperoxidase (MPO)', 'Histiócitos: macrófagos presentes no tecido', 'Destacam os histiócitos junto às áreas de necrose'],
+        ['CD123', 'Células dendríticas plasmocitoides, que participam da resposta imune', 'Sua presença compõe o padrão inflamatório observado'],
+        ['CD8', 'Uma população de linfócitos T', 'Mostra o predomínio de linfócitos T citotóxicos na lesão'],
+    ]),
+    p('O conjunto é compatível com Kikuchi quando acompanha a morfologia já discutida. Nenhum desses marcadores, isoladamente, confirma o diagnóstico ou exclui linfoma; pode haver sobreposição com linfadenite do lúpus. Para o clínico, o essencial é integrar o laudo à evolução, sem decorar os marcadores.'),
+    p('MPO aqui é uma proteína marcada no tecido: não é o exame de sangue anti-MPO/ANCA. Referências: <a href="https://pubmed.ncbi.nlm.nih.gov/11549584/">estudo dos histiócitos CD68/MPO</a>; <a href="https://meridian.allenpress.com/aplm/article/147/7/767/488040/Clinicopathologic-Analysis-of-Kikuchi-Fujimoto">série clinicopatológica de 170 casos</a>.'), so_kicker=True))
