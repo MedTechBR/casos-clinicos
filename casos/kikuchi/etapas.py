@@ -670,3 +670,31 @@ _inserir_antes('conduta', pg('relacao_lupus', 'Relação com o lúpus',
 for _e in ETAPAS:
     if _e.get('segue') == 'conduta':
         _e['segue'] = 'relacao_lupus'
+
+_inserir_antes('p1', Q('hipoteses_apresentacao', 1,
+    'Na primeira avaliação, quais três grupos de hipóteses devem organizar a investigação da adenopatia cervical com febre, sudorese e perda de peso?', [
+    ('Infecções sistêmicas com acometimento linfonodal', True),
+    ('Doença linfoproliferativa', True),
+    ('Doença inflamatória ou autoimune', True),
+    ('Infecção bacteriana localizada na área de drenagem', False),
+    ('Metástase de carcinoma de cabeça e pescoço', False),
+    ('Reação medicamentosa à amoxicilina', False),
+    ], [
+    ('Priorizar', 'Infecção sistêmica é favorecida pela apresentação febril após faringite. Sintomas constitucionais exigem manter doença linfoproliferativa no diferencial. Causas inflamatórias e autoimunes permanecem como terceiro eixo, ainda sem manifestação que permita nomear uma doença.'),
+    ('Menor sustentação', 'Não há foco bacteriano, rubor ou flutuação. Carcinoma metastático tem menor probabilidade nesta jovem, sem lesão primária ou linfonodo endurecido e fixo. A febre e a adenopatia começaram antes da amoxicilina, desfavorecendo reação a esse fármaco.'),
+    ('Probabilidade', 'Menor prioridade não equivale a exclusão. A lista será revista conforme evolução, exame físico e resultados; ainda não há base para procurar exclusivamente uma doença rara.'),
+    ]))
+_inserir_antes('res3', Q('hipoteses_tecido', 1,
+    'A biópsia mostra linfadenite necrosante com cariorrexe, histiócitos e escassez de neutrófilos, sem granulomas caseosos ou população neoplásica identificada. Quais duas hipóteses precisam ser comparadas agora?', [
+    ('Doença de Kikuchi–Fujimoto', True),
+    ('Linfadenite associada a lúpus', True),
+    ('Linfadenite bacteriana supurativa', False),
+    ('Tuberculose ganglionar', False),
+    ('Doença da arranhadura do gato', False),
+    ('Linfoma de Hodgkin', False),
+    ], [
+    ('Mais compatíveis', 'Kikuchi e linfadenite lúpica podem compartilhar necrose e restos nucleares. A distinção depende do conjunto da histologia, das manifestações clínicas e da investigação autoimune, e não de um achado isolado.'),
+    ('Menos compatíveis', 'Supuração bacteriana e doença da arranhadura do gato costumam ter componente neutrofílico. A ausência de granulomas caseosos reduz o apoio à tuberculose, mas não a exclui: a microbiologia continua sendo acompanhada. O tecido não mostrou evidência de linfoma; persistência discordante exigiria revisão.'),
+    ]))
+for _n, _e in enumerate((x for x in ETAPAS if x['t'] in ('pergunta', 'pareamento')), 1):
+    _e['kicker'] = f'Pergunta {_n}'
