@@ -277,15 +277,15 @@ ETAPAS = [
        'mesma amostra.'),
 
     Q('p4', 5,
-      'A equipe já decidiu obter tecido. Antes da cirurgia, recebe a informação de que o serviço costuma enviar todo linfonodo em formol. Qual ajuste deve ser combinado?', [
-      ('Manter o envio e solicitar cultura somente se a histologia demonstrar granulomas', False),
-      ('Enviar toda a peça sem fixador e deixar a equipe cirúrgica escolher o meio na hora', False),
-      ('Separar previamente amostras para histologia, citometria e microbiologia, conforme orientação dos laboratórios', True),
-      ('Priorizar citometria em toda a peça e reservar histologia se ela não identificar um clone', False),
+      'O ultrassom descreveu linfonodos ovalados com hilo preservado. Mesmo assim, a equipe indicou biópsia. Qual dado tem maior peso para essa decisão?', [
+      ('A persistência da febre com perda de peso e crescimento dos linfonodos, sem causa esclarecida', True),
+      ('A dor nos linfonodos, que favorece acometimento neoplásico em relação ao infeccioso', False),
+      ('A prova tuberculínica de 14 mm, que define a causa da adenopatia e exige confirmação histológica', False),
+      ('A leucopenia associada à LDH elevada, combinação que permite priorizar linfoma como diagnóstico', False),
       ], [
-      ('Perguntas complementares', 'Arquitetura e imunofenótipo não substituem a busca de agente. Cada método precisa de material apropriado; fixar toda a peça inviabiliza cultura.'),
-      ('Organização da coleta', 'Combinar o transporte antes: formol para histologia, material fresco no meio indicado para citometria e amostra estéril sem formol para microbiologia. Quantidade, recipiente e prazo dependem do laboratório.'),
-      ('Representatividade', 'Preservar tecido suficiente para a leitura da arquitetura. Informar os tratamentos já recebidos e as hipóteses clínicas ajuda o patologista a direcionar os estudos.'),
+      ('Evolução clínica', 'O que muda a conduta é a combinação de progressão, sintomas sistêmicos e investigação inicial sem explicação suficiente. Esses dados justificam obter tecido, mas ainda não escolhem uma doença.'),
+      ('Limites dos exames', 'Aspecto reacional ao ultrassom não encerra a investigação. Dor, leucopenia e LDH elevada são inespecíficas; prova tuberculínica positiva não confirma tuberculose ganglionar.'),
+      ('Objetivo da biópsia', 'A análise do linfonodo permite comparar causas infecciosas, inflamatórias e neoplásicas. O clínico comunica essas hipóteses à equipe que realizará o procedimento e ao patologista.'),
       ]),
 
     pg('tecido2', 'Amostra do linfonodo',

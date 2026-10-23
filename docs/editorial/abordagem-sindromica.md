@@ -40,3 +40,6 @@ Somente Kikuchi foi reescrito nesta entrega. Os demais eixos abaixo são **rotei
 ## Critério de conclusão por caso
 
 Revisão clínica das afirmações; diagnóstico final não exposto nas alternativas iniciais; resultados coerentes com a investigação discutida; todos os ramos alcançáveis; sem alteração de CSS ou componentes; teste das páginas antes/depois da resposta e dos links publicados. Não declarar a migração integral concluída enquanto restarem casos planejados.
+
+## Público-alvo
+Residentes de clínica médica. Perguntas devem avaliar enquadramento sindrômico, probabilidade, indicação e interpretação dos exames, gravidade e conduta. Detalhes de processamento de amostras, técnicas laboratoriais e subclassificações especializadas entram apenas como apoio quando mudam uma decisão clínica. Explicar siglas na primeira ocorrência.
