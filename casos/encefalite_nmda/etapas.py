@@ -129,31 +129,15 @@ ETAPAS = [
            so_kicker=True),
 
     Q('p1', 1,
-      'Dez dias de insônia, perseguição e fala desorganizada, sem psiquiatria '
-      'prévia. **Quais três** achados pedem que se procure uma causa orgânica '
-      'antes de fechar um transtorno psiquiátrico primário?', [
-      ('Quadro febril com cefaleia semanas antes', True),
-      ('Desorientação no tempo e atenção flutuante', True),
-      ('Pausas com olhar parado no meio da fala', True),
-      ('Ideias de perseguição pelos vizinhos', False),
-      ('Primeiro episódio aos 24 anos', False),
-      ('Estresse do trabalho de conclusão', False),
+      'Pelas pausas sem lembrança e pela desorientação após pródromo febril, quais **três exames** priorizar na investigação neurológica?', [
+      ('Eletroencefalograma', True),
+      ('Líquor com celularidade e pesquisa infecciosa', True),
+      ('Ressonância de encéfalo', True),
+      ('FAN e complemento séricos', False),
+      ('Vitamina B12 e folato séricos', False),
      ], [
-      ('O que pesa', 'A psicose primária costuma deixar o sensório claro: a '
-       'pessoa delira, mas sabe onde está e acompanha a conversa. Desorientação '
-       'no tempo e atenção que se perde indicam que o cérebro inteiro funciona '
-       'mal, o padrão do delirium. Pausas de segundos com olhar parado e sem '
-       'memória do que se dizia podem ser crises focais com alteração da '
-       'consciência. E febre com cefaleia pouco antes do início sugere que algo '
-       'aconteceu ao próprio cérebro.'),
-      ('O que pesa pouco', 'Ideias persecutórias aparecem na psicose primária e '
-       'na secundária e não ajudam a separar. Aos 24 anos, Camila '
-       'está na faixa típica do primeiro episódio de esquizofrenia, e estresse '
-       'acadêmico não explica nenhum quadro.'),
-      ('A consequência', 'Com sinais como esses, o primeiro episódio só deve ser '
-       'chamado de primário depois de uma avaliação clínica e neurológica '
-       'dirigida. Exames de sangue e tomografia normais ajudam, mas não encerram '
-       'a busca.'),
+      ('Investigar função, inflamação e estrutura', '**EEG** procura atividade epiléptica nas pausas estereotipadas. **Líquor** investiga inflamação e infecção após avaliação de segurança. **RM** pesquisa lesões não identificadas pela TC e pode apoiar uma etiologia; seu resultado normal não encerra a investigação.'),
+      ('Outros exames possíveis', '**FAN/complemento** ganham prioridade com manifestações sistêmicas de autoimunidade, não descritas. **B12/folato** entram na avaliação de causas reversíveis, mas a evolução em dez dias, o pródromo e os episódios breves tornam a investigação direta do cérebro mais urgente.'),
      ]),
 
     pagina('rastreio', 'Discussão', 'O primeiro episódio na emergência',
@@ -246,33 +230,15 @@ ETAPAS = [
            so_kicker=True),
 
     Q('p2', 2,
-      'Rigidez em cano de chumbo, febre de 39,2 °C, pressão oscilante, '
-      'sudorese, mutismo e CK de 4.800 U/L no segundo dia de internação. A que '
-      'mecanismo o quadro corresponde?', [
-      ('Bloqueio dopaminérgico central', True),
-      ('Excesso de serotonina', False),
-      ('Bloqueio colinérgico', False),
-      ('Abstinência de benzodiazepínico', False),
-      ('Excesso simpático por estimulante', False),
-      ('Infecção sistêmica com sepse', False),
+      'A psicose precedeu o haloperidol; febre, rigidez e CK de 4.800 surgiram depois. Qual interpretação integra melhor essa sequência?', [
+      ('Reação ao bloqueio dopaminérgico sobre quadro cerebral ainda não esclarecido', True),
+      ('Síndrome serotoninérgica precipitada pela prometazina', False),
+      ('Abstinência de clonazepam como explicação do quadro inteiro', False),
+      ('Catatonia maligna primária demonstrada pela elevação de CK', False),
+      ('Sepse como explicação única da alteração mental e da rigidez', False),
      ], [
-      ('A leitura', 'Rigidez difusa que não muda com a velocidade do movimento, '
-       'febre, instabilidade autonômica, alteração da consciência e CK alta, '
-       'instalados em horas a poucos dias depois de um antagonista da dopamina, '
-       'como o haloperidol da véspera, formam a síndrome por bloqueio '
-       'dopaminérgico. O bloqueio no hipotálamo desregula a temperatura; no '
-       'estriado, produz a rigidez, e a contração mantida libera CK e '
-       'mioglobina, que explica a fita com sangue e poucas hemácias.'),
-      ('Por que não as outras', 'O excesso de serotonina se instala em horas e '
-       'dá clônus, hiper-reflexia e diarreia, ausentes aqui. O bloqueio '
-       'colinérgico seca a pele e dilata as pupilas; Camila está suada, com '
-       'pupilas de 3 mm. A abstinência do clonazepam suspenso dá tremor, '
-       'agitação e crises, não rigidez com CK alta. A triagem não mostrou '
-       'estimulante. Infecção precisa ser afastada, mas não explica a rigidez.'),
-      ('Uma ressalva', 'Quadro igual aparece na catatonia maligna, e um cérebro '
-       'já doente é fator de risco conhecido para a reação ao antipsicótico. O '
-       'mecanismo responde à pergunta do momento, sem dizer por que a reação '
-       'aconteceu.'),
+      ('A cronologia discrimina', 'A exposição recente ao haloperidol, a rigidez difusa e a lesão muscular sustentam síndrome neuroléptica maligna. Ela explica a piora, mas não os dez dias anteriores de psicose, desorientação e pausas.'),
+      ('O concorrente próximo', 'Catatonia maligna pode se sobrepor e CK não a distingue sozinha. Não há exposição serotoninérgica convincente nem clônus descrito; o uso breve de clonazepam e sua suspensão tampouco explicam a síndrome inteira. Infecção permanece investigável, sem apagar a associação temporal com o antipsicótico.'),
      ]),
 
     pagina('nms', 'Discussão', 'A reação ao antipsicótico',
@@ -396,38 +362,18 @@ ETAPAS = [
         ['Atividade delta rítmica e generalizada, de 1 a 3 Hz, com atividade beta '
          'sobreposta e sincronizada a cada onda delta. Sem descargas '
          'epileptiformes durante os movimentos orofaciais.',
-         'Os movimentos da boca não têm correlato epiléptico no traçado: são um '
-         'distúrbio do movimento, e não crises.']),
+         'Os movimentos da boca não têm correlato epiléptico neste registro, favorecendo discinesias; isso não exclui outros episódios epilépticos.']),
 
     Q('p3', 3,
-      'Alteração da consciência há dias, uma crise convulsiva, movimentos '
-      'orofaciais contínuos, líquor com 38 células por mm³, quase todas '
-      'linfócitos, e eletroencefalograma com lentificação delta difusa. Onde '
-      'está a doença?', [
-      ('Parênquima cerebral, de forma difusa', True),
-      ('Meninges, sem acometer o cérebro', False),
-      ('Lesão estrutural focal', False),
-      ('Músculo esquelético', False),
-      ('Distúrbio metabólico sistêmico', False),
-      ('Medula espinal', False),
+      'Com líquor linfocítico, bandas restritas ao líquor, RM normal e primeira PCR para herpes negativa, quais **dois exames** priorizar para definir a etiologia?', [
+      ('Anticorpos neuronais em líquor e soro pareados', True),
+      ('Nova PCR para herpes simples no líquor após 3–7 dias', True),
+      ('PCR para enterovírus no líquor', False),
+      ('Pesquisa de micobactérias no líquor', False),
+      ('Sorologia para arboviroses no soro', False),
      ], [
-      ('A localização', 'Consciência alterada, crise e movimento anormal são '
-       'sinais do próprio tecido cerebral, e a lentificação difusa diz que ele '
-       'está acometido como um todo. Pelos critérios do Consórcio Internacional '
-       'de Encefalite (2013), alteração do estado mental por mais de 24 horas '
-       'sem outra causa, somada a dois critérios menores, define encefalite '
-       'possível; três, provável. Os menores são febre, crises, achado focal '
-       'novo, 5 ou mais células no líquor e imagem ou eletroencefalograma '
-       'compatíveis. Camila tem quatro.'),
-      ('Por que não as outras', 'Meningite isolada dá cefaleia e rigidez de nuca '
-       'com consciência relativamente preservada, sem crises nem movimentos. '
-       'Uma lesão focal apareceria na ressonância. A lesão muscular da reação ao '
-       'antipsicótico explica a CK, mas não a crise nem o líquor. Glicose, '
-       'sódio e funções renal e hepática normais afastam a encefalopatia '
-       'metabólica.'),
-      ('O que a categoria abre', 'Encefalite tem duas grandes famílias, a '
-       'infecciosa, quase sempre viral, e a imunomediada. Com a pesquisa de '
-       'herpes negativa e a ressonância normal, a lista continua aberta.'),
+      ('Hipóteses prioritárias', '**Anticorpos neuronais pareados** têm rendimento neste fenótipo psiquiátrico, epiléptico e motor com síntese intratecal; o líquor melhora a interpretação. **Nova PCR para herpes** em 3–7 dias, mantendo aciclovir enquanto a suspeita justificar, enfrenta um falso-negativo potencial sem abandonar uma causa tratável.'),
+      ('Infecções concorrentes', '**PCR para enterovírus** pode ser pertinente, mas a progressão com mutismo e discinesias torna a etiologia imunomediada mais prioritária. **Micobactérias no líquor** ganhariam peso com hipoglicorraquia, proteína mais alta, exposição ou imagem compatível. **Sorologia para arboviroses** depende da exposição, circulação local e janela de coleta; não há pista epidemiológica específica descrita.'),
      ]),
 
     pg('hipovent', 'Sétimo dia',
@@ -446,7 +392,7 @@ ETAPAS = [
        'O laboratório de referência liga: anticorpos IgG contra a subunidade '
        'GluN1 do receptor NMDA (N-metil-D-aspartato) detectados no líquor, título '
        '1:32, por ensaio em células transfectadas; no soro, 1:100. A segunda PCR '
-       'para herpes, colhida no sétimo dia, é negativa, e o aciclovir é suspenso.',
+       'para herpes, colhida no oitavo dia, três dias após a primeira, é negativa, e o aciclovir é suspenso.',
        'A neurologia relê a ficha da admissão e para na ultrassonografia de dois '
        'anos antes: cisto de 3 cm no ovário direito, sem controle.'),
 
@@ -469,34 +415,17 @@ ETAPAS = [
        'grave, com rigidez, febre, CK alta e piora da consciência: a reação do '
        'segundo dia fazia parte da doença.'),
 
-    pareamento('p4', 'Pergunta 4',
-      'Pelos critérios de Graus (2016) para encefalite anti-NMDAR provável, '
-      'associe cada dado de Camila ao grupo em que ele entra.', [
-      par('Insônia e ideias de perseguição', 'Comportamento ou cognição',
-          'Sintomas psiquiátricos e queda da memória contam juntos, num grupo só.'),
-      par('Mutismo depois da fala acelerada', 'Disfunção da fala',
-          'Fala acelerada, redução da fala e mutismo formam o segundo grupo.'),
-      par('Mastigação e protrusão da língua contínuas', 'Distúrbio do movimento',
-          'Discinesias, rigidez e posturas anormais; as orofaciais são as mais '
-          'típicas.'),
-      par('Crise tônico-clônica de dois minutos', 'Crise epiléptica',
-          'Qualquer tipo de crise conta.'),
-      par('Respiração lenta com pCO₂ de 62 mmHg', 'Disautonomia ou hipoventilação central',
-          'Hipoventilação de origem central e oscilação de pulso e pressão entram '
-          'no mesmo grupo.'),
-      par('Febre baixa duas semanas antes', 'Não entra nos critérios',
-          'O pródromo de virose é comum, mas não pontua.'),
-    ], opcoes=['Comportamento ou cognição', 'Disfunção da fala',
-               'Distúrbio do movimento', 'Crise epiléptica',
-               'Rebaixamento da consciência',
-               'Disautonomia ou hipoventilação central',
-               'Não entra nos critérios'],
-    titulo_resposta='Seis grupos, e ela tem todos',
-    nota='O rebaixamento da consciência, que ficou sem par, é o sexto grupo, e '
-         'Camila também o tem. Quatro grupos com líquor ou eletroencefalograma '
-         'alterados fazem o diagnóstico provável, que já autoriza tratar; três '
-         'bastam se houver teratoma. O anticorpo no líquor torna o diagnóstico '
-         'definido.'),
+    Q('p4', 4,
+      'O IgG anti-GluN1 foi detectado no líquor. Quais **duas conclusões** são sustentadas pelos dados de Camila?', [
+      ('O resultado no líquor tem maior peso diagnóstico que o título sérico isolado', True),
+      ('A RM normal é compatível com disfunção neuronal mediada por anticorpos', True),
+      ('A ausência de descarga durante a mastigação exclui as crises já observadas', False),
+      ('O cisto antigo confirma a presença atual de tumor associado', False),
+      ('O título no soro mede diretamente a gravidade e define a alta', False),
+     ], [
+      ('Peso dos achados', 'IgG anti-GluN1 no **líquor**, com síndrome compatível e exclusão razoável de alternativas, sustenta o diagnóstico definido. A RM pode permanecer normal porque disfunção sináptica não exige lesão estrutural visível.'),
+      ('Limites', 'O EEG durante a mastigação favorece discinesia naquele episódio, sem negar a crise tônico-clônica prévia. O cisto é uma pista a investigar por imagem atual, sem estabelecer sua natureza. Títulos séricos isolados não medem a evolução clínica de modo confiável.'),
+     ]),
 
     pagina('tumor', 'Discussão', 'Onde procurar',
       p('Nas mulheres jovens com a doença, o tumor associado é quase sempre um '
@@ -504,10 +433,7 @@ ETAPAS = [
         'teratoma contém tecidos das três camadas embrionárias, entre eles '
         'tecido nervoso que expressa o receptor NMDA; a resposta imune contra '
         'esse tecido alcança o cérebro.'),
-      p('Retirar o tumor encurta a doença: na série de Titulaer, quem teve o '
-        'tumor retirado junto com a imunoterapia evoluiu melhor e recaiu menos. A '
-        'procura começa pela pelve, com ultrassonografia transvaginal ou '
-        'ressonância; a tomografia serve quando as outras não estão à mão.'),
+      p('O cisto antigo foi descrito apenas como de aspecto benigno. Não houve controle por imagem; sua natureza e seu tamanho atuais ainda são desconhecidos.'),
       p('Camila está intubada, com disautonomia, e o cisto de dois anos antes '
         'está na ficha.')),
 
@@ -583,31 +509,15 @@ ETAPAS = [
          'resposta imune.']),
 
     Q('p5', 5,
-      'Sobre a imunoterapia de primeira linha que Camila recebe, **quais '
-      'quatro** afirmações estão corretas?', [
-      ('Metilprednisolona 1 g ao dia, cinco dias', True),
-      ('Imunoglobulina 0,4 g/kg ao dia, cinco dias', True),
-      ('Plasmaférese pode substituir a imunoglobulina', True),
-      ('A melhora costuma levar semanas', True),
-      ('Esperar o título sérico para começar', False),
-      ('Suspender se não melhorar em 72 horas', False),
-      ('Haloperidol para a agitação do despertar', False),
+      'Para acompanhar a resposta após primeira linha e retirada do tumor, quais **dois conjuntos de medidas** têm maior peso neste quadro grave?', [
+      ('Exame neurológico seriado e necessidade de suporte, considerados os sedativos', True),
+      ('Registro dos eventos motores e correlação eletroclínica quando houver dúvida', True),
+      ('Títulos séricos seriados e redução das bandas oligoclonais', False),
+      ('Frequência das discinesias e controle obtido com sedativos', False),
+      ('Extensão das alterações na RM e normalização do ritmo de base no EEG', False),
      ], [
-      ('O esquema', 'A primeira linha é metilprednisolona 1 g por dia por cinco '
-       'dias, com imunoglobulina humana 0,4 g/kg por dia por cinco dias, 2 g/kg '
-       'no total, ou plasmaférese, cinco a sete trocas em dias alternados. O '
-       'consenso brasileiro de 2024 recomenda começar nas primeiras quatro '
-       'semanas de sintomas. Pelos critérios de Graus, o tratamento pode começar '
-       'antes do anticorpo quando o quadro é compatível e as infecções foram '
-       'razoavelmente afastadas.'),
-      ('O tempo', 'Na série de Titulaer, pouco mais da metade melhorou nas '
-       'primeiras quatro semanas de primeira linha com retirada do tumor. A '
-       'melhora vem em semanas a meses e não se julga em dias. Na disautonomia, '
-       'a plasmaférese pede cuidado com a pressão.'),
-      ('O que não entra', 'O título no soro acompanha mal a doença e não decide '
-       'nada; o líquor é o material que conta. Antipsicóticos típicos se evitam, '
-       'pela intolerância grave que Camila já teve; agitação e insônia se tratam '
-       'com benzodiazepínicos e outros sedativos, sob vigilância.'),
+      ('Desfechos clínicos', 'Consciência, ventilação e disautonomia, avaliadas sob exposição comparável a sedativos, medem recuperação funcional. A correlação eletroclínica ajuda a separar crise de discinesia e a evitar que sedação desnecessária obscureça essa avaliação.'),
+      ('Marcadores concorrentes', 'Anticorpos e bandas podem persistir e não substituem a evolução clínica. Menos movimentos sob maior sedação pode representar apenas efeito farmacológico. A RM já é normal, e a lentificação do EEG é influenciada por doença e sedativos; ambos complementam, sem substituir, as medidas funcionais.'),
      ]),
 
     pg('semana2', 'Terceira semana',
@@ -650,31 +560,15 @@ ETAPAS = [
        'antipsicótico.'),
 
     Q('p6', 6,
-      'Camila vai para a enfermaria na 12.ª semana. **Quais três** afirmações '
-      'sobre a recuperação e o seguimento estão corretas?', [
-      ('A recuperação leva meses, até dois anos', True),
-      ('A segunda linha reduz o risco de recaída', True),
-      ('Sintomas novos pedem procurar outro teratoma', True),
-      ('Antipsicótico de manutenção por dois anos', False),
-      ('Anticorpo sérico negativo antes da alta', False),
-      ('Imunossupressor oral contínuo, como azatioprina', False),
-      ('Eletroencefalograma mensal por um ano', False),
+      'Na 12.ª semana Camila melhora e vai à enfermaria, ainda com dificuldade cognitiva. Qual interpretação melhor orienta a próxima etapa?', [
+      ('Recuperação incompleta em curso, a acompanhar com avaliação cognitiva e funcional seriada', True),
+      ('Resposta insuficiente à segunda linha, a reavaliar para outro ciclo de imunoterapia', False),
+      ('Recorrência da doença após a resposta, a investigar com nova punção lombar', False),
+      ('Déficit predominantemente pós-crítico, a manejar intensificando o tratamento anticrise', False),
+      ('Sequela cognitiva estabilizada, a usar como referência definitiva para o retorno ao curso', False),
      ], [
-      ('A recuperação', 'Ela acontece na ordem inversa da instalação: voltam '
-       'primeiro a respiração e a consciência, por último o comportamento, a '
-       'memória e as funções executivas. Na série de Titulaer, cerca de 80% '
-       'tinham boa recuperação em 24 meses, com escala de Rankin modificada de 0 '
-       'a 2, e muitos seguiram melhorando depois disso. Reabilitação cognitiva e '
-       'volta gradual aos estudos fazem parte do tratamento.'),
-      ('As recaídas', 'Cerca de 12% recaem nos dois primeiros anos; recaem menos '
-       'os que tiveram o tumor retirado e os que receberam segunda linha. Numa '
-       'recaída, procura-se teratoma no outro ovário ou em outro sítio e '
-       'repete-se o líquor.'),
-      ('O que não entra', 'Antipsicótico de manutenção não trata a causa e expõe '
-       'à mesma intolerância. O anticorpo pode persistir no soro por anos em '
-       'quem está bem e não serve de critério de alta. O consenso brasileiro '
-       'desaconselha imunossupressores orais na doença anti-NMDAR. '
-       'Eletroencefalograma se repete por sintoma, não por calendário.'),
+      ('Trajetória atual', 'Ela voltou a acompanhar com os olhos, foi extubada e passou a falar frases. Essa melhora progressiva favorece recuperação ainda em curso; o déficit cognitivo pode melhorar durante meses e exige reabilitação e avaliação seriada.'),
+      ('O que mudaria a leitura', 'Falha terapêutica pede considerar estagnação ou agravamento relevantes, e recaída pressupõe nova piora após melhora. Não foram descritas novas crises que sustentem déficit pós-crítico predominante. A trajetória recente também não permite declarar que a sequela estabilizou.'),
      ]),
 
     pg('alta', 'Preparando a alta',
@@ -769,3 +663,10 @@ ETAPAS = [
 ]
 
 REVISAO = []
+
+# Revisão de questões: fontes clínicas consultadas em 22/10/2026.
+# https://pmc.ncbi.nlm.nih.gov/articles/PMC5066574/
+# https://pubmed.ncbi.nlm.nih.gov/23290630/
+# https://www.idsociety.org/practice-guideline/encephalitis
+# https://pubmed.ncbi.nlm.nih.gov/39089672/
+# Redação: https://www.nbme.org/sites/default/files/2021-02/NBME_Item%20Writing%20Guide_R_6.pdf

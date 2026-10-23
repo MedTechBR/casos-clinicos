@@ -129,34 +129,13 @@ ETAPAS = [
                   'colhidos por punções separadas, antes de qualquer antibiótico.'),
 
     Q('p1', 1,
-      'Hemoglobina de 9,8 g/dL, VCM de 76 fL e RDW de 17,8%. A ferritina, de 18 '
-      'ng/mL, está dentro da faixa de referência do laboratório; a saturação da '
-      'transferrina é de 7%, e a proteína C reativa, de 74 mg/L. Qual o '
-      'mecanismo da anemia?', [
-      ('Falta de ferro', True),
-      ('Ferro retido pela inflamação', False),
-      ('Defeito na síntese da globina', False),
-      ('Sequestro no baço', False),
-      ('Destruição periférica das hemácias', False),
-      ('Infiltração da medula', False),
-     ], [
-      ('A leitura', 'A ferritina sobe com a inflamação. Com PCR de 74 mg/L, uma '
-       'ferritina normal não afastaria a falta de ferro; uma ferritina de 18 '
-       'ng/mL, abaixo de 30, a confirma, mesmo dentro da faixa do laboratório. '
-       'A saturação de 7% e o RDW de 17,8% completam o quadro de ferro que '
-       'falta, e não de ferro retido.'),
-      ('Por que não as outras', 'Quando a inflamação retém o ferro, a ferritina '
-       'fica normal ou alta. Defeito da globina dá microcitose com RDW normal e '
-       'ferritina preservada. Sequestro no baço derruba também leucócitos e '
-       'plaquetas, que estão normais. Destruição periférica não é microcítica, e '
-       'infiltração da medula costuma baixar mais de uma linhagem.'),
-      ('O que a falta de ferro abre', 'Numa mulher de 59 anos, depois da '
-       'menopausa, falta de ferro é perda crônica de sangue pelo tubo digestivo '
-       'até prova em contrário. A diretriz da Sociedade Britânica de '
-       'Gastroenterologia de 2021 indica investigação endoscópica alta e baixa '
-       'nessa situação, com ou sem febre. Seis meses de sulfato ferroso sem essa '
-       'investigação deixaram a pergunta aberta.'),
-     ]),
+      'Ferritina 18 e saturação 7%, com PCR 74 e anemia há seis meses. Quais duas conclusões orientam a investigação?', [
+      ('Há deficiência absoluta de ferro, mesmo com inflamação concomitante', True),
+      ('A investigação gastrointestinal continua indicada após a menopausa', True),
+      ('A faixa de referência da ferritina favorece inflamação isolada', False),
+      ('A febre de cinco semanas explica satisfatoriamente toda a cronologia da anemia', False),
+      ('Microcitose e RDW elevado priorizam hemoglobinopatia sobre perda de ferro', False),
+    ], [('Integração', 'A ferritina deveria subir com a inflamação; 18 torna estoques reduzidos muito prováveis. Saturação baixa e microcitose reforçam a falta de ferro, sem excluir um componente inflamatório associado.'), ('Cronologia', 'A anemia precede a febre e não deve ser atribuída integralmente à doença atual. Na mulher após a menopausa, investigar trato gastrointestinal, em geral com endoscopia alta e colonoscopia. Hemoglobinopatia pode dar microcitose, mas explica pior o conjunto de estoques baixos e cronologia.')]),
 
     painel('res1b', 'Primeiros exames', 'Urina e outros', [
         ex('Urina', 'Densidade 1.018 · 15 hemácias por campo, 40% dismórficas · proteína 1+ · sem leucocitúria', '—', True),
@@ -169,32 +148,13 @@ ETAPAS = [
     ]),
 
     Q('p2', 2,
-      'Hematúria com 40% de hemácias dismórficas, proteinúria de 0,8 g/g, sem '
-      'leucocitúria, e creatinina de 1,3 mg/dL. Onde está a lesão?', [
-      ('Glomerular', True),
-      ('Pré-renal', False),
-      ('Tubular', False),
-      ('Intersticial', False),
-      ('Obstrutiva', False),
-      ('Via urinária baixa', False),
-     ], [
-      ('A localização', 'Hemácias dismórficas em 40% e proteinúria dizem que o '
-       'sangue atravessou o glomérulo. Sem leucocitúria, a urina não tem o '
-       'padrão da lesão intersticial. Sangramento de bexiga, ureter ou cálculo dá '
-       'hemácias de forma normal, e lesão pré-renal, tubular ou obstrutiva não '
-       'produz hemácias dismórficas.'),
-      ('O complemento', 'C3 de 58 mg/dL com C4 normal é consumo pela via '
-       'alternativa, o que acontece quando imunocomplexos se depositam no '
-       'glomérulo; o fator reumatoide de 64 UI/mL aponta no mesmo sentido. A '
-       'creatinina de 1,3 mg/dL, que parece pouco, já corresponde a uma '
-       'filtração de 47 mL/min/1,73 m² pelo CKD-EPI 2021.'),
-      ('O que a categoria abre', 'Glomerulonefrite com consumo de complemento '
-       'vem de doença autoimune sistêmica, de crioglobulinas ou de infecção de '
-       'curso longo, que produz antígeno todos os dias. Com fator antinuclear '
-       'não reagente, a autoimune fica menos provável, e a crioglobulinemia '
-       'costuma derrubar também o C4. Com cinco semanas de febre, a infecção '
-       'persistente vai para a frente da lista.'),
-     ]),
+      'Qual mecanismo renal melhor integra o sedimento, C3 baixo, C4 preservado e cinco semanas de febre?', [
+      ('Glomerulonefrite relacionada a infecção persistente', True),
+      ('Nefrite intersticial pelos antibióticos recentes', False),
+      ('Hipoperfusão com hematúria incidental de via baixa', False),
+      ('Vasculite pauci-imune como hipótese prioritária', False),
+      ('Crioglobulinemia como hipótese prioritária', False),
+    ], [('Integração', 'Dismorfismo e proteinúria favorecem origem glomerular. C3 baixo com febre prolongada sustenta mecanismo associado a infecção e imunocomplexos; fator reumatoide pode acompanhar esse processo, sem provar artrite reumatoide.'), ('Comparação', 'Antibióticos tornam nefrite intersticial possível, mas ela integra pior o complemento e o sedimento. Pauci-imune costuma preservar complemento; crioglobulinemia costuma reduzir C4. São diferenças de probabilidade, não exclusões. A TFG calculada é estimativa pontual e não estabelece doença renal crônica.')]),
 
     estudo('rx_adm', 'Radiografia de tórax',
            'Radiografia da primeira consulta, parte da rodada inicial de febre '
@@ -249,28 +209,14 @@ ETAPAS = [
        'curso.'),
 
     Q('p4', 3,
-      'Três de três pares positivos, com cocos gram-positivos em cadeia, entre '
-      '16 e 22 horas de incubação. **Quais três** afirmações estão corretas?', [
-      ('Bacteremia contínua, de fonte intravascular', True),
-      ('Estreptococo ou enterococo, não estafilococo', True),
-      ('Positividade rápida indica inóculo alto', True),
-      ('Provável contaminação da coleta', False),
-      ('Os antibióticos curtos esterilizaram a fonte', False),
-      ('Repetir as culturas antes de valorizar', False),
-     ], [
-      ('A leitura', 'Três punções separadas, com horas entre elas, todas '
-       'positivas com o mesmo morfotipo: é bacteremia contínua. A bacteremia de '
-       'um foco fora do vaso, como uma pielonefrite ou um abscesso, costuma ser '
-       'intermitente; a contínua é a assinatura de uma fonte dentro do vaso ou '
-       'do coração. Positividade em menos de 24 horas reflete muitas bactérias '
-       'por mililitro de sangue.'),
-      ('O gram', 'Cocos gram-positivos em cadeia são estreptococos ou '
-       'enterococos. Estafilococos se agrupam em cachos.'),
-      ('Por que não as outras', 'Contaminante da pele positiva um frasco de um '
-       'par, e mais tarde. Os dois tratamentos curtos baixaram a febre sem '
-       'apagar a fonte, como a febre que voltou mostrou. Repetir culturas não '
-       'muda a leitura: três de três já são o dado.'),
-     ]),
+      'Três pares positivos, valvopatia e febre prolongada. Quais dois exames priorizar para localizar o foco e orientar a terapia, aproveitando as culturas já colhidas?', [
+      ('Ecocardiograma transtorácico', True),
+      ('Colonoscopia para localizar o foco da bacteremia antes da identificação', False),
+      ('Identificação e antibiograma das hemoculturas positivas', True),
+      ('Nova punção de medula para leishmaniose', False),
+      ('PET-CT como primeiro exame de valva nativa', False),
+      ('Procalcitonina para decidir se as culturas representam infecção', False),
+    ], [('Prioridades', 'Ecocardiograma transtorácico avalia a valva doente diante de bacteremia verdadeira provável; seu resultado aparece adiante. Identificação e antibiograma das culturas em processamento orientam o tratamento e a busca da porta de entrada, sem deduzir espécie apenas do Gram.'), ('Alternativas', 'Colonoscopia continua indicada pela ferropenia, mas não é o exame para localizar o foco cardíaco agora; a identificação posterior reforçará sua prioridade. Punção de medula repete investigação de menor rendimento diante deste dado novo. PET-CT não substitui ecocardiografia inicial de valva nativa. Procalcitonina não invalida três coletas concordantes. O tempo de positividade sozinho não prova foco intravascular.')]),
 
     pg('identificacao', 'Terceiro dia',
        'Com 44 horas de incubação sai a identificação: três de três pares com '
@@ -280,22 +226,7 @@ ETAPAS = [
        'fezes às vezes vêm mais escuras. Atribuía ao sulfato ferroso, mas o '
        'ferro foi suspenso há dois meses e as fezes escuras continuaram.'),
 
-    pagina('agente', 'Discussão', 'O agente e o intestino',
-      p('O //S. gallolyticus// vive no cólon e chega ao sangue por uma mucosa '
-        'doente. Entre os pacientes com bacteremia por ele, adenomas avançados e '
-        'câncer colorretal aparecem muito mais que na população geral, e a '
-        'associação justifica colonoscopia em todos, mesmo sem sintoma '
-        'intestinal.'),
-      p('Em Lúcia, o agente se soma a três pistas que já estavam no prontuário: '
-        'a falta de ferro com ferritina de 18 ng/mL, o ferro medular ausente no '
-        'mielograma e as fezes escuras que continuaram depois de suspenso o '
-        'sulfato ferroso. A anemia sozinha já pedia colonoscopia; com o agente, '
-        'ela deixa de esperar o fim da febre.'),
-      p('A endoscopia alta pode entrar pelas fezes escuras, mas não examina o '
-        'cólon. Sangue oculto negativo não afasta adenoma, e a tomografia perde '
-        'lesões pequenas e não permite biopsiar nem ressecar. A equipe marca a '
-        'colonoscopia para esta internação, assim que a infecção estiver '
-        'controlada.')),
+    pagina('agente', 'Discussão', 'Uma porta de entrada ainda aberta', p('A identificação do agente faz a equipe rever a anemia de seis meses. Lúcia está após a menopausa e não completou a investigação gastrointestinal. As fezes escuras persistiram depois da suspensão do ferro; não há endoscopia prévia disponível.')),
 
     pagina('beira_leito', 'À beira do leito', '',
            p('Com o agente em mãos, o residente volta ao leito e examina mãos, pés '
@@ -369,36 +300,7 @@ ETAPAS = [
          'mitral importante ao Doppler, com jato excêntrico. Ventrículo esquerdo '
          'de tamanho normal, fração de ejeção de 62%. Sem derrame pericárdico.']),
 
-    pareamento('p6', 'Pergunta 4',
-      'Pelos critérios de Duke-ISCVID de 2023, associe cada dado de Lúcia ao '
-      'critério em que ele entra.', [
-      par('Três de três pares com //S. gallolyticus//',
-          'Critério maior microbiológico',
-          'Agente típico em duas ou mais hemoculturas separadas.'),
-      par('Vegetação móvel de 12 mm na valva mitral',
-          'Critério maior de imagem',
-          'Evidência direta de lesão endocárdica no ecocardiograma.'),
-      par('Máculas plantares indolores e petéquias conjuntivais',
-          'Critério menor vascular',
-          'Lesões de Janeway e hemorragia conjuntival: êmbolos em pequenos vasos.'),
-      par('Fator reumatoide, nódulo de Osler e glomerulonefrite',
-          'Critério menor imunológico',
-          'Os três são fenômenos de imunocomplexo, e a versão de 2023 incluiu a '
-          'glomerulonefrite.'),
-      par('Insuficiência mitral reumática moderada',
-          'Critério menor de predisposição',
-          'Regurgitação mais que discreta, de qualquer causa, predispõe.'),
-      par('Baço palpável a 2 cm do rebordo',
-          'Não entra nos critérios',
-          'Esplenomegalia é comum, mas não pontua. Infarto ou abscesso esplênico '
-          'em imagem, sim.'),
-    ], opcoes=['Critério maior microbiológico', 'Critério maior de imagem',
-               'Critério menor vascular', 'Critério menor imunológico',
-               'Critério menor de predisposição', 'Critério menor de febre',
-               'Não entra nos critérios'],
-    titulo_resposta='Dois maiores fecham o diagnóstico',
-    nota='Dois critérios maiores bastam para endocardite definida. A febre acima '
-         'de 38 °C soma como menor, e as hemorragias sob as unhas não pontuam.'),
+    Q('p6', 4, 'Após identificar S. gallolyticus, quais dois exames priorizar para depuração e porta de entrada?', [('Hemoculturas de controle após terapia dirigida', True), ('Colonoscopia quando clinicamente estabilizada', True), ('Novo fator reumatoide para documentar esterilização', False), ('Sangue oculto fecal como condição para endoscopia', False), ('Tomografia abdominal como substituta da colonoscopia', False), ('Biópsia renal antes de iniciar betalactâmico', False)], [('Prioridades', 'Hemoculturas de controle documentam depuração e revelam persistência sob terapia. Colonoscopia pesquisa lesão colorretal associada a este agente; a ferropenia já era indicação independente. A sequência mostra culturas negativas e o resultado endoscópico.'), ('Comparação', 'Fator reumatoide pode persistir e não documenta esterilização. Sangue oculto negativo não descarta fonte intermitente nem deve condicionar endoscopia. Tomografia não substitui avaliação mucosa com possibilidade de biópsia. Biópsia renal pode ser útil em evolução discordante, mas não precede tratar esta infecção.')]),
 
     pg('virada', 'O diagnóstico',
        'É **endocardite infecciosa** de valva mitral nativa, sobre cardiopatia '
@@ -462,33 +364,13 @@ ETAPAS = [
        'A radiografia é feita no leito.'),
 
     Q('p7', 5,
-      'Na endocardite de valva nativa esquerda, **quais quatro** situações '
-      'indicam cirurgia precoce?', [
-      ('Insuficiência cardíaca por regurgitação grave', True),
-      ('Abscesso perivalvar ou bloqueio AV novo', True),
-      ('Vegetação de 10 mm ou mais após embolia', True),
-      ('Hemoculturas persistentes apesar do antibiótico', True),
-      ('Febre no segundo dia de antibiótico', False),
-      ('PCR ainda elevada no terceiro dia', False),
-      ('Hematúria da glomerulonefrite', False),
-     ], [
-      ('As três razões para operar', 'Pela diretriz da ESC de 2023: '
-       'insuficiência cardíaca por disfunção valvar; infecção que o antibiótico '
-       'não controla, como abscesso, fístula ou bacteremia persistente; e '
-       'prevenção de embolia, quando a vegetação de 10 mm ou mais já embolizou '
-       'ou quando se soma a outra indicação. Edema refratário ou choque pedem '
-       'cirurgia de emergência, em 24 horas; regurgitação grave com sintomas '
-       'de insuficiência cardíaca, cirurgia urgente, em três a cinco dias.'),
-      ('Para Lúcia', 'Crepitações até o terço médio, saturação de 88% e '
-       'terceira bulha no sexto dia, com a regurgitação importante do laudo, '
-       'são insuficiência cardíaca aguda, a indicação mais frequente e a mais '
-       'urgente. A valva perfurada não se refaz com antibiótico. A vegetação de '
-       '12 mm soma uma segunda razão. O PR de 180 ms, igual ao da admissão, é o '
-       'que se vigia: um bloqueio novo sugere abscesso no anel.'),
-      ('Por que não as outras', 'A febre leva de cinco a sete dias para ceder e '
-       'a PCR cai devagar; nenhuma das duas indica cirurgia por si. A '
-       'glomerulonefrite melhora com o controle da infecção.'),
-     ]),
+      'Culturas negativas no terceiro dia, dispneia súbita no sexto e PR inalterado. Qual mecanismo deve orientar a avaliação urgente?', [
+      ('Disfunção mecânica mitral com insuficiência cardíaca aguda', True),
+      ('Abscesso perivalvar como mecanismo mais sustentado pelo ECG', False),
+      ('Falha microbiológica como explicação principal, apesar da depuração', False),
+      ('Embolia pulmonar séptica da vegetação mitral', False),
+      ('Glomerulonefrite isolada como explicação suficiente da descompensação', False),
+    ], [('Dado decisivo', 'Regurgitação importante, novo quadro congestivo, terceira bulha e sopro que encurta favorecem piora mecânica valvar. Cultura negativa mostra controle sanguíneo, sem reparar tecido destruído; avaliação cirúrgica não deve esperar o fim do antibiótico.'), ('Concorrentes', 'PR estável não exclui abscesso, mas não fornece o sinal de extensão sugerido na alternativa. Vegetação esquerda emboliza usualmente para circulação sistêmica, não pulmonar. Não há dado de piora renal suficiente para atribuir o quadro apenas à retenção de volume. A urgência final depende da resposta ao suporte e da estabilidade.')]),
 
     estudo('rx_piora', 'Radiografia de tórax no leito',
            'Incidência anteroposterior, feita no leito na madrugada do sexto dia. '
@@ -576,34 +458,14 @@ ETAPAS = [
          'fezes escuras vinham dele.']),
 
     Q('p8', 6,
-      'Sobre o tratamento e o seguimento de Lúcia, **quais quatro** afirmações '
-      'estão corretas?', [
-      ('Contar a partir da primeira hemocultura negativa', True),
-      ('Completar por via oral, se estável', True),
-      ('Avaliação odontológica antes da alta', True),
-      ('Profilaxia antes de procedimento dentário', True),
-      ('Gentamicina associada em todo esquema', False),
-      ('Anticoagulação plena contra a embolia', False),
-      ('Hemoculturas diárias até o fim', False),
-     ], [
-      ('A duração', 'São quatro semanas de betalactâmico para estreptococo '
-       'sensível em valva nativa, contadas da primeira hemocultura negativa. '
-       'Como a cultura da valva operada foi negativa, a cirurgia não reinicia a '
-       'contagem; se fosse positiva, um curso inteiro recomeçaria.'),
-      ('A via oral', 'No ensaio POET, passar para antibiótico oral depois de '
-       'pelo menos dez dias endovenosos, ou sete depois da cirurgia, em '
-       'pacientes estáveis e sem abscesso, não foi inferior. A ESC de 2023 '
-       'incorporou essa possibilidade.'),
-      ('Os dentes', 'Ela usa prótese e vai pouco ao dentista. Focos dentários '
-       'tratados antes da alta reduzem o risco de nova infecção, e a '
-       'endocardite prévia, com ou sem anel ou remendo, indica profilaxia com '
-       'amoxicilina 2 g antes de procedimentos que manipulam a gengiva, pela '
-       'AHA de 2021 e pela ESC de 2023.'),
-      ('O que não entra', 'Gentamicina não acrescenta nada ao estreptococo '
-       'sensível e lesa o rim. Anticoagulação não reduz a embolia e aumenta o '
-       'sangramento cerebral. Hemoculturas se repetem até a primeira negativa, '
-       'e de novo se a febre voltar.'),
-     ]),
+      'Após completar o tratamento, Lúcia fará procedimentos eletivos, sem infecção ativa. Segundo a AHA, em quais dois indicar profilaxia de endocardite?', [
+      ('Raspagem periodontal subgengival', True),
+      ('Extração de dente permanente', True),
+      ('Ajuste da prótese dentária removível sem lesão de mucosa', False),
+      ('Radiografia odontológica intraoral', False),
+      ('Colonoscopia de vigilância, mesmo com possível biópsia', False),
+      ('Ecocardiograma transesofágico de controle', False),
+    ], [('Procedimentos odontológicos', 'Endocardite prévia define alto risco qualquer que tenha sido a cirurgia. Raspagem subgengival e extração manipulam gengiva ou região periapical e justificam profilaxia. Ajuste de prótese sem lesão e radiografia intraoral não têm esse tipo de manipulação.'), ('Procedimentos não odontológicos', 'Pela AHA, colonoscopia, inclusive com biópsia, e transesofágico não recebem profilaxia apenas por esse antecedente quando não há infecção ativa. A associação do agente ao cólon justifica investigar e acompanhar a lesão, não acrescentar profilaxia à colonoscopia.')]),
 
     pg('alta', 'Preparando a alta',
        'Lúcia completa o antibiótico com culturas negativas. O '
@@ -686,3 +548,9 @@ ETAPAS = [
 ]
 
 REVISAO = []
+
+# Revisão das perguntas: fontes consultadas em 22/10/2026.
+# https://www.nbme.org/sites/default/files/2021-02/NBME_Item%20Writing%20Guide_R_6.pdf
+# https://www.escardio.org/guidelines/clinical-practice-guidelines/all-esc-practice-guidelines/endocarditis/
+# https://doi.org/10.1136/gutjnl-2021-325210
+# https://www.heart.org/--/media/files/health-topics/infective-endocarditis/infective-endocarditis-wallet-card.pdf

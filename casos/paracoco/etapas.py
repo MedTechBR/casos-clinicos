@@ -157,29 +157,15 @@ ETAPAS = [
     ]),
 
     Q('p1', 1,
-      'Em ar ambiente, pO₂ de 64 mmHg com pCO₂ de 33 mmHg, num homem de 52 '
-      'anos, em Cacoal. Qual o mecanismo principal da hipoxemia?', [
-      ('Hipoventilação alveolar', False),
-      ('Baixa pressão inspirada de oxigênio', False),
-      ('Desequilíbrio ventilação-perfusão no parênquima', True),
-      ('Shunt intracardíaco', False),
-      ('Transporte reduzido pela anemia', False),
-      ('Fadiga da musculatura respiratória', False),
+      'Qual conclusão a gasometria permite antes de atribuir a hipoxemia a uma doença específica?', [
+      ('Há defeito de troca gasosa; a gasometria isolada não separa V/Q, difusão e shunt', True),
+      ('Hipoventilação isolada explica pO₂ de 64 com pCO₂ de 33', False),
+      ('A anemia de 11,6 g/dL explica a redução da pO₂', False),
+      ('O gradiente alvéolo-arterial é normal para a idade', False),
+      ('A pCO₂ baixa demonstra causa exclusivamente extrapulmonar', False),
      ], [
-      ('O cálculo', 'A pressão alveolar de oxigênio em ar ambiente é cerca de '
-       '150 menos a pCO₂ dividida por 0,8: 150 − 33/0,8, perto de 109 mmHg. '
-       'Com pO₂ de 64, o gradiente alvéolo-arterial é de cerca de 45 mmHg, '
-       'quando o esperado para 52 anos fica perto de 17 (idade dividida por '
-       '4, mais 4). O oxigênio chega ao alvéolo e não passa para o sangue.'),
-      ('Por que não as outras', 'Hipoventilação, por qualquer causa, inclusive '
-       'fadiga, elevaria a pCO₂, que está baixa: ele hiperventila. Cacoal fica '
-       'a cerca de 200 m de altitude, sem queda da pressão inspirada. A anemia '
-       'reduz o conteúdo de oxigênio, não a pO₂. Shunt intracardíaco é '
-       'improvável sem sopro nem cianose e não explicaria os estertores.'),
-      ('O que isso indica', 'Gradiente alargado com estertores finos dos dois '
-       'lados põe o problema no parênquima: alvéolos mal ventilados para a '
-       'perfusão que recebem e, no esforço, troca lenta por uma membrana '
-       'espessada. É doença difusa do pulmão; a radiografia dirá de que tipo.'),
+      ('O limite do cálculo', 'Em ar ambiente e baixa altitude, PAO₂ estimada em 109 mmHg e PaO₂ de 64 dão gradiente de cerca de 45, acima do esperado para 52 anos. Estertores e doença respiratória crônica favorecem processo pulmonar, mas o gradiente não identifica sozinho o mecanismo preciso.'),
+      ('Comparação', 'Hipoventilação isolada elevaria a pCO₂. Anemia reduz conteúdo de oxigênio, sem necessariamente baixar sua pressão arterial. pCO₂ de 33 indica ventilação aumentada, compatível com compensação da doença pulmonar.'),
      ]),
 
     estudo('rx_adm', 'Radiografia de tórax',
@@ -201,29 +187,15 @@ ETAPAS = [
          'Sem cavidade evidente, sem derrame pleural, área cardíaca normal.']),
 
     Q('p2', 2,
-      'Pela radiografia e pelo exame, **quais duas** leituras estão '
-      'corretas?', [
-      ('Acometimento do interstício, com micronódulos', True),
-      ('Extensão maior do que o exame sugere', True),
-      ('Consolidação do espaço aéreo', False),
-      ('Padrão de reativação apical', False),
-      ('Padrão de congestão cardíaca', False),
-      ('Doença pleural predominante', False),
+      'Baciloscopias e teste molecular negativos, cultura em curso, infiltrado bilateral e úlceras acessíveis: quais **dois exames** oferecem melhor rendimento etiológico inicial?', [
+      ('Exame direto do escarro para fungos', True),
+      ('Biópsia da lesão oral para histologia e pesquisa de agentes', True),
+      ('Broncoscopia com lavado broncoalveolar', False),
+      ('Biópsia da lesão laríngea sob anestesia geral', False),
+      ('Tomografia de tórax de alta resolução', False),
      ], [
-      ('O compartimento', 'Linhas finas que formam rede e nódulos de poucos '
-       'milímetros são a expressão do interstício: septos, espaço em volta dos '
-       'brônquios e vasos, e granulomas pequenos. O espaço aéreo cheio daria '
-       'opacidade confluente, com broncograma aéreo.'),
-      ('A dissociação', 'Opacidades nos dois pulmões, do hilo à periferia, num '
-       'homem com saturação de 93% em repouso e estertores discretos. Imagem '
-       'maior que a clínica é a dissociação clínico-radiológica, comum nas '
-       'doenças granulomatosas crônicas do pulmão e nas pneumoconioses, em que '
-       'a lesão se instala devagar e o pulmão se adapta.'),
-      ('Por que não as outras', 'A reativação típica da tuberculose ocupa os '
-       'segmentos apicais e posteriores, muitas vezes com cavidade; aqui os '
-       'ápices estão relativamente preservados, o que pesa contra, sem '
-       'afastar. Congestão traria área cardíaca aumentada, linhas septais nas '
-       'bases e derrame. Não há derrame nem espessamento pleural.'),
+      ('Amostras disponíveis', '**Direto do escarro** pesquisa agentes não avaliados pelos testes para micobactérias. **Biópsia oral** oferece material acessível para comparar infecção e neoplasia, com histologia e pesquisa microbiológica; a cultura para micobactérias já está em andamento.'),
+      ('Rendimento e custo da obtenção', '**Lavado broncoalveolar** é útil se amostras menos invasivas não resolverem a dúvida ou houver discordância pulmonar. **Biópsia laríngea** pode ser necessária para lesão persistente, mas a boca oferece tecido semelhante com menor complexidade inicial. **TC de alta resolução** caracteriza melhor o padrão e a extensão, sem identificar o agente ou substituir o tecido nesta comparação.'),
      ]),
 
     disc('escarro', 'Duas baciloscopias e um teste molecular',
@@ -262,30 +234,15 @@ ETAPAS = [
          'e uma área granulosa na gengiva, todas com meses de evolução.']),
 
     Q('p3', 3,
-      'Lesões de lábio, face e gengiva, com meses de evolução, nesse aspecto. '
-      'Em que grupo de processos elas se encaixam melhor?', [
-      ('Inflamação granulomatosa crônica', True),
-      ('Neoplasia epitelial primária', False),
-      ('Infecção bacteriana superficial', False),
-      ('Doença bolhosa autoimune', False),
-      ('Vasculite de pequenos vasos', False),
-      ('Dano solar crônico do lábio', False),
+      'Úlceras semelhantes em boca e face coexistem com doença pulmonar difusa. Qual hipótese de trabalho organiza melhor esses achados antes da biópsia?', [
+      ('Infecção granulomatosa sistêmica com acometimento pulmonar e mucocutâneo', True),
+      ('Carcinoma de lábio ou laringe com comprometimento linfonodal e pulmonar', False),
+      ('Leishmaniose mucosa associada a doença pulmonar tabágica independente', False),
+      ('Vasculite granulomatosa com acometimento de vias aéreas e pulmões', False),
+      ('Doença granulomatosa não infecciosa com acometimento pulmonar e cutâneo', False),
      ], [
-      ('O padrão', 'Várias lesões em sítios diferentes, infiltradas, de fundo '
-       'granuloso com pontos hemorrágicos, que crescem em meses, num homem com '
-       'linfonodos cervicais, doença intersticial bilateral e rouquidão. Isso '
-       'é um processo inflamatório crônico que se espalha, e a superfície '
-       'granulosa é a do tecido de granulação sobre granulomas.'),
-      ('O que cabe no grupo', 'No Brasil, úlceras granulomatosas de boca e '
-       'face vêm de micobactérias, de leishmânia, de micoses profundas e, mais '
-       'raramente, de sífilis tardia ou sarcoidose. Quase todas pedem tecido '
-       'para cultura e histologia, além da coloração especial.'),
-      ('Por que não as outras', 'O carcinoma do lábio costuma ser lesão única, '
-       'endurecida, de borda em rolete, e pode coexistir com um processo '
-       'granulomatoso; só a biópsia separa. Infecção bacteriana superficial '
-       'dura dias e forma crosta amarelada sem infiltração. Doença bolhosa '
-       'começa por bolhas e erosões, e vasculite por púrpura palpável. O dano '
-       'solar do lábio dá placa descamativa, sem úlcera granulosa.'),
+      ('Padrão que unifica', 'A evolução em meses, as várias lesões granulosas semelhantes, os linfonodos e o infiltrado reticulonodular favorecem infecção sistêmica. O trabalho rural amplia as exposições possíveis; os testes negativos para tuberculose ainda não encerram essa hipótese.'),
+      ('Concorrentes reais', 'Carcinoma continua relevante pelo fumo e álcool, mas a multiplicidade de lesões semelhantes e a imagem difusa sem massa enfraquecem essa explicação. Leishmaniose exigiria uma segunda causa para o pulmão. Vasculite e sarcoidose podem unir territórios, porém faltam manifestações renais ou destrutivas nasais, e a aparência ulcerogranulosa favorece pesquisar agentes no tecido antes de atribuir tudo a inflamação não infecciosa.'),
      ]),
 
     pg('laringe', 'Terceiro dia',
@@ -323,8 +280,7 @@ ETAPAS = [
          'Valdir tem quatro sítios na boca e na face, além da laringe, todos com '
          'a mesma superfície granulosa. Os linfonodos são bilaterais e móveis. '
          'A radiografia não mostra massa, e sim doença difusa.',
-         'As duas âncoras exigem a mesma coisa antes de qualquer tratamento: '
-         'tecido.'),
+         'A aparência clínica ainda admite mais de uma explicação. A cultura respiratória está em andamento e não há diagnóstico histológico.'),
 
     pg('semana', 'Uma semana depois',
        'Valdir volta mais magro, com 60 kg. A cultura do escarro segue '
@@ -334,8 +290,7 @@ ETAPAS = [
        'demora e ele está perdendo peso". O cirurgião de cabeça e pescoço vê o '
        'lábio e os linfonodos duros e propõe ressecção em cunha do lábio com '
        'esvaziamento cervical, em quatro semanas.',
-       'A lesão do lábio está ao alcance de uma biópsia com anestesia local, no '
-       'próprio ambulatório.'),
+       'A lesão do lábio permanece visível, assim como a área granulosa da gengiva.'),
 
     bifurcacao('b1', 'Decisão', 'Antes de tratar',
       'Pulmão, laringe, boca, face e linfonodos, com duas âncoras na mesa. '
@@ -418,33 +373,17 @@ ETAPAS = [
        'carcinoma de boca e laringe também. Um exame direto do escarro com '
        'hidróxido de potássio teria mostrado as leveduras em um dia.'),
 
-    pareamento('p4', 'Pergunta 4',
-      'Lesões granulomatosas crônicas de pele e mucosa têm poucas causas no '
-      'Brasil, e elas se confundem. Associe cada paciente à causa mais '
-      'provável.', [
-      par('Úlcera do palato e perfuração do septo nasal, anos após uma ferida '
-          'na perna', 'Leishmaniose mucosa',
-          'A lesão mucosa aparece anos depois da cutânea e começa pelo nariz.'),
-      par('Úlcera única do lábio inferior, de borda endurecida, em lavrador '
-          'fumante', 'Carcinoma epidermoide',
-          'Lesão única em área de sol e fumo. Pode coexistir com a micose, no '
-          'mesmo sítio.'),
-      par('Úlcera dolorosa da língua, bacilos no escarro e cavidade no ápice',
-          'Tuberculose',
-          'A lesão oral costuma acompanhar a doença pulmonar bacilífera.'),
-      par('Úlcera oral com aids e CD4 baixo; leveduras pequenas dentro de '
-          'macrófagos', 'Histoplasmose disseminada',
-          'Leveduras de 2 a 4 µm, intracelulares, sem brotamento múltiplo.'),
-      par('Nódulos em fila no antebraço, semanas após arranhão de gato',
-          'Esporotricose',
-          'Disseminação linfangítica a partir da inoculação na pele.'),
-    ], opcoes=['Leishmaniose mucosa', 'Carcinoma epidermoide', 'Tuberculose',
-               'Histoplasmose disseminada', 'Esporotricose',
-               'Cromoblastomicose', 'Sífilis terciária'],
-    titulo_resposta='O tecido com cultura separa o que o olho junta',
-    nota='As que sobraram: cromoblastomicose dá placa verrucosa no pé ou na '
-         'perna, com corpos castanhos na biópsia; sífilis terciária dá goma que '
-         'perfura o palato, com sorologia reagente.'),
+    Q('p4', 4,
+      'Confirmada a micose, quais **dois exames** mais ajudam a medir as disfunções já sugeridas por hiperpigmentação palmar, Na 133, dispneia e tabagismo?', [
+      ('Cortisol das 8 h e ACTH, seguidos de estímulo se indicado', True),
+      ('Espirometria com broncodilatador', True),
+      ('Tomografia das adrenais', False),
+      ('Capacidade de difusão do monóxido de carbono', False),
+      ('Broncoscopia com lavado broncoalveolar', False),
+     ], [
+      ('Função antes de atribuir causa', '**Cortisol/ACTH** investigam reserva e localização da disfunção adrenal; basal indeterminado justifica cosintropina. **Espirometria** caracteriza obstrução e sua reversibilidade, relevantes num fumante com doença pulmonar, antes de atribuir a dispneia apenas à micose.'),
+      ('O que os demais acrescentariam', '**TC das adrenais** caracteriza anatomia, mas não mede reserva hormonal. **Difusão de CO** pode complementar a avaliação respiratória, sobretudo se dispneia e espirometria forem discordantes; não substitui a avaliação inicial do fluxo aéreo. **Lavado broncoalveolar** pode esclarecer infecção pulmonar discordante ou não confirmada; aqui já há agente demonstrado em tecido e escarro disponível para exame direto.'),
+     ]),
 
     disc('formas', 'Forma e gravidade',
          'O consenso brasileiro separa a forma aguda ou subaguda, do jovem, '
@@ -474,31 +413,15 @@ ETAPAS = [
     ], introducao='Pedidos depois do diagnóstico, antes de começar o antifúngico.'),
 
     Q('p5', 5,
-      'Cortisol às 8 h de 7,4 µg/dL, ACTH de 112 pg/mL, pico de 11,8 µg/dL '
-      'após cosintropina, sódio de 132 e potássio de 5,1. Qual a '
-      'interpretação?', [
-      ('Insuficiência adrenal primária', True),
-      ('Insuficiência adrenal central', False),
-      ('Eixo normal: cortisol dentro da faixa', False),
-      ('Supressão por corticoide exógeno', False),
-      ('Efeito do diurético tiazídico', False),
+      'Qual combinação melhor localiza a disfunção adrenal de Valdir, apesar do cortisol basal dentro da referência?', [
+      ('Pico baixo após cosintropina e ACTH elevado, favorecendo falha adrenal primária', True),
+      ('Cortisol basal dentro da referência e sódio baixo, favorecendo eixo normal com SIADH', False),
+      ('Pico baixo e ACTH elevado, favorecendo doença hipofisária', False),
+      ('Hiponatremia em uso de tiazida, tornando dispensável interpretar a cosintropina', False),
+      ('Potássio de 5,1 isolado, confirmando deficiência de aldosterona', False),
      ], [
-      ('A leitura', 'Um cortisol de 7,4 µg/dL cabe na faixa do laboratório, '
-       'mas é baixo para um homem doente, e o pico de 11,8 após 250 µg de '
-       'cosintropina fica abaixo de 18, o corte clássico; com os ensaios mais '
-       'novos o corte cai para 14 a 15, e ele continua abaixo. Com o ACTH alto, '
-       'a falha está na própria glândula.'),
-      ('O que se soma', 'Sódio baixo e potássio no limite sugerem falta também '
-       'de aldosterona, que só a doença da adrenal produz. As dobras palmares '
-       'escuras são o ACTH alto estimulando o melanócito, e no rosto queimado '
-       'de sol passariam despercebidas.'),
-      ('Por que não as outras', 'Na insuficiência central e na supressão por '
-       'corticoide, o ACTH está baixo ou normal, sem escurecimento da pele e '
-       'sem potássio alto. A tiazida baixa o sódio, mas baixa também o '
-       'potássio e não mexe no cortisol.'),
-      ('Na micose', 'Granulomas destroem o córtex adrenal. Pelo consenso, 15 a '
-       '50% dos pacientes avaliados têm reserva reduzida sem sintomas, e 3,5% '
-       'chegam à doença de Addison.'),
+      ('O estímulo resolve a dúvida', 'Cortisol basal de 7,4 é indeterminado. Pico de 11,8 após cosintropina fica abaixo dos cortes usuais, inclusive de muitos ensaios modernos; com ACTH de 112, favorece falha da adrenal, não da hipófise.'),
+      ('Dados que apoiam, sem confirmar sozinhos', 'Hiperpigmentação e eletrólitos reforçam a localização. A tiazida pode contribuir para o sódio baixo, mas não explica a resposta hormonal. Potássio limítrofe não confirma sozinho deficiência mineralocorticoide; pressão, renina e eletrólitos orientam sua avaliação.'),
      ]),
 
     disc('adrenal', 'A adrenal de Valdir',
@@ -545,31 +468,15 @@ ETAPAS = [
        'conversa com ele sobre o cigarro e a cachaça.'),
 
     Q('p6', 6,
-      'Na orientação do itraconazol para Valdir, **quais quatro** afirmações '
-      'estão corretas?', [
-      ('Cápsula inteira, uma vez ao dia, após refeição', True),
-      ('Suspender o omeprazol durante o tratamento', True),
-      ('Não associar rifampicina ao itraconazol', True),
-      ('Sorologia e radiografia a cada seis meses', True),
-      ('Dividir a dose em duas tomadas, em jejum', False),
-      ('Suspender quando as lesões cicatrizarem', False),
-      ('Nova biópsia para comprovar a cura', False),
+      'Itraconazol em cápsulas, omeprazol em uso e cultura para micobactérias pendente: quais **duas medidas** reduzem o risco de exposição antifúngica insuficiente?', [
+      ('Reavaliar a necessidade do omeprazol e administrar as cápsulas após refeição', True),
+      ('Reorganizar o esquema antifúngico se for necessário iniciar rifampicina', True),
+      ('Manter o omeprazol, separando-o do itraconazol por duas horas', False),
+      ('Aumentar empiricamente o itraconazol ao introduzir rifampicina', False),
+      ('Administrar as cápsulas em jejum para evitar interferência alimentar', False),
      ], [
-      ('A absorção', 'O itraconazol em cápsula precisa de ácido no estômago e '
-       'de comida. O consenso recomenda a cápsula inteira, numa tomada só, '
-       'depois do almoço ou do jantar; suco cítrico ajuda, e antiácido, '
-       'bloqueador H2, omeprazol e alimentos alcalinos atrapalham. Dividir a '
-       'dose piora a absorção.'),
-      ('As interações', 'Rifampicina, fenitoína e barbitúricos derrubam o nível '
-       'do itraconazol. Se a cultura confirmar tuberculose ao lado da micose, o '
-       'esquema troca o itraconazol por sulfametoxazol-trimetoprima, que pode '
-       'correr com a rifampicina.'),
-      ('O seguimento', 'Consultas mensais nos três primeiros meses e depois '
-       'trimestrais; sorologia e radiografia a cada seis meses. As lesões de '
-       'pele e boca cicatrizam em cerca de 30 dias, e os linfonodos em dois a '
-       'três meses, mas o tratamento dura de 9 a 18 meses, em média 12, e '
-       'termina pelos critérios clínicos, radiológicos e sorológicos de cura. '
-       'Não é preciso repetir biópsia.'),
+      ('Dois mecanismos', 'Supressão ácida reduz absorção das cápsulas convencionais: revisar o omeprazol e tomar após refeição ajuda a evitar subexposição. Rifampicina induz metabolismo e exige reorganizar a terapia, com alternativa como sulfametoxazol-trimetoprima conforme avaliação do caso.'),
+      ('Ajustes que não resolvem a interação', 'Separar duas horas não reverte a supressão ácida prolongada pelo omeprazol. Elevar empiricamente a dose não compensa com segurança a forte indução pela rifampicina. Jejum pode ser adequado a outras formulações, mas reduz a absorção das cápsulas convencionais em comparação à administração após refeição.'),
      ]),
 
     pg('seguimento', 'Do primeiro ao sexto mês',
@@ -722,3 +629,8 @@ ETAPAS = [
 ]
 
 REVISAO = []
+
+# Revisão de questões: fontes clínicas consultadas em 22/10/2026.
+# https://www.scielo.br/j/rsbmt/a/Ynd6SxcPqLjtqkFyVp678zj/?format=pdf
+# https://pmc.ncbi.nlm.nih.gov/articles/PMC4880116/
+# Redação: https://www.nbme.org/sites/default/files/2021-02/NBME_Item%20Writing%20Guide_R_6.pdf

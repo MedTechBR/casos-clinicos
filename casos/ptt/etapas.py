@@ -165,29 +165,16 @@ ETAPAS = [
                   'antes de qualquer antibiótico.'),
 
     Q('p1', 1,
-      'Plaquetas de 14.000/mm³, que eram 38.000 dois dias antes. Qual o '
-      'mecanismo mais provável da plaquetopenia?', [
-      ('Falta de produção na medula', False),
-      ('Consumo ou destruição periférica', True),
-      ('Sequestro no baço', False),
-      ('Diluição por volume infundido', False),
-      ('Artefato de coleta', False),
+      'Anemia, plaquetopenia rapidamente progressiva e urina escura: quais **três exames** mais distinguem perda sanguínea, hemólise imune e hemólise intravascular agora?', [
+      ('DHL, bilirrubinas e haptoglobina', True),
+      ('Teste de antiglobulina direto', True),
+      ('Urina com fita e microscopia', True),
+      ('Mielograma', False),
+      ('Pesquisa de sangue oculto nas fezes', False),
+      ('Ultrassonografia do baço', False),
      ], [
-      ('A leitura', 'A medula está trabalhando: os leucócitos são normais, os '
-       'reticulócitos estão em 7,8% e o volume plaquetário médio de 12,4 fL '
-       'indica plaquetas jovens, grandes, liberadas às pressas. Uma contagem '
-       'que cai de 38.000 para 14.000 em dois dias, com produção ativa, está '
-       'sendo gasta na periferia.'),
-      ('Por que não as outras', 'Falta de produção costuma baixar mais de uma '
-       'linhagem e vem com reticulócitos baixos. O baço não é palpável, e o '
-       'sequestro raramente leva as plaquetas abaixo de 40.000. Ela não '
-       'recebeu volume endovenoso. O laboratório conferiu a lâmina e não '
-       'encontrou agregados, o que afasta o artefato do anticoagulante do '
-       'tubo.'),
-      ('O que a categoria abre', 'Plaqueta gasta na periferia é destruída por '
-       'anticorpo ou consumida em trombos, pela coagulação ativada ou pela '
-       'adesão às paredes de vasos lesados. A anemia, com reticulócitos '
-       'altos, também parece ser de destruição: a pergunta seguinte é como.'),
+      ('Rendimento imediato', '**DHL, bilirrubinas e haptoglobina** procuram destruição eritrocitária. **Antiglobulina direta** testa um mecanismo imune. **Fita e microscopia da urina** distinguem hemácias de pigmento heme; a CK ajuda a comparar hemoglobina e mioglobina.'),
+      ('Prioridade menor', '**Mielograma** não é a primeira etapa com reticulocitose e queda rápida de plaquetas. **Sangue oculto fecal** não explicaria por si icterícia e pigmentúria. **Ultrassom do baço** pode avaliar sequestro, mas discrimina menos o mecanismo urgente de anemia e lesão de órgãos.'),
      ]),
 
     painel('res1b', 'Primeiros exames', 'Hemólise e urina', [
@@ -201,42 +188,22 @@ ETAPAS = [
         ex('Beta-hCG sérico', 'Negativo', 'negativo'),
     ]),
 
-    disc('urina', 'A urina cor de café',
-       'A fita marca sangue +++, mas o microscópio encontra até duas hemácias '
-       'por campo. O que reage na fita é pigmento heme livre na urina: '
-       'hemoglobina, que vem da hemácia destruída dentro do '
-       'vaso, ou mioglobina, que vem do músculo.',
-       'Com creatinoquinase de 110 U/L, o músculo está fora. A bilirrubina '
-       'escurece a urina, mas não reage como sangue na fita. Sobra a '
-       'hemoglobina livre, que só chega à urina quando a haptoglobina que a '
-       'carregaria já se esgotou, como mostra o resultado menor que 10 mg/dL.',
-       'A AST acima da ALT, com DHL de 1.480 U/L, vem das próprias hemácias e '
-       'não do fígado. Os oito leucócitos por campo, sem nitrito, pesam pouco '
-       'numa mulher com dor lombar e febre, mas a equipe os anota.'),
+    disc('urina',
+       'A urina cor de café',
+       'A urina permanece escura. A fita marca sangue +++, mas o microscópio encontra até duas hemácias por campo; a creatinoquinase é de 110 U/L.',
+       'A haptoglobina veio menor que 10 mg/dL. A equipe precisa explicar a discrepância entre a fita e a microscopia em conjunto com os marcadores sanguíneos.',
+       'Os oito leucócitos por campo, sem nitrito, são anotados junto da dor lombar e da febre. A urocultura está em andamento.'),
 
     Q('p2', 2,
-      'Hemoglobina de 7,8 g/dL com reticulócitos de 7,8%, DHL de 1.480 U/L, '
-      'haptoglobina indetectável e teste de antiglobulina direto negativo. '
-      '**Quais duas** leituras estão corretas?', [
-      ('Hemólise intravascular', True),
-      ('Hemólise extravascular predominante', False),
-      ('Destruição mediada por anticorpo', False),
-      ('Destruição sem anticorpo na hemácia', True),
-      ('Perda de sangue oculta', False),
-      ('Medula que não responde', False),
+      'Sangue +++ na fita, 0–2 hemácias/campo, CK normal e antiglobulina negativa: qual interpretação melhor explica a anemia e a urina?', [
+      ('Hemólise com componente intravascular; mecanismo imune menos provável', True),
+      ('Hematúria glomerular como causa principal da anemia', False),
+      ('Mioglobinúria por lesão muscular como causa da urina escura', False),
+      ('Hemólise imune comprovada pela bilirrubina indireta', False),
+      ('Sangramento gengival como explicação suficiente da anemia', False),
      ], [
-      ('Onde a hemácia se rompe', 'Hemoglobina livre na urina, haptoglobina '
-       'esgotada e DHL quase seis vezes o limite dizem que a hemácia se rompe '
-       'dentro do vaso. Na hemólise extravascular, em que o baço e o fígado '
-       'retiram as hemácias, a bilirrubina indireta sobe, mas a hemoglobinúria '
-       'é rara e o baço costuma crescer.'),
-      ('Com ou sem anticorpo', 'O teste de antiglobulina direto negativo torna '
-       'improvável a destruição por anticorpo quente ou por complemento fixado '
-       'na hemácia. Sobram as causas não imunes: trauma mecânico dentro dos '
-       'vasos ou em próteses, toxinas, parasitas, oxidação e defeitos da '
-       'membrana ou da enzima da hemácia.'),
-      ('Por que não as outras', 'Reticulócitos de 7,8% mostram uma medula que '
-       'responde. Perda oculta não explica DHL alta nem haptoglobina zerada.'),
+      ('Integração', 'Pigmento heme sem hemácias proporcionais, associado a haptoglobina muito baixa e DHL alta, favorece hemoglobinúria. CK normal torna mioglobinúria menos provável; a perda gengival não produz esse perfil bioquímico.'),
+      ('O que ainda não se sabe', 'Antiglobulina negativa reduz, mas não zera, a possibilidade de hemólise imune. Bilirrubina indireta não identifica anticorpos. É preciso investigar fragmentação eritrocitária e outras causas não imunes, sem definir a etiologia só por esses dados.'),
      ]),
 
     painel('res1c', 'Primeiros exames', 'Coagulação e outros', [
@@ -285,42 +252,21 @@ ETAPAS = [
        'permitirem" e reavaliação da coagulação.'),
 
     Q('p3', 3,
-      'INR de 1,08, TTPa com relação de 1,0, fibrinogênio de 340 mg/dL e '
-      'D-dímero de 1.200 ng/mL, com plaquetas de 14.000/mm³. Como está a '
-      'coagulação?', [
-      ('Consumo de fatores e de fibrinogênio', False),
-      ('Preservada, sem consumo de fatores', True),
-      ('Falta de vitamina K', False),
-      ('Falha de síntese hepática', False),
-      ('Inibidor circulante de fator', False),
+      'Com hemólise, plaquetas de 14.000 e INR/fibrinogênio preservados, quais **dois exames** priorizar para discriminar o mecanismo da microangiopatia suspeita?', [
+      ('Revisão do esfregaço com quantificação de esquizócitos', True),
+      ('Atividade de ADAMTS13 e pesquisa de inibidor antes do plasma', True),
+      ('C3 e C4 séricos', False),
+      ('Pesquisa de toxina Shiga nas fezes', False),
+      ('Vitamina B12 e homocisteína', False),
      ], [
-      ('A leitura', 'Tempo de protrombina, TTPa e fibrinogênio normais dizem '
-       'que os fatores e o fibrinogênio não estão sendo gastos. O D-dímero de '
-       '1.200 ng/mL é inespecífico: sobe com inflamação, infecção e trombos '
-       'pequenos de qualquer natureza.'),
-      ('Contra a coagulação intravascular', 'No escore da ISTH para coagulação '
-       'intravascular disseminada franca, ela soma 2 pontos pelas plaquetas '
-       'abaixo de 50.000, 2 pelo D-dímero moderadamente alto, zero pelo tempo '
-       'de protrombina e zero pelo fibrinogênio acima de 100 mg/dL: 4 pontos, '
-       'abaixo dos 5 que definem o quadro. Na sepse grave que consome '
-       'plaquetas a esse ponto, o tempo de protrombina costuma se alongar e o '
-       'fibrinogênio, cair.'),
-      ('Por que não as outras', 'Falta de vitamina K, falha hepática e inibidor '
-       'alongariam o tempo de protrombina, o TTPa ou os dois, e nenhum deles '
-       'explicaria a plaquetopenia.'),
+      ('Prioridade diagnóstica', '**Esfregaço revisto** procura fragmentação eritrocitária e conecta a hemólise à plaquetopenia. **ADAMTS13/inibidor**, antes do plasma, discrimina deficiência grave; a espera pelo resultado não deve atrasar tratamento se a probabilidade clínica for alta.'),
+      ('Outras microangiopatias', '**C3/C4** podem complementar a investigação, mas valores normais não afastam mecanismo por complemento e valores baixos não o confirmam. **Toxina Shiga** ganha prioridade com pródromo diarreico, ausente aqui. **B12/homocisteína** investigam pseudomicroangiopatia; reticulocitose e VCM de 88 tornam essa hipótese menos provável neste momento.'),
      ]),
 
-    disc('coag', 'Plaquetas que somem sem trombina',
-       'A coagulação intravascular consome plaquetas e fatores ao mesmo tempo, '
-       'porque a trombina formada ativa as duas coisas. Em Sandra só as '
-       'plaquetas somem. Elas estão sendo gastas por um caminho que não passa '
-       'pela cascata, e é esse caminho que a lâmina pode mostrar.',
-       'Somados, os dados são três consumos que andam juntos: plaquetas gastas '
-       'na periferia, hemácias destruídas dentro do vaso sem anticorpo, e '
-       'órgãos que falham por episódios curtos, como a fala que vai e volta, a '
-       'creatinina de 1,4 mg/dL e a troponina discretamente elevada.',
-       'A equipe mantém a sepse como hipótese principal, mas risca a '
-       'coagulação intravascular da evolução.'),
+    disc('coag',
+       'Hemólise e coagulação',
+       'INR, TTPa e fibrinogênio preservados pesam contra CIVD franca, sem excluir uma fase inicial. O D-dímero elevado é inespecífico.',
+       'A queda das plaquetas acompanha hemólise, alterações transitórias da fala, creatinina de 1,4 mg/dL e troponina discretamente elevada. A equipe mantém a investigação de infecção e amplia as hipóteses.'),
 
     bifurcacao('b1', 'Decisão', 'A punção e as plaquetas',
       'Febre, confusão e petéquias numa profissional da emergência: a equipe não '
@@ -392,8 +338,7 @@ ETAPAS = [
         ['No esfregaço de Sandra: 4,2% de esquizócitos (hemácias em capacete, '
          'triângulos e fragmentos), policromasia e plaquetas raras, sem '
          'agregados.',
-         'Acima de 1%, num adulto com hemólise e plaquetopenia, a contagem tem '
-         'valor diagnóstico pela recomendação do ICSH de 2021.']),
+         'Acima de 1%, num adulto com hemólise e plaquetopenia, a contagem apoia a suspeita de microangiopatia pela recomendação do ICSH de 2021.']),
 
     disc('fragmentos', 'O que parte a hemácia',
        'Esquizócito é a hemácia cortada ao passar por um vaso pequeno cheio de '
@@ -401,13 +346,8 @@ ETAPAS = [
        'antiglobulina negativo, hemólise dentro do vaso e plaquetas consumidas, '
        'os achados de Sandra formam uma anemia hemolítica microangiopática com '
        'plaquetopenia: a síndrome de microangiopatia trombótica.',
-       'A febre, a confusão que vai e volta, a creatinina de 1,5 mg/dL e a '
-       'troponina de 0,09 são isquemia de órgão por trombos nos vasos pequenos '
-       'do cérebro, do rim e do coração.',
-       'A coagulação preservada já tinha afastado a coagulação intravascular '
-       'como causa. Ela não tem prótese, câncer conhecido, transplante, '
-       'diarreia nem pressão em nível de emergência hipertensiva, e o beta-hCG '
-       'é negativo. A hematologista calcula um escore à beira do leito.'),
+       'A confusão que vai e volta, a creatinina de 1,5 mg/dL e a troponina de 0,09 sugerem isquemia de órgão por trombos nos vasos pequenos do cérebro, do rim e do coração.',
+       'A coagulação preservada pesa contra CIVD franca, sem excluir sua fase inicial. Ela não tem prótese, câncer conhecido, transplante, diarreia nem pressão em nível de emergência hipertensiva, e o beta-hCG é negativo. A hematologista calcula um escore à beira do leito.'),
 
     pagina('plasmic', 'Discussão', 'O escore PLASMIC',
         p('O escore PLASMIC estima, em quem tem microangiopatia trombótica, a '
@@ -436,41 +376,19 @@ ETAPAS = [
        'plaquetas somem e a coagulação fica normal. As hemácias se cortam '
        'nesses trombos, e os órgãos sofrem isquemia em episódios, sobretudo '
        'cérebro, coração e rim.',
-       'A pêntade clássica, com febre, alteração neurológica e lesão renal, '
-       'aparece completa em poucos pacientes; plaquetopenia e esquizócitos '
-       'bastam para tratar. Sem tratamento, a mortalidade passa de 90%. É mais '
-       'comum em mulheres de 30 a 50 anos, e gestação, estrogênio e doença '
-       'autoimune estão entre os gatilhos e as associações descritas.'),
+       'A pêntade clássica, com febre, alteração neurológica e lesão renal, aparece completa em poucos pacientes; microangiopatia com alta suspeita clínica justifica tratamento antes da confirmação enzimática. Sem tratamento, a mortalidade passa de 90%. É mais comum em mulheres de 30 a 50 anos, e gestação, estrogênio e doença autoimune estão entre os gatilhos e as associações descritas.'),
 
-    pareamento('p4', 'Pergunta 4',
-      'Esquizócitos com plaquetas baixas aparecem em várias doenças. Associe '
-      'cada quadro à causa mais provável.', [
-      par('Criança com diarreia com sangue há seis dias e diurese mínima',
-          'SHU por toxina Shiga',
-          'A diarreia vem antes, e o rim é o órgão que mais sofre.'),
-      par('Lesão renal grave, plaquetas de 60.000 e ADAMTS13 em 55%',
-          'SHU atípica, por complemento',
-          'Enzima preservada com rim muito acometido: desregulação do complemento.'),
-      par('Gestante de 34 semanas, PA de 170/110 e AST de 400',
-          'Síndrome HELLP',
-          'Hipertensão e lesão hepática no fim da gestação; resolve com o parto.'),
-      par('Sepse com INR de 2,8 e fibrinogênio de 80 mg/dL',
-          'Coagulação intravascular disseminada',
-          'Fatores e fibrinogênio consumidos com as plaquetas.'),
-      par('PA de 240/140, papiledema e creatinina subindo',
-          'Emergência hipertensiva',
-          'A lesão do endotélio é pela pressão; melhora quando ela cai.'),
-      par('Lesão renal e hipertensão meses após gencitabina',
-          'Microangiopatia por fármaco',
-          'Toxicidade direta no endotélio, dependente da dose acumulada.'),
-    ], opcoes=['SHU por toxina Shiga', 'SHU atípica, por complemento',
-               'Síndrome HELLP', 'Coagulação intravascular disseminada',
-               'Emergência hipertensiva', 'Microangiopatia por fármaco',
-               'Púrpura trombocitopênica imune'],
-    titulo_resposta='A causa muda o tratamento',
-    nota='A opção que sobrou, púrpura trombocitopênica imune, destrói plaquetas '
-         'por anticorpo, sem hemólise e sem esquizócitos.'),
-
+    Q('p4', 4,
+      'Ao recuperar o prontuário da internação obstétrica de Sandra, qual informação ajudaria mais a distinguir HELLP de um episódio anterior da microangiopatia atual?', [
+      ('Persistência de hemólise e plaquetopenia após o parto e sua evolução com o plasma', True),
+      ('Intensidade da hipertensão no dia em que foi indicada a cesárea', False),
+      ('Relação entre AST e ALT na admissão à maternidade', False),
+      ('Necessidade de transfusão de plaquetas durante a cesárea', False),
+      ('Idade gestacional e peso do recém-nascido', False),
+     ], [
+      ('O evento que separa as hipóteses', 'O parto remove o fator desencadeante da HELLP, embora a recuperação possa demorar e haja piora transitória inicial. Hemólise e plaquetopenia persistentes, com recuperação associada a plasma, tornam importante reconsiderar outra microangiopatia. O prontuário recuperado adiante permitirá essa comparação.'),
+      ('Achados que se sobrepõem', 'Hipertensão, alteração de transaminases, prematuridade e transfusões podem ocorrer em ambas as apresentações. A magnitude e a cronologia ajudam, mas nenhum desses dados isolados identifica o mecanismo; ADAMTS13 e inibidor caracterizam o episódio atual.'),
+     ]),
     pg('transferencia', 'Fim da tarde do segundo dia',
        'O hospital regional não tem serviço de aférese. O centro de referência '
        'em Fortaleza, a cerca de 170 km, aceita Sandra e pode começar a troca '
@@ -546,32 +464,15 @@ ETAPAS = [
        'semana, quatro doses, a partir do terceiro dia.'),
 
     Q('p5', 5,
-      'Na fase aguda, **quais quatro** condutas estão corretas?', [
-      ('Troca plasmática diária de 1 a 1,5 volume', True),
-      ('Corticoide em dose alta com a troca', True),
-      ('Rituximabe já na fase aguda', True),
-      ('Profilaxia de trombose com plaquetas acima de 50.000', True),
-      ('Transfundir plaquetas para passar o cateter', False),
-      ('Anticoagulação plena pelos microtrombos', False),
-      ('Suspender a troca quando a DHL normalizar', False),
+      'Durante a troca diária, qual critério deve orientar seu encerramento?', [
+      ('Recuperação sustentada das plaquetas, resolução da hemólise e ausência de nova isquemia', True),
+      ('Recuperação das plaquetas acompanhada de negativação do inibidor de ADAMTS13', False),
+      ('Normalização da DHL acompanhada de recuperação renal e cardíaca', False),
+      ('Atividade de ADAMTS13 acima de 20% acompanhada de melhora neurológica', False),
+      ('Conclusão do pulso de corticoide acompanhada de aumento progressivo das plaquetas', False),
      ], [
-      ('A base', 'A troca plasmática retira o autoanticorpo e os multímeros '
-       'gigantes e repõe a enzima; é diária até as plaquetas passarem de '
-       '150.000/mm³ por dois dias. A ISTH, em 2020, recomenda somar '
-       'corticoide e sugere rituximabe já no primeiro episódio, o que reduz a '
-       'recaída. A atualização de 2025 manteve essas recomendações.'),
-      ('O caplacizumabe', 'Bloqueia a ligação entre o fator de von Willebrand '
-       'e a plaqueta e acelera a recuperação; a ISTH sugere usá-lo. A dose é '
-       '10 mg endovenoso antes da primeira troca e 10 mg subcutâneo ao dia até '
-       '30 dias depois da última, prolongado se a atividade da enzima não '
-       'subir. Aumenta o sangramento de mucosas. No Brasil, o acesso costuma '
-       'depender de plano de saúde ou de via judicial.'),
-      ('O que não entra', 'Plaqueta só se transfunde em sangramento grave; '
-       'cateter passado com ultrassom não exige. Anticoagulação plena não '
-       'desfaz trombos de plaqueta e aumenta o risco de sangrar. A troca '
-       'segue até a contagem de plaquetas se sustentar; parar antes disso '
-       'favorece a exacerbação. Ácido fólico e heparina profilática '
-       'entram quando as plaquetas passam de 50.000/mm³.'),
+      ('Resposta clínica composta', 'A decisão combina plaquetas sustentadamente recuperadas, hemólise resolvida ou próxima da resolução conforme o protocolo e ausência de isquemia nova ou progressiva. Uma primeira contagem normal ou uma DHL em queda ainda precisam de tendência confirmada.'),
+      ('Tempos biológicos diferentes', 'Inibidor e ADAMTS13 podem recuperar depois da resposta clínica; exigir esses marcos prolongaria a troca por um alvo que depende da imunossupressão. DHL e função de órgãos sem recuperação plaquetária podem dar falsa segurança. Terminar o pulso tampouco equivale a interromper a microangiopatia.'),
      ]),
 
     pg('evolucao', 'Primeira semana de tratamento',
@@ -605,29 +506,15 @@ ETAPAS = [
        'estão em 245.000/mm³ e a ADAMTS13, em 34%.'),
 
     Q('p6', 6,
-      'No seguimento de Sandra, **quais quatro** condutas estão corretas?', [
-      ('Dosar ADAMTS13 a cada um a três meses', True),
-      ('Rituximabe preventivo se atividade abaixo de 20%', True),
-      ('Trocar o anticoncepcional por método sem estrogênio', True),
-      ('Planejar gestação futura com a hematologia', True),
-      ('Aspirina e anticoagulação por seis meses', False),
-      ('Esplenectomia para prevenir recaída', False),
-      ('Alta do seguimento após um ano normal', False),
+      'Com plaquetas de 245.000 e ADAMTS13 de 34% após 30 dias, quais **duas decisões** são sustentadas?', [
+      ('Manter vigilância da ADAMTS13 mesmo com hemograma normal', True),
+      ('Planejar contracepção sem estrogênio e eventual gestação com a hematologia', True),
+      ('Indicar nova troca plasmática pela atividade abaixo do normal', False),
+      ('Iniciar anticoagulação plena para prevenir recaída hematológica', False),
+      ('Classificar a deficiência como congênita pelo episódio obstétrico', False),
      ], [
-      ('A enzima antes da plaqueta', 'A recaída é comum nos anos seguintes, e '
-       'a atividade da ADAMTS13 cai semanas antes das plaquetas. Por isso ela '
-       'é dosada com regularidade, mensal nos primeiros meses e depois a cada '
-       'três meses. Se cair abaixo de 20%, a ISTH sugere rituximabe '
-       'preventivo, mesmo com plaquetas normais.'),
-      ('Os gatilhos', 'Estrogênio e gestação estão associados a episódios. A '
-       'BSH orienta contracepção sem estrogênio, como dispositivo '
-       'intrauterino ou progestagênio isolado. Uma gestação futura é de risco '
-       'alto e precisa de planejamento, com a enzima acompanhada mês a mês. A '
-       'tireoidite lembra que a autoimunidade costuma vir acompanhada.'),
-      ('O que não entra', 'Antiagregante e anticoagulação não previnem '
-       'recaída. A esplenectomia fica para casos refratários ao rituximabe. O '
-       'seguimento é por toda a vida, inclusive pelo risco maior de AVC, '
-       'depressão e queixas cognitivas descrito em quem teve a doença.'),
+      ('Remissão e risco', 'Plaquetas recuperadas com ADAMTS13 de 34% não exigem nova troca; a atividade merece acompanhamento porque pode cair antes da recaída. Estrogênio e uma futura gestação pedem planejamento individualizado.'),
+      ('Mecanismos diferentes', 'Anticoagulação plena não previne a recaída por autoanticorpo. A presença de IgG e inibidor na amostra pré-plasma sustenta doença imune, apesar do episódio obstétrico anterior. Uma queda importante futura da enzima pede reavaliação para tratamento preventivo, sem esperar a plaquetopenia.'),
      ]),
 
     pg('alta', 'Preparando a alta',
@@ -681,12 +568,8 @@ ETAPAS = [
         pontos(
             'Plaquetopenia com reticulócitos altos, volume plaquetário grande e '
             'leucócitos normais é consumo ou destruição periférica.',
-            'Hemoglobina livre na urina, haptoglobina indetectável e DHL alta '
-            'são hemólise intravascular; com antiglobulina direta negativa, não '
-            'é mediada por anticorpo.',
-            'Plaquetas consumidas com tempo de protrombina, TTPa e fibrinogênio '
-            'normais afastam a coagulação intravascular e mandam olhar a '
-            'lâmina. Esquizócitos acima de 1% definem a microangiopatia.',
+            'Hemoglobina livre na urina, haptoglobina indetectável e DHL alta são hemólise intravascular; antiglobulina direta negativa reduz, sem eliminar, a possibilidade de mecanismo imune.',
+            'Hemólise e plaquetopenia com coagulação preservada pedem revisão da lâmina. Esquizócitos acima de 1% apoiam microangiopatia no contexto adequado, sem definir sua etiologia ou excluir CIVD inicial.',
             'PLASMIC de 6 ou 7 basta para começar troca plasmática e '
             'corticoide; a ADAMTS13 é colhida antes do plasma e não se espera '
             'por ela.',
@@ -723,3 +606,8 @@ ETAPAS = [
 ]
 
 REVISAO = []
+
+# Revisão de questões: fontes clínicas consultadas em 22/10/2026.
+# https://pmc.ncbi.nlm.nih.gov/articles/PMC8146131/
+# https://www.isth.org/page/ttpguidelines
+# Redação: https://www.nbme.org/sites/default/files/2021-02/NBME_Item%20Writing%20Guide_R_6.pdf

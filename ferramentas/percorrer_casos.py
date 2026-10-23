@@ -66,6 +66,28 @@ with sync_playwright() as pw:
       assert not faltam, (slug, e['k'], 'destino inexistente', faltam)
     branches = {e['k']: range(len(e['caminhos'])) for e in steps if e['t'] == 'bifurcacao'}
     plans = [dict(zip(branches, v)) for v in itertools.product(*branches.values())]
+    # Escolhas de ramos nunca visitados não criam um novo percurso.
+    # Manter cada escolha efetivamente feita, mesmo se dois destinos coincidirem.
+    if not any(e.get('rota') or e['t'] == 'pedido' for e in steps):
+      by_id = {e['k']: n for n, e in enumerate(steps)}
+      distintos = {}
+      for plan in plans:
+        n, trace, seen, choices = 0, [], set(), {}
+        while 0 <= n < len(steps) and n not in seen:
+          seen.add(n); e = steps[n]; target = ''
+          trace.append((e['k'], plan[e['k']] if e['t'] == 'bifurcacao' else None))
+          if e['t'] == 'bifurcacao':
+            choices[e['k']] = plan[e['k']]
+            target = e['caminhos'][plan[e['k']]]['vai']
+          elif e['t'] == 'desfecho':
+            target = e.get('fecho')
+            if not target: break
+          elif e.get('conforme'):
+            c = e['conforme']; target = c['para'][choices.get(c['de'], 0)]
+          elif e.get('segue'): target = e['segue']
+          n = by_id[target] if target else n + 1
+        distintos.setdefault(tuple(trace), plan)
+      plans = list(distintos.values())
     if smoke: plans = [plans[0], plans[-1]]
     html = (ROOT / 'saida' / f'{slug.replace("_", "-")}-etapas.html').as_uri()
     errors, layout, visited, endings, flows = [], [], set(), set(), 0

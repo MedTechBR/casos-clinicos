@@ -19,12 +19,12 @@ Decisão do usuário: catálogo de doenças raras **e apresentações incomuns d
 
 ## Migração do catálogo
 
-Somente Kikuchi foi reescrito nesta entrega. Os demais eixos abaixo são **roteiros de revisão**, não casos já convertidos. Os títulos visíveis ficam preservados; este documento de autoria contém spoilers.
+Kikuchi e sarcoidose receberam a revisão narrativa sindrômica. As perguntas dos 13 casos passaram por revisão própria em 23/10/2026; isso não significa que os outros 11 roteiros já estejam integralmente convertidos. Os demais eixos abaixo são **roteiros de revisão**, não casos já convertidos. Os títulos visíveis ficam preservados; este documento de autoria contém spoilers.
 
 | Caso | Porta de entrada sindrômica | Diferencial a explorar e ponto de mudança | Situação |
 |---|---|---|---|
-| Kikuchi–Fujimoto | Linfonodomegalia cervical com febre | Drenagem/localização → infecções dirigidas → persistência/progressão → linfoma/TB/inflamação → tecido e correlação | Piloto reformulado; 96 percursos, 55 etapas e 7 desfechos verificados, sem erros de JS ou transbordamento em 1600×900 e 1366×768 |
-| Sarcoidose | Hipercalcemia sintomática | Confirmação/gravidade → PTH → fármacos, neoplasias e mecanismos por vitamina D → tórax/tecido → exclusão contextual de infecção | Próximo |
+| Kikuchi–Fujimoto | Linfonodomegalia cervical com febre | Drenagem/localização → infecções dirigidas → persistência/progressão → linfoma/TB/inflamação → tecido e correlação | Piloto reformulado; manter contagens e verificação no relatório de cada revisão |
+| Sarcoidose | Hipercalcemia sintomática | Confirmação/gravidade → PTH → fármacos, neoplasias e mecanismos por vitamina D → tórax/tecido → exclusão contextual de infecção | Revisado: eixo da hipercalcemia, informação progressiva e resgate de amostra inconclusiva |
 | Vasculite associada a ANCA | Sintomas respiratórios persistentes; depois lesão renal | Infecção/congestão → hemorragia alveolar e síndrome nefrítica → mecanismos pulmão-rim → confirmação sorológica/histológica | Planejado |
 | Cocaína/levamisol | Púrpura dolorosa com febre | Sepse/coagulopatia, oclusão vascular, inflamação → hemograma/tecido → exposição e integração | Planejado |
 | Nilo Ocidental | Síndrome febril neurológica | Distúrbios metabólicos, infecção SNC e outras causas → localização da fraqueza → líquor/ENMG → epidemiologia e testes específicos | Planejado |
@@ -46,3 +46,15 @@ Residentes de clínica médica. Perguntas devem avaliar enquadramento sindrômic
 
 ## Linguagem clara em todo o catálogo
 Descrever o dado concreto antes da interpretação. Evitar expressões vagas como “foco na área de drenagem”: nomear os locais examinados e o que não foi encontrado. Explicar siglas na primeira ocorrência, preferir frases diretas e explicitar quais exames ou manifestações estão sendo discutidos. Manter precisão clínica e dificuldade do raciocínio, sem exigir decodificação de jargão.
+
+## Perguntas de investigação e raciocínio
+
+- O dado necessário vem na história, exame ou painel anterior; o enunciado pergunta o que fazer com ele, sem fornecer a interpretação que será cobrada.
+- Usar seleção limitada quando houver mais de um exame ou hipótese apropriados: por exemplo, três entre seis alternativas. A quantidade correta é declarada pelo próprio componente.
+- Comparar exames de rendimento diferente naquele momento, inclusive alternativas que seriam úteis em outra fase. Não usar uma opção abrangente e sensata contra erros caricatos.
+- Explicar depois da confirmação o motivo de cada exame oferecido: qual hipótese investiga, o dado decisivo e por que seria indicado, prematuro, redundante ou inferior à outra opção.
+- Exames marcados como indicados precisam aparecer nos resultados da investigação. A seleção avalia a decisão; não muda silenciosamente o painel para esconder exames indicados não selecionados.
+- Hipóteses concorrentes devem ser do mesmo nível e defensáveis; não chamar uma causa de excluída por um achado inespecífico.
+- Não tornar toda questão uma ordem de exames. Alternar diferencial, localização, interpretação e conduta; manter perguntas de dificuldade crescente.
+- Eliminar repetições em que a questão anterior ou uma explicação já entrega a resposta seguinte.
+- Dificuldade editorial é uma hipótese a validar nas sessões; não declarar calibração psicométrica sem respostas reais dos residentes.

@@ -16,7 +16,7 @@ _ENFASE = re.compile(r"\*\*(.+?)\*\*")
 _MARCA = re.compile(r"==(.+?)==")
 _DISCRETO = re.compile(r"\{\{(.+?)\}\}")
 _DIA = re.compile(r"\[\[(.+?)\]\]")
-_ITALICO = re.compile(r"//(?!/)(.+?)//")
+_ITALICO = re.compile(r"(?<!:)//(?!/)(.+?)//")
 # valor do estado do paciente, preenchido em tempo de execução: numa árvore
 # que não reconverge, a mesma frase encontra creatininas diferentes conforme
 # o caminho, e número escrito à mão na prosa mente em dois dos três ramos

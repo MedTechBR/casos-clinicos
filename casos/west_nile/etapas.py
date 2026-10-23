@@ -1,18 +1,7 @@
-"""Encefalite febril com paresia flácida assimétrica num homem de 71 anos.
+"""Caso ficcional para raciocínio clínico em residência de clínica médica.
 
-Reescrito em 26/09/2026 no molde do //New England// (piloto: leptospirose;
-ver Artifacts/nejm-casos-classicos/GRAMATICA_LIDA_2026-09-26.md). A âncora é
-a meningoencefalite em idoso, herpética até prova em contrário, tratada
-empiricamente como se deve. As primeiras perguntas classificam a
-hiponatremia, leem o líquor, localizam a lesão e leem a ressonância; a
-virada vem depois da metade, com a PCR para herpes negativa e a história da
-viagem contada pela esposa. O nome do diagnóstico aparece pela primeira vez
-na pergunta do exame confirmatório. As decisões de via aérea mudam o
-desfecho.
-
-Paciente ficcional. Vigilância e critérios de caso: Ministério da Saúde,
-Nota Técnica n.º 79/2026-CGARB/DEDT/SVSA/MS; diagnóstico e tratamento: CDC,
-páginas para profissionais consultadas em 26/09/2026.
+Revisão editorial: integração de dados, seleção limitada de exames e
+explicações após a resposta. Fontes clínicas ao final deste arquivo.
 """
 from pathlib import Path
 
@@ -139,31 +128,15 @@ ETAPAS = [
     ]),
 
     Q('p1', 1,
-      'Sódio de 129 mmol/L. Pelos exames e pelo exame físico, como se '
-      'classifica a hiponatremia?', [
-      ('Hipertônica, pela glicose', False),
-      ('Isotônica (pseudo-hiponatremia)', False),
-      ('Hipotônica hipovolêmica', False),
-      ('Hipotônica euvolêmica', True),
-      ('Hipotônica hipervolêmica', False),
-      ('Hipotônica com urina diluída', False),
+      'Na 129, osmolalidade sérica 270 e urinária 456, Na urinário 52, sem diurético ou sinais de depleção. Quais duas hipóteses ainda explicam esse padrão?', [
+      ('Antidiurese inapropriada associada à doença aguda', True),
+      ('Deficiência de cortisol', True),
+      ('Hiponatremia translocacional pela glicose de 138', False),
+      ('Polidipsia primária como mecanismo isolado', False),
+      ('Baixo volume arterial efetivo por insuficiência cardíaca', False),
      ], [
-      ('Passo a passo', 'A osmolalidade sérica de 270 mOsm/kg define '
-       'hiponatremia hipotônica e afasta as formas isotônica e hipertônica; a '
-       'glicose de 138 mg/dL muda o sódio em menos de 1 mmol/L. A urina com 456 '
-       'mOsm/kg mostra que o ADH está agindo: com excesso de água ou pouco '
-       'soluto na dieta, ela viria abaixo de 100.'),
-      ('O volume', 'Mucosas úmidas, jugulares planas e nenhum edema indicam '
-       'euvolemia. Sódio urinário de 52 mmol/L sem diurético e ácido úrico baixo, '
-       'de 2,6 mg/dL, tornam a hipovolemia improvável: nela o rim poupa sódio, '
-       'abaixo de 30 mmol/L.'),
-      ('O que a categoria abre', 'Hipotônica euvolêmica com urina concentrada '
-       'é, na maioria das vezes, secreção inapropriada de ADH; hipotireoidismo e '
-       'insuficiência adrenal completam a lista, e o TSH normal tira o primeiro. '
-       'No idoso febril e confuso, a secreção inapropriada costuma vir do sistema '
-       'nervoso ou do pulmão. A conduta já sai daqui: restrição de água livre, '
-       'nada de soro hipotônico e correção de no máximo 8 a 10 mmol/L em 24 '
-       'horas.'),
+      ('Duas possibilidades', 'A hipotonicidade com urina não diluída e Na urinário alto, em aparente euvolemia, favorece SIAD na doença neurológica aguda. Deficiência de cortisol pode produzir o mesmo padrão e ainda não foi investigada; não se pode fechar SIAD só com esses números.'),
+      ('O que pesa contra as demais', 'Glicose 138 altera pouco o sódio e não explica osmolalidade baixa. Polidipsia isolada deveria permitir urina muito diluída. Insuficiência cardíaca não encontra congestão no exame. TSH normal torna hipotireoidismo primário grave improvável, mas não substitui avaliação adrenal.'),
      ]),
 
     estudo('rx_adm', 'Radiografia de tórax',
@@ -251,42 +224,17 @@ ETAPAS = [
         ex('Gram', 'Sem bactérias'),
     ], introducao='Punção lombar feita logo depois da tomografia.'),
 
-    pareamento('p2', 'Pergunta 2',
-      'O líquor dele e o de outros quatro pacientes. Associe cada perfil à '
-      'categoria que ele sugere.', [
-      par('86 células, 58% neutrófilos, proteína 92, glicose 74/138, Gram '
-          'negativo (o dele)',
-          'Viral, em fase inicial',
-          'Dezenas de células, glicose preservada e Gram negativo. Neutrófilos '
-          'nos primeiros dias ocorrem em várias viroses.'),
-      par('2.400 células, 95% neutrófilos, proteína 240, glicose 20/110',
-          'Bacteriana',
-          'Milhares de neutrófilos, proteína alta e relação de glicose abaixo '
-          'de 0,4.'),
-      par('180 células, 90% linfócitos, proteína 110, glicose 35/100, ADA '
-          'elevada',
-          'Tuberculosa ou fúngica',
-          'Linfocitário, proteína alta e glicose baixa: é o que separa as '
-          'meningites crônicas das virais.'),
-      par('5 células, proteína 180, glicose normal',
-          'Dissociação albuminocitológica',
-          'Proteína alta sem células aponta para raízes nervosas ou bloqueio do '
-          'canal, sem infecção das meninges.'),
-      par('2 células, proteína 32, glicose 62/100',
-          'Normal',
-          'Até 5 células, proteína até 45 e relação de glicose de 0,62: febre '
-          'com dor de cabeça nem sempre é meningite.'),
-      ], opcoes=[
-      'Viral, em fase inicial',
-      'Bacteriana',
-      'Tuberculosa ou fúngica',
-      'Dissociação albuminocitológica',
-      'Normal',
-      'Neoplásica',
-      ], titulo_resposta='Célula, proteína e glicose, nessa ordem de leitura',
-      nota='A opção que sobrou, neoplásica, costuma ter proteína alta, glicose '
-           'baixa e células atípicas na citologia.'),
-
+    Q('p2', 2,
+      'Líquor com 86 células, 58% neutrófilos, proteína 92 e relação glicose 0,54. Qual interpretação melhor pondera as hipóteses infecciosas nesta fase?', [
+      ('Perfil compatível com virose inicial, mantendo cobertura bacteriana enquanto se esclarece a etiologia', True),
+      ('Perfil predominantemente piogênico, tornando a investigação viral uma prioridade posterior', False),
+      ('Perfil sugestivo de meningite tuberculosa, pela combinação de proteína elevada e pleocitose moderada', False),
+      ('Perfil favorece Listeria sobre virose, pelo predomínio neutrofílico no paciente idoso', False),
+      ('Perfil favorece infecção fúngica crônica, pela glicorraquia de 74 mg/dL', False),
+     ], [
+      ('Probabilidade e cobertura', 'Pleocitose moderada, proteína elevada e glicose relativamente preservada cabem em virose inicial, inclusive com neutrófilos. O conjunto não exclui bactéria: idade, quadro clínico e antibiótico pré-punção justificam manter cobertura enquanto se obtêm testes etiológicos.'),
+      ('Concorrentes', 'Meningite piogênica costuma ter maior celularidade e menor relação de glicose, embora haja sobreposição. Idade justifica cobrir Listeria, mas 58% de neutrófilos não a distingue de virose. TB e fungos permanecem diferenciais conforme contexto, porém evolução aguda e relação de glicose 0,54 não os priorizam; proteína 92 isoladamente também não os separa.'),
+     ]),
     pg('reexame', 'Na manhã seguinte',
        'A equipe registra meningoencefalite viral, herpética até prova em '
        'contrário, mantém o aciclovir e envia o líquor para PCR. As hemoculturas '
@@ -300,30 +248,16 @@ ETAPAS = [
        'espontaneamente. Há tremor de ação nas duas mãos.'),
 
     Q('p3', 3,
-      'Onde está a lesão que explica a fraqueza?', [
-      ('Corno anterior da medula', True),
-      ('Raízes e nervos, por desmielinização', False),
-      ('Cápsula interna', False),
-      ('Junção neuromuscular', False),
-      ('Medula inteira, em nível torácico', False),
-      ('Músculo', False),
+      'Fraqueza flácida muito assimétrica, arreflexia, sensibilidade preservada, tremor e pleocitose. Quais três exames melhor localizam o processo?', [
+      ('Ressonância do encéfalo', True),
+      ('Ressonância da medula', True),
+      ('Eletroneuromiografia com conduções motoras e sensitivas', True),
+      ('Repetir CK como principal teste localizatório', False),
+      ('Anticorpo antirreceptor de acetilcolina', False),
+      ('Nova tomografia de crânio sem contraste', False),
      ], [
-      ('O padrão', 'Flacidez com reflexos abolidos é lesão de neurônio motor '
-       'inferior. Sensibilidade normal nos três modos, sem nível e sem retenção '
-       'urinária, com distribuição assimétrica e salteada, que atinge muito um '
-       'membro e pouco outro: o alvo é o corpo do neurônio motor, no corno '
-       'anterior.'),
-      ('Por que não as outras', 'A lesão desmielinizante de raízes e nervos '
-       'costuma ser simétrica, com parestesias e perda da vibração. Uma lesão '
-       'da cápsula interna daria hiperreflexia e Babinski passados os primeiros '
-       'dias. As doenças da junção neuromuscular preservam os reflexos. A '
-       'lesão medular transversa daria nível sensitivo e bexiga neurogênica. '
-       'Doença muscular daria fraqueza proximal e simétrica, e a CK é de 160.'),
-      ('O que muda', 'Paralisia flácida aguda por lesão do corno anterior '
-       'tem várias causas, a maioria infecciosa. Lesão do corpo neuronal '
-       'recupera pouco e devagar, ao contrário da desmielinização, que se '
-       'refaz em semanas. A ressonância '
-       'passa a incluir a medula, e a eletroneuromiografia entra no pedido.'),
+      ('Localizações a testar', 'RM de encéfalo: investiga a encefalite e o tremor, que uma neuropatia isolada não explica. RM de medula: procura acometimento de substância cinzenta e exclui compressão. ENMG: distingue padrão motor axonal de desmielinização e testa a preservação sensitiva; sozinha não separa sempre corno anterior de neuropatia motora axonal.'),
+      ('Por que não estes agora', 'CK repetida: a inicial normal e o padrão focal/arreflexo tornam miopatia menos provável. Anti-AChR: miastenia não integra febre, pleocitose e arreflexia assimétrica. Nova TC: sem mudança aguda sugestiva de hemorragia, acrescenta menos que RM para estas localizações.'),
      ]),
 
     estudo('rm_encefalo', 'Ressonância de encéfalo',
@@ -359,29 +293,15 @@ ETAPAS = [
          'cone medular, fora destes cortes.']),
 
     Q('p4', 4,
-      '**Quais três** achados da ressonância pesam contra encefalite '
-      'herpética?', [
-      ('Hipersinal no tálamo', True),
-      ('Hipersinal na substância negra', True),
-      ('Lesão na substância cinzenta medular', True),
-      ('Hipersinal no temporal mesial', False),
-      ('Ausência de efeito de massa', False),
-      ('Tomografia sem alteração', False),
+      'A RM reúne substância negra, tálamo, discreto temporal mesial e substância cinzenta medular. Quais duas interpretações melhor integram imagem, exame e cronologia?', [
+      ('Encefalomielite infecciosa integra a encefalopatia, o tremor e a paresia assimétrica', True),
+      ('O acometimento temporal mantém HSV como concorrente enquanto se amplia a investigação etiológica', True),
+      ('Encefalite temporal por HSV com paresia de origem hemisférica é a melhor localização unificadora', False),
+      ('Polirradiculoneuropatia pós-infecciosa explica melhor a fraqueza durante a fase febril', False),
+      ('Mielite transversa inflamatória explica melhor a paresia pela alteração intramedular', False),
      ], [
-      ('O território do herpes', 'O herpes simples tipo 1 chega pelo trato '
-       'olfatório e acomete o lobo temporal mesial, a ínsula, o giro do cíngulo '
-       'e a face orbitária do frontal, em geral de forma assimétrica, com edema '
-       'e às vezes sangramento. Tálamo, núcleos da base e tronco costumam ser '
-       'poupados, e a medula quase nunca entra.'),
-      ('Por que não as outras', 'O hipersinal temporal mesial é o achado típico '
-       'do herpes e o mantém na lista. Tomografia normal nos primeiros dias é a '
-       'regra na encefalite herpética, e a falta de efeito de massa não afasta '
-       'a doença.'),
-      ('O que muda', 'Tálamo, substância negra e corno anterior, juntos, são o '
-       'padrão de vírus que infectam neurônios profundos, como alguns arbovírus '
-       'e enterovírus. A substância negra acometida combina com o tremor. O '
-       'aciclovir continua até a PCR, e a história de exposição volta a '
-       'importar.'),
+      ('O conjunto', 'Núcleos profundos, tremor e substância cinzenta medular com fraqueza flácida assimétrica favorecem encefalomielite infecciosa, como a produzida por alguns arbovírus ou enterovírus. O discreto achado temporal mantém HSV em investigação e sustenta manter aciclovir até esclarecimento adequado.'),
+      ('Localizações concorrentes', 'Uma paresia hemisférica explica mal a arreflexia e as lesões medulares. Polirradiculoneuropatia pós-infecciosa costuma aparecer após a infecção, com maior simetria; aqui a paresia acompanha a febre e há lesão intramedular. Mielite transversa pode ser aguda, mas o predomínio motor assimétrico sem nível sensitivo ou disfunção vesical favorece substância cinzenta motora em vez de síndrome transversa.'),
      ]),
 
     pg('respiracao', 'Segundo dia de internação',
@@ -392,25 +312,15 @@ ETAPAS = [
        'cmH₂O.'),
 
     Q('p5', 5,
-      '**Quais quatro** dados dele indicam intubação eletiva agora?', [
-      ('Capacidade vital de 17 mL/kg', True),
-      ('Pressão inspiratória máxima de −22 cmH₂O', True),
-      ('Pressão expiratória máxima de 34 cmH₂O', True),
-      ('Tosse fraca e engasgo com água', True),
-      ('SpO₂ de 96% em ar ambiente', False),
-      ('pCO₂ de 38 mmHg', False),
-      ('Frequência respiratória de 22', False),
+      'Capacidade vital caiu de 24 para 17 mL/kg em oito horas, com engasgos; SpO₂ 96% e pCO₂ 38. Quais duas interpretações devem orientar o suporte?', [
+      ('A tendência da capacidade vital indica reserva ventilatória em deterioração', True),
+      ('A disfunção bulbar reduz a segurança do suporte por máscara', True),
+      ('A pCO₂ normal demonstra reserva ventilatória suficiente para a noite', False),
+      ('A saturação preservada favorece oxigênio como tratamento da falência da bomba', False),
+      ('Aguardar capacidade vital abaixo de 10 mL/kg é seguro com vigilância', False),
      ], [
-      ('A regra 20/30/40', 'Na fraqueza neuromuscular, capacidade vital abaixo '
-       'de 20 mL/kg, pressão inspiratória máxima menos negativa que −30 cmH₂O e '
-       'expiratória abaixo de 40 cmH₂O anunciam falência ventilatória. Ele tem '
-       '17, −22 e 34, e a capacidade vital caiu quase 30% em oito horas.'),
-      ('A via aérea', 'Tosse fraca e engasgo com água indicam disfunção bulbar: '
-       'o risco é aspirar, qualquer que seja a espirometria.'),
-      ('O que engana', 'Saturação e pCO₂ normais são a regra até perto do fim. '
-       'A bomba fraca hipoventila tarde, e quando a pCO₂ sobe e a saturação cai '
-       'a intubação já é de emergência. Frequência respiratória de 22 é '
-       'inespecífica.'),
+      ('O risco vem da evolução', 'A queda de quase 30% da capacidade vital, somada a PImax −22 e PEmax 34, indica perda de reserva; os números não devem ser usados como limiares automáticos isolados. Tosse ineficaz e engasgo acrescentam risco de secreção e aspiração, limitando a VNI.'),
+      ('Por que os dados normais não tranquilizam', 'SpO₂ mede oxigenação, não força nem proteção da via aérea; oxigênio não corrige a bomba fraca. pCO₂ pode permanecer normal antes da descompensação. Esperar outro limiar ignora a queda rápida e a disfunção bulbar.'),
      ]),
 
     pg('enmg', 'A eletroneuromiografia',
@@ -419,8 +329,9 @@ ETAPAS = [
        'condução normais e potenciais sensitivos preservados.',
        'Amplitude baixa com condução normal indica perda de axônios motores; a '
        'desmielinização reduziria a velocidade. Com os potenciais sensitivos '
-       'normais, a lesão fica no neurônio motor, e o estudo confirma o corno '
-       'anterior que o exame e a ressonância já sugeriam.'),
+       'normais, há um processo motor sem perda sensitiva demonstrável. Em '
+       'conjunto com a assimetria e a RM, favorece o corno anterior; a ENMG '
+       'isolada não distingue toda neuropatia motora axonal.'),
 
     bifurcacao('b2', 'Decisão', 'Suporte respiratório',
       'De volta ao leito: tosse fraca, engasgo com água e capacidade vital de '
@@ -476,31 +387,16 @@ ETAPAS = [
        'enterovírus. As hemoculturas seguem negativas em 72 horas.'),
 
     Q('p6', 6,
-      'A equipe suspeita de infecção pelo vírus do Nilo Ocidental adquirida na '
-      'viagem. No sétimo dia de doença, qual exame sustenta melhor o '
-      'diagnóstico?', [
-      ('IgM específica no líquor', True),
-      ('RT-PCR no líquor', False),
-      ('RT-PCR no sangue', False),
-      ('IgG específica no soro', False),
-      ('Cultura viral do líquor', False),
-      ('Pesquisa do antígeno NS1', False),
+      'D7, imunocompetente, viagem à Louisiana, encefalomielite e PCR para HSV/VZV/enterovírus negativas. Com dengue prévia e vacina de febre amarela, quais dois exames priorizar?', [
+      ('IgM para Nilo Ocidental no líquor e no soro', True),
+      ('Neutralização por redução de placas em laboratório de referência', True),
+      ('RT-PCR de Nilo Ocidental no sangue como teste principal', False),
+      ('IgG isolada para Nilo Ocidental no soro', False),
+      ('Repetição imediata da PCR de enterovírus no mesmo material', False),
+      ('NS1 de dengue como confirmação da etiologia neurológica', False),
      ], [
-      ('O tempo da doença', 'A viremia é curta e costuma acabar quando os '
-       'sintomas neurológicos começam, por isso a RT-PCR tem sensibilidade baixa '
-       'no imunocompetente: positiva, confirma; negativa, não afasta. A IgM '
-       'aparece entre o terceiro e o oitavo dia de doença.'),
-      ('Por que no líquor', 'A IgM não atravessa a barreira hematoencefálica: '
-       'no líquor, foi produzida ali, o que indica doença neuroinvasiva. No '
-       'soro, pode persistir por meses depois de uma infecção antiga.'),
-      ('A armadilha deste paciente', 'Ele teve dengue e tomou a vacina de febre '
-       'amarela, e os flavivírus dão reação cruzada. Pela Nota Técnica 79/2026 '
-       'do Ministério da Saúde, IgM no líquor confirma o caso quando os outros '
-       'flavivírus testados são não reagentes; havendo reatividade cruzada, '
-       'decide o teste de neutralização por redução de placas, com título pelo '
-       'menos quatro vezes maior para o vírus do Nilo Ocidental.'),
-      ('Por que não as outras', 'IgG sozinha não data a infecção, a cultura '
-       'viral é lenta e pouco sensível, e o NS1 é antígeno da dengue.'),
+      ('Rendimento e especificidade', 'IgM no líquor e soro: maior rendimento nesta fase; no líquor apoia neuroinvasão, mas exige interpretação clínica. Neutralização: ajuda a discriminar reatividade entre flavivírus diante de dengue prévia e vacinação; o laboratório de referência integra títulos, amostras e epidemiologia.'),
+      ('Por que não os demais', 'RT-PCR sanguínea: baixa sensibilidade após a viremia curta no imunocompetente; negativa não exclui. IgG isolada: não data infecção nem resolve reatividade cruzada. Repetir enterovírus no mesmo material: sem falha técnica ou nova informação, rende menos que ampliar a etiologia. NS1: pesquisa dengue aguda, não confirma Nilo Ocidental nem neuroinvasão.'),
      ]),
 
     pg('virada', 'O diagnóstico',
@@ -632,3 +528,14 @@ ETAPAS = [
 ]
 
 REVISAO = []
+
+# Fontes conferidas na revisão das questões (22/10/2026):
+# https://www.cdc.gov/west-nile-virus/hcp/diagnosis-testing/index.html
+# https://www.cdc.gov/west-nile-virus/hcp/clinical-signs/index.html
+# https://academic.oup.com/ejendo/article/170/3/G1/6668028
+# https://pubmed.ncbi.nlm.nih.gov/12545029/
+
+# Referência de construção dos itens (aplicação e opções plausíveis):
+# https://www.nbme.org/sites/default/files/2021-02/NBME_Item%20Writing%20Guide_R_6.pdf
+# https://pubmed.ncbi.nlm.nih.gov/15661693/
+# https://jamanetwork.com/journals/jamaneurology/fullarticle/784803

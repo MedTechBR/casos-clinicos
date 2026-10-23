@@ -1,20 +1,7 @@
-"""Púrpura retiforme, neutropenia febril, ANCA de dois alvos e glomerulonefrite.
+"""Caso ficcional para raciocínio clínico em residência de clínica médica.
 
-Reescrito no molde do //New England// lido em 26/09/2026 (ver
-Artifacts/nejm-casos-classicos/GRAMATICA_LIDA_2026-09-26.md), no desenho do
-piloto aprovado (casos/leptospirose): apresentação curta, ficha do paciente,
-exame por sistema com os sinais vitais primeiro e primeiros exames entregues
-prontos. Seis perguntas, nunca duas telas interativas seguidas: as duas
-primeiras classificam (padrão da lesão de pele, mecanismo da neutropenia)
-sem nomear doença; a leitura da coagulação, da biópsia renal e do
-tratamento são páginas de discussão. A âncora é a registrada pela equipe e correta naquele
-momento: agranulocitose por dipirona com lesão necrótica de provável causa
-infecciosa num neutropênico febril. No terceiro dia, a orelha, a urina e o
-ANCA viram o caso; a exposição aparece na entrevista a sós e o nome da causa
-só na página "O diagnóstico". Cada pergunta tem uma explicação só, em seções.
-
-Paciente ficcional; desfechos são cenários didáticos. Neutropenia febril:
-IDSA 2010 e ASCO/IDSA 2018. Vasculite ANCA: KDIGO 2024.
+Revisão editorial: integração de dados, seleção limitada de exames e
+explicações após a resposta. Fontes clínicas ao final deste arquivo.
 """
 from pathlib import Path
 
@@ -38,8 +25,7 @@ def pg(k, titulo, *textos, segue='', conforme=None):
 
 
 def Q(k, n, enunciado, opcoes, explicacao, segue=''):
-    """Pergunta no molde do NEJM: alternativas curtas, sem comentário cada
-    uma, e uma explicação só, em seções (subtítulo, texto)."""
+    """Alternativas curtas e explicação única após a seleção limitada."""
     return pergunta(k, f'Pergunta {n}', enunciado,
                     [alt(t, certa=ok) for t, ok in opcoes],
                     explicacao=explicacao, segue=segue)
@@ -127,29 +113,15 @@ ETAPAS = [
          'ramificadas, duas com centro enegrecido.']),
 
     Q('q1', 1,
-      'Pela descrição do exame e pela fotografia, qual o padrão das lesões '
-      'de Marina?', [
-      ('Petéquias', False),
-      ('Púrpura palpável arredondada', False),
-      ('Púrpura retiforme', True),
-      ('Equimoses', False),
-      ('Livedo reticular', False),
-      ('Eritema nodoso', False),
+      'Placas dolorosas em rede, não clareáveis, com centros necróticos. Qual mecanismo melhor orienta a investigação inicial?', [
+      ('Dano vascular com oclusão e isquemia cutânea', True),
+      ('Extravasamento por trombocitopenia isolada', False),
+      ('Vasodilatação reversível da rede superficial', False),
+      ('Inflamação do tecido adiposo sem lesão vascular', False),
+      ('Sangramento traumático subcutâneo localizado', False),
      ], [
-      ('O padrão', 'Placas purpúricas que não clareiam, de borda angulada e '
-       'ramificada, dolorosas e com centro necrótico são púrpura retiforme, '
-       'como na fotografia. O desenho reproduz a rede de vasos da derme '
-       'profunda e do subcutâneo: o sangue sai porque o vaso foi ocluído, e a '
-       'pele que dependia dele necrosa.'),
-      ('Por que não as outras', 'Petéquias são pontos planos de até 2 mm. A '
-       'púrpura palpável da vasculite de pequeno vaso superficial forma lesões '
-       'pequenas e arredondadas, sem rede. Equimose é mancha plana '
-       'de contorno liso. Livedo reticular é rede violácea que clareia e não '
-       'necrosa. Eritema nodoso forma nódulos dolorosos nas pernas, sem púrpura.'),
-      ('O que esse padrão pede', 'Púrpura retiforme é oclusão até prova em '
-       'contrário: trombo, êmbolo, microrganismo que invade o vaso, crioproteína '
-       'ou vasculite que fecha a luz. Com febre, a causa infecciosa é a que não '
-       'pode esperar.'),
+      ('Além do nome', 'Bordas ramificadas e necrose sugerem púrpura retiforme, um padrão de comprometimento vascular oclusivo. Trombo, inflamação ou invasão do vaso podem produzi-lo; a morfologia não define etiologia.'),
+      ('Concorrentes', 'Trombocitopenia tende a produzir petéquias e sangramento, sem explicar tão bem a necrose em rede. Vasodilatação livedoide não explica centros necróticos persistentes. Paniculite produz nódulos; trauma não integra lesões múltiplas em progressão e febre.'),
      ]),
 
     painel('res1', 'Primeiros exames', 'Sangue', [
@@ -197,29 +169,16 @@ ETAPAS = [
          'taquicardia.'),
 
     Q('q2', 2,
-      'Qual o mecanismo mais provável da queda dos neutrófilos?', [
-      ('Reação idiossincrática a fármaco', True),
-      ('Infiltração da medula óssea', False),
-      ('Sequestro esplênico', False),
-      ('Carência nutricional da medula', False),
-      ('Neutropenia constitucional', False),
-      ('Consumo periférico pela infecção', False),
+      'Febre, 180 neutrófilos/mm³ e pele necrótica, com plaquetas e coagulação preservadas. Hemoculturas já foram colhidas. Quais dois estudos da pele priorizar sem atrasar o antibiótico?', [
+      ('Histologia de biópsia profunda da borda da placa', True),
+      ('Colorações e cultura bacteriana/fúngica do tecido', True),
+      ('Mielograma como primeiro procedimento invasivo', False),
+      ('Anticorpos antifosfolípides como primeira investigação isolada', False),
+      ('Angiografia arterial dos membros inferiores', False),
+      ('Repetir fibrinogênio antes de colher tecido', False),
      ], [
-      ('A contagem', 'Neutrófilos absolutos são leucócitos vezes a fração de '
-       'neutrófilos: 900 × 0,20 = 180/mm³. Abaixo de 500 a neutropenia é '
-       'grave, e febre com essa contagem é neutropenia febril, uma emergência.'),
-      ('O mecanismo', 'Queda de uma linhagem só, abrupta, numa adulta '
-       'hígida, com hemoglobina, plaquetas, VCM e esfregaço normais, é o '
-       'retrato da agranulocitose idiossincrática: uma exposição recente '
-       'lesa os precursores ou os neutrófilos maduros. O passo seguinte é '
-       'listar tudo o que ela tomou ou usou nas semanas anteriores e suspender '
-       'o que for suspeito.'),
-      ('Por que não as outras', 'Infiltração medular derruba mais de uma '
-       'linhagem e costuma mostrar blastos. O baço não é palpável. A carência '
-       'nutricional aumenta o VCM e atinge as três séries. A neutropenia constitucional '
-       'raramente cai abaixo de 1.000 e não surge aos 34 anos com febre. '
-       'Consumo pela infecção acontece na sepse grave, com choque, e '
-       'raramente isola 180 neutrófilos com lactato normal.'),
+      ('Prioridades', 'Histologia de biópsia profunda: distingue trombose de inflamação vascular e avalia invasão da parede. Colorações e cultura do tecido: procuram bactérias e fungos e podem orientar tratamento específico; tecido para cultura deve seguir separado do material em formol. Ambos complementam as hemoculturas já colhidas sem atrasar cobertura antipseudomonas.'),
+      ('Por que não primeiro', 'Mielograma: pode entrar se a neutropenia persistir ou houver outras alterações; não esclarece primeiro a pele potencialmente infectada. Antifosfolípides: úteis depois se persistir suspeita de trombose imune, mas não substituem microbiologia urgente. Angiografia: pulsos presentes e padrão de pequenos vasos tornam baixo o rendimento. Fibrinogênio repetido: o inicial e as plaquetas não sustentam consumo relevante; tecido discrimina mais.'),
      ]),
 
     pagina('coag', 'Discussão', 'O que a coagulação diz',
@@ -322,28 +281,16 @@ ETAPAS = [
          'está dentro do rim.']),
 
     Q('q4', 3,
-      'Qual a interpretação mais adequada da lesão renal?', [
-      ('Glomerulonefrite aguda', True),
-      ('Necrose tubular pela vancomicina', False),
-      ('Nefrite intersticial pelo betalactâmico', False),
-      ('Pré-renal pela febre', False),
-      ('Pigmentúria por rabdomiólise', False),
-      ('Obstrução urinária', False),
+      'Creatinina 0,9 → 1,6, acantócitos, cilindros hemáticos e lesão nova na orelha. Quais três estudos melhor distinguem doença sistêmica de toxicidade tubular?', [
+      ('ANCA com anti-MPO e anti-PR3', True),
+      ('Anticorpo anti-membrana basal glomerular', True),
+      ('Complemento C3/C4 e crioglobulinas', True),
+      ('Novo vale de vancomicina como teste principal da causa', False),
+      ('Nova CK para confirmar pigmentúria', False),
+      ('Repetir ultrassonografia renal imediatamente', False),
      ], [
-      ('O sedimento', 'Hemácias dismórficas, acantócitos e cilindros hemáticos '
-       'só se formam quando a hemácia atravessa o glomérulo lesado. Com '
-       'proteinúria de 1,1 g/g e creatinina que quase dobrou em dois dias, é '
-       'glomerulonefrite aguda, de curso rapidamente progressivo se não '
-       'tratada.'),
-      ('Por que não as outras', 'A vancomicina está com vale de 12 mg/L, e a '
-       'lesão tubular dá cilindros granulosos e FENa alta, não 0,8%. A nefrite '
-       'intersticial por betalactâmico traz leucocitúria e cilindros '
-       'leucocitários. Pré-renal não tem hemácias dismórficas. A CK de 96 '
-       'afasta rabdomiólise, e o ultrassom, obstrução.'),
-      ('O que muda', 'Púrpura retiforme, lesão nova na orelha e '
-       'glomerulonefrite na mesma semana formam uma doença sistêmica de vasos '
-       'pequenos. A dipirona explica a neutropenia, mas não o rim nem a '
-       'orelha: a equipe pede anticorpos e complemento.'),
+      ('O que cada pedido resolve', 'MPO/PR3: investigam mecanismo ANCA e um perfil que pode sugerir exposição. Anti-MBG: pesquisa glomerulonefrite que muda a urgência terapêutica. C3/C4 e crioglobulinas: testam mecanismos por imunocomplexos em pele e rim, sem excluir doença apenas por resultados negativos.'),
+      ('Por que não repetir agora', 'Vale de vancomicina: 12 não exclui nefrotoxicidade, mas esta não explica acantócitos e cilindros hemáticos; vigilância da dose continua separadamente. CK: 96 e hemácias verdadeiras no sedimento não sustentam rabdomiólise. Novo US: o primeiro já mostrou ausência de dilatação; sem mudança que sugira obstrução, repetir acrescenta pouco.'),
      ]),
 
     painel('res3', 'Terceiro dia', 'Anticorpos e complemento', [
@@ -359,28 +306,15 @@ ETAPAS = [
     ]),
 
     Q('q5', 4,
-      'Qual a interpretação mais provável desse perfil de anticorpos?', [
-      ('Poliangeíte microscópica', False),
-      ('Granulomatose com poliangeíte', False),
-      ('Vasculite ANCA induzida por substância', True),
-      ('Endocardite com ANCA positivo', False),
-      ('Lúpus com vasculite', False),
-      ('Crioglobulinemia mista', False),
+      'MPO e PR3 positivos, agranulocitose, lesão auricular e sedimento nefrítico. Qual hipótese ganha mais peso para integrar o quadro?', [
+      ('Doença vascular associada a exposição medicamentosa ou recreativa', True),
+      ('Vasculite primária definida apenas pela positividade do MPO', False),
+      ('Endocardite como explicação já confirmada do ANCA', False),
+      ('Síndrome antifosfolípide como causa da púrpura e da nefrite', False),
+      ('Crioglobulinemia como hipótese favorecida pelo complemento', False),
      ], [
-      ('Dois alvos', 'Na vasculite primária, o ANCA tem um alvo: MPO na '
-       'poliangeíte microscópica, PR3 na granulomatose com poliangeíte. MPO e '
-       'PR3 juntos, com título alto, aparecem em poucos por cento das formas '
-       'primárias e são a marca das vasculites induzidas por exposição: '
-       'propiltiouracila, hidralazina, minociclina e algumas substâncias de uso '
-       'recreativo.'),
-      ('Por que não as outras', 'Endocardite pode positivar o ANCA, mas as '
-       'hemoculturas colhidas antes do antibiótico estão negativas e não há '
-       'sopro. Lúpus consome complemento, e C3 e C4 estão normais. '
-       'Crioglobulinemia exige a crioproteína, não detectada em amostra '
-       'colhida a 37 °C, e costuma baixar o C4.'),
-      ('O que isso pede', 'A dipirona não está entre as drogas que induzem '
-       'ANCA. É hora de refazer a história de exposição a sós, perguntando '
-       'também pelo que a paciente não chama de remédio.'),
+      ('A combinação', 'Dupla especificidade ANCA, neutropenia profunda e púrpura auricular favorecem exposição como mecanismo comum. Nenhum desses achados isoladamente comprova a substância; é necessário rever medicamentos e uso recreativo a sós.'),
+      ('Concorrentes', 'Vasculite primária pode ter perfis atípicos, mas MPO não basta para classificá-la. Endocardite pode positivar ANCA; culturas pré-antibiótico negativas e ausência de outros sinais reduzem, sem zerar, essa possibilidade. Antifosfolípides negativos e sedimento glomerular inflamatório pesam contra SAF. Crioglobulinas não detectadas e C4 normal diminuem a probabilidade de crioglobulinemia.'),
      ]),
 
     pg('entrevista', 'Entrevista a sós',
@@ -411,26 +345,15 @@ ETAPAS = [
        'agora outra causa provável.'),
 
     Q('q6', 5,
-      'A urina do terceiro dia, cinco dias depois do último uso, vai para '
-      'toxicologia. **Quais duas** afirmações estão corretas?', [
-      ('Levamisol negativo agora não exclui exposição', True),
-      ('A benzoilecgonina documenta só a cocaína', True),
-      ('Benzoilecgonina positiva comprova o adulterante', False),
-      ('A biópsia de pele identifica a substância', False),
-      ('ANCA de dois alvos dispensa toxicologia', False),
-      ('Levamisol persiste semanas na urina', False),
+      'A coleta toxicológica ocorrerá cinco dias após o último uso referido. Quais duas conclusões poderão ser sustentadas pelos testes?', [
+      ('Benzoilecgonina confirmada documenta exposição à cocaína', True),
+      ('Levamisol não detectado terá pouco poder para excluir a exposição', True),
+      ('Benzoilecgonina confirmada identifica a composição do adulterante', False),
+      ('A intensidade do ANCA permite datar a última exposição', False),
+      ('A histologia cutânea distingue quimicamente cocaína de levamisol', False),
      ], [
-      ('A janela', 'O levamisol tem meia-vida de cerca de 5,6 horas, e só 2% '
-       'a 5% saem inalterados na urina. A pesquisa por cromatografia com '
-       'espectrometria de massa rende nas primeiras 48 horas; cinco dias '
-       'depois, o negativo é o esperado e não afasta nada.'),
-      ('O que a toxicologia mostra', 'A benzoilecgonina é o metabólito da '
-       'cocaína e fica detectável por dias, mais em quem usa com frequência. '
-       'Positiva, confirma o uso de cocaína, não a presença do adulterante.'),
-      ('Por que não as outras', 'A biópsia mostra o dano do vaso, não a '
-       'molécula que o causou. O ANCA sustenta a hipótese, mas não substitui '
-       'a história e a toxicologia. O diagnóstico final continua clínico e '
-       'provável, e é assim na maior parte dos casos publicados.'),
+      ('Janela e inferência', 'Benzoilecgonina é metabólito da cocaína, não do adulterante. Levamisol é eliminado rapidamente; coleta tardia tem baixa sensibilidade e resultado negativo não deve ser tratado como refutação.'),
+      ('O limite dos marcadores', 'ANCA pode persistir além da exposição e não serve como relógio. Histologia mostra trombose e inflamação, não a molécula causal. Assim, toxicologia de cocaína, padrão clínico e cronologia sustentam associação provável, sem comprovação química do levamisol.'),
      ]),
 
     painel('res4', 'Quarto e quinto dias', 'Toxicologia e biópsia renal', [
@@ -443,37 +366,17 @@ ETAPAS = [
     ], introducao='A biópsia renal foi feita no quarto dia, com plaquetas e '
                   'coagulação normais.'),
 
-    pareamento('q7', 'Pergunta 6',
-      'Exposições que produzem vasculite ou vasculopatia. Associe cada uma à '
-      'síndrome que ela costuma produzir.', [
-      par('Levamisol, adulterando cocaína',
-          'Púrpura retiforme de orelhas, agranulocitose e ANCA duplo',
-          'O quadro de Marina; a pele regride em semanas de abstinência, o '
-          'anticorpo em meses.'),
-      par('Cocaína inalada por anos',
-          'Lesão destrutiva de linha média, com ANCA anti-elastase',
-          'Destrói septo e palato e imita a granulomatose com poliangeíte.'),
-      par('Propiltiouracila por meses',
-          'Vasculite anti-MPO com glomerulonefrite',
-          'É a droga que mais induz ANCA; suspender é a base do tratamento.'),
-      par('Hidralazina por anos',
-          'Lúpus induzido, com anti-histona',
-          'Dose alta e acetilação lenta aumentam o risco; parte tem também '
-          'ANCA anti-MPO.'),
-      par('Anfetaminas e metanfetamina',
-          'Vasculite necrosante de vaso médio, tipo poliarterite',
-          'Descrita em usuários, sem ANCA, com acometimento cerebral e '
-          'sistêmico.'),
-      ], opcoes=[
-      'Púrpura retiforme de orelhas, agranulocitose e ANCA duplo',
-      'Lesão destrutiva de linha média, com ANCA anti-elastase',
-      'Vasculite anti-MPO com glomerulonefrite',
-      'Lúpus induzido, com anti-histona',
-      'Vasculite necrosante de vaso médio, tipo poliarterite',
-      'Arterite de células gigantes',
-      ], titulo_resposta='Exposição, vaso e anticorpo',
-      nota='A opção que sobrou, arterite de células gigantes, não se associa '
-           'a essas exposições e é rara antes dos 50 anos.'),
+    Q('q7', 6,
+      'Após toxicologia e biópsia renal, quais duas interpretações melhor ponderam causa e atividade da doença?', [
+      ('A biópsia demonstra doença glomerular ativa apesar da melhora dos neutrófilos', True),
+      ('A toxicologia confirma cocaína, mantendo levamisol como associação provável', True),
+      ('A creatinina em alta reflete sobretudo recuperação renal tardia após a fase infecciosa', False),
+      ('Vasculite ANCA primária com agranulocitose por dipirona é a explicação mais provável do conjunto', False),
+      ('O componente trombótico da pele favorece microangiopatia trombótica como causa da perda renal', False),
+     ], [
+      ('Atividade e atribuição', 'Neutrófilos subiram a 1.100, mas creatinina chegou a 2,6 e há necrose com crescentes celulares em 5/18 glomérulos: predomina uma lesão glomerular ativa, não apenas recuperação lenta de injúria anterior. Benzoilecgonina confirma cocaína; coleta tardia negativa para levamisol deixa a associação provável.'),
+      ('Explicações concorrentes', 'Vasculite primária e agranulocitose por dipirona podem coexistir, mas exigem causas separadas para uma combinação ligada à exposição recorrente, com púrpura auricular e ANCA duplo. Trombos cutâneos não demonstram microangiopatia renal: plaquetas preservadas, ausência de esquizócitos e biópsia necrosante pauci-imune favorecem outro mecanismo.'),
+     ]),
 
     pagina('sobre_biopsia', 'Discussão', 'Sobre a biópsia renal',
       p('Crescente é a proliferação de células no espaço de Bowman, em torno '
@@ -666,3 +569,14 @@ ETAPAS = [
 ]
 
 REVISAO = []
+
+# Fontes conferidas na revisão das questões (22/10/2026):
+# https://pubmed.ncbi.nlm.nih.gov/21980179/
+# https://pubmed.ncbi.nlm.nih.gov/22152487/
+# https://kdigo.org/wp-content/uploads/2024/05/KDIGO-2024-ANCA-Vasculitis-Guideline-Update.pdf
+
+# https://www.idsociety.org/practice-guideline/skin-and-soft-tissue-infections/
+# https://www.health.ny.gov/diseases/aids/consumers/prevention/opioidprevention/health_advisory_levamisole-contaminated_cocaine.htm
+
+# Referência de construção dos itens (aplicação e opções plausíveis):
+# https://www.nbme.org/sites/default/files/2021-02/NBME_Item%20Writing%20Guide_R_6.pdf

@@ -166,30 +166,13 @@ ETAPAS = [
          'diferencial.']),
 
     Q('p1', 1,
-      'Cálcio total de 13,6 mg/dL, albumina de 4,0 g/dL, cálcio ionizado de '
-      '1,72 mmol/L e QTc de 340 ms. **Quais três** leituras estão corretas?', [
-      ('Hipercalcemia verdadeira, confirmada pelo ionizado', True),
-      ('Faixa moderada, entre 12 e 14 mg/dL', True),
-      ('QT curto como efeito do cálcio', True),
-      ('Grave, por passar de 13 mg/dL', False),
-      ('A correção pela albumina muda a leitura', False),
-      ('Pseudo-hipercalcemia por excesso de proteína', False),
-     ], [
-      ('Os números', 'Com albumina de 4,0 g/dL, o cálcio corrigido é o próprio '
-       'total, 13,6 mg/dL, e o ionizado de 1,72 mmol/L mostra que a fração '
-       'livre, a que age, está alta. Excesso de uma proteína que liga cálcio, '
-       'como uma paraproteína, subiria o total sem mexer no ionizado; aqui os dois sobem juntos.'),
-      ('A gravidade', 'Na classificação usual (Walker e Shane, JAMA 2022), até '
-       '12 mg/dL é leve, de 12 a 13,9 é moderada e de 14 em diante é grave. Ele '
-       'está na faixa moderada, mas com sintomas: sede, poliúria, constipação, '
-       'atenção lenta e creatinina que dobrou. O QTc de 340 ms é o encurtamento '
-       'da repolarização que o cálcio alto produz.'),
-      ('O que isso muda', 'Hipercalcemia moderada com sintomas se trata na '
-       'emergência: soro fisiológico para repor o volume perdido na urina, '
-       'suspensão do tiazídico, que reduz a excreção renal de cálcio, e do '
-       'colecalciferol. Furosemida só entra depois de restaurado o volume, e '
-       'apenas se houver sobrecarga.'),
-     ]),
+      'Diante da poliúria e da lesão renal, qual mecanismo integra melhor os primeiros exames?', [
+      ('Diurese aquosa por defeito de concentração, com depleção de volume', True),
+      ('Diurese osmótica por solutos filtrados, com lesão renal secundária', False),
+      ('Polidipsia primária, com hipercalcemia por hemoconcentração', False),
+      ('Lesão glomerular, com perda urinária de proteínas e cálcio total elevado', False),
+      ('Retenção de cálcio pela lesão renal como evento inicial', False),
+    ], [('Integração', 'Urina a 190 mOsm/kg diante de plasma a 302 e Na 146 indica perda de água apesar do estímulo para concentrar. A hipercalcemia pode reduzir a resposta renal ao ADH; desidratação e vasoconstrição renal contribuem para a creatinina.'), ('Comparação', 'A diurese osmótica costuma elevar a osmolalidade urinária; não há glicosúria. Polidipsia não explica bem a hiperosmolalidade, e o ionizado alto afasta aumento apenas por hemoconcentração. Sedimento e proteinúria não sustentam lesão glomerular. Não é preciso esperar Ca 14 para tratar este paciente sintomático.')]),
 
     disc('urina', 'O que a urina diz',
          'Rafael está desidratado, com mucosas secas e sódio de 146 mmol/L. '
@@ -197,10 +180,9 @@ ETAPAS = [
          'com densidade de 1.004 e osmolalidade de 190 mOsm/kg, mais diluída '
          'que o plasma de 302. Glicemia de 98 mg/dL e urina sem glicose afastam '
          'diurese osmótica; na polidipsia primária o sódio seria normal ou baixo.',
-         'É um defeito de concentração, e o cálcio alto basta para produzi-lo: '
+         'O conjunto é compatível com defeito de concentração, ao qual a hipercalcemia pode contribuir: '
          'ele ativa o receptor sensor de cálcio na alça de Henle e no ducto '
-         'coletor e reduz a resposta ao hormônio antidiurético. É um diabetes '
-         'insípido nefrogênico, que regride quando o cálcio cai. O tiazídico não '
+         'coletor e pode reduzir a resposta ao hormônio antidiurético. A melhora da concentração urinária após corrigir o cálcio apoiaria esse mecanismo. O tiazídico não '
          'explica a urina diluída; ele é usado, ao contrário, para reduzir esse '
          'tipo de poliúria.',
          'A creatinina dobrou em relação à de um ano atrás. A fração de excreção '
@@ -216,44 +198,16 @@ ETAPAS = [
        'O PTH, colhido na chegada, é de 6 pg/mL (referência 15 a 65).'),
 
     Q('p3', 2,
-      'Cálcio de 12,4 mg/dL com PTH de 6 pg/mL. **Quais duas** leituras estão '
-      'corretas?', [
-      ('Hipercalcemia independente do PTH', True),
-      ('A paratireoide responde ao cálcio alto como deveria', True),
-      ('Hipercalcemia dependente do PTH', False),
-      ('PTH inapropriadamente normal para o cálcio', False),
-      ('A causa provável está na paratireoide', False),
-      ('O PTH baixo indica falência da paratireoide', False),
-     ], [
-      ('O divisor', 'Com o cálcio alto, a paratireoide normal para de '
-       'secretar. Um PTH abaixo de cerca de 20 pg/mL é a resposta esperada, e o '
-       'de 6 pg/mL está suprimido: a hipercalcemia é independente do PTH, e a '
-       'glândula sai da lista de causas.'),
-      ('A outra categoria', 'Na hipercalcemia dependente do PTH, o PTH vem alto '
-       'ou, o que engana, dentro da referência: com o cálcio alto, um PTH de 40 '
-       'já é inapropriado. PTH baixo não é falência da glândula; a falência '
-       'daria cálcio baixo.'),
-      ('O que a categoria abre', 'Sem o PTH, o cálcio a mais vem de três '
-       'lugares: de um fator que imita o PTH no osso e no rim, do excesso de '
-       'vitamina D ativa, que aumenta a absorção intestinal, ou do osso '
-       'destruído diretamente. Somam-se medicamentos e ingestão de cálcio. A '
-       'próxima rodada de exames separa essas frentes.'),
-     ]),
+      'PTH 6 pg/mL e hipercalcemia persistente. Quais três exames você prioriza agora?', [
+      ('PTHrP', True),
+      ('25-OH-D e 1,25-(OH)₂D, em conjunto', True),
+      ('Eletroforese e cadeias leves livres séricas', True),
+      ('Cintilografia de paratireoides com sestamibi', False),
+      ('Cintilografia óssea para pesquisar mieloma', False),
+      ('Repetição do PTH após semanas sem tiazídico', False),
+    ], [('Indicados', 'PTHrP pesquisa mecanismo humoral tumoral; as duas formas da vitamina D separam excesso de estoque de produção de calcitriol. Eletroforese e cadeias leves investigam doença plasmocitária diante de anemia, hipercalcemia e disfunção renal.'), ('Menor rendimento agora', 'Sestamibi localiza glândulas após diagnóstico bioquímico dependente de PTH, incompatível com esta supressão. Cintilografia óssea tem baixo rendimento nas lesões puramente líticas do mieloma. Repetir PTH semanas depois não deve adiar a investigação: os medicamentos podem agravar, mas não encerram a investigação desta hipercalcemia persistente.')]),
 
-    disc('pedidos', 'O que se pede com o PTH suprimido',
-         'A equipe pede as frentes de uma vez. O peptídeo relacionado ao PTH '
-         '(PTHrP) procura a hipercalcemia humoral, a dos tumores sólidos. As '
-         'duas formas da vitamina D, dosadas juntas, separam o excesso de '
-         'suplemento, que eleva a 25-hidroxi, da produção de calcitriol sem '
-         'controle, que eleva a 1,25-di-hidroxi com a 25-hidroxi normal.',
-         'Eletroforese de proteínas e cadeias leves livres procuram mieloma, que '
-         'libera cálcio do osso. A tomografia de tórax e abdome estuda os hilos '
-         'da radiografia e escolhe onde biopsiar, se for preciso. A calciúria '
-         'de 24 horas mede quanto cálcio o rim está eliminando.',
-         'Três exames ficam de fora. A cintilografia das paratireoides com '
-         'sestamibi procuraria um adenoma que esse PTH já afastou. A '
-         'cintilografia óssea vê mal a lesão lítica do mieloma. A calcitonina '
-         'marca carcinoma medular de tireoide e não explica hipercalcemia.'),
+    disc('pedidos', 'A próxima rodada', 'A equipe encaminha as dosagens e a investigação de proteínas séricas. Acrescenta calciúria de 24 horas e revê a radiografia realizada na chegada pela tosse e perda de peso. A necessidade de tomografia será definida por esses achados.'),
 
     painel('res2', 'Investigação', 'Segundo e terceiro dias', [
         ex('PTHrP', 'Não detectado', 'não detectado'),
@@ -264,48 +218,16 @@ ETAPAS = [
         ex('Calciúria de 24 horas', '410 mg', 'abaixo de 300 mg', True),
     ]),
 
-    disc('leitura', 'O que voltou',
-         'PTHrP não detectado torna improvável a hipercalcemia humoral. '
-         'Eletroforese sem componente monoclonal e relação kappa/lambda de 1,3, '
-         'dentro da referência, afastam mieloma com razoável segurança; a '
-         'gamaglobulina policlonal discretamente alta é inespecífica.',
-         'A calciúria de 410 mg em 24 horas, acima de 300 mg, mostra que o rim '
-         'está eliminando muito cálcio: o excesso está entrando no sangue, pelo '
-         'intestino, pelo osso ou pelos dois. Falta ler a vitamina D, com a '
-         '25-hidroxi de 38 ng/mL e a 1,25-di-hidroxi de 104 pg/mL.'),
+    disc('leitura', 'O que voltou', 'Calciúria de 410 mg em 24 horas. PTHrP não detectado, eletroforese sem componente monoclonal e relação kappa/lambda de 1,3. A equipe compara os mecanismos possíveis antes de escolher o alvo da biópsia.'),
 
-    pareamento('p4', 'Pergunta 3',
-      'O 1,25-di-hidroxivitamina D está alto e o 25-hidroxi, normal. Associe '
-      'cada perfil de outro paciente ao mecanismo da hipercalcemia.', [
-      par('PTH 95 pg/mL, fósforo 2,2 mg/dL, calciúria alta',
-          'Hiperparatireoidismo primário',
-          'O PTH reabsorve cálcio e espolia fósforo; é a causa mais comum no '
-          'ambulatório.'),
-      par('PTH 48 pg/mL, fração de excreção de cálcio abaixo de 0,01',
-          'Hipercalcemia hipocalciúrica familiar',
-          'O sensor de cálcio mal regulado mantém PTH normal e calciúria muito '
-          'baixa.'),
-      par('PTH suprimido, PTHrP alto, 1,25-(OH)₂D baixo',
-          'Hipercalcemia humoral maligna',
-          'O PTHrP imita o PTH no osso e no rim, mas não ativa a vitamina D.'),
-      par('PTH suprimido, 1,25-(OH)₂D alto, 25-OH-D normal',
-          'Produção extrarrenal de calcitriol',
-          'É o perfil de Rafael: uma 1-alfa-hidroxilase fora do rim, que não '
-          'obedece ao PTH.'),
-      par('PTH suprimido, 25-OH-D de 180 ng/mL',
-          'Intoxicação por vitamina D',
-          'Exige doses muito altas por meses; o 25-OH de Rafael é 38.'),
-      par('PTH suprimido, bicarbonato 34 mmol/L, carbonato de cálcio diário',
-          'Síndrome leite-álcali',
-          'Cálcio oral, alcalose e lesão renal se alimentam; o bicarbonato de '
-          'Rafael é 25.'),
-    ], opcoes=['Hiperparatireoidismo primário', 'Hipercalcemia hipocalciúrica familiar',
-               'Hipercalcemia humoral maligna', 'Produção extrarrenal de calcitriol',
-               'Intoxicação por vitamina D', 'Síndrome leite-álcali',
-               'Mieloma múltiplo'],
-    titulo_resposta='O calcitriol alto com estoque normal aponta para fora do rim',
-    nota='A opção que sobrou, mieloma, teria paraproteína ou cadeias leves '
-         'alteradas; as de Rafael são normais.'),
+    Q('p4', 3,
+      'Calcitriol 104, 25-OH-D 38, PTHrP não detectado. Quais duas hipóteses ainda integram hipercalcemia e adenopatia?', [
+      ('Doença granulomatosa com produção extrarrenal de calcitriol', True),
+      ('Linfoma com produção aumentada de calcitriol', True),
+      ('Intoxicação por colecalciferol como explicação unificadora', False),
+      ('Hipercalcemia humoral por PTHrP', False),
+      ('Hiperparatireoidismo primário agravado pelo tiazídico', False),
+    ], [('O mecanismo não é a etiologia', 'Calcitriol alto com PTH suprimido favorece produção pouco regulada, possível tanto em granulomas quanto em linfomas. A simetria hilar favorece a primeira categoria, mas perda de peso e adenopatia justificam tecido.'), ('Alternativas próximas', '25-OH-D normal enfraquece intoxicação por colecalciferol; o suplemento ainda pode fornecer substrato. PTHrP não detectado e PTH suprimido tornam os outros dois mecanismos menos prováveis, sem excluir neoplasia por outra via.')]),
 
     estudo('tc', 'Tomografia de tórax',
            'No quarto dia, com creatinina de 1,3 mg/dL, a equipe faz tomografia '
@@ -338,24 +260,19 @@ ETAPAS = [
               'imunossupressão.'),
       caminho('Prednisona agora; biópsia só se o cálcio não cair',
               'empirico',
-              'Corticoide antes da biópsia pode deixar um linfoma irreconhecível '
-              'na lâmina e piorar tuberculose ou histoplasmose.'),
+              'A resposta ao corticoide não define a causa. Ele pode modificar a amostra e agravar infecções ainda não reconhecidas; o risco depende da doença e da exposição.'),
       caminho('Atribuir ao suplemento, dar alta e reavaliar', 'suplemento',
               'O colecalciferol soma, mas não produz linfonodo nem calcitriol '
               'alto com 25-hidroxi normal.'),
     ]),
 
-    pg('empirico', 'Dez dias de prednisona',
-       'Com 40 mg/dia, o cálcio cai e a tosse melhora. A hematologia se recusa a '
-       'manter o corticoide sem tecido, e ninguém excluiu linfoma, tuberculose '
-       'nem histoplasmose. A ecobroncoscopia é feita com o paciente já sob '
-       'prednisona, e o patologista é avisado de que o corticoide pode reduzir '
-       'o rendimento da amostra.',
-       segue='tecido'),
+    pg('empirico', 'Dez dias depois',
+       'Com prednisona 40 mg/dia, o cálcio cai e a tosse melhora. A causa continua sem confirmação. A equipe organiza a amostragem e informa ao patologista o tratamento recebido.',
+       segue='amostra_limitada'),
 
     pg('suplemento', 'Dez semanas depois',
        'Rafael saiu com hidratação oral, sem suplemento e sem tiazídico, e '
-       'retorno marcado para dois meses. Volta antes, com cálcio de 13,1 mg/dL, '
+       'retorno marcado para dois meses. O retorno previsto não ocorre. Na décima semana, volta com cálcio de 13,1 mg/dL, '
        'creatinina de 1,9 mg/dL, falta de ar ao caminhar no plano e dor nos '
        'dois olhos com a luz. É readmitido e hidratado de novo; a radiografia e '
        'a tomografia são repetidas.'),
@@ -371,11 +288,10 @@ ETAPAS = [
          ((638, 257), (575, 420), 'Na TC coronal, **conglomerado peri-hilar** com espessamento peribroncovascular.', 12),
          ((905, 170), (985, 60), '**Micronódulos** difusos, de distribuição perilinfática.', -12),
         ],
-        ['Doença parenquimatosa nova e extensa: opacidades reticulonodulares de '
+        ['Progressão do acometimento pulmonar: opacidades reticulonodulares de '
          'predomínio superior, conglomerados peri-hilares e micronódulos '
          'perilinfáticos.',
-         'Em dez semanas sem diagnóstico, a doença saiu dos linfonodos para o '
-         'pulmão. A ecobroncoscopia é feita na mesma internação.'],
+         'A TC inicial já mostrava pequenos nódulos no pulmão. Na readmissão, a extensão e a confluência aumentaram; não se trata apenas de linfonodos aumentados. A ecobroncoscopia é feita na mesma internação.'],
         segue='tecido'),
 
     pg('tecido', 'A ecobroncoscopia',
@@ -405,32 +321,16 @@ ETAPAS = [
          'junta a lâmina, as culturas e a história.']),
 
     Q('p5', 4,
-      'Granulomas não necrosantes, citometria sem clone, pesquisas '
-      'negativas e culturas pendentes. Qual a interpretação mais adequada?', [
-      ('Sarcoidose provável, a confirmar pelas culturas', True),
-      ('Tuberculose excluída pelo teste molecular', False),
-      ('Sem necrose, infecção está excluída', False),
-      ('Granuloma confirma e dispensa as culturas', False),
-      ('Linfoma confirmado pela reação granulomatosa', False),
-      ('Esquema para tuberculose até sair a cultura', False),
-      ('Biópsia cirúrgica antes de qualquer conduta', False),
-     ], [
-      ('Os critérios', 'A ATS (2020) pede quadro compatível, granuloma não '
-       'necrosante em tecido e exclusão razoável das outras causas de '
-       'granuloma. Os dois primeiros estão aqui; a exclusão depende das '
-       'culturas, que levam de seis a oito semanas.'),
-      ('Por que não as outras', 'O teste molecular negativo reduz a chance de '
-       'tuberculose sem zerá-la, e o galinheiro da ficha mantém a histoplasmose '
-       'em mente; as duas podem dar granuloma sem necrose. O linfoma de Hodgkin '
-       'pode vir cercado de granulomas e escapa à citometria, mas a lâmina não '
-       'tem células atípicas. Biópsia cirúrgica fica para quando o quadro '
-       'divergir, e tratar tuberculose sem evidência só soma toxicidade.'),
-     ]),
+      'Como o EBUS com granulomas não necrosantes e citometria sem clone modifica o diferencial?', [
+      ('Favorece sarcoidose; infecções granulomatosas ainda exigem seguimento', True),
+      ('Favorece histoplasmose sobre as demais causas pela exposição ao galinheiro', False),
+      ('Mantém linfoma como primeira hipótese, pois a citometria tem pouco valor', False),
+      ('Favorece tuberculose sobre sarcoidose pela frequência regional', False),
+      ('Permite atribuir o cálcio ao suplemento, com adenopatia incidental', False),
+    ], [('Peso relativo', 'Adenopatia simétrica, nódulos perilinfáticos e granulomas favorecem sarcoidose. Culturas negativas não a confirmam: ajudam a excluir alternativas; resultados pendentes mantêm incerteza.'), ('O que persiste', 'Galinheiro sustenta pesquisa de fungos, sem tornar histoplasmose a primeira hipótese. Teste molecular negativo não exclui tuberculose. Citometria sem clone reduz alguns linfomas, mas não elimina Hodgkin; progressão discordante pode exigir nova biópsia. O suplemento não integra a histologia e o tórax.')]),
 
     pg('virada', 'O diagnóstico',
-       'Com quadro compatível, granuloma não necrosante e infecção e linfoma '
-       'razoavelmente afastados, a equipe fecha o diagnóstico de sarcoidose, '
-       'que as culturas finais ainda precisam sustentar.',
+       'O conjunto de manifestações clínicas, distribuição torácica e granulomas não necrosantes favorece sarcoidose. A investigação das alternativas não encontrou outra causa mais consistente até aqui; a equipe acompanhará as culturas e reavaliará o diagnóstico se houver evolução discordante.',
        'A sarcoidose é uma doença granulomatosa de causa desconhecida. Atinge '
        'pulmão e linfonodos do tórax em mais de 90% dos casos e, com frequência, '
        'olho, pele, fígado, rim e coração. Os macrófagos do granuloma expressam '
@@ -438,36 +338,19 @@ ETAPAS = [
        'obedecer ao PTH: sobem a absorção intestinal de cálcio, a reabsorção '
        'óssea e a calciúria.',
        'É o que se viu: calcitriol alto com estoque normal, calciúria de 410 mg, '
-       'linfopenia pelo sequestro de linfócitos nos granulomas e adenopatia '
+       'linfopenia compatível com inflamação sistêmica e adenopatia '
        'hilar simétrica com nódulos ao longo dos feixes. O colecalciferol deu '
-       'substrato, e o tiazídico impediu o rim de eliminar o excesso: os dois '
-       'descompensaram uma produção de calcitriol que vinha de antes.'),
+       'substrato para essa via, e o tiazídico pode reduzir a excreção renal de cálcio. Ambos podem ter agravado a hipercalcemia, sem explicar sozinhos a doença do tórax.'),
 
     Q('p6', 5,
-      'Pela ATS, **quais três** avaliações se fazem em todo paciente ao '
-      'diagnóstico, mesmo sem sintomas?', [
-      ('Eletrocardiograma de 12 derivações', True),
-      ('Exame oftalmológico com lâmpada de fenda', True),
-      ('Creatinina e fosfatase alcalina', True),
-      ('Ecocardiograma e Holter de rotina', False),
-      ('PET-CT de corpo inteiro', False),
-      ('Biópsia hepática', False),
-      ('Enzima conversora seriada', False),
-     ], [
-      ('O rastreio de base', 'A ATS (2020) sugere, para todo paciente ao '
-       'diagnóstico, mesmo sem sintomas: eletrocardiograma, exame oftalmológico, '
-       'cálcio, creatinina e fosfatase alcalina. O cálcio de Rafael já é '
-       'conhecido; os outros entram agora.'),
-      ('Por quê', 'O acometimento cardíaco pode começar por bloqueio ou '
-       'arritmia, e o ECG é a triagem; alterado, leva a ressonância ou PET. A '
-       'uveíte pode ser silenciosa e deixar sinéquias, catarata e glaucoma. '
-       'Creatinina e fosfatase alcalina rastreiam rim e fígado.'),
-      ('O que não entra', 'Sem sintomas nem ECG alterado, a ATS sugere não '
-       'fazer ecocardiograma nem Holter de rotina. PET-CT não é rastreio: serve '
-       'para doença cardíaca ou para escolher onde biopsiar. Biópsia hepática '
-       'não se faz para rastrear, e a enzima conversora oscila demais para guiar '
-       'conduta.'),
-     ]),
+      'Com os exames iniciais disponíveis, quais três avaliações priorizar para extensão e referência funcional?', [
+      ('Lâmpada de fenda', True),
+      ('Espirometria e DLCO', True),
+      ('Fosfatase alcalina', True),
+      ('Holter de 24 horas', False),
+      ('PET-CT cardíaco', False),
+      ('Enzima conversora de angiotensina seriada', False),
+    ], [('Prioridades', 'Lâmpada de fenda pesquisa uveíte: o olho vermelho persistente já torna a avaliação dirigida. Espirometria e DLCO quantificam o comprometimento diante de tosse e dispneia. Fosfatase alcalina pesquisa acometimento hepático pouco sintomático.'), ('Sem indicação inicial', 'Holter e PET cardíaco ficam para suspeita cardíaca; não há síncope, palpitações ou bloqueio no ECG já disponível. Enzima conversora seriada não define atividade nem deve guiar tratamento isoladamente. Não é necessário pedir de novo o ECG normal apenas para completar uma lista.')]),
 
     pg('extensao', 'O rastreio',
        'ECG sem bloqueio nem arritmia. Fosfatase alcalina e transaminases '
@@ -483,39 +366,22 @@ ETAPAS = [
        'cicloplégico.'),
 
     Q('p7', 6,
-      'A prednisona vai começar. **Quais quatro** afirmações estão corretas?', [
-      ('A indicação é o cálcio com lesão renal', True),
-      ('Dose inicial de 20 a 40 mg/dia', True),
-      ('A uveíte segue com colírio e oftalmologia', True),
-      ('Pode começar antes das culturas finais', True),
-      ('Repor cálcio e vitamina D de rotina', False),
-      ('Suspender quando a radiografia normalizar', False),
-      ('Infliximabe como primeira linha', False),
-     ], [
-      ('A indicação', 'Adenopatia hilar sem sintomas muitas vezes só se '
-       'acompanha. Hipercalcemia com lesão renal é indicação clara: o '
-       'corticoide suprime a 1-alfa-hidroxilase do granuloma, e o cálcio '
-       'costuma cair em dias.'),
-      ('A dose', 'Dose moderada, em torno de 20 a 40 mg/dia de prednisona, com '
-       'redução lenta. A ERS (2021) não viu benefício pulmonar acima de 20 '
-       'mg/dia, e doses maiores só somam toxicidade. Infliximabe é terceira '
-       'linha, depois do corticoide e do metotrexato. A meta é a função dos '
-       'órgãos acometidos, não a imagem.'),
-      ('O que acompanha', 'Cálcio e vitamina D de rotina, como se costuma dar '
-       'com corticoide, pioram a hipercalcemia com calcitriol alto; a proteção '
-       'óssea se decide caso a caso. A uveíte anterior segue com colírio e '
-       'lâmpada de fenda. E o rim não espera oito semanas de cultura: começa-se '
-       'agora, com alguém responsável por conferir o resultado final.'),
-     ]),
+      'Qual dado pesa mais para tratar sistemicamente, em vez de acompanhar apenas o tórax?', [
+      ('Hipercalcemia sintomática com repercussão renal', True),
+      ('Linfonodos mediastinais de até 2,4 cm', False),
+      ('DLCO de 64% isoladamente, sem considerar a evolução', False),
+      ('Uveíte anterior com acuidade preservada, isoladamente', False),
+      ('Linfopenia periférica de 780/mm³', False),
+    ], [('Indicação', 'A ameaça metabólica e renal já demonstrada é a indicação mais forte. A extensão radiológica e a DLCO ajudam a acompanhar, mas não substituem sintomas, trajetória e risco de órgão.'), ('Olho e segurança', 'A uveíte anterior descrita recebe tratamento tópico e avaliação oftalmológica; não determina, sozinha, prednisona sistêmica. Se iniciada antes das culturas finais, a decisão exige revisão da probabilidade de infecção e conferência dos resultados. Evitar reposição automática de cálcio e vitamina D neste contexto.')]),
 
     disc('reducao', 'O plano da redução',
          'A prednisona sai devagar, ao longo de meses, e a doença pode voltar '
          'no caminho. Antes de chamar de recidiva e escalar, confere-se a '
          'adesão, sobretudo ao tratamento local, e se exclui infecção, que o '
          'corticoide facilita e que pode imitar inflamação.',
-         'Recidiva ou dependência de corticoide pede um poupador. Pela ERS '
+         'Recidivas persistentes apesar do tratamento local adequado ou dependência de corticoide podem justificar um poupador. Pela ERS '
          '(2021), o metotrexato é a segunda linha, com ácido fólico e controle de '
-         'hemograma e função hepática; o anti-TNF, como o infliximabe, vem '
+         'hemograma, função hepática e renal; o anti-TNF, como o infliximabe, vem '
          'depois dele. A hidroxicloroquina tem papel na pele e na '
          'hipercalcemia, não na uveíte.',
          'Voltar a doses altas por tempo indefinido é o que o poupador evita: '
@@ -539,12 +405,9 @@ ETAPAS = [
               'Nenhum desses exames vê a câmara anterior.'),
     ]),
 
-    pg('controle', 'No mesmo dia',
-       'Células 2+ no olho direito, pressão de 18 mmHg, sem edema macular. O '
-       'colírio tinha acabado havia uma semana. É recidiva anterior: o colírio '
-       'é retomado e intensificado, a redução sistêmica desacelera e começa o '
-       'metotrexato.',
-       segue='f1'),
+    pg('controle', 'Reavaliação oftalmológica',
+       'No mesmo dia, há células 2+ no olho direito, pressão de 18 mmHg e ausência de edema macular. O colírio tinha acabado havia uma semana. O tratamento tópico é retomado e ajustado, com reavaliação próxima; esse episódio isolado não determina novo imunossupressor.',
+       'Nos dois meses seguintes, apesar de adesão confirmada, há novas recidivas documentadas durante tentativas de redução do tratamento e dificuldade de reduzir a prednisona. Após discussão entre as equipes, inicia-se metotrexato como poupador, com ácido fólico e monitorização.', segue='f1'),
 
     pg('visao', 'Três semanas depois',
        'Rafael volta com visão turva no olho direito. Acuidade 20/80, células '
@@ -575,10 +438,9 @@ ETAPAS = [
        segue='f2'),
 
     fim('f1', 'Controle com visão preservada',
-        'Com metotrexato, a prednisona chega a 5 mg/dia em seis meses. Cálcio e '
+        'Nos seis meses seguintes ao início do metotrexato, a prednisona chega a 5 mg/dia. Cálcio e '
         'creatinina normais, visão 20/20, espirometria estável.',
-        'O tecido veio antes do corticoide, cada órgão foi examinado com o seu '
-        'instrumento, e a recidiva ocular foi vista no dia em que apareceu.',
+        'A causa foi avaliada com tecido adequado e investigação das alternativas. O seguimento de cada órgão permitiu reconhecer a recidiva ocular no dia em que apareceu.',
         'melhor'),
 
     fim('f1b', 'Controle após recidiva grave',
@@ -595,12 +457,8 @@ ETAPAS = [
 
     pagina('retrospectiva', 'Pontos de ensino', '',
         pontos(
-            'Na hipercalcemia, o primeiro divisor é o PTH. Suprimido, manda '
-            'procurar PTHrP, as duas formas da vitamina D, paraproteína e '
-            'imagem; sestamibi não tem lugar.',
-            'Urina diluída com sódio alto num paciente desidratado é defeito de '
-            'concentração: a hipercalcemia causa diabetes insípido nefrogênico '
-            'e lesão pré-renal, e o volume vem antes de qualquer diurético.',
+            'Na hipercalcemia confirmada, interpretar o PTH separa os mecanismos. PTH suprimido direciona exames conforme a hipótese; cintilografia de paratireoides não substitui o diagnóstico bioquímico.',
+            'Urina diluída apesar da desidratação sugere defeito de concentração. A hipercalcemia pode contribuir; evolução e resposta à correção ajudam a interpretar a lesão renal.',
             '1,25-di-hidroxivitamina D alta com 25-hidroxi normal indica '
             'calcitriol produzido fora do rim, por granuloma ou linfoma. '
             'Tiazídico e suplemento de vitamina D descompensam essa produção.',
@@ -636,3 +494,55 @@ ETAPAS = [
 ]
 
 REVISAO = []
+
+# Revisão das perguntas: fontes consultadas em 22/10/2026.
+# https://www.nbme.org/sites/default/files/2021-02/NBME_Item%20Writing%20Guide_R_6.pdf
+# https://pmc.ncbi.nlm.nih.gov/articles/PMC7159433/
+
+# Revisão sindrômica de 23/10/2026: a imagem torácica estreita o diferencial
+# depois do primeiro eixo bioquímico, sem mudar o layout ou os arquivos de imagem.
+_rx = next(e for e in ETAPAS if e['k'] == 'rx_hilos')
+ETAPAS.remove(_rx)
+_idx = next(i for i,e in enumerate(ETAPAS) if e['k'] == 'p4')
+ETAPAS.insert(_idx, _rx)
+
+_idx = next(i for i,e in enumerate(ETAPAS) if e['k'] == 'p3')
+ETAPAS.insert(_idx, Q('hipoteses_calcio', 2,
+    'Cálcio ionizado alto e PTH suprimido: quais três mecanismos permanecem prioritários?', [
+      ('Produção tumoral de mediadores que elevam o cálcio', True),
+      ('Aumento da ação da vitamina D, por excesso de oferta ou produção de calcitriol', True),
+      ('Contribuição dos medicamentos à retenção de cálcio', True),
+      ('Secreção autônoma de PTH por uma paratireoide', False),
+      ('Hipercalcemia familiar hipocalciúrica como explicação principal', False),
+      ('Aumento apenas do cálcio ligado à albumina', False),
+    ], [
+      ('Prioridades', 'PTH suprimido desloca a investigação para mecanismos independentes dele. Perda de peso e tosse sustentam procurar doença sistêmica; o suplemento e o tiazídico precisam ser revistos, sem presumir que expliquem todo o quadro.'),
+      ('Por que as outras perdem força', 'Secreção autônoma de PTH e hipercalcemia familiar hipocalciúrica costumam manter PTH não suprimido. A instalação sintomática e a falta de história pessoal ou familiar também desfavorecem esta última. Cálcio ionizado elevado com albumina normal afasta uma elevação apenas da fração ligada à proteína.'),
+    ]))
+
+_idx = next(i for i,e in enumerate(ETAPAS) if e['k'] == 'tecido')
+ETAPAS[_idx:_idx] = [
+    pg('amostra_limitada', 'Resultado da amostragem',
+       'Neste percurso alternativo, a punção produz pouco material. Há linfócitos e histiócitos, sem arquitetura suficiente para uma conclusão. A citometria é limitada pela baixa celularidade; as pesquisas iniciais de microrganismos são negativas e as culturas seguem em incubação.',
+       'O laudo é inconclusivo. Isso pode decorrer da amostragem e do tratamento recebido, sem que se possa atribuir o resultado apenas ao corticoide.', segue='b_nova_amostra'),
+    bifurcacao('b_nova_amostra', 'Decisão', 'Após a amostra inconclusiva',
+       'O cálcio e a tosse melhoraram. Como prosseguir?', [
+        caminho('Organizar nova amostra representativa, discutindo a técnica com a equipe', 'nova_amostra',
+                'A melhora sob corticoide é compartilhada por doenças diferentes. O primeiro material não respondeu à suspeita de doença sistêmica; é preciso ponderar nova amostragem e risco de cada técnica.'),
+        caminho('Adotar a resposta ao corticoide como base do diagnóstico e manter seguimento', 'f_incerteza',
+                'A observação pode ser apropriada em apresentações selecionadas, mas aqui há hipercalcemia com repercussão renal, perda de peso e amostra inconclusiva. A resposta isolada não resolve as alternativas infecciosas e neoplásicas.'),
+       ]),
+    pg('nova_amostra', 'Nova coleta',
+       'Pneumologia e patologia revisam o alvo e o material necessário. É feita nova ecobroncoscopia, com amostragem ampliada para bloco celular, histologia e microbiologia. Desta vez o material permite interpretação; se permanecesse inconclusivo, seria discutida outra técnica. A equipe registra o atraso e revê a exposição ao corticoide.', segue='tecido'),
+    fim('f_incerteza', 'Diagnóstico ainda indefinido',
+        'Neste encerramento alternativo, Rafael mantém melhora sintomática sob tratamento, mas a causa não foi confirmada. As alternativas infecciosas e neoplásicas permanecem em avaliação; a investigação do quadro sistêmico está incompleta e precisa ser retomada.',
+        'Melhora terapêutica não equivale a confirmação da causa. O custo desta decisão é manter incerteza durante uma exposição a tratamento com riscos, não uma complicação obrigatória.', 'medio'),
+]
+for _n, _e in enumerate((e for e in ETAPAS if e['t'] in ('pergunta','pareamento')), 1):
+    _e['kicker'] = f'Pergunta {_n}'
+
+_idx = next(i for i,e in enumerate(ETAPAS) if e['k'] == 'reducao')
+ETAPAS.insert(_idx, pg('inicio_tratamento', 'Tratamento sistêmico',
+    'Após obtenção de tecido adequado e revisão das hipóteses infecciosas, a equipe inicia prednisona 40 mg/dia pela hipercalcemia sintomática com lesão renal. Se já havia corticoide no percurso, a dose é revista neste momento. Mantêm-se a suspensão do suplemento e do tiazídico e a hidratação orientada clinicamente.',
+    'Cálcio, creatinina, eletrólitos, sintomas e efeitos adversos são reavaliados em uma a duas semanas para ajustar a dose. A decisão de tratar antes das culturas finais considera a ameaça aos órgãos e a probabilidade residual de infecção, que não foi zerada pelos testes iniciais. Os resultados pendentes serão conferidos.',
+    'O tratamento ocular tópico e o acompanhamento oftalmológico continuam. A redução sistêmica será guiada pela resposta clínica e laboratorial, em vez de um prazo fixo independente da evolução.'))

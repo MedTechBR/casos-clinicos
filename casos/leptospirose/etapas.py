@@ -176,28 +176,13 @@ ETAPAS = [
           'ainda cabe na hipótese de pneumonia com sepse.')),
 
     Q('p3', 1,
-      'Creatinina de 2,6 mg/dL, que era 1,0 há quatro dias. Qual a '
-      'interpretação mais adequada da lesão renal?', [
-      ('Pré-renal por hipovolemia', False),
-      ('Lesão tubular aguda', True),
-      ('Glomerulonefrite aguda', False),
-      ('Obstrução urinária', False),
-      ('Doença renal crônica agudizada', False),
-     ], [
-      ('A classificação', 'Com densidade urinária de 1.012, sódio urinário de '
-       '64 mmol/L, fração de excreção de sódio de 2,5% e cilindros granulosos, '
-       'o túbulo já não reabsorve sódio: é lesão intrínseca tubular. Na '
-       'pré-renal, a FENa fica abaixo de 1% e a urina vem concentrada.'),
-      ('Por que não as outras', 'Sem cilindros hemáticos nem proteinúria '
-       'importante, glomerulonefrite é pouco provável. O ultrassom sem '
-       'hidronefrose afasta obstrução, e a creatinina normal quatro dias antes '
-       'afasta doença crônica.'),
-      ('Dois achados que não combinam com a sepse comum', 'O potássio está '
-       'baixo, 3,1, com potássio urinário de 38 mmol/L: o rim está perdendo '
-       'potássio, quando na lesão renal habitual ele o retém. E a fita mostra '
-       'sangue ++ com poucas hemácias, o que, com CK de 2.380, indica pigmento '
-       'muscular na urina.'),
-     ]),
+      'Qual interpretação integra creatinina 2,6, cilindros granulosos e hipocalemia com K urinário 38?', [
+      ('Lesão tubular com perda de eletrólitos, possivelmente somada à hipoperfusão', True),
+      ('Hipoperfusão isolada com túbulos preservados', False),
+      ('Nefropatia por pigmentos como explicação suficiente de todos os achados', False),
+      ('Glomerulonefrite como mecanismo predominante', False),
+      ('Obstrução urinária com diurese paradoxal', False),
+    ], [('Integração', 'Cilindros granulosos, FENa 2,5% e urina pouco concentrada favorecem lesão tubular. A hipotensão pode contribuir, mas não explica sozinha o padrão urinário. K urinário 38 durante hipocalemia sugere perda renal inadequada, interpretada com diurese e reposição.'), ('Concorrentes', 'CK 2.380 e sangue na fita com poucas hemácias sustentam contribuição de pigmento muscular, sem provar que seja o mecanismo dominante. Pouca proteína e ausência de cilindros hemáticos enfraquecem glomerulonefrite; ultrassom sem dilatação reduz obstrução. FENa não é um divisor infalível na sepse.')]),
 
     pagina('gravidade', 'Discussão', 'A gravidade antes da causa',
         p('Com a hipótese de pneumonia comunitária, a equipe aplica os critérios '
@@ -279,28 +264,13 @@ ETAPAS = [
          'alvéolos é sangue: hemorragia alveolar difusa.']),
 
     Q('p4', 2,
-      'Hemorragia alveolar com plaquetas de 38.000, INR de 1,4, fibrinogênio '
-      'de 390 e esfregaço sem esquizócitos. **Quais três** afirmações estão '
-      'corretas?', [
-      ('Não há coagulação intravascular disseminada', True),
-      ('O sangramento é sobretudo de lesão capilar', True),
-      ('Transfundir plaquetas se abaixo de 50.000', True),
-      ('As plaquetas explicam sozinhas a hemorragia', False),
-      ('Plasma fresco pelo INR de 1,4', False),
-      ('Microangiopatia trombótica provável', False),
-     ], [
-      ('A coagulação', 'Fibrinogênio normal, INR pouco alterado e esfregaço '
-       'sem esquizócitos afastam CIVD descompensada e microangiopatia '
-       'trombótica. Esquizócitos seriam o achado da microangiopatia, não a '
-       'ausência deles.'),
-      ('O mecanismo', 'Plaquetas de 38.000 raramente causam sangramento '
-       'espontâneo grave; o risco sobe abaixo de 10 a 20 mil. Um sangramento '
-       'alveolar difuso com esses números aponta para lesão do endotélio '
-       'capilar, em que a plaquetopenia soma, mas não causa.'),
-      ('A transfusão', 'No sangramento ativo, a meta é manter plaquetas acima '
-       'de 50.000. Plasma com INR de 1,4 não corrige nada que importe e soma '
-       'volume a um pulmão que já está cheio.'),
-     ]),
+      'Hemoptise, Hb em queda e plaquetas 38.000, com INR 1,4 e fibrinogênio 390. Quais duas interpretações se sustentam?', [
+      ('Lesão da barreira alveolocapilar pode somar-se à trombocitopenia', True),
+      ('CIVD permanece possível, mas não demonstrada por estes dados', True),
+      ('Consumo sistêmico de fatores é o mecanismo comprovado do sangramento', False),
+      ('Microangiopatia trombótica é a explicação mais forte para rim e pulmão', False),
+      ('A contagem plaquetária permite atribuir a hemorragia apenas à hemostasia primária', False),
+    ], [('Limite da inferência', 'A gravidade pulmonar não deve ser atribuída apenas às plaquetas: lesão capilar pode coexistir. Fibrinogênio preservado, reagente de fase aguda, não exclui CIVD; faltam tendência do coagulograma e marcadores de fibrina para caracterizar consumo.'), ('Comparação', 'Sem esquizócitos nem demonstração de hemólise microangiopática, a microangiopatia perde força, sem ser impossibilidade. A hemorragia exige suporte e pode justificar plaquetas; INR 1,4 isolado não fundamenta plasma.')]),
 
     pg('suporte', 'Uma hora depois',
        'Ele recebe uma dose de plaquetas e um concentrado de hemácias, sem '
@@ -372,26 +342,13 @@ ETAPAS = [
        'As hemoculturas seguem sem crescimento em 48 horas.'),
 
     Q('p5', 3,
-      'Com essa exposição, a equipe quer confirmar a hipótese a partir da '
-      'alíquota guardada da admissão, colhida no sexto dia e antes do '
-      'antibiótico. Qual exame confirma o diagnóstico nessa amostra?', [
-      ('PCR para Leptospira no sangue', True),
-      ('ELISA IgM para leptospira', False),
-      ('Microaglutinação em amostra única', False),
-      ('Cultura de urina para leptospira', False),
-      ('Hemocultura em meio convencional', False),
-     ], [
-      ('O tempo da doença', 'Na primeira semana a leptospira circula no '
-       'sangue, e o anticorpo ainda pode não ter aparecido. Pelo Guia de '
-       'Vigilância em Saúde, PCR detectável em sangue colhido até o sétimo '
-       'dia confirma o caso.'),
-      ('Por que não as outras', 'ELISA IgM antes do sétimo dia pode vir '
-       'negativo e não descarta; só a partir do sétimo dia um resultado '
-       'negativo pesa contra. A microaglutinação precisa de amostras pareadas, '
-       'a segunda entre 14 e 60 dias. A leptospira aparece na urina mais '
-       'tarde e cresce devagar, em semanas. Hemocultura convencional não '
-       'isola o agente.'),
-     ]),
+      'Há sangue do sexto dia, pré-antibiótico. Quais duas estratégias laboratoriais priorizar para a hipótese ligada à enchente?', [
+      ('PCR para Leptospira na amostra guardada', True),
+      ('IgM na amostra aguda e repetição na convalescença se negativa', True),
+      ('Microaglutinação isolada na amostra aguda como único teste', False),
+      ('Cultura urinária para decisão nas próximas horas', False),
+      ('Nova hemocultura convencional para identificar Leptospira', False),
+    ], [('Prioridades', 'PCR sanguínea aproveita a primeira semana de leptospiremia e pode confirmar rapidamente. IgM aguda fornece referência; negativa nessa fase não afasta a doença e deve ser repetida. Os resultados agudo e convalescente aparecem na sequência.'), ('Alternativas', 'Microaglutinação isolada tem sensibilidade limitada cedo; amostras pareadas são mais informativas. Cultura urinária é lenta e a eliminação urinária tende a ser posterior. Hemocultura convencional não é o método de isolamento para este agente; as já negativas não o excluem. Nenhum resultado deve atrasar o tratamento.')]),
 
     pg('virada', 'O diagnóstico',
        'Laboratório de referência: **PCR para Leptospira no sangue, DNA '
@@ -407,29 +364,14 @@ ETAPAS = [
        'com hipotensão duas horas depois da primeira dose ganha agora outro '
        'sentido.'),
 
-    pareamento('p6', 'Pergunta 4',
-      'As febres ictéricas e hemorrágicas do Brasil se sobrepõem. Associe '
-      'cada quadro à doença que ele sugere.', [
-      par('Sufusão conjuntival, dor na panturrilha e contato com enchente',
-          'Leptospirose',
-          'A combinação dele. A sufusão é congestão sem secreção.'),
-      par('Dor abdominal, vômitos e hematócrito subindo na defervescência',
-          'Dengue grave',
-          'O extravasamento plasmático começa quando a febre cai.'),
-      par('Febre, icterícia e pulso lento para a febre, sem vacina, após mata',
-          'Febre amarela',
-          'Sinal de Faget e transaminases na casa dos milhares.'),
-      par('Febre em picos, anemia e esplenomegalia depois de viagem ao Pará',
-          'Malária por Plasmodium vivax',
-          'A gota espessa decide. No Ceará, quase sempre importada.'),
-      par('Icterícia com transaminases acima de 1.000 e pouca febre',
-          'Hepatite A aguda',
-          'Hepatite hepatocelular pura, sem rim nem pulmão.'),
-    ], opcoes=['Leptospirose', 'Dengue grave', 'Febre amarela',
-               'Malária por Plasmodium vivax', 'Hepatite A aguda', 'Hantavirose'],
-    titulo_resposta='O detalhe da história decide mais que o laboratório',
-    nota='A opção que sobrou, hantavirose, é cardiopulmonar, de exposição '
-         'rural, com hemoconcentração e sem icterícia importante.'),
+    Q('p6', 4,
+      'Antes da diálise, creatinina 4,6 e K 3,0, após K 3,1 com K urinário 38 na admissão. Qual interpretação integra melhor essa evolução?', [
+      ('Redução da filtração coexistindo com perda tubular de potássio', True),
+      ('Perda digestiva de potássio com conservação renal apropriada', False),
+      ('Liberação muscular de potássio como mecanismo predominante', False),
+      ('Redistribuição intracelular isolada, sem perda corporal relevante', False),
+      ('Recuperação da filtração já estabelecida pela queda do potássio', False),
+    ], [('Integração', 'K urinário de 38 durante hipocalemia sugere excreção renal inadequada, embora a concentração isolada dependa do fluxo urinário. Lesão tubular pode produzir perda de K mesmo com filtração muito reduzida; creatinina alta não garante hipercalemia.'), ('Comparação', 'Perda digestiva e redistribuição podem contribuir, mas isoladamente explicam pior a excreção urinária descrita. Miosite com lise celular tende a liberar K, não explica a hipocalemia persistente. Potássio baixo não documenta recuperação da filtração: pode persistir perda tubular durante lesão renal grave.')]),
 
     pg('recuperacao', 'Segunda semana',
        'A diurese volta com poliúria de 4 litros por dia. O potássio cai para '
@@ -439,33 +381,13 @@ ETAPAS = [
        'para o sorogrupo Icterohaemorrhagiae.'),
 
     Q('p7', 5,
-      'Sobre o tratamento, **quais três** afirmações estão corretas?', [
-      ('Antibiótico endovenoso por pelo menos 7 dias', True),
-      ('Diálise precoce e diária', True),
-      ('Reposição de potássio pelos controles', True),
-      ('Suspender a ceftriaxona pela reação febril', False),
-      ('Furosemida para evitar a diálise', False),
-      ('Antibiótico só na primeira semana', False),
-      ('Corticoide de rotina na forma grave', False),
-     ], [
-      ('O antibiótico', 'Na forma grave, ceftriaxona ou penicilina cristalina '
-       'endovenosa, por pelo menos sete dias; doxiciclina oral fica para a '
-       'forma leve. O benefício é maior na primeira semana, mas o antibiótico '
-       'está indicado em qualquer fase.'),
-      ('A reação da primeira dose', 'Calafrios, febre alta e hipotensão '
-       'poucas horas após a primeira dose são a reação de Jarisch-Herxheimer, '
-       'descrita nas infecções por espiroquetas. Trata-se o sintoma e o '
-       'antibiótico continua.'),
-      ('O rim', 'Diálise precoce e diária reduziu a mortalidade frente à '
-       'diálise em dias alternados num ensaio brasileiro. Furosemida não muda '
-       'a necessidade de diálise.'),
-      ('O potássio', 'A perda tubular de potássio continua na fase poliúrica, '
-       'como o potássio de 2,9 com 80 mEq por dia mostrou. A reposição segue '
-       'os controles, e o magnésio baixo precisa ser corrigido junto, ou o '
-       'potássio não se sustenta.'),
-      ('O que não entra', 'Não há evidência que sustente corticoide de rotina '
-       'na forma grave.'),
-     ]),
+      'K 2,9 apesar de 80 mEq/dia, Mg 1,4 e diurese de 4 L/dia. Qual ajuste é mais apropriado?', [
+      ('Corrigir magnésio e titular potássio com controles frequentes', True),
+      ('Aumentar apenas o potássio, mantendo o magnésio para reavaliação após a alta', False),
+      ('Reduzir a reposição de potássio por ter necessitado de diálise', False),
+      ('Associar furosemida para acelerar a recuperação tubular', False),
+      ('Manter diálise diária pela poliúria, independentemente dos demais parâmetros', False),
+    ], [('Integração', 'Magnésio baixo favorece perda renal persistente de potássio; corrigir ambos é mais efetivo que aumentar apenas K. O risco muda com a recuperação renal, exigindo controles e ajuste, não dose fixa.'), ('Suporte individualizado', 'Necessidade prévia de diálise não implica retenção atual de K. Furosemida aumenta perdas e não recupera túbulos. Poliúria não determina diálise: decidir por volume, depuração e distúrbios metabólicos. O estudo brasileiro de diálise diária foi pequeno e comparou períodos de tratamento; não sustenta calendário obrigatório para todo caso.')]),
 
     pg('terceira', 'Terceira semana',
        'Com o magnésio corrigido, o potássio se sustenta acima de 3,5 mmol/L '
@@ -476,26 +398,13 @@ ETAPAS = [
        'contaminado cuidando dele.'),
 
     Q('p8', 6,
-      'Na alta, **quais três** medidas estão corretas?', [
-      ('Notificar à vigilância epidemiológica', True),
-      ('Investigar o local de trabalho', True),
-      ('Acompanhar creatinina e potássio', True),
-      ('Isolamento de contato em casa', False),
-      ('Antibiótico profilático por três meses', False),
-      ('Vacinar os colegas de trabalho', False),
-      ('Repetir a microaglutinação todo mês', False),
-     ], [
-      ('Vigilância e trabalho', 'Leptospirose é de notificação compulsória. '
-       'A vigilância investiga os colegas expostos e o depósito, e a '
-       'prevenção está em botas íntegras, luvas e controle de roedores.'),
-      ('O seguimento', 'A função renal costuma se recuperar em semanas, e a '
-       'fase poliúrica perde potássio; creatinina e potássio guiam as '
-       'consultas seguintes.'),
-      ('O que não entra', 'Não há transmissão entre pessoas, nem vacina humana '
-       'disponível no Brasil. Antibiótico profilático depois da infecção '
-       'tratada não tem indicação, e repetir a microaglutinação não muda a '
-       'conduta num caso confirmado.'),
-     ]),
+      'Qual interpretação deve orientar a investigação dos colegas e a orientação ao irmão?', [
+      ('Os colegas podem compartilhar a exposição ambiental; cuidar do paciente raramente transmite a doença', True),
+      ('A negatividade das hemoculturas indica baixo risco ocupacional para os colegas', False),
+      ('O título de microaglutinação define quais colegas devem receber antibiótico', False),
+      ('O contato domiciliar deve ser tratado como exposição equivalente à água do canal', False),
+      ('A recuperação clínica dispensa investigação do ambiente de trabalho', False),
+    ], [('Exposição', 'Canal alagado, bota furada e roedores sustentam risco compartilhado no trabalho e justificam notificação e investigação ambiental. Hemocultura convencional negativa não mede esse risco.'), ('Contato e seguimento', 'Transmissão entre pessoas é rara; cuidar dele não equivale à exposição ao canal. Título sorológico do paciente não define profilaxia de terceiros. A recuperação não elimina a fonte ambiental, e o paciente ainda precisa acompanhar função renal e eletrólitos.')]),
 
     pg('alta', 'Preparando a alta',
        'A equipe revê com ele e o irmão o que aconteceu: a exposição, a '
@@ -564,3 +473,9 @@ ETAPAS = [
 ]
 
 REVISAO = []
+
+# Revisão das perguntas: fontes consultadas em 22/10/2026.
+# https://www.nbme.org/sites/default/files/2021-02/NBME_Item%20Writing%20Guide_R_6.pdf
+# https://www.cdc.gov/yellow-book/hcp/travel-associated-infections-diseases/leptospirosis.html
+# https://pubmed.ncbi.nlm.nih.gov/17699490/
+# https://www.nice.org.uk/guidance/ng148/chapter/Recommendations

@@ -1,25 +1,7 @@
-"""O caso pulmão-rim, no molde do //New England// lido em 26/09/2026.
+"""Caso ficcional para raciocínio clínico em residência de clínica médica.
 
-Reescrito no desenho do piloto da leptospirose (ver
-Artifacts/nejm-casos-classicos/GRAMATICA_LIDA_2026-09-26.md): apresentação
-curta, ficha do paciente com a pista enterrada (a urina e a creatinina do
-ambulatório de seis semanas antes), exame físico por sistema e os primeiros
-exames entregues prontos, sem pergunta antes. As duas primeiras perguntas
-interpretam números (gasometria; onde está a lesão renal, por categoria), com
-o ultrassom entre elas. A âncora da equipe (pneumonia multilobar com
-glomerulonefrite associada à infecção, endocardite a afastar) é registrada
-como texto, com uma página de discussão, e a hemorragia alveolar também. A
-âncora é correta naquele momento. Seis perguntas no total (revisão de 30/09:
-menos perguntas, nenhuma interativa seguida de outra). O caso vira no
-quinto dia, com as culturas negativas e o reexame (púrpura, pé caído); o
-mecanismo vem por categoria (pauci-imune) e o nome da doença só aparece com o
-anticorpo, depois de 60% do percurso. Cada pergunta tem uma explicação só, em
-seções com subtítulo. As três decisões de conduta e o balanço continuam.
-
-Paciente ficcional. Os números fecham entre si: gasometria por
-Henderson-Hasselbalch, filtração por CKD-EPI 2021, hiato aniônico corrigido
-pela albumina, FENa pelos valores do painel. Condutas: KDIGO 2024 (vasculite
-associada ao ANCA), EULAR 2022, PEXIVAS, CYCLOPS, RAVE, RITUXVAS.
+Revisão editorial: integração de dados, seleção limitada de exames e
+explicações após a resposta. Fontes clínicas ao final deste arquivo.
 """
 
 from pathlib import Path
@@ -54,8 +36,7 @@ def pg(k, titulo, *textos, segue='', conforme=None):
 
 
 def Q(k, n, enunciado, opcoes, explicacao, segue=''):
-    """Pergunta no molde do NEJM: alternativas curtas, sem comentário cada
-    uma, e uma explicação só, em seções (subtítulo, texto)."""
+    """Alternativas curtas e explicação única após a seleção limitada."""
     return pergunta(k, f'Pergunta {n}', enunciado,
                     [alt(t, certa=ok) for t, ok in opcoes],
                     explicacao=explicacao, segue=segue)
@@ -216,29 +197,16 @@ ETAPAS = [
          'como pneumonia multilobar.']),
 
     Q('p1', 1,
-      'Gasometria arterial em ar ambiente, com os eletrólitos da mesma coleta. '
-      '**Quais três** afirmações estão corretas?', [
-      ('Acidose metabólica com hiato aniônico aumentado', True),
-      ('Compensação respiratória adequada', True),
-      ('Gradiente alvéolo-arterial de oxigênio aumentado', True),
-      ('Acidose respiratória associada', False),
-      ('Acidose lática por hipoperfusão', False),
-      ('Hiato aniônico normal depois de corrigir a albumina', False),
-      ('Hipoxemia explicada por hipoventilação', False),
+      'Com pH 7,29, HCO₃ 15, pCO₂ 32 e albumina 2,9, selecione as duas interpretações sustentadas pelos dados.', [
+      ('Acidose metabólica com hiato aumentado e compensação esperada', True),
+      ('Defeito de troca gasosa além do distúrbio ácido-básico', True),
+      ('Acidose metabólica hiperclorêmica isolada', False),
+      ('Acidose respiratória somada à metabólica', False),
+      ('Acidose lática como principal origem do hiato', False),
+      ('Hipoventilação como principal causa da hipoxemia', False),
      ], [
-      ('As contas', 'O hiato aniônico é 136 − (104 + 15) = 17 mmol/L. '
-       'Corrigido pela albumina de 2,9 g/dL, soma 2,5 para cada grama abaixo '
-       'de 4 e chega a cerca de 20. Pela fórmula de Winters, o pCO₂ esperado é '
-       '1,5 × 15 + 8 = 30,5 ± 2; o medido, 32, cabe na faixa. A resposta '
-       'respiratória é a esperada, sem distúrbio respiratório primário.'),
-      ('O oxigênio', 'Em ar ambiente, a pressão alveolar de oxigênio é cerca '
-       'de 0,21 × (760 − 47) − 32/0,8, perto de 110 mmHg. Com pO₂ de 56, o '
-       'gradiente passa de 50 mmHg, quando o esperado aos 63 anos fica perto '
-       'de 20. A hipoxemia vem do parênquima; a ventilação está aumentada, não '
-       'reduzida.'),
-      ('O que a acidose indica', 'Lactato de 1,6 mmol/L afasta hipoperfusão '
-       'como causa. Com ureia de 118 e creatinina de 3,8, é a acidose da lesão '
-       'renal, que retém sulfato, fosfato e outros ânions.'),
+      ('Ácido-básico', 'Hiato = 136 − 104 − 15 = 17; corrigido pela albumina, cerca de 20 mmol/L. Winters prevê pCO₂ de 30,5 ± 2; 32 cabe na faixa, sem acidose respiratória adicional. Lactato 1,6 não sustenta acidose lática como causa principal, embora não exclua infecção.'),
+      ('Oxigenação', 'Em ar ambiente e próximo ao nível do mar, PAO₂ ≈ 110 e PaO₂ = 56: gradiente de cerca de 54 mmHg. A pCO₂ baixa indica aumento da ventilação; o gradiente elevado exige alteração de troca gasosa, sem distinguir sozinho sangue, pus ou edema.'),
      ]),
 
     estudo('us_adm', 'Ultrassonografia renal',
@@ -260,31 +228,16 @@ ETAPAS = [
          'e recente.']),
 
     Q('p2', 2,
-      'Creatinina de 1,0 há dois meses, 1,4 há seis semanas e 3,8 mg/dL hoje. '
-      'Com a urina e o ultrassom da chegada, onde está a lesão renal?', [
-      ('Pré-renal', False),
-      ('Tubular', False),
-      ('Intersticial', False),
-      ('Glomerular', True),
-      ('Obstrutiva', False),
-      ('Crônica agudizada', False),
+      'FENa 0,8%, hematúria e proteinúria de 1,4 g/g, com creatinina em ascensão há seis semanas. Quais dois exames priorizar para localizar a lesão e investigar o foco nasal persistente?', [
+      ('Sedimento urinário com microscopia manual', True),
+      ('Tomografia dos seios da face', True),
+      ('Nova FENa antes de investigar o sedimento', False),
+      ('Cintilografia renal para obstrução', False),
+      ('Eletroforese de proteínas como primeiro exame renal', False),
+      ('Angiotomografia das artérias renais', False),
      ], [
-      ('O padrão', 'Hematúria de 60 hemácias por campo, proteinúria de 1,4 '
-       'g/g e perda de função em semanas descrevem síndrome nefrítica de '
-       'evolução rápida. Por CKD-EPI 2021, aos 63 anos, a filtração caiu de '
-       'cerca de 85 para 17 mL/min/1,73 m² em dois meses. Perder mais da metade '
-       'da filtração em semanas a poucos meses, com sedimento nefrítico, é o '
-       'que se chama glomerulonefrite rapidamente progressiva: uma síndrome, '
-       'com causas infecciosas, imunológicas e vasculares.'),
-      ('A armadilha da FENa', 'A fração de excreção de sódio de 0,8% parece '
-       'pré-renal. Na glomerulonefrite, porém, o túbulo está íntegro e '
-       'reabsorve sódio com avidez, porque recebe pouco filtrado. FENa baixa '
-       'com hematúria e proteinúria não é hipovolemia.'),
-      ('Por que não as outras', 'A lesão tubular daria FENa acima de 2% e '
-       'cilindros granulosos. A intersticial, em geral por fármaco, traria '
-       'leucocitúria, e aqui há 6 leucócitos por campo. O ultrassom sem '
-       'hidronefrose afasta obstrução, e rins de 11 cm com creatinina de 1,0 '
-       'dois meses antes afastam doença crônica.'),
+      ('Os dois pedidos', 'Sedimento manual: procura acantócitos e cilindros que a leitura automatizada pode perder, distinguindo sangramento glomerular de causas urológicas. TC dos seios: sintomas persistentes após dois antibióticos justificam avaliar extensão e complicação, sem atribuir etiologia apenas pelo velamento.'),
+      ('Por que adiar os demais', 'Nova FENa: não resolve a localização; valores baixos também ocorrem na glomerulonefrite. Cintilografia: sem dilatação no ultrassom ou outra pista de obstrução, tem baixo rendimento agora. Eletroforese: não é a primeira resposta à hematúria de evolução rápida. Angio-TC renal: não há quadro de infarto ou doença renovascular, e o contraste acrescenta risco na lesão renal.'),
      ]),
 
     estudo('sedimento', 'Sedimento urinário, leitura manual',
@@ -519,33 +472,16 @@ ETAPAS = [
          'predileção pelas pernas acompanha a pressão hidrostática.']),
 
     Q('p5', 3,
-      'Hemorragia alveolar e glomerulonefrite com cilindros hemáticos, no '
-      'mesmo mês, com culturas negativas. **Quais três** mecanismos produzem '
-      'esse par?', [
-      ('Anticorpo contra a membrana basal', True),
-      ('Deposição de imunocomplexos', True),
-      ('Inflamação de pequenos vasos sem depósitos', True),
-      ('Microangiopatia trombótica', False),
-      ('Congestão cardiorrenal', False),
-      ('Necrose tubular com lesão pulmonar da sepse', False),
-      ('Nefrotoxicidade do betalactâmico', False),
+      'Hemorragia alveolar, sedimento nefrítico, púrpura e déficit em territórios nervosos distintos. Quais três exames têm maior impacto na definição do mecanismo e da indução?', [
+      ('Anti-membrana basal glomerular', True),
+      ('Biópsia renal com imunofluorescência', True),
+      ('ANCA com especificidade anti-MPO e anti-PR3', True),
+      ('Repetir C3 e C4 antes das sorologias', False),
+      ('Biópsia do nervo como primeiro tecido', False),
+      ('Difusão pulmonar de monóxido de carbono', False),
      ], [
-      ('Os três mecanismos', 'Anticorpo contra o colágeno tipo IV da membrana '
-       'basal, presente no glomérulo e no alvéolo: é a doença anti-MBG, com '
-       'depósito linear de IgG. Imunocomplexos que se depositam nos dois '
-       'leitos: lúpus, crioglobulinemia, vasculite por IgA e a própria '
-       'endocardite, com depósito granular e, em várias delas, complemento '
-       'baixo. E a inflamação necrosante de pequenos vasos sem depósito na '
-       'imunofluorescência, chamada pauci-imune, a mais comum depois dos 50 '
-       'anos.'),
-      ('O que o paciente já mostrou', 'A púrpura que não some à digitopressão '
-       'e a mononeurite múltipla, com pé caído à direita e território ulnar à '
-       'esquerda, dizem que o vaso pequeno está inflamado também na pele e no '
-       'nervo. C3 e C4 normais tornam o imunocomplexo menos provável.'),
-      ('Por que não os outros', 'Microangiopatia trombótica exigiria '
-       'plaquetas baixas e esquizócitos, e ele tem 468.000 e esfregaço limpo. '
-       'Congestão daria estase jugular e edema. Sepse e betalactâmico lesam o '
-       'túbulo, não o glomérulo: cilindro granuloso, não hemático.'),
+      ('Exames que mudam o caminho', 'Anti-MBG: identifica uma sobreposição em que a troca plasmática ganha prioridade. Biópsia renal com IF: separa depósitos lineares, granulares e padrão pauci-imune, além de medir atividade e cronicidade. MPO/PR3: acrescentam suporte etiológico ao fenótipo; ANCA isolado não substitui contexto e tecido.'),
+      ('Exames de menor rendimento agora', 'Repetir C3/C4: já normais, não diferencia com segurança os mecanismos nem exclui imunocomplexos. Biópsia de nervo: pode demonstrar vasculite, mas o rim oferece tecido do órgão ameaçado e classificação por IF. DLCO: pode subir com sangue alveolar, mas não identifica a causa e é pouco viável nesta insuficiência respiratória.'),
      ]),
 
     painel("res_mec", "O mecanismo", "Biópsia e sorologias", [
@@ -625,42 +561,18 @@ ETAPAS = [
          'mieloperoxidase, catiônica, migra para perto do núcleo. Quem define o '
          'alvo é o ELISA.']),
 
-    pareamento("p6", "Pergunta 4",
-        "Associe cada perfil sorológico ao contexto em que ele é "
-        "característico.",
-        [
-            par("c-ANCA com anti-PR3",
-                "Granulomatose com poliangiite",
-                "Padrão citoplasmático com anti-PR3; via aérea destrutiva, "
-                "granuloma e nódulo escavado."),
-            par("p-ANCA com anti-MPO",
-                "Poliangiite microscópica",
-                "O perfil dele: rim e capilarite pulmonar, em geral sem "
-                "granuloma."),
-            par("Anti-PR3 e anti-MPO simultâneos, com anti-elastase",
-                "Vasculite por cocaína adulterada com levamisol",
-                "Dupla positividade com anti-elastase é atípica das vasculites "
-                "primárias e sugere levamisol."),
-            par("Anti-MPO com anti-membrana basal, os dois positivos",
-                "Doença anti-MBG com ANCA (dupla positividade)",
-                "Rim com prognóstico de anti-MBG e recidiva de vasculite; a "
-                "troca plasmática entra."),
-            par("p-ANCA atípico, sem anti-MPO nem anti-PR3",
-                "Colite ulcerativa e hepatopatia autoimune",
-                "Fluorescência perinuclear sem alvo definido acompanha doença "
-                "intestinal e hepatopatia autoimune."),
-        ],
-        opcoes=[
-            "Granulomatose com poliangiite",
-            "Poliangiite microscópica",
-            "Vasculite por cocaína adulterada com levamisol",
-            "Doença anti-MBG com ANCA (dupla positividade)",
-            "Colite ulcerativa e hepatopatia autoimune",
-            "Poliarterite nodosa",
-        ],
-        titulo_resposta="O alvo do anticorpo orienta o fenótipo",
-        nota="A opção que sobrou é a armadilha: a poliarterite nodosa é ANCA "
-             "negativa e de vaso médio."),
+    Q('p6', 4,
+      'Crescentes em 15/24 glomérulos, IF pauci-imune, anti-MPO 148 e anti-MBG negativo. Quais duas conclusões melhor integram os resultados à evolução?', [
+      ('Vasculite associada ao ANCA integra rim, pulmão, pele e nervos', True),
+      ('Crescentes celulares e pouca fibrose indicam componente potencialmente reversível', True),
+      ('Glomerulonefrite associada à infecção permanece a explicação principal pela febre e PCR elevada', False),
+      ('Doença anti-MBG soronegativa é a principal hipótese pela combinação de hemorragia e crescentes', False),
+      ('A perda funcional decorre predominantemente de cicatriz renal, pelo percentual de crescentes', False),
+      ('Vasculite restrita ao rim com pneumonia concomitante explica melhor o acometimento pulmonar', False),
+     ], [
+      ('Integração', 'IF pauci-imune, anti-MPO e envolvimento simultâneo de rim, alvéolo, pele e nervos favorecem vasculite sistêmica ANCA. Crescentes celulares e apenas 10% de fibrose apontam atividade potencialmente tratável; a creatinina elevada ainda implica risco renal importante.'),
+      ('Hipóteses concorrentes', 'Febre e PCR alta também acompanham vasculite; culturas negativas e ausência de depósitos tornam glomerulonefrite infecciosa menos provável. Anti-MBG soronegativa é possível, mas esperaria depósito linear, ausente aqui. Crescentes celulares não equivalem a cicatriz. Separar rim e pulmão exige duas causas quando a hemorragia alveolar e as lesões extrarrenais integram o mesmo processo.'),
+     ]),
 
     pagina("diagnostico", "O diagnóstico", "",
         p("Glomerulonefrite crescêntica pauci-imune, anti-MPO de 148 U/mL e "
@@ -769,33 +681,16 @@ ETAPAS = [
     ),
 
     Q('p7', 5,
-      'Antes e junto da primeira dose da indução, **quais três** medidas '
-      'estão indicadas?', [
-      ('Sorologia completa de hepatite B', True),
-      ('Ivermectina por dois dias', True),
-      ('Sulfametoxazol-trimetoprima profilático', True),
-      ('Vacina de febre amarela', False),
-      ('Fluconazol profilático', False),
-      ('Imunoglobulina endovenosa de rotina', False),
+      'Antes da indução, quais duas estratégias preventivas são mais bem sustentadas pelo risco deste paciente?', [
+      ('Tratar presuntivamente estrongiloidíase pela exposição ao solo e pelo corticoide urgente', True),
+      ('Iniciar prevenção de pneumocistose considerando função renal e potássio', True),
+      ('Reservar prevenção de pneumocistose para linfopenia após o primeiro ciclo', False),
+      ('Completar HBsAg com anti-HBs para definir o risco de reativação antes do rituximabe', False),
+      ('Iniciar sulfametoxazol-trimetoprima no esquema habitual e ajustar se a creatinina subir mais', False),
+      ('Aguardar parasitológico de fezes antes de tratar estrongiloidíase na ausência de sintomas digestivos', False),
      ], [
-      ('Hepatite B', 'O anti-HBc isolado reativa sob rituximabe e sob '
-       'glicocorticoide em dose alta, e a reativação pode ser fulminante. O '
-       'HBsAg não basta: HBsAg e anti-HBc antes da primeira dose decidem se '
-       'entra profilaxia antiviral.'),
-      ('Estrongiloidíase', 'Ele trabalhou a vida inteira com terra e cuida da '
-       'horta descalço, no sertão cearense. O glicocorticoide em dose alta '
-       'pode transformar uma infecção silenciosa por //Strongyloides '
-       'stercoralis// em hiperinfecção, de mortalidade alta. Ivermectina 200 '
-       'µg/kg ao dia por dois dias, junto do pulso, é a conduta usual em quem '
-       'tem exposição.'),
-      ('Pneumocistose', 'A profilaxia com sulfametoxazol-trimetoprima '
-       'acompanha a indução com rituximabe ou ciclofosfamida. Com creatinina '
-       'de 4,6 mg/dL, filtração de 14 mL/min/1,73 m² por CKD-EPI 2021, usa-se '
-       'meia dose, e o potássio, que chegou a 5,4 mmol/L, precisa ser '
-       'vigiado.'),
-      ('O que não entra', 'Vacina de vírus vivo é contraindicada sob '
-       'imunossupressão. Fluconazol e imunoglobulina não têm indicação de '
-       'rotina.'),
+      ('Prevenção desde a indução', 'Exposição ao solo em área endêmica e corticoide urgente favorecem ivermectina presuntiva conforme avaliação local. Rituximabe ou ciclofosfamida justificam prevenção de pneumocistose desde a indução, sem depender de linfopenia documentada.'),
+      ('Escolha e rastreio', 'HBsAg e anti-HBs não substituem anti-HBc para pesquisar infecção passada e risco de reativação. A função renal já está muito reduzida e o potássio chegou a 5,4: escolher e ajustar o esquema agora é mais seguro que aguardar nova piora sob trimetoprima. Estrongiloidíase pode ser assintomática e o parasitológico tem sensibilidade limitada; esperar seu resultado pode deixar o pulso sem proteção.'),
      ], segue='esquema'),
 
     pagina("esquema", "A prescrição", "O que é igual nos três caminhos",
@@ -825,29 +720,15 @@ ETAPAS = [
        "está em 3,1 ng/mL."),
 
     Q('p8', 6,
-      'Febre de 38,9 °C no quinto dia de indução, hipotensão que respondeu a '
-      'volume, sem nova hemoptise. **Quais quatro** causas devem entrar na '
-      'lista?', [
-      ('Infecção relacionada ao cateter', True),
-      ('Atividade da vasculite', True),
-      ('Tromboembolismo venoso', True),
-      ('Reação hemolítica transfusional tardia', True),
-      ('Pneumocistose', False),
-      ('Nadir da ciclofosfamida', False),
-      ('Reativação de citomegalovírus', False),
+      'No D5 da indução, febre e hipotensão reaparecem, com cateter doloroso e pulmão em melhora. Qual hipótese deve orientar a investigação imediata?', [
+      ('Infecção de corrente sanguínea relacionada ao cateter', True),
+      ('Recidiva de capilarite pulmonar', False),
+      ('Hemólise transfusional tardia', False),
+      ('Tromboembolismo pulmonar', False),
+      ('Toxicidade medular da ciclofosfamida como causa já demonstrada', False),
      ], [
-      ('As quatro que entram', 'Cateter central de mais de uma semana, sítio '
-       'inflamado, calafrio e procalcitonina de 0,3 para 3,1: a infecção do '
-       'cateter é a primeira hipótese. A atividade da doença entra sempre, mas '
-       'o órgão-alvo desmente: a hemoptise cessou e o pulmão não piorou. '
-       'Vasculite ativa e imobilidade elevam o risco de trombose venosa, e '
-       'febre com taquicardia é apresentação possível. E ele recebeu duas '
-       'unidades de hemácias: a reação hemolítica tardia aparece de 3 a 14 '
-       'dias depois e pede Coombs e bilirrubina.'),
-      ('As que o tempo afasta', 'O nadir da ciclofosfamida cai entre o 10º e '
-       'o 14º dia do pulso, e o rituximabe não o produz. Pneumocistose e '
-       'citomegalovírus exigem semanas de imunossupressão, e a profilaxia da '
-       'pneumocistose já corre.'),
+      ('O que discrimina', 'Calafrios, hipotensão e inflamação no sítio do cateter priorizam infecção relacionada ao dispositivo; a procalcitonina reforça, mas não comprova. Culturas periféricas e do cateter ajudam a confirmar sem atrasar tratamento.'),
+      ('Concorrentes', 'Capilarite perde força com hemoptise cessada e oxigenação estável. Hemólise tardia é temporalmente possível após a transfusão, mas faltam nova anemia ou sinais de hemólise. TEP permanece possível pela imobilidade, sem explicar tão bem o foco local. O D5 não demonstra nadir por ciclofosfamida e essa exposição varia entre os caminhos; seria necessário hemograma.'),
      ]),
 
     pagina('calendario', 'Discussão', 'O calendário da infecção na indução',
@@ -1182,3 +1063,10 @@ ETAPAS = [
 # ═══════════════ o que a revisão cobra, quando não há mais o que decidir ══════
 
 REVISAO = []
+
+# Fontes conferidas na revisão das questões (22/10/2026):
+# https://kdigo.org/wp-content/uploads/2024/05/KDIGO-2024-ANCA-Vasculitis-Guideline-Update.pdf
+# https://www.who.int/news/item/17-12-2020-a-parasitic-infection-that-can-turn-fatal-with-administration-of-corticosteroids
+
+# Referência de construção dos itens (aplicação e opções plausíveis):
+# https://www.nbme.org/sites/default/files/2021-02/NBME_Item%20Writing%20Guide_R_6.pdf

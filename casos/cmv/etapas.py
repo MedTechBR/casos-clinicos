@@ -1,21 +1,7 @@
-"""Febre, diarreia e citopenias no quarto mês de um transplante renal.
+"""Caso ficcional para raciocínio clínico em residência de clínica médica.
 
-Reescrito no molde do //New England// lido em 26/09/2026 (ver
-Artifacts/nejm-casos-classicos/GRAMATICA_LIDA_2026-09-26.md), com o piloto da
-leptospirose como modelo: apresentação curta, ficha com a pista enterrada (a
-profilaxia antiviral encerrada há quatro semanas), exame com os sinais vitais
-primeiro, primeiros exames em dois painéis sem pergunta antes. As primeiras
-perguntas classificam a diarreia, a lesão do enxerto, a tomografia e as
-citopenias. A âncora, registrada pela equipe, é colite pelo micofenolato com
-desidratação e tacrolimo acima do alvo; a lâmina da colonoscopia vira o caso,
-e o nome do agente só aparece na página "O diagnóstico", perto de 57% do
-percurso. As decisões de conduta continuam mudando o desfecho.
-
-Paciente ficcional; sem doses numéricas de antiviral, porque a prescrição
-depende da função renal e do protocolo do serviço. Condutas conferidas no
-Fourth International Consensus Guidelines on the Management of
-Cytomegalovirus in Solid Organ Transplantation (Kotton e cols.,
-Transplantation 2025).
+Revisão editorial: integração de dados, seleção limitada de exames e
+explicações após a resposta. Fontes clínicas ao final deste arquivo.
 """
 from pathlib import Path
 
@@ -45,8 +31,7 @@ def pg(k, titulo, *textos, segue='', conforme=None):
 
 
 def Q(k, n, enunciado, opcoes, explicacao, segue=''):
-    """Pergunta no molde do NEJM: alternativas curtas, sem comentário cada
-    uma, e uma explicação só, em seções (subtítulo, texto)."""
+    """Alternativas curtas e explicação única após a seleção limitada."""
     return pergunta(k, f'Pergunta {n}', enunciado,
                     [alt(t, certa=ok) for t, ok in opcoes],
                     explicacao=explicacao, segue=segue)
@@ -139,29 +124,15 @@ ETAPAS = [
     ]),
 
     Q('p1', 1,
-      'Com a história e os exames de fezes, **quais duas** características '
-      'definem esta diarreia?', [
-      ('Secretora', True),
-      ('Inflamatória', True),
-      ('Osmótica', False),
-      ('Disabsortiva, com esteatorreia', False),
-      ('Por trânsito acelerado', False),
-      ('Funcional', False),
+      'Diarreia noturna que persiste em jejum, Na/K fecais 90/35 e calprotectina 640. Quais duas hipóteses de mecanismo permanecem prioritárias?', [
+      ('Colite infecciosa não inteiramente coberta pelo painel de fezes', True),
+      ('Lesão intestinal relacionada ao micofenolato', True),
+      ('Diarreia osmótica isolada por carboidrato não absorvido', False),
+      ('Síndrome funcional como explicação principal', False),
+      ('Insuficiência pancreática exócrina como mecanismo dominante', False),
      ], [
-      ('O hiato osmótico', 'O hiato osmótico fecal é 290 menos duas vezes a '
-       'soma de sódio e potássio fecais: 290 − 2 × (90 + 35) = 40 mOsm/kg. '
-       'Abaixo de 50 a água sai puxada por eletrólitos, o que define a '
-       'diarreia secretora; acima de 125, por um soluto não absorvido, na '
-       'osmótica. Continuar em jejum e acordar à noite confirmam.'),
-      ('A inflamação', 'Calprotectina de 640 µg/g, febre e proteína C-reativa '
-       'de 8,6 mg/dL indicam mucosa inflamada, com neutrófilos na parede. A '
-       'diarreia é secretora e inflamatória ao mesmo tempo, o padrão das '
-       'colites.'),
-      ('Por que não as outras', 'Osmótica pararia em jejum e teria hiato alto. '
-       'Esteatorreia não dá febre nem calprotectina alta. Trânsito acelerado '
-       'e diarreia funcional não acordam a paciente nem inflamam a mucosa.'),
-      ('O que esse padrão pede', 'Diarreia secretora e inflamatória aponta '
-       'para uma colite. É a categoria que a próxima etapa precisa explicar.'),
+      ('Integração', 'Hiato fecal = 290 − 2 × (90 + 35) = 40, com persistência em jejum: predomina secreção. Febre e calprotectina elevada sustentam inflamação, compatível com infecção ou lesão medicamentosa; calprotectina não as separa.'),
+      ('Concorrentes', 'Painel negativo não pesquisa toda infecção nem substitui tecido. Diarreia osmótica isolada deveria diminuir em jejum e ter hiato maior. Sintomas noturnos, febre e inflamação pesam contra causa funcional. Não há esteatorreia ou contexto que priorize insuficiência pancreática.'),
      ]),
 
     pagina('colite_tx', 'Discussão', 'Colite no transplantado',
@@ -178,26 +149,15 @@ ETAPAS = [
              'da biópsia.')),
 
     Q('p2', 2,
-      'Creatinina de 2,1 mg/dL (basal 1,2), FENa de 0,3%, densidade urinária '
-      'de 1.024 e sedimento sem cilindros. Como se classifica a lesão do '
-      'enxerto?', [
-      ('Pré-renal', True),
-      ('Tubular', False),
-      ('Glomerular', False),
-      ('Intersticial', False),
-      ('Vascular', False),
-      ('Obstrutiva', False),
+      'Oito evacuações/dia, creatinina 2,1, FENa 0,3%, sedimento inativo e tacrolimo 14 ng/mL. Qual combinação explica melhor a disfunção inicial do enxerto?', [
+      ('Depleção de volume somada à vasoconstrição pelo tacrolimo', True),
+      ('Rejeição celular somada à nefrite por amoxicilina', False),
+      ('Toxicidade tubular comprovada pelo sedimento inativo', False),
+      ('Elevação isolada da creatinina pela trimetoprima crônica', False),
+      ('Glomerulonefrite com retenção tubular de sódio', False),
      ], [
-      ('A classificação', 'FENa de 0,3%, urina concentrada e sedimento sem '
-       'cilindros mostram um túbulo que ainda reabsorve sódio: a lesão é '
-       'pré-renal. Mucosas secas, frequência de 108 e pressão de 100/62 com '
-       'oito evacuações por dia mostram a perda de volume.'),
-      ('Por que não as outras', 'Lesão tubular teria FENa acima de 2% e '
-       'cilindros granulosos. Glomerular traria proteína e sangue na urina; '
-       'intersticial, leucócitos. Obstrução e causa vascular se procuram no '
-       'ultrassom com Doppler.'),
-      ('O que a categoria abre', 'Pré-renal tem dois mecanismos: menos volume '
-       'chegando ao rim ou arteríola aferente contraída. Podem somar.'),
+      ('Dois mecanismos convergentes', 'Perdas digestivas, mucosas secas e taquicardia favorecem depleção. Tacrolimo acima do alvo pode somar vasoconstrição renal, mesmo sem alteração da dose; a diarreia muda sua exposição. FENa baixa apoia retenção de sódio, mas não comprova causa pré-renal.'),
+      ('O que falta às concorrentes', 'Rejeição não está excluída e merece avaliação se a disfunção persistir após correção. Sedimento inativo não comprova nem exclui toxicidade tubular. Trimetoprima já era usada com creatinina basal normal; não integra a mudança aguda. Ausência de hematúria/proteinúria torna glomerulonefrite menos provável.'),
      ]),
 
     pagina('enxerto', 'Discussão', 'A creatinina do enxerto',
@@ -287,11 +247,24 @@ ETAPAS = [
              'mielotoxicidade. Tacrolimo raramente causa citopenia, corticoide '
              'eleva os leucócitos, e carência vitamínica não derruba três '
              'linhagens em cinco dias.'),
-           p('O que as drogas não explicam: febre que não cede com 48 horas de '
+           p('O que a hipótese medicamentosa não explica bem: febre que não cede com 48 horas de '
              'antibiótico e hemoculturas negativas, transaminases subindo de '
              '62/71 para 88/94 e neutrófilos caindo de 1.200 para 950 com o '
              'micofenolato já reduzido. Uma infecção viral sistêmica entra na '
              'lista.')),
+
+    Q('p5', 3,
+      'No D5, febre e diarreia persistem, com citopenias e transaminases em alta, apesar da redução do micofenolato. Quais dois exames priorizar para definir a causa da colite?', [
+      ('Colonoscopia com biópsias para histologia e imuno-histoquímica', True),
+      ('PCR quantitativa de CMV no plasma', True),
+      ('Repetir o mesmo painel molecular gastrointestinal sem nova exposição', False),
+      ('IgM anti-CMV para comprovar invasão intestinal', False),
+      ('Biópsia do enxerto antes de investigar a mucosa', False),
+      ('Nova tomografia abdominal para definir o agente', False),
+     ], [
+      ('Doença local e replicação', 'Colonoscopia com tecido: após testes fecais negativos e persistência clínica, distingue lesão medicamentosa e infecção invasiva; histologia e IHQ procuram o agente na mucosa. PCR plasmática: pesquisa replicação sistêmica e oferece linha de base se houver doença por CMV; não substitui biópsia e pode ser baixa na doença intestinal.'),
+      ('Por que não os demais', 'Mesmo painel de fezes: sem nova pista, repete as limitações do primeiro. IgM anti-CMV: não comprova invasão tecidual, sobretudo no transplantado. Biópsia do enxerto: creatinina melhorou para 1,5 e ela não esclarece primeiro a colite. Nova TC: indicada se houver suspeita de complicação, mas não determina o agente nesta pancolite estável.'),
+     ]),
 
     pg('colonoscopia', 'Sexto dia',
        'Para confirmar a colite pelo micofenolato e afastar outra causa, a '
@@ -347,36 +320,8 @@ ETAPAS = [
        'A redução do micofenolato, feita pela hipótese anterior, já era parte '
        'do tratamento.'),
 
-    pareamento('p5', 'Pergunta 3',
-      'Na colite do transplantado, a lâmina decide. Associe cada achado '
-      'histológico ao diagnóstico.', [
-      par('Pseudomembranas com exsudato em jato saindo das criptas',
-          '//Clostridioides difficile//',
-          'Fibrina, neutrófilos e muco em "vulcão". O teste de fezes de Helena '
-          'foi negativo.'),
-      par('Apoptose de criptas sem inclusões virais, sob micofenolato',
-          'Colite pelo micofenolato',
-          'Lembra a doença do enxerto contra o hospedeiro e pode coexistir com a '
-          'infecção. Era a hipótese do plantão.'),
-      par('Células multinucleadas, núcleos em vidro fosco e moldagem',
-          'Herpes-simples',
-          'Multinucleação e marginação da cromatina. Mais no esôfago e no reto '
-          'que no cólon.'),
-      par('Infiltrado linfoide atípico com EBER positivo',
-          'Doença linfoproliferativa pós-transplante',
-          'Linfócitos B transformados pelo vírus Epstein-Barr. A conduta muda: '
-          'redução da imunossupressão e rituximabe.'),
-      par('Atrofia de criptas e lâmina própria hialinizada',
-          'Colite isquêmica',
-          'Criptas "fantasmas" e hialinização, sem inclusões. Poupa o reto e '
-          'prefere as flexuras.'),
-    ], opcoes=['Citomegalovírus', '//Clostridioides difficile//',
-               'Colite pelo micofenolato', 'Herpes-simples',
-               'Doença linfoproliferativa pós-transplante', 'Colite isquêmica'],
-    titulo_resposta='Cada agente assina a lâmina de um jeito',
-    nota='A opção que sobrou é a de Helena: citomegalia com inclusão '
-         'intranuclear em "olho de coruja", no endotélio e no estroma, e '
-         'imuno-histoquímica positiva.'),
+
+
 
     painel('res2', 'Sétimo dia', 'Plasma e prontuário', [
         ex('PCR quantitativa de CMV no plasma', '18.600 UI/mL', 'limite de quantificação 137 UI/mL', True),
@@ -385,31 +330,19 @@ ETAPAS = [
         ex('Creatinina', '1,9 mg/dL {{(1,5 no quinto dia)}}', 'basal 1,2 mg/dL', True),
         ex('Neutrófilos', '900/mm³', '1.500–7.500/mm³', True),
         ex('Evacuações', 'Sete por dia, febre de 38,5 °C', '—', True),
-    ], introducao='Com o laudo, a equipe pede a carga viral no plasma e resgata as '
-                  'sorologias do pré-transplante.'),
+    ], introducao='Após a investigação da mucosa, chega a carga viral plasmática. '
+                  'A equipe também resgata as sorologias do pré-transplante.'),
 
     Q('p6', 4,
-      'Doença comprovada no tecido e PCR de 18.600 UI/mL no plasma. **Quais '
-      'duas** afirmações sobre a carga estão corretas?', [
-      ('Será a linha de base da resposta', True),
-      ('Na doença intestinal, pode vir baixa', True),
-      ('Dispensaria a biópsia neste caso', False),
-      ('Abaixo de 50.000, excluiria doença invasiva', False),
-      ('Deve ser conferida em outro laboratório', False),
-      ('Sugere resistência ao valganciclovir', False),
+      'IHQ positiva no cólon, PCR plasmática 18.600 e doadora/receptora soropositivas. Quais duas interpretações melhor orientam a avaliação inicial?', [
+      ('A imunossupressão permite doença intestinal por CMV em receptora previamente soropositiva', True),
+      ('A PCR seriada no mesmo ensaio ajuda a medir resposta ao tratamento', True),
+      ('A DNAemia favorece atribuir as citopenias ao vírus e manter os mielotóxicos na dose atual', False),
+      ('A soropositividade do doador favorece transmissão pelo enxerto em relação à reativação da receptora', False),
+      ('A profilaxia prévia e a carga atual favorecem resistência como explicação principal da doença', False),
      ], [
-      ('Para que serve agora', 'A carga guia o tratamento: é medida toda semana, '
-       'no mesmo ensaio e no mesmo tipo de amostra, e o tratamento só termina '
-       'quando ela cai abaixo do limiar do laboratório. Plasma e sangue total, '
-       'ou dois ensaios diferentes, não se comparam.'),
-      ('O intestino e o sangue', 'A doença gastrointestinal pode ter carga '
-       'baixa ou indetectável, sobretudo em receptores soropositivos como '
-       'Helena. Carga alta sugere, mas não localiza a doença nem exclui outra '
-       'colite; nenhum limiar exclui doença invasiva. Por isso o tecido '
-       'decide.'),
-      ('Por que não resistência', 'Doença que aparece semanas depois do fim da '
-       'profilaxia é o padrão esperado. Resistência se suspeita durante o '
-       'tratamento, depois de exposição prolongada e resposta ruim.'),
+      ('Doença e seguimento', 'Clínica e IHQ na lesão comprovam doença intestinal, possível por reativação ou reinfecção em receptora soropositiva sob imunossupressão. A PCR no mesmo ensaio e tipo de amostra oferece linha de base e permite seguir a resposta.'),
+      ('Inferências concorrentes', 'Vírus e fármacos podem somar mielotoxicidade; a DNAemia não discrimina suas contribuições nem justifica manter doses sem revisão. D+/R+ não permite priorizar transmissão pelo enxerto sobre reativação. Exposição prévia ao antiviral entra na avaliação de resistência, mas doença após o fim da profilaxia, antes de observar a resposta terapêutica, favorece inicialmente doença pós-profilaxia, não resistência como causa principal.'),
      ]),
 
     pg('visita7', 'Sétimo dia, na visita',
@@ -498,27 +431,15 @@ ETAPAS = [
     ], introducao='A carga caiu quase seis vezes em uma semana.'),
 
     Q('p7', 5,
-      'Neutrófilos de 700/mm³ no D7, com febre em resolução e carga em queda. '
-      'Qual o próximo passo?', [
-      ('Reduzir a dose do ganciclovir', False),
-      ('Trocar para foscarnet', False),
-      ('Suspender micofenolato e trocar sulfametoxazol-trimetoprima', True),
-      ('Pausar o antiviral até recuperar', False),
-      ('Letermovir em dose de tratamento', False),
+      'No D7 de ganciclovir, carga 18.600 → 3.200 e neutrófilos 900 → 700/mm³, com melhora clínica. Quais duas medidas são mais adequadas agora?', [
+      ('Rever micofenolato e sulfametoxazol-trimetoprima como mielotóxicos associados', True),
+      ('Manter dose antiviral de tratamento revista pela função renal atual', True),
+      ('Reduzir ganciclovir pela metade apenas pela contagem de neutrófilos', False),
+      ('Trocar para foscarnet por presumida resistência virológica', False),
+      ('Encerrar o antiviral após a primeira queda de carga', False),
      ], [
-      ('Poupar a medula sem enfraquecer o antiviral', 'O consenso de 2025 '
-       'recomenda retirar os outros mielotóxicos antes de mexer no antiviral. '
-       'O micofenolato é suspenso por ora e a profilaxia de pneumocistose '
-       'passa a atovaquona. Fator estimulador de colônias é seguro e pode ser '
-       'usado se a contagem cair mais.'),
-      ('A dose do ganciclovir', 'Segue a função renal, não o hemograma. '
-       'Subdose ou pausa no meio do tratamento de doença invasiva prolongam a '
-       'replicação e favorecem a seleção de resistência.'),
-      ('Por que não as outras', 'Foscarnet é nefrotóxico e causa distúrbios '
-       'de cálcio, magnésio e potássio; fica para intolerância grave ou '
-       'resistência, assim como o maribavir, onde disponível. O letermovir '
-       'não trata doença estabelecida: tem barreira baixa à resistência e é '
-       'usado em profilaxia.'),
+      ('Resposta e toxicidade', 'Queda virológica com melhora clínica favorece eficácia, enquanto a neutropenia pode ter contribuições do vírus e de várias drogas. Revisar os mielotóxicos com a equipe do transplante, considerar G-CSF e manter vigilância permite preservar tratamento efetivo.'),
+      ('Alternativas próximas', 'A dose de ganciclovir deve acompanhar a função renal, que melhorou, e não ser reduzida apenas pela leucopenia. Foscarnet traz nefrotoxicidade sem evidência atual de resistência; reserva-se para situações apropriadas de intolerância ou resistência. Carga ainda quantificável e doença recente não sustentam término.'),
      ]),
 
     pg('evolucao2', 'D14',
@@ -527,27 +448,16 @@ ETAPAS = [
        'O residente pergunta se já é hora de genotipar o vírus.'),
 
     Q('p8', 6,
-      '**Quais três** achados, juntos, indicariam genotipagem de resistência '
-      'ao ganciclovir?', [
-      ('Quatro semanas ou mais de antiviral', True),
-      ('Carga sem queda após duas semanas', True),
-      ('Carga acima de 1.000 UI/mL', True),
-      ('Carga de 620 após queda contínua', False),
-      ('Neutropenia durante o tratamento', False),
-      ('Carga que sobe na primeira semana', False),
-      ('Carga inicial acima de 10.000 UI/mL', False),
+      'D14: PCR 18.600 → 3.200 → 620 UI/mL no mesmo ensaio. Quais três exames priorizar no seguimento para decidir dose, segurança e término?', [
+      ('PCR quantitativa semanal no mesmo ensaio', True),
+      ('Hemograma com diferencial', True),
+      ('Creatinina seriada para rever a função renal', True),
+      ('Genotipagem de resistência agora', False),
+      ('Nova colonoscopia para comprovar cura antes da avaliação clínica', False),
+      ('IgM anti-CMV seriada', False),
      ], [
-      ('O critério', 'O consenso de 2025 indica genotipagem depois de '
-       'exposição prolongada ao antiviral, de pelo menos quatro semanas, com '
-       'resposta ruim depois de duas semanas de dose plena. O teste é feito com '
-       'carga acima de 1.000 UI/mL, porque abaixo disso a leitura das mutações '
-       'é pouco confiável.'),
-      ('O caso de Helena', 'Duas semanas de tratamento, carga de 18.600 para '
-       '3.200 e depois 620 UI/mL: queda de 30 vezes. É resposta, e 620 está '
-       'abaixo do limite para genotipar.'),
-      ('Por que não as outras', 'Carga estável ou em alta na primeira semana '
-       'acontece pela cinética do vírus e não prediz resistência. Neutropenia '
-       'é toxicidade. Carga inicial alta pede tratamento, não genotipagem.'),
+      ('O que cada exame decide', 'PCR semanal: verifica supressão até o limiar do serviço, além da resolução clínica; a curva atual é de resposta. Hemograma: acompanha neutropenia e efeito da revisão de mielotóxicos. Creatinina: função renal em recuperação exige revisar a dose, evitando subexposição ou toxicidade.'),
+      ('Por que não agora', 'Genotipagem: queda contínua não sugere refratariedade e 620 UI/mL reduz a confiabilidade técnica; a profilaxia conta como exposição prévia, mas não muda essa interpretação da resposta. Colonoscopia: não é controle rotineiro de cura se houver boa evolução clínica/virológica; entra se sintomas persistirem ou voltarem. IgM: não mede resposta nem orienta término.'),
      ]),
 
     pg('visita14', 'D14, na visita',
@@ -663,3 +573,9 @@ ETAPAS = [
 ]
 
 REVISAO = []
+
+# Fontes conferidas na revisão das questões (22/10/2026):
+# https://pmc.ncbi.nlm.nih.gov/articles/PMC12180710/
+
+# Referência de construção dos itens (aplicação e opções plausíveis):
+# https://www.nbme.org/sites/default/files/2021-02/NBME_Item%20Writing%20Guide_R_6.pdf

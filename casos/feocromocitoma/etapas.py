@@ -161,33 +161,15 @@ ETAPAS = [
          'Hipertrofia do ventrículo esquerdo leva meses a anos para se formar.']),
 
     Q('p1', 1,
-      'Pressão de 228/124 mmHg, dor no peito, crepitações nas bases, troponina de '
-      '1.840 subindo para 3.260 ng/L em três horas. Como classificar a crise?', [
-      ('Emergência hipertensiva', True),
-      ('Elevação importante sem lesão aguda', False),
-      ('Pseudocrise por dor ou ansiedade', False),
-      ('Hipertensão acelerada-maligna', False),
-      ('Hipertensão do avental branco', False),
+      'Após o controle inicial, qual exame melhor distingue uma causa coronariana obstrutiva da disfunção cardíaca, diante da dor, troponina dinâmica e congestão?', [
+      ('Cateterismo com coronariografia e ventriculografia', True),
+      ('Angiotomografia de coronárias', False),
+      ('Ressonância cardíaca com contraste', False),
+      ('Ecocardiograma transtorácico', False),
+      ('Cintilografia de perfusão miocárdica em repouso', False),
      ], [
-      ('A classificação', 'A Diretriz Brasileira de Hipertensão Arterial de 2025 '
-       'separa as crises pela lesão aguda de órgão-alvo, e não pelo número. Com '
-       'pressão de 180/110 mmHg ou mais, há emergência quando um órgão está sendo '
-       'lesado agora: aqui, dor torácica com troponina que quase dobra em três '
-       'horas e congestão pulmonar. Sem lesão aguda, é elevação importante da '
-       'pressão, termo que a diretriz adotou no lugar de urgência hipertensiva, e o '
-       'tratamento é oral, sem pressa.'),
-      ('O eletrocardiograma', 'A voltagem alta e a alteração da repolarização em V5 '
-       'são de sobrecarga do ventrículo esquerdo, dano que leva anos para se formar. '
-       'Numa mulher de 41 anos cuja pressão "só subia de nervoso", ele diz que a '
-       'hipertensão não é só das crises.'),
-      ('Por que não as outras', 'Pseudocrise é a elevação reativa a dor ou medo, sem '
-       'lesão, e a troponina a afasta. A forma acelerada-maligna exige retinopatia '
-       'com hemorragias, exsudatos ou papiledema, que o fundo de olho não mostrou. '
-       'Avental branco não explica troponina que sobe em três horas.'),
-      ('A meta', 'Na lesão miocárdica aguda, o documento da Sociedade Europeia de '
-       'Cardiologia de 2019 indica nitroglicerina endovenosa e sistólica abaixo de '
-       '140 mmHg de imediato. Nas demais emergências, a pressão média cai no máximo '
-       '25% na primeira hora.'),
+      ('Anatomia e padrão ventricular', 'O cateterismo é a prioridade neste contexto de possível síndrome coronariana de alto risco: avalia obstrução com possibilidade de intervenção. Neste percurso, a ventriculografia documenta também distribuição e gravidade da disfunção.'),
+      ('Exames complementares', '**Angio-TC** é útil em cenários de menor risco ou dúvida selecionada, mas aqui a possibilidade de intervenção favorece a estratégia invasiva. **RM** distingue lesão isquêmica, inflamatória e atordoamento depois da avaliação coronariana. **Eco** avalia função e complicações sem demonstrar diretamente a anatomia coronariana. **Perfusão em repouso** pode mostrar defeitos, sem resolver com a mesma rapidez a indicação de revascularização.'),
      ]),
 
     pg('primeira_hora', 'Primeira hora',
@@ -219,28 +201,15 @@ ETAPAS = [
          'esquerdo de 24 mmHg.']),
 
     Q('p2', 2,
-      'Coronárias sem obstrução e, na ventriculografia, acinesia médio-apical em '
-      'todas as paredes, com base hipercontrátil. Qual o mecanismo mais provável da '
-      'lesão miocárdica?', [
-      ('Oclusão aterotrombótica de uma coronária', False),
-      ('Espasmo prolongado de uma coronária', False),
-      ('Atordoamento por descarga adrenérgica', True),
-      ('Inflamação do miocárdio', False),
-      ('Infiltração do miocárdio', False),
-      ('Embolia para uma coronária', False),
+      'Qual mecanismo melhor corresponde à acinesia médio-apical circunferencial, base hipercontrátil e coronárias sem obstrução?', [
+      ('Atordoamento miocárdico relacionado à ativação adrenérgica', True),
+      ('Infarto por aterotrombose com reperfusão espontânea', False),
+      ('Lesão inflamatória por miocardite aguda', False),
+      ('Isquemia por vasoespasmo epicárdico', False),
+      ('Disfunção por sobrecarga aguda de pressão sobre hipertrofia prévia', False),
      ], [
-      ('O padrão', 'Uma coronária ocluída, em espasmo ou com êmbolo produz disfunção '
-       'no território dela. Aqui a acinesia dá a volta no ventrículo, nas paredes '
-       'anterior, inferior e lateral, no mesmo nível, o que nenhuma artéria irriga '
-       'sozinha. Esse desenho, com o ápice que se dilata e a base que contrai com '
-       'força, é o da cardiomiopatia de estresse, a síndrome de takotsubo.'),
-      ('O mecanismo', 'Uma descarga adrenérgica intensa atordoa o miocárdio por '
-       'toxicidade direta, sobrecarga de cálcio e espasmo da microcirculação. O '
-       'ápice tem mais receptores beta e sofre mais. A disfunção é reversível em '
-       'dias a semanas.'),
-      ('Por que não as outras', 'A inflamação do miocárdio costuma vir depois de um '
-       'quadro viral e dar disfunção irregular, sem esse desenho circunferencial; a '
-       'ressonância separa as duas. Infiltração não se instala em horas.'),
+      ('A distribuição discrimina', 'A acinesia médio-apical envolvendo paredes de territórios coronarianos diferentes, com base hipercontrátil, favorece atordoamento no padrão de takotsubo. O gatilho dessa ativação permanece em aberto.'),
+      ('Hipóteses próximas', 'Reperfusão espontânea e vasoespasmo podem deixar coronárias sem obstrução, mas explicam menos bem a distribuição circunferencial. Miocardite continua possível e pode ser discriminada por RM se a evolução exigir. Sobrecarga de pressão contribui para a lesão, porém não explica tão bem essa geometria segmentar.'),
      ]),
 
     pagina('estresse', 'Discussão', 'O gatilho',
@@ -277,28 +246,15 @@ ETAPAS = [
         'com a classificação de risco que decide se precisa de punção.')),
 
     Q('p3', 3,
-      'Na chegada, hemoglobina de 16,2 g/dL, hematócrito de 49% e albumina de 5,2 '
-      'g/dL, numa mulher que não fuma e satura 95% em ar ambiente. Qual a leitura '
-      'mais provável?', [
-      ('Contração do volume plasmático', True),
-      ('Aumento da massa de hemácias', False),
-      ('Resposta à hipóxia crônica', False),
-      ('Erro pré-analítico da coleta', False),
-      ('Variação normal para mulheres', False),
+      'Apesar da congestão pulmonar, Ht 49%, albumina 5,2 e ureia 46 com creatinina 0,8 sugerem qual interpretação do volume circulante?', [
+      ('Contração plasmática coexistindo com pressão de enchimento elevada', True),
+      ('Congestão por retenção hidrossalina com elevação compensatória da massa eritrocitária', False),
+      ('Eritrocitose absoluta coexistindo com disfunção ventricular aguda', False),
+      ('Hemoconcentração predominantemente produzida pelo diurético da emergência', False),
+      ('Hipovolemia por perdas gastrointestinais como principal causa da lesão cardíaca', False),
      ], [
-      ('A leitura', 'Hematócrito e albumina sobem juntos quando o que falta é plasma: '
-       'os dois ficam mais concentrados num volume menor. Numa massa de hemácias '
-       'aumentada, a albumina seria normal. A ureia de 46 mg/dL com creatinina de 0,8 '
-       'aponta no mesmo sentido, de um volume circulante contraído.'),
-      ('De onde vem', 'Vasoconstrição intensa e prolongada reduz o leito venoso, e a '
-       'pressão alta aumenta a perda renal de sódio e água, a natriurese pressórica. '
-       'O resultado é um volume plasmático cronicamente baixo, que passa despercebido '
-       'enquanto a pressão está alta.'),
-      ('Por que não as outras', 'Hipóxia crônica exige saturação baixa ou doença '
-       'pulmonar, e ela satura 95% sem fumar. Em mulheres, o hematócrito vai até '
-       'cerca de 46%. Erro de coleta não explicaria albumina e ureia altas juntas.'),
-      ('O que isso muda', 'Um volume contraído tolera mal vasodilatadores e '
-       'diuréticos: a pressão pode despencar quando a vasoconstrição cede.'),
+      ('Concentração e pressão são medidas diferentes', 'Hematócrito e albumina já vieram elevados na coleta de chegada, antes da furosemida. Juntos favorecem contração plasmática. A disfunção ventricular aguda pode elevar pressões de enchimento e causar congestão apesar desse volume reduzido.'),
+      ('O que pesa contra as alternativas', 'Eritrocitose absoluta permanece avaliável se o hematócrito persistir elevado, mas não explica a albumina acompanhando a concentração. Retenção hidrossalina tenderia à diluição. O diurético foi administrado depois da coleta, e não foram descritas perdas gastrointestinais prolongadas suficientes para explicar o conjunto de crises e hipertensão.'),
      ]),
 
     pg('equipe', 'O que a equipe registra',
@@ -362,32 +318,16 @@ ETAPAS = [
          'por outra razão.']),
 
     Q('p4', 4,
-      'Massa adrenal esquerda de 5,1 cm, heterogênea, com 38 UH sem contraste, numa '
-      'mulher hipertensa. **Quais três** exames vêm antes de qualquer decisão sobre a '
-      'massa?', [
-      ('Metanefrinas livres no plasma', True),
+      'Massa adrenal de 5,1 cm, heterogênea, 38 UH, com hipertensão: quais **três exames** compõem a avaliação hormonal inicial após estabilização?', [
+      ('Metanefrinas livres plasmáticas', True),
       ('Cortisol após 1 mg de dexametasona', True),
       ('Aldosterona e renina', True),
-      ('Biópsia percutânea guiada por tomografia', False),
-      ('PET-CT com FDG', False),
-      ('Ressonância magnética das adrenais', False),
-      ('Cintilografia com MIBG', False),
+      ('Catecolaminas plasmáticas', False),
+      ('Ácido vanilmandélico urinário de 24 horas', False),
+      ('Cortisol urinário livre de 24 horas', False),
      ], [
-      ('A avaliação hormonal', 'Pela diretriz da Sociedade Europeia de Endocrinologia '
-       'de 2023, todo incidentaloma adrenal faz o teste de supressão com 1 mg de '
-       'dexametasona, à procura de cortisol autônomo. Metanefrinas livres no plasma, '
-       'ou fracionadas na urina, entram sempre que a densidade sem contraste passa de '
-       '10 UH; abaixo disso, o tumor da medula adrenal é tão improvável que a '
-       'diretriz dispensa o exame. Hipertensão ou potássio baixo pedem aldosterona e '
-       'renina. Patrícia tem os três motivos.'),
-      ('A imagem', 'Densidade acima de 10 UH afasta o adenoma rico em gordura, a '
-       'lesão benigna mais comum. Mais de 4 cm e heterogeneidade obrigam a pensar '
-       'também em carcinoma adrenocortical. Ressonância e PET não substituem a '
-       'dosagem hormonal, e a cintilografia com MIBG estadia, não diagnostica.'),
-      ('Por que não biopsiar', 'A biópsia não separa adenoma de carcinoma '
-       'adrenocortical e, num tumor que secreta catecolaminas, pode desencadear crise '
-       'hipertensiva grave e hemorragia. Só entra na suspeita de metástase de outro '
-       'câncer, e sempre depois de metanefrinas normais.'),
+      ('Eixos prioritários', '**Metanefrinas** têm melhor desempenho que dosagens de catecolaminas episódicas; coletar deitada após repouso e revisar interferentes. **Cortisol após dexametasona** pesquisa secreção autônoma, inclusive discreta. **Aldosterona/renina** é indicada pela hipertensão, com interpretação de potássio, medicamentos e estado clínico.'),
+      ('Exames próximos, rendimento diferente', '**Catecolaminas plasmáticas** variam com descarga e estresse e não substituem o rastreio por metanefrinas. **Ácido vanilmandélico** tem menor sensibilidade. **Cortisol urinário livre** pode complementar suspeita de hipercortisolismo mais expressivo, mas é menos sensível à secreção autônoma discreta pesquisada no incidentaloma.'),
      ]),
 
     painel('res3', 'Investigação da massa', 'Dosagens hormonais', [
@@ -426,12 +366,7 @@ ETAPAS = [
        'glicemia alta e emagrecimento, volume plasmático contraído e queda da '
        'pressão ao levantar. A cardiomiopatia também: os critérios da Clínica Mayo '
        'para takotsubo exigem afastar feocromocitoma, que produz o mesmo atordoamento.',
-       'Os gatilhos estavam na lista de remédios. Metoclopramida e outros '
-       'antagonistas da dopamina liberam catecolaminas do tumor; tricíclicos como a '
-       'amitriptilina bloqueiam a recaptação de noradrenalina; a sertralina, '
-       'raramente; corticoide e betabloqueador sem alfabloqueio prévio também. A '
-       'compressão do abdome, ao se abaixar, é outro gatilho conhecido. O metoprolol '
-       'do terceiro dia foi suspenso antes da primeira dose.'),
+       'A lista de medicamentos e a relação das crises com metoclopramida e com o ato de se abaixar ganham novo peso. O metoprolol do terceiro dia foi suspenso antes da primeira dose.'),
 
     bifurcacao('b1', 'Decisão', 'O preparo',
       'Feocromocitoma de 5,1 cm, sem sinal de metástase. O ecocardiograma do sétimo '
@@ -571,24 +506,17 @@ ETAPAS = [
        'mg/dL com PTH normal. A ultrassonografia mostra o nódulo de 1,5 cm, '
        'hipoecoico e com microcalcificações, sem linfonodo suspeito.'),
 
-    pareamento('p5', 'Pergunta 5',
-      'Outros pacientes com feocromocitoma ou paraganglioma. Associe cada quadro ao '
-      'gene ou síndrome mais provável.', [
-      par('Carcinoma medular de tireoide e hiperparatireoidismo', 'NEM2 (RET)',
-          'O quadro de Patrícia: tumor adrenal, adrenérgico, muitas vezes bilateral.'),
-      par('Hemangioblastoma de cerebelo e cistos renais', 'von Hippel-Lindau',
-          'Também carcinoma renal de células claras; o tumor é noradrenérgico.'),
-      par('Paraganglioma abdominal com metástase óssea aos 30 anos', 'SDHB',
-          'Extra-adrenal e com o maior risco de metástase entre os genes conhecidos.'),
-      par('Manchas café com leite e neurofibromas', 'Neurofibromatose tipo 1',
-          'O diagnóstico é clínico; o feocromocitoma aparece em poucos por cento.'),
-      par('Paragangliomas do pescoço, herdados do pai', 'SDHD',
-          'Só se manifesta quando a variante vem do pai, por impressão genômica.'),
-    ], opcoes=['NEM2 (RET)', 'von Hippel-Lindau', 'SDHB', 'Neurofibromatose tipo 1',
-               'SDHD', 'NEM1 (MEN1)'],
-    titulo_resposta='O gene muda o seguimento',
-    nota='A opção que sobrou, NEM1, dá tumores de paratireoide, hipófise e pâncreas; '
-         'feocromocitoma nela é raro.'),
+    Q('p5', 5,
+      'Identificada RET C634R em Patrícia, qual estratégia de avaliação dos dois filhos tem maior rendimento inicial?', [
+      ('Pesquisa dirigida da variante familiar, com conduta conforme o resultado e a idade', True),
+      ('Calcitonina basal e ultrassonografia cervical, com teste genético se houver alteração', False),
+      ('Painel amplo de genes de tumores endócrinos como primeira investigação', False),
+      ('Metanefrinas plasmáticas, com teste genético se houver elevação', False),
+      ('Calcitonina estimulada, com ultrassonografia se houver resposta aumentada', False),
+     ], [
+      ('A informação já disponível', 'A variante familiar patogênica é conhecida. O teste dirigido identifica quais filhos precisam do acompanhamento e da prevenção específicos, antes de sinais bioquímicos ou nódulos. Idade e risco do códon 634 tornam o encaminhamento especialmente urgente.'),
+      ('Comparar finalidades', 'Calcitonina e ultrassom avaliam expressão atual da doença tireoidiana; resultados normais não identificam quem herdou a variante. Metanefrinas avaliam outro componente e também podem estar normais em portadores. Um painel amplo pode ter indicação em outro contexto, mas aqui o teste familiar é mais direto. Calcitonina estimulada não substitui essa identificação.'),
+     ]),
 
     pg('familia', 'Dois meses depois',
        'Com o tumor adrenal já retirado, Patrícia faz tireoidectomia total com '
@@ -602,29 +530,15 @@ ETAPAS = [
        'filhos e os irmãos de Patrícia.'),
 
     Q('p6', 6,
-      'Sobre o seguimento de Patrícia e da família, **quais quatro** afirmações '
-      'estão corretas?', [
-      ('Testar a variante nos dois filhos', True),
-      ('Metanefrinas anuais por toda a vida', True),
-      ('Calcitonina e CEA no seguimento', True),
-      ('Cálcio e PTH todo ano', True),
-      ('Na filha, esperar nódulo palpável', False),
-      ('Alta do seguimento após cinco anos', False),
-      ('Cintilografia anual de corpo inteiro', False),
+      'Após as duas cirurgias, quais **duas estratégias** correspondem ao risco ainda presente na NEM2A de Patrícia?', [
+      ('Metanefrinas anuais para doença adrenal metacrônica ou recorrente', True),
+      ('Calcitonina e CEA seriados, associados à vigilância do cálcio', True),
+      ('Imagem funcional anual para antecipar doença adrenal bioquimicamente silenciosa', False),
+      ('Ultrassonografia da adrenal contralateral como principal rastreio anual', False),
+      ('Ultrassonografia cervical como principal marcador de recorrência tireoidiana', False),
      ], [
-      ('A família', 'A NEM2A tem herança autossômica dominante: cada filho de '
-       'portador tem 50% de chance de ter a variante. Pela Associação Americana de '
-       'Tireoide de 2015, o códon 634 é de alto risco, com tireoidectomia indicada '
-       'até os 5 anos de idade, guiada pela calcitonina, e rastreio do '
-       'feocromocitoma a partir dos 11. Quem não tem a variante sai do rastreio.'),
-      ('O seguimento de Patrícia', 'Metanefrinas todo ano por toda a vida: na NEM2, '
-       'o tumor pode aparecer na outra adrenal, às vezes anos '
-       'depois. Calcitonina e CEA a cada 6 a 12 meses, porque calcitonina indetectável '
-       'marca a cura e a que sobe marca a volta da doença. Cálcio e PTH todo ano, '
-       'pelo risco de hiperparatireoidismo no códon 634.'),
-      ('O que não entra', 'Esperar nódulo palpável na filha deixa o câncer chegar aos '
-       'linfonodos. Não há alta depois de cinco anos, e cintilografia não é exame '
-       'de rastreio.'),
+      ('Vigilância dirigida ao fenótipo', 'Metanefrinas anuais acompanham o risco de outro tumor adrenal, mesmo depois da normalização pós-operatória. Calcitonina/CEA detectam doença medular persistente ou recorrente; cálcio acompanha o componente paratireoidiano, com PTH conforme o contexto.'),
+      ('O lugar da imagem', 'Imagem funcional é selecionada por contexto clínico, bioquímica e suspeita de extensão; rastreio anual indiscriminado acrescenta exposição e achados incidentais. Ultrassom tem limitações para pequenas lesões adrenais. No pescoço, ultrassom complementa a avaliação, mas não substitui a vigilância bioquímica de doença medular após a cirurgia.'),
      ]),
 
     pg('alta', 'Seis meses depois',
@@ -718,3 +632,11 @@ ETAPAS = [
 ]
 
 REVISAO = []
+
+# Revisão de questões: fontes clínicas consultadas em 22/10/2026.
+# https://academic.oup.com/jcem/article/99/6/1915/2537399
+# https://academic.oup.com/ejendo/article/189/1/G1/7198474
+# https://pmc.ncbi.nlm.nih.gov/articles/PMC4490627/
+# Redação: https://www.nbme.org/sites/default/files/2021-02/NBME_Item%20Writing%20Guide_R_6.pdf
+
+# Prioridade cardiológica: https://www.escardio.org/guidelines/clinical-practice-guidelines/all-esc-practice-guidelines/acute-coronary-syndromes
