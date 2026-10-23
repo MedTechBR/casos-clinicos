@@ -234,17 +234,9 @@ ETAPAS = [
               'diagnóstico e pode dificultar a interpretação da amostra.'),
     ]),
 
-    pg('ripe', 'Três semanas de esquema básico',
-       'Rifampicina, isoniazida, pirazinamida e etambutol em comprimidos '
-       'combinados. A febre cede na segunda semana, e a equipe anota boa '
-       'resposta. Na terceira, Bianca tem náuseas e vômitos, com ALT de 310 '
-       'U/L e bilirrubina normal.',
-       'ALT acima de três vezes o limite com sintomas manda suspender o '
-       'esquema, e ele é suspenso. O maior linfonodo não mudou de tamanho. Sem '
-       'tecido, ninguém sabe se a febre cedeu pelo remédio ou sozinha. A '
-       'equipe marca a biópsia e avisa o patologista das três semanas de '
-       'tratamento, que reduzem a chance de a cultura crescer.',
-       segue='tecido'),
+    pg('ripe', 'Terceira semana de tratamento',
+       'Após iniciar rifampicina, isoniazida, pirazinamida e etambutol, a febre diminui. Na terceira semana, surgem náuseas e vômitos. ALT: 310 U/L (referência até 40); bilirrubina: 0,8 mg/dL; INR: 1,0. O linfonodo permanece com 2,8 cm.',
+       segue='b_toxicidade'),
 
     pg('corticoide', 'Duas semanas de prednisona',
        'A febre cede em quatro dias e o linfonodo dói menos. Na redução da '
@@ -381,8 +373,7 @@ ETAPAS = [
         ex('Ferritina', '480 ng/mL', '15–150 ng/mL', True),
         ex('Triglicerídeos, em jejum', '126 mg/dL', 'até 150 mg/dL'),
         ex('Fibrinogênio', '390 mg/dL', '200–400 mg/dL'),
-    ], introducao='Febre de semanas com leucopenia persistente: a equipe '
-                  'procura uma complicação rara dessa doença.'),
+    ], introducao='Exames de controle durante a persistência da febre.'),
 
     Q('p6', 6,
       'Ainda há febre intermitente. Ferritina é 480 ng/mL, plaquetas 176.000/mm³, neutrófilos 1.350/mm³, triglicerídeos 126 mg/dL e fibrinogênio 390 mg/dL. Como conduzir a possibilidade de síndrome hemofagocítica?', [
@@ -517,7 +508,7 @@ ETAPAS = [
         ex('Creatinina', '0,9 mg/dL', '0,5–1,1 mg/dL'),
         ex('Sedimento urinário', '18 hemácias por campo, 30% dismórficas · sem cilindros', 'sem hemácias', True),
         ex('Relação proteína/creatinina urinária', '0,8 g/g', 'abaixo de 0,2 g/g', True),
-    ], introducao='A creatinina é normal. O resto não é.'),
+    ], introducao='Exames colhidos neste retorno.'),
 
     pg('nova_doenca', 'O diagnóstico longitudinal',
        'É lúpus eritematoso sistêmico com nefrite: FAN em título alto, '
@@ -686,3 +677,77 @@ _inserir_antes('diferencial_final', pagina('leitura_imuno', 'Discussão', 'Como 
     ]),
     p('O conjunto é compatível com Kikuchi quando acompanha a morfologia já discutida. Nenhum desses marcadores, isoladamente, confirma o diagnóstico ou exclui linfoma; pode haver sobreposição com linfadenite do lúpus. Para o clínico, o essencial é integrar o laudo à evolução, sem decorar os marcadores.'),
     p('MPO aqui é uma proteína marcada no tecido: não é o exame de sangue anti-MPO/ANCA. Referências: <a href="https://pubmed.ncbi.nlm.nih.gov/11549584/">estudo dos histiócitos CD68/MPO</a>; <a href="https://meridian.allenpress.com/aplm/article/147/7/767/488040/Clinicopathologic-Analysis-of-Kikuchi-Fujimoto">série clinicopatológica de 170 casos</a>.'), so_kicker=True))
+
+# Revisão: enunciados concisos; interpretação discutida após a escolha.
+_enunciados = {
+ 'p1': 'Qual é o próximo passo na primeira consulta?',
+ 'p2': 'Com os primeiros exames disponíveis, qual investigação você prioriza?',
+ 'sorologias_leitura': 'Como interpretar a sorologia para EBV?',
+ 'p_probabilidade': 'O PPD de 14 mm muda a conduta de que forma?',
+ 'p4': 'Qual dado mais justifica obter tecido neste momento?',
+ 'p6': 'Com os exames de controle disponíveis, qual é a melhor conduta?',
+ 'p8': 'Após a melhora clínica, como organizar o seguimento?',
+ 'hipoteses_apresentacao': 'Quais três grupos de causas devem orientar a investigação inicial?',
+ 'hipoteses_tecido': 'Após a microscopia, quais duas hipóteses ganham prioridade?',
+}
+for _e in ETAPAS:
+    if _e['k'] in _enunciados:
+        _e['enunciado'] = _enunciados[_e['k']]
+# Distratores exigem ponderar tempo, rendimento e risco, sem absolutos artificiais.
+_novas_alts = {
+ 'p1': [('Reexaminar em quatro semanas antes de solicitar exames', False),
+        ('Colher hemograma, selecionar testes pela história e marcar retorno em uma semana', True),
+        ('Usar outro antibiótico por sete dias e reavaliar a resposta', False),
+        ('Solicitar tomografias de pescoço, tórax e abdome como primeira investigação', False)],
+ 'p2': [('Tomografias de tórax e abdome e avaliação hematológica', False),
+        ('FAN, anti-DNA e complemento', False),
+        ('Sorologias para síndrome mononucleose-símile e teste para HIV', True),
+        ('Hemoculturas e investigação de infecção bacteriana cervical', False)],
+ 'p6': [('Solicitar estudo de medula e ampliar investigação de síndrome hemofagocítica agora', False),
+        ('Acompanhar sintomas, hemograma e marcadores inflamatórios em série', True),
+        ('Iniciar corticoide em dose alta pela febre e leucopenia persistentes', False),
+        ('Encerrar o controle laboratorial e observar apenas os linfonodos', False)],
+}
+from motor.etapas import _embaralhar
+for _e in ETAPAS:
+    if _e['k'] in _novas_alts:
+        _e['alts'] = _embaralhar([alt(t, certa=c) for t,c in _novas_alts[_e['k']]], _e['k'] + _e['enunciado'])
+
+_pos = next(i for i,e in enumerate(ETAPAS) if e['k'] == 'tecido')
+ETAPAS[_pos:_pos] = [
+ bifurcacao('b_toxicidade', 'Decisão', 'Reavaliação durante o tratamento',
+    'Como conduzir as alterações da terceira semana?', [
+      caminho('Suspender o esquema e investigar a lesão hepática', 'toxicidade_revisao',
+              'ALT acima de três vezes o limite com sintomas exige interromper os fármacos hepatotóxicos e avaliar gravidade e outras causas. A indicação do esquema também precisa ser revista.'),
+      caminho('Manter o esquema, tratar as náuseas e repetir exames em uma semana', 'toxicidade_piora',
+              'A presença de sintomas com esse aumento de ALT torna insegura a manutenção. A queda da febre não confirma a indicação do tratamento.'),
+    ]),
+ pg('toxicidade_revisao', 'Reavaliação',
+    'O esquema é interrompido. A equipe avalia outras causas de hepatite, acompanha ALT, bilirrubina e INR e discute a hipótese de tuberculose. Os sintomas melhoram, mas o linfonodo permanece aumentado.',
+    'A biópsia é organizada após a avaliação clínica. O patologista e o laboratório recebem a informação de que houve tratamento prévio.', segue='tecido'),
+ pg('toxicidade_piora', 'Quatro dias depois',
+    'Neste percurso simulado, Bianca retorna antes do exame programado por vômitos persistentes. ALT: 740 U/L; bilirrubina: 2,1 mg/dL; INR: 1,1. Está alerta e sem hipotensão. É internada para avaliação, e o esquema é interrompido.',
+    'Não há falência hepática documentada, mas a evolução exige vigilância. A piora é uma possibilidade clínica deste ramo, não uma consequência inevitável em todo paciente.', segue='b_resgate_hepatico'),
+ bifurcacao('b_resgate_hepatico', 'Decisão', 'Durante a internação',
+    'Como retomar a investigação dos linfonodos?', [
+      caminho('Reavaliar as hipóteses e obter tecido quando clinicamente seguro', 'toxicidade_resgate',
+              'Estabilizar a paciente e rever o diagnóstico permite investigar sem reexposição a um esquema cuja indicação não foi confirmada.'),
+      caminho('Planejar reintrodução do esquema após melhora da ALT, sem obter tecido', 'f_sem_confirmacao',
+              'A reintrodução pode ser necessária em tuberculose confirmada, com planejamento especializado. Aqui, a causa dos linfonodos continua sem demonstração e exige reavaliação antes dessa decisão.'),
+    ]),
+ pg('toxicidade_resgate', 'Após estabilização',
+    'A lesão hepática começa a regredir. A equipe obtém uma amostra do linfonodo e comunica todos os medicamentos recebidos. O percurso passa a incluir os riscos e o afastamento decorrentes da internação.', segue='tecido'),
+ fim('f_sem_confirmacao', 'Investigação incompleta',
+    'Neste encerramento alternativo, a causa dos linfonodos não foi demonstrada. A paciente continua em acompanhamento por lesão hepática, e a proposta de reexposição precisa de revisão especializada.',
+    'A melhora da febre durante um tratamento empírico não substitui confirmação diagnóstica. Este ramo termina com incerteza, não com o diagnóstico raro presumido.', 'pior'),
+]
+
+_inserir_antes('nova_doenca', bifurcacao('b_renal_inicial', 'Decisão', 'Após os novos exames',
+    'Qual é o próximo passo?', [
+      caminho('Confirmar as alterações urinárias e organizar avaliação renal e reumatológica', 'nova_doenca',
+              'Proteinúria de 0,8 g/g e hematúria, no contexto clínico e sorológico, justificam avaliação de nefrite e discussão de biópsia, mesmo com creatinina normal.'),
+      caminho('Tratar as manifestações cutâneas e articulares e rever a urina em dois meses', 'encerramento',
+              'A função de filtração preservada não afasta inflamação renal. Adiar a investigação pode permitir progressão antes de a creatinina subir.'),
+    ]))
+for _n, _e in enumerate((x for x in ETAPAS if x['t'] in ('pergunta', 'pareamento')), 1):
+    _e['kicker'] = f'Pergunta {_n}'
