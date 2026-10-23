@@ -1,4 +1,4 @@
-"""Abordagem sindrômica da linfonodomegalia, revisada em 21/10/2026.
+"""Abordagem sindrômica da linfonodomegalia, revisada em 23/10/2026.
 
 Apresentação regional, hipóteses amplas, investigação dirigida, reavaliação
 e tecido antes de nomear a doença rara. Paciente e trajetórias ficcionais.
@@ -49,6 +49,7 @@ def fim(k, titulo, texto, porque, qualidade, fecho='retrospectiva'):
 
 
 ETAPAS = [
+
     capa(TITULO, fundo=CENA, kicker='Caso interativo',
          selo='Paciente ficcional · procedência e créditos na última tela'),
 
@@ -103,33 +104,13 @@ ETAPAS = [
                     'sinovite.')),
            so_kicker=True),
 
-    Q('p1', 1, 'Quais três conjuntos de exames você solicita nesta consulta?',
-[('Hemograma com esfregaço e LDH', True),
- ('Tomografias de pescoço, tórax e abdome', False),
- ('Ultrassonografia cervical e radiografia de tórax', True),
- ('Ferritina, triglicerídeos e fibrinogênio', False),
- ('Proteína C reativa, transaminases e creatinina', True),
- ('Hemoculturas e ecocardiograma transtorácico', False)],
-[('Hemograma, esfregaço e LDH',
-  'Selecionados. Procuram citopenias e alterações celulares. LDH elevada pode acompanhar infecção, '
-  'inflamação ou linfoma; não distingue essas causas sozinha.'),
- ('Tomografias de pescoço, tórax e abdome',
-  'Podem ser necessárias para extensão ou lesões profundas. Nesta consulta há linfonodos superficiais '
-  'acessíveis, sem sinais de compressão ou outras cadeias palpáveis: ultrassom e radiografia são um '
-  'primeiro passo, sem assumir que exames normais excluam linfoma.'),
- ('Ultrassom e radiografia',
-  'Selecionados. O ultrassom avalia estrutura sólida, coleção e morfologia. A radiografia procura '
-  'alterações torácicas associadas à febre e à perda de peso.'),
- ('Ferritina, triglicerídeos e fibrinogênio',
-  'São úteis se a avaliação levantar suspeita de síndrome hiperinflamatória. Antes do hemograma, não '
-  'substituem a investigação inicial. Febre prolongada, citopenias progressivas ou disfunção orgânica '
-  'podem antecipar sua indicação.'),
- ('Inflamação e bioquímica',
-  'Selecionadas. Registram inflamação e procuram comprometimento além do pescoço; o padrão encontrado '
-  'orientará a próxima investigação, sem identificar sozinho uma doença.'),
- ('Hemoculturas e ecocardiograma',
-  'Febre isolada não torna esse conjunto prioritário. Ganha valor com achados de bacteremia ou '
-  'endocardite. A escolha é de prioridade neste quadro, não uma contraindicação absoluta.')]),
+    Q('p1', 1, 'Entre as alternativas, quais três hipóteses você prioriza inicialmente?',
+ [('Mononucleose por EBV', True), ('Toxoplasmose', True), ('Linfoma', True),
+  ('Linfadenite bacteriana supurativa', False), ('Metástase de carcinoma de orofaringe', False),
+  ('Reação a medicamento', False)],
+ [('Hipóteses selecionadas', 'EBV e toxoplasmose podem causar adenopatia cervical subaguda. A faringite inicial favorece EBV, mas não o confirma. Linfoma deve permanecer pela sudorese e perda de peso; dor e mobilidade não o excluem. Não é necessário escolher agora uma única causa.'),
+  ('Menor apoio nesta apresentação', 'Não há coleção, rubor nem lesão dentária ou de orofaringe que sustentem supuração. A idade, o exame e a ausência de lesão mucosa tornam metástase menos provável. O linfonodo precedeu a amoxicilina, e não houve medicamento novo antes dos sintomas. Essas comparações organizam prioridades, sem exclusões absolutas.'),
+  ('Investigação aberta', 'HIV, tuberculose e doenças autoimunes também podem entrar no diferencial. Os primeiros exames e a evolução decidirão o peso dessas possibilidades; esta seleção não é uma lista completa de causas.')]),
 
     painel('res1', 'Primeiros exames', 'Sangue', [
         ex('Hemoglobina / VCM', '11,7 g/dL / 86 fL', 'Hb 12–16 g/dL · VCM 80–100 fL', True),
@@ -151,29 +132,16 @@ ETAPAS = [
         ex('Urina tipo 1', 'Densidade 1.018 · sem proteína, hemácias ou leucócitos', 'normal'),
     ]),
 
-    Q('p2', 1, 'Quais quatro grupos de exames você acrescenta agora?',
-[('FAN e complementos C3 e C4', True),
- ('Sorologias para EBV, CMV e toxoplasmose', True),
- ('Tomografias de tórax e abdome', False),
- ('HIV de quarta geração', True),
- ('Reticulócitos, bilirrubinas, haptoglobina e Coombs direto', True),
- ('Aspirado e biópsia de medula óssea', False)],
-[('Autoimunidade',
-  'Indicada agora. A associação de febre, adenopatia, anemia e leucopenia em uma mulher jovem '
-  'justifica investigar LES, mesmo sem artrite ou lesão cutânea. FAN e C3/C4 integram essa avaliação; '
-  'autoanticorpos específicos serão acrescentados conforme os resultados e a suspeita clínica.'),
- ('Infecções',
-  'EBV, CMV, toxoplasmose e HIV podem causar adenopatia e alterações hematológicas. A investigação '
-  'infecciosa deve ocorrer em paralelo à autoimune, com atenção à cronologia e à janela dos testes.'),
- ('Anemia e LDH',
-  'Reticulócitos, bilirrubinas e haptoglobina avaliam se há destruição de hemácias; Coombs direto '
-  'investiga mecanismo imune. LDH elevada não demonstra hemólise. Não se deve atribuir a anemia à '
-  'inflamação ou ao lúpus antes de caracterizá-la.'),
- ('Imagem e medula',
-  'A ampliação por tomografia pode ser necessária com progressão, achados profundos ou dúvida de '
-  'extensão. A medula pode ser indicada com citopenias progressivas, esfregaço suspeito ou causa '
-  'medular provável. Neste momento, a avaliação etiológica e hematológica não invasiva ainda está '
-  'incompleta; esses procedimentos não a substituem.')]),
+    Q('p2', 2, 'Quais três exames melhor investigam causas distintas deste quadro agora?',
+ [('FAN', True), ('HIV de quarta geração', True), ('EBV anti-VCA IgM', True),
+  ('Anti-CCP', False), ('ANCA', False), ('PET-CT', False)],
+ [('FAN', 'A anemia associada à leucopenia, febre e adenopatia justifica investigar autoimunidade desde agora, mesmo sem artrite ou lesão cutânea. C3 e C4, urina e função renal compõem a avaliação clínica; essa avaliação deve ocorrer em paralelo à investigação infecciosa.'),
+  ('HIV e EBV', 'São causas possíveis de adenopatia com alterações hematológicas. O teste de HIV deve considerar a janela de exposição. No EBV, a IgM precisa ser interpretada com IgG e EBNA: um anticorpo positivo isolado não estabelece a causa da febre.'),
+  ('Outras opções', 'Anti-CCP responde a uma suspeita de artrite reumatoide que não se apresenta aqui. ANCA tem maior valor diante de manifestações compatíveis com vasculite, ausentes até agora. PET-CT mostra atividade tanto em inflamação quanto em neoplasia e não define a etiologia do linfonodo. Toxoplasmose e CMV também podem justificar investigação dirigida.')]),
+
+    pg('coleta_dirigida', 'Investigação',
+ 'A equipe colhe os exames selecionados. Acrescenta C3 e C4, sorologias para CMV e toxoplasmose e os marcadores complementares de EBV. A anemia é investigada com reticulócitos, bilirrubinas, haptoglobina e Coombs direto; LDH elevada não demonstra hemólise.',
+ 'A ultrassonografia cervical e a radiografia de tórax, pedidas na primeira consulta, ficam disponíveis. Bianca continua com febre ao final do dia, mas não há instabilidade nem dificuldade para engolir.'),
 
     estudo('us_cervical', 'Ultrassonografia do pescoço',
            'Pedida na primeira consulta para avaliar os linfonodos palpados. '
@@ -213,10 +181,23 @@ ETAPAS = [
          'aponte tuberculose ou linfoma. A radiografia simples não vê '
          'linfonodos pequenos.']),
 
-    pg('hipotese', 'Intervalo entre as consultas',
-       'Nos dias seguintes, Bianca tenta manter as aulas pela manhã. À tarde, a temperatura volta a subir e o pescoço dói ao virar a cabeça. O paracetamol alivia por algumas horas, mas os linfonodos não diminuem. O companheiro não percebe aumento em outras regiões.',
-       'Na revisão da história, ela nega contato conhecido com tuberculose, consumo de leite não pasteurizado e viagem recente. O gato vive dentro de casa; não houve lesão no braço ou no rosto antes do caroço. Esses dados orientam a investigação, sem excluir isoladamente uma infecção.',
-       'Diante da anemia associada à leucopenia, a equipe investiga infecções, autoimunidade e possíveis mecanismos da anemia em paralelo. Bianca nega aumento do fluxo menstrual, outros sangramentos ou icterícia. Mantém retorno programado e orientação para antecipá-lo se houver piora.'),
+    bifurcacao('b_inicial', 'Decisão', 'Continuação da investigação',
+ 'Os exames etiológicos ainda estão em processamento. Qual estratégia de imagem você escolhe?', [
+ caminho('Tomografia de tórax', 'tc_precoce', 'Pode procurar adenopatias profundas não visíveis na radiografia. A utilidade deve ser ponderada com a evolução, a radiação e a possibilidade de esclarecer primeiro os exames já colhidos.'),
+ caminho('Reavaliação clínica em uma semana', 'retorno_programado', 'Um retorno curto é possível em paciente estável, com investigação em andamento. Crescimento, piora do estado geral ou sintomas compressivos antecipam a avaliação; observar não significa encerrar o caso.')]),
+
+    pg('tc_precoce', 'Tomografia de tórax',
+ 'A tomografia não mostra linfonodos mediastinais ou hilares aumentados, lesões pulmonares ou derrame. O exame não identifica outra área para amostragem. Os linfonodos cervicais permanecem palpáveis e dolorosos.',
+ 'Bianca pergunta se isso afasta câncer. A ausência de alterações torácicas não exclui uma doença restrita ao pescoço. A equipe mantém a investigação etiológica e o retorno combinado.', segue='hipotese'),
+
+    pg('retorno_programado', 'Retorno combinado',
+ 'A equipe combina retorno em uma semana, conferência dos exames e reexame das cadeias linfonodais. Orienta Bianca a antecipar a consulta se houver piora importante, dificuldade para engolir ou respirar, sangramento ou aumento rápido do pescoço.',
+ 'Durante o intervalo, a febre persiste sem instabilidade. Não surge um foco dentário, cutâneo ou de orofaringe que explique a adenopatia.', segue='hipotese'),
+
+    pg('hipotese', 'Entre as consultas',
+ 'No 15.º e no 16.º dia, Bianca acorda com menos cansaço, volta a comer melhor e não registra temperatura acima de 37,5 °C. Pensa que a amoxicilina finalmente fez efeito e cogita cancelar o retorno. O caroço, porém, continua do mesmo tamanho.',
+ 'Dois dias depois, a febre reaparece ao final da tarde. Ela volta a perder o apetite e precisa sair da escola antes do fim das aulas. O paracetamol reduz a temperatura, sem resolver a dor no pescoço.',
+ 'A equipe mantém o retorno e confere as coletas já realizadas. Bianca nega aumento do fluxo menstrual, outros sangramentos ou icterícia. Na revisão das exposições, não lembra de contato com tuberculose, leite não pasteurizado, arranhadura de gato ou lesão na pele antes do início dos sintomas.'),
 
     painel('res2', 'Retorno', 'Sorologias', [
         ex('EBV IgM (anti-VCA)', 'Não reagente', 'não reagente'),
@@ -226,7 +207,7 @@ ETAPAS = [
         ex('Toxoplasmose: IgM / IgG', 'Não reagente / não reagente', 'não reagente'),
         ex('HIV, teste de quarta geração', 'Não reagente', 'não reagente'),
         ex('VDRL', 'Não reagente', 'não reagente'),
-    ], introducao='Investigação dirigida após os primeiros resultados, ainda na segunda semana de febre.'),
+    ], introducao='Coleta na segunda semana de febre; resultados revistos no retorno, no 19.º dia.'),
 
     painel('citopenias_iniciais', 'Investigação complementar', 'Autoimunidade e anemia', [
         ex('FAN por imunofluorescência em HEp-2', 'Não reagente na diluição de 1:80', 'não reagente'),
@@ -236,11 +217,6 @@ ETAPAS = [
         ex('Haptoglobina', '130 mg/dL', '30–200 mg/dL'),
         ex('Coombs direto', 'Negativo', 'negativo'),
     ], introducao='Colhidos na mesma etapa das sorologias, após o hemograma inicial.'),
-
-    pg('revisao_citopenias', 'Reavaliação dos resultados',
-       'A investigação realizada não demonstra hemólise: não há reticulocitose, aumento da bilirrubina indireta ou redução da haptoglobina. O Coombs direto é negativo. A LDH de 330 U/L permanece inespecífica; não permite diagnosticar hemólise autoimune.',
-       'FAN não reagente e complemento preservado reduzem o suporte a LES nesta avaliação. A hipótese foi investigada por indicação clínica, não afastada pela ausência de manifestações cutâneas ou articulares. Resultados negativos não encerram o seguimento se surgirem novos achados.',
-       'A anemia é leve, normocítica e acompanha a leucopenia; sua causa não está definida. A equipe revê hemogramas anteriores, perdas menstruais, medicamentos e alimentação e acompanha as duas linhagens. Persistência ou progressão pode ampliar a investigação nutricional, hematológica e de doença sistêmica.'),
 
     Q('sorologias_leitura', 1, 'Qual interpretação integra melhor os resultados para EBV?',
 [('Infecção passada, sem evidência sorológica de infecção primária recente', True),
@@ -266,99 +242,71 @@ ETAPAS = [
        'No reexame, não há linfonodos axilares ou inguinais, aumento do baço, lesões cutâneas ou sinovite. O comprometimento cervical agora é bilateral. Os dentes, a orofaringe e o couro cabeludo continuam sem lesões que expliquem os linfonodos.' ,
        'A prova tuberculínica solicitada na avaliação dirigida mede 14 mm. Bianca recebeu BCG na infância e não refere contato conhecido com tuberculose. A radiografia de tórax não mostrou alterações.'),
 
-    bifurcacao('b1', 'Decisão', 'O linfonodo em crescimento',
-      'Três semanas de febre, prova tuberculínica de 14 mm e linfonodos '
-      'crescendo. Bianca está estável e quer uma resposta. O que você faz?', [
-      caminho('Obter uma amostra do linfonodo nesta semana', 'tecido',
-              'A análise do tecido e a pesquisa de infecção ajudam a investigar a causa, mantendo as alternativas não infecciosas.'),
-      caminho('Iniciar o esquema básico para tuberculose sem tecido', 'ripe',
-              'A prova tuberculínica mede infecção, não doença. Seis meses de '
-              'tratamento sem confirmação expõem a hepatotoxicidade e podem '
-              'mascarar outra causa.'),
-      caminho('Prednisona 40 mg ao dia pela febre persistente', 'corticoide',
-              'Alivia a febre, e o alívio parece resposta. Trata sem '
-              'diagnóstico e pode dificultar a interpretação da amostra.'),
-    ]),
+    pg('sintoma_novo', 'Quatro dias depois',
+ 'No 23.º dia de sintomas, Bianca entra em contato por dor nos dois punhos e nos joelhos. Pela manhã, sente o corpo preso durante cerca de 15 minutos; não percebe articulações inchadas. Não houve exercício intenso nem medicamento novo desde o fim da amoxicilina.',
+ 'No reexame, há dor à movimentação dos punhos, sem calor, derrame ou sinovite. O pescoço continua doloroso. Não há eritema no rosto, úlceras orais, lesões no tronco, dor pleurítica ou edema. A pressão permanece normal.',
+ 'O quadro já não se limita ao pescoço. A equipe retoma as hipóteses à luz dessa mudança, levando em conta que FAN e complemento já foram avaliados, mas não substituem a observação clínica.'),
 
-    pg('ripe', 'Terceira semana de tratamento',
-       'Após iniciar rifampicina, isoniazida, pirazinamida e etambutol, a febre diminui. Na terceira semana, surgem náuseas e vômitos. ALT: 310 U/L (referência até 40); bilirrubina: 0,8 mg/dL; INR: 1,0. O linfonodo permanece com cerca de 3,9 cm.',
-       segue='b_toxicidade'),
+    Q('p_probabilidade', 4, 'Quais três hipóteses você prioriza agora?',
+ [('Linfoma', True), ('Linfadenite tuberculosa', True), ('Lúpus eritematoso sistêmico', True),
+  ('Mononucleose primária por EBV', False), ('Linfadenite bacteriana supurativa', False),
+  ('Reação medicamentosa', False)],
+ [('Persistência e progressão', 'Linfoma e tuberculose ganglionar continuam relevantes pelo crescimento e pelos sintomas constitucionais. A prova tuberculínica não demonstra doença ativa, e linfonodo doloroso não exclui linfoma.'),
+  ('Novo componente articular', 'Artralgias, febre e citopenias justificam rever LES. FAN não reagente, complemento preservado e urina normal reduzem o suporte atual, mas uma mudança clínica exige nova avaliação. As artralgias sem sinovite não confirmam doença autoimune.'),
+  ('Demais hipóteses', 'O padrão sorológico enfraquece uma infecção primária recente por EBV. Não há coleção ou foco local que favoreça supuração. A febre e a adenopatia começaram antes da amoxicilina; uma reação ao fármaco poderia explicar sintomas superpostos, mas não integra bem a trajetória inteira. A seleção hierarquiza as opções apresentadas, sem excluir outras infecções ou causas inflamatórias.')]),
 
-    pg('corticoide', 'Duas semanas de prednisona',
-       'A febre cede em quatro dias e o linfonodo dói menos. Na redução da '
-       'dose, a febre volta e o linfonodo cresce de novo. Bianca pergunta se '
-       'a melhora confirma uma doença inflamatória.',
-       'Ainda não há diagnóstico. O corticoide pode agravar uma infecção não tratada; '
-       'se for linfoma, pode reduzir a celularidade a '
-       'ponto de deixar a biópsia inconclusiva.'),
+    pg('reavaliacao_articular', 'Reavaliação',
+ 'A equipe revê os exames colhidos: FAN não reagente, C3 e C4 preservados e ausência de sinais laboratoriais de hemólise. A urina e a creatinina continuam normais. Pelo novo componente articular, complementa a avaliação com anti-DNA nativo, que não é reagente.',
+ 'Três dias depois, as dores articulares desaparecem sem corticoide. A febre, porém, ainda aparece em alguns fins de tarde, e os linfonodos continuam aumentados. A melhora das articulações não esclarece a adenopatia nem explica as citopenias.',
+ 'A equipe mantém o seguimento clínico e a discussão da amostra do linfonodo. Não há motivo para considerar todas as hipóteses resolvidas pelos exames autoimunes negativos.'),
 
-    bifurcacao('resgate', 'Decisão', 'A febre voltou',
-      'O alívio sob prednisona foi transitório. Qual é o próximo passo?', [
-      caminho('Reduzir o corticoide e marcar a biópsia, avisando o '
-              'patologista', 'tecido',
-              'A resposta foi inespecífica. O patologista precisa saber do '
-              'corticoide para ler a lâmina.'),
-      caminho('Repetir o ciclo que havia aliviado a febre', 'novo_ciclo',
-              'Mais um ciclo empurra o diagnóstico sem tratar nenhuma causa '
-              'demonstrada.'),
-    ]),
+    pg('encaminhamento', 'Avaliação do linfonodo',
+ 'A equipe discute o caso com cirurgia e hematologia. Bianca mantém febre, perda de peso e crescimento cervical, sem diagnóstico nos exames iniciais. O linfonodo é superficial e acessível; não há contraindicação cirúrgica identificada.',
+ 'A prova tuberculínica não basta para iniciar tratamento de doença ativa. Antes da coleta, patologia e microbiologia combinam como receber o material, incluindo amostra adequada para pesquisa e cultura de micobactérias.'),
 
-    pg('novo_ciclo', 'Mais duas semanas',
-       'A febre melhora de novo e volta na redução. Bianca está afastada do '
-       'trabalho há um mês, dorme mal e ganhou 4 kg. O linfonodo mede cerca de 4,2 cm no controle. '
-       'A equipe abandona os ciclos, reduz a prednisona e marca a biópsia.',
-       segue='tecido'),
-
-    pg('tecido', 'A biópsia',
-       'Bianca é encaminhada para avaliação do linfonodo. Uma punção por agulha fina, realizada no encaminhamento, mostra população linfoide polimórfica, sem células malignas identificadas. A citometria não detecta população B clonal. O material não permite avaliar a arquitetura do linfonodo.',
-       'A febre persiste e o linfonodo não diminuiu. Ele é superficial, acessível e não está aderido aos planos profundos. A causa permanece sem definição.'),
-
-    Q('p4', 1, 'Como esse resultado modifica a investigação?',
-[('Favorece reação benigna e permite aguardar regressão antes de nova amostra', False),
- ('Reduz a suspeita de linfoma B clonal, sem explicar a evolução ou avaliar a arquitetura', True),
- ('Desloca a prioridade para infecção, pois o material já foi avaliado por citometria', False),
- ('Torna o PET-CT mais informativo que nova análise do tecido para definir a causa', False)],
-[('O que foi demonstrado',
-  'A punção não identificou células malignas nem população B clonal no material obtido. Isso reduz '
-  'o suporte a algumas hipóteses, mas não exclui Hodgkin, outras neoplasias ou erro de amostragem.'),
- ('O que continua sem resposta',
-  'O exame não avaliou a arquitetura. Febre persistente, crescimento e perda de peso mantêm a '
-  'necessidade de esclarecimento; células polimórficas não demonstram a causa nem garantem benignidade.'),
- ('Como usar o resultado',
-  'É necessário decidir se a amostra respondeu à dúvida clínica. O PET pode mostrar atividade '
-  'tanto em inflamação quanto em neoplasia; não substitui o tecido. Observação precisa ser '
-  'justificada pela evolução, não apenas pela ausência de um clone na punção.')]),
+    Q('p_amostra', 5, 'Qual exame tem maior chance de esclarecer a causa nesta situação?',
+ [('Biópsia excisional do linfonodo', True), ('Punção aspirativa por agulha fina', False),
+  ('PET-CT', False), ('Biópsia de medula óssea', False), ('Ultrassom cervical de controle', False)],
+ [('Excisão', 'O linfonodo é acessível e as hipóteses incluem doenças em que a arquitetura importa. A excisão permite estudar a distribuição da lesão e obter material para os exames complementares planejados. O benefício deve ser ponderado com os riscos do procedimento.'),
+  ('Amostras e imagem', 'A punção pode ser útil para perguntas específicas, mas pode não classificar linfomas ou linfadenites. PET-CT não distingue inflamação de câncer. Novo ultrassom pode registrar a progressão, mas a progressão já está documentada. Medula pode ser indicada se surgir suspeita medular; neste contexto não substitui a avaliação do linfonodo.')]),
 
     bifurcacao('b_amostra', 'Decisão', 'Obtenção de tecido',
-      'Qual estratégia você escolhe para esclarecer a causa?', [
-      caminho('Biópsia excisional do linfonodo acessível', 'tecido2',
-              'Preserva a arquitetura e oferece material para estudos complementares. O benefício deve ser ponderado com o risco cirúrgico e a disponibilidade.'),
-      caminho('Biópsia por agulha grossa guiada por ultrassom', 'fragmentos',
-              'É uma alternativa em contextos selecionados. A suficiência depende da amostra e da pergunta; se não for diagnóstica, é preciso rever a estratégia.'),
-      caminho('Reavaliação em duas semanas antes de nova amostra', 'observacao',
-              'A estabilidade permite acompanhamento organizado, mas a progressão já descrita torna menos favorável adiar o tecido. A observação exige retorno definido e critérios para antecipá-lo.'),
-    ]),
+ 'A excisão demorará dez dias. Há biópsia por agulha grossa disponível amanhã. Qual procedimento você programa?', [
+ caminho('Biópsia excisional', 'aguarda_excisao', 'Com estabilidade e linfonodo acessível, pode-se aguardar um intervalo curto para preservar a arquitetura. Deve haver reavaliação se a evolução mudar.'),
+ caminho('Biópsia por agulha grossa', 'fragmentos', 'Pode antecipar informação e ser diagnóstica. Se não responder à dúvida, a amostra parcial não deve ser interpretada como exclusão de doença; será necessário rever a estratégia.')]),
+
+    pg('aguarda_excisao', 'Durante o agendamento',
+ 'Bianca mantém contato com a equipe enquanto aguarda a data da excisão. Não surgem sintomas compressivos ou instabilidade. Após a melhora das dores articulares, passa a ter dias inteiros sem febre e volta a almoçar normalmente.',
+ 'Os linfonodos, entretanto, permanecem bem palpáveis. A equipe programa reexame antes de decidir se o procedimento continua indicado.', segue='nova_evolucao'),
 
     pg('fragmentos', 'Resultado da biópsia por agulha',
        'Uma semana depois, os fragmentos mostram tecido linfoide com áreas de necrose. O patologista não encontra uma população maligna inequívoca, mas considera o material insuficiente para classificar a lesão e avaliar sua distribuição no linfonodo.',
        'Bianca ainda tem febre e dor no pescoço. O hemograma não mostra blastos, e as plaquetas continuam preservadas. O resultado parcial não explica o quadro.', segue='b_fragmentos'),
 
-    bifurcacao('b_fragmentos', 'Decisão', 'Amostra não diagnóstica',
-      'Qual procedimento oferece mais informação agora?', [
-      caminho('Retirar o linfonodo para avaliar a arquitetura', 'tecido2',
-              'Com suspeita persistente e uma amostra por agulha insuficiente, a excisão é preferível, quando viável, a repetir o mesmo método sem perspectiva de resolver a limitação.'),
-      caminho('Repetir a biópsia por agulha em outro ponto', 'fragmentos_repetidos',
-              'Uma nova amostra pode ter indicação se a cirurgia não for viável. Nesta trajetória há um linfonodo acessível e a limitação é arquitetural.'),
-    ]),
+    bifurcacao('b_fragmentos', 'Decisão', 'Resultado parcial',
+ 'Qual procedimento acrescenta mais informação após essa amostra?', [
+ caminho('Biópsia excisional', 'nova_evolucao', 'A limitação foi a distribuição e a arquitetura. Com linfonodo acessível, a excisão oferece uma chance maior de esclarecer a dúvida restante.'),
+ caminho('Nova biópsia por agulha grossa', 'fragmentos_repetidos', 'Outra amostra pode ser considerada quando a excisão não é viável. Aqui permanece o risco de repetir a limitação arquitetural; a decisão precisa ser revista se o material continuar insuficiente.')]),
 
     pg('fragmentos_repetidos', 'Segunda amostra',
        'A nova biópsia também mostra fragmentos com necrose e tecido inflamatório, sem permitir uma conclusão. Os procedimentos não causaram complicações, mas a febre persiste e a investigação se prolonga.',
-       'Na reunião com cirurgia e patologia, a equipe revê a necessidade de estudar o linfonodo inteiro. Bianca concorda com a retirada após discutir riscos e benefícios.', segue='tecido2'),
+       'Na reunião com cirurgia e patologia, a equipe revê a necessidade de estudar o linfonodo inteiro. Bianca concorda com a retirada após discutir riscos e benefícios.', segue='nova_evolucao'),
 
-    pg('observacao', 'Reavaliação após duas semanas',
-       'Bianca retorna na data marcada. A febre ainda chega a 38,6 °C ao final do dia. A dor oscila, mas os linfonodos não regrediram. Continua afastada das aulas e perdeu mais 0,5 kg; não tem tosse, dispneia, lesões cutâneas ou dor articular.',
-       'Leucócitos: 2.400/mm³ (referência 4.000–11.000); hemoglobina: 11,3 g/dL (12–16); plaquetas: 181.000/mm³ (150.000–450.000). A estabilidade das plaquetas e do exame geral não esclarece a causa da febre.',
-       'Diante da persistência, a equipe e Bianca retomam a discussão da amostra excisional. O linfonodo permanece superficial e acessível.', segue='tecido2'),
+    pg('nova_evolucao', 'Reexame antes da biópsia',
+ 'Bianca está há três dias sem febre. O apetite melhorou, as dores articulares não voltaram e ela pensa em retomar as aulas. Não iniciou corticoide nem outro tratamento específico.',
+ 'Ao exame, o maior linfonodo cervical continua com aproximadamente 3,7 cm, móvel e menos doloroso. Os contralaterais permanecem palpáveis. Não há sinovite, lesão cutânea ou aumento do baço. Hemoglobina: 11,5 g/dL; leucócitos: 2.600/mm³; plaquetas: 184.000/mm³.',
+ 'Ela pergunta se a melhora permite cancelar a biópsia. A febre e a capacidade funcional melhoraram antes dos linfonodos e do hemograma.'),
+
+    bifurcacao('b_reavaliacao', 'Decisão', 'Após o reexame',
+ 'Como você ajusta o plano?', [
+ caminho('Realizar a biópsia excisional programada', 'tecido2',
+ 'A melhora deve ser considerada, mas a adenopatia volumosa persistente e a investigação inconclusiva ainda justificam tecido. Nos percursos com amostra por agulha, sua insuficiência também pesa na decisão.'),
+ caminho('Reavaliar clinicamente em sete dias', 'observacao_curta',
+ 'Uma observação curta requer decisão compartilhada, retorno garantido e critérios de antecipação. A melhora não confirma benignidade. Pela dimensão e pelo curso prévio, a amostra permanece uma opção importante.')]),
+
+    pg('observacao_curta', 'Uma semana depois',
+ 'Bianca permanece melhor durante os primeiros dias e tenta voltar à escola. Na véspera do retorno, a febre reaparece, chegando a 38,7 °C, com sudorese noturna. O linfonodo não havia desaparecido; agora volta a doer. As articulações continuam sem sintomas.',
+ 'No reexame, o maior linfonodo mede aproximadamente 3,8 cm e permanece acessível. Ela está hidratada e sem sinais compressivos. O intervalo mostrou melhora clínica incompleta, seguida de recorrência; a equipe e Bianca retomam a excisão, sem presumir a causa.', segue='tecido2'),
 
     pg('tecido2', 'Amostra do linfonodo',
        'O cirurgião retira o linfonodo cervical mais representativo. A amostra é distribuída conforme o plano acordado: histologia e imuno-histoquímica, citometria de fluxo e investigação microbiológica.',
@@ -396,30 +344,12 @@ ETAPAS = [
          'neutrófilos e sem granulomas.',
          'Não apresenta o padrão granulomatoso caseoso típico. Isso enfraquece, mas não exclui tuberculose; a conclusão depende da amostra completa e da microbiologia.']),
 
-    Q('p5', 1, 'Quais duas medidas mais ajudam a interpretar esse laudo?',
-[('Rever a avaliação autoimune e correlacionar com pele, articulações e urina', True),
- ('Mapear a atividade dos linfonodos com PET-CT', False),
- ('Rever a amostra com hematopatologista e integrar os estudos infecciosos', True),
- ('Biopsiar um segundo linfonodo antes da revisão da primeira amostra', False),
- ('Repetir sorologias para EBV e CMV neste momento', False),
- ('Investigar a medula óssea pela leucopenia persistente', False)],
-[('Correlação clínica e autoimune',
-  'Prioritária. O padrão necrosante sem neutrófilos também pode ocorrer na linfadenite do lúpus. '
-  'FAN e complemento já foram colhidos por causa da bicitopenia. Agora é preciso rever o contexto '
-  'e discutir testes específicos conforme a suspeita; não repetir automaticamente um painel nem '
-  'tratar resultado negativo como exclusão absoluta.'),
- ('Revisão da amostra e microbiologia',
-  'Prioritária. Necrose não é uma etiologia. A arquitetura, as populações celulares, a '
-  'imuno-histoquímica e a investigação de infecção devem ser interpretadas em conjunto. '
-  'A pesquisa de bacilos negativa e a ausência de granulomas não excluem tuberculose sozinhas.'),
- ('PET-CT ou segunda biópsia',
-  'Atividade no PET pode ocorrer tanto em inflamação quanto em linfoma. Uma nova amostra pode '
-  'ser necessária se a primeira for insuficiente ou houver discordância; aqui, a amostra '
-  'excisional ainda está em análise e deve ser revista antes de repetir o procedimento.'),
- ('Sorologias ou medula',
-  'Não há nova exposição ou cronologia que justifique repetir agora as sorologias já colhidas. '
-  'A leucopenia requer controle; progressão das citopenias, alterações no esfregaço ou suspeita '
-  'de doença medular mudariam a indicação. Ela não substitui a interpretação do linfonodo.')]),
+    Q('p5', 6, 'Quais duas informações ainda precisam ser integradas à histologia?',
+ [('Imuno-histoquímica do linfonodo', True), ('Cultura de micobactérias do tecido', True),
+  ('PET-CT', False), ('Nova sorologia para EBV', False), ('Biópsia de medula óssea', False)],
+ [('Tecido', 'O painel imuno-histoquímico ajuda a caracterizar as células junto às áreas de necrose. A cultura mantém aberta a investigação de tuberculose: ausência de granulomas e testes negativos isolados não a excluem. Nenhum marcador imuno-histoquímico confirma sozinho a doença rara.'),
+  ('Correlação clínica', 'A linfadenite do lúpus também pode ter necrose. FAN e complemento já foram investigados diante das citopenias; a amostra será correlacionada com essa avaliação e com pele, articulações e urina. Não se espera uma nova manifestação para começar a pensar em autoimunidade.'),
+  ('Demais exames', 'PET-CT é inespecífico para essa distinção. Sem nova exposição ou mudança de cronologia, repetir EBV não resolve o padrão do tecido. A leucopenia segue em acompanhamento, mas sem sinais novos de doença medular a medula não substitui a integração da amostra excisional.')]),
 
     painel('res3', 'Complemento da biópsia', 'Tecido e autoanticorpos', [
         ex('Imuno-histoquímica', 'Histiócitos CD68 e mieloperoxidase positivos · '
@@ -428,14 +358,23 @@ ETAPAS = [
         ex('Revisão morfológica e painel para linfoma', 'Sem células suspeitas de Hodgkin/Reed–Sternberg identificadas na amostra; painel integrado à morfologia, sem suporte para linfoma', '—'),
         ex('Pesquisa de bacilos da tuberculose no tecido (BAAR)', 'Negativa', 'negativa'),
         ex('Cultura de micobactérias e fungos', 'Em andamento', '—'),
-        ex('Anti-DNA nativo', 'Não reagente', 'não reagente'),
-    ], introducao='FAN e C3/C4 já haviam sido avaliados na investigação das citopenias. A suspeita anatomoclínica motivou a complementação dirigida com anti-DNA, apesar do FAN negativo. As culturas ainda estão em andamento.'),
+    ], introducao='FAN e C3/C4 já haviam sido avaliados na investigação das citopenias. O anti-DNA, acrescentado após o aparecimento das artralgias, também não foi reagente. As culturas ainda estão em andamento.'),
 
     pg('diagnostico', 'Discussão anatomoclínica',
        'O hematopatologista integra a amostra excisional à evolução e conclui que o conjunto é compatível com doença de Kikuchi–Fujimoto, também chamada linfadenite necrosante histiocítica. A conclusão depende da amostra completa e de sua correlação com a avaliação clínica.',
-       'O diagnóstico reúne três componentes: febre e linfonodos cervicais dolorosos de evolução subaguda; leucopenia e investigação inicial sem causa definida; e necrose com fragmentos nucleares e histiócitos, sem padrão supurativo. Nenhum desses componentes clínicos é específico. A arquitetura e os estudos complementares do tecido dão sustentação ao diagnóstico.',
+       'O diagnóstico reúne três componentes: febre oscilante, linfonodos cervicais dolorosos e artralgias transitórias; leucopenia e investigação inicial sem causa definida; e necrose com fragmentos nucleares e histiócitos, sem padrão supurativo. Nenhum desses componentes clínicos é específico. A arquitetura e os estudos complementares do tecido dão sustentação ao diagnóstico.',
        'A investigação não sustenta infecção supurativa, linfoma ou linfadenite tuberculosa. As culturas ainda serão acompanhadas. FAN e anti-DNA não reagentes, complemento preservado e ausência de outros achados específicos reduzem o suporte a LES, sem representar exclusão definitiva.',
        'A conclusão é de alta compatibilidade anatomoclínica, não um diagnóstico por exclusão nem um marcador exclusivo. Ela orienta o acompanhamento enquanto as culturas terminam. Piora, progressão das citopenias ou manifestações novas exigem reavaliação.'),
+
+    pagina('leitura_imuno', 'Discussão', 'Como interpretar a imuno-histoquímica',
+    p('O patologista usa anticorpos para marcar proteínas nas células do tecido. Isso ajuda a reconhecer quais células participam da lesão. “Positivo” significa que a proteína foi identificada; não significa, por si só, câncer.'),
+    tabela(['Marcador', 'O que ajuda a identificar', 'Significado nesta biópsia'], [
+        ['CD68 e mieloperoxidase (MPO)', 'Histiócitos: macrófagos presentes no tecido', 'Destacam os histiócitos junto às áreas de necrose'],
+        ['CD123', 'Células dendríticas plasmocitoides, que participam da resposta imune', 'Sua presença compõe o padrão inflamatório observado'],
+        ['CD8', 'Uma população de linfócitos T', 'Mostra o predomínio de linfócitos T citotóxicos na lesão'],
+    ]),
+    p('O conjunto é compatível com Kikuchi quando acompanha a morfologia já discutida. Nenhum desses marcadores, isoladamente, confirma o diagnóstico ou exclui linfoma; pode haver sobreposição com linfadenite do lúpus. Para o clínico, o essencial é integrar o laudo à evolução, sem decorar os marcadores.'),
+    p('MPO aqui é uma proteína marcada no tecido: não é o exame de sangue anti-MPO/ANCA. Referências: <a href="https://pubmed.ncbi.nlm.nih.gov/11549584/">estudo dos histiócitos CD68/MPO</a>; <a href="https://meridian.allenpress.com/aplm/article/147/7/767/488040/Clinicopathologic-Analysis-of-Kikuchi-Fujimoto">série clinicopatológica de 170 casos</a>.'), so_kicker=True),
 
     painel('res3b', 'No dia do laudo', 'Sangue', [
         ex('Hemoglobina', '11,4 g/dL', '12–16 g/dL', True),
@@ -444,96 +383,24 @@ ETAPAS = [
         ex('Ferritina', '480 ng/mL', '15–150 ng/mL', True),
         ex('Triglicerídeos, em jejum', '126 mg/dL', 'até 150 mg/dL'),
         ex('Fibrinogênio', '390 mg/dL', '200–400 mg/dL'),
-    ], introducao='Exames de controle durante a persistência da febre.'),
+    ], introducao='Controle do hemograma e da atividade inflamatória durante a investigação.'),
 
-    Q('p6', 1, 'Quais dois padrões, se surgissem no próximo controle, exigiriam investigação urgente de complicação sistêmica?',
-[('Plaquetas 70.000/mm³ e fibrinogênio 120 mg/dL', True),
- ('Ferritina 6.000 ng/mL em ascensão e novo aumento do baço', True),
- ('Neutrófilos 1.100/mm³, com hemoglobina e plaquetas estáveis', False),
- ('Ferritina 620 ng/mL, com queda da PCR e melhora da febre', False),
- ('VHS 70 mm/h, com PCR 8 mg/L e recuperação do hemograma', False),
- ('Linfócitos reativos no esfregaço, sem piora das demais linhagens', False)],
-[('Padrões que mudam a prioridade',
-  'Queda de plaquetas com redução do fibrinogênio sugere um processo sistêmico novo, incluindo consumo '
-  'e síndrome hemofagocítica. Ferritina muito elevada e crescente com esplenomegalia também muda a '
-  'probabilidade. Ambos exigem avaliação urgente, sem confirmar uma causa isoladamente.'),
- ('Mudanças de menor peso isolado',
-  'Neutrófilos de 1.100 ainda exigem controle, mas não representam, sozinhos, deterioração de múltiplas '
-  'linhagens. Pequena elevação de ferritina com melhora clínica pode refletir a inflamação em '
-  'resolução. O VHS cai lentamente e não deve sobrepor-se à melhora da PCR e do hemograma. Linfócitos '
-  'reativos são inespecíficos e precisam da evolução para ganhar significado.'),
- ('Comparação com o painel atual',
-  'Até aqui, plaquetas, fibrinogênio e triglicerídeos estão preservados, sem aumento do baço '
-  'documentado. A comparação de tendências e órgãos acometidos é mais útil que usar um único ponto de '
-  'corte como diagnóstico.')]),
-
-    pg('conduta', 'Conduta após o diagnóstico',
-       'Bianca está estável, sem disfunção orgânica e com sintomas em redução. A equipe propõe analgesia conforme necessidade, hidratação e seguimento. Não há evidência suficiente de infecção bacteriana a justificar novo antibiótico.',
-       'Sintomas intensos ou persistentes, doença extranodal ou complicações mudariam a avaliação e poderiam justificar tratamento imunomodulador após revisão das alternativas. O diagnóstico não autoriza ignorar deterioração posterior.',
-       'A resposta aos sintomáticos será acompanhada junto ao tamanho dos linfonodos, estado geral e hemograma. A cultura final também precisa ser conferida.'),
+    pg('conduta', 'Tratamento e acompanhamento',
+ 'Bianca está estável, sem disfunção orgânica. A equipe revê a melhora parcial anterior: os sintomas oscilaram antes do diagnóstico, sem que isso esclarecesse a causa. Propõe hidratação, analgesia individualizada e controle clínico e do hemograma. Não há indicação de antibiótico adicional nem de corticoide de rotina nesta apresentação.',
+ 'Sintomas intensos ou persistentes, comprometimento extranodal ou complicações poderiam justificar tratamento imunomodulador após revisão das alternativas. A cultura deve ser acompanhada até o resultado final. Piora, novas citopenias ou aumento do baço exigem reavaliação, sem atribuir tudo automaticamente ao diagnóstico estabelecido.'),
 
     pg('tratamento', 'Quatro semanas após o plano de seguimento',
-       'Bianca está afebril há oito dias. O maior linfonodo mede cerca de 1 cm à palpação e não dói. Hemoglobina: 12,1 g/dL; leucócitos: 4.300/mm³; PCR: 4 mg/L. Voltou a trabalhar meio período.',
+       'Bianca está afebril há oito dias. As dores articulares não retornaram. O maior linfonodo mede cerca de 1 cm à palpação e não dói. Hemoglobina: 12,1 g/dL; leucócitos: 4.300/mm³; PCR: 4 mg/L. Voltou a trabalhar meio período.',
        'A cultura do linfonodo continua em acompanhamento, ainda sem crescimento nesta revisão. A melhora clínica é coerente com o diagnóstico estabelecido, mas não substitui a conferência do resultado final.'),
 
-    Q('p8', 1, 'Neste retorno, quais três grupos de exames você prioriza?',
-[('Hemograma', True),
- ('Creatinina, urina e relação proteína/creatinina urinária', True),
- ('FAN, anti-DNA e complemento', True),
- ('Fator reumatoide e anti-CCP', False),
- ('Biópsia da lesão facial', False),
- ('Novas sorologias para EBV e CMV', False)],
-[('Prioridades',
-  'Hemograma procura novas citopenias. Creatinina, urina e proteinúria rastreiam lesão renal que pode '
-  'existir sem edema ou perda de filtração. A avaliação autoimune inicial já foi indicada pela '
-  'bicitopenia. Agora, sinovite e lesão cutânea após o sol justificam reavaliar FAN, anti-DNA e '
-  'C3/C4, pois o quadro mudou; não é repetição de rotina em uma paciente assintomática.'),
- ('Concorrentes',
-  'Fator reumatoide e anti-CCP podem ajudar se o padrão articular sustentar artrite reumatoide, mas não '
-  'integram tão bem a pele e os antecedentes. A biópsia de pele pode esclarecer lesão atípica ou '
-  'diagnóstico incerto, sem substituir a busca de acometimento sistêmico. Repetir EBV/CMV não esclarece '
-  'prioritariamente este quadro sem nova síndrome infecciosa compatível.')]),
+    pg('alta', 'Oito semanas depois',
+ 'Bianca está sem febre, os linfonodos medem menos de 1 cm e ela retomou o trabalho integral. As culturas finais do linfonodo não mostraram crescimento após seis semanas de incubação.',
+ 'A melhora é coerente com um curso autolimitado. Não torna desnecessária a biópsia que foi indicada antes de conhecer a evolução. A equipe combina seguimento e explica a associação descrita com lúpus: manifestações novas precisam de avaliação, mas nem toda paciente desenvolverá LES.'),
 
-    pg('alta', 'Oito semanas após a definição diagnóstica',
-       'Bianca está sem febre, com linfonodos de menos de 1 cm, e voltou à '
-       'sala de aula. A equipe revê com ela o que aconteceu, o que esperar e '
-       'quando voltar antes do retorno marcado. As culturas finais do linfonodo não mostraram crescimento após seis semanas de incubação.',
-       conforme=('b1', ['f0', 'f_ripe', 'alta_cort'])),
-
-    fim('f0', 'Recuperação clínica',
-        'Depois do retorno inicial em meio período, Bianca retoma o trabalho integral na avaliação seguinte, já sem febre ou dor. Não precisou de tratamento específico adicional.',
-        'A amostra excisional esclareceu a causa após a investigação. Conforme o caminho escolhido, houve observação ou amostras anteriores não diagnósticas; a ausência de complicações não transforma o atraso em uma vantagem.', 'melhor', fecho='extensao'),
-
-    pg('alta_cort', 'Oito semanas após a definição diagnóstica',
-       'Bianca está sem febre, mas o corticoide deixou marcas: insônia, '
-       'inchaço no rosto e glicemia de jejum de 112 mg/dL, que a equipe vai '
-       'reavaliar depois da retirada.',
-       conforme=('resgate', ['f_cort', 'f_pior'])),
-
-    fim('f_ripe', 'Recuperação depois de uma hepatite medicamentosa',
-        'Neste percurso houve lesão hepática durante o tratamento empírico. O esquema foi interrompido, a função hepática se recuperou no acompanhamento e a notificação de tuberculose foi revista após a definição de outra causa. Bianca retomou o trabalho progressivamente.',
-        'A prova tuberculínica não demonstrou doença ativa. A melhora durante o esquema não confirmou tuberculose; a trajetória incluiu toxicidade e atraso até a definição histológica.', 'medio', fecho='extensao'),
-
-    fim('f_cort', 'Recuperação com diagnóstico atrasado',
-        'Antes da definição diagnóstica houve uso de prednisona e retorno da febre na redução. A equipe comunicou a exposição ao patologista e ajustou a retirada ao tempo e à dose de uso. No seguimento descrito, Bianca recuperou-se e voltou ao trabalho.',
-        'O corticoide aliviou a febre sem dizer o que ela era. Parar a tempo '
-        'e contar ao patologista preservou a leitura da lâmina.', 'medio',
-        fecho='extensao'),
-
-    fim('f_pior', 'Recuperação após dois ciclos de corticoide',
-        'Antes do diagnóstico, Bianca permaneceu afastada, ganhou 4 kg e teve febre recorrente durante as reduções da prednisona. A amostra obtida após essa exposição foi revista por outro patologista antes da conclusão. A recuperação posterior já apresentada ocorreu após a reavaliação e o ajuste do tratamento.',
-        'Ciclos empíricos podem dificultar a interpretação histológica e atrasar o reconhecimento de uma infecção ou neoplasia.', 'pior',
-        fecho='extensao'),
-
-    bifurcacao('extensao', 'Extensão opcional', 'Seis meses depois',
-      'O caso principal terminou. Quer encerrar ou explorar um cenário de '
-      'seguimento?', [
-      caminho('Encerrar e ver os pontos de ensino', 'retrospectiva',
-              'Retoma o que o caso quis ensinar.'),
-      caminho('Explorar um retorno seis meses depois', 'novo_quadro',
-              'Cenário independente: não é consequência de nenhuma escolha '
-              'anterior nem a evolução de toda paciente com essa doença.'),
-    ]),
+    bifurcacao('extensao', 'Seguimento', 'Continuação opcional',
+ 'Deseja discutir um novo quadro no seguimento?', [
+ caminho('Encerrar a discussão', 'retrospectiva', 'Revisão do raciocínio percorrido.'),
+ caminho('Avaliar o retorno após seis meses', 'novo_quadro', 'Cenário didático adicional, não consequência das escolhas anteriores nem evolução obrigatória de Kikuchi.')]),
 
     pg('novo_quadro', 'Seis meses depois',
        'Bianca volta por dor e rigidez matinal nas mãos há três semanas, e '
@@ -561,16 +428,6 @@ ETAPAS = [
          'tarde de sol.',
          'A distribuição e a relação com o sol apoiam a investigação de lúpus neste contexto. A aparência isolada não confirma LES: rosácea e outras dermatoses continuam no diferencial, com avaliação dermatológica quando necessário.']),
 
-    bifurcacao('b2', 'Decisão', 'Os sintomas novos',
-      'Como você conduz esse retorno?', [
-      caminho('Investigar doença sistêmica agora, incluindo urina e função '
-              'renal', 'seguimento',
-              'Os sintomas são novos e cabem no lúpus que o seguimento '
-              'procurava.'),
-      caminho('Atribuir tudo a uma recorrência e observar', 'encerramento',
-              'Manifestações articulares e cutâneas também podem acompanhar Kikuchi, mas um padrão novo não deve ser atribuído automaticamente à recorrência. É preciso investigar LES e comprometimento de órgãos.'),
-    ]),
-
     painel('seguimento', 'Reavaliação', 'O que a equipe pediu', [
         ex('FAN', '1:640, padrão homogêneo', 'não reagente', True),
         ex('Anti-DNA nativo', 'Reagente', 'não reagente', True),
@@ -585,48 +442,11 @@ ETAPAS = [
        'Sinovite, lesão cutânea fotossensível, FAN e anti-DNA positivos, complemento baixo e alterações urinárias sustentam forte suspeita de LES com acometimento renal. A equipe confirma a proteinúria e a hematúria e discute biópsia renal, apesar da creatinina normal. Proteinúria significativa persistente pode justificar a biópsia mesmo sem sedimento ativo; a hematúria reforça a suspeita nesta paciente.',
        'A biópsia demonstra nefrite lúpica classe III. A integração dos achados estabelece LES. Nefrologia e reumatologia planejam a indução e o seguimento; incluem hidroxicloroquina, salvo contraindicação, e avaliam bloqueio do sistema renina–angiotensina, com controle de pressão, potássio e função renal.',
        'O episódio inicial havia sido interpretado como compatível com Kikuchi. O surgimento de LES justifica rever a história e, se houver dúvida, o tecido original. Pode haver associação entre as doenças ou linfadenite relacionada ao lúpus; a evolução posterior não prova sozinha nem erro nem independência do primeiro diagnóstico.',
-       segue='f1'),
-
-    fim('f1', 'Lúpus reconhecido cedo',
-        'Bianca inicia o tratamento da nefrite com creatinina normal, e a '
-        'proteinúria cai nos meses seguintes.',
-        'Reconhecer manifestações novas evitou que o diagnóstico anterior '
-        'explicasse tudo.', 'melhor'),
-
-    pg('encerramento', 'Dois meses depois',
-       'Bianca volta com edema de membros inferiores e urina espumosa. A '
-       'pressão é 150/96 mmHg. Proteinúria de 2,4 g/g e creatinina de 1,5 '
-       'mg/dL.',
-       segue='resgate_renal'),
-
-    bifurcacao('resgate_renal', 'Decisão', 'Edema e creatinina subindo',
-      'O que acompanha a avaliação do edema?', [
-      caminho('Investigação renal e reumatológica imediata, com biópsia',
-              'f2', 'Ainda há rim a salvar; o atraso não é, sozinho, '
-                    'irreversibilidade.'),
-      caminho('Diurético e nova consulta em um mês', 'atraso_renal',
-              'Aliviar o edema não trata a nefrite que o produz.'),
-    ]),
-
-    pg('atraso_renal', 'Um mês depois',
-       'Bianca é internada com creatinina de 2,8 mg/dL e pressão de 170/104 '
-       'mmHg. A biópsia mostra nefrite lúpica classe IV com crescentes em 30% '
-       'dos glomérulos e algum grau de fibrose.',
-       segue='f3'),
-
-    fim('f2', 'Diagnóstico tardio, ainda a tempo',
-        'A nefrite lúpica é tratada com a creatinina em 1,5 mg/dL. A função '
-        'renal volta perto do basal, com proteinúria residual.',
-        'O atraso custou dois meses de proteinúria, não o rim.', 'medio'),
-
-    fim('f3', 'Nefrite com dano crônico',
-        'A indução controla a atividade, mas a creatinina estabiliza em 1,9 '
-        'mg/dL, com fibrose documentada na biópsia.',
-        'Os sintomas novos foram atribuídos à doença anterior sem reavaliação sistêmica. Neste percurso simulado, a lesão renal progrediu no intervalo; isso não era uma consequência inevitável.', 'pior'),
+       segue='retrospectiva'),
 
     pagina('retrospectiva', 'Pontos de ensino', '',
       pontos(
-        'Começar pela linfonodomegalia: distribuição, duração, drenagem, exposições e sinais de alarme. Sintomas sistêmicos podem acompanhar adenopatia localizada.',
+        'Começar pela linfonodomegalia: distribuição, duração, exposições, sinais de alarme e possíveis infecções próximas aos linfonodos. Sintomas sistêmicos podem acompanhar adenopatia localizada.',
         'Dor, ultrassom de aspecto reacional e ausência de blastos não excluem neoplasia. Nenhum deles encerra o diferencial.',
         'Selecionar exames para uma pergunta. Sorologia de contato passado não explica automaticamente febre atual; prova tuberculínica não confirma doença ativa.',
         'Crescimento com sintomas persistentes mudou o limiar para biópsia. Planejar a amostra permite investigar infecção e neoplasia sem perder material.',
@@ -634,7 +454,7 @@ ETAPAS = [
         'Uma evolução discordante reabre o raciocínio. O diagnóstico anterior não deve impedir reconhecer uma doença nova.'),so_kicker=True),
 
     pg('referencias', 'Fontes e limites',
-       'Paciente, valores e percursos são ficcionais. A extensão de seguimento '
+       'Paciente, valores e percursos são ficcionais. As oscilações clínicas e as escolhas de investigação são simuladas; não reproduzem uma sequência obrigatória da doença. A extensão de seguimento '
        'é um cenário separado, não a evolução necessária da doença. A cena de '
        'abertura é uma ilustração gerada por inteligência artificial, sem '
        'valor diagnóstico.',
@@ -652,162 +472,20 @@ ETAPAS = [
        'Häggström, Wikimedia Commons, CC0; lâminas, Nephron, Wikimedia '
        'Commons, CC BY-SA 3.0; fotografia do rosto, Doktorinternet, Wikimedia '
        'Commons, CC BY-SA 4.0, com olhos cobertos e recorte '
-       '(commons.wikimedia.org/wiki/File:Lupusfoto.jpg).'),
+       '(commons.wikimedia.org/wiki/File:Lupusfoto.jpg).')
 ]
 
 REVISAO = []
 
-
-# Revisão sindrômica de 21/10/2026. A doença permanece oculta até o tecido.
-def _inserir_antes(destino, nova):
-    pos = next(i for i, e in enumerate(ETAPAS) if e['k'] == destino)
-    ETAPAS.insert(pos, nova)
-
-_inserir_antes('res1', pagina('diferencial_inicial', 'Discussão', 'Linfonodomegalia cervical',
-    tabela(['Grupo', 'O que procurar nesta paciente', 'O que mudaria a conduta'], [
-      ['Infecção local', 'Dentes, orofaringe, ouvido e couro cabeludo; coleção', 'Foco tratável ou necessidade de drenagem'],
-      ['Infecção sistêmica', 'Faringite, exposições e janela dos testes', 'Evidência de infecção recente compatível'],
-      ['Neoplasia', 'Progressão, outras cadeias, baço e repercussão', 'Persistência ou crescimento que justifique tecido'],
-      ['Inflamação / medicamentos', 'Pele, articulações, urina e cronologia de fármacos', 'Achados associados que direcionem exames'],
-    ])))
-
-_inserir_antes('b1', Q('p_probabilidade', 1, 'Quais duas hipóteses mais justificam obter tecido neste momento?',
-[('Linfoma', True),
- ('Mononucleose primária por EBV', False),
- ('Linfadenite tuberculosa', True),
- ('Linfadenite por Bartonella', False),
- ('Linfadenite associada a lúpus', False),
- ('Linfadenite bacteriana supurativa', False)],
-[('Linfoma',
-  'Progressão, sintomas constitucionais e ausência de uma infecção recente demonstrada justificam '
-  'investigar essa hipótese. Dor, mobilidade e leucopenia não a excluem. Não significa que linfoma '
-  'seja a única explicação, nem que sintomas constitucionais confirmem câncer.'),
- ('Tuberculose ganglionar',
-  'A evolução subaguda e a prova tuberculínica de 14 mm sustentam sua investigação. O PPD não '
-  'demonstra doença ativa, e uma radiografia normal não exclui acometimento ganglionar. O tecido '
-  'deve ser planejado também para microbiologia.'),
- ('Infecções concorrentes',
-  'O padrão de EBV favorece contato passado. Bartonella continua possível, mas há menos apoio '
-  'epidemiológico e clínico para priorizá-la sobre as duas selecionadas. Na forma supurativa, '
-  'esperaríamos maior suporte de infecção local ou coleção; a ausência desses achados não é exclusão absoluta.'),
- ('Autoimunidade',
-  'LES foi investigado pela associação de anemia, leucopenia e febre. FAN não reagente, C3/C4 '
-  'preservados e urina sem alterações reduzem seu suporte neste momento, sem exclusão absoluta. '
-  'As duas hipóteses selecionadas justificam investigar o linfonodo; não são diagnósticos confirmados.')]))
-
-_inserir_antes('diagnostico', pg('reavaliacao_laudo', 'Reavaliação clínica',
-    'Quando o laudo complementar chega, Bianca ainda tem febre à tarde e dor no pescoço, mas segue estável. Os linfonodos permanecem móveis e não há flutuação. O exame não mostra aumento do baço, sinovite, úlceras orais ou lesões cutâneas; a urina anterior não tinha sangue nem proteína.',
-    'A punção inicial não explicou o quadro. A amostra excisional mostra um processo inflamatório com necrose, e a revisão não identifica uma população linfoide maligna. O padrão deve ser discutido com a clínica: dor e mobilidade não excluem linfoma, e a ausência de granulomas não encerra a investigação de tuberculose.'))
-
-_inserir_antes('diagnostico', pagina('diferencial_final', 'Discussão', 'Revisão das hipóteses',
-    tabela(['Hipótese', 'Dados que a enfraquecem', 'Limite da conclusão'], [
-      ['Infecção viral aguda', 'Sorologias sem padrão recente e progressão', 'Janela e exposição sempre importam'],
-      ['Tuberculose ganglionar', 'Sem granulomas; teste molecular e pesquisa de bacilos negativos', 'Negativos isolados não excluem; acompanhar cultura'],
-      ['Linfoma', 'Revisão morfológica e imuno-histoquímica sem suporte', 'Citometria isolada não basta'],
-      ['Linfadenite associada a lúpus', 'FAN negativo desde a investigação inicial, C3/C4 preservados e anti-DNA negativo; urina sem alterações', 'Seguimento permanece aberto'],
-    ])))
-
-for _n, _e in enumerate((x for x in ETAPAS if x['t'] in ('pergunta','pareamento')), 1):
-    _e['kicker'] = f'Pergunta {_n}'
-ETAPAS[-1]['corpo'] += p('Referências da revisão sindrômica: <a href="https://www.cdc.gov/epstein-barr/php/laboratories/index.html">CDC — sorologia para EBV</a>; <a href="https://www.cdc.gov/tb/hcp/testing-diagnosis/index.html">CDC — investigação de tuberculose</a>; <a href="https://www.nice.org.uk/guidance/ng52/chapter/Recommendations">NICE NG52 — amostragem em suspeita de linfoma</a>.')
-
-
-_inserir_antes('conduta', pg('como_foi_estabelecido', 'Como o diagnóstico foi estabelecido',
-    'A suspeita inicial era ampla. A anemia associada à leucopenia levou à investigação paralela de infecções, autoimunidade e mecanismos da anemia. Não se demonstrou hemólise, e a avaliação inicial reduziu o suporte a LES, sem descartá-lo definitivamente. A persistência, o crescimento e a perda de peso mantiveram a necessidade de investigar o linfonodo.',
-    'Foi a persistência do quadro, e não uma imagem típica, que levou à obtenção de tecido. A biópsia estreitou as hipóteses. A avaliação clínica, a microbiologia e os estudos complementares permitiram ao patologista sustentar Kikuchi e comparar esse diagnóstico com linfadenite associada a lúpus.',
-    'A melhora posterior sem tratamento específico de infecção ou neoplasia será coerente com um curso autolimitado, mas não é usada para justificar retrospectivamente a decisão de biopsiar. Acompanhamento e revisão de resultados pendentes fazem parte da conclusão.'))
-
-_inserir_antes('conduta', pg('relacao_lupus', 'Relação com o lúpus',
-    'A doença de Kikuchi–Fujimoto tem associação descrita com lúpus eritematoso sistêmico (LES). Pode ocorrer antes, ao mesmo tempo ou depois do diagnóstico de LES. Essa associação não significa que toda paciente desenvolverá lúpus nem que o episódio atual já seja uma manifestação dele.',
-    'O lúpus também pode causar linfadenite com necrose e se parecer com Kikuchi na biópsia. Por isso, o laudo precisa ser integrado à história, ao exame físico e aos exames laboratoriais. Em Bianca, a avaliação atual não sustenta LES; FAN e anti-DNA negativos e complemento normal devem ser interpretados nesse contexto.',
-    'No seguimento, artrite persistente, lesões relacionadas ao sol, úlceras orais, dor pleurítica, edema ou alterações na urina justificam nova avaliação. Conforme os achados, reavaliam-se hemograma, creatinina, urina/proteinúria e autoanticorpos/complemento. O objetivo é reconhecer um novo quadro clínico, sem repetir mensalmente um painel autoimune em quem está bem.'))
-for _e in ETAPAS:
-    if _e.get('segue') == 'conduta':
-        _e['segue'] = 'relacao_lupus'
-
-for _n, _e in enumerate((x for x in ETAPAS if x['t'] in ('pergunta', 'pareamento')), 1):
-    _e['kicker'] = f'Pergunta {_n}'
-
-_inserir_antes('diferencial_final', pagina('leitura_imuno', 'Discussão', 'Como interpretar a imuno-histoquímica',
-    p('O patologista usa anticorpos para marcar proteínas nas células do tecido. Isso ajuda a reconhecer quais células participam da lesão. “Positivo” significa que a proteína foi identificada; não significa, por si só, câncer.'),
-    tabela(['Marcador', 'O que ajuda a identificar', 'Significado nesta biópsia'], [
-        ['CD68 e mieloperoxidase (MPO)', 'Histiócitos: macrófagos presentes no tecido', 'Destacam os histiócitos junto às áreas de necrose'],
-        ['CD123', 'Células dendríticas plasmocitoides, que participam da resposta imune', 'Sua presença compõe o padrão inflamatório observado'],
-        ['CD8', 'Uma população de linfócitos T', 'Mostra o predomínio de linfócitos T citotóxicos na lesão'],
-    ]),
-    p('O conjunto é compatível com Kikuchi quando acompanha a morfologia já discutida. Nenhum desses marcadores, isoladamente, confirma o diagnóstico ou exclui linfoma; pode haver sobreposição com linfadenite do lúpus. Para o clínico, o essencial é integrar o laudo à evolução, sem decorar os marcadores.'),
-    p('MPO aqui é uma proteína marcada no tecido: não é o exame de sangue anti-MPO/ANCA. Referências: <a href="https://pubmed.ncbi.nlm.nih.gov/11549584/">estudo dos histiócitos CD68/MPO</a>; <a href="https://meridian.allenpress.com/aplm/article/147/7/767/488040/Clinicopathologic-Analysis-of-Kikuchi-Fujimoto">série clinicopatológica de 170 casos</a>.'), so_kicker=True))
-
-_pos = next(i for i,e in enumerate(ETAPAS) if e['k'] == 'tecido')
-ETAPAS[_pos:_pos] = [
- bifurcacao('b_toxicidade', 'Decisão', 'Reavaliação durante o tratamento',
-    'Como conduzir as alterações da terceira semana?', [
-      caminho('Suspender o esquema e investigar a lesão hepática', 'toxicidade_revisao',
-              'ALT acima de três vezes o limite com sintomas exige interromper os fármacos hepatotóxicos e avaliar gravidade e outras causas. A indicação do esquema também precisa ser revista.'),
-      caminho('Manter o esquema, tratar as náuseas e repetir exames em uma semana', 'toxicidade_piora',
-              'A presença de sintomas com esse aumento de ALT torna insegura a manutenção. A queda da febre não confirma a indicação do tratamento.'),
-    ]),
- pg('toxicidade_revisao', 'Reavaliação',
-    'O esquema é interrompido. A equipe avalia outras causas de hepatite, acompanha ALT, bilirrubina e INR e discute a hipótese de tuberculose. Os sintomas melhoram, mas o linfonodo permanece aumentado.',
-    'A biópsia é organizada após a avaliação clínica. O patologista e o laboratório recebem a informação de que houve tratamento prévio.', segue='tecido'),
- pg('toxicidade_piora', 'Quatro dias depois',
-    'Neste percurso simulado, Bianca retorna antes do exame programado por vômitos persistentes. ALT: 740 U/L; bilirrubina: 2,1 mg/dL; INR: 1,1. Está alerta e sem hipotensão. É internada para avaliação, e o esquema é interrompido.',
-    'Não há falência hepática documentada, mas a evolução exige vigilância. A piora é uma possibilidade clínica deste ramo, não uma consequência inevitável em todo paciente.', segue='b_resgate_hepatico'),
- bifurcacao('b_resgate_hepatico', 'Decisão', 'Durante a internação',
-    'Como retomar a investigação dos linfonodos?', [
-      caminho('Reavaliar as hipóteses e obter tecido quando clinicamente seguro', 'toxicidade_resgate',
-              'Estabilizar a paciente e rever o diagnóstico permite investigar sem reexposição a um esquema cuja indicação não foi confirmada.'),
-      caminho('Planejar reintrodução do esquema após melhora da ALT, sem obter tecido', 'f_sem_confirmacao',
-              'A reintrodução pode ser necessária em tuberculose confirmada, com planejamento especializado. Aqui, a causa dos linfonodos continua sem demonstração e exige reavaliação antes dessa decisão.'),
-    ]),
- pg('toxicidade_resgate', 'Após estabilização',
-    'A lesão hepática começa a regredir. A equipe obtém uma amostra do linfonodo e comunica todos os medicamentos recebidos. O percurso passa a incluir os riscos e o afastamento decorrentes da internação.', segue='tecido'),
- fim('f_sem_confirmacao', 'Investigação incompleta',
-    'Neste encerramento alternativo, a causa dos linfonodos não foi demonstrada. A paciente continua em acompanhamento por lesão hepática, e a proposta de reexposição precisa de revisão especializada.',
-    'A melhora da febre durante um tratamento empírico não substitui confirmação diagnóstica. Este ramo termina com incerteza, não com o diagnóstico raro presumido.', 'pior'),
-]
-
-_inserir_antes('nova_doenca', bifurcacao('b_renal_inicial', 'Decisão', 'Após os novos exames',
-    'Qual é o próximo passo?', [
-      caminho('Confirmar as alterações urinárias e organizar avaliação renal e reumatológica', 'nova_doenca',
-              'Proteinúria de 0,8 g/g e hematúria, no contexto clínico e sorológico, justificam avaliação de nefrite e discussão de biópsia, mesmo com creatinina normal.'),
-      caminho('Tratar as manifestações cutâneas e articulares e rever a urina em dois meses', 'encerramento',
-              'A função de filtração preservada não afasta inflamação renal. Adiar a investigação pode permitir progressão antes de a creatinina subir.'),
-    ]))
-for _n, _e in enumerate((x for x in ETAPAS if x['t'] in ('pergunta', 'pareamento')), 1):
-    _e['kicker'] = f'Pergunta {_n}'
-
-# Medida aproximada baseada na escala visível da imagem original (D = 4 cm).
+# Calibrated didactic overlay retained from the published image audit.
 from .medida_us import sobreposicao as _medida_us
 _us = next(e for e in ETAPAS if e['k'] == 'us_cervical')
 _us['corpo'] = _us['corpo'].replace('</g></svg>', _medida_us() + '</g></svg>', 1)
 _us['corpo'] = _us['corpo'].replace('A imagem não apresenta medidas assinaladas.',
-    'Medida aproximada no corte: 3,5 × 1,1 cm, estimada pela escala de profundidade de 4 cm da imagem original. Cálipers A/B e régua de 1 cm adicionados para ensino; não são medidas registradas no exame original.')
+ 'Medida aproximada no corte: 3,5 × 1,1 cm, estimada pela escala de profundidade de 4 cm da imagem original. Cálipers e régua adicionados para ensino; não são medidas registradas no exame original.')
 _us['corpo'] = _us['corpo'].replace('setas adicionadas', 'setas, cálipers e régua adicionados · estimativa didática')
-
-# Retorno tardio: pergunta antes de investigar a nova síndrome, com resultados logo adiante.
-_p8 = next(e for e in ETAPAS if e['k'] == 'p8')
-ETAPAS.remove(_p8)
-_inserir_antes('b2', _p8)
-for _n, _e in enumerate((x for x in ETAPAS if x['t'] in ('pergunta', 'pareamento')), 1):
+for _n, _e in enumerate((e for e in ETAPAS if e['t'] == 'pergunta'), 1):
     _e['kicker'] = f'Pergunta {_n}'
+next(e for e in ETAPAS if e['k'] == 'referencias')['corpo'] += p('Estrutura editorial estudada: <a href="https://www.nejm.org/doi/full/10.1056/NEJMimc1302497">An Unusual Case of Abdominal Pain, NEJM, 2013</a>. Referência de narrativa e perguntas; nenhuma imagem, texto de paciente ou recomendação de 2013 foi reproduzida. Revisão clínica: <a href="https://www.cdc.gov/epstein-barr/php/laboratories/index.html">CDC — EBV</a>; <a href="https://arupconsult.com/content/systemic-lupus-erythematosus">ARUP — LES</a>; <a href="https://www.nice.org.uk/guidance/ng52/chapter/Recommendations">NICE NG52 — amostragem</a>.')
 
-_referencias = next(e for e in ETAPAS if e['k'] == 'referencias')
-_referencias['corpo'] += p('Relatos usados para discutir a sequência diagnóstica, sem reproduzir pacientes: <a href="https://pubmed.ncbi.nlm.nih.gov/20111755/">Archibald e cols., 2009</a>; <a href="https://pubmed.ncbi.nlm.nih.gov/22461878/">Hassan e cols., 2009</a>; <a href="https://pubmed.ncbi.nlm.nih.gov/37605695/">Arya e cols., 2023, linfadenite lúpica como diagnóstico concorrente</a>. Bianca e seus percursos continuam ficcionais.')
-
-for _n, _e in enumerate((x for x in ETAPAS if x['t'] in ('pergunta', 'pareamento')), 1):
-    _e['kicker'] = f'Pergunta {_n}'
-
-_conduta = next(e for e in ETAPAS if e['k'] == 'conduta')
-_conduta['conforme'] = {'de': 'b1', 'para': ['plano_suporte', 'plano_apos_hepatite', 'plano_apos_corticoide']}
-_inserir_antes('tratamento', pg('plano_suporte', 'Plano de seguimento',
-    'Sem disfunção orgânica e com sintomas em redução, Bianca mantém hidratação, analgesia conforme necessidade e reavaliação clínica e do hemograma. Um anti-inflamatório pode ser considerado após avaliar função renal, hidratação, risco gastrointestinal e interações; não há prescrição automática por um número fixo de dias.',
-    'Neste percurso não foi iniciado corticoide. A equipe combina retorno e sinais para reavaliação antes da data marcada, incluindo piora do estado geral, sangramento, dispneia ou novas manifestações.', segue='tratamento'))
-_inserir_antes('tratamento', pg('plano_apos_hepatite', 'Seguimento após a lesão hepática',
-    'Bianca continua com o esquema antituberculose suspenso enquanto a equipe revê a indicação e acompanha a recuperação da lesão hepática. São reavaliados sintomas, ALT, bilirrubina e INR, além de outras causas de hepatite.',
-    'A escolha de analgésico é individualizada após revisar hidratação, função renal e hepática e risco gastrointestinal. Não se inicia ibuprofeno de rotina após os episódios de vômitos e lesão hepática. As culturas do linfonodo permanecem em acompanhamento.', segue='tratamento'))
-_inserir_antes('tratamento', pg('plano_apos_corticoide', 'Revisão do corticoide',
-    'A equipe reconcilia a dose atual de prednisona e o tempo de exposição nos atendimentos anteriores. Como não há indicação atual de mantê-la em dose imunossupressora, combina redução individualizada, considerando o controle da doença e o risco de supressão adrenal após uso prolongado.',
-    'São acompanhados retorno da febre, hipotensão, fraqueza importante e outros sintomas durante a retirada, além de pressão e glicemia. Não há um desmame fixo aplicável a todos os percursos. A analgesia também considera o risco gastrointestinal da exposição a corticoide.', segue='tratamento'))
-
-_referencias['corpo'] += p('Revisão clínica: <a href="https://academic.oup.com/rheumatology/article/65/6/keag223/8713811">BSR 2026 — diagnóstico e avaliação de LES</a>; <a href="https://arupconsult.com/content/systemic-lupus-erythematosus">ARUP — avaliação laboratorial de LES</a>; <a href="https://arupconsult.com/content/hemolytic-anemias">ARUP — investigação de hemólise</a>; <a href="https://www.endocrine.org/clinical-practice-guidelines/glucocorticoid-induced-adrenal-insufficiency">ESE/Endocrine Society 2024 — exposição a corticoide e retirada</a>.')
+next(e for e in ETAPAS if e['k'] == 'referencias')['corpo'] += p('Evolução clínica ficcional informada pela variedade de manifestações descrita em <a href="https://pubmed.ncbi.nlm.nih.gov/25500707/">Dumas et al., 2014, série de 91 casos</a>. A série sustenta a possibilidade de artralgias e de evolução autolimitada, não uma cronologia diária individual.')

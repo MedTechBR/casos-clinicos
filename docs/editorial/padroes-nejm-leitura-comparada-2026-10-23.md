@@ -52,3 +52,31 @@ A leitura ampliada mostra que ainda é preciso revisar a seleção de exames com
 ## Limite da referência
 
 Esses casos são antigos. Nomes, critérios, exames e tratamentos apresentados neles não devem ser adotados como recomendações atuais sem verificação independente. A referência aqui é editorial e pedagógica. Nenhuma imagem ou texto clínico do NEJM foi incorporado ao aplicativo.
+
+## Segunda leitura: o paciente entre as perguntas
+
+Mais cinco casos foram lidos na mesma sessão institucional, com atenção a manifestações, respostas e mudanças de prioridade. Total acumulado: **11 casos, 77 questões**. Leitura dos textos das páginas, perguntas e explicações no player, sem afirmar que todos os controles de todos os casos foram exercitados.
+
+| Caso adicional | Questões | O que muda durante a história | Consequência para o raciocínio |
+|---|---:|---|---|
+| [Painful Purple Toes](https://interactive.nejm.org/imc/NEJMdo004904/index.html) | 7 | O quadro periférico é integrado a comprometimento de outros territórios; a investigação depois identifica neoplasia. Mais tarde há progressão clínica apesar do tratamento. | Rever a explicação dos eventos vasculares e distinguir problema atual, mecanismo e doença de base. A virada central é sobretudo diagnóstica; não é exemplo de vários sintomas novos a cada página. |
+| [The Beat Goes On](https://interactive.nejm.org/imc/NEJMdo004906/index.html) | 6 | Após estabilização e alta, novas arritmias motivam reinternações, mudança de tratamento e investigação etiológica adicional. | Tratar a manifestação inicial não encerra a causa. A recorrência altera a necessidade e a utilidade de outros procedimentos. |
+| [A Crazy Cause of Dyspnea](https://interactive.nejm.org/imc/NEJMdo004910/index.html) | 6 | Há melhora inicial, retorno posterior com tosse, perda de capacidade de exercício e depois limitação para atividades cotidianas. As explicações usuais deixam de bastar. | A trajetória funcional importa. Reexaminar o mecanismo da dispneia antes de escolher um teste mais invasivo. |
+| [Stalking the Diagnosis](https://interactive.nejm.org/imc/NEJMdo004905/index.html) | 6 | Uma infecção tratada não explica a persistência dos sintomas; a estabilização posterior é seguida por alteração do equilíbrio de água, que muda novamente a prioridade. | Uma hipótese pode explicar apenas parte do quadro. Tratamento e circunstâncias assistenciais podem tornar visível outro problema antes da etiologia final. |
+| [A Rash Hypothesis](https://interactive.nejm.org/imc/NEJMdo004907/index.html) | 7 | A história e o exame ampliados conectam pele e sintomas digestivos. Depois do diagnóstico, resposta inicial e recorrência motivam ajuste do tratamento. | Não chamar de sintoma novo o achado antigo que só foi revelado depois. Separar descoberta de informação, evolução real e resposta ao tratamento. |
+
+### Distinção necessária
+
+- **Revelação:** uma história já existente ou um exame previamente colhido fica conhecido. O paciente não necessariamente mudou.
+- **Evolução:** surge ou regride uma manifestação, muda o exame físico ou a capacidade funcional, há resposta incompleta, recorrência ou novo órgão acometido.
+- **Reformulação:** a mudança clínica obriga a revisar a hierarquia de hipóteses, o local de cuidado ou a escolha do exame/tratamento.
+
+O caso pode conter as três coisas. Nosso problema é a predominância da primeira. Acrescentar mais exames, mais datas ou a frase “a febre persiste” não resolve esse defeito.
+
+### Critério para escrever cada alíquota clínica
+
+Antes de escrever a pergunta, registrar: estado anterior → evento observado → novo estado → dúvida que esse evento criou → decisão que agora tem valor. Não introduzir um teste discriminante e só depois perguntar se era preciso investigá-lo. Não inventar complicação grave para produzir entretenimento.
+
+Para Bianca, a nova versão deve mostrar fases clínicas antes do laudo: eventual melhora incompleta; progressão além da adenopatia inicial; manifestações novas que reabrem o diferencial; reavaliação antes de uma amostra invasiva; e recuperação que pode ocorrer em ritmos diferentes para febre, pele e linfonodos. Cada mudança precisa de plausibilidade clínica e deve afetar a próxima ação. Não é obrigatório converter toda Kikuchi em choque, síndrome hemofagocítica ou LES.
+
+Sustentação para ampliar o fenótipo ficcional, e não para copiar um paciente: [Dumas et al., 91 casos, PMID 25500707](https://pubmed.ncbi.nlm.nih.gov/25500707/). A série descreve manifestações cutâneas e musculoesqueléticas e destaca a necessidade de avaliar associação com LES. Não estabelece que uma sequência específica ocorra em todos os pacientes.
