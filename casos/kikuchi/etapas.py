@@ -216,10 +216,10 @@ ETAPAS = [
          'aponte tuberculose ou linfoma. A radiografia simples não vê '
          'linfonodos pequenos.']),
 
-    pg('hipotese', 'Investigação dirigida',
-       'Faringite no início, febre e linfonodos cervicais posteriores tornam infecções mononucleose-símile uma linha inicial plausível. O exame não mostrou foco dentário, otológico ou cutâneo nem coleção. Não há indicação de repetir antibiótico apenas porque o primeiro falhou.',
-       'A equipe solicita sorologia para EBV, CMV e toxoplasmose e teste de quarta geração para HIV. Revê exposição sexual recente, contato com gatos e viagens; não há um achado epidemiológico que defina sozinho a investigação.',
-       'Bianca mantém sintomáticos e retorna em uma semana. Infecção local, infecção sistêmica, doença inflamatória e neoplasia permanecem no diferencial.'),
+    pg('hipotese', 'Intervalo entre as consultas',
+       'Nos dias seguintes, Bianca tenta manter as aulas pela manhã. À tarde, a temperatura volta a subir e o pescoço dói ao virar a cabeça. O paracetamol alivia por algumas horas, mas os linfonodos não diminuem. O companheiro não percebe aumento em outras regiões.',
+       'Na revisão da história, ela nega contato conhecido com tuberculose, consumo de leite não pasteurizado e viagem recente. O gato vive dentro de casa; não houve lesão no braço ou no rosto antes do caroço. Esses dados orientam a investigação, sem excluir isoladamente uma infecção.',
+       'A equipe colhe os testes selecionados para infecções associadas a esse quadro e mantém o retorno programado. Bianca recebe orientação para procurar o serviço antes se tiver dificuldade para engolir, falta de ar ou piora importante do estado geral.'),
 
     painel('res2', 'Retorno', 'Sorologias', [
         ex('EBV IgM (anti-VCA)', 'Não reagente', 'não reagente'),
@@ -229,7 +229,7 @@ ETAPAS = [
         ex('Toxoplasmose: IgM / IgG', 'Não reagente / não reagente', 'não reagente'),
         ex('HIV, teste de quarta geração', 'Não reagente', 'não reagente'),
         ex('VDRL', 'Não reagente', 'não reagente'),
-    ], introducao='Colhidas na primeira consulta, no 12.º dia de febre.'),
+    ], introducao='Investigação dirigida após os primeiros resultados, ainda na segunda semana de febre.'),
 
     Q('sorologias_leitura', 1, 'Qual interpretação integra melhor os resultados para EBV?',
 [('Infecção passada, sem evidência sorológica de infecção primária recente', True),
@@ -251,7 +251,8 @@ ETAPAS = [
 
     pg('evolucao1', 'Terceira semana',
        'No retorno, no 19.º dia, a febre chega a 38,8 °C. O maior linfonodo mede cerca de 3,9 cm no ultrassom de controle, e surgiram dois menores na cadeia cervical posterior direita. Perdeu mais 1 kg. Leucócitos: 2.500/mm³; neutrófilos: 1.300/mm³; LDH: 360 U/L.',
-       'Continuam sem linfonodos palpáveis em outras regiões, lesões cutâneas ou sinovite. O comprometimento cervical bilateral continua regional; não equivale, por si, a adenopatia generalizada.',
+       'Bianca deixou de dar aulas: sente cansaço ao final da manhã e come menos porque o pescoço incomoda ao mastigar. Não há dificuldade para engolir nem alteração da voz. A temperatura entre os picos é normal, e ela permanece hidratada, sem hipotensão.',
+       'No reexame, não há linfonodos axilares ou inguinais, aumento do baço, lesões cutâneas ou sinovite. O comprometimento cervical agora é bilateral. Os dentes, a orofaringe e o couro cabeludo continuam sem lesões que expliquem os linfonodos.' ,
        'A prova tuberculínica solicitada na avaliação dirigida mede 14 mm. Bianca recebeu BCG na infância e não refere contato conhecido com tuberculose. A radiografia de tórax não mostrou alterações.'),
 
     bifurcacao('b1', 'Decisão', 'O linfonodo em crescimento',
@@ -301,20 +302,52 @@ ETAPAS = [
        'Bianca é encaminhada para avaliação do linfonodo. Uma punção por agulha fina, realizada no encaminhamento, mostra população linfoide polimórfica, sem células malignas identificadas. A citometria não detecta população B clonal. O material não permite avaliar a arquitetura do linfonodo.',
        'A febre persiste e o linfonodo não diminuiu. Ele é superficial, acessível e não está aderido aos planos profundos. A causa permanece sem definição.'),
 
-    Q('p4', 1, 'Após essa amostra, qual é o próximo passo?',
-[('Retirada de um linfonodo para histologia e microbiologia', True),
- ('Repetir a punção com nova citologia e citometria', False),
- ('Biópsia por agulha grossa para histologia e microbiologia', False),
- ('PET-CT para escolher o linfonodo mais ativo', False)],
-[('Melhor opção aqui',
-  'A punção não encerrou a investigação: ausência de células malignas e de clone B não exclui todos os linfomas. O linfonodo é acessível e a retirada permite '
-  'avaliar sua arquitetura e realizar estudos complementares. A escolha depende também do risco do '
-  'procedimento e da disponibilidade local.'),
- ('Alternativas próximas',
-  'A punção fina pode ajudar em metástases e infecções, mas avalia mal a arquitetura. A agulha grossa é '
-  'uma alternativa quando o risco ou a localização desfavorecem a retirada; não é um exame errado em '
-  'si. O PET-CT não distingue com segurança inflamação de neoplasia e, com um linfonodo já acessível, '
-  'não resolve a pergunta principal.')]),
+    Q('p4', 1, 'Como esse resultado modifica a investigação?',
+[('Favorece reação benigna e permite aguardar regressão antes de nova amostra', False),
+ ('Reduz a suspeita de linfoma B clonal, sem explicar a evolução ou avaliar a arquitetura', True),
+ ('Desloca a prioridade para infecção, pois o material já foi avaliado por citometria', False),
+ ('Torna o PET-CT mais informativo que nova análise do tecido para definir a causa', False)],
+[('O que foi demonstrado',
+  'A punção não identificou células malignas nem população B clonal no material obtido. Isso reduz '
+  'o suporte a algumas hipóteses, mas não exclui Hodgkin, outras neoplasias ou erro de amostragem.'),
+ ('O que continua sem resposta',
+  'O exame não avaliou a arquitetura. Febre persistente, crescimento e perda de peso mantêm a '
+  'necessidade de esclarecimento; células polimórficas não demonstram a causa nem garantem benignidade.'),
+ ('Como usar o resultado',
+  'É necessário decidir se a amostra respondeu à dúvida clínica. O PET pode mostrar atividade '
+  'tanto em inflamação quanto em neoplasia; não substitui o tecido. Observação precisa ser '
+  'justificada pela evolução, não apenas pela ausência de um clone na punção.')]),
+
+    bifurcacao('b_amostra', 'Decisão', 'Obtenção de tecido',
+      'Qual estratégia você escolhe para esclarecer a causa?', [
+      caminho('Biópsia excisional do linfonodo acessível', 'tecido2',
+              'Preserva a arquitetura e oferece material para estudos complementares. O benefício deve ser ponderado com o risco cirúrgico e a disponibilidade.'),
+      caminho('Biópsia por agulha grossa guiada por ultrassom', 'fragmentos',
+              'É uma alternativa em contextos selecionados. A suficiência depende da amostra e da pergunta; se não for diagnóstica, é preciso rever a estratégia.'),
+      caminho('Reavaliação em duas semanas antes de nova amostra', 'observacao',
+              'A estabilidade permite acompanhamento organizado, mas a progressão já descrita torna menos favorável adiar o tecido. A observação exige retorno definido e critérios para antecipá-lo.'),
+    ]),
+
+    pg('fragmentos', 'Resultado da biópsia por agulha',
+       'Uma semana depois, os fragmentos mostram tecido linfoide com áreas de necrose. O patologista não encontra uma população maligna inequívoca, mas considera o material insuficiente para classificar a lesão e avaliar sua distribuição no linfonodo.',
+       'Bianca ainda tem febre e dor no pescoço. O hemograma não mostra blastos, e as plaquetas continuam preservadas. O resultado parcial não explica o quadro.', segue='b_fragmentos'),
+
+    bifurcacao('b_fragmentos', 'Decisão', 'Amostra não diagnóstica',
+      'Qual procedimento oferece mais informação agora?', [
+      caminho('Retirar o linfonodo para avaliar a arquitetura', 'tecido2',
+              'Com suspeita persistente e uma amostra por agulha insuficiente, a excisão é preferível, quando viável, a repetir o mesmo método sem perspectiva de resolver a limitação.'),
+      caminho('Repetir a biópsia por agulha em outro ponto', 'fragmentos_repetidos',
+              'Uma nova amostra pode ter indicação se a cirurgia não for viável. Nesta trajetória há um linfonodo acessível e a limitação é arquitetural.'),
+    ]),
+
+    pg('fragmentos_repetidos', 'Segunda amostra',
+       'A nova biópsia também mostra fragmentos com necrose e tecido inflamatório, sem permitir uma conclusão. Os procedimentos não causaram complicações, mas a febre persiste e a investigação se prolonga.',
+       'Na reunião com cirurgia e patologia, a equipe revê a necessidade de estudar o linfonodo inteiro. Bianca concorda com a retirada após discutir riscos e benefícios.', segue='tecido2'),
+
+    pg('observacao', 'Reavaliação após duas semanas',
+       'Bianca retorna na data marcada. A febre ainda chega a 38,6 °C ao final do dia. A dor oscila, mas os linfonodos não regrediram. Continua afastada das aulas e perdeu mais 0,5 kg; não tem tosse, dispneia, lesões cutâneas ou dor articular.',
+       'Leucócitos: 2.400/mm³ (referência 4.000–11.000); hemoglobina: 11,3 g/dL (12–16); plaquetas: 181.000/mm³ (150.000–450.000). A estabilidade das plaquetas e do exame geral não esclarece a causa da febre.',
+       'Diante da persistência, a equipe e Bianca retomam a discussão da amostra excisional. O linfonodo permanece superficial e acessível.', segue='tecido2'),
 
     pg('tecido2', 'Amostra do linfonodo',
        'O cirurgião retira o linfonodo cervical mais representativo. A amostra é distribuída conforme o plano acordado: histologia e imuno-histoquímica, citometria de fluxo e investigação microbiológica.',
@@ -461,11 +494,9 @@ ETAPAS = [
        'quando voltar antes do retorno marcado.',
        conforme=('b1', ['f0', 'f_ripe', 'alta_cort'])),
 
-    fim('f0', 'Recuperação sem desvios',
+    fim('f0', 'Recuperação clínica',
         'Depois do retorno inicial em meio período, Bianca retoma o trabalho integral na avaliação seguinte, já sem febre ou dor. Não precisou de tratamento específico adicional.',
-        'Tecido no momento em que a linfadenopatia passou a crescer, com parte '
-        'a fresco, respondeu às hipóteses de uma vez e poupou tratamento '
-        'empírico.', 'melhor', fecho='extensao'),
+        'A amostra excisional esclareceu a causa após a investigação. Conforme o caminho escolhido, houve observação ou amostras anteriores não diagnósticas; a ausência de complicações não transforma o atraso em uma vantagem.', 'melhor', fecho='extensao'),
 
     pg('alta_cort', 'Oito semanas depois',
        'Bianca está sem febre, mas o corticoide deixou marcas: insônia, '
@@ -475,19 +506,19 @@ ETAPAS = [
 
     fim('f_ripe', 'Recuperação depois de uma hepatite medicamentosa',
         'A ALT volta ao normal três semanas depois da suspensão. Bianca fica '
-        'sete semanas afastada e sai com uma notificação de tuberculose que '
+        'afastada até a recuperação clínica e sai com uma notificação de tuberculose que '
         'precisou ser encerrada como erro diagnóstico.',
         'A prova tuberculínica não demonstrou doença ativa. A melhora durante o esquema não confirmou tuberculose; a trajetória incluiu toxicidade e atraso até a definição histológica.', 'medio', fecho='extensao'),
 
     fim('f_cort', 'Recuperação com diagnóstico atrasado',
         'A biópsia, com o patologista avisado, é conclusiva. A prednisona é '
-        'retirada em três semanas, e Bianca fica seis semanas afastada.',
+        'retirada em três semanas, com recuperação gradual antes da volta ao trabalho.',
         'O corticoide aliviou a febre sem dizer o que ela era. Parar a tempo '
         'e contar ao patologista preservou a leitura da lâmina.', 'medio',
         fecho='extensao'),
 
-    fim('f_pior', 'Dois ciclos de corticoide e dez semanas afastada',
-        'Bianca fica dez semanas longe da escola, com 4 kg a mais e a febre '
+    fim('f_pior', 'Recuperação após dois ciclos de corticoide',
+        'Bianca permanece várias semanas longe da escola, com 4 kg a mais e a febre '
         'voltando a cada redução. A lâmina, colhida sob corticoide, precisa de '
         'revisão por um segundo patologista antes do laudo.',
         'Ciclos empíricos podem dificultar a interpretação histológica e atrasar o reconhecimento de uma infecção ou neoplasia.', 'pior',
@@ -650,22 +681,29 @@ _inserir_antes('res1', pagina('diferencial_inicial', 'Discussão', 'Linfonodomeg
       ['Inflamação / medicamentos', 'Pele, articulações, urina e cronologia de fármacos', 'Achados associados que direcionem exames'],
     ])))
 
-_inserir_antes('b1', Q('p_probabilidade', 1, 'Qual resultado mais fortaleceria tuberculose como causa dos linfonodos?',
-[('Cultura do linfonodo positiva para Mycobacterium tuberculosis', True),
- ('Granulomas necrosantes no exame do linfonodo', False),
- ('Nova prova tuberculínica com reação maior', False),
- ('Redução da febre durante tratamento empírico', False)],
-[('Mais específico',
-  'A identificação de M. tuberculosis na cultura do linfonodo fornece evidência etiológica no órgão '
-  'acometido. O teste molecular rápido também pode contribuir; resultados negativos não descartam '
-  'sozinhos doença com poucos bacilos.'),
- ('Evidências concorrentes',
-  'Granulomas necrosantes apoiam a hipótese, mas também aparecem em outras infecções. Uma prova '
-  'tuberculínica maior demonstra resposta imune e não localiza doença. A queda da febre sob tratamento '
-  'é inespecífica e pode coincidir com a evolução natural.'),
- ('PPD de 14 mm',
-  'O PPD mantém a hipótese em discussão. BCG prévia não permite descartá-lo automaticamente, e '
-  'radiografia normal não exclui tuberculose ganglionar.')]))
+_inserir_antes('b1', Q('p_probabilidade', 1, 'Quais duas hipóteses mais justificam obter tecido neste momento?',
+[('Linfoma', True),
+ ('Mononucleose primária por EBV', False),
+ ('Linfadenite tuberculosa', True),
+ ('Linfadenite por Bartonella', False),
+ ('Linfadenite associada a lúpus', False),
+ ('Linfadenite bacteriana supurativa', False)],
+[('Linfoma',
+  'Progressão, sintomas constitucionais e ausência de uma infecção recente demonstrada justificam '
+  'investigar essa hipótese. Dor, mobilidade e leucopenia não a excluem. Não significa que linfoma '
+  'seja a única explicação, nem que sintomas constitucionais confirmem câncer.'),
+ ('Tuberculose ganglionar',
+  'A evolução subaguda e a prova tuberculínica de 14 mm sustentam sua investigação. O PPD não '
+  'demonstra doença ativa, e uma radiografia normal não exclui acometimento ganglionar. O tecido '
+  'deve ser planejado também para microbiologia.'),
+ ('Infecções concorrentes',
+  'O padrão de EBV favorece contato passado. Bartonella continua possível, mas há menos apoio '
+  'epidemiológico e clínico para priorizá-la sobre as duas selecionadas. Na forma supurativa, '
+  'esperaríamos maior suporte de infecção local ou coleção; a ausência desses achados não é exclusão absoluta.'),
+ ('Autoimunidade',
+  'Lúpus permanece no diferencial pela idade e pela leucopenia, mas ainda não há manifestações '
+  'associadas que o tornem uma das duas prioridades. A pergunta hierarquiza a investigação; não '
+  'pretende excluir as demais causas antes da análise do tecido.')]))
 
 _inserir_antes('diagnostico', pg('reavaliacao_laudo', 'Reavaliação clínica',
     'Quando o laudo complementar chega, Bianca ainda tem febre à tarde e dor no pescoço, mas segue estável. Os linfonodos permanecem móveis e não há flutuação. O exame não mostra aumento do baço, sinovite, úlceras orais ou lesões cutâneas; a urina anterior não tinha sangue nem proteína.',
@@ -766,3 +804,6 @@ for _n, _e in enumerate((x for x in ETAPAS if x['t'] in ('pergunta', 'pareamento
 
 _referencias = next(e for e in ETAPAS if e['k'] == 'referencias')
 _referencias['corpo'] += p('Relatos usados para discutir a sequência diagnóstica, sem reproduzir pacientes: <a href="https://pubmed.ncbi.nlm.nih.gov/20111755/">Archibald e cols., 2009</a>; <a href="https://pubmed.ncbi.nlm.nih.gov/22461878/">Hassan e cols., 2009</a>; <a href="https://pubmed.ncbi.nlm.nih.gov/37605695/">Arya e cols., 2023, linfadenite lúpica como diagnóstico concorrente</a>. Bianca e seus percursos continuam ficcionais.')
+
+for _n, _e in enumerate((x for x in ETAPAS if x['t'] in ('pergunta', 'pareamento')), 1):
+    _e['kicker'] = f'Pergunta {_n}'

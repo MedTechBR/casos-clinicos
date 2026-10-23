@@ -39,7 +39,7 @@ CASOS = [
     caso(slug="kikuchi", titulo="O que ficou no pescoço",
          subtitulo="Uma professora de 27 anos chega no 12º dia de febre, com um caroço doloroso no pescoço que o antibiótico não mudou.",
          especialidade="Clínica médica", minutos=50, decisoes=6,
-         desfechos=3, nivel="os dois", cor="laranja", capa="../../kikuchi/img/cena.png", arquivo="o-que-ficou-no-pescoco.html?v=20261023-anatomoclinica"),
+         desfechos=3, nivel="os dois", cor="laranja", capa="../../kikuchi/img/cena.png", arquivo="o-que-ficou-no-pescoco.html?v=20261023-bianca-evolucao"),
     caso(slug="sarcoidose", titulo="Entre a sede e o fôlego",
          subtitulo="Um analista administrativo chega ao pronto-socorro nauseado, confuso e com o intestino preso há cinco dias.",
          especialidade="Clínica médica", minutos=50, decisoes=6,
