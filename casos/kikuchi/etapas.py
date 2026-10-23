@@ -93,7 +93,7 @@ ETAPAS = [
                    ('Cabeça e pescoço', 'Orofaringe sem exsudato, dentes sem cárie '
                     'visível, couro cabeludo sem lesões. Três linfonodos na cadeia '
                     'cervical posterior esquerda, móveis, elásticos e dolorosos, o '
-                    'maior com cerca de 2 cm, sem rubor e sem flutuação. Tireoide e '
+                    'maior com cerca de 3 cm à palpação, sem rubor e sem flutuação. Tireoide e '
                     'parótidas normais. Fossas supraclaviculares livres.'),
                    ('Outras cadeias', 'Sem linfonodos axilares, epitrocleares ou '
                     'inguinais palpáveis.'),
@@ -215,11 +215,11 @@ ETAPAS = [
       ]),
 
     pg('evolucao1', 'Terceira semana',
-       'No retorno, no 19.º dia, a febre chega a 38,8 °C. O maior linfonodo mede 2,8 cm, e surgiram dois menores na cadeia cervical posterior direita. Perdeu mais 1 kg. Leucócitos: 2.500/mm³; neutrófilos: 1.300/mm³; LDH: 360 U/L.',
+       'No retorno, no 19.º dia, a febre chega a 38,8 °C. O maior linfonodo mede cerca de 3,9 cm no ultrassom de controle, e surgiram dois menores na cadeia cervical posterior direita. Perdeu mais 1 kg. Leucócitos: 2.500/mm³; neutrófilos: 1.300/mm³; LDH: 360 U/L.',
        'Continuam sem linfonodos palpáveis em outras regiões, lesões cutâneas ou sinovite. O comprometimento cervical bilateral continua regional; não equivale, por si, a adenopatia generalizada.',
        'A prova tuberculínica solicitada na avaliação dirigida mede 14 mm. Bianca recebeu BCG na infância e não refere contato conhecido com tuberculose. A equipe considera tuberculose ganglionar, mas mantém doença linfoproliferativa e causas inflamatórias.'),
 
-    bifurcacao('b1', 'Decisão', 'O linfonodo de 2,8 cm',
+    bifurcacao('b1', 'Decisão', 'O linfonodo em crescimento',
       'Três semanas de febre, prova tuberculínica de 14 mm e linfonodos '
       'crescendo. Bianca está estável e quer uma resposta. O que você faz?', [
       caminho('Biópsia excisional nesta semana, com parte a fresco', 'tecido',
@@ -235,7 +235,7 @@ ETAPAS = [
     ]),
 
     pg('ripe', 'Terceira semana de tratamento',
-       'Após iniciar rifampicina, isoniazida, pirazinamida e etambutol, a febre diminui. Na terceira semana, surgem náuseas e vômitos. ALT: 310 U/L (referência até 40); bilirrubina: 0,8 mg/dL; INR: 1,0. O linfonodo permanece com 2,8 cm.',
+       'Após iniciar rifampicina, isoniazida, pirazinamida e etambutol, a febre diminui. Na terceira semana, surgem náuseas e vômitos. ALT: 310 U/L (referência até 40); bilirrubina: 0,8 mg/dL; INR: 1,0. O linfonodo permanece com cerca de 3,9 cm.',
        segue='b_toxicidade'),
 
     pg('corticoide', 'Duas semanas de prednisona',
@@ -259,7 +259,7 @@ ETAPAS = [
 
     pg('novo_ciclo', 'Mais duas semanas',
        'A febre melhora de novo e volta na redução. Bianca está afastada do '
-       'trabalho há um mês, dorme mal e ganhou 4 kg. O linfonodo mede 3 cm. '
+       'trabalho há um mês, dorme mal e ganhou 4 kg. O linfonodo mede cerca de 4,2 cm no controle. '
        'A equipe abandona os ciclos, reduz a prednisona e marca a biópsia.',
        segue='tecido'),
 
@@ -751,3 +751,11 @@ _inserir_antes('nova_doenca', bifurcacao('b_renal_inicial', 'Decisão', 'Após o
     ]))
 for _n, _e in enumerate((x for x in ETAPAS if x['t'] in ('pergunta', 'pareamento')), 1):
     _e['kicker'] = f'Pergunta {_n}'
+
+# Medida aproximada baseada na escala visível da imagem original (D = 4 cm).
+from .medida_us import sobreposicao as _medida_us
+_us = next(e for e in ETAPAS if e['k'] == 'us_cervical')
+_us['corpo'] = _us['corpo'].replace('</g></svg>', _medida_us() + '</g></svg>', 1)
+_us['corpo'] = _us['corpo'].replace('A imagem não apresenta medidas assinaladas.',
+    'Medida aproximada no corte: 3,5 × 1,1 cm, estimada pela escala de profundidade de 4 cm da imagem original. Cálipers A/B e régua de 1 cm adicionados para ensino; não são medidas registradas no exame original.')
+_us['corpo'] = _us['corpo'].replace('setas adicionadas', 'setas, cálipers e régua adicionados · estimativa didática')
