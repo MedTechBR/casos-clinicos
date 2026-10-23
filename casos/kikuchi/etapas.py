@@ -618,14 +618,14 @@ _inserir_antes('res1', pagina('diferencial_inicial', 'Discussão', 'Linfonodomeg
     ])))
 
 _inserir_antes('b1', Q('p_probabilidade', 4,
-    'A prova tuberculínica mede 14 mm e Bianca recebeu BCG na infância. A equipe considera pedir um exame de sangue para infecção tuberculosa (IGRA) antes de decidir a conduta. Que informação esse exame acrescentaria?', [
-      ('Maior especificidade para infecção por micobactéria do complexo tuberculose, sem distinguir doença ativa de infecção latente', True),
-      ('Estimativa da atividade ganglionar pelo valor quantitativo, permitindo acompanhar resposta ao tratamento', False),
-      ('Confirmação da causa do linfonodo quando concordante com a prova tuberculínica', False),
-      ('Diferenciação entre linfoma e linfadenite tuberculosa pela intensidade da resposta imune', False),
+    'Bianca mantém febre, perda de peso e linfonodos em crescimento. A prova tuberculínica (PPD) mede 14 mm. Como esse resultado deve influenciar o raciocínio?', [
+      ('Manter tuberculose entre as hipóteses e buscar evidência no linfonodo, sem abandonar as outras causas', True),
+      ('Iniciar tratamento para tuberculose, pois o PPD positivo com sintomas confirma a causa dos linfonodos', False),
+      ('Desconsiderar o resultado, pois a vacinação BCG na infância explica qualquer PPD positivo', False),
+      ('Tratar como infecção latente, pois a radiografia de tórax normal afasta doença ativa', False),
     ], [
-      ('O que mede', 'IGRA não é afetado pela BCG como a prova tuberculínica pode ser. Ambos pesquisam resposta imune à infecção, não demonstram que a doença atual esteja no linfonodo.'),
-      ('O que falta', 'Um segundo teste de sensibilização não responde à pergunta etiológica que permanece. Progressão e sintomas persistentes justificam discutir amostragem, mantendo infecção, neoplasia e inflamação no diferencial.'),
+      ('O que o PPD informa', 'Uma reação positiva pode indicar infecção pela bactéria da tuberculose. Sozinha, não distingue infecção latente de doença ativa nem demonstra a causa dos linfonodos. A BCG prévia não permite descartar automaticamente o resultado.'),
+      ('O que investigar', 'A radiografia de tórax normal não exclui tuberculose nos linfonodos. A evolução clínica justifica obter tecido para análise e pesquisa da bactéria, mantendo também causas neoplásicas e inflamatórias.'),
     ]))
 
 _inserir_antes('diagnostico', pagina('diferencial_final', 'Discussão', 'Revisão das hipóteses',
