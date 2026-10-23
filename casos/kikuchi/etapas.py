@@ -104,14 +104,14 @@ ETAPAS = [
            so_kicker=True),
 
     Q('p1', 1,
-      'Bianca tem adenopatia cervical localizada há 12 dias, com febre e perda de peso, mas está estável e não há foco na área de drenagem. Qual plano inicial é mais adequado?', [
+      'Bianca tem linfonodos aumentados no pescoço há 12 dias, com febre e perda de peso. Está estável, e o exame não encontrou infecção na garganta, nos dentes ou no couro cabeludo que explique esse aumento. Qual plano inicial é mais adequado?', [
       ('Observar por quatro semanas, com exames apenas se o linfonodo persistir', False),
-      ('Colher hemograma e exames dirigidos, avaliar o pescoço e reexaminar em curto prazo', True),
+      ('Colher hemograma e selecionar outros exames conforme as hipóteses, avaliar o pescoço e marcar retorno próximo', True),
       ('Trocar a amoxicilina por cobertura mais ampla e usar a resposta para decidir os exames', False),
       ('Solicitar PET-CT para selecionar as hipóteses que merecem investigação', False),
       ], [
-      ('O problema inicial', 'É uma linfonodomegalia localizada com sintomas sistêmicos. A estabilidade permite investigar ambulatorialmente, mas febre, perda ponderal e ausência de foco tornam inadequada a observação sem plano.'),
-      ('O que procurar', 'Caracterizar outras cadeias, área de drenagem, exposições e medicamentos. Hemograma e testes selecionados pela história ajudam a decidir o próximo passo; ultrassom avalia estrutura e coleção, sem substituir seguimento.'),
+      ('O problema inicial', 'É uma linfonodomegalia localizada com sintomas sistêmicos. A estabilidade permite investigar ambulatorialmente, mas febre, perda ponderal e ausência de uma infecção local identificável tornam inadequada a observação sem plano.'),
+      ('O que procurar', 'Examinar os linfonodos de outras regiões e procurar infecções na garganta, boca, dentes, pele e couro cabeludo. Perguntar sobre contatos, animais, viagens e medicamentos. Hemograma e testes selecionados pela história ajudam a decidir o próximo passo; ultrassom avalia estrutura e coleção, sem substituir seguimento.'),
       ('Reavaliar', 'Marcar retorno em uma semana, antecipado diante de piora, crescimento rápido, dificuldade para engolir ou respirar. O intervalo muda conforme gravidade; não existe tamanho ou prazo isolado que resolva todos os casos.'),
       ]),
 
@@ -223,7 +223,7 @@ ETAPAS = [
       'crescendo. Bianca está estável e quer uma resposta. O que você faz?', [
       caminho('Biópsia excisional nesta semana, com parte a fresco', 'tecido',
               'Uma amostra responde às duas hipóteses: arquitetura para '
-              'linfoma, cultura e TRM-TB para tuberculose.'),
+              'linfoma, cultura e teste molecular rápido para tuberculose (TRM-TB).'),
       caminho('Iniciar o esquema básico para tuberculose sem tecido', 'ripe',
               'A prova tuberculínica mede infecção, não doença. Seis meses de '
               'tratamento sem confirmação expõem a hepatotoxicidade e podem '
@@ -344,7 +344,7 @@ ETAPAS = [
           'com plasmócitos',
           'Linfadenite lúpica',
           'Pode haver sobreposição; corpos hematoxilínicos e '
-          'plasmócitos puxam para lúpus. Daí o FAN agora.'),
+          'plasmócitos favorecem lúpus. Por isso, a equipe solicita o fator antinuclear (FAN).'),
       par('Células de Reed-Sternberg em fundo inflamatório misto',
           'Linfoma de Hodgkin clássico',
           'Morfologia e imunofenótipo precisam ser interpretados em conjunto; uma citometria negativa não exclui esse diagnóstico.'),
@@ -360,7 +360,7 @@ ETAPAS = [
            'células dendríticas plasmocitoides CD123 positivas · predomínio de '
            'linfócitos T CD8', '—', True),
         ex('Células de Reed-Sternberg (CD15 / CD30)', 'Ausentes', 'ausentes'),
-        ex('Pesquisa de BAAR no tecido', 'Negativa', 'negativa'),
+        ex('Pesquisa de bacilos da tuberculose no tecido (BAAR)', 'Negativa', 'negativa'),
         ex('Cultura de micobactérias e fungos', 'Em andamento', '—'),
         ex('FAN', 'Não reagente', 'não reagente'),
         ex('Anti-DNA nativo', 'Não reagente', 'não reagente'),
@@ -617,7 +617,7 @@ _inserir_antes('res1', pagina('diferencial_inicial', 'Discussão', 'Linfonodomeg
     ])))
 
 _inserir_antes('b1', Q('p_probabilidade', 4,
-    'A prova tuberculínica mede 14 mm e Bianca recebeu BCG na infância. A equipe considera pedir IGRA antes de decidir a conduta. Que informação esse exame acrescentaria?', [
+    'A prova tuberculínica mede 14 mm e Bianca recebeu BCG na infância. A equipe considera pedir um exame de sangue para infecção tuberculosa (IGRA) antes de decidir a conduta. Que informação esse exame acrescentaria?', [
       ('Maior especificidade para infecção por micobactéria do complexo tuberculose, sem distinguir doença ativa de infecção latente', True),
       ('Estimativa da atividade ganglionar pelo valor quantitativo, permitindo acompanhar resposta ao tratamento', False),
       ('Confirmação da causa do linfonodo quando concordante com a prova tuberculínica', False),
@@ -630,7 +630,7 @@ _inserir_antes('b1', Q('p_probabilidade', 4,
 _inserir_antes('diagnostico', pagina('diferencial_final', 'Discussão', 'Revisão das hipóteses',
     tabela(['Hipótese', 'Dados que a enfraquecem', 'Limite da conclusão'], [
       ['Infecção viral aguda', 'Sorologias sem padrão recente e progressão', 'Janela e exposição sempre importam'],
-      ['Tuberculose ganglionar', 'Morfologia sem granulomas; TRM e BAAR negativos', 'Negativos isolados não excluem; acompanhar cultura'],
+      ['Tuberculose ganglionar', 'Sem granulomas; teste molecular e pesquisa de bacilos negativos', 'Negativos isolados não excluem; acompanhar cultura'],
       ['Linfoma', 'Revisão morfológica e imuno-histoquímica sem suporte', 'Citometria isolada não basta'],
       ['Linfadenite associada a lúpus', 'Sem manifestações associadas, autoanticorpos ou consumo de complemento', 'Seguimento permanece aberto'],
     ])))
@@ -676,7 +676,7 @@ _inserir_antes('p1', Q('hipoteses_apresentacao', 1,
     ('Infecções sistêmicas com acometimento linfonodal', True),
     ('Doença linfoproliferativa', True),
     ('Doença inflamatória ou autoimune', True),
-    ('Infecção bacteriana localizada na área de drenagem', False),
+    ('Infecção bacteriana na garganta, nos dentes ou na pele próxima', False),
     ('Metástase de carcinoma de cabeça e pescoço', False),
     ('Reação medicamentosa à amoxicilina', False),
     ], [

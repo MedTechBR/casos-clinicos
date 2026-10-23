@@ -43,3 +43,6 @@ Revisão clínica das afirmações; diagnóstico final não exposto nas alternat
 
 ## Público-alvo
 Residentes de clínica médica. Perguntas devem avaliar enquadramento sindrômico, probabilidade, indicação e interpretação dos exames, gravidade e conduta. Detalhes de processamento de amostras, técnicas laboratoriais e subclassificações especializadas entram apenas como apoio quando mudam uma decisão clínica. Explicar siglas na primeira ocorrência.
+
+## Linguagem clara em todo o catálogo
+Descrever o dado concreto antes da interpretação. Evitar expressões vagas como “foco na área de drenagem”: nomear os locais examinados e o que não foi encontrado. Explicar siglas na primeira ocorrência, preferir frases diretas e explicitar quais exames ou manifestações estão sendo discutidos. Manter precisão clínica e dificuldade do raciocínio, sem exigir decodificação de jargão.
