@@ -352,22 +352,29 @@ ETAPAS = [
          'neutrófilos e sem granulomas.',
          'Não apresenta o padrão granulomatoso caseoso típico. Isso enfraquece, mas não exclui tuberculose; a conclusão depende da amostra completa e da microbiologia.']),
 
-    Q('p5', 1, 'Quais duas hipóteses melhor se ajustam ao padrão da biópsia?',
-[('Doença de Kikuchi–Fujimoto', True),
- ('Linfadenite lúpica', True),
- ('Linfadenite tuberculosa', False),
- ('Doença da arranhadura do gato', False),
- ('Linfadenite supurativa', False),
- ('Linfoma de Hodgkin', False)],
-[('Melhor ajuste',
-  'Necrose, cariorrexe, histiócitos e escassez de neutrófilos compõem um padrão compatível com Kikuchi '
-  'e também com linfadenite lúpica. A distinção exige correlação clínica, análise completa do tecido e '
-  'investigação autoimune.'),
- ('Demais hipóteses',
-  'Tuberculose é enfraquecida pela ausência do padrão granulomatoso típico, sem estar excluída. '
-  'Arranhadura do gato costuma apresentar granulomas com microabscessos; a forma supurativa, '
-  'neutrófilos abundantes. O tecido descrito não demonstra as células e o contexto morfológico '
-  'esperados para Hodgkin; discordância clínica exigiria revisão.')]),
+    Q('p5', 1, 'Quais duas medidas mais ajudam a interpretar esse laudo?',
+[('Correlacionar FAN, anti-DNA e complemento com pele, articulações e urina', True),
+ ('Mapear a atividade dos linfonodos com PET-CT', False),
+ ('Rever a amostra com hematopatologista e integrar os estudos infecciosos', True),
+ ('Biopsiar um segundo linfonodo antes da revisão da primeira amostra', False),
+ ('Repetir sorologias para EBV e CMV neste momento', False),
+ ('Investigar a medula óssea pela leucopenia persistente', False)],
+[('Correlação clínica e autoimune',
+  'Prioritária. O padrão necrosante sem neutrófilos também pode ocorrer na linfadenite do lúpus. '
+  'É preciso procurar manifestações associadas e interpretar os autoanticorpos e o complemento '
+  'nesse contexto; nenhum marcador isolado resolve a distinção.'),
+ ('Revisão da amostra e microbiologia',
+  'Prioritária. Necrose não é uma etiologia. A arquitetura, as populações celulares, a '
+  'imuno-histoquímica e a investigação de infecção devem ser interpretadas em conjunto. '
+  'A pesquisa de bacilos negativa e a ausência de granulomas não excluem tuberculose sozinhas.'),
+ ('PET-CT ou segunda biópsia',
+  'Atividade no PET pode ocorrer tanto em inflamação quanto em linfoma. Uma nova amostra pode '
+  'ser necessária se a primeira for insuficiente ou houver discordância; aqui, a amostra '
+  'excisional ainda está em análise e deve ser revista antes de repetir o procedimento.'),
+ ('Sorologias ou medula',
+  'Não há nova exposição ou cronologia que justifique repetir agora as sorologias já colhidas. '
+  'A leucopenia requer controle; progressão das citopenias, alterações no esfregaço ou suspeita '
+  'de doença medular mudariam a indicação. Ela não substitui a interpretação do linfonodo.')]),
 
     painel('res3', 'Complemento da biópsia', 'Tecido e autoanticorpos', [
         ex('Imuno-histoquímica', 'Histiócitos CD68 e mieloperoxidase positivos · '
@@ -379,13 +386,13 @@ ETAPAS = [
         ex('FAN', 'Não reagente', 'não reagente'),
         ex('Anti-DNA nativo', 'Não reagente', 'não reagente'),
         ex('C3 / C4', '112 / 25 mg/dL', '90–180 / 10–40 mg/dL'),
-    ], introducao='Com a lâmina, a equipe fecha as alternativas que ela '
-                  'deixou abertas.'),
+    ], introducao='A equipe revê o exame físico e completa a análise do tecido. As culturas ainda estão em andamento.'),
 
-    pg('diagnostico', 'Integração diagnóstica',
-       'A revisão da amostra demonstra linfadenite necrosante histiocítica, compatível com doença de Kikuchi–Fujimoto. A morfologia, a imuno-histoquímica e a apresentação clínica sustentam o diagnóstico; ele não foi estabelecido apenas porque outros testes vieram negativos.',
+    pg('diagnostico', 'Discussão anatomoclínica',
+       'O hematopatologista integra a amostra excisional à evolução e conclui que o conjunto é compatível com doença de Kikuchi–Fujimoto, também chamada linfadenite necrosante histiocítica. A conclusão depende da amostra completa e de sua correlação com a avaliação clínica.',
+       'O diagnóstico reúne três componentes: febre e linfonodos cervicais dolorosos de evolução subaguda; leucopenia e investigação inicial sem causa definida; e necrose com fragmentos nucleares e histiócitos, sem padrão supurativo. Nenhum desses componentes clínicos é específico. A arquitetura e os estudos complementares do tecido dão sustentação ao diagnóstico.',
        'A investigação não sustenta infecção supurativa, linfoma ou linfadenite tuberculosa. As culturas ainda serão acompanhadas. FAN e anti-DNA não reagentes, complemento normal e ausência de manifestações sistêmicas tornam lúpus menos provável neste momento, sem representar exclusão definitiva.',
-       'O achado raro passa a ser a melhor explicação porque integra o padrão de tecido à doença observada. Persistência, novas manifestações ou evolução discordante reabririam o diagnóstico.'),
+       'A conclusão é de alta compatibilidade anatomoclínica, não um diagnóstico por exclusão nem um marcador exclusivo. Ela orienta o acompanhamento enquanto as culturas terminam. Piora, progressão das citopenias ou manifestações novas exigem reavaliação.'),
 
     painel('res3b', 'No dia do laudo', 'Sangue', [
         ex('Hemoglobina', '11,4 g/dL', '12–16 g/dL', True),
@@ -660,6 +667,10 @@ _inserir_antes('b1', Q('p_probabilidade', 1, 'Qual resultado mais fortaleceria t
   'O PPD mantém a hipótese em discussão. BCG prévia não permite descartá-lo automaticamente, e '
   'radiografia normal não exclui tuberculose ganglionar.')]))
 
+_inserir_antes('diagnostico', pg('reavaliacao_laudo', 'Reavaliação clínica',
+    'Quando o laudo complementar chega, Bianca ainda tem febre à tarde e dor no pescoço, mas segue estável. Os linfonodos permanecem móveis e não há flutuação. O exame não mostra aumento do baço, sinovite, úlceras orais ou lesões cutâneas; a urina anterior não tinha sangue nem proteína.',
+    'A punção inicial não explicou o quadro. A amostra excisional mostra um processo inflamatório com necrose, e a revisão não identifica uma população linfoide maligna. O padrão deve ser discutido com a clínica: dor e mobilidade não excluem linfoma, e a ausência de granulomas não encerra a investigação de tuberculose.'))
+
 _inserir_antes('diagnostico', pagina('diferencial_final', 'Discussão', 'Revisão das hipóteses',
     tabela(['Hipótese', 'Dados que a enfraquecem', 'Limite da conclusão'], [
       ['Infecção viral aguda', 'Sorologias sem padrão recente e progressão', 'Janela e exposição sempre importam'],
@@ -672,6 +683,11 @@ for _n, _e in enumerate((x for x in ETAPAS if x['t'] in ('pergunta','pareamento'
     _e['kicker'] = f'Pergunta {_n}'
 ETAPAS[-1]['corpo'] += p('Referências da revisão sindrômica: <a href="https://www.cdc.gov/epstein-barr/php/laboratories/index.html">CDC — sorologia para EBV</a>; <a href="https://www.cdc.gov/tb/hcp/testing-diagnosis/index.html">CDC — investigação de tuberculose</a>; <a href="https://www.nice.org.uk/guidance/ng52/chapter/Recommendations">NICE NG52 — amostragem em suspeita de linfoma</a>.')
 
+
+_inserir_antes('conduta', pg('como_foi_estabelecido', 'Como o diagnóstico foi estabelecido',
+    'A suspeita inicial era ampla: uma infecção podia explicar a dor de garganta e os linfonodos, mas a febre persistente, o crescimento e a perda de peso obrigaram a investigar também tuberculose e linfoma. Os exames de sangue e a ultrassonografia caracterizaram o problema; não identificaram a causa.',
+    'Foi a persistência do quadro, e não uma imagem típica, que levou à obtenção de tecido. A biópsia estreitou as hipóteses. A avaliação clínica, a microbiologia e os estudos complementares permitiram ao patologista sustentar Kikuchi e comparar esse diagnóstico com linfadenite associada a lúpus.',
+    'A melhora posterior sem tratamento específico de infecção ou neoplasia será coerente com um curso autolimitado, mas não é usada para justificar retrospectivamente a decisão de biopsiar. Acompanhamento e revisão de resultados pendentes fazem parte da conclusão.'))
 
 _inserir_antes('conduta', pg('relacao_lupus', 'Relação com o lúpus',
     'A doença de Kikuchi–Fujimoto tem associação descrita com lúpus eritematoso sistêmico (LES). Pode ocorrer antes, ao mesmo tempo ou depois do diagnóstico de LES. Essa associação não significa que toda paciente desenvolverá lúpus nem que o episódio atual já seja uma manifestação dele.',
@@ -747,3 +763,6 @@ ETAPAS.remove(_p8)
 _inserir_antes('b2', _p8)
 for _n, _e in enumerate((x for x in ETAPAS if x['t'] in ('pergunta', 'pareamento')), 1):
     _e['kicker'] = f'Pergunta {_n}'
+
+_referencias = next(e for e in ETAPAS if e['k'] == 'referencias')
+_referencias['corpo'] += p('Relatos usados para discutir a sequência diagnóstica, sem reproduzir pacientes: <a href="https://pubmed.ncbi.nlm.nih.gov/20111755/">Archibald e cols., 2009</a>; <a href="https://pubmed.ncbi.nlm.nih.gov/22461878/">Hassan e cols., 2009</a>; <a href="https://pubmed.ncbi.nlm.nih.gov/37605695/">Arya e cols., 2023, linfadenite lúpica como diagnóstico concorrente</a>. Bianca e seus percursos continuam ficcionais.')
