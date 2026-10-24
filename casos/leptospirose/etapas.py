@@ -1,21 +1,6 @@
-"""Febre ictérica grave com lesão renal e hemorragia pulmonar.
+"""Caso ficcional reformulado em 23/10/2026: evolução clínica antes da resolução.
 
-PILOTO do molde do //New England// lido em 26/09/2026 (ver
-Artifacts/nejm-casos-classicos/GRAMATICA_LIDA_2026-09-26.md), no desenho de
-"An Unusual Case of Abdominal Pain": apresentação curta, ficha do paciente,
-exame por sistema e primeiros exames entregues prontos; as primeiras
-leituras classificam os dados sem nomear doença; a exposição chega
-depois, com o irmão; o nome do diagnóstico aparece pela primeira vez na
-pergunta do exame confirmatório, perto de 60% do caso. Cada pergunta tem uma
-explicação só, em seções com subtítulo. As decisões de conduta continuam
-mudando o desfecho, a pedido do Matheus.
-
-Revisão de 30/09: seis perguntas no caminho padrão, nunca duas telas
-interativas seguidas; o padrão hepático e os critérios de gravidade viraram
-páginas de discussão, e a primeira pergunta só classifica a lesão renal.
-
-Paciente ficcional; doses e critérios segundo o Guia de Vigilância em Saúde
-do Ministério da Saúde, 6.ª edição revisada, 2024.
+Imagens, créditos e marcações preservados. Fontes e limites no fechamento.
 """
 from pathlib import Path
 
@@ -128,6 +113,10 @@ ETAPAS = [
         ex('Sódio / creatinina / potássio urinários', '64 mmol/L / 50 mg/dL / 38 mmol/L · FENa 2,5%', '—', True),
     ]),
 
+    pg('suporte_inicial', 'Primeiros minutos',
+ 'Enquanto os exames chegam, ele recebe oxigênio, monitorização e cristaloide em alíquotas pequenas, com reavaliação de perfusão e ausculta. Após 500 mL, a pressão passa a 108/64, sem piora das crepitações; saturação 94% com oxigênio. Ceftriaxona 2 g IV a cada 24 horas e azitromicina são iniciadas após culturas pela suspeita inicial de infecção pulmonar grave.',
+ 'A internação em terapia intensiva é organizada pela disfunção respiratória e renal. Não se aguarda uma pergunta nem confirmação etiológica para oferecer suporte e antibiótico. O volume adicional será individualizado; melhora da pressão não autoriza bolus repetidos independentemente do pulmão.'),
+
     estudo('rx_adm', 'Radiografia de tórax na admissão',
            'Radiografia feita na chegada. Descreva a localização e o tipo da '
            'opacidade antes de ler os achados.',
@@ -142,7 +131,7 @@ ETAPAS = [
         ['Consolidação alveolar em base direita, sem derrame pleural e sem '
          'aumento da área cardíaca.',
          'Com febre, tosse, leucocitose e neutrofilia, é o quadro de uma '
-         'pneumonia comunitária, e é essa a hipótese que a equipe registra.']),
+         'infecção pulmonar; pneumonia comunitária é a hipótese inicial, mas icterícia e lesão renal exigem ampliar a investigação.']),
 
     estudo('us_adm', 'Ultrassonografia de abdome',
            'Ultrassonografia feita na chegada, pela icterícia e pela dor no '
@@ -160,20 +149,9 @@ ETAPAS = [
          'Sem obstrução biliar nem urinária: a icterícia e a lesão renal são '
          'de dentro do fígado e do rim.']),
 
-    pagina('figado', 'Discussão', 'O padrão hepático',
-        p('A bilirrubina total é de 6,4 mg/dL, 5,3 dela direta, com fosfatase '
-          'alcalina de 190 e GGT de 160 U/L. As transaminases, 96 e 70 U/L, '
-          'ficam abaixo de três vezes o limite. A icterícia é desproporcional à '
-          'lesão do hepatócito, e esse é o padrão colestático.'),
-        p('O ultrassom sem dilatação das vias biliares põe a colestase dentro do '
-          'fígado. Uma obstrução extra-hepática dilataria as vias, e a hemólise '
-          'elevaria a fração indireta. Uma hepatite viral, isquêmica ou tóxica '
-          'com essa icterícia teria transaminases nas centenas altas ou nos '
-          'milhares, e a infiltração do fígado sobe a fosfatase alcalina muito '
-          'mais que a bilirrubina.'),
-        p('Colestase intra-hepática aparece na sepse de qualquer foco, inclusive '
-          'o pulmonar, em infecções sistêmicas e na lesão por fármacos. Sozinha, '
-          'ainda cabe na hipótese de pneumonia com sepse.')),
+    pagina('figado', 'Discussão', 'Icterícia no quadro febril',
+ p('Bilirrubina predominantemente direta, com elevação relativamente modesta de transaminases, favorece comprometimento colestático associado à doença sistêmica. Ultrassom sem dilatação reduz o suporte a obstrução evidente, mas não exclui toda obstrução inicial.'),
+ p('Sepse, infecção sistêmica e lesão por fármacos podem produzir esse padrão. Transaminases abaixo de três vezes o limite não excluem absolutamente hepatite viral ou tóxica; o curso, exposições e exames dirigidos determinam a investigação. Não se deduz necrose ou sua ausência apenas desses valores.')),
 
     Q('p3', 1,
       'Qual interpretação integra creatinina 2,6, cilindros granulosos e hipocalemia com K urinário 38?', [
@@ -184,71 +162,39 @@ ETAPAS = [
       ('Obstrução urinária com diurese paradoxal', False),
     ], [('Integração', 'Cilindros granulosos, FENa 2,5% e urina pouco concentrada favorecem lesão tubular. A hipotensão pode contribuir, mas não explica sozinha o padrão urinário. K urinário 38 durante hipocalemia sugere perda renal inadequada, interpretada com diurese e reposição.'), ('Concorrentes', 'CK 2.380 e sangue na fita com poucas hemácias sustentam contribuição de pigmento muscular, sem provar que seja o mecanismo dominante. Pouca proteína e ausência de cilindros hemáticos enfraquecem glomerulonefrite; ultrassom sem dilatação reduz obstrução. FENa não é um divisor infalível na sepse.')]),
 
-    pagina('gravidade', 'Discussão', 'A gravidade antes da causa',
-        p('Com a hipótese de pneumonia comunitária, a equipe aplica os critérios '
-          'menores de gravidade da IDSA/ATS: frequência respiratória de 30 ou '
-          'mais, PaO₂/FiO₂ de 250 ou menos, infiltrados multilobares, confusão, '
-          'ureia acima de cerca de 42 mg/dL, leucócitos abaixo de 4.000/mm³, '
-          'plaquetas abaixo de 100.000/mm³, temperatura abaixo de 36 °C e '
-          'hipotensão que exige volume agressivo.'),
-        p('Ele preenche três: ureia de 148, plaquetas de 88.000 e frequência '
-          'respiratória de 30. A PaO₂/FiO₂ é 58 dividido por 0,21, igual a 276, '
-          'a consolidação ocupa um lobo só e ele está sonolento, mas orientado. '
-          'A leucocitose de 15.600 não conta, porque o critério é a leucopenia.'),
-        p('Três ou mais critérios menores indicam terapia intensiva. A regra '
-          'orienta o local de tratamento e nada diz sobre a causa. Ureia alta, '
-          'plaquetas baixas e icterícia num quadro pulmonar pedem que se '
-          'pergunte se a pneumonia explica tudo.')),
+    pg('exposicao_precoce', 'A história é ampliada na emergência',
+ 'Após a estabilização inicial, o paciente consegue detalhar o trabalho: é agente de limpeza urbana. Doze dias antes da febre, entrou num canal alagado com uma bota furada, após chuvas fortes. O irmão confirma ratos no depósito da equipe. Esse evento já ocorreu; é informação recuperada, não uma manifestação nova.',
+ 'O reexame dirigido encontra hiperemia conjuntival sem secreção e dor mais intensa nas panturrilhas. A exposição, a icterícia e a lesão renal tornam prioritária uma infecção sistêmica relacionada à água. A ceftriaxona já cobre uma das principais hipóteses; não há razão para interrompê-la enquanto se investiga.'),
 
-    bifurcacao('b1', 'Decisão', 'As primeiras horas',
-      'Hipotenso, hipoxêmico, com lesão tubular e colestase, três critérios '
-      'menores de gravidade. As hemoculturas já foram colhidas. Como você '
-      'conduz?', [
-      caminho('Ceftriaxona 2 g e azitromicina agora, oxigênio e vaga de UTI',
-              'tratado',
-              'Pneumonia grave com sepse pede betalactâmico com macrolídeo no '
-              'primeiro atendimento, e três critérios menores indicam UTI.'),
-      caminho('Oxigênio e hidratação; escolher o antibiótico quando saírem as '
-              'hemoculturas', 'espera',
-              'Culturas levam dias, e a mortalidade da sepse sobe a cada hora '
-              'sem antibiótico.'),
-      caminho('Conduzir como dengue grave: cristaloide 20 mL/kg em bolus '
-              'repetidos, sem antibiótico', 'volume',
-              'Crepitações e hipoxemia pedem cautela com volume, e a colestase '
-              'com lesão tubular não é o padrão da dengue.'),
-    ]),
+    Q('p_etiologias', 2, 'Quais três hipóteses você prioriza entre estas possibilidades para integrar o quadro atual?',
+ [('Leptospirose', True), ('Pneumonia bacteriana com sepse', True), ('Dengue com comprometimento de órgãos', True), ('Hepatite viral isolada', False), ('Cólica biliar não complicada', False), ('Síndrome nefrótica primária isolada', False)],
+ [('Integração', 'A exposição à enchente, mialgia, hiperemia conjuntival, icterícia e lesão renal favorecem leptospirose. Pneumonia continua concorrente pela imagem inicial e dengue merece investigação no contexto epidemiológico, sem usar uma hipótese para impedir antibiótico.'),
+ ('Proporção', 'Hepatite isolada, cólica biliar e síndrome nefrótica não explicam bem pulmão, plaquetas e lesão tubular. A ausência de exantema não exclui dengue. A seleção hierarquiza as opções, sem exigir que sejam equiprováveis.')]),
 
-    pg('volume', 'Quatro horas depois',
-       'Depois de três litros de cristaloide, a pressão sobe para 102/60, mas '
-       'a saturação cai para 84% com cateter nasal e as crepitações chegam '
-       'aos terços médios. A plantonista suspende o volume e inicia '
-       'ceftriaxona e azitromicina com quatro horas de atraso.',
-       segue='tratado'),
+    Q('p5', 3, 'Quais dois testes mais ajudam a confirmar a hipótese ligada à água nesta fase?',
+ [('PCR para Leptospira no sangue da admissão', True), ('IgM anti-Leptospira', True), ('Hemocultura convencional para Leptospira', False), ('Cultura urinária para decisão imediata', False), ('Microaglutinação única como único método', False)],
+ [('Fase da doença', 'O sangue pré-antibiótico do sexto dia é apropriado para PCR; positivo confirma infecção. IgM inicial pode ser negativa e deve ser interpretada com tempo de sintomas, com nova amostra na convalescença.'),
+ ('Resultados e suporte', 'Cultivo específico é lento e hemocultura convencional não identifica adequadamente esse agente. A equipe envia PCR e sorologia independentemente da resposta do aluno; nenhum teste deve atrasar tratamento.')]),
 
-    pg('espera', 'Dezoito horas depois',
-       'Sob soro e oxigênio, a saturação cai para 85% e a urina para 20 mL '
-       'por hora. As hemoculturas ainda não cresceram. A plantonista inicia '
-       'ceftriaxona e azitromicina com dezoito horas de atraso.',
-       segue='tratado'),
+    pg('coletas', 'Coletas e prioridades',
+ 'PCR para Leptospira e IgM são encaminhadas na amostra da admissão. A investigação de dengue inclui NS1 nesta fase e sorologia conforme janela. A função hepática e o coagulograma serão seriados; não se considera hemocultura convencional negativa como exclusão da infecção suspeitada.',
+ 'Na observação, a pressão permanece melhor e ele consegue conversar. Ainda necessita de oxigênio e tem pouca urina. A melhora de um órgão não significa recuperação global.'),
 
-    pg('tratado', 'Primeiras horas de antibiótico',
-       'Duas horas depois da primeira dose, ele tem calafrios, febre de 40 °C '
-       'e queda da pressão para 84/50. Com 500 mL de cristaloide e '
-       'antitérmico, melhora em quatro horas. A equipe mantém os antibióticos.',
-       'Na madrugada, a tosse fica úmida e ele expectora sangue vivo.'),
+    pg('reacao_inicial', 'Duas horas após o antibiótico',
+ 'Ele apresenta calafrios, temperatura de 40 °C e pressão de 84/50. Não há urticária, sibilância ou edema de língua. A equipe reavalia perfusão, sangramento, reação ao medicamento e progressão da infecção; administra suporte titulado e mantém vigilância intensiva.',
+ 'Em quatro horas a pressão volta a 106/62 e os calafrios cedem. Uma reação de Jarisch–Herxheimer é possível no contexto, mas não se pode atribuir toda hipotensão ao antibiótico nem deixar de tratar choque se persistir. O episódio não demonstra falha do esquema nem confirma a causa.'),
 
-    pg('hemorragia', 'Segundo dia de internação',
-       'Saturação de 83% com máscara com reservatório, frequência '
-       'respiratória de 36, hemoptise de 150 mL em seis horas. Diurese de 280 '
-       'mL em 24 horas.',
-       'Hemoglobina 9,6 g/dL (12,8 na admissão), plaquetas 38.000/mm³, INR '
-       '1,4, fibrinogênio 390 mg/dL, esfregaço sem esquizócitos. Bilirrubina '
-       'total 17,8 mg/dL, creatinina 4,6 mg/dL, potássio 3,0 mmol/L. A '
-       'radiografia é repetida.'),
+    pg('pulmao_muda', 'Seis horas de internação',
+ 'Apesar da melhora da pressão e de estar mais desperto, ele precisa de mais oxigênio para manter saturação de 92%. A tosse fica úmida e aparecem novos episódios de sangue vivo. A diurese permanece baixa; não houve balanço volumoso que explicasse sozinho a mudança pulmonar.',
+ 'A equipe repete hemograma e radiografia e acompanha gasometria e lactato. Prepara suporte de via aérea caso a troca gasosa piore. A suspeita deixa de ser apenas uma consolidação focal: hemorragia, edema e dano alveolar por infecção precisam ser comparados.'),
+
+    pg('hemorragia', 'Doze horas: o quadro torna-se bilateral',
+ 'A saturação cai a 83% mesmo com máscara com reservatório; frequência respiratória 36, uso de musculatura acessória e cerca de 150 mL de hemoptise nas últimas seis horas. Hemoglobina 9,6 g/dL, plaquetas 38.000/mm³, INR 1,4 e fibrinogênio 390 mg/dL. Bilirrubina total 17,8, creatinina 4,6 e potássio 3,0; o esfregaço não mostra esquizócitos.',
+ 'A gasometria mostra pH 7,30, pCO₂ 32 mmHg e HCO₃ 15 mmol/L; lactato 2,0 mmol/L. Diante da hipoxemia persistente e do sangramento, realiza-se intubação na UTI, sem esperar broncoscopia ou resultado etiológico. A deterioração faz parte deste percurso ficcional de doença grave apesar do tratamento; não é consequência obrigatória de uma escolha.'),
 
     estudo('rx_hemorragia', 'Radiografia de tórax',
            'Radiografia ilustrativa de outro paciente, com o padrão descrito '
-           'no laudo dele no segundo dia. Compare com a da admissão, que '
+           'no laudo dele após a mudança respiratória. Compare com a da admissão, que '
            'mostrava consolidação só na base direita.',
            IMG / 'rx_torax_alveolar.jpg',
            'Radiografia de outro paciente · comparação didática.',
@@ -258,10 +204,9 @@ ETAPAS = [
          ((704, 430), (912, 320), 'O mesmo padrão no **pulmão esquerdo**: a doença é bilateral.', -12),
          ((620, 160), (760, 60), '**Ápices relativamente poupados**: o predomínio é central e inferior.', 12),
         ],
-        ['Opacidades alveolares bilaterais e confluentes, que em 24 horas '
-         'passaram da base direita para os dois pulmões.',
-         'Com hemoptise e queda de 3,2 g/dL na hemoglobina, o que enche os '
-         'alvéolos é sangue: hemorragia alveolar difusa.']),
+        ['Opacidades alveolares bilaterais e confluentes, que '
+         'passaram da base direita para os dois pulmões em poucas horas.',
+         'Com hemoptise e queda da hemoglobina, há forte suspeita de hemorragia alveolar. A radiografia isolada não distingue sangue, edema e outras causas de preenchimento alveolar.']),
 
     Q('p4', 2,
       'Hemoptise, Hb em queda e plaquetas 38.000, com INR 1,4 e fibrinogênio 390. Quais duas interpretações se sustentam?', [
@@ -272,97 +217,31 @@ ETAPAS = [
       ('A contagem plaquetária permite atribuir a hemorragia apenas à hemostasia primária', False),
     ], [('Limite da inferência', 'A gravidade pulmonar não deve ser atribuída apenas às plaquetas: lesão capilar pode coexistir. Fibrinogênio preservado, reagente de fase aguda, não exclui CIVD; faltam tendência do coagulograma e marcadores de fibrina para caracterizar consumo.'), ('Comparação', 'Sem esquizócitos nem demonstração de hemólise microangiopática, a microangiopatia perde força, sem ser impossibilidade. A hemorragia exige suporte e pode justificar plaquetas; INR 1,4 isolado não fundamenta plasma.')]),
 
-    pg('suporte', 'Uma hora depois',
-       'Ele recebe uma dose de plaquetas e um concentrado de hemácias, sem '
-       'plasma. As plaquetas sobem para 61.000/mm³ e a hemoglobina para 10,4 '
-       'g/dL, mas a hemoptise continua.',
-       'A saturação não passa de 83% com a máscara com reservatório. A '
-       'frequência respiratória é de 38, com uso da musculatura acessória, e a '
-       'sonda vesical drenou 10 mL na última hora.'),
+    pg('suporte', 'Suporte e investigação do sangramento',
+ 'A ventilação usa volume corrente em torno de 6 mL/kg de peso predito e pressões ajustadas à mecânica e à oxigenação. Plaquetas são transfundidas diante do sangramento ativo e da contagem de 38.000; o controle é 61.000/mm³. Plasma não é indicado apenas pelo INR de 1,4.',
+ 'A hemoglobina de 9,6 não determina, isoladamente, transfusão de hemácias: a equipe acompanha perda, perfusão e tendência. São solicitados ANCA e anti-membrana basal glomerular pela síndrome pulmonar-renal, além de revisão do sedimento e marcadores de hemólise. A hipótese infecciosa permanece forte, mas não exclui capilarite por princípio.'),
 
-    bifurcacao('b2', 'Decisão', 'O pulmão que sangra',
-      'Saturação de 83% com máscara, hemoptise e oligúria. O que você faz?', [
-      caminho('UTI: intubação precoce com ventilação protetora e diálise '
-              'precoce e diária', 'uti',
-              'Proteger o pulmão com volumes baixos e dialisar cedo reduz a '
-              'mortalidade.'),
-      caminho('Ventilação não invasiva e furosemida em dose alta', 'vni',
-              'A máscara não protege uma via aérea que sangra, e o diurético '
-              'não muda o curso da lesão renal.'),
-      caminho('Pulso de metilprednisolona e observação na enfermaria', 'pulso',
-              'O corticoide na hemorragia pulmonar é controverso e não '
-              'substitui suporte intensivo.'),
-    ]),
+    bifurcacao('b1', 'Decisão', 'O que acrescentar à investigação agora?',
+ 'Após intubação e estabilização, há dúvida sobre o mecanismo das opacidades. Qual avaliação você prioriza?', [
+ caminho('Ecocardiografia à beira do leito', 'eco', 'Ajuda a avaliar função cardíaca e congestão sem transporte; não confirma nem exclui sozinha hemorragia alveolar.'),
+ caminho('Broncoscopia com lavado sequencial', 'lavado', 'Pode documentar sangramento alveolar e colher agentes, se a oxigenação e o risco do procedimento permitirem. Não deve atrasar ventilação ou suporte.')]),
 
-    pg('pulso', 'Seis horas depois',
-       'Na enfermaria, sob corticoide, a saturação cai para 78%. O time de '
-       'resposta rápida é chamado.',
-       segue='vni'),
+    pg('eco', 'Avaliação hemodinâmica',
+ 'Não há disfunção ventricular importante ou valvopatia que explique a mudança. Isso enfraquece edema cardiogênico como causa principal, sem excluir aumento de permeabilidade ou algum componente de volume. Sangue pelo tubo e queda de hemoglobina mantêm forte suspeita de hemorragia alveolar.',
+ 'A equipe decide não acrescentar broncoscopia de imediato, pois a informação disponível já orienta suporte e a hipoxemia aumenta o risco. A avaliação microbiológica inicial continua em andamento.', segue='rim'),
 
-    pg('vni', 'Na sala de emergência',
-       'Com ventilação não invasiva, ele enche a máscara de sangue e não '
-       'consegue manter a saturação acima de 80%. Está agitado e confuso.',
-       segue='b3'),
+    pg('lavado', 'Depois de melhorar a oxigenação',
+ 'Com ventilação estabilizada e plaquetas acima de 50.000 após reposição, a equipe pondera benefício e risco e faz broncoscopia sem biópsia. Não há fonte endobrônquica focal; alíquotas sequenciais do lavado tornam-se progressivamente mais hemorrágicas, apoiando hemorragia alveolar.',
+ 'O material é encaminhado à microbiologia. A documentação do mecanismo não identifica a causa: infecção sistêmica e capilarite continuam na discussão até integrar os demais exames.', segue='rim'),
 
-    bifurcacao('b3', 'Decisão', 'A máscara falhou',
-      'Qual a próxima conduta?', [
-      caminho('Intubar agora, ventilação protetora e UTI com diálise',
-              'uti_tardia', 'A falha da ventilação não invasiva é a indicação.'),
-      caminho('Manter a máscara e aumentar a fração inspirada de oxigênio',
-              'parada', 'Insistir num suporte que já falhou.'),
-    ]),
+    pg('rim', 'O suporte renal acompanha a evolução',
+ 'A oligúria persiste, com balanço positivo crescente e dificuldade de controlar o volume num pulmão gravemente comprometido. A nefrologia inicia terapia renal substitutiva pela situação clínica, com modalidade e frequência ajustadas à estabilidade, depuração e balanço.',
+ 'Não se indica diálise apenas pela creatinina de 4,6 nem um calendário diário universal. O potássio baixo exige reposição e ajuste da solução utilizada; insuficiência renal grave não significa obrigatoriamente retenção de potássio.'),
 
-    pg('parada', 'Vinte minutos depois',
-       'Ele para em atividade elétrica sem pulso, hipoxêmico. É intubado '
-       'durante a reanimação, com sangue saindo pelo tubo. O retorno da '
-       'circulação acontece depois de 18 minutos.',
-       segue='f_obito'),
-
-    pg('uti_tardia', 'Na UTI',
-       'Intubado em emergência, com ventilação protetora, pressão expiratória '
-       'alta e sedação profunda. A hemodiálise começa no mesmo dia. A '
-       'hipoxemia grave dura quatro dias.',
-       segue='irmao'),
-
-    pg('uti', 'Na UTI',
-       'Intubação planejada, ventilação com volume corrente de 6 mL/kg de '
-       'peso predito e pressão expiratória elevada. Hemodiálise no mesmo dia, '
-       'depois diária, com reposição de potássio.',
-       'A hemoptise diminui no terceiro dia.'),
-
-    pg('irmao', 'O irmão volta',
-       'O irmão volta com os documentos, depois de conversar com os colegas de '
-       'trabalho. Ele é agente de limpeza urbana. Doze dias antes da febre, '
-       'depois de três dias de chuva forte, passou um turno dentro de um canal '
-       'alagado, desobstruindo a passagem da água, com uma bota furada.',
-       'Revisto com calma, o exame mostra conjuntivas hiperemiadas, sem '
-       'secreção, dor à compressão muito maior nas panturrilhas e um corte '
-       'cicatrizado na planta do pé direito. Os colegas dizem que o depósito '
-       'da equipe tem ratos.',
-       'As hemoculturas seguem sem crescimento em 48 horas.'),
-
-    Q('p5', 3,
-      'Há sangue do sexto dia, pré-antibiótico. Quais duas estratégias laboratoriais priorizar para a hipótese ligada à enchente?', [
-      ('PCR para Leptospira na amostra guardada', True),
-      ('IgM na amostra aguda e repetição na convalescença se negativa', True),
-      ('Microaglutinação isolada na amostra aguda como único teste', False),
-      ('Cultura urinária para decisão nas próximas horas', False),
-      ('Nova hemocultura convencional para identificar Leptospira', False),
-    ], [('Prioridades', 'PCR sanguínea aproveita a primeira semana de leptospiremia e pode confirmar rapidamente. IgM aguda fornece referência; negativa nessa fase não afasta a doença e deve ser repetida. Os resultados agudo e convalescente aparecem na sequência.'), ('Alternativas', 'Microaglutinação isolada tem sensibilidade limitada cedo; amostras pareadas são mais informativas. Cultura urinária é lenta e a eliminação urinária tende a ser posterior. Hemocultura convencional não é o método de isolamento para este agente; as já negativas não o excluem. Nenhum resultado deve atrasar o tratamento.')]),
-
-    pg('virada', 'O diagnóstico',
-       'Laboratório de referência: **PCR para Leptospira no sangue, DNA '
-       'detectado.** ELISA IgM na mesma amostra: não reagente.',
-       'É leptospirose na forma grave, a síndrome de Weil: icterícia, lesão '
-       'renal e hemorragia pulmonar. A leptospira entra por pele lesada ou '
-       'mucosa em contato com água ou lama contaminada pela urina de roedores. '
-       'A vasculite capilar difusa explica o que se viu: colestase sem '
-       'necrose, lesão tubular com perda de potássio, miosite e sangramento '
-       'alveolar. A hemorragia pulmonar é a complicação que mais mata, com '
-       'letalidade acima de 50% em várias séries.',
-       'A ceftriaxona dada para a pneumonia já tratava a doença, e a febre '
-       'com hipotensão duas horas depois da primeira dose ganha agora outro '
-       'sentido.'),
+    pg('virada', 'Integração etiológica',
+ 'O laboratório de referência detecta DNA de Leptospira no sangue pré-antibiótico do sexto dia. IgM na mesma amostra é não reagente; isso não contradiz a PCR positiva nesta fase. A exposição e o conjunto clínico estabelecem leptospirose grave, com comprometimento hepatorrenal e hemorragia pulmonar.',
+ 'NS1 para dengue é negativo; a sorologia de convalescença ainda será conferida. ANCA e anti-membrana basal glomerular são negativos. A revisão urinária mantém poucas hemácias, sem cilindros hemáticos; não há aumento de bilirrubina indireta, queda de haptoglobina ou esquizócitos que sustentem hemólise microangiopática. Esses negativos não excluem toda doença autoimune, mas a confirmação infecciosa oferece explicação coerente.',
+ 'A ceftriaxona é mantida para completar sete dias, com revisão do esquema conforme evolução. A azitromicina é suspensa quando a investigação não sustenta coinfecção bacteriana comunitária. Não se atribui uma porcentagem individual de morte ao paciente nem se promete que antibiótico elimina o risco de progressão já instalada.'),
 
     Q('p6', 4,
       'Antes da diálise, creatinina 4,6 e K 3,0, após K 3,1 com K urinário 38 na admissão. Qual interpretação integra melhor essa evolução?', [
@@ -373,29 +252,18 @@ ETAPAS = [
       ('Recuperação da filtração já estabelecida pela queda do potássio', False),
     ], [('Integração', 'K urinário de 38 durante hipocalemia sugere excreção renal inadequada, embora a concentração isolada dependa do fluxo urinário. Lesão tubular pode produzir perda de K mesmo com filtração muito reduzida; creatinina alta não garante hipercalemia.'), ('Comparação', 'Perda digestiva e redistribuição podem contribuir, mas isoladamente explicam pior a excreção urinária descrita. Miosite com lise celular tende a liberar K, não explica a hipocalemia persistente. Potássio baixo não documenta recuperação da filtração: pode persistir perda tubular durante lesão renal grave.')]),
 
-    pg('recuperacao', 'Segunda semana',
-       'A diurese volta com poliúria de 4 litros por dia. O potássio cai para '
-       '2,9 mmol/L apesar de 80 mEq por dia de reposição, e o magnésio para '
-       '1,4 mg/dL. A icterícia regride devagar. A segunda amostra, no 14.º '
-       'dia, tem ELISA IgM reagente e microaglutinação com título de 1:1.600 '
-       'para o sorogrupo Icterohaemorrhagiae.'),
+    pg('recuperacao', 'Segunda semana: o rim muda de fase',
+ 'A hemoptise diminui no terceiro dia e o suporte respiratório é reduzido progressivamente. No nono dia, a diálise pode ser suspensa pela recuperação conjunta de diurese, controle de volume e depuração. A decisão não depende de um número isolado.',
+ 'A diurese chega a 4 L/dia. Apesar de reposição de potássio, ele cai a 2,9 mmol/L e o magnésio a 1,4 mg/dL. A icterícia ainda é evidente, embora a bilirrubina comece a cair. A amostra colhida no 14.º dia de doença, oitavo dia de internação, retorna com IgM reagente e microaglutinação 1:1.600; o resultado apoia a infecção, sem identificar com certeza o sorovar infectante.'),
 
-    Q('p7', 5,
-      'K 2,9 apesar de 80 mEq/dia, Mg 1,4 e diurese de 4 L/dia. Qual ajuste é mais apropriado?', [
-      ('Corrigir magnésio e titular potássio com controles frequentes', True),
-      ('Aumentar apenas o potássio, mantendo o magnésio para reavaliação após a alta', False),
-      ('Reduzir a reposição de potássio por ter necessitado de diálise', False),
-      ('Associar furosemida para acelerar a recuperação tubular', False),
-      ('Manter diálise diária pela poliúria, independentemente dos demais parâmetros', False),
-    ], [('Integração', 'Magnésio baixo favorece perda renal persistente de potássio; corrigir ambos é mais efetivo que aumentar apenas K. O risco muda com a recuperação renal, exigindo controles e ajuste, não dose fixa.'), ('Suporte individualizado', 'Necessidade prévia de diálise não implica retenção atual de K. Furosemida aumenta perdas e não recupera túbulos. Poliúria não determina diálise: decidir por volume, depuração e distúrbios metabólicos. O estudo brasileiro de diálise diária foi pequeno e comparou períodos de tratamento; não sustenta calendário obrigatório para todo caso.')]),
+    Q('p7', 6, 'Qual medida adicional é prioritária para a hipocalemia persistente com Mg 1,4 e poliúria?',
+ [('Reposição de magnésio', True), ('Furosemida para acelerar recuperação tubular', False), ('Suspensão da reposição de potássio', False), ('Diálise diária apenas pela poliúria', False)],
+ [('Mecanismo', 'Hipomagnesemia favorece perda renal de potássio e dificulta sua correção. Repor magnésio é uma medida adicional; o potássio continua sendo titulado com controles frequentes conforme a função renal se modifica.'),
+ ('Segurança', 'Poliúria exige acompanhar balanço e eletrólitos, não diurético automático nem diálise por calendário. A necessidade anterior de diálise não prova retenção atual de potássio.')]),
 
-    pg('terceira', 'Terceira semana',
-       'Com o magnésio corrigido, o potássio se sustenta acima de 3,5 mmol/L '
-       'com reposição oral. A bilirrubina e a creatinina caem a cada dia, e ele '
-       'volta a comer.',
-       'Na visita, ele pergunta quando pode voltar ao trabalho e se os colegas '
-       'da equipe correm o mesmo risco. O irmão quer saber se pode ter se '
-       'contaminado cuidando dele.'),
+    pg('resultados_pendentes', 'Conferência dos resultados',
+ 'As hemoculturas convencionais terminam sem crescimento e a sorologia de convalescença não sustenta dengue. No percurso com lavado, a pesquisa microbiológica não identifica coinfecção adicional. A negatividade desses exames não é a base da confirmação: o resultado positivo da PCR e a evolução sorológica já responderam à investigação dirigida.',
+ 'Corrigidos magnésio e potássio, a força melhora e a reposição é reduzida conforme a poliúria cede. A bilirrubina cai mais devagar que a febre. Antes da alta, ele caminha sem oxigênio, mas ainda se cansa ao tomar banho.'),
 
     Q('p8', 6,
       'Qual interpretação deve orientar a investigação dos colegas e a orientação ao irmão?', [
@@ -406,57 +274,19 @@ ETAPAS = [
       ('A recuperação clínica dispensa investigação do ambiente de trabalho', False),
     ], [('Exposição', 'Canal alagado, bota furada e roedores sustentam risco compartilhado no trabalho e justificam notificação e investigação ambiental. Hemocultura convencional negativa não mede esse risco.'), ('Contato e seguimento', 'Transmissão entre pessoas é rara; cuidar dele não equivale à exposição ao canal. Título sorológico do paciente não define profilaxia de terceiros. A recuperação não elimina a fonte ambiental, e o paciente ainda precisa acompanhar função renal e eletrólitos.')]),
 
-    pg('alta', 'Preparando a alta',
-       'A equipe revê com ele e o irmão o que aconteceu: a exposição, a '
-       'doença, as sessões de diálise e o que esperar do rim e dos músculos '
-       'nas próximas semanas.',
-       conforme=('b2', ['alta_cedo', 'f2', 'f2'])),
+    desfecho('alta', 'Alta e recuperação funcional',
+ p('Recebe alta após a recuperação respiratória, sem diálise, com creatinina 1,6 mg/dL e bilirrubina em queda. Reavaliação clínica e de função renal e eletrólitos é combinada em uma a duas semanas, antes de discutir retorno ao trabalho pesado.'),
+ p('Notificação e investigação da exposição ocupacional são organizadas. O irmão recebe orientação de que o cuidado habitual não equivale ao contato com água contaminada; os colegas precisam de avaliação da exposição e de sintomas, sem profilaxia automática baseada no título sorológico do paciente.'),
+ p('Em seis semanas a capacidade de esforço melhora e o retorno é discutido com a saúde do trabalhador. É uma evolução ficcional favorável após doença grave, sem afirmar recuperação obrigatória nesse prazo.'),
+ qualidade='melhor', porque='O suporte acompanhou as mudanças de pulmão e rim; o seguimento e a avaliação ocupacional continuam após a alta.', fecho='retrospectiva'),
 
-    pg('alta_cedo', 'Última visita',
-       'A diálise foi suspensa no nono dia e a creatinina cai todos os dias. '
-       'Ele já caminha pelo corredor sem oxigênio.',
-       conforme=('b1', ['f1', 'f2', 'f2'])),
-
-    fim('f1', 'Alta sem diálise',
-        'Ele sai no 16.º dia, sem diálise desde o 9.º, com creatinina de 1,6 '
-        'mg/dL e bilirrubina em queda. Retoma o trabalho em seis semanas.',
-        'Antibiótico no primeiro contato, UTI antes da falência e diálise '
-        'precoce foram as três decisões que mudam a mortalidade da síndrome '
-        'de Weil.', 'melhor'),
-
-    fim('f2', 'Alta depois de internação prolongada',
-        'Ele sai no 27.º dia, com creatinina de 2,1 mg/dL e fraqueza muscular '
-        'que leva dois meses para passar.',
-        'O atraso do antibiótico ou do suporte intensivo acrescentou dias de '
-        'hipoxemia e de diálise, numa forma de letalidade alta.',
-        'medio'),
-
-    fim('f_obito', 'Óbito no terceiro dia',
-        'Depois da parada, ele evolui com choque refratário e hemorragia '
-        'pulmonar maciça, e morre no terceiro dia de internação.',
-        'A ventilação não invasiva numa via aérea que sangra, mantida depois '
-        'de falhar, levou à parada hipóxica. A hemorragia pulmonar pede '
-        'intubação precoce.', 'pior'),
-
-    pagina('retrospectiva', 'Pontos de ensino', '',
-        pontos(
-            'Na icterícia febril, a primeira leitura é o padrão: bilirrubina '
-            'direta muito alta com transaminases abaixo de três vezes o limite '
-            'é colestase, e afasta as hepatites virais agudas.',
-            'Na lesão renal aguda, FENa acima de 2% com cilindros granulosos '
-            'indica lesão tubular. Potássio baixo com potássio urinário alto '
-            'é perda tubular, incomum e útil para o diagnóstico.',
-            'Hemoptise, queda de hemoglobina e infiltrado alveolar difuso são '
-            'hemorragia alveolar até prova em contrário, e pedem suporte '
-            'intensivo antes do nome da causa.',
-            'A exposição à água e à lama muda a hipótese; ela precisa ser '
-            'perguntada, porque o paciente grave raramente a conta.',
-            'Na primeira semana, PCR no sangue confirma a leptospirose; o '
-            'ELISA IgM negativo antes do sétimo dia não descarta.',
-            'Na forma grave: antibiótico endovenoso sem esperar a '
-            'confirmação, intubação precoce com ventilação protetora na '
-            'hemorragia pulmonar e diálise precoce e diária.'),
-        so_kicker=True),
+    pagina('retrospectiva', 'Pontos de ensino', '', pontos(
+ 'Na febre com icterícia, rim e pulmão, uma consolidação focal não deve encerrar o diferencial.',
+ 'A pressão pode melhorar enquanto a troca gasosa piora. Mudanças clínicas exigem reavaliar suporte e mecanismo.',
+ 'A história de enchente deve ser perguntada cedo. Não é uma pista que se guarda até o paciente sangrar.',
+ 'PCR sanguínea na primeira semana e sorologia interpretada por fase são complementares. IgM inicial negativa não afasta infecção.',
+ 'Hemorragia alveolar requer suporte imediato; a imagem isolada não define causa. Plaquetas baixas podem coexistir com lesão capilar.',
+ 'Diálise e reposições dependem da evolução de volume, depuração e eletrólitos. Poliúria de recuperação não significa equilíbrio restaurado.'), so_kicker=True),
 
     pg('referencias', 'Fontes e limites',
        'Paciente, valores e percursos são ficcionais. A cena de abertura é uma ilustração autoral gerada por inteligência artificial para este caso; não é fotografia nem documentação clínica.',
@@ -469,13 +299,11 @@ ETAPAS = [
        'Wikimedia Commons, CC0 (admissão), e Samir, Wikimedia Commons, CC '
        'BY-SA 3.0 (segundo dia). Ultrassonografia: Ptrump16, Wikimedia '
        'Commons, CC BY-SA 4.0. Todas de outros pacientes, com setas '
-       'adicionadas.'),
+       'adicionadas.',
+ 'Revisão de 23/10/2026: <a href="https://www.cdc.gov/yellow-book/hcp/travel-associated-infections-diseases/leptospirosis.html">CDC Yellow Book 2026, capítulo atualizado em 2025</a>; <a href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/l/leptospirose/notas-tecnicas/nota-tecnica-no-16-2024-cgzv-dedt-svsa-ms">Ministério da Saúde, Nota Técnica 16/2024</a>; <a href="https://pubmed.ncbi.nlm.nih.gov/17699490/">Andrade et al., 2007</a>, estudo histórico pequeno de períodos assistenciais, não regra universal de diálise; <a href="https://www.nice.org.uk/guidance/ng148/chapter/Recommendations">NICE NG148, indicações clínicas de terapia renal substitutiva</a>. A hemorragia grave já integrava o caso; não foi criada como consequência de respostas erradas.')
 ]
 
 REVISAO = []
 
-# Revisão das perguntas: fontes consultadas em 22/10/2026.
-# https://www.nbme.org/sites/default/files/2021-02/NBME_Item%20Writing%20Guide_R_6.pdf
-# https://www.cdc.gov/yellow-book/hcp/travel-associated-infections-diseases/leptospirosis.html
-# https://pubmed.ncbi.nlm.nih.gov/17699490/
-# https://www.nice.org.uk/guidance/ng148/chapter/Recommendations
+for _n, _e in enumerate((e for e in ETAPAS if e['t'] == 'pergunta'), 1):
+    _e['kicker'] = f'Pergunta {_n}'

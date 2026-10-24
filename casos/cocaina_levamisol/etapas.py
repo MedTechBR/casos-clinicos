@@ -112,17 +112,11 @@ ETAPAS = [
          '6 cm, dolorosas, que não clareiam, com bordas anguladas e '
          'ramificadas, duas com centro enegrecido.']),
 
-    Q('q1', 1,
-      'Placas dolorosas em rede, não clareáveis, com centros necróticos. Qual mecanismo melhor orienta a investigação inicial?', [
-      ('Dano vascular com oclusão e isquemia cutânea', True),
-      ('Extravasamento por trombocitopenia isolada', False),
-      ('Vasodilatação reversível da rede superficial', False),
-      ('Inflamação do tecido adiposo sem lesão vascular', False),
-      ('Sangramento traumático subcutâneo localizado', False),
-     ], [
-      ('Além do nome', 'Bordas ramificadas e necrose sugerem púrpura retiforme, um padrão de comprometimento vascular oclusivo. Trombo, inflamação ou invasão do vaso podem produzi-lo; a morfologia não define etiologia.'),
-      ('Concorrentes', 'Trombocitopenia tende a produzir petéquias e sangramento, sem explicar tão bem a necrose em rede. Vasodilatação livedoide não explica centros necróticos persistentes. Paniculite produz nódulos; trauma não integra lesões múltiplas em progressão e febre.'),
-     ]),
+    Q('q1', 1, 'Quais três hipóteses você precisa diferenciar inicialmente?', [
+ ('Vasculite cutânea', True), ('Ectima gangrenoso', True), ('Síndrome antifosfolípide', True),
+ ('Púrpura trombocitopênica imune', False), ('Eritema nodoso', False), ('Calcifilaxia urêmica', False)],
+ [('Mecanismos concorrentes', 'O desenho ramificado com necrose sugere comprometimento vascular. Inflamação do vaso, invasão infecciosa e trombose imune precisam ser diferenciadas; a pele sozinha não define qual delas está presente.'),
+ ('Por que as outras pesam menos', 'Trombocitopenia costuma produzir petéquias e sangramento, sem explicar bem a necrose em rede. Eritema nodoso é uma paniculite nodular, de outra morfologia. Calcifilaxia urêmica integra pior a ausência de doença renal conhecida; uma forma não urêmica não é impossível, mas não é a prioridade entre estas opções.')]),
 
     painel('res1', 'Primeiros exames', 'Sangue', [
         ex('Hemoglobina / hematócrito', '12,1 g/dL / 36%', 'Hb 12–16 g/dL'),
@@ -168,26 +162,19 @@ ETAPAS = [
          'Febre e dor explicam o ritmo; o traçado não aponta outra causa para a '
          'taquicardia.'),
 
-    Q('q2', 2,
-      'Febre, 180 neutrófilos/mm³ e pele necrótica, com plaquetas e coagulação preservadas. Hemoculturas já foram colhidas. Quais dois estudos da pele priorizar sem atrasar o antibiótico?', [
-      ('Histologia de biópsia profunda da borda da placa', True),
-      ('Colorações e cultura bacteriana/fúngica do tecido', True),
-      ('Mielograma como primeiro procedimento invasivo', False),
-      ('Anticorpos antifosfolípides como primeira investigação isolada', False),
-      ('Angiografia arterial dos membros inferiores', False),
-      ('Repetir fibrinogênio antes de colher tecido', False),
-     ], [
-      ('Prioridades', 'Histologia de biópsia profunda: distingue trombose de inflamação vascular e avalia invasão da parede. Colorações e cultura do tecido: procuram bactérias e fungos e podem orientar tratamento específico; tecido para cultura deve seguir separado do material em formol. Ambos complementam as hemoculturas já colhidas sem atrasar cobertura antipseudomonas.'),
-      ('Por que não primeiro', 'Mielograma: pode entrar se a neutropenia persistir ou houver outras alterações; não esclarece primeiro a pele potencialmente infectada. Antifosfolípides: úteis depois se persistir suspeita de trombose imune, mas não substituem microbiologia urgente. Angiografia: pulsos presentes e padrão de pequenos vasos tornam baixo o rendimento. Fibrinogênio repetido: o inicial e as plaquetas não sustentam consumo relevante; tecido discrimina mais.'),
-     ]),
+    Q('q2', 2, 'Quais três estudos da pele você solicita sem atrasar o antibiótico?', [
+ ('Histologia de biópsia profunda', True), ('Cultura bacteriana do tecido', True), ('Pesquisa de fungos no tecido', True),
+ ('Mielograma', False), ('Angiografia dos membros inferiores', False), ('Novo fibrinogênio', False)],
+ [('Amostra da lesão', 'A histologia compara trombose, inflamação e possível invasão vascular. Cultura bacteriana e pesquisa micológica, com colorações e cultura conforme o laboratório, procuram uma infecção que mudaria o tratamento. Planejar fragmentos adequados antes de colocar todo o material em formol.'),
+ ('Prioridade clínica', 'Febre com 180 neutrófilos/mm³ exige antibiótico empírico imediato, em paralelo à coleta. Angiografia tem menor rendimento com pulsos preservados e lesões de pequenos vasos; mielograma pode ser necessário se a neutropenia não se resolver ou surgirem outras alterações. Repetir fibrinogênio não substitui investigar a lesão.')]),
 
     pagina('coag', 'Discussão', 'O que a coagulação diz',
       p('Diante de púrpura que oclui vasos, a equipe relê o sangue da chegada '
         'à procura de consumo. Plaquetas de 238.000/mm³, INR de 1,0, TTPa de '
         '29 s e fibrinogênio de 410 mg/dL: não há gasto de plaquetas nem de '
-        'fatores, e a oclusão não vem de coagulação intravascular '
+        'fatores, e esses resultados não sustentam coagulação intravascular '
         'disseminada.'),
-      p('O esfregaço sem esquizócitos, com plaquetas normais, afasta a '
+      p('O esfregaço sem esquizócitos, com plaquetas normais, reduz a probabilidade de '
         'hemólise mecânica das microangiopatias trombóticas. O fibrinogênio '
         'pouco acima do limite acompanha a PCR de 96 mg/L: é inflamação, não '
         'consumo.'),
@@ -201,16 +188,16 @@ ETAPAS = [
     bifurcacao('b1', 'Decisão', 'As primeiras horas',
       'Febril, com 180 neutrófilos e placas necróticas nas coxas. As '
       'hemoculturas já foram colhidas. Como você conduz?', [
-      caminho('Cefepima em até uma hora, vancomicina e biópsia da pele',
+      caminho('Iniciar cefepima endovenosa',
               'protecao',
               'Neutropenia febril pede betalactâmico antipseudomonas na primeira '
               'hora; infecção de pele e partes moles é critério para somar '
               'vancomicina.', rotulo_curto='Tratar agora'),
-      caminho('Biópsia e culturas primeiro; antibiótico conforme o resultado',
+      caminho('Aguardar a cultura do tecido',
               'espera',
-              'Cultura de tecido leva dias, e a mortalidade da neutropenia '
-              'febril sobe a cada hora sem antibiótico.', rotulo_curto='Esperar'),
-      caminho('Filgrastim e observação, sem antibiótico por ora', 'gcsf',
+              'Cultura de tecido leva dias; aguardar o resultado deixa uma '
+              'possível infecção grave sem tratamento.', rotulo_curto='Esperar'),
+      caminho('Iniciar filgrastim como única intervenção', 'gcsf',
               'O fator estimulador pode encurtar a agranulocitose, mas não '
               'trata a infecção que já pode estar presente.',
               rotulo_curto='Só filgrastim'),
@@ -238,7 +225,10 @@ ETAPAS = [
     pg('internacao', 'Na enfermaria',
        'Marina é internada em quarto individual, com hemograma diário. A '
        'hipótese registrada é agranulocitose por dipirona com lesões necróticas '
-       'de provável causa infecciosa.'),
+       'de provável causa infecciosa.',
+       'Confere-se a coleta de tecido da borda da lesão para histologia e '
+       'microbiologia; nos caminhos em que ainda não foi feita, a dermatologia '
+       'obtém a amostra durante a estabilização, sem atrasar o antibiótico.'),
 
     pg('dia3', 'Terceiro dia',
        'A febre cedeu no segundo dia. Os neutrófilos estão em 240/mm³ e as '
@@ -280,18 +270,24 @@ ETAPAS = [
          'Sem obstrução e sem rim pequeno de doença antiga: a lesão é aguda e '
          'está dentro do rim.']),
 
-    Q('q4', 3,
-      'Creatinina 0,9 → 1,6, acantócitos, cilindros hemáticos e lesão nova na orelha. Quais três estudos melhor distinguem doença sistêmica de toxicidade tubular?', [
-      ('ANCA com anti-MPO e anti-PR3', True),
-      ('Anticorpo anti-membrana basal glomerular', True),
-      ('Complemento C3/C4 e crioglobulinas', True),
-      ('Novo vale de vancomicina como teste principal da causa', False),
-      ('Nova CK para confirmar pigmentúria', False),
-      ('Repetir ultrassonografia renal imediatamente', False),
-     ], [
-      ('O que cada pedido resolve', 'MPO/PR3: investigam mecanismo ANCA e um perfil que pode sugerir exposição. Anti-MBG: pesquisa glomerulonefrite que muda a urgência terapêutica. C3/C4 e crioglobulinas: testam mecanismos por imunocomplexos em pele e rim, sem excluir doença apenas por resultados negativos.'),
-      ('Por que não repetir agora', 'Vale de vancomicina: 12 não exclui nefrotoxicidade, mas esta não explica acantócitos e cilindros hemáticos; vigilância da dose continua separadamente. CK: 96 e hemácias verdadeiras no sedimento não sustentam rabdomiólise. Novo US: o primeiro já mostrou ausência de dilatação; sem mudança que sugira obstrução, repetir acrescenta pouco.'),
-     ]),
+    Q('q4', 3, 'Quais quatro exames mais ajudam a distinguir os mecanismos possíveis?', [
+ ('Anti-MPO', True), ('Anti-PR3', True), ('Anticorpo anti-membrana basal glomerular', True), ('Complemento C3', True),
+ ('Novo nível sérico de vancomicina', False), ('Nova creatinoquinase', False), ('Novo ultrassom renal', False)],
+ [('Mecanismos', 'MPO e PR3 avaliam duas especificidades do ANCA; positividade não estabelece sozinha uma vasculite primária. Anti-MBG pesquisa um mecanismo de glomerulonefrite com consequências terapêuticas importantes. C3 ajuda a avaliar a hipótese de imunocomplexos; a equipe complementa com C4 e crioglobulinas.'),
+ ('Toxicidade e obstrução', 'A vigilância da vancomicina permanece necessária, mas o nível sérico não explica sozinho acantócitos e cilindros hemáticos. A CK inicial normal e hemácias verdadeiras tornam pigmentúria menos provável. Sem nova pista de obstrução, repetir o ultrassom acrescenta menos que esclarecer o mecanismo glomerular.')]),
+
+    bifurcacao('b_investigacao_renal', 'Decisão', 'Nova alteração urinária',
+ 'A pele começa a doer menos, mas a creatinina continua subindo. Qual exame você prioriza?', [
+ caminho('Biópsia renal', 'renal_precoce', 'A evolução e o sedimento sugerem lesão glomerular. A amostra pode distinguir mecanismos e medir atividade antes de atribuir a piora apenas aos medicamentos.'),
+ caminho('Novo nível sérico de vancomicina', 'renal_vigilancia', 'É útil para segurança e ajuste, mas não responde à localização glomerular sugerida pelo sedimento. O resultado deve ser confrontado com a evolução, sem encerrar a investigação.')]),
+
+    pg('renal_precoce', 'Avaliação da nefrologia',
+ 'Marina passa a urinar menos e nota a primeira urina do dia avermelhada. A febre não voltou e a dor das placas diminuiu. Não há edema importante nem dispneia. Creatinina de controle: 2,1 mg/dL.',
+ 'Com plaquetas e coagulação preservadas, a equipe programa a biópsia renal e mantém vigilância infecciosa. O contraste entre melhora da pele e piora do rim impede tratar os dois órgãos como se estivessem em remissão.', segue='res3'),
+
+    pg('renal_vigilancia', 'Reavaliação no dia seguinte',
+ 'O novo nível de vancomicina é de 13 mg/L. A indicação e a dose são revistas; a cobertura empírica é ajustada à microbiologia e à função renal. Esse valor não exclui toxicidade, mas também não explica o sedimento.',
+ 'Marina continua afebril e as placas estão menos dolorosas. A urina permanece avermelhada, a creatinina chega a 2,1 mg/dL e os cilindros hemáticos persistem. A equipe solicita a biópsia renal, sem presumir que a melhora cutânea significa melhora renal.', segue='res3'),
 
     painel('res3', 'Terceiro dia', 'Anticorpos e complemento', [
         ex('ANCA por imunofluorescência', 'Padrão perinuclear (p-ANCA), título 1:1.280', 'Não reagente', True),
@@ -308,10 +304,10 @@ ETAPAS = [
     Q('q5', 4,
       'MPO e PR3 positivos, agranulocitose, lesão auricular e sedimento nefrítico. Qual hipótese ganha mais peso para integrar o quadro?', [
       ('Doença vascular associada a exposição medicamentosa ou recreativa', True),
-      ('Vasculite primária definida apenas pela positividade do MPO', False),
-      ('Endocardite como explicação já confirmada do ANCA', False),
-      ('Síndrome antifosfolípide como causa da púrpura e da nefrite', False),
-      ('Crioglobulinemia como hipótese favorecida pelo complemento', False),
+      ('Vasculite primária associada ao ANCA', False),
+      ('Endocardite infecciosa', False),
+      ('Síndrome antifosfolípide', False),
+      ('Vasculite crioglobulinêmica', False),
      ], [
       ('A combinação', 'Dupla especificidade ANCA, neutropenia profunda e púrpura auricular favorecem exposição como mecanismo comum. Nenhum desses achados isoladamente comprova a substância; é necessário rever medicamentos e uso recreativo a sós.'),
       ('Concorrentes', 'Vasculite primária pode ter perfis atípicos, mas MPO não basta para classificá-la. Endocardite pode positivar ANCA; culturas pré-antibiótico negativas e ausência de outros sinais reduzem, sem zerar, essa possibilidade. Antifosfolípides negativos e sedimento glomerular inflamatório pesam contra SAF. Crioglobulinas não detectadas e C4 normal diminuem a probabilidade de crioglobulinemia.'),
@@ -327,23 +323,6 @@ ETAPAS = [
        'maior. Não sabe o que há no pó. Nunca injetou. A rinite com crostas '
        'começou na mesma época.'),
 
-    pg('diagnostico', 'O diagnóstico',
-       'Púrpura retiforme com predileção pela orelha, agranulocitose, ANCA com '
-       'dois alvos e glomerulonefrite pauci-imune numa usuária de cocaína '
-       'formam a síndrome associada ao levamisol, o adulterante mais comum da '
-       'cocaína. No Brasil ele apareceu em mais da metade das amostras '
-       'apreendidas pela Polícia Federal para tráfico internacional e das '
-       'amostras de fluido oral positivas para cocaína em festas.',
-       'O levamisol é um anti-helmíntico veterinário com efeito imunomodulador. '
-       'Causa agranulocitose idiossincrática, oclusão trombótica e vasculite de '
-       'pequenos vasos da derme, com predomínio em mulheres, nas orelhas, '
-       'bochechas, nariz e coxas. Induz ANCA contra MPO, PR3 e elastase, e '
-       'anticorpos antifosfolípides. A pele e a medula melhoram em duas a três '
-       'semanas sem exposição e pioram a cada nova exposição; o ANCA pode '
-       'levar meses para negativar.',
-       'A dipirona continua suspensa, mas a neutropenia que ela explicaria tem '
-       'agora outra causa provável.'),
-
     Q('q6', 5,
       'A coleta toxicológica ocorrerá cinco dias após o último uso referido. Quais duas conclusões poderão ser sustentadas pelos testes?', [
       ('Benzoilecgonina confirmada documenta exposição à cocaína', True),
@@ -356,14 +335,14 @@ ETAPAS = [
       ('O limite dos marcadores', 'ANCA pode persistir além da exposição e não serve como relógio. Histologia mostra trombose e inflamação, não a molécula causal. Assim, toxicologia de cocaína, padrão clínico e cronologia sustentam associação provável, sem comprovação química do levamisol.'),
      ]),
 
-    painel('res4', 'Quarto e quinto dias', 'Toxicologia e biópsia renal', [
+    painel('res4', 'Quarto ao sexto dia', 'Toxicologia e biópsia renal', [
         ex('Benzoilecgonina urinária, confirmada por cromatografia', 'Detectada', 'Não detectada', True),
         ex('Levamisol urinário (LC-MS/MS)', 'Não detectado', 'Não detectado'),
         ex('Biópsia renal, microscopia', 'Glomerulonefrite necrosante com crescentes celulares em 5 de 18 glomérulos · fibrose intersticial mínima', '—', True),
         ex('Biópsia renal, imunofluorescência', 'Pauci-imune', '—', True),
         ex('Creatinina', '2,6 mg/dL', '0,6–1,1 mg/dL', True),
         ex('Neutrófilos absolutos', '1.100/mm³', '1.500–7.500/mm³', True),
-    ], introducao='A biópsia renal foi feita no quarto dia, com plaquetas e '
+    ], introducao='A biópsia renal foi feita após a reavaliação nefrológica, com plaquetas e '
                   'coagulação normais.'),
 
     Q('q7', 6,
@@ -377,6 +356,11 @@ ETAPAS = [
       ('Atividade e atribuição', 'Neutrófilos subiram a 1.100, mas creatinina chegou a 2,6 e há necrose com crescentes celulares em 5/18 glomérulos: predomina uma lesão glomerular ativa, não apenas recuperação lenta de injúria anterior. Benzoilecgonina confirma cocaína; coleta tardia negativa para levamisol deixa a associação provável.'),
       ('Explicações concorrentes', 'Vasculite primária e agranulocitose por dipirona podem coexistir, mas exigem causas separadas para uma combinação ligada à exposição recorrente, com púrpura auricular e ANCA duplo. Trombos cutâneos não demonstram microangiopatia renal: plaquetas preservadas, ausência de esquizócitos e biópsia necrosante pauci-imune favorecem outro mecanismo.'),
      ]),
+
+    pg('diagnostico', 'Discussão clínica',
+ 'A integração da exposição recorrente, da agranulocitose, da púrpura retiforme com lesão auricular e da glomerulonefrite pauci-imune sustenta doença vascular associada à cocaína, com provável participação do levamisol. A toxicologia comprova cocaína; a coleta tardia negativa para levamisol não confirma nem exclui o adulterante.',
+ 'A melhora dos neutrófilos e da pele após a interrupção da exposição não resolveu a inflamação glomerular. Esse comportamento diferente entre órgãos é o motivo para discutir tratamento renal específico, e não apenas prolongar observação.',
+ 'A dipirona permanece suspensa e registrada como possível contribuinte da agranulocitose. Nenhum exame isolado permite atribuir com certeza toda a neutropenia a uma única substância.'),
 
     pagina('sobre_biopsia', 'Discussão', 'Sobre a biópsia renal',
       p('Crescente é a proliferação de células no espaço de Bowman, em torno '
@@ -395,18 +379,20 @@ ETAPAS = [
       'Glomerulonefrite crescêntica pauci-imune, creatinina de 2,6 mg/dL, '
       'neutrófilos em 1.100 e subindo, culturas negativas, sem cocaína há '
       'sete dias. O que você propõe?', [
-      caminho('Pulso de corticoide e rituximabe, mantendo o antibiótico',
+      caminho('Iniciar rituximabe para a doença renal ativa',
               'renal',
               'Crescentes celulares são lesão ativa e reversível; tratar agora '
               'preserva néfrons, com a infecção coberta enquanto os neutrófilos '
               'sobem.', rotulo_curto='Tratar o rim'),
-      caminho('Só abstinência e suporte, esperando a regressão', 'suporte',
+      caminho('Manter suporte sem imunossupressor', 'suporte',
               'A pele e a medula respondem à abstinência; o glomérulo com '
               'crescente ativo nem sempre.', rotulo_curto='Esperar'),
-      caminho('Pulso e ciclofosfamida em dose plena, suspendendo o antibiótico',
+      caminho('Iniciar ciclofosfamida em dose plena',
               'infeccao',
               'Ciclofosfamida é mielotóxica e ela ainda está neutropênica; '
-              'suspender a cobertura soma risco.', rotulo_curto='Pulso sem cobertura'),
+              'a dose e o momento exigem discussão especializada. A cobertura '
+              'antimicrobiana é revista conforme a recuperação, as culturas e '
+              'a evolução.', rotulo_curto='Ciclofosfamida plena'),
     ]),
 
     pg('renal', 'Tratamento dirigido',
@@ -421,14 +407,14 @@ ETAPAS = [
     pagina('tratamento', 'Discussão', 'O que entra no tratamento',
       p('A exposição vem primeiro. Sem novo uso, a pele e a medula se '
         'recuperam na maioria dos casos publicados, sem imunossupressor, e '
-        'cada recaída descrita veio de um novo uso.'),
+        'uma nova exposição pode provocar recorrência; persistência ou piora também exige investigar outras causas.'),
       p('O rim não segue a pele. As séries de glomerulonefrite associada ao '
         'levamisol trataram os crescentes ativos com corticoide e rituximabe ou '
         'ciclofosfamida, como a KDIGO 2024 indica na vasculite ANCA. Numa '
         'mulher de 34 anos que acaba de sair da agranulocitose, o rituximabe '
         'poupa a fertilidade e a medula; a ciclofosfamida, quando usada, é '
         'ajustada pela contagem de leucócitos.'),
-      topicos(('Troca plasmática', 'A KDIGO 2024 reserva para creatinina '
+      topicos(('Troca plasmática', 'A KDIGO 2024 sugere considerar em situações como creatinina '
                'acima de 3,4 mg/dL, diálise, queda rápida da função ou '
                'hemorragia alveolar com hipoxemia.'),
               ('Anticoagulação', 'Sem antifosfolípide, trombo de pequeno vaso '
@@ -438,10 +424,12 @@ ETAPAS = [
                'proteinúria, com vigilância de infecção durante a '
                'imunossupressão.'))),
 
-    pg('seguimento', 'Segunda semana',
+    pg('seguimento', 'Após o controle da inflamação renal',
        'Não surgem placas novas. As áreas necróticas das coxas delimitam e '
        'recebem curativo; a da orelha cicatriza. Os neutrófilos passam de '
-       '2.000 no décimo dia, e a creatinina começa a cair.',
+       '2.000 no controle atual, e a creatinina começa a cair. O tempo de '
+       'recuperação depende do percurso: o início tardio do tratamento renal '
+       'prolongou a internação neste caso.',
        conforme=('b2', ['alta_cedo', 'f2', 'f2'])),
 
     pg('alta_cedo', 'Última visita',
@@ -457,9 +445,11 @@ ETAPAS = [
 
     bifurcacao('b3', 'Decisão', 'O rim não seguiu a pele',
       'Creatinina de 3,8 mg/dL e subindo, sem cocaína há doze dias. E agora?', [
-      caminho('Pulso de corticoide e rituximabe agora', 'tardio',
-              'A lesão ativa ainda responde, embora parte dos néfrons já tenha '
-              'sido perdida.', rotulo_curto='Tratar agora'),
+      caminho('Iniciar rituximabe', 'tardio',
+              'A equipe associa glicocorticoide ao tratamento da lesão renal '
+              'ativa. O atraso aumenta o risco de recuperação incompleta, sem '
+              'permitir prever individualmente quantos néfrons foram perdidos.',
+              rotulo_curto='Tratar agora'),
       caminho('Manter a espera por mais uma semana', 'dialise',
               'Esperar a regressão espontânea com a função caindo transforma '
               'crescente celular em fibrose.', rotulo_curto='Esperar mais'),
@@ -475,9 +465,9 @@ ETAPAS = [
        'sobrecarga de volume. Ela começa hemodiálise. A nova biópsia mostra '
        'crescentes fibrosos na maior parte dos glomérulos.', segue='f_dialise'),
 
-    pg('infeccao', 'Quatro dias depois',
+    pg('infeccao', 'Dez dias depois',
        'Os neutrófilos, que estavam em 1.100, caem para 300 depois da '
-       'ciclofosfamida. Marina tem febre de 39,4 °C, pressão de 80/46 mmHg e '
+       'ciclofosfamida. Nesta trajetória simulada, Marina tem febre de 39,4 °C, pressão de 80/46 mmHg e '
        'hemocultura com bacilo gram-negativo. Vai para a terapia intensiva.',
        segue='f_infeccao'),
 
@@ -509,9 +499,10 @@ ETAPAS = [
         'Com meropeném, vasopressor e retirada da ciclofosfamida, ela sai do '
         'choque em cinco dias e deixa a UTI no décimo. A glomerulonefrite '
         'segue ativa, e o tratamento do rim recomeça do zero.',
-        'Ciclofosfamida em dose plena numa medula que mal se recuperava, com a '
-        'cobertura antimicrobiana suspensa, derrubou de novo os neutrófilos e '
-        'abriu caminho para a bacteremia.', 'pior'),
+        'Neste percurso simulado, a exposição mielotóxica foi seguida de nova '
+        'neutropenia e infecção grave. Não se presume suspensão do antibiótico '
+        'nem se apresenta a bacteremia como consequência inevitável da '
+        'ciclofosfamida; a dose e o momento exigiam individualização.', 'pior'),
 
     pagina('retrospectiva', 'Pontos de ensino', '',
         pontos(
@@ -580,3 +571,7 @@ REVISAO = []
 
 # Referência de construção dos itens (aplicação e opções plausíveis):
 # https://www.nbme.org/sites/default/files/2021-02/NBME_Item%20Writing%20Guide_R_6.pdf
+
+next(e for e in ETAPAS if e['k']=='referencias')['corpo'] += p('Revisão da evolução: melhora cutânea e hematológica não garante remissão renal. Conduta em doença glomerular ativa individualizada, com extrapolação das diretrizes de vasculite: <a href="https://kdigo.org/wp-content/uploads/2024/05/KDIGO-2024-ANCA-Vasculitis-Guideline-Update.pdf">KDIGO 2024</a>. Para a emergência infecciosa, <a href="https://www.idsociety.org/globalassets/idsa/practice-guidelines/outpatient-management-of-fever-and-neutropenia.pdf">ASCO/IDSA — antibiótico empírico precoce na neutropenia febril</a>; diretriz oncológica usada como referência de segurança, não prova específica de tratamento da agranulocitose por adulterantes.')
+
+for _n,_e in enumerate((e for e in ETAPAS if e['t']=='pergunta'),1): _e['kicker']=f'Pergunta {_n}'

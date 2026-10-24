@@ -172,51 +172,52 @@ ETAPAS = [
          'Uma radiografia normal não afasta tuberculose extrapulmonar ou '
          'disseminada, nem linfoma restrito ao abdome.']),
 
-    pg('plano', 'O que a equipe registra',
-       'Lúcia é internada na enfermaria de clínica médica. Na evolução do '
-       'primeiro dia, a equipe escreve: "Febre prolongada a esclarecer, com '
-       'esplenomegalia, hiperglobulinemia e glomerulonefrite por imunocomplexo. '
-       'Hipóteses: leishmaniose visceral, linfoma, tuberculose disseminada."',
-       'O raciocínio da evolução: Sobral é área de leishmaniose visceral, com '
-       'cães na vizinhança, e febre longa com baço palpável, anemia e globulinas '
-       'de 4,8 g/dL é o quadro clássico do calazar. Linfoma dá febre, suor '
-       'noturno e baço palpável, mesmo sem linfonodo periférico. Tuberculose '
-       'disseminada dá febre vespertina e emagrecimento com radiografia normal, '
-       'e há um irmão tratado.',
-       'Ficam de lado a malária, que no Ceará é quase sempre importada da '
-       'Amazônia, numa paciente que não viajou; o hipertireoidismo, com TSH de '
-       '1,8 mUI/L; e a doença de Still, que dá picos acima de 39 °C e ferritina '
-       'muito alta, quando a dela é 18 ng/mL.',
-       'A equipe pede o teste rápido rK39, mielograma com pesquisa de formas '
-       'amastigotas e cultura do aspirado para micobactérias. Mantém sem '
-       'antibiótico, e as hemoculturas da consulta seguem incubando. A '
-       'endoscopia e a colonoscopia da anemia ficam "para depois de esclarecida '
-       'a febre".'),
+    pg('plano', 'Plano inicial',
+ 'Lúcia é internada. A equipe considera infecção persistente com repercussão renal, doença linfoproliferativa e infecções endêmicas. A valvopatia, a febre e o sedimento mantêm a possibilidade de foco cardíaco desde esta etapa; ausência de lesões típicas na pele não a afasta.',
+ 'As três hemoculturas já foram colhidas. Pela suspeita de infecção valvar, inicia-se antibioticoterapia empírica endovenosa, conforme o protocolo local e a função renal, sem aguardar identificação do agente. São solicitados ecocardiografia e teste rK39. Não há instabilidade, edema pulmonar nem sinal neurológico focal. A ferropenia também requer investigação gastrointestinal, organizada conforme a estabilidade.'),
 
     pg('investiga', 'Primeiro dia, à tarde',
-       'Teste rápido rK39: não reagente. Mielograma: medula normocelular, sem '
-       'formas amastigotas, sem infiltração linfoide e sem granulomas; ferro '
-       'medular ausente. A cultura para micobactérias leva semanas.',
-       'A equipe mantém as três hipóteses: nem o rK39 nem o mielograma afastam '
-       'o calazar com segurança, e uma punção de baço é discutida para os '
-       'próximos dias.'),
+ 'O teste rK39 não é reagente. Lúcia permanece sem hipotensão e conversa normalmente, mas ainda tem pouca disposição para comer. A filha percebe que ela se levanta menos do leito por cansaço.',
+ 'O resultado isolado não encerra a investigação de leishmaniose. A equipe revê a cronologia da anemia, a função renal e a valva previamente doente, antes de indicar novos procedimentos invasivos.'),
+
+    pg('dor_nova', 'Primeira noite',
+ 'Depois do jantar, Lúcia sente dor contínua abaixo das costelas à esquerda, que não existia na consulta. Está com 38,2 °C, frequência cardíaca de 106 e pressão de 126/68 mmHg. O abdome apresenta dor localizada, sem defesa ou rigidez.',
+ 'Não houve queda, esforço ou vômito. Não há dor torácica nem dispneia. A equipe mantém vigilância e precisa decidir qual informação buscar primeiro para integrar esse evento à febre e à alteração urinária.'),
+
+    bifurcacao('b_foco_inicial', 'Decisão', 'Novo sintoma',
+ 'Qual exame você prioriza nesta reavaliação?', [
+ caminho('Ecocardiograma transtorácico', 'eco_inicial', 'Procura uma fonte cardíaca possível no contexto de febre, valvopatia e fenômenos em órgãos distintos. Não substitui avaliar a dor abdominal se ela persistir.'),
+ caminho('Tomografia de abdome com contraste', 'abdome_inicial', 'Pode caracterizar uma complicação esplênica. O benefício é ponderado com a função renal e a situação clínica; a avaliação cardíaca continua indicada em paralelo.')]),
+
+    pg('eco_inicial', 'Avaliação inicial da valva',
+ 'O exame portátil mostra a valva mitral espessada e regurgitação, mas a janela é limitada e não permite caracterizar uma eventual massa pequena. Não há derrame pericárdico. O resultado não encerra a suspeita clínica, e a equipe solicita avaliação ecocardiográfica complementar.',
+ 'A dor abdominal diminui com analgesia, sem desaparecer. Lúcia continua sem sinais de peritonite ou instabilidade, e a investigação do baço permanece programada.', segue='segundo_dia'),
+
+    pg('abdome_inicial', 'Avaliação do abdome',
+ 'A tomografia mostra esplenomegalia e uma pequena área periférica em cunha, sem realce, compatível com infarto esplênico; não há coleção drenável ou adenomegalias volumosas. O resultado descreve a lesão, mas não estabelece sua causa.',
+ 'Lúcia permanece estável e a dor reduz com analgesia. O achado aumenta a importância de procurar uma fonte embólica, sem excluir outros mecanismos de oclusão. A ecocardiografia é mantida como prioridade.', segue='segundo_dia'),
 
     pg('segundo_dia', 'Segundo dia, 7 horas',
        'A febre de 38,4 °C voltou às 16 horas da véspera, como todos os dias. '
        'Às 7 horas, a microbiologia liga: os três pares positivaram durante a '
        'madrugada, entre 16 e 22 horas de incubação, todos com cocos '
        'gram-positivos em cadeia. A identificação e o antibiograma estão em '
-       'curso.'),
+       'curso. A antibioticoterapia empírica iniciada após a coleta é mantida '
+       'até o ajuste pelo agente e pela sensibilidade.',
+       'A avaliação abdominal é completada: a TC mostra pequeno infarto '
+       'esplênico periférico, sem abscesso. No percurso que priorizou a TC, '
+       'trata-se do achado já conhecido; no que priorizou o eco, é o resultado '
+       'da investigação que estava programada.'),
 
     Q('p4', 3,
-      'Três pares positivos, valvopatia e febre prolongada. Quais dois exames priorizar para localizar o foco e orientar a terapia, aproveitando as culturas já colhidas?', [
-      ('Ecocardiograma transtorácico', True),
+      'Quais dois estudos mais ajudam agora a definir o foco cardíaco e a terapia?', [
+      ('Ecocardiograma transesofágico', True),
       ('Colonoscopia para localizar o foco da bacteremia antes da identificação', False),
-      ('Identificação e antibiograma das hemoculturas positivas', True),
+      ('Antibiograma das hemoculturas positivas', True),
       ('Nova punção de medula para leishmaniose', False),
       ('PET-CT como primeiro exame de valva nativa', False),
       ('Procalcitonina para decidir se as culturas representam infecção', False),
-    ], [('Prioridades', 'Ecocardiograma transtorácico avalia a valva doente diante de bacteremia verdadeira provável; seu resultado aparece adiante. Identificação e antibiograma das culturas em processamento orientam o tratamento e a busca da porta de entrada, sem deduzir espécie apenas do Gram.'), ('Alternativas', 'Colonoscopia continua indicada pela ferropenia, mas não é o exame para localizar o foco cardíaco agora; a identificação posterior reforçará sua prioridade. Punção de medula repete investigação de menor rendimento diante deste dado novo. PET-CT não substitui ecocardiografia inicial de valva nativa. Procalcitonina não invalida três coletas concordantes. O tempo de positividade sozinho não prova foco intravascular.')]),
+    ], [('Prioridades', 'O transesofágico é indicado para esclarecer a suspeita, sobretudo quando o estudo transtorácico é limitado. Bacteremia concordante, valvopatia e possível embolia justificam prosseguir. A imagem ilustrativa adiante é transtorácica; o resultado do transesofágico é descrito na evolução. O antibiograma orienta o tratamento dirigido, sem deduzir espécie apenas do Gram.'), ('Alternativas', 'Colonoscopia continua indicada pela ferropenia, mas não é o exame para localizar o foco cardíaco agora; a identificação posterior reforçará sua prioridade. Punção de medula repete investigação de menor rendimento diante deste dado novo. PET-CT não substitui ecocardiografia inicial de valva nativa. Procalcitonina não invalida três coletas concordantes. O tempo de positividade sozinho não prova foco intravascular.')]),
 
     pg('identificacao', 'Terceiro dia',
        'Com 44 horas de incubação sai a identificação: três de três pares com '
@@ -229,8 +230,8 @@ ETAPAS = [
     pagina('agente', 'Discussão', 'Uma porta de entrada ainda aberta', p('A identificação do agente faz a equipe rever a anemia de seis meses. Lúcia está após a menopausa e não completou a investigação gastrointestinal. As fezes escuras persistiram depois da suspensão do ferro; não há endoscopia prévia disponível.')),
 
     pagina('beira_leito', 'À beira do leito', '',
-           p('Com o agente em mãos, o residente volta ao leito e examina mãos, pés '
-             'e olhos com calma, sob luz boa. Lúcia lembra de "dois caroços '
+           p('Durante o acompanhamento, Lúcia refere um ponto doloroso novo no dedo. O residente examina mãos, pés '
+             'e olhos com calma, sob luz boa. Lúcia também lembra de "dois caroços '
              'doloridos" na ponta dos dedos na semana anterior, que sumiram em '
              'dois dias.'),
            topicos(('Unhas', 'Três hemorragias lineares, finas e avermelhadas, sob as '
@@ -286,7 +287,7 @@ ETAPAS = [
     estudo('eco', 'Ecocardiograma transtorácico',
            'Bacteremia contínua por um estreptococo de origem intestinal, numa '
            'valva reumática, com lesões novas nas mãos, nos pés e na conjuntiva: '
-           'o ecocardiograma é feito na mesma manhã. Corte apical de quatro '
+           'o estudo detalhado da valva é feito pela equipe de ecocardiografia. Corte apical de quatro '
            'câmaras.',
            IMG / 'eco_4c.jpg',
            'Quadro de vídeo de outro paciente · comparação didática.',
@@ -315,48 +316,32 @@ ETAPAS = [
        'Janeway) e as petéquias conjuntivais.',
        'O curso subagudo, de semanas, é o dos estreptococos. Os dois '
        'antibióticos curtos baixaram a carga bacteriana a ponto de a febre '
-       'ceder, sem esterilizar a vegetação. Calazar, linfoma e tuberculose eram '
-       'as hipóteses certas para febre com baço grande em Sobral; o que as '
-       'desfez foi a hemocultura colhida antes de mais um antibiótico.'),
+       'ceder, sem esterilizar a vegetação. Calazar, linfoma e tuberculose permaneceram entre '
+       'as hipóteses para febre com baço palpável em Sobral; o que reorganizou sua prioridade '
+       'foi a hemocultura colhida antes de mais um antibiótico.'),
 
-    bifurcacao('b1', 'Decisão', 'O antibiótico',
-      'Endocardite definida por estreptococo sensível à penicilina, em valva '
-      'nativa, com filtração de 47 mL/min. Como tratar?', [
-      caminho('Penicilina cristalina ou ceftriaxona endovenosa por quatro '
-              'semanas, com transesofágico e avaliação da cirurgia cardíaca',
-              'tratamento',
-              'É o esquema da valva nativa por estreptococo sensível, com a '
-              'equipe de endocardite desde o início.'),
-      caminho('Amoxicilina oral por duas semanas, em casa', 'oral',
-              'Duas semanas de oral desde o início não é esquema de '
-              'endocardite, e a vegetação é grande.'),
-      caminho('Vancomicina e gentamicina empíricas até o transesofágico',
-              'vanco',
-              'O agente e a sensibilidade já são conhecidos. Vancomicina é '
-              'inferior aos betalactâmicos para estreptococo sensível, e a '
-              'gentamicina lesa um rim que já filtra 47 mL/min.'),
-    ]),
+    bifurcacao('b1', 'Decisão', 'Terapia dirigida',
+ 'Qual antibiótico você mantém como tratamento dirigido desta infecção de valva nativa?', [
+ caminho('Ceftriaxona endovenosa', 'tratamento', 'O agente é sensível a betalactâmico; ceftriaxona é opção de tratamento dirigido, com duração e seguimento adequados ao quadro. A equipe de endocardite acompanha a valva e as complicações.'),
+ caminho('Amoxicilina oral', 'oral', 'A transição oral existe em pacientes selecionados e estabilizados após terapia endovenosa. Ela não equivale a iniciar este quadro complicado com amoxicilina oral isolada.'),
+ caminho('Vancomicina endovenosa', 'vanco', 'Pode ter indicação em alergia grave ou outros contextos. Sem contraindicação a betalactâmico e com sensibilidade conhecida, não oferece vantagem como escolha dirigida e exige monitorar a exposição.')]),
 
     pg('oral', 'Dez dias depois',
-       'Lúcia volta com febre de 38,6 °C e falta de ar ao deitar. As '
+       'Após a troca precoce do esquema endovenoso por amoxicilina oral e '
+       'alta, Lúcia volta com febre de 38,6 °C e falta de ar ao deitar. As '
        'hemoculturas voltam a crescer //S. gallolyticus//. É internada para '
        'antibiótico endovenoso, com dez dias perdidos.',
        segue='tratamento'),
 
-    pg('vanco', 'Quatro dias depois',
-       'A febre cede devagar, mas a creatinina sobe de 1,3 para 2,4 mg/dL. A '
-       'infectologia troca para ceftriaxona e suspende a gentamicina.',
-       segue='tratamento'),
+    pg('vanco', 'Revisão da prescrição',
+ 'A equipe inicia vancomicina e acompanha os níveis e a função renal. Na revisão com infectologia, confirma que Lúcia não tem alergia grave e que o estreptococo é sensível à penicilina. O esquema é trocado para ceftriaxona.',
+ 'A escolha do antibiótico é revista sem aguardar nova deterioração. A hematúria e a função renal continuam em seguimento; não se atribui automaticamente qualquer aumento da creatinina à vancomicina.', segue='tratamento'),
 
-    pg('tratamento', 'Primeira semana de antibiótico',
-       'Ceftriaxona 2 g endovenosa uma vez ao dia, que não exige ajuste para a '
-       'filtração dela. A febre some no quarto dia, e as hemoculturas de '
-       'controle do terceiro dia são negativas.',
-       'O ecocardiograma transesofágico, pedido para procurar abscesso '
-       'perivalvar e medir a lesão do folheto, fica marcado para o oitavo dia. '
-       'A cirurgia cardíaca de referência já acompanha o caso.'),
+    pg('tratamento', 'Primeiros dias de terapia dirigida',
+ 'Lúcia recebe ceftriaxona 2 g endovenosa uma vez ao dia. A febre desaparece no quarto dia de terapia efetiva, e as hemoculturas de controle do terceiro dia não mostram crescimento. Ela volta a comer melhor e pede à filha que traga material de costura.',
+ 'O transesofágico inicial confirma vegetação mitral, sem abscesso perivalvar ou perfuração identificável naquele exame. A cirurgia cardíaca acompanha o caso. Culturas negativas documentam depuração, sem demonstrar recuperação mecânica do folheto.'),
 
-    pg('piora', 'Sexto dia, madrugada',
+    pg('piora', 'Sexto dia de terapia endovenosa efetiva, madrugada',
        'Lúcia acorda sufocada e não consegue deitar. Crepitações até o terço '
        'médio dos dois pulmões, saturação de 88% em ar ambiente, pressão de '
        '100/60 mmHg, frequência cardíaca de 124. O sopro mitral ficou mais curto '
@@ -389,14 +374,14 @@ ETAPAS = [
          'pressão num átrio esquerdo que não teve tempo de se dilatar.']),
 
     bifurcacao('b2', 'Decisão', 'A valva perfurada',
-      'Edema pulmonar por insuficiência mitral aguda, no sexto dia de '
-      'antibiótico. O que você faz?', [
-      caminho('Cirurgia cardíaca nesta internação, em caráter de urgência',
+      'Na reavaliação urgente, o transesofágico mostra perfuração de folheto '
+      'mitral e regurgitação importante, com edema pulmonar no sexto dia de '
+      'terapia efetiva. Qual conduta você indica?', [
+      caminho('Cirurgia cardíaca urgente',
               'cirurgia',
               'Insuficiência cardíaca por destruição valvar é a indicação '
               'clássica de cirurgia precoce.'),
-      caminho('Diurético e vasodilatador, e cirurgia só depois de completar as '
-              'quatro semanas', 'espera',
+      caminho('Adiar a cirurgia até o fim do antibiótico', 'espera',
               'A valva não vai se refazer com antibiótico, e o coração não '
               'aguenta quatro semanas de regurgitação aguda.'),
     ]),
@@ -413,7 +398,7 @@ ETAPAS = [
               'O risco cirúrgico subiu muito, mas sem cirurgia não há saída.'),
       caminho('Manter suporte clínico e esperar estabilizar para operar',
               'obito_pagina',
-              'A estabilização não vem enquanto a valva estiver aberta.'),
+              'O suporte pode ser uma ponte, mas a disfunção mecânica mantém a necessidade de correção urgente; esta trajetória descreve uma possibilidade grave, não um prognóstico individual inevitável.'),
     ]),
 
     pg('obito_pagina', 'Décimo dia',
@@ -475,7 +460,7 @@ ETAPAS = [
     pg('alta_cedo', 'Última semana',
        'Ela já sobe um lance de escada sem parar e voltou a costurar no '
        'quarto do hospital.',
-       conforme=('b1', ['f1', 'f2', 'f2'])),
+       conforme=('b1', ['f1', 'f2', 'f1'])),
 
     fim('f1', 'Alta com a valva preservada',
         'Plástica mitral funcionando, sem regurgitação significativa, '
@@ -486,18 +471,20 @@ ETAPAS = [
         'decisões contaram.', 'melhor'),
 
     fim('f2', 'Alta depois de um percurso mais longo',
-        'Lúcia sai viva, com a infecção controlada, mas com mais dias de '
-        'internação, função renal pior que a basal ou uma prótese no lugar '
-        'da valva que poderia ter sido reparada.',
-        'Esquema inadequado ou cirurgia adiada acrescentaram dano. A valva '
-        'perfurada não se refaz enquanto o antibiótico corre.', 'medio'),
+        'Lúcia sai viva, com a infecção controlada, depois de uma internação '
+        'mais longa. Neste percurso, o atraso no tratamento endovenoso ou na '
+        'cirurgia exigiu estabilização e recuperação adicionais.',
+        'O atraso teve consequências neste curso simulado. A necessidade de '
+        'trocar ou reparar a valva depende da anatomia encontrada, e a piora '
+        'renal exige avaliação própria; não é uma consequência obrigatória '
+        'de qualquer escolha de antibiótico.', 'medio'),
 
     fim('f_obito', 'Óbito no décimo primeiro dia',
         'Lúcia morre em choque cardiogênico refratário, com a infecção já '
         'controlada pelo antibiótico.',
         'A insuficiência mitral aguda por perfuração valvar é indicação de '
-        'cirurgia de urgência. Esperar estabilizar um choque que só a '
-        'cirurgia corrige levou ao óbito.', 'pior'),
+        'cirurgia de urgência. Nesta trajetória, o atraso na correção da lesão que a '
+        'cirurgia poderia corrigir acompanhou uma evolução fatal; o resultado é simulado e não prevê o de todo paciente.', 'pior'),
 
     pagina('retrospectiva', 'Pontos de ensino', '',
         pontos(
@@ -554,3 +541,5 @@ REVISAO = []
 # https://www.escardio.org/guidelines/clinical-practice-guidelines/all-esc-practice-guidelines/endocarditis/
 # https://doi.org/10.1136/gutjnl-2021-325210
 # https://www.heart.org/--/media/files/health-topics/infective-endocarditis/infective-endocarditis-wallet-card.pdf
+
+next(e for e in ETAPAS if e['k']=='referencias')['corpo'] += p('Revisão da evolução e do tempo dos exames: <a href="https://academic.oup.com/eurheartj/article/44/39/3948/7243107">ESC 2023 — endocardite</a>. A dor nova pode exigir investigação de embolia; ecocardiografia limitada não exclui infecção; melhora infecciosa não repara necessariamente destruição valvar. Os percursos são ficcionais.')

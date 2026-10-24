@@ -1,29 +1,6 @@
-"""Tosse, rouquidão e uma ferida no lábio num lavrador de café de Rondônia.
+"""Caso ficcional reformulado em 23/10/2026: evolução clínica antes da resolução.
 
-Escrito em 01/10/2026 no molde do //New England// aprovado (modelos:
-endocardite e leptospirose; ver
-Artifacts/nejm-casos-classicos/GRAMATICA_LIDA_2026-09-26.md). Apresentação
-curta, ficha com a pista enterrada no ruído (roça de café desde criança,
-derrubada de mata em Rondônia, omeprazol por conta própria, dobras palmares
-escuras), exame com os vitais em cima e primeiros exames entregues prontos.
-Seis perguntas no caminho padrão, com um pareamento; as três antes da
-virada só interpretam (mecanismo da hipoxemia, compartimento e extensão na
-radiografia, grupo de processos das lesões), com alternativas que são
-categorias. A equipe registra duas âncoras razoáveis: tuberculose com
-baciloscopia e teste molecular negativos, e carcinoma epidermoide de lábio
-ou laringe num fumante de 40 maços-ano. A virada é a biópsia do lábio, com
-leveduras de parede espessa e brotos múltiplos na prata; o nome aparece na
-página "O diagnóstico", logo depois da metade do percurso. Depois: forma
-crônica multifocal, gravidade pelos critérios do consenso, insuficiência
-adrenal primária, itraconazol e critérios de cura, sequelas e cigarro.
-Três decisões de conduta mudam o desfecho.
-
-Paciente ficcional. Fonte principal: II Consenso Brasileiro em
-Paracoccidioidomicose (Shikanai-Yasuda e cols., Epidemiol Serv Saúde 2018;
-versão em inglês, Rev Soc Bras Med Trop 2017). Insuficiência adrenal:
-Bornstein e cols., Endocrine Society 2016. Tuberculose: Manual de
-Recomendações para o Controle da Tuberculose no Brasil, 2.ª ed., 2019.
-Filtração pelo CKD-EPI 2021.
+Imagens, créditos e marcações preservados. Fontes e limites no fechamento.
 """
 import json
 from pathlib import Path
@@ -39,7 +16,7 @@ COR = '#a16207'
 IMG = Path(__file__).parent / 'img'
 BANCO = []
 MOLDE = 'nejm'
-CENA = 'cena.jpg'
+CENA = 'cena-paciente.png'
 
 
 def credito_meta(meta):
@@ -186,33 +163,14 @@ ETAPAS = [
          'relativamente preservados.',
          'Sem cavidade evidente, sem derrame pleural, área cardíaca normal.']),
 
-    Q('p2', 2,
-      'Baciloscopias e teste molecular negativos, cultura em curso, infiltrado bilateral e úlceras acessíveis: quais **dois exames** oferecem melhor rendimento etiológico inicial?', [
-      ('Exame direto do escarro para fungos', True),
-      ('Biópsia da lesão oral para histologia e pesquisa de agentes', True),
-      ('Broncoscopia com lavado broncoalveolar', False),
-      ('Biópsia da lesão laríngea sob anestesia geral', False),
-      ('Tomografia de tórax de alta resolução', False),
-     ], [
-      ('Amostras disponíveis', '**Direto do escarro** pesquisa agentes não avaliados pelos testes para micobactérias. **Biópsia oral** oferece material acessível para comparar infecção e neoplasia, com histologia e pesquisa microbiológica; a cultura para micobactérias já está em andamento.'),
-      ('Rendimento e custo da obtenção', '**Lavado broncoalveolar** é útil se amostras menos invasivas não resolverem a dúvida ou houver discordância pulmonar. **Biópsia laríngea** pode ser necessária para lesão persistente, mas a boca oferece tecido semelhante com menor complexidade inicial. **TC de alta resolução** caracteriza melhor o padrão e a extensão, sem identificar o agente ou substituir o tecido nesta comparação.'),
-     ]),
+    pg('alivio_parcial', 'Primeiro dia: volta a comer, mas não a trabalhar',
+ 'Com analgesia e alimentação macia, Valdir consegue terminar uma refeição. A ferida continua endurecida e sangra ao escovar os dentes. Ao atravessar o corredor, precisa parar para recuperar o fôlego; a melhora da boca não recuperou sua capacidade de esforço.',
+ 'Na revisão do atendimento anterior, conta que a nistatina não mudou a lesão. A equipe organiza avaliação em hospital-dia, orientação nutricional e vigilância respiratória, sem atribuir todos os sintomas à dor ao comer. A hidroclorotiazida é suspensa diante do sódio baixo e da pressão sem elevação.'),
 
-    disc('escarro', 'Duas baciloscopias e um teste molecular',
-         'Com quatro meses de tosse, emagrecimento, um colega tratado no '
-         'alojamento, cigarro e cachaça, a tuberculose pulmonar está na frente '
-         'da lista, como estaria em qualquer unidade de Rondônia. Os exames '
-         'negativos não a encerram.',
-         'A baciloscopia precisa de muitos bacilos por mililitro de escarro, e '
-         'perde uma parte grande dos casos. O teste rápido molecular é mais '
-         'sensível, mas nos pacientes com baciloscopia negativa deixa passar '
-         'cerca de um quarto a um terço dos que a cultura confirma. Pelo manual '
-         'do Ministério da Saúde, o caso com clínica e imagem compatíveis segue '
-         'investigado com cultura, que leva até oito semanas.',
-         'Contra a hipótese, a radiografia sem cavidade e com ápices '
-         'preservados, e a rouquidão, que na tuberculose laríngea costuma vir '
-         'com escarro cheio de bacilos. A favor, a epidemiologia e a duração. A '
-         'equipe colhe escarro induzido para cultura e espera.'),
+    Q('p2', 2, 'Quais dois exames etiológicos você prioriza com escarro disponível e lesão oral acessível?',
+ [('Exame micológico direto do escarro', True), ('Biópsia da lesão oral', True), ('Lavado broncoalveolar', False), ('Biópsia laríngea sob anestesia geral', False), ('Tomografia de tórax', False)],
+ [('Amostras', 'Exame direto pode identificar fungos; a biópsia oral discrimina infecção e neoplasia e permite pesquisa microbiológica. A cultura de micobactérias já está em curso. Patologia e laboratório combinam a distribuição e o transporte antes da coleta.'),
+ ('Prioridade relativa', 'Lavado ou tecido laríngeo podem ser necessários se houver discordância ou amostras insuficientes. A lesão oral oferece acesso menos complexo agora. TC caracteriza extensão, mas não substitui identificação do agente. Os exames indicados serão feitos mesmo que a seleção do aluno seja incompleta.')]),
 
     estudo('lesoes', 'As lesões do rosto',
            'Fotografia de outro paciente, com lesões do mesmo tipo das de '
@@ -233,107 +191,49 @@ ETAPAS = [
          'No caso de Valdir: uma lesão de 1,5 cm no lábio, duas menores na face '
          'e uma área granulosa na gengiva, todas com meses de evolução.']),
 
-    Q('p3', 3,
-      'Úlceras semelhantes em boca e face coexistem com doença pulmonar difusa. Qual hipótese de trabalho organiza melhor esses achados antes da biópsia?', [
-      ('Infecção granulomatosa sistêmica com acometimento pulmonar e mucocutâneo', True),
-      ('Carcinoma de lábio ou laringe com comprometimento linfonodal e pulmonar', False),
-      ('Leishmaniose mucosa associada a doença pulmonar tabágica independente', False),
-      ('Vasculite granulomatosa com acometimento de vias aéreas e pulmões', False),
-      ('Doença granulomatosa não infecciosa com acometimento pulmonar e cutâneo', False),
-     ], [
-      ('Padrão que unifica', 'A evolução em meses, as várias lesões granulosas semelhantes, os linfonodos e o infiltrado reticulonodular favorecem infecção sistêmica. O trabalho rural amplia as exposições possíveis; os testes negativos para tuberculose ainda não encerram essa hipótese.'),
-      ('Concorrentes reais', 'Carcinoma continua relevante pelo fumo e álcool, mas a multiplicidade de lesões semelhantes e a imagem difusa sem massa enfraquecem essa explicação. Leishmaniose exigiria uma segunda causa para o pulmão. Vasculite e sarcoidose podem unir territórios, porém faltam manifestações renais ou destrutivas nasais, e a aparência ulcerogranulosa favorece pesquisar agentes no tecido antes de atribuir tudo a inflamação não infecciosa.'),
-     ]),
+    Q('p3', 3, 'Quais duas hipóteses merecem investigação prioritária entre estas alternativas?',
+ [('Micose sistêmica endêmica', True), ('Carcinoma epidermoide de via aerodigestiva', True), ('Candidíase oral isolada', False), ('Doença pulmonar obstrutiva como explicação única', False), ('Aftose recorrente isolada', False)],
+ [('Integração e concorrência', 'A exposição rural, a doença pulmonar e as múltiplas lesões granulosas favorecem micose sistêmica. Fumo, álcool e lesão endurecida impõem investigar carcinoma, inclusive doença coexistente. A amostra deve responder às duas perguntas.'),
+ ('Limites', 'Tuberculose continua no diferencial e a cultura será acompanhada; não foi excluída por testes iniciais negativos. Candidíase, obstrução e aftas isoladas não integram o padrão pulmonar, os linfonodos e a lesão crônica infiltrada.')]),
 
-    pg('laringe', 'Terceiro dia',
-       'A otorrinolaringologia faz a videolaringoscopia: pregas vocais '
-       'espessadas, de superfície granulosa, esbranquiçada e salpicada de '
-       'pontos avermelhados, nas duas pregas e na face laríngea da epiglote. '
-       'Mobilidade preservada, sem massa vegetante.',
-       'O otorrino registra "aspecto inflamatório granulomatoso, não afasta '
-       'neoplasia" e programa biópsia da laringe sob anestesia geral. A fila '
-       'do centro cirúrgico é de três semanas.'),
+    pg('mudanca_laringea', 'No dia seguinte: engolir também passa a doer',
+ 'Desde a noite anterior, Valdir sente dor ao engolir sólidos e a voz fica mais fraca. Continua engolindo líquidos e saliva, sem estridor ou esforço respiratório em repouso. É uma mudança em relação à ausência de disfagia na apresentação.',
+ 'A otorrinolaringologia o examina no mesmo dia: pregas vocais espessadas e granulosas, epiglote com lesões semelhantes, mobilidade preservada, sem massa obstrutiva. O resultado aproxima boca e laringe, sem excluir câncer. Dor progressiva, estridor ou incapacidade de ingerir líquidos exigiriam internação e proteção da via aérea.'),
 
-    pg('plano', 'O que a equipe registra',
-       'Na evolução, o residente escreve: "Doença pulmonar intersticial '
-       'bilateral, lesões granulosas de lábio, face, gengiva e laringe, '
-       'linfonodos cervicais e emagrecimento de 13% em quatro meses. '
-       'Hipóteses: tuberculose pulmonar com baciloscopia negativa, com '
-       'acometimento laríngeo e orificial; carcinoma epidermoide de lábio ou '
-       'de laringe, com doença pulmonar à parte; leishmaniose mucosa."',
-       'A tuberculose explica o pulmão, a laringe, a boca e os linfonodos numa '
-       'doença só, e há um contato. O carcinoma explica o lábio endurecido, a '
-       'voz, os linfonodos duros e a história do pai, num homem de 40 '
-       'maços-ano que bebe todo dia. A leishmaniose mucosa é comum em Rondônia, '
-       'mas começa pelo nariz e não faria a radiografia.',
-       'Plano: cultura do escarro induzido, biópsia de laringe quando sair a '
-       'vaga e consulta com a cirurgia de cabeça e pescoço para o lábio.'),
+    pg('ortostatismo', 'Ainda antes do resultado da biópsia',
+ 'Ao levantar após o exame, Valdir refere tontura. Deitado, pressão 110/70; em pé, 88/58, com reprodução do sintoma. Não há febre ou sangramento volumoso. Com hidratação supervisionada, a tontura diminui, mas a fraqueza persiste. Sódio 131 e potássio 5,2 mmol/L, creatinina 0,9.',
+ 'Baixa ingestão e tiazida podem contribuir, mas hiperpigmentação, perda de peso e alterações eletrolíticas exigem avaliar reserva adrenal agora. A investigação não pode esperar confirmar a micose. Não há choque ou vômitos; se surgissem, a hidrocortisona de emergência não aguardaria testes.'),
 
-    disc('tabaco', 'O lábio, a laringe e o cigarro',
-         'O carcinoma epidermoide do lábio inferior é o câncer de boca do '
-         'trabalhador rural: soma o sol de décadas ao cigarro, sobretudo o de '
-         'palha, que se apoia no mesmo ponto do lábio. O da laringe vem do '
-         'cigarro, e o álcool multiplica o risco. Num fumante assim, toda a '
-         'mucosa das vias aerodigestivas sofreu a mesma agressão, e um segundo '
-         'tumor, na laringe ou no pulmão, não é raro.',
-         'O que não combina com a âncora: o carcinoma costuma ser lesão única, e '
-         'Valdir tem quatro sítios na boca e na face, além da laringe, todos com '
-         'a mesma superfície granulosa. Os linfonodos são bilaterais e móveis. '
-         'A radiografia não mostra massa, e sim doença difusa.',
-         'A aparência clínica ainda admite mais de uma explicação. A cultura respiratória está em andamento e não há diagnóstico histológico.'),
+    Q('p_adrenal', 4, 'Qual exame inicial mais ajuda a avaliar a hipótese endócrina levantada pela evolução?',
+ [('Cortisol sérico matinal', True), ('Tomografia das adrenais', False), ('Aldosterona isolada', False), ('TSH isolado', False)],
+ [('Função antes de anatomia', 'Cortisol matinal é interpretado com ACTH, colhido junto, e com o contexto. Resultado indeterminado requer teste de estímulo se o paciente estiver estável. Imagem não mede reserva hormonal.'),
+ ('Segurança', 'Não se deve retardar tratamento de crise adrenal para obter uma prova dinâmica. Neste paciente estável, é possível colher as amostras e realizar o teste sem adiar a reposição necessária.')]),
 
-    pg('semana', 'Uma semana depois',
-       'Valdir volta mais magro, com 60 kg. A cultura do escarro segue '
-       'incubando.',
-       'O pneumologista de plantão propõe iniciar o esquema básico para '
-       'tuberculose: "quadro compatível, contato no alojamento, a cultura '
-       'demora e ele está perdendo peso". O cirurgião de cabeça e pescoço vê o '
-       'lábio e os linfonodos duros e propõe ressecção em cunha do lábio com '
-       'esvaziamento cervical, em quatro semanas.',
-       'A lesão do lábio permanece visível, assim como a área granulosa da gengiva.'),
+    painel('reserva_adrenal', 'Avaliação precoce', 'Antes do antifúngico', [
+ ex('Cortisol às 8 h', '7,4 µg/dL', 'interpretação clínica; faixa basal do laboratório 5–25'),
+ ex('ACTH', '112 pg/mL', 'até 46 pg/mL', True),
+ ex('Cortisol 60 min após 250 µg de cosintropina', '11,8 µg/dL', 'resposta inadequada pelo método do laboratório', True),
+ ex('Renina / aldosterona', 'Renina elevada e aldosterona inadequadamente baixa após suspensão da tiazida', 'interpretar com volume e medicamentos', True),
+ ], introducao='Coletas realizadas antes da hidrocortisona. O serviço interpreta o pico pelo ensaio utilizado, sem aplicar um corte universal de 18 a qualquer método.'),
 
-    bifurcacao('b1', 'Decisão', 'Antes de tratar',
-      'Pulmão, laringe, boca, face e linfonodos, com duas âncoras na mesa. '
-      'O que você faz agora?', [
-      caminho('Biopsiar a lesão do lábio no ambulatório, com fragmento para '
-              'histologia e outro para cultura', 'biopsia',
-              'O tecido está ao alcance da mão e decide entre as hipóteses em '
-              'dias, sem anestesia geral.'),
-      caminho('Iniciar o esquema básico para tuberculose e reavaliar em dois '
-              'meses', 'rhze',
-              'Tratar sem confirmação, com a cultura a caminho e um tecido '
-              'acessível, atrasa o diagnóstico se a hipótese estiver errada.'),
-      caminho('Encaminhar para ressecção do lábio com esvaziamento cervical',
-              'cirurgia_cp',
-              'Nenhuma cirurgia oncológica se faz sem diagnóstico histológico.'),
-    ]),
+    pg('reposicao', 'Uma disfunção tratada, causa ainda em investigação',
+ 'A combinação de resposta inadequada ao estímulo e ACTH alto sustenta insuficiência adrenal primária. Inicia-se hidrocortisona oral em dose ajustada ao estresse da doença, com plano de redução para reposição fisiológica, usualmente 15–25 mg/dia fracionados. A endocrinologia acrescenta fludrocortisona 0,05 mg/dia pela deficiência mineralocorticoide, com controle de pressão, sódio e potássio.',
+ 'No dia seguinte, Valdir levanta sem tontura e volta a beber água com facilidade. As lesões, a rouquidão e a limitação respiratória continuam. A resposta à reposição não identifica a causa da adrenal; tuberculose e micose sistêmica permanecem em avaliação. Se houver deterioração, o local de cuidado será revisto.'),
 
-    pg('rhze', 'Dois meses de esquema básico',
-       'Valdir toma rifampicina, isoniazida, pirazinamida e etambutol por dois '
-       'meses. As lesões da boca crescem, a rouquidão piora e ele chega a 57 '
-       'kg. A cultura do escarro termina negativa em oito semanas.',
-       'Sem resposta, a equipe biopsia a lesão do lábio no ambulatório. A '
-       'rifampicina é suspensa, e o efeito dela sobre as enzimas do fígado '
-       'ainda dura cerca de duas semanas.',
-       segue='biopsia'),
+    bifurcacao('b1', 'Decisão', 'Qual tecido primeiro?',
+ 'Amostras de escarro para micologia e micobactérias já foram enviadas. Há lesões acessíveis na gengiva e no lábio; qual local você escolhe para a primeira biópsia?', [
+ caminho('Biópsia da borda da lesão labial', 'biopsia_labio', 'A borda ativa oferece material para agentes e avaliação epitelial, importante também pelo risco de carcinoma.'),
+ caminho('Biópsia da lesão gengival', 'biopsia_gengiva', 'É uma alternativa acessível para histologia e microbiologia. Se a evolução do lábio permanecer discordante, ele precisará de amostra própria.')]),
 
-    pg('cirurgia_cp', 'Cinco semanas depois',
-       'A consulta da cirurgia de cabeça e pescoço sai em cinco semanas. Nesse '
-       'tempo Valdir perde mais 3 kg e passa a engasgar com líquidos. O '
-       'cirurgião não opera sem tecido: faz a biópsia do lábio no ambulatório, '
-       'no mesmo dia.',
-       segue='biopsia'),
+    pg('biopsia_labio', 'Amostra do lábio',
+ 'Sob anestesia local, a borda ativa é amostrada em profundidade adequada. Fragmentos separados seguem para histologia e cultura, conforme orientação do laboratório. A gengiva e a laringe serão reavaliadas pela resposta; uma lesão persistente não será presumida como parte da mesma doença.', segue='biopsia'),
 
-    pg('biopsia', 'A biópsia',
-       'Biópsia com punch de 4 mm na borda da lesão do lábio e na gengiva, com '
-       'anestesia local. Um fragmento vai em formol; o outro, em soro '
-       'fisiológico, para cultura.',
-       'Três dias depois, o patologista liga. O epitélio tem hiperplasia '
-       'pseudoepiteliomatosa, que imita o carcinoma, mas sem atipia que o '
-       'configure. Na derme, granulomas epitelioides com células gigantes e '
-       'microabscessos de neutrófilos. Dentro das células gigantes há '
-       'estruturas arredondadas, de parede espessa. A coloração de Ziehl-Neelsen '
-       'é negativa. Ele pede a coloração pela prata.'),
+    pg('biopsia_gengiva', 'Amostra da gengiva',
+ 'A área granulosa gengival é amostrada para histologia e cultura. A equipe mantém avaliação do lábio endurecido: mesmo que a gengiva mostre infecção, persistência ou aspecto discordante do lábio exigirá biópsia específica. Não se agenda ressecção oncológica sem diagnóstico.', segue='biopsia'),
+
+    pg('biopsia', 'Histologia e microbiologia',
+ 'O exame direto do escarro retorna com leveduras de parede espessa e brotamento múltiplo. O laboratório comunica imediatamente à equipe. Esse resultado já sustenta iniciar tratamento dirigido; não se espera a cultura terminar.',
+ 'No tecido, há hiperplasia pseudoepiteliomatosa sem atipia neoplásica identificada, granulomas e microabscessos com estruturas fúngicas. A coloração pela prata confirma o padrão do exame direto. A lesão escolhida foi diagnóstica; a resposta das demais será conferida.'),
 
     estudo('lamina', 'Coloração pela prata',
            'Lâmina de outro paciente, com o mesmo achado da biópsia de Valdir, '
@@ -352,177 +252,47 @@ ETAPAS = [
         ],
         ['Leveduras de tamanho variado, de parede espessa, com vários brotos '
          'ao redor da mesma célula-mãe, como os raios de uma roda de leme.',
-         'Brotamento múltiplo é a marca de um fungo só, entre os que causam '
-         'doença granulomatosa no Brasil.']),
+         'A morfologia é característica de Paracoccidioides spp. no contexto clínico; não identifica a espécie dentro do gênero.']),
 
-    pg('virada', 'O diagnóstico',
-       'É **paracoccidioidomicose**, na forma crônica multifocal, do adulto: '
-       'pulmão, laringe, boca, pele da face e linfonodos cervicais.',
-       'O fungo vive no solo de áreas úmidas, e o homem inala os conídios ao '
-       'mexer na terra, em geral nas duas primeiras décadas de vida. A '
-       'infecção fica latente por anos e reativa como forma crônica entre os 30 '
-       'e os 60 anos, em homens, numa proporção de mais de 20 para cada mulher. '
-       'Fumar mais de 20 cigarros por dia por mais de 20 anos e beber mais de '
-       '50 g de álcool por dia são associações frequentes. Valdir mexe com café '
-       'desde os 9 anos, no Paraná, e derrubou mata em Rondônia, que tem hoje '
-       'algumas das maiores incidências do país.',
-       'O pulmão quase sempre está acometido, com a imagem maior que a '
-       'clínica. Na boca, a úlcera de fundo granuloso com pontilhado '
-       'hemorrágico é a estomatite moriforme, e a laringe dá a rouquidão. As '
-       'âncoras eram razoáveis: tuberculose coexiste em 2 a 20% dos casos, e '
-       'carcinoma de boca e laringe também. Um exame direto do escarro com '
-       'hidróxido de potássio teria mostrado as leveduras em um dia.'),
+    pg('virada', 'Integração diagnóstica',
+ 'Exame direto e histologia estabelecem paracoccidioidomicose crônica multifocal: pulmão, mucosas, pele e linfonodos. A insuficiência adrenal primária é compatível com acometimento associado, embora a etiologia adrenal não tenha sido comprovada por biópsia própria.',
+ 'Exposição ao solo e atividade rural sustentam a epidemiologia; a data da infecção não pode ser deduzida da lembrança de uma derrubada. A identificação morfológica não distingue as espécies. Sorologia pode ajudar a acompanhar, mas depende do antígeno e tem limitações, inclusive nas infecções por P. lutzii.',
+ 'O agente no tecido não exclui coinfecção por tuberculose nem carcinoma concomitante. A cultura respiratória para micobactérias segue em andamento e uma lesão residual ou discordante requer nova avaliação.'),
 
-    Q('p4', 4,
-      'Confirmada a micose, quais **dois exames** mais ajudam a medir as disfunções já sugeridas por hiperpigmentação palmar, Na 133, dispneia e tabagismo?', [
-      ('Cortisol das 8 h e ACTH, seguidos de estímulo se indicado', True),
-      ('Espirometria com broncodilatador', True),
-      ('Tomografia das adrenais', False),
-      ('Capacidade de difusão do monóxido de carbono', False),
-      ('Broncoscopia com lavado broncoalveolar', False),
-     ], [
-      ('Função antes de atribuir causa', '**Cortisol/ACTH** investigam reserva e localização da disfunção adrenal; basal indeterminado justifica cosintropina. **Espirometria** caracteriza obstrução e sua reversibilidade, relevantes num fumante com doença pulmonar, antes de atribuir a dispneia apenas à micose.'),
-      ('O que os demais acrescentariam', '**TC das adrenais** caracteriza anatomia, mas não mede reserva hormonal. **Difusão de CO** pode complementar a avaliação respiratória, sobretudo se dispneia e espirometria forem discordantes; não substitui a avaliação inicial do fluxo aéreo. **Lavado broncoalveolar** pode esclarecer infecção pulmonar discordante ou não confirmada; aqui já há agente demonstrado em tecido e escarro disponível para exame direto.'),
-     ]),
+    painel('estadio', 'Referência para o seguimento', 'Sem adiar o tratamento', [
+ ex('Imunodifusão para Paracoccidioides', 'Reagente, 1:8', 'método do laboratório de referência', True),
+ ex('Espirometria pós-broncodilatador', 'VEF₁/CVF 0,63 · VEF₁ 61% do previsto · sem reversibilidade significativa', '—', True),
+ ex('Sódio / potássio após reposição adrenal', '135 / 4,6 mmol/L', '135–145 / 3,5–5,1'),
+ ex('Cultura para micobactérias', 'Em incubação', 'resultado final será conferido'),
+ ], introducao='A investigação funcional e sorológica ocorre em paralelo à terapia. Dispneia não será atribuída apenas à micose num tabagista com obstrução.'),
 
-    disc('formas', 'Forma e gravidade',
-         'O consenso brasileiro separa a forma aguda ou subaguda, do jovem, '
-         'com linfonodos, fígado, baço e pouca doença pulmonar, da forma '
-         'crônica do adulto, que responde por 74 a 96% dos casos e se instala '
-         'em meses, com pulmão, mucosas das vias aerodigestivas e pele. Na '
-         'crônica, unifocal ou multifocal, a gravidade orienta o tratamento.',
-         'É grave quem tem três ou mais destes: perda de peso acima de 10%; '
-         'comprometimento pulmonar intenso; acometimento de adrenais, sistema '
-         'nervoso ou ossos; linfonodos em várias cadeias, maiores que 2 cm ou '
-         'supurados; títulos de anticorpos elevados. É leve quem perdeu menos '
-         'de 5% do peso, com um órgão acometido e sem disfunção.',
-         'Valdir perdeu 10 kg de 70, ou 14%: um critério. Tem hipoxemia leve em '
-         'repouso, sem insuficiência respiratória, e linfonodos de até 2 cm, sem '
-         'supuração. Faltam os títulos e a adrenal, que o consenso manda '
-         'avaliar na forma crônica pela frequência com que é atingida.'),
+    Q('p_tratamento', 5, 'Com ingestão oral preservada e estabilidade após reposição adrenal, qual antifúngico é a opção inicial mais apropriada neste percurso?',
+ [('Itraconazol oral', True), ('Anfotericina B lipossomal', False), ('Fluconazol oral', False), ('Nistatina tópica', False)],
+ [('Escolha contextual', 'Após avaliação especializada, a doença é conduzida como forma crônica sem instabilidade ou insuficiência respiratória grave, com absorção oral viável. Itraconazol é opção de primeira linha para formas leves a moderadas. A perda ponderal e a adrenal exigem monitorização próxima e não podem ser banalizadas por um rótulo.'),
+ ('Alternativas', 'Anfotericina é apropriada para doença grave, deterioração ou impossibilidade de terapia oral; não é um erro absoluto nem necessariamente causa lesão renal. Nistatina não trata doença sistêmica e fluconazol não é a primeira escolha habitual. A classificação e o local de cuidado serão revistos se a evolução mudar.')]),
 
-    painel('estadio', 'Avaliação da extensão', 'Duas semanas depois', [
-        ex('Exame direto do escarro com hidróxido de potássio', 'Leveduras de parede espessa, com brotos múltiplos', 'ausentes', True),
-        ex('Imunodifusão dupla para //Paracoccidioides//', 'Reagente, 1:16', 'não reagente', True),
-        ex('Cultura de escarro para micobactérias', 'Sem crescimento em quatro semanas {{(final em oito)}}', '—'),
-        ex('Cortisol sérico às 8 h', '7,4 µg/dL', '5–25 µg/dL'),
-        ex('ACTH plasmático', '112 pg/mL', 'até 46 pg/mL', True),
-        ex('Cortisol 60 min após 250 µg de cosintropina', '11,8 µg/dL', 'pico ≥ 18 µg/dL', True),
-        ex('Sódio / potássio', '132 / 5,1 mmol/L', '135–145 / 3,5–5,1', True),
-        ex('Espirometria', 'VEF₁/CVF 0,63 · VEF₁ 61% do previsto · sem resposta ao broncodilatador', '—', True),
-    ], introducao='Pedidos depois do diagnóstico, antes de começar o antifúngico.'),
+    pg('tratamento', 'Começar e conferir exposição',
+ 'Valdir inicia itraconazol em cápsulas convencionais, 200 mg/dia após refeição, com acompanhamento próximo de ingestão, peso, função hepática e interações. O omeprazol sem indicação clara é suspenso antes da primeira dose; não se espera falha terapêutica para reconhecer a interação.',
+ 'A duração será guiada pelos critérios de resposta e cura: a diretriz global de 2021 usa em geral 9–12 meses nas formas leves/moderadas; o consenso brasileiro admite 9–18 meses. Não se promete um prazo universal. Progressão ou má absorção pode exigir internação e terapia intravenosa.',
+ 'Ele recebe orientação sobre doses de estresse da hidrocortisona, cartão de alerta e reposição parenteral se não conseguir reter comprimidos. Tratamento antifúngico não autoriza interromper a reposição adrenal por conta própria.'),
 
-    Q('p5', 5,
-      'Qual combinação melhor localiza a disfunção adrenal de Valdir, apesar do cortisol basal dentro da referência?', [
-      ('Pico baixo após cosintropina e ACTH elevado, favorecendo falha adrenal primária', True),
-      ('Cortisol basal dentro da referência e sódio baixo, favorecendo eixo normal com SIADH', False),
-      ('Pico baixo e ACTH elevado, favorecendo doença hipofisária', False),
-      ('Hiponatremia em uso de tiazida, tornando dispensável interpretar a cosintropina', False),
-      ('Potássio de 5,1 isolado, confirmando deficiência de aldosterona', False),
-     ], [
-      ('O estímulo resolve a dúvida', 'Cortisol basal de 7,4 é indeterminado. Pico de 11,8 após cosintropina fica abaixo dos cortes usuais, inclusive de muitos ensaios modernos; com ACTH de 112, favorece falha da adrenal, não da hipófise.'),
-      ('Dados que apoiam, sem confirmar sozinhos', 'Hiperpigmentação e eletrólitos reforçam a localização. A tiazida pode contribuir para o sódio baixo, mas não explica a resposta hormonal. Potássio limítrofe não confirma sozinho deficiência mineralocorticoide; pressão, renina e eletrólitos orientam sua avaliação.'),
-     ]),
-
-    disc('adrenal', 'A adrenal de Valdir',
-         'Com a reserva reduzida e sinais de falta de aldosterona, a '
-         'endocrinologia inicia hidrocortisona 15 mg ao dia, 10 mg ao acordar e '
-         '5 mg no início da tarde, dentro da faixa de 15 a 25 mg da diretriz da '
-         'Endocrine Society de 2016, e fludrocortisona 0,05 mg, guiada por '
-         'sódio, potássio e pressão. A hidroclorotiazida é suspensa: piora o '
-         'sódio, e a pressão está em 112/70.',
-         'Ele leva para casa a regra da doença intercorrente: dobrar ou '
-         'triplicar a dose com febre, e hidrocortisona injetável se vomitar. '
-         'Recebe um cartão que diz que usa corticoide e não pode ficar sem.',
-         'A função adrenal às vezes melhora com o tratamento da micose, mas na '
-         'maioria a reposição continua. O cetoconazol, usado no passado contra '
-         'esse fungo, bloqueia a síntese de cortisol e fica fora de cogitação.'),
-
-    bifurcacao('b2', 'Decisão', 'O antifúngico',
-      'Forma crônica multifocal, com dois critérios de gravidade, perda de peso '
-      'e adrenal, sem instabilidade, com a reposição já iniciada. Como '
-      'tratar?', [
-      caminho('Itraconazol 200 mg por via oral, em casa, por 9 a 18 meses, '
-              'guiado pelos critérios de cura', 'tratamento',
-              'É o tratamento de escolha do consenso para as formas leves e '
-              'moderadas.'),
-      caminho('Internar para anfotericina B desoxicolato por quatro semanas',
-              'anfo',
-              'Anfotericina é para as formas graves e instáveis, e cobra rim e '
-              'potássio.'),
-    ]),
-
-    pg('anfo', 'Duas semanas de internação',
-       'Anfotericina B desoxicolato 0,6 mg/kg ao dia. Na segunda semana, a '
-       'creatinina sobe de 0,9 para 1,9 mg/dL e o potássio cai para 2,9 mmol/L, '
-       'com reposição endovenosa diária e uma flebite no braço. No 14.º dia a '
-       'equipe suspende a anfotericina e passa para itraconazol.',
-       segue='tratamento'),
-
-    pg('tratamento', 'Primeira consulta de tratamento',
-       'A farmácia do hospital dispensa o itraconazol 200 mg ao dia, sem custo '
-       'para ele. Valdir mora a 40 minutos do hospital e mantém o omeprazol '
-       'que comprou na farmácia. '
-       'Pergunta se pode parar quando a boca sarar.',
-       'A cultura de escarro para micobactérias ainda corre, e a equipe '
-       'conversa com ele sobre o cigarro e a cachaça.'),
-
-    Q('p6', 6,
-      'Itraconazol em cápsulas, omeprazol em uso e cultura para micobactérias pendente: quais **duas medidas** reduzem o risco de exposição antifúngica insuficiente?', [
-      ('Reavaliar a necessidade do omeprazol e administrar as cápsulas após refeição', True),
-      ('Reorganizar o esquema antifúngico se for necessário iniciar rifampicina', True),
-      ('Manter o omeprazol, separando-o do itraconazol por duas horas', False),
-      ('Aumentar empiricamente o itraconazol ao introduzir rifampicina', False),
-      ('Administrar as cápsulas em jejum para evitar interferência alimentar', False),
-     ], [
-      ('Dois mecanismos', 'Supressão ácida reduz absorção das cápsulas convencionais: revisar o omeprazol e tomar após refeição ajuda a evitar subexposição. Rifampicina induz metabolismo e exige reorganizar a terapia, com alternativa como sulfametoxazol-trimetoprima conforme avaliação do caso.'),
-      ('Ajustes que não resolvem a interação', 'Separar duas horas não reverte a supressão ácida prolongada pelo omeprazol. Elevar empiricamente a dose não compensa com segurança a forte indução pela rifampicina. Jejum pode ser adequado a outras formulações, mas reduz a absorção das cápsulas convencionais em comparação à administração após refeição.'),
-     ]),
+    Q('p6', 6, 'Se a cultura posteriormente confirmar tuberculose e houver indicação de rifampicina, qual ação é mais apropriada?',
+ [('Reorganizar o esquema antifúngico', True), ('Separar as doses por duas horas', False), ('Dobrar empiricamente o itraconazol', False), ('Manter o esquema sem revisão', False)],
+ [('Interação', 'A indução enzimática pela rifampicina reduz muito a exposição ao itraconazol. A equipe precisa escolher estratégia antifúngica alternativa, conforme gravidade e função renal. Não se corrige essa interação apenas com horário ou aumento empírico. Também é necessário rever a reposição adrenal: rifampicina acelera a depuração de glicocorticoides e pode exigir ajuste da hidrocortisona.'),
+ ('Outra interação', 'Supressores de acidez reduzem absorção das cápsulas convencionais e devem ser revistos; outras formulações têm instruções distintas. As culturas serão acompanhadas mesmo após a confirmação da micose.')]),
 
     pg('seguimento', 'Do primeiro ao sexto mês',
-       'Em 30 dias as lesões do lábio, da face e da gengiva cicatrizam. Os '
-       'linfonodos regridem no terceiro mês, e a voz melhora, sem voltar a ser '
-       'a de antes. A cultura de escarro termina negativa em oito semanas.',
-       'Com adesivo de nicotina e o grupo de cessação da unidade básica, ele '
-       'para de fumar no segundo mês e reduz a cachaça para o fim de semana. '
-       'No sexto mês pesa 68 kg, a imunodifusão caiu para 1:4 e as '
-       'opacidades da radiografia estão menores e mais lineares.',
-       'Ele voltou ao cafezal e pergunta, de novo, se pode parar o remédio.'),
-
-    bifurcacao('b3', 'Decisão', 'Quando parar',
-      'Sexto mês: lesões cicatrizadas, peso quase recuperado, imunodifusão em '
-      '1:4. O que você responde?', [
-      caminho('Manter até cumprir os critérios clínicos, radiológicos e '
-              'sorológicos de cura', 'cura',
-              'Cicatrizar a boca é o primeiro critério, não o último.'),
-      caminho('Suspender agora, porque as lesões cicatrizaram e o peso voltou',
-              'recaida',
-              'Seis meses ficam abaixo do tempo mínimo, com a sorologia ainda '
-              'positiva e a radiografia ainda mudando.'),
-    ]),
-
-    pg('recaida', 'Onze meses depois',
-       'Cinco meses depois de suspenso o itraconazol, a rouquidão volta, '
-       'depois a falta de ar e uma nova área granulosa na gengiva. Valdir '
-       'perde 6 kg e a imunodifusão sobe para 1:64. O itraconazol é retomado.',
-       'A laringe cicatriza com fibrose e estreita: ele passa a ter estridor ao '
-       'esforço e precisa de traqueostomia enquanto a otorrino planeja a '
-       'correção. A espirometria mostra VEF₁ de 44% do previsto.',
-       segue='f_pior'),
+ 'Em 30 dias as lesões labial, gengival e da face cicatrizam, sem área endurecida residual. A cultura fúngica confirma Paracoccidioides spp.; a de micobactérias termina sem crescimento em oito semanas. A laringoscopia de controle mostra regressão das lesões, com disfonia residual.',
+ 'Valdir deixa de fumar no segundo mês com apoio da unidade básica. No sexto, pesa 68 kg e a imunodifusão caiu para 1:2, mas ainda para ao subir o morro. A equipe revê a obstrução e a possibilidade de sequela pulmonar, em vez de supor atividade fúngica só pela dispneia.',
+ 'A cicatrização da boca foi mais rápida que a recuperação de peso, função respiratória e voz. O antifúngico continua; não há uma decisão de suspensão precoce usada para produzir uma recaída obrigatória.'),
 
     pg('cura', 'Do 12.º ao 18.º mês',
-       'A imunodifusão é de 1:2 no 12.º mês e não reagente no 18.º. As '
-       'radiografias do 12.º e do 18.º mês são iguais, com linhas finas '
-       'residuais. O peso estabiliza em 70 kg, sem lesão nova.',
-       'Com os critérios clínico, radiológico e sorológico cumpridos, o '
-       'itraconazol é suspenso no 18.º mês. Como a falta de ar aos esforços '
-       'continua, a equipe pede tomografia de tórax para separar sequela de '
-       'atividade.'),
+ 'No 12.º mês, a avaliação ainda não satisfaz todos os critérios de suspensão, e o tratamento é prolongado. No 18.º, peso estável em 70 kg, ausência de lesões novas, sorologia não reagente e radiografias estáveis em avaliações sucessivas sustentam a suspensão supervisionada.',
+ 'A reserva adrenal continua reduzida e a reposição é mantida. A dispneia residual motiva TC e tratamento funcional, sem prolongar antifúngico automaticamente por uma cicatriz ou pelo tabagismo prévio.'),
 
     estudo('tc_seq', 'Tomografia de tórax no fim do tratamento',
            'Corte axial nos lobos superiores, em janela de pulmão. A pergunta é '
-           'se há sinal de atividade, como nódulos, cavidades ou vidro fosco, '
-           'ou só cicatriz.',
+           'como interpretar alterações residuais junto da evolução clínica e funcional; a TC isolada não confirma cura nem atividade.',
            IMG / 'tc_controle.jpg',
            'Tomografia de outro paciente · comparação didática.',
            credito_meta(IMG / 'tc_controle.jpg.json'),
@@ -535,72 +305,19 @@ ETAPAS = [
         ],
         ['Enfisema centrolobular difuso nos lobos superiores. Sem nódulos, '
          'cavidades, consolidação ou vidro fosco neste corte.',
-         'No tratado, a tomografia mostra enfisema e distorção cicatricial em '
-         'mais de 80% dos casos, somando a micose ao cigarro. A espirometria '
-         'obstrutiva justifica broncodilatador como na doença pulmonar '
-         'obstrutiva crônica.']),
+         'A imagem de referência mostra enfisema. No caso, o laudo completo é integrado à obstrução e à estabilidade clínica para orientar broncodilatador e reabilitação; uma única fatia não exclui atividade em outro local.']),
 
-    pg('alta', 'Seguimento depois do tratamento',
-       'Valdir passa a consultas semestrais por dois anos, com sorologia e '
-       'radiografia, e segue com broncodilatador inalatório e a '
-       'hidrocortisona, porque a reserva adrenal reavaliada no fim continua '
-       'baixa.',
-       conforme=('b1', ['alta2', 'f2', 'f2'])),
+    desfecho('alta', 'Depois do antifúngico',
+ p('Valdir segue em consultas semestrais por pelo menos dois anos após a suspensão, com avaliação clínica, sorológica e radiológica conforme evolução. Mantém broncodilatador, reabilitação e acompanhamento endócrino.'),
+ p('Dois anos depois, sem recaída documentada, sobe o morro com uma pausa e a voz continua mais grave. Há controle da infecção com sequelas; não se afirma que cada atraso causaria fibrose nem que a cura esteriliza todos os focos.'),
+ qualidade='medio', porque='A infecção foi controlada neste percurso, mas a recuperação funcional e o cuidado das sequelas continuam.', fecho='retrospectiva'),
 
-    pg('alta2', 'Dois anos depois',
-       'Sem fumar, ele sobe o morro do cafezal parando uma vez. A voz ficou '
-       'um pouco mais grave.',
-       conforme=('b2', ['f1', 'f2'])),
-
-    fim('f1', 'Cura clínica com sequela pequena',
-        'Sem recaída dois anos depois de suspenso o itraconazol, com '
-        'sorologia não reagente, sem cigarro, com a adrenal compensada pela '
-        'reposição e uma obstrução moderada que o broncodilatador controla.',
-        'A biópsia antes de qualquer tratamento, o antifúngico oral certo para '
-        'a gravidade e o tratamento até os critérios de cura foram as três '
-        'decisões que contaram.', 'melhor'),
-
-    fim('f2', 'Cura depois de um percurso mais longo',
-        'Valdir chega aos critérios de cura, mas com mais semanas de doença '
-        'ativa antes do diagnóstico ou com uma lesão renal que custou duas '
-        'semanas de internação, e com mais fibrose e mais falta de ar do que '
-        'teria.',
-        'Tratar tuberculose sem tecido, esperar uma cirurgia sem diagnóstico '
-        'ou usar anfotericina numa forma moderada acrescentou dano sem '
-        'acrescentar cura.', 'medio'),
-
-    fim('f_pior', 'Recaída com sequela de laringe',
-        'Ele completa um segundo curso de itraconazol, mais longo, mas fica com '
-        'traqueostomia por meses, voz muito alterada e obstrução grave ao '
-        'esforço.',
-        'Cicatrizar a boca em 30 dias não é cura. Suspender aos seis meses, com '
-        'a sorologia positiva e a radiografia mudando, deixou o fungo voltar, e '
-        'cada atividade nova soma fibrose.', 'pior'),
-
-    pagina('retrospectiva', 'Pontos de ensino', '',
-        pontos(
-            'Num lavrador de área endêmica com tosse longa, emagrecimento, '
-            'rouquidão e lesão de boca, a micose entra na lista ao lado da '
-            'tuberculose e do carcinoma, e o exame direto do escarro com '
-            'hidróxido de potássio custa um dia.',
-            'Radiografia com doença intersticial bilateral, peri-hilar, maior '
-            'que a clínica, é a dissociação clínico-radiológica das doenças '
-            'granulomatosas crônicas.',
-            'Baciloscopia e teste molecular negativos não afastam tuberculose, '
-            'e a coinfecção acontece em 2 a 20% dos casos; a cultura segue até o '
-            'fim.',
-            'Lesão acessível se biopsia antes de tratar, e o fragmento vai '
-            'também para cultura. A hiperplasia pseudoepiteliomatosa imita '
-            'carcinoma na biópsia superficial.',
-            'Na forma crônica, avaliar a adrenal sempre: reserva reduzida é '
-            'frequente e silenciosa, e a reposição costuma ser definitiva.',
-            'Itraconazol 200 mg ao dia, cápsula inteira após refeição, sem '
-            'omeprazol nem rifampicina, por 9 a 18 meses, até os critérios '
-            'clínico, radiológico e sorológico de cura. Anfotericina fica para '
-            'as formas graves.',
-            'Parar de fumar faz parte do tratamento: o cigarro soma enfisema à '
-            'fibrose e aumenta o risco de carcinoma no mesmo sítio da micose.'),
-        so_kicker=True),
+    pagina('retrospectiva', 'Pontos de ensino', '', pontos(
+ 'Pulmão, boca e laringe exigem integrar micose, tuberculose e neoplasia; uma hipótese pode não explicar todos os sítios.',
+ 'Melhorar a alimentação não recupera automaticamente a troca gasosa. Odinófagia nova exige examinar a via aérea.',
+ 'Hiperpigmentação, ortostatismo e alterações eletrolíticas motivam avaliar a adrenal antes da confirmação etiológica.',
+ 'Amostra acessível e exame direto podem antecipar o diagnóstico. Cultura pendente não deve adiar tratamento quando há agente demonstrado.',
+ 'A resposta das lesões, da voz, do peso e da função pulmonar ocorre em ritmos diferentes. Interações e critérios de suspensão precisam de acompanhamento.'), so_kicker=True),
 
     pg('referencias', 'Fontes e limites',
        'Paciente, valores e percursos são ficcionais.',
@@ -614,9 +331,9 @@ ETAPAS = [
        'Endocrinol Metab 2016. Ministério da Saúde. Manual de Recomendações '
        'para o Controle da Tuberculose no Brasil, 2.ª ed., 2019. Inker e cols. '
        'CKD-EPI 2021, N Engl J Med 2021.',
-       'Imagens, todas de outros pacientes, com setas adicionadas. Capa: José '
-       'Palahv Gavião, CC BY-SA 4.0, commons.wikimedia.org/wiki/'
-       'File:Plantação_de_café_(1)_01.jpg. Radiografia: CDC/M. Renz, domínio '
+       'Capa: ilustração original do paciente ficcional, gerada com OpenAI '
+       'imagegen para este projeto em 24/10/2026. Imagens clínicas de outros '
+       'pacientes, com setas adicionadas. Radiografia: CDC/M. Renz, domínio '
        'público, commons.wikimedia.org/wiki/'
        'File:Chest_X-ray_acute_pulmonary_histoplasmosis_PHIL_3954.jpg (usada '
        'pelo padrão intersticial). Lesões da face: CDC/Dr. Martins Castro e Dr. '
@@ -625,12 +342,11 @@ ETAPAS = [
        'Prata: CDC/Dr. Lucille K. Georg, domínio público, '
        'commons.wikimedia.org/wiki/File:Paracoccidioides_brasiliensis_01.jpg. '
        'Tomografia: Hellerhoff, CC BY-SA 4.0, commons.wikimedia.org/wiki/'
-       'File:Zentrilobulaeres_Lungenemphysem_61W_-_CT_axial_-_001.jpg.'),
+       'File:Zentrilobulaeres_Lungenemphysem_61W_-_CT_axial_-_001.jpg.',
+ 'Revisão de 23/10/2026: <a href="https://pubmed.ncbi.nlm.nih.gov/34364529/">ECMM/ISHAM 2021, micoses endêmicas</a>; <a href="https://pubmed.ncbi.nlm.nih.gov/30133688/">consenso brasileiro publicado em 2018</a>; <a href="https://www.endocrine.org/clinical-practice-guidelines/primary-adrenal-insufficiency">Endocrine Society, diretriz de insuficiência adrenal primária de 2016</a>. A data de cada documento é explícita; a cronologia individual é ficcional. Não se pretende demonstrar uma nova diretriz de 2026.')
 ]
 
 REVISAO = []
 
-# Revisão de questões: fontes clínicas consultadas em 22/10/2026.
-# https://www.scielo.br/j/rsbmt/a/Ynd6SxcPqLjtqkFyVp678zj/?format=pdf
-# https://pmc.ncbi.nlm.nih.gov/articles/PMC4880116/
-# Redação: https://www.nbme.org/sites/default/files/2021-02/NBME_Item%20Writing%20Guide_R_6.pdf
+for _n, _e in enumerate((e for e in ETAPAS if e['t'] == 'pergunta'), 1):
+    _e['kicker'] = f'Pergunta {_n}'

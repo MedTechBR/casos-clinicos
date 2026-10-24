@@ -68,9 +68,9 @@ def _esquema_comum():
           "52 semanas**, poupando glicocorticoide. É adjuvante da indução, não "
           "substituto, e o limite aqui é a disponibilidade."),
         sistema="geral")
-    cerco = quadro("Antes da primeira dose, e depois dela",
-        p("Antes: HBsAg e anti-HBc, anti-HCV e anti-HIV; ivermectina 200 "
-          "µg/kg por dois dias. Depois: sulfametoxazol-trimetoprima **400/80 "
+    cerco = quadro("Proteção durante a indução",
+        p("Colher HBsAg e anti-HBc, anti-HCV e anti-HIV em paralelo ao tratamento urgente, sem atrasá-lo para esperar resultados; ivermectina 200 "
+          "µg/kg por dois dias iniciada prontamente pela exposição. Profilaxia com sulfametoxazol-trimetoprima **400/80 "
           "mg três vezes por semana**, meia dose pela filtração, com o potássio "
           "vigiado: ele chegou com 5,4. Cálcio, vitamina D e hemograma "
           "semanal."),
@@ -153,8 +153,8 @@ ETAPAS = [
                     'pápulas avermelhadas de 1 a 2 mm, que ele atribui a '
                     'picadas de inseto na horta. Sem lesões nas polpas digitais '
                     'nem hemorragias subungueais.'),
-                   ('Neurológico', 'Orientado. Força proximal preservada, '
-                    'reflexos patelares presentes. Marcha não testada, pela '
+                   ('Neurológico', 'Orientado. Força proximal e dorsiflexão dos pés preservadas; '
+                    'sensibilidade distal sem assimetria, reflexos patelares e aquileus presentes. Marcha não testada, pela '
                     'dispneia.')),
            so_kicker=True),
 
@@ -280,7 +280,7 @@ ETAPAS = [
        'mg/L num homem com sinusite arrastada. No rim, glomerulonefrite com '
        'cilindros hemáticos. A equipe registra pneumonia grave multilobar com '
        'glomerulonefrite associada à infecção, e endocardite a afastar.',
-       'Inicia ceftriaxona 2 g e azitromicina 500 mg ao dia, oxigênio por '
+       'Desde a chegada recebe oxigênio e monitorização, com avaliação imediata da necessidade de suporte ventilatório. Inicia ceftriaxona 2 g e azitromicina 500 mg ao dia, oxigênio por '
        'cateter nasal a 4 L/min, e pede ecocardiograma transtorácico, '
        'complemento e antígenos urinários de pneumococo e legionela.'),
 
@@ -325,7 +325,7 @@ ETAPAS = [
         ex('Antígeno urinário de legionela', 'Não reagente', 'não reagente'),
         ex('Hemoculturas, três pares', 'Sem crescimento em 36 horas', 'sem crescimento'),
         ex('Procalcitonina', '0,3 ng/mL', 'abaixo de 0,5 ng/mL'),
-        ex('HBsAg, anti-HCV e anti-HIV', 'Não reagentes', 'não reagentes'),
+        ex('HBsAg, anti-HBc, anti-HCV e anti-HIV', 'Não reagentes', 'não reagentes'),
     ]),
 
     pg('dia2', 'Segundo dia de internação',
@@ -337,7 +337,7 @@ ETAPAS = [
        'A hemoglobina está em 6,9 g/dL, sem melena, hematêmese ou epistaxe '
        'volumosa. A creatinina subiu para 4,1 mg/dL, e a diurese das últimas '
        '24 horas foi de 620 mL. A equipe pede tomografia de tórax sem '
-       'contraste.'),
+       'contraste. Pela hipoxemia e pelo sangramento ativo, é transferido para cuidado intensivo, com oxigênio titulado e avaliação de via aérea; intubação não será adiada se houver fadiga ou hipoxemia refratária. Recebe uma unidade de concentrado de hemácias, com reavaliação clínica e da hemoglobina após a transfusão.'),
 
     estudo('tc_torax', 'Tomografia de tórax',
         'Tomografia do segundo dia, pela piora da oxigenação. Descreva o '
@@ -375,80 +375,53 @@ ETAPAS = [
           'separar sangue de água e de pus.')),
 
     bifurcacao("b_dia2", "Decisão",
-        "Ele piorou sob antibiótico. O que você faz agora?",
+        "Piora respiratória no segundo dia",
         "Trinta e seis horas de ceftriaxona e azitromicina, mais oxigênio, mais "
         "hemoptise e 0,9 g/dL a menos de hemoglobina. As culturas ainda não "
-        "voltaram.",
+        "têm resultado final. O suporte respiratório e transfusional já está em curso. Qual prioridade etiológica orienta sua conduta?",
         [
-            caminho("Escalonar o antibiótico para carbapenêmico e vancomicina",
+            caminho("Ampliar a cobertura antibiótica",
                     "r_escalona",
                     "É a leitura de que o espectro foi insuficiente, e germe "
                     "resistente existe. Mas trinta e seis horas é cedo para "
                     "declarar falha numa pneumonia comunitária, e antibiótico "
                     "mais largo não retém sangue no alvéolo."),
-            caminho("Investigar a hemorragia alveolar antes de mudar o "
-                    "tratamento", "r_investiga",
+            caminho("Realizar lavado broncoalveolar", "r_investiga",
                     "A broncoscopia com lavado mostra de onde vem o sangue, e a "
-                    "cultura do lavado responde ao que sobrou da hipótese de "
-                    "infecção. O antibiótico continua correndo enquanto isso."),
+                    "microbiologia do lavado investiga infecção concomitante. A coleta depende da segurança respiratória e não deve atrasar tratamento urgente. O antibiótico continua enquanto se reavalia a hipótese."),
             caminho("Iniciar corticoide em dose imunossupressora agora",
                     "r_corticoide",
-                    "A hemorragia alveolar é uma emergência, e o corticoide "
-                    "costuma contê-la. O preço é o momento: as culturas ainda "
-                    "estão em curso, e nenhum material foi colhido antes."),
+                    "Na hemorragia alveolar ameaçadora, o tratamento pode começar enquanto a causa é investigada. Hemoculturas pré-antibiótico já foram colhidas; revisar infecção e obter outras amostras quando seguro continua necessário."),
         ],
     ),
 
-    pg("r_escalona", "Terceiro e quarto dias",
-       "Meropeném e vancomicina correram por 48 horas. A saturação caiu para "
-       "91% em máscara com reservatório a 12 L/min e a hemoglobina está em 6,3 "
-       "g/dL, com nova hemoptise de cerca de 40 mL. A creatinina subiu para "
-       "4,6 mg/dL e a diurese caiu para 380 mL.",
-       "As hemoculturas da admissão seguem negativas. A urocultura, negativa.",
+    pg("r_escalona", "Reavaliação nas horas seguintes",
+       "A cobertura é ampliada, mas nas horas seguintes persiste hemoptise e a oxigenação exige máscara com reservatório. A hemoglobina é reavaliada após a primeira unidade; pelo sangramento persistente, recebe uma segunda unidade, com controle de volume e resposta. Creatinina 4,6 mg/dL, diurese de 380 mL nas últimas 24 horas.",
+       "No cuidado intensivo, a equipe reconhece que ampliar antibióticos não trata a possível capilarite e retoma imediatamente a investigação e o tratamento da síndrome pulmão-rim, sem esperar cinco dias de culturas.",
        segue="virada"),
 
-    pg("r_investiga", "Terceiro dia",
-       "Broncoscopia à beira do leito, sob oxigênio a 100%. Árvore brônquica "
-       "sem lesão endobrônquica e sem ponto de sangramento: sangue difuso "
-       "escorrendo dos óstios segmentares dos dois pulmões.",
-       "Lavado em três alíquotas de 60 mL no mesmo segmento: a primeira "
-       "rosada, a segunda vermelha, a terceira francamente hemorrágica. A "
-       "citologia mostra macrófagos carregados de hemossiderina, e a "
-       "bacterioscopia é negativa.",
+    pg("r_investiga", "Ainda no segundo dia",
+       "Após estabilização respiratória e avaliação conjunta da equipe intensiva, realiza-se broncoscopia com suporte de via aérea apropriado. Não há lesão endobrônquica nem ponto focal de sangramento.",
+       "As alíquotas sequenciais no mesmo segmento ficam progressivamente hemorrágicas. A bacterioscopia inicial é negativa; culturas do lavado permanecem pendentes e foram obtidas após antibiótico. Uma segunda unidade de hemácias é administrada pelo sangramento persistente, com reavaliação após a transfusão. A coleta não é condição para iniciar tratamento se houver nova deterioração.",
        segue="virada"),
 
-    pg("r_corticoide", "Terceiro e quarto dias",
-       "Metilprednisolona 500 mg ao dia. Em 48 horas a hemoptise cessou e a "
-       "saturação subiu para 95% em cateter a 4 L/min. A hemoglobina "
-       "estabilizou em 6,9 g/dL e a creatinina parou de subir, em 4,6 mg/dL.",
-       "A partir de agora, toda cultura negativa terá sido colhida sob "
-       "imunossupressão, e o valor dela é menor.",
+    pg("r_corticoide", "Tratamento urgente e investigação paralela",
+       "Metilprednisolona 500 mg/dia é iniciada pela hemorragia alveolar ameaçadora, após discussão conjunta. Mantêm-se suporte intensivo e avaliação infecciosa; recebe uma segunda unidade de hemácias pelo sangramento persistente, com controle da resposta e do volume.",
+       "O corticoide não invalida as hemoculturas da admissão, colhidas antes do antibiótico. Amostras posteriores precisam ser interpretadas considerando sobretudo o antibiótico já recebido e a sensibilidade de cada teste. Resposta ao corticoide não confirma vasculite nem exclui infecção.",
        segue="virada"),
 
     # ══════════════════════ a virada ══════════════════════
 
-    pg("virada", "Quinto dia de internação",
-       "As três hemoculturas colhidas antes do antibiótico vieram negativas em "
-       "cinco dias. A urocultura e os antígenos urinários também são "
-       "negativos, e o complemento é normal. A creatinina está em 4,6 mg/dL.",
-       "Com cinco dias de antibiótico e nenhuma cultura positiva, a equipe "
-       "volta ao paciente e o reexamina, dessa vez de pé."),
+    pg("virada", "Reavaliação no segundo dia",
+       "As hemoculturas pré-antibiótico seguem sem crescimento preliminar; só terão resultado final ao completar a incubação. Antígenos urinários negativos e complemento normal não excluem infecção. A creatinina está em 4,6 mg/dL.",
+       "Durante a internação surge dificuldade nova para mover o pé direito. Sem colocá-lo de pé enquanto está hipoxêmico, a equipe repete o exame neurológico e examina a pele."),
 
-    pagina("reexame", "O reexame do quinto dia", "",
+    pagina("reexame", "Novo exame à beira do leito", "",
         topicos(
-            ("Marcha",
-             "Levado ao banheiro com apoio, arrasta a ponta do pé direito. Diz "
-             "que tropeça há cerca de dez dias e achou que era fraqueza."),
-            ("Neurológico",
-             "Dorsiflexão do pé direito com força 2/5 e aquileu direito "
-             "abolido. Hipoestesia no território ulnar esquerdo. Sem nível "
-             "sensitivo e sem padrão de raiz única."),
-            ("Pele",
-             "As pápulas dos pés se multiplicaram e subiram para as pernas: "
-             "lesões elevadas de 2 a 8 mm, algumas com centro escurecido, que "
-             "não desaparecem à digitopressão."),
-        ),
-        so_kicker=True),
+            ("Evolução", "Na admissão, a dorsiflexão e a sensibilidade distal estavam preservadas. Agora ele relata dificuldade nova para elevar o pé direito, surgida nas últimas horas."),
+            ("Neurológico", "Dorsiflexão direita 2/5, eversão 3/5 e reflexo aquileu direito reduzido. Há também hipoestesia nova no território ulnar esquerdo. Sem nível sensitivo; a distribuição multifocal exige investigação de neuropatia, sem atribuição automática a uma raiz única."),
+            ("Pele", "As pápulas dos pés se multiplicaram e subiram para as pernas: lesões elevadas de 2 a 8 mm, algumas com centro escurecido, que não desaparecem à digitopressão."),
+        ), so_kicker=True),
 
     estudo('purpura', 'A pele das pernas',
         'Fotografia de outro paciente, com lesões do mesmo tipo das dele. Antes '
@@ -472,11 +445,12 @@ ETAPAS = [
          'predileção pelas pernas acompanha a pressão hidrostática.']),
 
     Q('p5', 3,
-      'Hemorragia alveolar, sedimento nefrítico, púrpura e déficit em territórios nervosos distintos. Quais três exames têm maior impacto na definição do mecanismo e da indução?', [
+      'Hemorragia alveolar, sedimento nefrítico, púrpura e déficit em territórios nervosos distintos. Quais quatro exames têm maior impacto na definição do mecanismo e da indução?', [
       ('Anti-membrana basal glomerular', True),
       ('Biópsia renal com imunofluorescência', True),
-      ('ANCA com especificidade anti-MPO e anti-PR3', True),
-      ('Repetir C3 e C4 antes das sorologias', False),
+      ('Anti-MPO', True),
+      ('Anti-PR3', True),
+      ('Repetir C3', False),
       ('Biópsia do nervo como primeiro tecido', False),
       ('Difusão pulmonar de monóxido de carbono', False),
      ], [
@@ -486,14 +460,13 @@ ETAPAS = [
 
     painel("res_mec", "O mecanismo", "Biópsia e sorologias", [
         ex('Anticorpo anti-membrana basal glomerular', 'Não reagente {{(resultado em horas)}}', 'não reagente'),
+        ex('Anti-MPO', '148 U/mL (positivo)', 'negativo', True),
+        ex('Anti-PR3', 'Não reagente', 'não reagente'),
         ex('FAN / anti-DNA nativo', 'Não reagentes', 'não reagentes'),
         ex('Crioglobulinas', 'Não detectadas', 'não detectadas'),
         ex('Biópsia renal · microscopia óptica', '24 glomérulos · crescentes celulares em 15 (62%) · necrose fibrinoide segmentar · fibrose intersticial em 10% do córtex', 'sem proliferação extracapilar', True),
         ex('Biópsia renal · imunofluorescência', 'Sem depósitos significativos de IgG, IgA, IgM, C3 ou C1q · padrão pauci-imune · sem depósito linear', 'sem depósitos', True),
-    ], introducao='Com o anti-MBG negativo em horas, a equipe transfundiu, '
-                  'puncionou o rim no mesmo dia, e a metilprednisolona 500 mg ao '
-                  'dia passou a correr sem esperar o laudo. A biópsia saiu em '
-                  'três dias. Um último anticorpo, colhido junto, levou quatro.'),
+    ], introducao='Anti-MBG, anti-MPO e anti-PR3 são enviados com urgência no segundo dia e retornam no dia seguinte. Diante da deterioração compatível, o corticoide começa ainda no segundo dia, caso não tenha sido iniciado no ramo escolhido. Com anti-MPO positivo, a indução com rituximabe e/ou ciclofosfamida é definida sem aguardar a biópsia, conforme KDIGO 2024. Após estabilização e avaliação do risco hemorrágico, o rim é biopsiado; o laudo sai três dias depois. O painel reúne os resultados obtidos em momentos distintos; as telas seguintes detalham essa decisão, sem acrescentar espera clínica.'),
 
     estudo("crescente", "Corpúsculo renal",
         "Antes de interpretar a microfotografia, localize a cápsula, o espaço "
@@ -544,7 +517,7 @@ ETAPAS = [
         kicker="Discussão de imagem"),
 
     estudo('if_anca', 'O último anticorpo',
-        'Chega no nono dia. Neutrófilos fixados em etanol recebem o soro do '
+        'Revisão ilustrativa do ANCA já disponível no terceiro dia; não se espera esta imagem para tratar. Neutrófilos fixados em etanol recebem o soro do '
         'paciente e um anticorpo antiglobulina marcado: onde a fluorescência '
         'se acumula, está o alvo.',
         IMG / 'panca_imunofluorescencia.jpg',
@@ -603,7 +576,7 @@ ETAPAS = [
         "Com que esquema você induz a remissão?",
         "Creatinina de 4,6 mg/dL (407 µmol/L), filtração estimada de 14 "
         "mL/min/1,73 m² por CKD-EPI 2021, 78 kg, 63 anos, hemorragia alveolar "
-        "em curso. O glicocorticoide é comum aos três caminhos; a segunda "
+        "recente e ameaçadora. Esta decisão é tomada assim que a sorologia retorna, sem aguardar o laudo renal. O glicocorticoide é comum aos três caminhos; a segunda "
         "droga é a decisão.",
         [
             caminho("Rituximabe semanal com dois pulsos de ciclofosfamida",
@@ -702,8 +675,8 @@ ETAPAS = [
        "Setenta e duas horas depois do primeiro pulso de metilprednisolona, a "
        "hemoptise cessou. O oxigênio caiu de máscara com reservatório para "
        "cateter nasal a 3 L/min, com saturação de 95%. A hemoglobina "
-       "estabilizou em 6,8 g/dL depois de duas unidades de concentrado de "
-       "hemácias no primeiro dia.",
+       "chegou a 8,6 g/dL após duas unidades de concentrado de "
+       "hemácias durante a piora do segundo dia, sem nova queda.",
        "A creatinina parou de subir, em 4,6 mg/dL, com diurese de 780 mL. Ele "
        "voltou a completar frases inteiras e pediu para comer. Ao caminhar "
        "com ajuda, ainda arrasta a ponta do pé direito."),
@@ -748,28 +721,24 @@ ETAPAS = [
           'cobre, e por isso ela segue por pelo menos seis meses.')),
 
     bifurcacao("b_febre", "Decisão",
-        "Febre no quinto dia de indução. O que você faz?",
+        "Febre durante a indução",
         "38,9 °C com calafrio, hipotensão que respondeu a volume, "
         "procalcitonina de 0,3 para 3,1, cateter central com sítio inflamado. "
-        "Sem nova hemoptise e sem piora pulmonar.",
+        "Sem nova hemoptise e sem piora pulmonar. Hemoculturas pareadas são colhidas antes do antibiótico empírico, sem atrasá-lo; essas medidas são comuns aos percursos. Qual decisão sobre o foco ou a imunossupressão você prioriza?",
         [
-            caminho("Retirar o cateter, colher hemoculturas pareadas e "
-                    "iniciar antibiótico com cobertura para "
-                    "//Staphylococcus aureus//", "f_retira",
+            caminho("Retirar o cateter suspeito", "f_retira",
                     "Órgão-alvo estável, procalcitonina subindo e porta de "
-                    "entrada visível. Retirar o cateter faz parte do "
+                    "entrada visível. A procalcitonina não confirma a causa. Após garantir outro acesso, retirar o cateter faz parte do "
                     "tratamento."),
             caminho("Intensificar a imunossupressão, por recidiva da vasculite",
                     "f_intensifica",
                     "Tem lógica se a leitura for de doença descontrolada. Mas a "
                     "hemoptise cessou, o pulmão não piorou e a "
-                    "procalcitonina subiu, o marcador que mais separa "
-                    "inflamação estéril de infecção bacteriana."),
+                    "procalcitonina subiu. O conjunto prioriza infecção; o marcador isolado não confirma nem exclui bacteremia."),
             caminho("Suspender toda a imunossupressão até esclarecer a febre",
                     "f_suspende",
                     "Parece prudente. Mas a vasculite acabou de ser controlada "
-                    "e a crescente ainda é celular: tratar a infecção e manter "
-                    "a indução é possível."),
+                    "e a crescente ainda é celular. Controlar a infecção exige reavaliar a próxima dose de imunossupressor; não implica suspender abruptamente todo o corticoide."),
         ],
     ),
 
@@ -778,12 +747,12 @@ ETAPAS = [
        "pareadas, //Staphylococcus aureus// sensível a oxacilina, com tempo "
        "diferencial de positivação compatível com origem no cateter. O "
        "ecocardiograma transesofágico não mostrou vegetação.",
-       "A febre cedeu em 48 horas, sem interromper a indução.",
+       "A febre cedeu em 48 horas. O corticoide é mantido na menor dose necessária; as próximas doses da indução são reavaliadas conforme o controle da bacteremia.",
        segue="dia10"),
 
     pg("f_suspende", "Sétimo ao nono dia",
        "A febre cedeu com a retirada tardia do cateter e a oxacilina, no "
-       "sétimo dia. Mas no nono, com 48 horas sem corticoide, voltou a "
+       "sétimo dia. No nono, após a suspensão do corticoide, voltou a "
        "hemoptise, dois episódios de cerca de 40 mL, e a saturação caiu para "
        "90% em cateter a 4 L/min. A hemoglobina caiu de 8,6 para 7,4 g/dL e a "
        "creatinina voltou a subir, de 4,2 para 4,8.",
@@ -793,7 +762,7 @@ ETAPAS = [
 
     pg("f_intensifica", "Sétimo dia",
        "Metilprednisolona voltou a 1 g ao dia por três dias, sobre a "
-       "bacteremia não tratada. O cateter permaneceu. Em 24 horas a "
+       "bacteremia com foco ainda não controlado, apesar do antibiótico empírico. O cateter permaneceu. Em 24 horas a "
        "temperatura chegou a 39,6 °C, a pressão caiu para 78/44 mmHg e não "
        "respondeu a 2.000 mL de cristaloide. Lactato 4,8 mmol/L.",
        "As hemoculturas voltaram com //Staphylococcus aureus// em 2 de 2 "
@@ -804,7 +773,7 @@ ETAPAS = [
     pg("fi_grave", "Do sétimo ao vigésimo dia",
        "Choque séptico por //S. aureus//, com foco em cateter mantido por 48 "
        "horas depois do primeiro pico febril. Noradrenalina por seis dias, "
-       "oxacilina por 28 dias, a duração da bacteremia complicada, e três "
+       "oxacilina por 28 dias neste curso, com duração individualizada após revisão da bacteremia complicada, e três "
        "sessões de diálise durante o choque, por oligúria e acidose "
        "refratária.",
        "Sobreviveu. Saiu da terapia intensiva treze dias depois, com "
@@ -813,24 +782,13 @@ ETAPAS = [
        conforme=("b1", ["prealta_rituximabe", "prealta_cfx", "prealta_uti"])),
 
     fim("fi_obito", "Óbito na terceira semana de internação",
-        "O choque séptico se instalou sobre uma medula que a ciclofosfamida "
-        "em dose plena, sem correção para a filtração de 14 mL/min, havia "
-        "levado a **210 neutrófilos**. A intensificação do corticoide no "
-        "sétimo dia foi dada sobre uma bacteremia já em curso, com a porta "
-        "de entrada ainda no pescoço.",
+        'Neste curso ficcional, o choque séptico ocorreu com neutropenia grave, de **210 neutrófilos/mm³**, após ciclofosfamida sem ajuste para idade e função renal. O corticoide foi intensificado durante bacteremia já coberta por antibiótico empírico, mas com atraso na retirada do cateter suspeito.',
         "Evoluiu com disfunção de múltiplos órgãos e choque refratário a três "
         "drogas vasoativas. Faleceu no nono dia de bacteremia. A vasculite "
         "estava respondendo: a hemoptise havia cessado no terceiro dia de "
         "indução.",
         qualidade="pior",
-        porque="Três decisões se somaram, e nenhuma delas era sobre o "
-               "diagnóstico. A dose plena da ciclofosfamida com filtração de "
-               "14 mL/min entregou uma neutropenia que o esquema corrigido não "
-               "produziria. A febre do quinto dia foi lida como recidiva "
-               "quando a procalcitonina, o órgão-alvo estável e o sítio de "
-               "inserção indicavam infecção. E o cateter, a porta de entrada, "
-               "permaneceu. No primeiro ano da vasculite ANCA tratada, a "
-               "infecção mata mais do que a própria vasculite."),
+        porque='A dose não ajustada aumenta o risco de toxicidade, mas neutropenia grave também pode ocorrer com dose ajustada. Neste percurso, a intensificação da imunossupressão e o atraso no controle do foco acompanharam a piora infecciosa apesar do antibiótico empírico. O óbito é um desfecho simulado, não consequência inevitável dessas escolhas.'),
 
     pg("dia10", "Décimo dia de indução",
        "O que vem a seguir depende do esquema de indução escolhido, e é aqui "
@@ -838,22 +796,14 @@ ETAPAS = [
        conforme=("b1", ["d10_rituximabe", "d10_cfx_ajustada", "d10_cfx_plena"])),
 
     pg("d10_rituximabe", "Décimo dia · caminho A",
-       "O hemograma do décimo dia, no nadir do primeiro pulso, mostra 4.800 "
-       "leucócitos com 3.000 neutrófilos. Com um pulso só de dose ajustada, a "
-       "queda é pequena, e o rituximabe não produz nadir de neutrófilos: a "
-       "bacteremia veio do cateter e do corticoide.",
+       'No décimo dia deste percurso, o hemograma mostra 4.800 leucócitos/mm³ e 3.000 neutrófilos/mm³, sem neutropenia. Essas contagens são valores simulados, não uma resposta garantida ao esquema. O cateter foi identificado como foco da bacteremia; a imunossupressão contribui para o risco infeccioso.',
        "Completou as quatro doses semanais e catorze dias de oxacilina. A "
        "creatinina caiu de forma sustentada.",
        segue="prealta_rituximabe"),
 
     pg("d10_cfx_ajustada", "Décimo dia · caminho B",
-       "O hemograma do décimo dia, no nadir esperado do pulso, mostra 3.600 "
-       "leucócitos com 1.900 neutrófilos. É citopenia leve, dentro do previsto "
-       "para 10 mg/kg; com nadir acima de 3.000 leucócitos, o pulso seguinte "
-       "fica na mesma dose, e o hemograma passa a duas vezes por semana "
-       "durante a bacteremia.",
-       "A febre cedeu, completou catorze dias de oxacilina, e o segundo pulso "
-       "foi dado na semana 2, como programado.",
+       'No décimo dia deste percurso, o hemograma mostra 3.600 leucócitos/mm³ e 1.900 neutrófilos/mm³. São valores observados na simulação, não um nadir universal para 10 mg/kg. O hemograma é repetido duas vezes por semana; dose e momento do próximo pulso dependem da evolução das contagens, da função renal e do controle da infecção.',
+       'Na evolução subsequente, a febre cedeu e o tratamento da bacteremia foi completado. O segundo pulso foi reprogramado após controle da infecção e revisão clínica e laboratorial.',
        segue="prealta_cfx"),
 
     pg("d10_cfx_plena", "Décimo dia · caminho C",
@@ -861,10 +811,7 @@ ETAPAS = [
        "A febre, que havia cedido com a oxacilina, voltou a 39,4 °C, agora com "
        "hipotensão que exigiu noradrenalina, e ele foi transferido para a "
        "terapia intensiva.",
-       "A neutropenia é muito mais profunda que a esperada: o nadir de um "
-       "pulso ajustado fica em torno de 1.900 neutrófilos. Entraram "
-       "antibiótico de amplo espectro, antifúngico empírico no quinto dia de "
-       "neutropenia febril e fator estimulador de colônias.",
+       'Neste percurso, houve neutropenia grave após a dose não ajustada; a contagem de 1.900 do outro ramo não prevê o nadir de outros pacientes. Entraram antibiótico de amplo espectro e fator estimulador de colônias. Pela persistência da febre e pelo risco de neutropenia prolongada, acrescentou-se antifúngico empírico no quinto dia de neutropenia febril.',
        segue="prealta_uti"),
 
     pg("prealta_rituximabe", "Preparação do seguimento",
@@ -902,43 +849,20 @@ ETAPAS = [
         "reabilitação: a mononeurite é o achado que mais demora a melhorar, "
         "quando melhora.",
         qualidade="melhor",
-        porque="O tratamento entrou enquanto a crescente ainda era celular, "
-               "lesão ativa e capaz de responder. Com filtração de 14 "
-               "mL/min/1,73 m², a combinação do RITUXVAS limita a "
-               "ciclofosfamida a dois pulsos de dose ajustada, e a infecção de "
-               "cateter não encontrou uma medula deprimida."),
+        porque='Havia lesão ativa potencialmente tratável. Neste curso ficcional, houve recuperação sem diálise e sem neutropenia grave. O esquema combina rituximabe com dois pulsos ajustados de ciclofosfamida; esse resultado individual não demonstra superioridade sobre os outros esquemas nem elimina o risco infeccioso.'),
 
     fim("d_cfx_ajustada", "Alta sem diálise, com vigilância semanal",
-        "A creatinina estabilizou acima do valor do caminho A e a diurese se "
-        "recuperou; ele sai sem diálise. O hemograma foi vigiado duas vezes "
-        "por semana durante a bacteremia, e o nadir do segundo pulso foi de "
-        "1.600 neutrófilos.",
+        'Neste percurso, a creatinina estabilizou e a diurese se recuperou; ele sai sem diálise. O hemograma foi vigiado duas vezes por semana durante a bacteremia. A menor contagem registrada após o segundo pulso foi de 1.600 neutrófilos/mm³, um valor deste curso ficcional.',
         "Completou a oxacilina e os três primeiros pulsos de ciclofosfamida "
         "sem nova intercorrência infecciosa.",
         qualidade="melhor",
-        porque="A ciclofosfamida com dose corrigida pela idade e pela "
-               "filtração é tão eficaz quanto o esquema com rituximabe. Custa "
-               "mais vigilância (hemograma seriado, mesna, ajuste a cada "
-               "ciclo) e cobra uma dose acumulada maior que a dos dois pulsos do "
-               "caminho A. Neste paciente, de 63 anos, a fertilidade pesa "
-               "menos; a conta da dose, não."),
+        porque='A ciclofosfamida ajustada é uma opção de indução para doença grave, com hemograma, função renal e toxicidades revistos antes de cada pulso. A recuperação desta simulação não permite comparar causalmente eficácia ou duração da internação entre esquemas. Riscos cumulativos e preferências individuais também orientam a escolha.'),
 
     fim("d_cfx_plena", "Alta após a terapia intensiva",
-        "A vasculite respondeu como nos outros dois caminhos: a hemoptise "
-        "cessou no terceiro dia e a creatinina caiu. O que mudou foi o resto: "
-        "treze dias de terapia intensiva, noradrenalina por quatro deles, "
-        "antibiótico de amplo espectro, antifúngico empírico e fator "
-        "estimulador de colônias.",
-        "Saiu andando, com mais dias de internação e menos função renal que "
-        "nos outros caminhos.",
+        'Neste curso ficcional, a hemoptise cessou no terceiro dia e a creatinina caiu. Houve treze dias de terapia intensiva, noradrenalina por quatro deles, antibiótico de amplo espectro, antifúngico empírico e fator estimulador de colônias.',
+        'Saiu andando, após internação prolongada, com disfunção renal residual. Os valores deste percurso não estimam a diferença esperada entre tratamentos.',
         qualidade="pior",
-        porque="Com filtração glomerular de 14 mL/min/1,73 m², a dose plena "
-               "produziu exposição bem acima da pretendida: os metabólitos "
-               "ativos da ciclofosfamida saem por via renal, e a conta do "
-               "CYCLOPS teria pedido 10 mg/kg. No primeiro ano da vasculite "
-               "ANCA tratada, a infecção mata mais do que a vasculite. Aqui a "
-               "infecção veio do cateter, que os três caminhos tinham; a "
-               "profundidade dela veio da dose, que só este caminho escolheu."),
+        porque='A dose sem ajuste para idade e disfunção renal aumenta o risco de toxicidade hematológica. Neste percurso houve neutropenia grave e complicação infecciosa; a gravidade não pode ser atribuída exclusivamente à dose. Ajustar a prescrição reduz risco, sem garantir ausência de complicações.'),
 
     # ═══════════════ o fecho, igual para os três ramos ═══════════════
 
@@ -955,9 +879,9 @@ ETAPAS = [
             'Hemoglobina caindo sem sangramento externo, hipoxemia que '
             'responde mal ao oxigênio e vidro fosco difuso são hemorragia '
             'alveolar até prova em contrário; a hemoptise falta em um terço.',
-            'Hemorragia alveolar com glomerulonefrite pede anti-MBG e ANCA no '
-            'primeiro dia, junto das culturas: o resultado leva dias, e a '
-            'crescente celular não espera. A âncora infecciosa foi razoável; '
+            'Hemorragia alveolar com glomerulonefrite pede anti-MBG e ANCA '
+            'assim que a síndrome é reconhecida, junto da investigação infecciosa: o resultado pode levar dias, e a '
+            'crescente celular não espera. Com quadro compatível e ANCA positivo, não se aguarda biópsia para tratar a deterioração. A âncora infecciosa foi razoável; '
             'o que faltou foi testar as outras ao mesmo tempo.',
             'Na indução, a ciclofosfamida se ajusta por idade e filtração '
             '(CYCLOPS); antes da primeira dose, hepatite B, ivermectina em '
@@ -969,9 +893,7 @@ ETAPAS = [
 
     balanco("balanco", "O balanço da sua condução",
         "O percurso e o preço",
-        p("O que cada decisão custou, contra o melhor percurso que este caso "
-          "permite. Os números são inferência autoral, coerente com a "
-          "fisiologia do caso, e cada linha traz o motivo que a sustenta."),
+        p('Comparação dos percursos ficcionais. Dias e valores de função renal foram definidos pelo autor para esta simulação; não são estimativas de efeito causal, previsões individuais ou prova de superioridade de um esquema.'),
         base_dias=21, base_tfg=39, base_creatinina="1,9 mg/dL",
         obito_se={"escolheu_todos": [["b_febre", 1], ["b1", 2]]},
         obito_texto="Ciclofosfamida em dose plena com filtração de 14 mL/min, "
@@ -984,54 +906,32 @@ ETAPAS = [
             consequencia(
                 chave="escalonou",
                 titulo="Escalonou o antibiótico em vez de investigar o sangramento",
-                quando={"escolheu": ["b_dia2", 0]}, dias=3, tfg=6,
+                quando={"escolheu": ["b_dia2", 0]}, dias=1, tfg=2,
                 porque="Trinta e seis horas é cedo para declarar falha de "
                        "antibiótico numa pneumonia comunitária, e nenhum "
-                       "espectro retém sangue no alvéolo. Foram 48 horas a "
-                       "mais de sangramento e de creatinina subindo, com "
+                       "espectro trata a capilarite. A reavaliação ocorreu em horas, com "
+                       "sangramento e creatinina ainda em ascensão, com "
                        "crescentes celulares em formação."),
-            consequencia(
-                chave="corticoide_antes_das_provas",
-                titulo="Imunossuprimiu antes de colher qualquer prova",
-                quando={"escolheu": ["b_dia2", 2]}, dias=2, tfg=2,
-                porque="Parou o sangramento, e isso conta. Mas toda cultura "
-                       "colhida a partir dali foi colhida sob corticoide, e o "
-                       "negativo delas vale menos justamente quando se "
-                       "precisa dele para justificar o que já foi feito."),
             consequencia(
                 chave="febre_intensificou",
                 titulo="Leu a febre do quinto dia como recidiva da vasculite",
                 quando={"escolheu": ["b_febre", 1]}, dias=14, tfg=14,
-                porque="A hemoptise havia cessado, o pulmão não piorou e a "
-                       "procalcitonina subiu de 0,3 para 3,1. Intensificar a "
-                       "imunossupressão sobre uma bacteremia com a porta de "
-                       "entrada ainda no pescoço levou a choque séptico e a "
-                       "três sessões de diálise."),
+                porque='Pulmão estável e cateter inflamado priorizavam infecção; procalcitonina isolada não a confirma. Neste percurso, apesar do antibiótico empírico, o foco permaneceu e houve choque e três sessões de diálise após intensificação da imunossupressão. Esses números são próprios da simulação.'),
             consequencia(
                 chave="febre_suspendeu",
                 titulo="Suspendeu toda a imunossupressão",
                 quando={"escolheu": ["b_febre", 2]}, dias=6, tfg=9,
-                porque="Quarenta e oito horas sem corticoide bastaram para o "
-                       "alvéolo voltar a sangrar e a creatinina voltar a "
-                       "subir. Tratar a infecção e manter a indução era "
-                       "possível."),
+                porque='Neste percurso, houve nova hemorragia e piora renal após a suspensão. Isso não estabelece um prazo universal de recidiva. O controle da infecção e a dose necessária de corticoide devem ser reavaliados juntos, com revisão das próximas doses da indução.'),
             consequencia(
                 chave="cfx_ajustada",
                 titulo="Escolheu ciclofosfamida, com a conta feita",
                 quando={"escolheu": ["b1", 1]}, dias=5, tfg=8,
-                porque="Tão eficaz quanto o esquema com rituximabe, e o nadir de "
-                       "1.900 neutrófilos ficou onde a dose corrigida prevê. "
-                       "Custa mais vigilância e mais dias, e o preço é da "
-                       "droga, não de um erro de conduta."),
+                porque='Neste ramo, a menor contagem registrada foi de 1.900 neutrófilos/mm³. Os dias e a função renal atribuídos à simulação não demonstram que ciclofosfamida ajustada prolongue internação ou prejudique recuperação em comparação com rituximabe.'),
             consequencia(
                 chave="cfx_plena",
                 titulo="Escolheu ciclofosfamida sem a correção de dose",
                 quando={"escolheu": ["b1", 2]}, dias=13, tfg=12,
-                porque="Os metabólitos ativos saem por via renal, e com "
-                       "filtração de 14 mL/min a exposição de 15 mg/kg é bem "
-                       "maior do que a pretendida. A vasculite respondeu igual "
-                       "nos três caminhos; o que mudou foi a medula, e a "
-                       "bacteremia encontrou 210 neutrófilos em vez de 1.900."),
+                porque='A dose não ajustada aumenta o risco de toxicidade. Neste ramo, registraram-se 210 neutrófilos/mm³ e complicação infecciosa grave. Os valores dos outros ramos não são previsões contrafactuais nem garantias de segurança.'),
         ],
     ),
 
@@ -1045,7 +945,7 @@ ETAPAS = [
        'RAVE e RITUXVAS //(N Engl J Med. 2010;363:221-32 e 211-20)//; ADVOCATE '
        '//(N Engl J Med. 2021;384:599-609)//; Berden //(J Am Soc Nephrol. '
        '2010;21:1628-36)//; Nasr e cols. //(Kidney Int. 2013;83:792-803)// '
-       'para a glomerulonefrite associada à infecção no adulto; CDC, '
+       'para a glomerulonefrite associada à infecção no adulto; Surviving Sepsis Campaign 2026 (antibiótico imediato pela suspeita clínica, sem depender da procalcitonina); CDC, '
        'tratamento da estrongiloidíase (ivermectina 200 µg/kg por dois dias).',
        'Imagens de outros pacientes, de licença aberta, com setas '
        'adicionadas: radiografia, Samir, CC BY-SA 3.0; ultrassom renal, '

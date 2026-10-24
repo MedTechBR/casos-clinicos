@@ -177,5 +177,11 @@ with sync_playwright() as pw:
           page.screenshot(path=str(out / f'{slug}-{e["k"]}-b.png'))
       page.close()
   b.close()
-bad = {s: r for s, r in report.items() if r['erros'] or r['n_layout'] or r['nao_visitadas']}
-print('\nRESUMO:', 'tudo limpo' if not bad else json.dumps({s: dict(erros=r['erros'][:5], layout=r['layout'][:8], nao_visitadas=r['nao_visitadas']) for s, r in bad.items()}, ensure_ascii=False, indent=1))
+bad = {s: r for s, r in report.items()
+       if r['erros'] or r['n_layout'] or (r['nao_visitadas'] and not smoke)}
+# O smoke percorre só as duas combinações extremas; nós fora desses caminhos
+# são cobertura parcial esperada. No teste completo, continuam sendo falha.
+ok = 'smoke sem falhas (cobertura parcial)' if smoke else 'tudo limpo'
+print('\nRESUMO:', ok if not bad else json.dumps({s: dict(erros=r['erros'][:5], layout=r['layout'][:8], nao_visitadas=r['nao_visitadas']) for s, r in bad.items()}, ensure_ascii=False, indent=1))
+if bad:
+  raise SystemExit(1)

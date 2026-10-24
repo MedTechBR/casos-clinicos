@@ -1,29 +1,5 @@
-"""Crises de cefaleia e palpitação tratadas como pânico, até a crise que parou no coração.
-
-Escrito em 01/10/2026 no molde do //New England// (pilotos: leptospirose e
-endocardite; gramática em Artifacts/nejm-casos-classicos/GRAMATICA_LIDA_2026-09-26.md).
-Contadora de 41 anos, em Fortaleza, com seis meses de crises chamadas de
-transtorno de pânico (sertralina) e de enxaqueca (amitriptilina), chega à
-emergência depois de uma ampola de metoclopramida com pressão de 228/124,
-dor no peito e troponina subindo. As perguntas da primeira metade só
-classificam e interpretam: a crise (emergência pela lesão aguda), o mecanismo
-da lesão miocárdica (atordoamento adrenérgico) e o hematócrito alto (volume
-plasmático contraído). As âncoras são da equipe, registradas em texto: pânico
-com hipertensão reativa, tireotoxicose (afastada pelo TSH) e síndrome de
-takotsubo com gatilho emocional. A virada é a urotomografia pedida pela dor
-lombar e pela hematúria de um cálculo, que mostra a massa adrenal, logo
-depois da metade; o nome aparece na pergunta dos exames da massa (54%). Depois
-vêm o preparo com alfabloqueio, a adrenalectomia, o teste genético (RET C634R,
-NEM2A, com o "bócio operado" da mãe) e o rastreio da família. As decisões de
-conduta mudam o desfecho: betabloqueio antes do alfa, operar sem preparo e não
-testar a genética.
-
-Paciente ficcional. Lenders e cols., Endocrine Society, J Clin Endocrinol
-Metab 2014; Nölting e cols., Endocr Rev 2022; Fassnacht e cols., ESE/ENSAT,
-Eur J Endocrinol 2023 (incidentaloma); Buitenwerf e cols., PRESCRIPT, J Clin
-Endocrinol Metab 2020; Wells e cols., ATA, Thyroid 2015; Brandão e cols.,
-Diretriz Brasileira de Hipertensão Arterial 2025; van den Born e cols., ESC
-2019 (emergências hipertensivas). Filtração pelo CKD-EPI 2021.
+"""Revisão editorial de 23/10/2026: evolução clínica, decisões precoces e
+urgências preservadas. Paciente e cronologia ficcionais; fontes na última tela.
 """
 import json
 from pathlib import Path
@@ -69,7 +45,8 @@ def fim(k, titulo, texto, porque, qualidade):
 
 
 ETAPAS = [
-    capa(TITULO, fundo='cena.jpg', kicker='Caso interativo',
+
+    capa(TITULO, fundo='cena-paciente.png', kicker='Caso interativo',
          selo='Paciente ficcional · procedência e créditos na última tela'),
 
     pg('historia', 'Apresentação',
@@ -127,6 +104,10 @@ ETAPAS = [
                     'papiledema.')),
            so_kicker=True),
 
+    pg('socorro', 'Avaliação e tratamento imediatos',
+ 'Patrícia recebe monitorização e nitroglicerina EV titulada pela emergência hipertensiva com congestão e dor torácica. Recebe furosemida 20 mg, com reavaliação do volume. A cefaleia abrupta exige investigação paralela: TC de crânio e angiotomografia não mostram hemorragia ou aneurisma; neurologia acompanha, sem atribuir automaticamente a dor ao nervosismo.',
+ 'Para possível síndrome coronariana, a equipe realiza avaliação de risco e inicia tratamento antitrombótico após a avaliação neurológica. Betabloqueador EV é evitado na insuficiência cardíaca aguda. A amitriptilina é suspensa; a exposição à metoclopramida fica registrada. As telas seguintes recuperam dados desta avaliação, sem representar atraso no cuidado.'),
+
     painel('res1', 'Primeiros exames', 'Sangue', [
         ex('Hemoglobina / hematócrito', '16,2 g/dL / 49%', 'Hb 12–16 g/dL · Ht 36–46%', True),
         ex('Leucócitos', '14.200/mm³ · neutrófilos 82%', '4.000–11.000/mm³', True),
@@ -160,26 +141,14 @@ ETAPAS = [
          'supradesnivelamento do ST.',
          'Hipertrofia do ventrículo esquerdo leva meses a anos para se formar.']),
 
-    Q('p1', 1,
-      'Após o controle inicial, qual exame melhor distingue uma causa coronariana obstrutiva da disfunção cardíaca, diante da dor, troponina dinâmica e congestão?', [
-      ('Cateterismo com coronariografia e ventriculografia', True),
-      ('Angiotomografia de coronárias', False),
-      ('Ressonância cardíaca com contraste', False),
-      ('Ecocardiograma transtorácico', False),
-      ('Cintilografia de perfusão miocárdica em repouso', False),
-     ], [
-      ('Anatomia e padrão ventricular', 'O cateterismo é a prioridade neste contexto de possível síndrome coronariana de alto risco: avalia obstrução com possibilidade de intervenção. Neste percurso, a ventriculografia documenta também distribuição e gravidade da disfunção.'),
-      ('Exames complementares', '**Angio-TC** é útil em cenários de menor risco ou dúvida selecionada, mas aqui a possibilidade de intervenção favorece a estratégia invasiva. **RM** distingue lesão isquêmica, inflamatória e atordoamento depois da avaliação coronariana. **Eco** avalia função e complicações sem demonstrar diretamente a anatomia coronariana. **Perfusão em repouso** pode mostrar defeitos, sem resolver com a mesma rapidez a indicação de revascularização.'),
-     ]),
+    pg('primeira_resposta', 'Ao fim das primeiras duas horas',
+ 'A dor no peito e a cefaleia cedem, pressão 162/96 e frequência 88. As crepitações diminuem. A troponina, entretanto, continua subindo e o ecocardiograma mostra FE de 35%, com acinesia médio-apical além de um único território coronariano e sem obstrução da via de saída.',
+ 'A melhora dos sintomas não eliminou lesão miocárdica aguda. A equipe precisa distinguir doença coronariana tratável de causas de disfunção ventricular sem obstrução.'),
 
-    pg('primeira_hora', 'Primeira hora',
-       'A equipe inicia nitroglicerina endovenosa em bomba, ondansetrona para os '
-       'vômitos e furosemida 20 mg pelas crepitações. Em uma hora a dor cede e a '
-       'pressão chega a 162/96 mmHg. Recebe ácido acetilsalicílico e heparina como '
-       'síndrome coronariana aguda sem supradesnivelamento do ST.',
-       'O metoprolol endovenoso é discutido pela taquicardia e pela troponina, e '
-       'fica para depois, por causa da congestão. Com a troponina em ascensão, o '
-       'cateterismo é feito na mesma tarde.'),
+    Q('p1', 1, 'Após estabilizar pressão e congestão, qual exame priorizar nesta apresentação de alto risco, com troponina dinâmica e disfunção ventricular?', [
+ ('Coronariografia invasiva', True), ('Angiotomografia coronariana', False),
+ ('Ressonância cardíaca', False), ('Cintilografia de perfusão em repouso', False)
+ ], [('Prioridade', 'A estratégia invasiva é favorecida pela possibilidade de síndrome coronariana de alto risco e de intervenção. Eco já orientou função e complicações. RM poderá esclarecer miocardite e padrão de lesão se persistir dúvida; angio-TC tem lugar em pacientes selecionados de menor risco. A escolha depende da estabilidade e da avaliação cardiológica.')]),
 
     estudo('vent', 'Cateterismo e ventriculografia',
            'Primeiro dia, à tarde. As coronárias não têm obstrução. A ventriculografia '
@@ -200,30 +169,9 @@ ETAPAS = [
          'fração de ejeção estimada em 35%. Pressão diastólica final do ventrículo '
          'esquerdo de 24 mmHg.']),
 
-    Q('p2', 2,
-      'Qual mecanismo melhor corresponde à acinesia médio-apical circunferencial, base hipercontrátil e coronárias sem obstrução?', [
-      ('Atordoamento miocárdico relacionado à ativação adrenérgica', True),
-      ('Infarto por aterotrombose com reperfusão espontânea', False),
-      ('Lesão inflamatória por miocardite aguda', False),
-      ('Isquemia por vasoespasmo epicárdico', False),
-      ('Disfunção por sobrecarga aguda de pressão sobre hipertrofia prévia', False),
-     ], [
-      ('A distribuição discrimina', 'A acinesia médio-apical envolvendo paredes de territórios coronarianos diferentes, com base hipercontrátil, favorece atordoamento no padrão de takotsubo. O gatilho dessa ativação permanece em aberto.'),
-      ('Hipóteses próximas', 'Reperfusão espontânea e vasoespasmo podem deixar coronárias sem obstrução, mas explicam menos bem a distribuição circunferencial. Miocardite continua possível e pode ser discriminada por RM se a evolução exigir. Sobrecarga de pressão contribui para a lesão, porém não explica tão bem essa geometria segmentar.'),
-     ]),
-
-    pagina('estresse', 'Discussão', 'O gatilho',
-      p('Em nove de cada dez casos, a síndrome de takotsubo atinge mulheres, a maioria '
-        'depois da menopausa. O gatilho pode ser emocional, como luto, discussão ou '
-        'medo, ou físico, como cirurgia, crise de asma, sepse e alguns remédios. Em '
-        'cerca de um terço não se encontra nenhum.'),
-      p('Entre os critérios da Clínica Mayo estão a disfunção transitória além do '
-        'território de uma coronária, coronárias sem lesão que a explique, alteração '
-        'nova do eletrocardiograma ou da troponina e a ausência de miocardite.'),
-      p('Para a equipe, o gatilho estava na história: seis meses de crises de pânico '
-        'e uma crise maior hoje, no escritório, em semana de fechamento. A cardiologia '
-        'registra "síndrome de takotsubo, provável gatilho emocional" e marca '
-        'ecocardiograma de controle para o sétimo dia.')),
+    pg('recuperacao', 'Segundo dia',
+ 'Sem dor e sem dispneia em repouso, caminha até a poltrona. Pulmões agora sem crepitações. Não há obstrução coronariana e a distribuição ventricular favorece padrão de takotsubo; a etiologia do estímulo ainda está aberta.',
+ 'A equipe considera gatilho emocional, miocardite e excesso de catecolaminas. As crises de meses, a perda de peso e o agravamento após medicações motivam investigação endócrina durante a internação. Não é preciso esperar uma massa incidental para solicitá-la.'),
 
     painel('res2', 'Segundo dia', 'Sangue e urina', [
         ex('TSH', '1,6 mUI/L', '0,4–4,0 mUI/L'),
@@ -235,66 +183,30 @@ ETAPAS = [
         ex('Urina', 'Densidade 1.024 · sangue 1+ · 8 hemácias por campo, de forma normal · sem proteína', '—', True),
     ]),
 
-    pagina('tireoide', 'Discussão', 'A tireoide',
-      p('Tremor, sudorese, palpitação, perda de 6 kg e um nódulo palpável levaram o '
-        'plantão a pensar em tireotoxicose, que também precipita a síndrome de '
-        'takotsubo e crises de taquicardia.'),
-      p('TSH de 1,6 mUI/L com T4 livre de 1,2 ng/dL afasta essa hipótese. No '
-        'hipertireoidismo primário, o TSH fica suprimido, quase sempre abaixo de 0,1. '
-        'A exceção, o adenoma hipofisário produtor de TSH, é rara e eleva o T4 livre.'),
-      p('O nódulo de 1,5 cm do lobo direito fica para ultrassonografia no ambulatório, '
-        'com a classificação de risco que decide se precisa de punção.')),
+    Q('p2', 2, 'Quais duas hipóteses merecem maior prioridade para explicar as crises anteriores à internação, nesta fase?', [
+ ('Tumor produtor de catecolaminas', True), ('Transtorno de pânico coexistente', True),
+ ('Tireotoxicose primária', False), ('Síndrome serotoninérgica persistente por seis meses', False),
+ ('Hipoglicemia recorrente documentada', False)
+ ], [('Hierarquia', 'A recorrência estereotipada, a hipertensão e a lesão cardíaca tornam prioritária a pesquisa de excesso catecolaminérgico. Pânico permanece possibilidade ou comorbidade; não deve ser usado para encerrar a investigação. TSH e T4 livre normais pesam contra tireotoxicose. Não há clônus ou hipertermia sustentada, e a glicose observada está elevada.')]),
 
-    Q('p3', 3,
-      'Apesar da congestão pulmonar, Ht 49%, albumina 5,2 e ureia 46 com creatinina 0,8 sugerem qual interpretação do volume circulante?', [
-      ('Contração plasmática coexistindo com pressão de enchimento elevada', True),
-      ('Congestão por retenção hidrossalina com elevação compensatória da massa eritrocitária', False),
-      ('Eritrocitose absoluta coexistindo com disfunção ventricular aguda', False),
-      ('Hemoconcentração predominantemente produzida pelo diurético da emergência', False),
-      ('Hipovolemia por perdas gastrointestinais como principal causa da lesão cardíaca', False),
-     ], [
-      ('Concentração e pressão são medidas diferentes', 'Hematócrito e albumina já vieram elevados na coleta de chegada, antes da furosemida. Juntos favorecem contração plasmática. A disfunção ventricular aguda pode elevar pressões de enchimento e causar congestão apesar desse volume reduzido.'),
-      ('O que pesa contra as alternativas', 'Eritrocitose absoluta permanece avaliável se o hematócrito persistir elevado, mas não explica a albumina acompanhando a concentração. Retenção hidrossalina tenderia à diluição. O diurético foi administrado depois da coleta, e não foram descritas perdas gastrointestinais prolongadas suficientes para explicar o conjunto de crises e hipertensão.'),
-     ]),
+    pg('madrugada', 'Segunda noite',
+ 'Enquanto dormia, acorda pálida, suando, com cefaleia e palpitação. PA 204/118 e frequência 132. A equipe a reavalia ao leito; a crise cede em cerca de 20 minutos, sem nova congestão. Permanece monitorizada. Na manhã seguinte, ao levantar, quase cai: PA 136/84 deitada e 92/60 em pé.',
+ 'A recorrência em repouso e o ortostatismo entre crises mudam a segurança de apenas intensificar anti-hipertensivos de longa ação. O diurético não é repetido na ausência de congestão; a reposição de volume será cautelosa pela disfunção ventricular recente.'),
 
-    pg('equipe', 'O que a equipe registra',
-       'Evolução do segundo dia: "Síndrome de takotsubo com gatilho emocional, em '
-       'paciente com transtorno de pânico. Emergência hipertensiva na admissão, '
-       'resolvida. Hipertensão arterial provavelmente antiga, com sobrecarga '
-       'ventricular, sem tratamento. Pré-diabetes. Nódulo de tireoide a esclarecer. '
-       'Tireotoxicose afastada."',
-       'Conduta: enalapril 5 mg duas vezes ao dia; metoprolol a iniciar no terceiro '
-       'dia, quando a congestão tiver passado. A psiquiatria suspende a amitriptilina '
-       'e mantém a sertralina. Com 2 litros de soro nas primeiras 24 horas, o '
-       'hematócrito caiu para 43%.'),
+    bifurcacao('b1', 'Investigação', 'Primeiro teste bioquímico',
+ 'O laboratório dispõe de dois métodos validados. Qual você escolhe para iniciar o rastreio das crises?', [
+ caminho('Metanefrinas livres plasmáticas', 'coleta_plasma', 'É possível coletar após repouso e registrar interferentes; o resultado deve ser interpretado no contexto da doença aguda.'),
+ caminho('Metanefrinas fracionadas urinárias de 24 horas', 'coleta_urina', 'Alternativa válida se a coleta for completa e o método adequado; o prazo de coleta é considerado na avaliação do paciente internado.')]),
 
-    pagina('sobras', 'Discussão', 'O que sobra',
-      p('Lida de novo, a internação deixa dados que a hipótese registrada explica mal.'),
-      p('A sobrecarga ventricular, aos 41 anos, pede pressão alta sustentada por anos. '
-        'As medidas de 146/92 mmHg na unidade básica foram atribuídas ao nervosismo.'),
-      p('A glicemia de jejum já era 118 mg/dL há dois meses, e a hemoglobina glicada é '
-        '6,2%, numa mulher magra que perdeu 6 kg sem dieta.'),
-      p('As crises vinham também em casa, de madrugada e nos fins de semana, longe do '
-        'trabalho; duas começaram ao se abaixar; e ficaram mais frequentes depois da '
-        'amitriptilina. A pior delas começou quinze minutos depois de uma ampola de '
-        'metoclopramida.'),
-      p('A equipe anota os quatro pontos para a consulta de retorno.')),
+    pg('coleta_plasma', 'Preparo da coleta',
+ 'Com Patrícia estável, colhe-se sangue após 30 minutos de repouso deitada. A amitriptilina havia sido suspensa na admissão, cerca de dois dias antes; o intervalo pode ser insuficiente para eliminar interferência. O laboratório registra método e limites próprios. A avaliação anatômica ocorrerá em paralelo, se indicada pela queixa lombar.', segue='lombar'),
 
-    pg('madrugada', 'Segunda noite, 4 horas',
-       'Patrícia acorda com cefaleia em pressão, palpitação, suor e mãos frias. A '
-       'enfermagem mede 204/118 mmHg e frequência de 132. Em 25 minutos, antes que a '
-       'medicação chegue, a crise passa sozinha.',
-       'Às 7 horas, ao levantar para o banheiro, tem tontura e quase cai: 136/84 '
-       'mmHg deitada, 92/60 em pé. O plantão atribui a crise ao pânico e a queda ao '
-       'enalapril e aos dois dias de leito.'),
+    pg('coleta_urina', 'Uma coleta completa',
+ 'A coleta urinária começa no terceiro dia e termina no quarto, enquanto a investigação da dor lombar descrita adiante ocorre em paralelo. Creatinina e volume tornam a coleta plausivelmente completa. Metanefrina 2.400 µg/24 h (referência 30–350) e normetanefrina 3.600 µg/24 h (referência 88–444). Pela doença aguda e pelo tricíclico recente, a equipe programa confirmação plasmática em condições controladas. A intensidade da elevação impede encerrar a avaliação como ansiedade.', segue='lombar'),
 
     pg('lombar', 'Terceiro dia',
-       'Pela manhã, dor lombar esquerda em peso, sem febre e sem disúria. A urina do '
-       'segundo dia tinha 8 hemácias por campo, de forma normal, sem proteína: '
-       'sangue que não vem do glomérulo.',
-       'Com dor lombar e hematúria, a equipe pede urotomografia, com fase sem '
-       'contraste, para procurar cálculo e lesão das vias urinárias. O metoprolol, '
-       'programado para hoje, fica para depois do exame.'),
+ 'Surge dor lombar esquerda, sem febre ou disúria, e hematúria microscópica. A equipe avalia via urinária com tomografia, incluindo fase sem contraste. A pesquisa de excesso catecolaminérgico já está em andamento; a imagem não foi condição para lembrar dessa hipótese.',
+ 'A dor cede com analgesia, sem expulsão de cálculo observada. Um cálculo calicial pequeno pode acompanhar hematúria, mas sua presença sem obstrução não prova que causou toda a dor.'),
 
     estudo('tc', 'Urotomografia',
            'Terceiro dia. Corte coronal da fase nefrográfica, de outro paciente com '
@@ -314,140 +226,51 @@ ETAPAS = [
          'central de menor densidade; 38 UH na fase sem contraste e realce intenso '
          'na fase venosa. Adrenal direita e fígado sem lesões. Cálculo de 4 mm no '
          'cálice inferior esquerdo, sem dilatação, fora deste corte.',
-         'O cálculo explica a dor e a hematúria. A massa é achado de um exame pedido '
-         'por outra razão.']),
+         'O cálculo pode acompanhar a hematúria; sem obstrução, não prova a causa da dor. A massa adrenal exige integração com as crises e a investigação hormonal já indicada.']),
 
-    Q('p4', 4,
-      'Massa adrenal de 5,1 cm, heterogênea, 38 UH, com hipertensão: quais **três exames** compõem a avaliação hormonal inicial após estabilização?', [
-      ('Metanefrinas livres plasmáticas', True),
-      ('Cortisol após 1 mg de dexametasona', True),
-      ('Aldosterona e renina', True),
-      ('Catecolaminas plasmáticas', False),
-      ('Ácido vanilmandélico urinário de 24 horas', False),
-      ('Cortisol urinário livre de 24 horas', False),
-     ], [
-      ('Eixos prioritários', '**Metanefrinas** têm melhor desempenho que dosagens de catecolaminas episódicas; coletar deitada após repouso e revisar interferentes. **Cortisol após dexametasona** pesquisa secreção autônoma, inclusive discreta. **Aldosterona/renina** é indicada pela hipertensão, com interpretação de potássio, medicamentos e estado clínico.'),
-      ('Exames próximos, rendimento diferente', '**Catecolaminas plasmáticas** variam com descarga e estresse e não substituem o rastreio por metanefrinas. **Ácido vanilmandélico** tem menor sensibilidade. **Cortisol urinário livre** pode complementar suspeita de hipercortisolismo mais expressivo, mas é menos sensível à secreção autônoma discreta pesquisada no incidentaloma.'),
-     ]),
+    pg('antes_resultado', 'Recuperação desigual',
+ 'No quarto dia, a FE já chega a 45% e Patrícia anda sem falta de ar. Ao tomar banho, entretanto, volta a ter suor e palpitação com PA 188/106; o episódio dura dez minutos. Não há dor torácica ou nova elevação significativa da troponina.',
+ 'A melhora cardíaca e a persistência das crises seguem ritmos diferentes. A equipe mantém internação monitorizada e evita betabloqueio isolado até esclarecer a secreção hormonal. Não propõe biópsia da massa vascular antes dessa avaliação.'),
 
-    painel('res3', 'Investigação da massa', 'Dosagens hormonais', [
-        ex('Metanefrina livre plasmática', '1.240 pg/mL', 'até 90 pg/mL', True),
-        ex('Normetanefrina livre plasmática', '2.860 pg/mL', 'até 180 pg/mL', True),
-        ex('3-metoxitiramina plasmática', '14 pg/mL', 'até 18 pg/mL'),
-        ex('Cortisol após 1 mg de dexametasona', '1,1 µg/dL', 'até 1,8 µg/dL'),
-        ex('Aldosterona / atividade de renina', '8 ng/dL / 1,3 ng/mL/h · relação 6', 'relação até 30'),
-        ex('Potássio', '3,8 mmol/L', '3,5–5,0 mmol/L'),
-    ], introducao='Colhidos no quinto dia, deitada, depois de 30 minutos de repouso. '
-                  'A amitriptilina estava suspensa havia três dias.'),
+    painel('res3', 'Bioquímica', 'Resultados plasmáticos', [
+ ex('Metanefrina livre plasmática', '1.240 pg/mL', 'até 90 pg/mL', True),
+ ex('Normetanefrina livre plasmática', '2.860 pg/mL', 'até 180 pg/mL', True)
+ ], introducao='Resultados da coleta em repouso, disponíveis a todos os percursos. No ramo urinário, correspondem à coleta confirmatória no quinto dia; no outro, à coleta inicial no terceiro dia. Não foram omitidos resultados indicados para prolongar a investigação.'),
 
-    pagina('leitura', 'Discussão', 'A leitura das metanefrinas',
-      p('Metanefrina e normetanefrina são produzidas dentro da célula do tumor, de '
-        'forma contínua. Por isso sobem também entre as crises, quando as '
-        'catecolaminas no sangue podem estar normais, e por isso são o exame de '
-        'escolha.'),
-      p('Valores acima de três a quatro vezes o limite praticamente confirmam o '
-        'diagnóstico; os dela estão 14 e 16 vezes acima. A coleta deitada evita o '
-        'falso-positivo da postura. A amitriptilina eleva a normetanefrina, mas não '
-        'chega a esses números nem explica a metanefrina.'),
-      p('A metanefrina alta, e não só a normetanefrina, é o fenótipo adrenérgico: '
-        'tumor da adrenal que fabrica adrenalina, comum em algumas formas '
-        'hereditárias. A 3-metoxitiramina normal fala contra tumor produtor de '
-        'dopamina, de maior risco de metástase. Cortisol suprimido e relação '
-        'aldosterona/renina baixa afastam outra secreção.')),
+    Q('p3', 3, 'Considerando massa adrenal, elevação acentuada dos dois metabólitos e tricíclico recentemente suspenso, qual interpretação tem maior sustentação?', [
+ ('Forte evidência de tumor produtor de catecolaminas', True),
+ ('Interferência farmacológica como explicação suficiente do conjunto', False),
+ ('Massa não funcionante com crises independentes do achado adrenal', False),
+ ('Elevação transitória explicada suficientemente pela cardiomiopatia', False)
+ ], [('Probabilidade e limite', 'A magnitude, a elevação de ambos os metabólitos e a concordância clínica e anatômica tornam a secreção tumoral muito provável. Estresse, método e remédios precisam ser reconhecidos: repouso reduz interferência postural, mas não elimina todos os falsos positivos. Não é correto afirmar que tricíclicos nunca geram elevações importantes.'),
+ ('Ação', 'O conjunto permite organizar manejo especializado sem biópsia. Resultado limítrofe ou discordante pediria repetição após recuperação e revisão de interferentes; não é a situação apresentada.')]),
 
-    pg('diagnostico', 'O diagnóstico',
-       'É **feocromocitoma** da adrenal esquerda, tumor das células cromafins da '
-       'medula adrenal que produz catecolaminas. Fora da adrenal, nos gânglios '
-       'simpáticos ou parassimpáticos, a mesma célula forma o paraganglioma. A '
-       'incidência gira em torno de 0,6 por 100 mil pessoas por ano, e boa parte dos '
-       'casos hoje é achada em imagem pedida por outro motivo.',
-       'Cefaleia, sudorese e palpitação em crises formam a tríade clássica. Os dados '
-       'que sobravam se explicam: hipertensão sustentada com sobrecarga ventricular, '
-       'glicemia alta e emagrecimento, volume plasmático contraído e queda da '
-       'pressão ao levantar. A cardiomiopatia também: os critérios da Clínica Mayo '
-       'para takotsubo exigem afastar feocromocitoma, que produz o mesmo atordoamento.',
-       'A lista de medicamentos e a relação das crises com metoclopramida e com o ato de se abaixar ganham novo peso. O metoprolol do terceiro dia foi suspenso antes da primeira dose.'),
+    pg('diagnostico', 'Integração diagnóstica',
+ 'O conjunto é de feocromocitoma da adrenal esquerda, com excesso catecolaminérgico e disfunção miocárdica no padrão de takotsubo. Os critérios InterTAK admitem o feocromocitoma como gatilho; não é necessário negar a síndrome cardíaca para reconhecer a causa endócrina.',
+ 'A hipótese explica as crises e a contração do volume circulante; não torna cada sintoma específico. O nódulo tireoidiano e o bócio operado da mãe exigem recuperar documentos e aconselhamento genético já nesta fase, sem aguardar anos de seguimento.'),
 
-    bifurcacao('b1', 'Decisão', 'O preparo',
-      'Feocromocitoma de 5,1 cm, sem sinal de metástase. O ecocardiograma do sétimo '
-      'dia mostra fração de ejeção de 50%, já em recuperação. A adrenalectomia está '
-      'indicada. Como preparar Patrícia?', [
-      caminho('Doxazosina titulada por 10 a 14 dias, com sal e líquidos; '
-              'betabloqueador só depois, se a frequência subir', 'preparo',
-              'O alfabloqueio primeiro tira a vasoconstrição e deixa o volume se '
-              'refazer; o betabloqueador entra só para a taquicardia reflexa.'),
-      caminho('Propranolol agora, pela taquicardia, e doxazosina a partir da '
-              'semana que vem', 'beta_primeiro',
-              'Sem o alfabloqueio, o betabloqueador deixa os receptores alfa sem '
-              'oposição e tira a vasodilatação beta-2.'),
-      caminho('Adrenalectomia nesta internação, sem bloqueio prévio, com '
-              'nitroprussiato na sala', 'sem_preparo',
-              'A anestesia e a manipulação do tumor liberam catecolaminas num '
-              'paciente com volume contraído e sem receptor bloqueado.'),
-    ]),
+    pg('preparo_inicial', 'Primeira semana de preparo',
+ 'A equipe inicia doxazosina em dose baixa e titula conforme pressão sentada/em pé e sintomas. Com o pulmão seco e função ventricular em recuperação, ajusta sal e líquidos gradualmente, sem meta fixa de litros para quem teve congestão.',
+ 'As crises ficam menos frequentes. No quinto dia de bloqueio, ao aumentar a dose, Patrícia volta a sentir tontura em pé; PA 88/56, sem dispneia ou edema. O plano precisa ser ajustado antes de prosseguir a escalada.'),
 
-    pg('beta_primeiro', 'Duas horas depois',
-       'Duas horas depois de 40 mg de propranolol, cefaleia explosiva, pressão de '
-       '248/138 mmHg e falta de ar: edema pulmonar, com saturação de 84%. Vai para a '
-       'UTI com nitroprussiato e ventilação não invasiva por 36 horas, e a fração de '
-       'ejeção volta a 30%. A doxazosina começa na UTI, e a cirurgia é adiada em três '
-       'semanas.',
-       segue='preparo'),
+    bifurcacao('b2', 'Preparo', 'Ortostatismo durante a titulação',
+ 'Qual medida você prioriza na próxima reavaliação do preparo?', [
+ caminho('Reavaliar a velocidade de titulação da doxazosina', 'ajuste_dose', 'A dose pode exceder a tolerância naquele momento; não se deve usar tontura como meta de bloqueio.'),
+ caminho('Reavaliar o volume circulante à beira do leito', 'ajuste_volume', 'Reposição insuficiente pode contribuir, mas congestão recente exige avaliação antes de aumentar sal e líquido.')]),
 
-    pg('sem_preparo', 'Centro cirúrgico, segundo dia',
-       'Na laringoscopia, a pressão vai a 280/150 mmHg. Com o pneumoperitônio, antes '
-       'de tocar o tumor, aparecem salvas de taquicardia ventricular e a pressão '
-       'chega a 300/160, apesar do nitroprussiato em dose alta.',
-       segue='b3'),
+    pg('ajuste_dose', 'Titulação individualizada',
+ 'A escalada é pausada e a dose, revista. No dia seguinte a PA em pé sobe para 102/66 e a tontura diminui, sem retorno de crises intensas. A equipe completa também avaliação de volume e tolerância cardíaca antes de novos ajustes.', segue='preparo'),
 
-    bifurcacao('b3', 'Decisão', 'A sala de cirurgia',
-      'A pressão não cede e a dissecção nem começou. O que fazer?', [
-      caminho('Suspender a cirurgia, estabilizar na UTI e preparar com '
-              'alfabloqueio', 'abortada',
-              'Sem bloqueio, cada manipulação libera mais catecolaminas; a '
-              'cirurgia volta depois do preparo.'),
-      caminho('Prosseguir com a ressecção o mais rápido possível', 'colapso',
-              'Retirar o tumor sem preparo troca a crise hipertensiva por um '
-              'colapso num volume que nunca foi refeito.'),
-    ]),
+    pg('ajuste_volume', 'Volume e função cardíaca',
+ 'Sem edema, crepitações ou sinais ultrassonográficos de congestão, permite-se aumento cauteloso da ingestão. O ortostatismo melhora; a equipe também pausa a escalada da doxazosina até tolerância adequada. Não se usa reposição agressiva automática.', segue='preparo'),
 
-    pg('abortada', 'UTI',
-       'A cirurgia é suspensa. Três dias de UTI, com nova subida da troponina e '
-       'fração de ejeção de 30%. A doxazosina começa no segundo dia, e a cirurgia '
-       'volta a ser marcada três semanas depois.',
-       segue='preparo'),
+    pg('preparo', 'Duas semanas depois',
+ 'Patrícia está há seis dias sem crises, PA sentada 118/76 e em pé 102/68, frequência 72. A FE é 55%. Taquicardia persistente foi tratada apenas depois de alfabloqueio estabelecido. O preparo e o momento da cirurgia são pactuados com endocrinologia, cardiologia, cirurgia e anestesia.',
+ 'Após recuperação da fase aguda, cortisol pós-dexametasona de 1 mg é 1,1 µg/dL. Aldosterona 8 ng/dL e atividade de renina 1,3 ng/mL/h foram avaliadas com potássio corrigido e revisão dos interferentes: não sustentam hiperaldosteronismo, sem excluir todo distúrbio em qualquer condição de coleta.'),
 
-    pg('colapso', 'Depois da veia adrenal',
-       'A veia adrenal é ligada aos 40 minutos. Em cinco minutos a pressão cai de '
-       '240/130 para 50/30 mmHg e não responde a volume, noradrenalina e '
-       'vasopressina em doses altas; a glicemia cai a 38 mg/dL. Patrícia para em '
-       'atividade elétrica sem pulso na sala, com retorno da circulação depois de 22 '
-       'minutos.',
-       segue='f_obito'),
-
-    pg('preparo', 'Duas semanas de preparo',
-       'Doxazosina 2 mg à noite, com aumento de 2 mg a cada dois ou três dias, até 8 '
-       'mg duas vezes ao dia. Dieta com sal liberado e 2,5 a 3 litros de líquido por '
-       'dia. As metas, pela Endocrine Society de 2014: pressão sentada abaixo de '
-       '130/80 mmHg, sistólica em pé acima de 90, frequência de 60 a 70 sentada e de '
-       '70 a 80 em pé.',
-       'No nono dia a frequência chega a 104, e entra atenolol 25 mg. O nariz entope '
-       'e há tontura leve ao levantar, sinais de bloqueio efetivo. O hematócrito cai '
-       'de 46% para 41%, à medida que o volume se refaz. No 14.º dia: 118/76 mmHg '
-       'sentada, 102/68 em pé, frequência de 72, sem crises há seis dias.',
-       'No ensaio PRESCRIPT, a doxazosina e a fenoxibenzamina, que não é '
-       'comercializada no Brasil, deram estabilidade semelhante na cirurgia.'),
-
-    pg('cirurgia', 'A cirurgia',
-       'Adrenalectomia esquerda por videolaparoscopia, com anestesista avisada. Na '
-       'manipulação do tumor a pressão sobe a 190/100 mmHg e é controlada com '
-       'nitroprussiato. Depois da ligadura da veia adrenal, cai a 82/50 e pede volume '
-       'e noradrenalina em dose baixa por seis horas.',
-       'Na terceira hora do pós-operatório, glicemia de 52 mg/dL, pelo rebote da '
-       'insulina que as catecolaminas mantinham suprimida; a glicemia capilar segue de '
-       'hora em hora por 48 horas. Doxazosina e atenolol são suspensos, e ela recebe '
-       'alta no terceiro dia, sem anti-hipertensivo. As metanefrinas de seis semanas '
-       'são normais.'),
+    pg('cirurgia', 'Adrenalectomia e vigilância inicial',
+ 'É feita adrenalectomia esquerda videolaparoscópica. Há oscilação pressórica transitória tratada pela anestesia. No pós-operatório, hipotensão leve responde a suporte cuidadosamente titulado; a glicemia cai a 52 mg/dL, é prontamente corrigida com glicose e permanece monitorizada.',
+ 'A ocorrência ilustra riscos de retirada da fonte de catecolaminas, sem exigir colapso ou parada cardíaca para justificar o preparo. Doxazosina e o betabloqueador são suspensos conforme pressão e frequência.'),
 
     estudo('histo', 'Anatomia patológica',
            'Tumor de 5,1 cm, encapsulado, castanho, com hemorragia central. '
@@ -471,172 +294,39 @@ ETAPAS = [
          'metastático; nenhum escore histológico garante comportamento benigno, e o '
          'seguimento é por toda a vida.']),
 
-    bifurcacao('b2', 'Decisão', 'A genética',
-      'Patrícia tem 41 anos, um tumor único, sem outras lesões na tomografia. Pedir '
-      'teste genético?', [
-      caminho('Painel germinativo com aconselhamento genético, como para todo '
-              'paciente', 'genetica',
-              'Até 30 a 40% dos feocromocitomas e paragangliomas têm variante '
-              'germinativa, inclusive sem história familiar conhecida.'),
-      caminho('Não testar: tumor único, mais de 40 anos e família sem diagnóstico',
-              'sem_genetica',
-              'Idade e tumor único não afastam síndrome hereditária, e a família '
-              'dela tem um bócio operado e uma morte precoce por pressão alta.'),
-    ]),
+    pg('genetica', 'A investigação familiar',
+ 'O aconselhamento iniciado no preparo é seguido de painel germinativo: variante patogênica RET C634R em heterozigose, sustentando NEM2A. A mãe encontra o laudo do bócio operado: carcinoma medular da tireoide. A morte do tio por derrame não permite atribuir retrospectivamente um tumor sem comprovação.',
+ 'Patrícia tem calcitonina 96 pg/mL (até 5), CEA 6,8 ng/mL (até 5), cálcio 9,6 mg/dL e PTH normal. O ultrassom mostra nódulo tireoidiano direito de 1,5 cm, hipoecoico, com microcalcificações. A equipe organiza tratamento cervical após controlar o feocromocitoma.'),
 
-    pg('sem_genetica', 'Quatro anos depois',
-       'O nódulo de tireoide foi puncionado no ambulatório, com resultado de '
-       'neoplasia folicular, e a lobectomia direita mostrou carcinoma medular de 1,6 '
-       'cm. Sem calcitonina antes da cirurgia e sem teste genético, a tireoidectomia '
-       'não foi completada e a família não foi chamada.',
-       'Quatro anos depois, Patrícia nota um caroço no pescoço: calcitonina de 4.800 '
-       'pg/mL, linfonodos cervicais dos dois lados e metástases no fígado. Só então o '
-       'painel genético: variante patogênica do RET no códon 634. A filha, com 17 '
-       'anos, tem a mesma variante e carcinoma medular com linfonodo comprometido.',
-       segue='f_tardio'),
+    Q('p4', 4, 'A variante familiar já é conhecida. Qual exame tem maior rendimento para identificar quais filhos herdaram esse risco?', [
+ ('Pesquisa dirigida de RET C634R', True), ('Calcitonina basal', False),
+ ('Ultrassonografia cervical', False), ('Metanefrinas plasmáticas', False)
+ ], [('Finalidades', 'A pesquisa dirigida responde à herança; exames bioquímicos e imagem avaliam doença já expressa e podem estar normais em portadores. Encaminhamento dos filhos de 13 e 8 anos é prioritário, com aconselhamento e conduta conforme idade, variante e avaliação clínica, sem esperar sintomas.')]),
 
-    pg('genetica', 'O painel genético',
-       'Painel germinativo (RET, VHL, SDHA, SDHB, SDHC, SDHD, SDHAF2, NF1, TMEM127, '
-       'MAX e FH): variante patogênica do RET no códon 634 (C634R), em heterozigose. '
-       'É neoplasia endócrina múltipla tipo 2A.',
-       'A mãe encontra em casa o laudo da cirurgia de 26 anos atrás: carcinoma '
-       'medular de tireoide. O tio que morreu aos 44 anos teve o derrame numa crise '
-       'hipertensiva, sem diagnóstico.',
-       'Calcitonina de 96 pg/mL (até 5) e CEA de 6,8 ng/mL (até 5). Cálcio de 9,6 '
-       'mg/dL com PTH normal. A ultrassonografia mostra o nódulo de 1,5 cm, '
-       'hipoecoico e com microcalcificações, sem linfonodo suspeito.'),
+    pg('familia', 'Depois do controle adrenal',
+ 'Patrícia faz tireoidectomia total com esvaziamento central. Há carcinoma medular de 1,2 cm e hiperplasia bilateral de células C, sem comprometimento dos 11 linfonodos. Calcitonina de três meses indetectável.',
+ 'A mãe e a filha de 13 anos têm a variante; o filho de 8 anos não. A avaliação especializada da filha identifica carcinoma medular de 3 mm, sem linfonodos. Não se presume que toda família terá a mesma expressão ou evolução.'),
 
-    Q('p5', 5,
-      'Identificada RET C634R em Patrícia, qual estratégia de avaliação dos dois filhos tem maior rendimento inicial?', [
-      ('Pesquisa dirigida da variante familiar, com conduta conforme o resultado e a idade', True),
-      ('Calcitonina basal e ultrassonografia cervical, com teste genético se houver alteração', False),
-      ('Painel amplo de genes de tumores endócrinos como primeira investigação', False),
-      ('Metanefrinas plasmáticas, com teste genético se houver elevação', False),
-      ('Calcitonina estimulada, com ultrassonografia se houver resposta aumentada', False),
-     ], [
-      ('A informação já disponível', 'A variante familiar patogênica é conhecida. O teste dirigido identifica quais filhos precisam do acompanhamento e da prevenção específicos, antes de sinais bioquímicos ou nódulos. Idade e risco do códon 634 tornam o encaminhamento especialmente urgente.'),
-      ('Comparar finalidades', 'Calcitonina e ultrassom avaliam expressão atual da doença tireoidiana; resultados normais não identificam quem herdou a variante. Metanefrinas avaliam outro componente e também podem estar normais em portadores. Um painel amplo pode ter indicação em outro contexto, mas aqui o teste familiar é mais direto. Calcitonina estimulada não substitui essa identificação.'),
-     ]),
+    pg('seguimento', 'Seis meses depois',
+ 'Sem novas crises, PA 118/74 sem anti-hipertensivos, HbA1c 5,4% e ecocardiograma normal. Metanefrinas pós-operatórias de seis semanas normais documentam resposta bioquímica; a histologia não garante risco zero de recorrência ou metástase.',
+ 'Mantém vigilância prolongada, neste contexto hereditário por toda a vida: metanefrinas, acompanhamento do carcinoma medular e avaliação de cálcio/PTH conforme indicação. A sertralina é revista com a psiquiatria, sem afirmar que qualquer ansiedade futura terá causa tumoral.'),
 
-    pg('familia', 'Dois meses depois',
-       'Com o tumor adrenal já retirado, Patrícia faz tireoidectomia total com '
-       'esvaziamento do compartimento central. Na NEM2, a adrenal vem antes do '
-       'pescoço: operar a tireoide com um feocromocitoma no lugar arrisca a crise da '
-       'anestesia.',
-       'Anatomia patológica: carcinoma medular de 1,2 cm no lobo direito e '
-       'hiperplasia de células C nos dois lobos; nenhum dos 11 linfonodos '
-       'comprometido. A calcitonina de três meses é indetectável.',
-       'A equipe chama a família para uma conversa com a genética: a mãe, os dois '
-       'filhos e os irmãos de Patrícia.'),
+    fim('f1', 'Recuperação e vigilância familiar',
+ 'Patrícia recuperou função cardíaca e controle bioquímico após ressecção, com NEM2A reconhecida e família avaliada.',
+ 'A melhora inicial não explicou as crises noturnas; sua recorrência antecipou a investigação. O ortostatismo mudou o preparo, e a história familiar mudou o alcance do cuidado.', 'melhor'),
 
-    Q('p6', 6,
-      'Após as duas cirurgias, quais **duas estratégias** correspondem ao risco ainda presente na NEM2A de Patrícia?', [
-      ('Metanefrinas anuais para doença adrenal metacrônica ou recorrente', True),
-      ('Calcitonina e CEA seriados, associados à vigilância do cálcio', True),
-      ('Imagem funcional anual para antecipar doença adrenal bioquimicamente silenciosa', False),
-      ('Ultrassonografia da adrenal contralateral como principal rastreio anual', False),
-      ('Ultrassonografia cervical como principal marcador de recorrência tireoidiana', False),
-     ], [
-      ('Vigilância dirigida ao fenótipo', 'Metanefrinas anuais acompanham o risco de outro tumor adrenal, mesmo depois da normalização pós-operatória. Calcitonina/CEA detectam doença medular persistente ou recorrente; cálcio acompanha o componente paratireoidiano, com PTH conforme o contexto.'),
-      ('O lugar da imagem', 'Imagem funcional é selecionada por contexto clínico, bioquímica e suspeita de extensão; rastreio anual indiscriminado acrescenta exposição e achados incidentais. Ultrassom tem limitações para pequenas lesões adrenais. No pescoço, ultrassom complementa a avaliação, mas não substitui a vigilância bioquímica de doença medular após a cirurgia.'),
-     ]),
-
-    pg('alta', 'Seis meses depois',
-       'A mãe, de 66 anos, tem a mesma variante; a calcitonina dela é indetectável e '
-       'as metanefrinas são normais. A filha de 13 anos também é portadora: a '
-       'tireoidectomia total mostra um carcinoma medular de 3 mm, sem linfonodos, e as '
-       'metanefrinas dela são normais. O filho de 8 anos não tem a variante.',
-       conforme=('b1', ['alta_cedo', 'f2', 'f2'])),
-
-    pg('alta_cedo', 'A consulta',
-       'Patrícia não teve nenhuma crise desde a cirurgia. Pressão de 118/74 mmHg sem '
-       'remédio, hemoglobina glicada de 5,4% e ecocardiograma normal. A psiquiatria '
-       'retira a sertralina aos poucos.'),
-
-    fim('f1', 'Sem crises, com a família rastreada',
-        'Patrícia está curada do tumor adrenal, com o carcinoma medular retirado '
-        'pequeno e calcitonina indetectável. A filha foi operada antes de o câncer '
-        'sair da tireoide.',
-        'Alfabloqueio antes da cirurgia, ressecção sem instabilidade grave e teste '
-        'genético que achou a NEM2A: as três decisões contaram, para ela e para a '
-        'filha.', 'melhor'),
-
-    fim('f2', 'Curada, depois de um percurso mais longo',
-        'Patrícia também está sem crises e sem remédio, e a família foi rastreada. O '
-        'caminho custou dias de UTI, uma nova queda da fração de ejeção e semanas a '
-        'mais até a cirurgia.',
-        'Betabloqueador sem alfabloqueio prévio deixa os receptores alfa sem '
-        'oposição, e anestesia sem preparo expõe o miocárdio a picos de pressão; os '
-        'dois caminhos acrescentaram dano a um coração que se recuperava.', 'medio'),
-
-    fim('f_tardio', 'Carcinoma medular com metástases',
-        'Patrícia vive com carcinoma medular metastático, em tratamento com inibidor '
-        'de RET, e a filha foi operada com linfonodo já comprometido.',
-        'Sem teste genético, a NEM2A ficou escondida atrás de um tumor adrenal tido '
-        'como esporádico. O carcinoma medular, curável quando pequeno, foi achado '
-        'com metástases, e a família não foi rastreada a tempo.', 'pior'),
-
-    fim('f_obito', 'Óbito no centro cirúrgico',
-        'Depois da parada, Patrícia evolui com choque refratário e morre na UTI no '
-        'mesmo dia.',
-        'Operar sem alfabloqueio e insistir na ressecção durante a crise levou a '
-        'picos de pressão e, depois da ligadura da veia, a um colapso num volume '
-        'plasmático que nunca tinha sido refeito.', 'pior'),
-
-    pagina('retrospectiva', 'Pontos de ensino', '',
-        pontos(
-            'Crises de cefaleia, sudorese e palpitação com pressão alta pedem '
-            'metanefrinas antes do rótulo de pânico. Pânico não produz sobrecarga '
-            'ventricular, hiperglicemia nem perda de peso.',
-            'Emergência hipertensiva é definida pela lesão aguda de órgão-alvo, e não '
-            'pelo número da pressão.',
-            'A síndrome de takotsubo só se fecha depois de afastado o feocromocitoma, '
-            'que produz o mesmo atordoamento miocárdico.',
-            'Metoclopramida, tricíclicos, corticoide e betabloqueador sem alfabloqueio '
-            'podem precipitar uma crise grave.',
-            'Massa adrenal com mais de 10 UH sem contraste pede metanefrinas, e nunca '
-            'se biopsia antes delas.',
-            'O preparo é alfabloqueio por 10 a 14 dias, com sal e líquidos; o '
-            'betabloqueador entra depois, só para a taquicardia.',
-            'Todo paciente com feocromocitoma faz teste genético. Na NEM2, a adrenal '
-            'é operada antes da tireoide, e a família é rastreada.'),
-        so_kicker=True),
+    pagina('retrospectiva', 'Pontos de ensino', '', pontos(
+ 'Emergência hipertensiva exige lesão aguda de órgão, com tratamento e investigação paralelos.',
+ 'Recuperação ventricular não encerra a pesquisa de crises autonômicas recorrentes.',
+ 'Metanefrinas plasmáticas ou urinárias fracionadas são opções de rastreio; revisar método, postura e medicamentos.',
+ 'InterTAK admite feocromocitoma como gatilho de takotsubo.',
+ 'Alfabloqueio precede betabloqueio; reposição de volume respeita tolerância cardíaca.',
+ 'Genética e avaliação do nódulo não devem depender de complicações tardias.'), so_kicker=True),
 
     pg('referencias', 'Fontes e limites',
-       'Paciente, valores e percursos são ficcionais. A foto de abertura é da orla '
-       'de Fortaleza, sem relação com o caso.',
-       'Lenders e cols. Pheochromocytoma and paraganglioma: an Endocrine Society '
-       'clinical practice guideline, J Clin Endocrinol Metab 2014. Nölting e cols. '
-       'Personalized management of pheochromocytoma and paraganglioma, Endocr Rev '
-       '2022. Fassnacht e cols. European Society of Endocrinology clinical practice '
-       'guidelines on the management of adrenal incidentalomas, Eur J Endocrinol '
-       '2023. Buitenwerf e cols. PRESCRIPT, J Clin Endocrinol Metab 2020. Wells e '
-       'cols. Revised American Thyroid Association guidelines for the management of '
-       'medullary thyroid carcinoma, Thyroid 2015. Brandão e cols. Diretriz '
-       'Brasileira de Hipertensão Arterial 2025, Arq Bras Cardiol 2025. van den Born '
-       'e cols. ESC Council on Hypertension position document on the management of '
-       'hypertensive emergencies, Eur Heart J Cardiovasc Pharmacother 2019. Ghadri e '
-       'cols. International Expert Consensus Document on Takotsubo Syndrome, Eur '
-       'Heart J 2018.',
-       'Imagens, todas de outros pacientes, com setas adicionadas, do Wikimedia '
-       'Commons: eletrocardiograma, Michael Rosengarten (CardioNetworks ECGpedia), CC '
-       'BY-SA 3.0, recortado (commons.wikimedia.org/wiki/File:E242_(CardioNetworks_ECGpedia).jpg); '
-       'ventriculografia, Gangadhar, Von der Lohe, Sawada e Helft, CC BY 2.0 '
-       '(commons.wikimedia.org/wiki/File:Takotsubo_ventriculography.gif); '
-       'tomografia, Drahreg01, CC BY-SA 3.0 '
-       '(commons.wikimedia.org/wiki/File:Phaeochromozytoma_CT_coronal.jpg); lâmina, '
-       'Nephron, CC BY-SA 3.0 '
-       '(commons.wikimedia.org/wiki/File:Pheochromocytoma_high_mag.jpg); orla de '
-       'Fortaleza, RonaldoMorais, CC BY-SA 4.0 '
-       '(commons.wikimedia.org/wiki/File:Calçadão_na_orla_da_praia-_Fortaleza.jpg).'),
+ 'Paciente, cronologia e percursos ficcionais. Imagens clínicas são de outras pessoas; a abertura é a orla de Fortaleza.',
+ 'Revisão: <a href="https://pubmed.ncbi.nlm.nih.gov/41083371/">Japan Endocrine Society, diretriz 2025, publicação em volume de 2026</a>; <a href="https://pubmed.ncbi.nlm.nih.gov/37318239/">ESE/ENSAT, incidentalomas, 2023</a>; <a href="https://pubmed.ncbi.nlm.nih.gov/24893135/">Endocrine Society, 2014</a>; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5991216/">InterTAK, 2018</a>; ATA, carcinoma medular, 2015. A diretriz japonesa é contextualizada; acesso e recomendações locais não são presumidos iguais no Brasil.',
+ 'Wikimedia Commons, setas preservadas: ECG, Michael Rosengarten (CardioNetworks ECGpedia), CC BY-SA 3.0, recortado (File:E242_(CardioNetworks_ECGpedia).jpg); ventriculografia, Gangadhar, Von der Lohe, Sawada e Helft, CC BY 2.0 (File:Takotsubo_ventriculography.gif); TC, Drahreg01, CC BY-SA 3.0 (File:Phaeochromozytoma_CT_coronal.jpg); lâmina, Nephron, CC BY-SA 3.0 (File:Pheochromocytoma_high_mag.jpg). Abertura: ilustração original da paciente ficcional, gerada com OpenAI imagegen para o projeto em 24/10/2026; não é fotografia clínica.')
 ]
 
 REVISAO = []
-
-# Revisão de questões: fontes clínicas consultadas em 22/10/2026.
-# https://academic.oup.com/jcem/article/99/6/1915/2537399
-# https://academic.oup.com/ejendo/article/189/1/G1/7198474
-# https://pmc.ncbi.nlm.nih.gov/articles/PMC4490627/
-# Redação: https://www.nbme.org/sites/default/files/2021-02/NBME_Item%20Writing%20Guide_R_6.pdf
-
-# Prioridade cardiológica: https://www.escardio.org/guidelines/clinical-practice-guidelines/all-esc-practice-guidelines/acute-coronary-syndromes

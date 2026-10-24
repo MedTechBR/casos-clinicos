@@ -75,7 +75,7 @@ ETAPAS = [
                     'no fim de semana. Caminha 40 minutos todas as manhãs.'),
                    ('Vida social', 'Bancário aposentado, mora com a esposa e '
                     'cuida do neto duas tardes por semana. Voltaram há nove dias '
-                    'de três semanas na casa da filha, nos Estados Unidos.'),
+                    'de três semanas na casa da filha, perto de Baton Rouge, Louisiana, em agosto. Ficava no quintal ao entardecer e sofreu muitas picadas de mosquito. Sem contato com morcegos, mordidas ou transfusões recentes.'),
                    ('Família', 'Pai morreu de infarto aos 68 anos; a mãe teve '
                     'AVC aos 80. Um irmão tem doença de Parkinson.')),
            so_kicker=True),
@@ -162,42 +162,25 @@ ETAPAS = [
          'Com febre de 38,7 °C, a taquicardia sinusal é esperada e não explica a '
          'confusão nem a perna que cedeu.'),
 
-    bifurcacao('b1', 'Decisão', 'Antes da tomografia',
-      'Febre, confusão, rigidez de nuca discreta e uma perna fraca. A tomografia '
-      'vai levar uma hora. O que você faz enquanto isso?', [
-      caminho('Ceftriaxona, ampicilina e aciclovir agora, antes da tomografia',
-              'tratado',
-              'Com déficit focal, a punção espera a imagem, mas o tratamento '
-              'empírico não. Acima dos 50 anos, a ampicilina cobre Listeria; o '
-              'aciclovir cobre o herpes simples.'),
-      caminho('Tomografia e punção primeiro; tratar conforme o líquor',
-              'atraso',
-              'O líquor fica pronto horas depois, e cada hora de atraso do '
-              'antibiótico na meningite bacteriana aumenta a mortalidade.'),
-      caminho('Ceftriaxona agora; aciclovir só se a ressonância mostrar o lobo '
-              'temporal', 'sem_aciclovir',
-              'A ressonância pode demorar um dia, e o atraso do aciclovir piora '
-              'o prognóstico da encefalite herpética.'),
+    pg('cobertura', 'Enquanto se organiza a punção',
+       'Após hemoculturas, iniciam-se ceftriaxona, ampicilina e aciclovir intravenosos, com avaliação de dexametasona junto à primeira dose antibacteriana enquanto meningite bacteriana permanece possível. A imagem precede a punção pelo déficit focal; o tratamento não espera a tomografia.',
+       'A hiponatremia moderada não explica sozinha a paresia. A amostra de cortisol, colhida antes de eventual corticoide, retorna em 19 µg/dL; o contexto clínico e esse resultado tornam insuficiência adrenal importante menos provável, sem usar um valor isolado como exclusão universal. Monitoram-se sódio, diurese e balanço, evitando líquidos hipotônicos e restrição que comprometa a hidratação. Não se atribui toda a alteração mental ao sódio.'),
+
+    bifurcacao('b1', 'Decisão', 'Investigação epidemiológica',
+      'Com encefalopatia febril, déficit motor e viagem recente à Louisiana, que investigação acrescentar ao líquor inicial?', [
+      caminho('IgM para Nilo Ocidental no líquor', 'arbovirus_precoce',
+              'A exposição já justifica colher na primeira punção; resultado precoce negativo pode exigir repetição.'),
+      caminho('RT-PCR para Nilo Ocidental no plasma', 'pcr_precoce',
+              'Pode ajudar, mas tem menor rendimento no imunocompetente após a viremia curta; não deve substituir a sorologia.'),
     ]),
 
-    pg('atraso', 'Seis horas depois',
-       'A fila da tomografia leva uma hora e meia, e a punção só sai no fim da '
-       'tarde. Nesse tempo ele fica mais sonolento. Ceftriaxona, ampicilina e '
-       'aciclovir começam seis horas depois da chegada, quando chega a '
-       'citologia do líquor.',
+    pg('arbovirus_precoce', 'Coleta inicial',
+       'A equipe reserva a solicitação para a primeira punção e colhe o soro. As amostras seguem juntas ao laboratório de referência após a coleta do líquor, com o histórico de dengue e vacina de febre amarela. HSV, VZV e enterovírus também são investigados. A vigilância recebe a suspeita sem esperar confirmação.',
        segue='tc_evolucao'),
 
-    pg('sem_aciclovir', 'Primeiras horas',
-       'Ceftriaxona 2 g e ampicilina 2 g entram antes da tomografia. O aciclovir '
-       'fica esperando a ressonância, marcada para o dia seguinte, até que o '
-       'plantonista da noite o inicia, 14 horas depois da chegada.',
+    pg('pcr_precoce', 'Revisão da amostra',
+       'O laboratório esclarece a baixa sensibilidade da PCR sanguínea nesta fase. A equipe solicita IgM no soro e no líquor a colher após a tomografia e registra dengue prévia e vacina de febre amarela. A investigação e a notificação ocorrem ainda no primeiro dia.',
        segue='tc_evolucao'),
-
-    pg('tratado', 'Primeiras horas',
-       'Ceftriaxona 2 g, ampicilina 2 g e aciclovir 780 mg (10 mg/kg) pela veia '
-       'em 40 minutos. Com a TFG estimada de 72, o aciclovir não precisa de '
-       'ajuste. A água livre fica restrita a um litro por dia, e o soro '
-       'fisiológico, só para diluir as medicações.'),
 
     estudo('tc_evolucao', 'Tomografia de crânio',
         'Tomografia sem contraste antes da punção, pelo déficit focal e pela '
@@ -211,7 +194,7 @@ ETAPAS = [
          ((766, 466), (560, 250), '**Localizador**: a linha amarela marca o nível do corte, que passa pelos ventrículos laterais.', 12),
         ],
         ['Sem hemorragia, hidrocefalia, efeito de massa ou desvio da linha média.',
-         'A tomografia libera a punção; não afasta encefalite nem isquemia '
+         'Sem contraindicação clínica adicional, a equipe procede à punção; uma TC normal não afasta encefalite nem isquemia '
          'recente.']),
 
     painel('lcr', 'Líquor', 'Punção lombar', [
@@ -236,10 +219,7 @@ ETAPAS = [
       ('Concorrentes', 'Meningite piogênica costuma ter maior celularidade e menor relação de glicose, embora haja sobreposição. Idade justifica cobrir Listeria, mas 58% de neutrófilos não a distingue de virose. TB e fungos permanecem diferenciais conforme contexto, porém evolução aguda e relação de glicose 0,54 não os priorizam; proteína 92 isoladamente também não os separa.'),
      ]),
     pg('reexame', 'Na manhã seguinte',
-       'A equipe registra meningoencefalite viral, herpética até prova em '
-       'contrário, mantém o aciclovir e envia o líquor para PCR. As hemoculturas '
-       'não cresceram. A febre continua, e o sódio subiu para 132 com a '
-       'restrição de água.',
+       'Na manhã seguinte, a cefaleia e a desorientação diminuem, o sódio está em 132 e a febre é menos alta. Apesar disso, agora ele não consegue dobrar o joelho direito nem elevar o braço direito como fazia na admissão. Não é apenas um exame mais confiável: a esposa e a enfermagem observaram perda motora durante a noite.',
        'Mais acordado, ele colabora com o exame. Força grau 1 na perna direita, '
        '4 na esquerda, 4 no braço direito e 5 no esquerdo, com tônus flácido na '
        'perna direita. Patelar e aquileu abolidos à direita e diminuídos à '
@@ -305,7 +285,7 @@ ETAPAS = [
      ]),
 
     pg('respiracao', 'Segundo dia de internação',
-       'No fim da tarde, a tosse fica fraca e ele engasga com água. Frequência '
+       'Embora esteja mais atento e com menos cefaleia, no fim da tarde a tosse fica fraca e ele engasga com água. Frequência '
        'respiratória de 22, SpO₂ de 96% em ar ambiente, gasometria com pH 7,43 '
        'e pCO₂ de 38 mmHg. A capacidade vital caiu de 24 para 17 mL/kg em oito '
        'horas; pressão inspiratória máxima de −22 cmH₂O e expiratória de 34 '
@@ -336,12 +316,12 @@ ETAPAS = [
     bifurcacao('b2', 'Decisão', 'Suporte respiratório',
       'De volta ao leito: tosse fraca, engasgo com água e capacidade vital de '
       '17 mL/kg, em queda. Como você conduz?', [
-      caminho('UTI e intubação planejada agora', 'r_via',
+      caminho('Intubação planejada', 'r_via',
               'A progressão bulbar e ventilatória permite antecipar a via aérea '
               'em vez de esperar o colapso.'),
-      caminho('Ventilação não invasiva com vigilância intensiva', 'r_vni',
+      caminho('Ventilação não invasiva', 'r_vni',
               'Disfagia e secreções tiram a margem de segurança da máscara.'),
-      caminho('Oxigênio e vigilância na enfermaria', 'r_atraso',
+      caminho('Observação na enfermaria', 'r_atraso',
               'A saturação não mede a reserva ventilatória nem a proteção '
               'contra aspiração.'),
     ]),
@@ -352,43 +332,25 @@ ETAPAS = [
        'via aérea piora.',
        segue='b_resgate'),
 
-    pg('r_atraso', 'Na enfermaria',
-       'De madrugada, engasga e passa a respirar com esforço. É levado à sala de '
-       'emergência com saturação de 88%.',
+    pg('r_atraso', 'Reavaliação ainda na mesma noite',
+       'A enfermagem percebe fala entrecortada, tosse ineficaz e fadiga ao sustentar a cabeça. A equipe transfere para UTI e interrompe a oferta oral. A saturação preservada não muda o risco bulbar.',
        segue='b_resgate'),
 
-    bifurcacao('b_resgate', 'Decisão', 'A estratégia falhou',
-      'Ele não elimina secreções e já aspirou uma vez. Qual a próxima conduta?', [
-      caminho('Intubar agora', 'r_resgate',
-              'A falha em proteger a via aérea é a indicação.'),
-      caminho('Manter o suporte não invasivo e reavaliar', 'f_obito',
-              'Insistir num suporte que já falhou numa via aérea desprotegida.'),
-    ]),
-
-    pg('r_resgate', 'Terceiro dia',
-       'Intubado em urgência, depois de aspirar, e tratado para pneumonia '
-       'aspirativa. Precisa de pressão expiratória alta por três dias.',
+    pg('b_resgate', 'Mudança de estratégia',
+       'Na UTI, a retenção de secreções persiste apesar do suporte inicial. A equipe realiza intubação após reconhecer a falha de proteção da via aérea. O manejo passa a incluir aspiração de secreções, via segura para alimentação e vigilância de infecção respiratória.',
        segue='exposicao'),
 
     pg('r_via', 'Terceiro dia',
-       'Intubação planejada, sem aspiração, e ventilação protetora na UTI. A '
-       'febre começa a ceder; a força não muda.'),
+       'Intubação planejada e ventilação na UTI. A febre começa a ceder, mas a fraqueza bulbar e dos membros persiste. A melhora da encefalopatia não permite suspender a vigilância respiratória.',
+       segue='exposicao'),
 
-    pg('exposicao', 'A esposa conta a viagem',
-       'Com ele sedado, a esposa conta a viagem com calma. A filha mora nos '
-       'arredores de Baton Rouge, na Louisiana, no sul dos Estados Unidos. Era '
-       'agosto, fazia calor, e ele passava o fim de tarde no quintal, ao lado '
-       'de um canal de drenagem, sem repelente. Os dois foram muito picados por '
-       'mosquitos. Na última semana, a filha achou dois pássaros mortos no '
-       'gramado.',
-       'Não houve contato com morcegos nem mordida de animal, e ninguém na '
-       'família adoeceu. A PCR do líquor para herpes simples, colhida no quinto '
-       'dia de sintomas, veio negativa, assim como as PCR para varicela-zóster e '
-       'enterovírus. As hemoculturas seguem negativas em 72 horas.'),
+    pg('exposicao', 'Quarto dia: evolução e resultados',
+       'No quarto dia, a redução da sedação permite reconhecer a esposa e obedecer a comandos. Persistem a paresia assimétrica e a dificuldade para eliminar secreções. A família pergunta sobre extubação; a equipe explica que cognição e função motora podem recuperar em ritmos diferentes.',
+       'A PCR do primeiro líquor para HSV, colhido no quinto dia de sintomas, é negativa; VZV e enterovírus também negativos. Pela alteração temporal discreta, mantém-se aciclovir até reavaliação e uma nova PCR para HSV, três dias após a primeira, também negativa. IgM para arbovírus está em processamento desde a admissão.'),
 
     Q('p6', 6,
-      'D7, imunocompetente, viagem à Louisiana, encefalomielite e PCR para HSV/VZV/enterovírus negativas. Com dengue prévia e vacina de febre amarela, quais dois exames priorizar?', [
-      ('IgM para Nilo Ocidental no líquor e no soro', True),
+      'As PCR para HSV/VZV/enterovírus são negativas e a investigação para arbovírus já foi iniciada. Quais dois exames têm maior valor para sustentar a etiologia e enfrentar a reatividade cruzada neste imunocompetente?', [
+      ('IgM para Nilo Ocidental no líquor', True),
       ('Neutralização por redução de placas em laboratório de referência', True),
       ('RT-PCR de Nilo Ocidental no sangue como teste principal', False),
       ('IgG isolada para Nilo Ocidental no soro', False),
@@ -396,15 +358,13 @@ ETAPAS = [
       ('NS1 de dengue como confirmação da etiologia neurológica', False),
      ], [
       ('Rendimento e especificidade', 'IgM no líquor e soro: maior rendimento nesta fase; no líquor apoia neuroinvasão, mas exige interpretação clínica. Neutralização: ajuda a discriminar reatividade entre flavivírus diante de dengue prévia e vacinação; o laboratório de referência integra títulos, amostras e epidemiologia.'),
-      ('Por que não os demais', 'RT-PCR sanguínea: baixa sensibilidade após a viremia curta no imunocompetente; negativa não exclui. IgG isolada: não data infecção nem resolve reatividade cruzada. Repetir enterovírus no mesmo material: sem falha técnica ou nova informação, rende menos que ampliar a etiologia. NS1: pesquisa dengue aguda, não confirma Nilo Ocidental nem neuroinvasão.'),
+      ('Por que não os demais', 'IgM sérica complementar também é colhida pela equipe. RT-PCR sanguínea: baixa sensibilidade após a viremia curta no imunocompetente; negativa não exclui. IgG isolada: não data infecção nem resolve reatividade cruzada. Repetir enterovírus no mesmo material: sem falha técnica ou nova informação, rende menos que ampliar a etiologia. NS1: pesquisa dengue aguda, não confirma Nilo Ocidental nem neuroinvasão.'),
      ]),
 
     pg('virada', 'O diagnóstico',
        'Laboratório de referência: **IgM contra o vírus do Nilo Ocidental '
        'reagente no líquor e no soro**; IgM para dengue, febre amarela e '
-       'encefalite de Saint Louis não reagentes. Dez dias depois, o teste de '
-       'neutralização mostra título oito vezes maior para o vírus do Nilo '
-       'Ocidental que para a dengue.',
+       'encefalite de Saint Louis não reagentes. O laboratório interpreta como doença neuroinvasiva por Nilo Ocidental no contexto compatível. O teste de neutralização segue em processamento; o suporte e as decisões de antimicrobianos não aguardam sua conclusão.',
        'É doença neuroinvasiva pelo vírus do Nilo Ocidental, com encefalite e '
        'poliomielite. O vírus circula entre aves e mosquitos do gênero Culex, e '
        'o homem é hospedeiro acidental. Cerca de uma infecção em 150 atinge o '
@@ -412,16 +372,11 @@ ETAPAS = [
        'hipertensos; na forma neuroinvasiva, cerca de um em cada dez morre. O '
        'vírus prefere neurônios profundos, do tálamo, da substância negra e do '
        'corno anterior: daí o tremor e a paralisia flácida assimétrica.',
-       'Nas Américas desde 1999, é endêmico nos Estados Unidos, com pico no fim '
-       'do verão. No Brasil, o Ministério da Saúde confirmou 17 casos humanos '
-       'entre 2014 e 2026, a maioria no Piauí, e em 2026 houve transmissão local '
-       'em Santa Catarina e em São Paulo.'),
+       'O vínculo epidemiológico é a viagem recente, com exposição a mosquitos. Não se deduz o local de transmissão apenas do lugar de residência. A confirmação é discutida com o laboratório de referência, considerando reatividade cruzada entre flavivírus.'),
 
     pg('tratamento', 'O tratamento a partir de agora',
-       'Com a PCR para herpes negativa em líquor colhido depois de 72 horas de '
-       'sintomas e outro diagnóstico confirmado, o aciclovir é suspenso. '
-       'Hemoculturas negativas em 72 horas e um líquor que não é bacteriano '
-       'permitem suspender ceftriaxona e ampicilina.',
+       'Com duas PCR para HSV negativas, reavaliação do achado temporal e etiologia alternativa sustentada, o aciclovir é suspenso. '
+       'Culturas de sangue e líquor negativas, evolução, perfil liquórico e etiologia alternativa sustentada permitem suspender ceftriaxona e ampicilina após revisão conjunta; antibiótico antes da punção limita a sensibilidade da cultura.',
        'Não há antiviral específico. Ribavirina, interferon, corticoide e '
        'imunoglobulina foram usados sem benefício conclusivo; o único ensaio '
        'randomizado de imunoglobulina rica em anticorpos contra o vírus foi '
@@ -429,13 +384,13 @@ ETAPAS = [
        'O desfecho depende do suporte: ventilação, prevenção de aspiração, '
        'trombose e úlcera por pressão, nutrição por via segura, controle do '
        'sódio e fisioterapia desde a UTI. A recuperação motora da poliomielite '
-       'é lenta e muitas vezes incompleta.'),
+       'é lenta e pode ser incompleta.'),
 
     pg('recuperacao', 'Segunda e terceira semanas',
        'A febre acaba no sexto dia de internação. O tremor diminui, e ele volta '
        'a conversar, lúcido. O braço direito recupera força; a perna direita '
        'continua sem vencer a gravidade. A eletroneuromiografia da terceira '
-       'semana mostra fibrilações na perna direita, sinal de denervação.'),
+       'semana mostra fibrilações na perna direita, sinal de denervação. A neutralização solicitada ao laboratório de referência retorna no seguimento, com título oito vezes maior para Nilo Ocidental que para os demais flavivírus testados em paralelo, reforçando a identificação etiológica.'),
 
     pg('vigilancia', 'Vigilância e orientação na alta',
        'A febre do Nilo Ocidental é de notificação compulsória imediata no '
@@ -451,31 +406,16 @@ ETAPAS = [
        'depois da alta; fraqueza e cansaço podem durar meses.'),
 
     pg('alta', 'Preparando a alta',
-       'A equipe revê com ele e a esposa o que aconteceu: a viagem, a doença, a '
-       'intubação e o que esperar da perna direita nos próximos meses.',
+       'Extubado no nono dia após recuperar tosse eficaz, ele ainda precisa de ajuda para transferências e avaliação de deglutição. Na terceira semana, a perna direita continua muito mais fraca que a esquerda. A alta depende da segurança funcional e do apoio disponível.',
        conforme=('b2', ['f_reab', 'f_longa', 'f_longa'])),
 
     fim('f_reab', 'Alta para reabilitação',
-        'Extubado no nono dia, sem pneumonia, ele sai no 21.º dia para um centro '
-        'de reabilitação. Aos três meses anda com andador; a perna direita vence '
-        'a gravidade, mas não a resistência.',
-        'A intubação planejada evitou aspiração e pneumonia. O suporte não '
-        'devolve o neurônio motor destruído; a força que volta vem dos que '
-        'sobreviveram.', 'melhor'),
+        'Sai no 21.º dia para reabilitação. Aos três meses usa andador e a perna direita vence a gravidade, mas não a resistência. Persistem fadiga e necessidade de adaptações em casa.',
+        'O suporte antecipado controlou riscos respiratórios; a recuperação motora lenta decorre da doença. Este percurso não demonstra que a escolha determine uma recuperação específica.', 'melhor'),
 
-    fim('f_longa', 'Internação prolongada',
-        'A pneumonia aspirativa custou dez dias de antibiótico e uma '
-        'traqueostomia. Ele sai no 38.º dia para cuidados de continuidade, '
-        'dependente para se mover e com alimentação por sonda.',
-        'Aspiração e falência ventilatória somaram morbidade à lesão '
-        'neurológica, que já era grave.', 'medio'),
-
-    fim('f_obito', 'Óbito no quarto dia',
-        'Mantido na máscara, ele aspira de novo, tem parada hipóxica e não '
-        'sobrevive. A causa da encefalite não chegou a ser definida.',
-        'Manter um suporte não invasivo numa via aérea que já não se protege '
-        'levou à parada. Na fraqueza bulbar, a intubação vem antes da queda da '
-        'saturação.', 'pior'),
+    fim('f_longa', 'Reabilitação após reavaliação do suporte',
+        'Após a mudança de estratégia respiratória, também é extubado e encaminhado à reabilitação. Há fraqueza e dependência para transferências, com seguimento de deglutição e força.',
+        'O percurso exigiu reconhecer a limitação do suporte inicial. Aspiração é um risco, não uma consequência obrigatória; não se atribui uma sequela neurológica à escolha de máscara.', 'medio'),
 
     pagina('retrospectiva', 'Pontos de ensino', '',
         pontos(
@@ -486,13 +426,9 @@ ETAPAS = [
             'Com déficit focal, a tomografia vem antes da punção, e o '
             'antibiótico e o aciclovir vêm antes da tomografia.',
             'Paresia flácida, arrefléxica e assimétrica, com sensibilidade '
-            'normal e sem nível, localiza no corno anterior: é poliomielite até '
-            'que se ache a causa.',
-            'Tálamo, substância negra e corno anterior na ressonância não são '
-            'território do herpes e pedem a história de exposição, a começar '
-            'pelo destino da viagem.',
-            'Na fraqueza neuromuscular, a intubação é indicada pela regra '
-            '20/30/40 e pela tosse, não pela saturação.',
+            'normal e sem nível, sugere acometimento motor, inclusive de corno anterior; a localização exige integrar exame, imagem e ENMG.',
+            'O padrão de núcleos profundos e substância cinzenta medular amplia a etiologia além de HSV; a história de exposição precisa ser colhida desde a admissão.',
+            'Na fraqueza neuromuscular, tendência da força ventilatória, tosse e proteção da via aérea orientam o suporte; números isolados não substituem a reavaliação.',
             'Na doença neuroinvasiva pelo vírus do Nilo Ocidental, a IgM no '
             'líquor sustenta o diagnóstico; dengue prévia e vacina de febre '
             'amarela exigem a neutralização. O tratamento é suporte, e a '
@@ -503,15 +439,7 @@ ETAPAS = [
        p('Paciente, valores e percursos são ficcionais. A cena de abertura é '
          'uma ilustração gerada por inteligência artificial para este caso; não '
          'é fotografia nem documentação clínica.'),
-       p('Ministério da Saúde, Nota Técnica n.º 79/2026-CGARB/DEDT/SVSA/MS '
-         '(cenário epidemiológico, notificação imediata e critérios de caso). '
-         'CDC, páginas para profissionais sobre diagnóstico e tratamento, '
-         'consultadas em 26/09/2026. Sejvar e cols., //Emerg Infect Dis// 2003 '
-         '(paralisia flácida). Tunkel e cols., IDSA, //Clin Infect Dis// 2004 e '
-         '2008 (meningite bacteriana e encefalite). Lawn e cols., //Arch '
-         'Neurol// 2001 (regra 20/30/40). Gnann e cols., //Clin Infect Dis// '
-         '2019 (imunoglobulina). Spasovski e cols., //Eur J Endocrinol// 2014 '
-         '(hiponatremia).'),
+       p('Revisão em 23/10/2026: CDC, diagnóstico, manifestações e suporte; Ministério da Saúde, Nota Técnica 79/2026, notificação e classificação de caso. OMS, diretriz de meningite 2025, assistência inicial. Sejvar et al., 2003, PMID 12890318, série histórica sobre paralisia flácida; não é guideline atual. Gnann et al., 2019, ensaio de imunoglobulina. A classificação da hiponatremia usa osmolalidades, contexto e exclusões clínicas; não transforma SIAD em diagnóstico etiológico.'),
        '<p><a href="https://www.cdc.gov/west-nile-virus/hcp/diagnosis-testing/index.html" '
        'target="_blank" rel="noopener">CDC: diagnóstico</a> · '
        '<a href="https://www.cdc.gov/west-nile-virus/hcp/treatment-prevention/index.html" '
@@ -539,3 +467,6 @@ REVISAO = []
 # https://www.nbme.org/sites/default/files/2021-02/NBME_Item%20Writing%20Guide_R_6.pdf
 # https://pubmed.ncbi.nlm.nih.gov/15661693/
 # https://jamanetwork.com/journals/jamaneurology/fullarticle/784803
+
+# Revisão de evolução 23/10/2026: CDC diagnóstico, clínica e suporte;
+# Sejvar et al., PMID 12890318 (fenótipo, série histórica, não guideline).

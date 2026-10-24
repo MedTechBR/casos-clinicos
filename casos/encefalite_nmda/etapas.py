@@ -1,27 +1,6 @@
-"""Primeiro episódio psicótico numa estudante de 24 anos, em Teresina.
-
-Escrito em 01/10/2026 no molde do //New England// aprovado (modelos:
-endocardite e leptospirose; ver Artifacts/nejm-casos-classicos/
-GRAMATICA_LIDA_2026-09-26.md). Apresentação curta, ficha com a pista
-enterrada (um cisto de ovário de dois anos antes, sem controle), exame com
-os vitais em cima, primeiros exames entregues prontos.
-
-Âncoras registradas pela equipe: primeiro episódio psicótico com rastreio
-orgânico negativo (haloperidol, leito de saúde mental) e, no segundo dia,
-síndrome neuroléptica maligna. A reação não explica as discinesias
-orofaciais, a crise e a hipoventilação; líquor com pleocitose linfocítica
-leve, PCR para herpes negativa, ressonância normal e eletroencefalograma com
-delta e atividade rápida sobreposta. As perguntas antes da virada só
-classificam e localizam (sinais de alerta, mecanismo da reação, sítio da
-doença). A virada é o anticorpo no líquor, depois da metade do percurso; a
-imagem da pelve vem com a decisão de procurar o tumor. Decisões: o que fazer
-com o antipsicótico, tratar e procurar o tumor já ou esperar, e escalar
-para a segunda linha.
-
-Paciente ficcional. Critérios de Graus e cols. (Lancet Neurol 2016);
-desfechos de Titulaer e cols. (Lancet Neurol 2013); consenso brasileiro de
-encefalites autoimunes (Dutra e cols., Arq Neuropsiquiatr 2024); filtração
-pelo CKD-EPI 2021.
+"""Camila: evolução psiquiátrica, motora e autonômica de encefalite anti-NMDAR.
+Revisão de 23/10/2026. Paciente e percursos ficcionais; fontes ao final.
+Investigação e tratamento não aguardam o anticorpo quando há indicação clínica.
 """
 import json
 from pathlib import Path
@@ -67,7 +46,7 @@ def fim(k, titulo, texto, porque, qualidade):
 
 
 ETAPAS = [
-    capa(TITULO, fundo='cena.jpg', kicker='Caso interativo',
+    capa(TITULO, fundo='cena-paciente.png', kicker='Caso interativo',
          selo='Paciente ficcional · procedência e créditos na última tela'),
 
     pg('historia', 'Apresentação',
@@ -131,10 +110,10 @@ ETAPAS = [
     Q('p1', 1,
       'Pelas pausas sem lembrança e pela desorientação após pródromo febril, quais **três exames** priorizar na investigação neurológica?', [
       ('Eletroencefalograma', True),
-      ('Líquor com celularidade e pesquisa infecciosa', True),
+      ('Punção lombar diagnóstica', True),
       ('Ressonância de encéfalo', True),
-      ('FAN e complemento séricos', False),
-      ('Vitamina B12 e folato séricos', False),
+      ('FAN sérico', False),
+      ('Vitamina B12 sérica', False),
      ], [
       ('Investigar função, inflamação e estrutura', '**EEG** procura atividade epiléptica nas pausas estereotipadas. **Líquor** investiga inflamação e infecção após avaliação de segurança. **RM** pesquisa lesões não identificadas pela TC e pode apoiar uma etiologia; seu resultado normal não encerra a investigação.'),
       ('Outros exames possíveis', '**FAN/complemento** ganham prioridade com manifestações sistêmicas de autoimunidade, não descritas. **B12/folato** entram na avaliação de causas reversíveis, mas a evolução em dez dias, o pródromo e os episódios breves tornam a investigação direta do cérebro mais urgente.'),
@@ -192,22 +171,13 @@ ETAPAS = [
          'A tomografia afasta o que muda a conduta na hora. É pouco sensível para '
          'doenças que alteram a função do cérebro sem mudar sua forma.']),
 
-    pg('plano', 'O que a equipe registra',
-       'O psiquiatra de plantão avalia Camila às 22 horas e escreve: "Primeiro '
-       'episódio psicótico agudo, com agitação e insônia, em contexto de estresse '
-       'acadêmico. Rastreio orgânico sem alterações. Hipóteses: transtorno '
-       'psicótico agudo e transitório; episódio maníaco com sintomas psicóticos."',
-       'O raciocínio da evolução: tomografia, exames de sangue e triagem vieram '
-       'normais, fora o benzodiazepínico receitado na UPA. A desorientação foi '
-       'atribuída a dez noites quase sem sono e ao clonazepam; as pausas no meio '
-       'da frase, ao bloqueio do pensamento, comum na psicose. O quadro febril '
-       'de semanas antes ficou registrado como "virose, sem relação aparente". '
-       'A psicose por substância fica de lado, com triagem negativa para '
-       'estimulantes e maconha.',
-       'Prescrição: haloperidol 5 mg com prometazina 50 mg intramusculares para '
-       'a agitação, depois haloperidol 5 mg por via oral de 12 em 12 horas. O '
-       'clonazepam é suspenso. Camila vai para o leito de saúde mental do '
-       'hospital geral, com acompanhante.'),
+    pg('plano', 'Primeira noite',
+       'Camila permanece no hospital geral, com avaliação conjunta de neurologia e psiquiatria. A desorientação e as pausas com amnésia impedem encerrar a investigação como psicose primária. Inicia-se aciclovir empírico enquanto se investiga encefalite infecciosa.',
+       'O EEG inicial mostra lentificação difusa, sem capturar uma pausa. O primeiro líquor tem 18 células/mm³, predomínio linfocítico, proteína 48 mg/dL e glicose preservada; Gram sem bactérias. A primeira PCR para HSV é negativa. A equipe mantém investigação infecciosa e envia líquor e soro para anticorpos neuronais, sem esperar a resposta às medidas de agitação.'),
+
+    pg('noite1', 'Agitação e fala em mudança',
+       'Na mesma noite, mesmo em ambiente calmo e com a mãe presente, Camila tenta sair e retirar o acesso. Recebe haloperidol intramuscular para agitação de risco e mais uma dose oral antes da revisão do plano. Não há uso programado prolongado.',
+       'Dorme algumas horas, mas ao despertar a fala, antes acelerada, está escassa. Passa a repetir a última palavra da mãe e depois deixa de responder verbalmente. A redução da fala persiste quando está desperta, sem nova dose de sedativo.'),
 
     pagina('dia2', 'Segundo dia, 9 horas', '',
            p('Na primeira noite dormiu quatro horas. No primeiro dia ficou mais '
@@ -232,7 +202,7 @@ ETAPAS = [
     Q('p2', 2,
       'A psicose precedeu o haloperidol; febre, rigidez e CK de 4.800 surgiram depois. Qual interpretação integra melhor essa sequência?', [
       ('Reação ao bloqueio dopaminérgico sobre quadro cerebral ainda não esclarecido', True),
-      ('Síndrome serotoninérgica precipitada pela prometazina', False),
+      ('Síndrome serotoninérgica como explicação da piora', False),
       ('Abstinência de clonazepam como explicação do quadro inteiro', False),
       ('Catatonia maligna primária demonstrada pela elevação de CK', False),
       ('Sepse como explicação única da alteração mental e da rigidez', False),
@@ -241,58 +211,31 @@ ETAPAS = [
       ('O concorrente próximo', 'Catatonia maligna pode se sobrepor e CK não a distingue sozinha. Não há exposição serotoninérgica convincente nem clônus descrito; o uso breve de clonazepam e sua suspensão tampouco explicam a síndrome inteira. Infecção permanece investigável, sem apagar a associação temporal com o antipsicótico.'),
      ]),
 
-    pagina('nms', 'Discussão', 'A reação ao antipsicótico',
-      p('A equipe registra a segunda hipótese: síndrome neuroléptica maligna. '
-        'Pelo consenso internacional de 2011, ela se apoia em exposição a '
-        'antagonista dopaminérgico nas 72 horas anteriores, febre acima de 38 °C '
-        'em duas medidas, rigidez, alteração da consciência, CK de pelo menos '
-        'quatro vezes o limite, instabilidade autonômica e ausência de outra '
-        'causa. Camila preenche todos os itens, menos o último, que ainda não foi '
-        'testado.'),
-      p('A síndrome é rara, em torno de 0,01% a 0,02% dos expostos nas séries '
-        'recentes. Pesam a dose alta ou o aumento rápido, a via intramuscular, a '
-        'desidratação, a agitação e a doença cerebral prévia. A mortalidade, que '
-        'já passou de 20%, hoje fica abaixo de 10% com reconhecimento precoce e '
-        'suporte.'),
-      p('Hemoculturas e urocultura são colhidas. A pergunta imediata é o que '
-        'fazer com o antipsicótico e com a agitação, que vai voltar.')),
+    pg('nms', 'Duas hipóteses que podem se sobrepor',
+       'A equipe considera reação neuroléptica grave e catatonia associada à doença cerebral. A temporalidade com haloperidol favorece síndrome neuroléptica maligna, mas não prova que toda a rigidez e disautonomia tenham uma única causa. CK elevada mede lesão muscular, não distingue sozinha essas síndromes.',
+       'Camila é transferida à UTI para resfriamento, hidratação guiada e vigilância renal e autonômica. A investigação da encefalite continua; não se considera a reação ao fármaco uma explicação para os dez dias anteriores.'),
 
-    bifurcacao('b1', 'Decisão', 'O antipsicótico',
-      'Febre de 39,2 °C, rigidez, pressão oscilante e CK de 4.800 U/L no segundo '
-      'dia de haloperidol. Como você conduz?', [
-      caminho('Suspender todo antipsicótico; UTI, hidratação, resfriamento e '
-              'benzodiazepínico venoso', 'uti',
-              'Retirar o agente e dar suporte é o centro do tratamento; o '
-              'benzodiazepínico trata a rigidez e a agitação sem bloquear '
-              'dopamina.'),
-      caminho('Trocar o haloperidol por olanzapina, para não perder o controle '
-              'da psicose', 'atipico',
-              'Antipsicótico atípico também causa a síndrome, e ela ainda está '
-              'em curso.'),
-      caminho('Manter o haloperidol e associar biperideno, como impregnação',
-              'impregnacao',
-              'Anticolinérgico trata distonia e parkinsonismo, não a síndrome; '
-              'manter o agente que a causou a agrava.'),
+    pg('retirada', 'Retirada e suporte',
+       'A equipe suspende haloperidol e evita outros bloqueadores dopaminérgicos. Mantém hidratação, resfriamento, prevenção de complicações e vigilância respiratória e renal. A presença de mutismo e posturas mantidas motiva avaliação de catatonia.'),
+
+    bifurcacao('b1', 'Decisão', 'Avaliar a redução da fala',
+      'Após retirar haloperidol e iniciar suporte, persistem mutismo e posturas mantidas. Qual estratégia acrescentar à avaliação especializada?', [
+      caminho('Prova com lorazepam intravenoso monitorizada', 'prova_lorazepam',
+              'Pode ajudar a avaliar componente catatônico, com observação de resposta e da ventilação; não define a etiologia da encefalite.'),
+      caminho('Exame neurológico seriado sem sedativo adicional', 'exame_sem_sedativo',
+              'Preserva a leitura do exame e evita depressão respiratória, mas ausência de prova não resolve a hipótese de catatonia.'),
     ]),
 
-    pg('atipico', 'Quarto dia',
-       'Com olanzapina 10 mg à noite, a febre sobe a 40,1 °C e a CK a 21.000 U/L. '
-       'A creatinina vai de 0,9 a 2,8 mg/dL, com urina cor de refrigerante de '
-       'cola. A olanzapina é suspensa; Camila vai para a UTI com hidratação '
-       'vigorosa, resfriamento, benzodiazepínico e dantroleno, e a função renal '
-       'leva duas semanas para voltar.',
+    pg('prova_lorazepam', 'Resposta parcial à prova',
+       'Sob monitorização na UTI, a prova reduz transitoriamente as posturas e a resistência ao movimento. Camila continua sem contato consistente e não recupera a fala. A resposta parcial apoia um componente catatônico, mas não explica a inflamação liquórica nem exclui intolerância neuroléptica sobreposta.',
        segue='uti'),
 
-    pg('impregnacao', 'Terceiro dia',
-       'Com haloperidol e biperideno, a temperatura chega a 40,6 °C, a CK passa de '
-       '38.000 U/L e a creatinina sobe a 3,4 mg/dL. Camila é intubada pela rigidez '
-       'e pela acidose e precisa de três sessões de hemodiálise. O antipsicótico é '
-       'suspenso na UTI.',
+    pg('exame_sem_sedativo', 'Exame com menor interferência farmacológica',
+       'Nas horas seguintes, sem sedativo adicional, a temperatura e a resistência passiva diminuem com o suporte, mas Camila continua muda e sem seguir comandos. A persistência da alteração cognitiva fora do pico febril reforça o processo cerebral subjacente.',
        segue='uti'),
 
     pg('uti', 'Na terapia intensiva',
-       'Sem antipsicótico, com cristaloide, resfriamento e diazepam venoso quando '
-       'agitada, a febre cede e a CK começa a cair. Hemoculturas e urocultura são '
+       'Sem antipsicótico, com suporte e sintomáticos titulados conforme a necessidade, a febre cede e a CK começa a cair. Hemoculturas e urocultura são '
        'negativas.',
        'A rigidez diminui, mas Camila não volta: segue sem falar, de olhos '
        'abertos, sem seguir comandos, e a pressão e a frequência cardíaca oscilam '
@@ -305,11 +248,7 @@ ETAPAS = [
        'piano. À tarde tem uma crise tônico-clônica generalizada de dois minutos, '
        'tratada com diazepam e levetiracetam; depois dela, não abre mais os olhos '
        'ao chamado.',
-       'A neurologia anota: "A reação ao antipsicótico não explica movimentos '
-       'orofaciais contínuos, crise convulsiva e piora da consciência depois de '
-       'retirado o agente. O problema está no próprio cérebro." Pede líquor, '
-       'ressonância e eletroencefalograma, e inicia aciclovir 10 mg/kg de 8 em 8 '
-       'horas até o resultado da pesquisa de herpes-vírus.'),
+       'O aparecimento de discinesias e crise, apesar da queda da CK e da febre, amplia a síndrome cerebral. A neurologia repete o líquor e a PCR para HSV, mantém aciclovir com dose revista pela função renal e realiza RM e vídeo-EEG. Os anticorpos já foram enviados na primeira noite.'),
 
     painel('lcr', 'Quinto dia', 'Líquor', [
         ex('Aspecto / pressão de abertura', 'Límpido · 18 cmH₂O', 'límpido · até 20'),
@@ -365,111 +304,46 @@ ETAPAS = [
          'Os movimentos da boca não têm correlato epiléptico neste registro, favorecendo discinesias; isso não exclui outros episódios epilépticos.']),
 
     Q('p3', 3,
-      'Com líquor linfocítico, bandas restritas ao líquor, RM normal e primeira PCR para herpes negativa, quais **dois exames** priorizar para definir a etiologia?', [
-      ('Anticorpos neuronais em líquor e soro pareados', True),
-      ('Nova PCR para herpes simples no líquor após 3–7 dias', True),
+      'Com progressão para mutismo, discinesias e crise, quais dois exames etiológicos merecem ser acompanhados ou acrescentados agora?', [
+      ('IgG anti-GluN1 no líquor', True),
+      ('Ultrassonografia da pelve', True),
       ('PCR para enterovírus no líquor', False),
       ('Pesquisa de micobactérias no líquor', False),
       ('Sorologia para arboviroses no soro', False),
      ], [
-      ('Hipóteses prioritárias', '**Anticorpos neuronais pareados** têm rendimento neste fenótipo psiquiátrico, epiléptico e motor com síntese intratecal; o líquor melhora a interpretação. **Nova PCR para herpes** em 3–7 dias, mantendo aciclovir enquanto a suspeita justificar, enfrenta um falso-negativo potencial sem abandonar uma causa tratável.'),
-      ('Infecções concorrentes', '**PCR para enterovírus** pode ser pertinente, mas a progressão com mutismo e discinesias torna a etiologia imunomediada mais prioritária. **Micobactérias no líquor** ganhariam peso com hipoglicorraquia, proteína mais alta, exposição ou imagem compatível. **Sorologia para arboviroses** depende da exposição, circulação local e janela de coleta; não há pista epidemiológica específica descrita.'),
+      ('Hipóteses prioritárias', 'A pesquisa de IgG anti-GluN1 no líquor já enviada tem prioridade neste fenótipo, com interpretação conjunta ao soro. A imagem da pelve procura tumor associado e revisita o cisto antigo antes de haver confirmação sorológica.'),
+      ('Infecção em paralelo', 'A segunda PCR para HSV foi colhida no quinto dia, após a primeira negativa. Aciclovir permanece até reavaliação do resultado e das hipóteses. Outros agentes dependem de exposição e fenótipo; a investigação autoimune não substitui essa avaliação.'),
      ]),
 
     pg('hipovent', 'Sétimo dia',
-       'A respiração fica lenta e superficial, com pausas, sem obstrução e sem '
-       'fraqueza dos membros: pCO₂ de 62 mmHg e pH de 7,26. Camila é intubada. '
-       'Os movimentos da boca continuam, e a frequência cardíaca alterna entre 48 '
-       'e 140 sem causa aparente.',
-       'A neurologia escreve: "Encefalite com PCR para herpes negativa e '
-       'ressonância normal. Aciclovir mantido até a segunda PCR. Pesquisa de '
-       'anticorpos contra antígenos de superfície neuronal enviada, em líquor e '
-       'soro, por ensaio em células, a laboratório de referência." A mãe pergunta '
-       'se a filha vai voltar a ser quem era. A equipe responde que depende da '
-       'causa, que ainda não tem.'),
+       'Mesmo após reduzir os sedativos e sem novas crises no vídeo-EEG, a respiração fica lenta e superficial, com pausas: pCO₂ de 62 mmHg e pH de 7,26. Camila é intubada. Não há alteração pulmonar ou metabólica que explique o padrão; hipoventilação central ganha peso, sem ignorar contribuição farmacológica.',
+       'Os movimentos da boca persistem e a frequência cardíaca oscila entre 48 e 140. A queda da CK não acompanhou a evolução neurológica. A equipe explica à mãe que agora é necessário sustentar ventilação e tratar uma doença cerebral provável, ainda sem confirmação etiológica.'),
 
-    pg('virada', 'Nono dia',
-       'O laboratório de referência liga: anticorpos IgG contra a subunidade '
-       'GluN1 do receptor NMDA (N-metil-D-aspartato) detectados no líquor, título '
-       '1:32, por ensaio em células transfectadas; no soro, 1:100. A segunda PCR '
-       'para herpes, colhida no oitavo dia, três dias após a primeira, é negativa, e o aciclovir é suspenso.',
-       'A neurologia relê a ficha da admissão e para na ultrassonografia de dois '
-       'anos antes: cisto de 3 cm no ovário direito, sem controle.'),
+    pg('probabilidade', 'Antes do anticorpo',
+       'Há alteração comportamental e cognitiva, redução da fala, crise, discinesias, redução da consciência e disfunção autonômica/respiratória, além de líquor e EEG alterados. A segunda PCR para HSV é negativa. Após exclusão razoável das infecções prioritárias, o conjunto preenche critérios clínicos de provável encefalite anti-NMDAR; o anticorpo ainda não retornou.',
+       'O ultrassom pélvico solicitado foi tecnicamente limitado e não caracterizou o ovário direito. A equipe discute tratamento e complementação da imagem durante o suporte intensivo.'),
 
-    pg('diagnostico', 'O diagnóstico',
-       'É **encefalite contra o receptor NMDA** (anti-NMDAR), definida pelos '
-       'critérios de Graus e colaboradores de 2016: quadro clínico compatível, '
-       'anticorpo IgG anti-GluN1 no líquor e exclusão razoável de outras causas.',
-       'O receptor NMDA é um canal de glutamato essencial para memória, '
-       'comportamento e controle autonômico. O anticorpo se liga à subunidade '
-       'GluN1 e faz o neurônio internalizar o receptor; a perda é reversível e '
-       'quase não mata neurônios, o que explica a ressonância normal e a chance '
-       'real de recuperação. A doença segue fases: pródromo de virose, fase '
-       'psiquiátrica, depois mutismo, discinesias orofaciais, crises, '
-       'disautonomia e hipoventilação central. O traçado de Camila tem nome, '
-       'delta brush extremo, visto em cerca de um terço dos adultos e ligado a '
-       'doença mais grave.',
-       'Na série de 577 pacientes de Titulaer (2013), 81% eram mulheres e 38% '
-       'tinham tumor, quase sempre teratoma de ovário. Numa série francesa de '
-       '2016, quase metade dos que receberam antipsicótico teve intolerância '
-       'grave, com rigidez, febre, CK alta e piora da consciência: a reação do '
-       'segundo dia fazia parte da doença.'),
+    pg('iniciar_imuno', 'Tratamento da síndrome provável',
+       'Após revisar as infecções prioritárias, inicia-se metilprednisolona em pulso. Não se exige esperar anticorpos para tratar. Pela gravidade, a equipe indica associar outra modalidade de primeira linha e discute acesso vascular, estabilidade e riscos.'),
 
-    Q('p4', 4,
-      'O IgG anti-GluN1 foi detectado no líquor. Quais **duas conclusões** são sustentadas pelos dados de Camila?', [
-      ('O resultado no líquor tem maior peso diagnóstico que o título sérico isolado', True),
-      ('A RM normal é compatível com disfunção neuronal mediada por anticorpos', True),
-      ('A ausência de descarga durante a mastigação exclui as crises já observadas', False),
-      ('O cisto antigo confirma a presença atual de tumor associado', False),
-      ('O título no soro mede diretamente a gravidade e define a alta', False),
-     ], [
-      ('Peso dos achados', 'IgG anti-GluN1 no **líquor**, com síndrome compatível e exclusão razoável de alternativas, sustenta o diagnóstico definido. A RM pode permanecer normal porque disfunção sináptica não exige lesão estrutural visível.'),
-      ('Limites', 'O EEG durante a mastigação favorece discinesia naquele episódio, sem negar a crise tônico-clônica prévia. O cisto é uma pista a investigar por imagem atual, sem estabelecer sua natureza. Títulos séricos isolados não medem a evolução clínica de modo confiável.'),
-     ]),
-
-    pagina('tumor', 'Discussão', 'Onde procurar',
-      p('Nas mulheres jovens com a doença, o tumor associado é quase sempre um '
-        'teratoma de ovário, muitas vezes pequeno e de aspecto benigno. O '
-        'teratoma contém tecidos das três camadas embrionárias, entre eles '
-        'tecido nervoso que expressa o receptor NMDA; a resposta imune contra '
-        'esse tecido alcança o cérebro.'),
-      p('O cisto antigo foi descrito apenas como de aspecto benigno. Não houve controle por imagem; sua natureza e seu tamanho atuais ainda são desconhecidos.'),
-      p('Camila está intubada, com disautonomia, e o cisto de dois anos antes '
-        'está na ficha.')),
-
-    bifurcacao('b2', 'Decisão', 'Tratar e procurar',
-      'Anticorpo anti-NMDAR no líquor, Camila intubada no nono dia, com '
-      'discinesias e disautonomia. Qual o próximo passo?', [
-      caminho('Metilprednisolona e imunoglobulina agora, e imagem da pelve hoje',
-              'pelve',
-              'A primeira linha começa já, e o tumor, se existir, precisa sair '
-              'cedo.'),
-      caminho('Imunoterapia agora; procurar tumor só se não houver resposta',
-              'sem_busca',
-              'O tumor mantém o estímulo imune; esperar a falha para procurá-lo '
-              'custa semanas.'),
-      caminho('Confirmar no soro por outro método e repetir o líquor antes de '
-              'tratar', 'espera',
-              'O IgG no líquor por ensaio em células já define o diagnóstico, e '
-              'cada semana sem tratamento piora o desfecho.'),
+    bifurcacao('b2', 'Decisão', 'Completar a primeira linha',
+      'Camila está intubada, sem trombose conhecida ou contraindicação maior a uma das modalidades. Que tratamento associar ao corticoide?', [
+      caminho('Imunoglobulina intravenosa', 'primeira_linha',
+              'É opção de primeira linha; avaliar risco trombótico, função renal e tolerância à infusão.'),
+      caminho('Plasmaférese', 'plasmaferese',
+              'Também é opção de primeira linha; exige acesso e ponderação das oscilações hemodinâmicas. Não há comparação robusta que imponha uma única escolha para toda paciente.'),
     ]),
 
-    pg('sem_busca', 'Terceira semana',
-       'Com cinco dias de metilprednisolona e imunoglobulina, os movimentos '
-       'diminuem, mas Camila continua intubada e sem contato. Sem melhora na '
-       'terceira semana, a equipe pede a tomografia da pelve.',
+    pg('primeira_linha', 'Primeira linha com imunoglobulina',
+       'A equipe inicia um curso de cinco dias de imunoglobulina, com vigilância de infusão, função renal e trombose. Nas primeiras horas ainda não há recuperação da fala ou da ventilação; isso não basta para declarar falha. A imagem da pelve continua em paralelo.',
        segue='pelve'),
 
-    pg('espera', 'Décimo sexto dia',
-       'Enquanto os exames são repetidos, Camila entra em estado de mal '
-       'epiléptico no 12.º dia, controlado com midazolam contínuo e três drogas '
-       'anticrise. A imunoterapia começa no 16.º dia, junto com a tomografia da '
-       'pelve.',
+    pg('plasmaferese', 'Primeira linha com troca plasmática',
+       'A equipe usa acesso apropriado e programa as sessões com monitorização hemodinâmica. As pausas para realizar o procedimento exigem coordenar sedação e exame neurológico. Após a primeira sessão, Camila segue sem contato consistente; a resposta não é julgada por horas.',
        segue='pelve'),
 
     estudo('pelve', 'Tomografia da pelve com contraste',
-           'Feita na UTI, com Camila intubada, no lugar da ultrassonografia '
-           'transvaginal. Corte axial na altura das asas do ilíaco. Compare a '
+           'Feita na UTI, com Camila intubada, para complementar a ultrassonografia inconclusiva. Corte axial na altura das asas do ilíaco. Compare a '
            'densidade do conteúdo da lesão com a da gordura do subcutâneo.',
            IMG / 'tc_pelve.jpg',
            'Tomografia de outro paciente · comparação didática.',
@@ -485,10 +359,10 @@ ETAPAS = [
          'gordura, calcificação e nódulo de partes moles na parede: teratoma '
          'maduro (cisto dermoide). Na cirurgia, a lesão vinha do ovário direito.',
          'Gordura dentro de um cisto de ovário é praticamente diagnóstica de '
-         'teratoma maduro. O cisto de 3 cm de dois anos antes cresceu.']),
+         'teratoma maduro. A descrição antiga não permite assegurar que fosse a mesma lesão nem medir sua evolução com precisão.']),
 
     estudo('peca', 'A peça',
-           'No dia seguinte à tomografia, a ginecologia retira a lesão por '
+           'No oitavo dia, após avaliação da estabilidade e discussão com a família, a ginecologia retira a lesão por '
            'videolaparoscopia, com ooforectomia direita, porque o cisto ocupava '
            'quase todo o ovário. Lâmina da parede do cisto em hematoxilina-eosina, '
            'pequeno aumento. Procure tecidos que não deveriam estar num ovário.',
@@ -505,55 +379,62 @@ ETAPAS = [
         ],
         ['Teratoma cístico maduro do ovário: pele com anexos, derme e tecido glial '
          'maduro na parede. Sem componente imaturo. Margens livres.',
-         'O tecido nervoso do tumor expressa o receptor NMDA e é o alvo inicial da '
+         'O tecido neural de teratomas pode expressar o receptor NMDA e participar da '
          'resposta imune.']),
 
-    Q('p5', 5,
-      'Para acompanhar a resposta após primeira linha e retirada do tumor, quais **dois conjuntos de medidas** têm maior peso neste quadro grave?', [
-      ('Exame neurológico seriado e necessidade de suporte, considerados os sedativos', True),
-      ('Registro dos eventos motores e correlação eletroclínica quando houver dúvida', True),
-      ('Títulos séricos seriados e redução das bandas oligoclonais', False),
-      ('Frequência das discinesias e controle obtido com sedativos', False),
-      ('Extensão das alterações na RM e normalização do ritmo de base no EEG', False),
+    pg('virada', 'Nono dia',
+       'O laboratório de referência informa IgG contra a subunidade GluN1 do receptor NMDA detectada no líquor por ensaio em células, título 1:32; no soro, 1:100. A segunda PCR para HSV, colhida no quinto dia, também foi negativa. Após revisão das alternativas infecciosas, o aciclovir é suspenso.',
+       'O tratamento da síndrome provável e a retirada da lesão ovariana já ocorreram. O resultado confirma a etiologia; não foi uma autorização para só agora começar a assistência.'),
+
+    pg('diagnostico', 'O diagnóstico',
+       'É **encefalite contra o receptor NMDA** (anti-NMDAR): síndrome compatível, IgG anti-GluN1 no líquor e exclusão razoável de alternativas. O teratoma maduro com tecido neural é uma associação relevante, na integração da clínica, imagem e anatomopatológico.',
+       'Os anticorpos alteram a disponibilidade de receptores sinápticos; a disfunção pode ser importante mesmo sem lesão na RM. Isso ajuda a compreender a possibilidade de recuperação, sem garantir reversibilidade completa. Pródromo, psicose, redução da fala, crises, discinesias e disautonomia podem se sobrepor; não são fases obrigatórias.',
+       'O padrão delta brush extremo no EEG apoia o fenótipo, mas não é isoladamente diagnóstico nem prova que todo movimento seja crise. A reação após haloperidol permanece como provável intolerância neuroléptica sobreposta à encefalite.'),
+
+    Q('p4', 4,
+      'O IgG anti-GluN1 foi detectado no líquor. Quais **duas conclusões** são sustentadas pelos dados de Camila?', [
+      ('O resultado no líquor tem maior peso diagnóstico que o título sérico isolado', True),
+      ('A RM normal é compatível com disfunção neuronal mediada por anticorpos', True),
+      ('A ausência de descarga durante a mastigação exclui as crises já observadas', False),
+      ('A descrição antiga do cisto estabelecia a natureza da lesão', False),
+      ('O título no soro mede diretamente a gravidade e define a alta', False),
      ], [
-      ('Desfechos clínicos', 'Consciência, ventilação e disautonomia, avaliadas sob exposição comparável a sedativos, medem recuperação funcional. A correlação eletroclínica ajuda a separar crise de discinesia e a evitar que sedação desnecessária obscureça essa avaliação.'),
-      ('Marcadores concorrentes', 'Anticorpos e bandas podem persistir e não substituem a evolução clínica. Menos movimentos sob maior sedação pode representar apenas efeito farmacológico. A RM já é normal, e a lentificação do EEG é influenciada por doença e sedativos; ambos complementam, sem substituir, as medidas funcionais.'),
+      ('Peso dos achados', 'IgG anti-GluN1 no **líquor**, com síndrome compatível e exclusão razoável de alternativas, sustenta o diagnóstico definido. A RM pode permanecer normal porque disfunção sináptica não exige lesão estrutural visível.'),
+      ('Limites', 'O EEG durante a mastigação favorece discinesia naquele episódio, sem negar a crise tônico-clônica prévia. A descrição do cisto antigo não definia sua natureza; a imagem atual e o tecido é que caracterizaram a lesão. Títulos séricos isolados não medem a evolução clínica de modo confiável.'),
      ]),
 
-    pg('semana2', 'Terceira semana',
-       'Duas semanas depois do pulso, da imunoglobulina e da retirada do tumor, '
+    Q('p5', 5,
+      'Após a retirada do tumor, os movimentos diminuem sob sedação maior. Quais dois registros permitem avaliar melhor se há recuperação?', [
+      ('Exame neurológico seriado sob sedação comparável', True),
+      ('Vídeo-EEG durante eventos motores duvidosos', True),
+      ('Título sérico de anti-GluN1 como medida principal', False),
+      ('Contagem de movimentos sem registrar a sedação', False),
+      ('Nova RM como medida principal de função cognitiva', False),
+     ], [
+      ('Resposta observável', 'Contato, comandos, linguagem e autonomia respiratória precisam ser comparados com exposição conhecida a sedativos. Vídeo-EEG ajuda quando surge evento diferente ou há dúvida entre discinesia e crise; não implica monitorização indefinida de toda discinesia.'),
+      ('Limites', 'Anticorpos podem persistir e a RM inicial já era normal. Menos movimentos sob mais sedação não demonstra, isoladamente, resposta imunológica.'),
+     ]),
+
+    pg('semana2', 'Reavaliação após a primeira linha',
+       'Cerca de três semanas após completar a primeira linha e retirar o tumor, '
        'Camila segue intubada. As discinesias diminuíram sem sumir, ela não abre '
        'os olhos ao chamado e a pressão ainda oscila. O novo eletroencefalograma '
        'mantém a lentificação delta.'),
 
-    bifurcacao('b3', 'Decisão', 'Sem resposta',
-      'Duas semanas depois da primeira linha completa e da retirada do tumor, '
-      'sem melhora clínica relevante. O que você faz?', [
-      caminho('Rituximabe, como segunda linha', 'rituximabe',
-              'Sem resposta à primeira linha, a segunda linha melhora o desfecho '
-              'e reduz recaídas.'),
-      caminho('Novo ciclo de imunoglobulina e reavaliar em um mês', 'mais_igiv',
-              'Repetir a primeira linha sem escalar adia a segunda num quadro que '
-              'não respondeu.'),
-      caminho('Haloperidol para controlar as discinesias e a agitação',
-              'halo_de_novo',
-              'O antipsicótico típico já provocou a reação grave do segundo dia.'),
+    bifurcacao('b3', 'Decisão', 'Resposta ainda insuficiente',
+      'Após cerca de três semanas da primeira linha, Camila segue dependente de ventilação e sem contato consistente, sob menor sedação. Qual tratamento acrescentar?', [
+      caminho('Rituximabe', 'rituximabe',
+              'Persistência de doença grave após primeira linha adequada justifica segunda linha, após avaliação de segurança infecciosa.'),
+      caminho('Repetição da modalidade de primeira linha', 'mais_igiv',
+              'Pode ser individualizado, mas repetir primeira linha não deve postergar indefinidamente a escalada num quadro grave sem resposta relevante.'),
     ]),
 
-    pg('mais_igiv', 'Sexta semana',
-       'Com o segundo ciclo de imunoglobulina, Camila melhora pouco. O rituximabe '
-       'só começa na oitava semana; ela passa 11 semanas intubada, com '
-       'traqueostomia e uma pneumonia associada à ventilação no caminho.',
-       segue='f2'),
+    pg('mais_igiv', 'Reavaliação da resposta',
+       'A proposta de repetir a primeira linha é discutida com a neuroimunologia. Discinesias menores sem recuperação de contato ou ventilação não bastam para declarar resposta. A equipe escolhe segunda linha após rastreio infeccioso e planejamento de prevenção de infecção.',
+       segue='rituximabe'),
 
-    pg('halo_de_novo', 'Quarto dia de haloperidol',
-       'A febre volta a 40,4 °C, com CK de 46.000 U/L, lesão renal que exige '
-       'diálise e taquicardia ventricular revertida com choque. O haloperidol é '
-       'suspenso, e o rituximabe só começa na sétima semana.',
-       segue='f3'),
-
-    pg('rituximabe', 'Da quarta semana em diante',
-       'Rituximabe 375 mg/m² por semana, quatro doses. Na sexta semana Camila '
+    pg('rituximabe', 'Semanas seguintes',
+       'Após rastreio de hepatite B e outras infecções relevantes, usa-se rituximabe segundo protocolo especializado. Na sexta semana Camila '
        'começa a acompanhar com os olhos; na oitava é extubada e as discinesias '
        'param. Na décima fala frases curtas e não lembra de nada desde a UPA.',
        'A agitação da fase de despertar é tratada com benzodiazepínico, sem '
@@ -572,40 +453,12 @@ ETAPAS = [
      ]),
 
     pg('alta', 'Preparando a alta',
-       'Na 14.ª semana Camila caminha sozinha, conversa e começa a reabilitação '
-       'cognitiva. Não lembra de quase nada dos dois meses de UTI.',
-       conforme=('b2', ['alta_cedo', 'f2', 'f2'])),
+       'Na 14.ª semana Camila caminha sozinha e conversa, mas perde a sequência de tarefas e cansa depois de meia hora de leitura. Não há nova piora que indique recaída. A equipe combina reabilitação e retorno gradual aos estudos.',
+       segue='f1'),
 
-    pg('alta_cedo', 'Última semana',
-       'Ela pede o notebook para rever o projeto de conclusão e reconhece os '
-       'próprios desenhos, embora ainda canse depois de meia hora de leitura.',
-       conforme=('b1', ['f1', 'f2', 'f2'])),
-
-    fim('f1', 'Alta para casa na 15.ª semana',
-        'Camila sai andando, com reabilitação cognitiva duas vezes por semana. '
-        'Retoma o curso seis meses depois; com um ano, a escala de Rankin é 1 e '
-        'a ultrassonografia do ovário esquerdo é normal.',
-        'Suspender o antipsicótico na primeira reação, tratar e procurar o tumor '
-        'no mesmo dia do anticorpo e escalar para a segunda linha quando a '
-        'primeira não bastou: cada decisão encurtou a fase grave.', 'melhor'),
-
-    fim('f2', 'Alta depois de um percurso mais longo',
-        'Camila sai viva, depois de semanas a mais de internação, e um ano depois '
-        'ainda tem falhas de memória e de atenção que a impedem de voltar ao '
-        'curso (Rankin 2 a 3).',
-        'Um antipsicótico mantido, a imunoterapia adiada, o tumor procurado tarde '
-        'ou a segunda linha atrasada prolongaram a fase grave. O tempo até o '
-        'tratamento é um dos principais preditores do desfecho nessa doença.',
-        'medio'),
-
-    fim('f3', 'Sequela grave',
-        'Depois de quatro meses de UTI, Camila vai para casa dependente para as '
-        'atividades do dia (Rankin 4), com déficit cognitivo importante e '
-        'epilepsia.',
-        'Repetir o antipsicótico típico numa paciente que já tinha tido a reação '
-        'grave provocou nova crise de rigidez, febre e lesão muscular e atrasou a '
-        'segunda linha. Nessa doença, agitação e movimentos se tratam com '
-        'benzodiazepínicos e imunoterapia.', 'pior'),
+    fim('f1', 'Alta e recuperação em curso',
+        'Camila sai na 15.ª semana com reabilitação cognitiva e seguimento neurológico e ginecológico. Retoma parte do curso seis meses depois; aos doze meses ainda precisa de pausas para estudar. O ovário remanescente não apresenta lesão na avaliação atual.',
+        'A melhora levou meses apesar de tratamento indicado e retirada do tumor. O plano de vigilância tumoral é individualizado; piora nova exige distinguir recaída de crise, infecção, efeito medicamentoso ou flutuação da recuperação.', 'melhor'),
 
     pagina('retrospectiva', 'Pontos de ensino', '',
         pontos(
@@ -626,14 +479,13 @@ ETAPAS = [
             'teratoma de ovário; retirar o tumor cedo melhora o desfecho e reduz '
             'recaídas.',
             'Primeira linha: metilprednisolona em pulso com imunoglobulina ou '
-            'plasmaférese. Sem resposta clínica em cerca de duas semanas, '
-            'rituximabe. Antipsicóticos típicos se evitam.'),
+            'plasmaférese. Persistência de doença grave após cerca de 2–4 semanas justifica discutir segunda linha, frequentemente rituximabe; tempo e escolha são individualizados.'),
         so_kicker=True),
 
     pg('referencias', 'Fontes e limites',
-       'Paciente, valores e percursos são ficcionais. A foto de abertura é uma '
-       'prancheta de desenho técnico (Gaf.arq, Wikimedia Commons, CC BY-SA 2.0, '
-       'commons.wikimedia.org/wiki/File:Drafting_table.jpg).',
+       'Revisão clínica em 23/10/2026: consenso brasileiro 2024 e Abboud et al. 2021 (recomendações de prática; evidência limitada para comparar modalidades). Fontes: https://pubmed.ncbi.nlm.nih.gov/39089672/ e https://pubmed.ncbi.nlm.nih.gov/33649022/. Paciente, valores e percursos são ficcionais. A abertura mostra uma '
+       'ilustração original da paciente ficcional, gerada com OpenAI imagegen '
+       'para este projeto em 24/10/2026; não é fotografia clínica.',
        'Graus e cols. A clinical approach to diagnosis of autoimmune '
        'encephalitis, Lancet Neurol 2016. Titulaer e cols. Treatment and '
        'prognostic factors for long-term outcome in patients with anti-NMDA '
@@ -670,3 +522,9 @@ REVISAO = []
 # https://www.idsociety.org/practice-guideline/encephalitis
 # https://pubmed.ncbi.nlm.nih.gov/39089672/
 # Redação: https://www.nbme.org/sites/default/files/2021-02/NBME_Item%20Writing%20Guide_R_6.pdf
+
+# Revisão de evolução 23/10/2026: Dutra et al. 2024, PMID 39089672;
+# Abboud et al. 2021, PMID 33649022; Graus 2016 (critérios diagnósticos).
+
+# Catatonia e prova monitorizada: Rogers et al. 2023, PMID 37039129.
+# https://pubmed.ncbi.nlm.nih.gov/37039129/
