@@ -159,8 +159,8 @@ ETAPAS = [
     *ecg('ecg_evolucao',
          'Uma hora depois do antitérmico, a frequência cardíaca continua acima '
          'de 110 e a equipe registra um eletrocardiograma. Qual é o ritmo?', IMG,
-         'Febre e dor explicam o ritmo; o traçado não aponta outra causa para a '
-         'taquicardia.'),
+         'Febre e dor podem contribuir para a frequência, mas volume, '
+         'oxigenação e eletrólitos também precisam ser reavaliados.'),
 
     Q('q2', 2, 'Quais três estudos da pele você solicita sem atrasar o antibiótico?', [
  ('Histologia de biópsia profunda', True), ('Cultura bacteriana do tecido', True), ('Pesquisa de fungos no tecido', True),

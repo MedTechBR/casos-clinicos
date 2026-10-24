@@ -6,11 +6,12 @@ ROOT=Path(__file__).resolve().parents[1]
 import sys as _s;_s.path.insert(0,str(ROOT))
 from nomes_publicos import PUBLICO as _P
 PUBLICO_HIFEN={k.replace('_','-'):v for k,v in _P.items()}
+ESCOLHIDOS={s.replace('_','-') for s in _s.argv[1:]}
 with sync_playwright() as pw:
  b=pw.chromium.launch();page=b.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)));total=0
  for w,h in [(1366,768),(1600,900),(375,812)]:
   page.set_viewport_size({'width':w,'height':h})
-  for slug in [k for k in PUBLICO_HIFEN if (ROOT/(PUBLICO_HIFEN[k]+'.html')).exists()]:
+  for slug in [k for k in PUBLICO_HIFEN if (not ESCOLHIDOS or k in ESCOLHIDOS) and (ROOT/(PUBLICO_HIFEN[k]+'.html')).exists()]:
    page.goto((ROOT/(PUBLICO_HIFEN.get(slug,slug)+'.html')).as_uri())
    steps=page.evaluate('ETAPAS.map(e=>({k:e.k,t:e.t}))')
    page.evaluate('ETAPAS.filter(e=>e.t==="pedido").forEach(e=>{const res=ETAPAS.find(x=>x.de===e.k&&x.t==="resultados");let opts=e.grupos.flatMap(g=>g.o).sort((a,b)=>Number(!!res?.laminas[b.e])-Number(!!res?.laminas[a.e]));marcados[e.k]=new Set(opts.slice(0,e.limite).map(o=>o.e))})')

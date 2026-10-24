@@ -159,28 +159,12 @@ ETAPAS = [
          'A frequência cardíaca segue em 124 depois do antitérmico. A equipe '
          'registra um ECG.',
          IMG,
-         'Com febre de 38,7 °C, a taquicardia sinusal é esperada e não explica a '
-         'confusão nem a perna que cedeu.'),
+         'No caso, reavaliam-se febre, dor, volume e oxigenação; a frequência '
+         'isolada não esclarece o quadro neurológico.'),
 
     pg('cobertura', 'Enquanto se organiza a punção',
        'Após hemoculturas, iniciam-se ceftriaxona, ampicilina e aciclovir intravenosos, com avaliação de dexametasona junto à primeira dose antibacteriana enquanto meningite bacteriana permanece possível. A imagem precede a punção pelo déficit focal; o tratamento não espera a tomografia.',
        'A hiponatremia moderada não explica sozinha a paresia. A amostra de cortisol, colhida antes de eventual corticoide, retorna em 19 µg/dL; o contexto clínico e esse resultado tornam insuficiência adrenal importante menos provável, sem usar um valor isolado como exclusão universal. Monitoram-se sódio, diurese e balanço, evitando líquidos hipotônicos e restrição que comprometa a hidratação. Não se atribui toda a alteração mental ao sódio.'),
-
-    bifurcacao('b1', 'Decisão', 'Investigação epidemiológica',
-      'Com encefalopatia febril, déficit motor e viagem recente à Louisiana, que investigação acrescentar ao líquor inicial?', [
-      caminho('IgM para Nilo Ocidental no líquor', 'arbovirus_precoce',
-              'A exposição já justifica colher na primeira punção; resultado precoce negativo pode exigir repetição.'),
-      caminho('RT-PCR para Nilo Ocidental no plasma', 'pcr_precoce',
-              'Pode ajudar, mas tem menor rendimento no imunocompetente após a viremia curta; não deve substituir a sorologia.'),
-    ]),
-
-    pg('arbovirus_precoce', 'Coleta inicial',
-       'A equipe reserva a solicitação para a primeira punção e colhe o soro. As amostras seguem juntas ao laboratório de referência após a coleta do líquor, com o histórico de dengue e vacina de febre amarela. HSV, VZV e enterovírus também são investigados. A vigilância recebe a suspeita sem esperar confirmação.',
-       segue='tc_evolucao'),
-
-    pg('pcr_precoce', 'Revisão da amostra',
-       'O laboratório esclarece a baixa sensibilidade da PCR sanguínea nesta fase. A equipe solicita IgM no soro e no líquor a colher após a tomografia e registra dengue prévia e vacina de febre amarela. A investigação e a notificação ocorrem ainda no primeiro dia.',
-       segue='tc_evolucao'),
 
     estudo('tc_evolucao', 'Tomografia de crânio',
         'Tomografia sem contraste antes da punção, pelo déficit focal e pela '
@@ -196,6 +180,24 @@ ETAPAS = [
         ['Sem hemorragia, hidrocefalia, efeito de massa ou desvio da linha média.',
          'Sem contraindicação clínica adicional, a equipe procede à punção; uma TC normal não afasta encefalite nem isquemia '
          'recente.']),
+
+    bifurcacao('b1', 'Decisão', 'Avaliação neurológica',
+      'A TC não mostra lesão expansiva. A confusão oscila e a paresia persiste. Qual exame você prioriza?', [
+      caminho('Punção lombar', 'lcr_prioritario',
+              'Prioriza inflamação e infecção do sistema nervoso. O tratamento empírico já foi iniciado e o resultado não é presumido pela viagem.'),
+      caminho('Eletroencefalograma', 'eeg_prioritario',
+              'Pesquisa atividade epiléptica como causa da flutuação. É complementar: não substitui o líquor neste quadro febril e não deve atrasar sua coleta.'),
+    ]),
+
+    pg('lcr_prioritario', 'Coleta inicial',
+       'A punção é realizada após revisão das contraindicações. Solicitam-se celularidade, glicose, proteína, Gram e cultura, além de investigação viral. Soro e alíquotas de líquor são reservados para estudos dirigidos pela exposição, em articulação com o laboratório de referência.',
+       'A viagem e as picadas ampliam as possibilidades; não estabelecem uma etiologia. O histórico de dengue e vacina de febre amarela acompanha as amostras para orientar a interpretação sorológica.',
+       segue='lcr'),
+
+    pg('eeg_prioritario', 'Avaliação à beira do leito',
+       'O EEG mostra lentificação difusa, sem crise eletrográfica no período registrado. Isso documenta disfunção cerebral, mas não determina a causa nem exclui eventos fora do registro.',
+       'Enquanto o exame é organizado, a equipe prepara a punção, sem adiar antimicrobianos. O líquor segue para estudo celular, bioquímico, microbiológico e viral; soro e alíquotas são reservados para investigação relacionada à exposição.',
+       segue='lcr'),
 
     painel('lcr', 'Líquor', 'Punção lombar', [
         ex('Pressão de abertura', '19 cmH₂O', '10–20 cmH₂O'),

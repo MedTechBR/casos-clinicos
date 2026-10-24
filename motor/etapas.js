@@ -500,10 +500,9 @@ const DESENHO = {
       + (esc !== undefined
           ? '<div class="forca">' + e.caminhos.map((c, k) =>
               '<i class="' + (esc === k ? 'on' : '') + '"></i>').join('')
-            + '<span>Daqui em diante o caso segue pelo caminho '
-            + String.fromCharCode(65 + esc) + '. As próximas páginas — '
-            + 'a prescrição, a evolução e o desfecho — são as dele, e são '
-            + 'outras nos outros dois.</span></div>'
+            + '<span>Você escolheu o caminho '
+            + String.fromCharCode(65 + esc) + '. O caso acompanha essa conduta. '
+            + 'Você pode voltar para comparar os outros caminhos.</span></div>'
           : '')
       + '</div>';
   },

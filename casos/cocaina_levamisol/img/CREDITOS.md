@@ -16,7 +16,7 @@ Os dois revisores independentes aceitaram os usos delimitados. Cortes de TC/RM n
 
 ## ECG e leitura em duas páginas — 7 de setembro de 2026
 
-- `ecg_taquicardia.jpg`: Ewingdo, [arquivo original](https://commons.wikimedia.org/wiki/File:ECG_Sinus_Tachycardia_125_bpm.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Traçado de outra pessoa, 125 bpm, sem alteração do arquivo. As setas da segunda página são uma adaptação sob CC BY-SA 4.0. O mesmo traçado comparativo é usado nos três casos; não representa três registros independentes nem os ECGs dos pacientes ficcionais.
+- `ecg_taquicardia.jpg`: Ewingdo, [arquivo original](https://commons.wikimedia.org/wiki/File:ECG_Sinus_Tachycardia_125_bpm.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Traçado de outra pessoa, 125 bpm, sem alteração do arquivo. As setas sobrepostas são uma adaptação sob CC BY-SA 4.0. O traçado comparativo é compartilhado por West Nile e cocaína/levamisol; não representa registros independentes nem os ECGs dos pacientes ficcionais.
 - Discussão de ritmo e causas sistêmicas: [ESC, diretriz de taquicardias supraventriculares, seção de taquicardia sinusal](https://academic.oup.com/eurheartj/article/41/5/655/5556821). Não se atribui causa ou diagnóstico etiológico pelo traçado isolado.
 - As figuras de radiologia/ultrassom nesta sequência mantêm seus arquivos e créditos prévios. Setas sobrepostas por SVG na página seguinte são adições editoriais; em obras BY-SA, a adaptação conserva a licença original.
 
@@ -34,3 +34,5 @@ A chave numérica de `Renal corpuscle.svg` foi traduzida da [fonte original](htt
 
 - `pele_placa.jpg` — Niels Olson. [Fonte](https://commons.wikimedia.org/wiki/File:Calciphylaxis.png) · [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/). Placa por calcifilaxia no abdome de outro paciente (púrpura retiforme de outra causa); reduzida para 1400 px e convertida para JPEG. Três setas adicionadas sob a mesma licença (desenho em rede na periferia, centro necrótico, borda angulada). Não documenta as placas da paciente ficcional.
 - Substitui `purpura.jpg` (Hektor) na tela `pele`: aquela era púrpura comum arredondada, usada só como contraste, e deixou de ser usada no caso.
+
+- Revisão de 24/10/2026: leitura ampliada para grandes voltagens precordiais e alterações de ST–T; setas conferidas em S de V3, R de V6 e T de V2. Não se conclui hipertrofia anatômica ou isquemia pela imagem isolada.

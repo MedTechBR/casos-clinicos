@@ -53,12 +53,12 @@ def ecg(ident, contexto, img, discussao):
     return sequencia(ident, 'Eletrocardiograma', contexto, img / 'ecg_taquicardia.jpg',
         'Ewingdo · Wikimedia Commons · CC BY-SA 4.0. Setas adicionadas sob a mesma licença.',
         'Traçado ilustrativo de outro paciente; não é um registro deste caso. 25 mm/s; 10 mm/mV.',
-        [((110, 408), (40, 300), 'Um complexo QRS da tira longa de DII: **estreito**, de '
-          'duração normal.', 12),
-         ((157, 405), (180, 300), 'O QRS seguinte chega cedo e a distância entre eles se '
-          'repete em toda a tira: **ritmo regular e rápido**.', -12),
-         ((225, 414), (310, 300), '**Onda T** positiva depois de cada QRS. Nessa frequência, '
-          'a onda P pode ficar escondida no fim da T.', 8)],
-        ['Taquicardia sinusal, cerca de 125 bpm, QRS estreito e ritmo regular. '
-         'Confirmar a onda P nas demais derivações antes de fechar o ritmo.',
-         discussao])
+        [((579, 386), (520, 300), '**S profunda em V3**: voltagem precordial elevada.', -12),
+         ((832, 238), (920, 310), '**R alta em V6**, compondo o padrão de grandes voltagens.', 12),
+         ((596, 159), (470, 92), '**T proeminente em V2**; também chama atenção em V3–V4.', 8)],
+        ['Taquicardia regular, provável origem sinusal, cerca de 125 bpm; '
+         'QRS estreito. Altas voltagens, T anteriores proeminentes e discreto '
+         'desnível de J/ST lateral.',
+         'Correlacionar com clínica, eletrólitos e ECG prévio; não concluir '
+         'hipertrofia ou isquemia pela imagem isolada. Os achados deste '
+         'traçado comparativo não são automaticamente do paciente ficcional.', discussao])
