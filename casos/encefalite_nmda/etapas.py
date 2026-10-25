@@ -107,29 +107,9 @@ ETAPAS = [
                    ('Pele', 'Sem lesões e sem marcas de agulha.')),
            so_kicker=True),
 
-    Q('p1', 1,
-      'Pelas pausas sem lembrança e pela desorientação após pródromo febril, quais **três exames** priorizar na investigação neurológica?', [
-      ('Eletroencefalograma', True),
-      ('Punção lombar diagnóstica', True),
-      ('Ressonância de encéfalo', True),
-      ('FAN sérico', False),
-      ('Vitamina B12 sérica', False),
-     ], [
-      ('Investigar função, inflamação e estrutura', '**EEG** procura atividade epiléptica nas pausas estereotipadas. **Líquor** investiga inflamação e infecção após avaliação de segurança. **RM** pesquisa lesões não identificadas pela TC e pode apoiar uma etiologia; seu resultado normal não encerra a investigação.'),
-      ('Outros exames possíveis', '**FAN/complemento** ganham prioridade com manifestações sistêmicas de autoimunidade, não descritas. **B12/folato** entram na avaliação de causas reversíveis, mas a evolução em dez dias, o pródromo e os episódios breves tornam a investigação direta do cérebro mais urgente.'),
-     ]),
-
-    pagina('rastreio', 'Discussão', 'O primeiro episódio na emergência',
-      p('Em todo primeiro episódio psicótico, a emergência procura causas '
-        'tratáveis: glicemia, eletrólitos, função renal e hepática, tireoide, '
-        'hemograma, triagem toxicológica, teste de gravidez e, no Brasil, testes '
-        'rápidos para HIV e sífilis. A tomografia de crânio entra quando há '
-        'déficit, trauma, idade mais alta ou alteração da consciência.'),
-      p('O que separa a psicose primária da secundária quase sempre está na beira '
-        'do leito: o tempo de instalação, o nível de consciência, a atenção, o '
-        'exame neurológico e a história das semanas anteriores. Nenhum exame de '
-        'rastreio substitui essa leitura, e um rastreio normal não a desfaz.'),
-      p('Camila colhe os exames na chegada e vai para a tomografia.')),
+    pg('rastreio', 'Avaliação inicial',
+       'A equipe verifica glicemia, sinais vitais e exame neurológico e colhe hemograma, eletrólitos e funções renal e hepática. Pela possibilidade de encefalite, a avaliação neurológica e o aciclovir empírico são organizados desde a admissão, em paralelo aos exames básicos.',
+       'A sequência das telas organiza a leitura dos resultados; não significa esperar o rastreio metabólico terminar para investigar as pausas com amnésia e a desorientação.'),
 
     painel('res1', 'Primeiros exames', 'Sangue', [
         ex('Hemoglobina / leucócitos', '13,4 g/dL / 9.800/mm³ · neutrófilos 72%', 'Hb 12–16 · 4.000–11.000'),
@@ -139,18 +119,37 @@ ETAPAS = [
         ex('Glicose', '96 mg/dL', '70–99 mg/dL'),
         ex('Ureia / creatinina', '24 / 0,7 mg/dL {{(TFG 124, CKD-EPI 2021)}}', 'até 42 / 0,6–1,1'),
         ex('AST / ALT', '22 / 18 U/L', 'até 32 / 33 U/L'),
-        ex('TSH', '1,9 mUI/L', '0,4–4,0 mUI/L'),
-        ex('Creatinoquinase', '210 U/L', 'até 170 U/L', True),
     ], introducao='Colhidos na chegada à emergência.'),
 
-    painel('res1b', 'Primeiros exames', 'Urina, triagem e eletrocardiograma', [
-        ex('Beta-hCG sérico', 'Negativo', 'negativo'),
+    painel('res1b', 'Primeiros exames', 'Urina e avaliação reprodutiva', [
         ex('Urina tipo 1', 'Sem alterações', '—'),
+        ex('Beta-hCG sérico', 'Negativo', 'negativo'),
+    ], introducao='Teste de gravidez pela idade reprodutiva e planejamento de exames e tratamento.'),
+
+    pg('reavaliacao_inicial', 'Reexame ainda na emergência',
+       'Com glicemia e eletrólitos sem alterações explicativas, Camila continua confundindo a data. Durante nova conversa, interrompe a frase, fixa o olhar e depois não lembra do intervalo. A mãe confirma que isso também ocorreu em casa. A ausência de déficit motor não torna o episódio apenas psiquiátrico.',
+       'A equipe acrescenta exames dirigidos para causas tóxicas, endócrinas e infecciosas tratáveis. O ECG orienta a segurança do manejo da agitação; CK basal é colhida pela agitação persistente antes de eventual antipsicótico. A investigação neurológica corre em paralelo.'),
+
+    Q('p1', 1,
+      'Pelas pausas sem lembrança e pela desorientação após pródromo febril, quais **três exames** priorizar na investigação neurológica?', [
+      ('Eletroencefalograma', True),
+      ('Punção lombar diagnóstica', True),
+      ('Ressonância de encéfalo', True),
+      ('FAN sérico', False),
+      ('Vitamina B12 sérica', False),
+     ], [
+      ('Investigar função, inflamação e estrutura', '**EEG** procura atividade epiléptica nas pausas estereotipadas. **Líquor** investiga inflamação e infecção após avaliação de segurança. **RM** pesquisa lesões não identificadas pela TC e pode apoiar uma causa; seu resultado normal não encerra a investigação.'),
+      ('Outros exames possíveis', '**FAN/complemento** ganham prioridade com manifestações sistêmicas de autoimunidade, não descritas. **B12/folato** entram na avaliação de causas reversíveis, mas a evolução em dez dias, o pródromo e os episódios breves tornam a investigação direta do cérebro mais urgente.'),
+     ]),
+
+    painel('rastreio_dirigido', 'Investigação dirigida', 'Contexto neuropsiquiátrico', [
+        ex('TSH', '1,9 mUI/L', '0,4–4,0 mUI/L'),
+        ex('Creatinoquinase', '210 U/L', 'até 170 U/L', True),
         ex('Triagem toxicológica na urina', 'Benzodiazepínicos positivos · cocaína, canabinoides e anfetaminas negativos', '—', True),
         ex('Etanol sérico', 'Não detectado', 'não detectado'),
-        ex('Testes rápidos para HIV e sífilis', 'Não reagentes', 'não reagentes'),
+        ex('Testes para HIV e sífilis', 'Não reagentes', 'não reagentes'),
         ex('Eletrocardiograma', 'Taquicardia sinusal, 106 bpm · QTc 428 ms · sem outras alterações', '—'),
-    ]),
+    ], introducao='Resultados complementares do primeiro atendimento. A triagem toxicológica negativa não exclui todas as substâncias; não se aguardam esses testes para avaliar encefalite.'),
 
     estudo('tc_cranio', 'Tomografia de crânio sem contraste',
            'Feita na emergência, pela desorientação. Corte axial na altura dos '
@@ -168,8 +167,7 @@ ETAPAS = [
         ['Sem lesão expansiva, sangramento, hipodensidade ou hidrocefalia. '
          'Ventrículos de tamanho normal. Calcificações fisiológicas do plexo '
          'coroide.',
-         'A tomografia afasta o que muda a conduta na hora. É pouco sensível para '
-         'doenças que alteram a função do cérebro sem mudar sua forma.']),
+         'Sem alteração estrutural aguda identificada.']),
 
     pg('plano', 'Primeira noite',
        'Camila permanece no hospital geral, com avaliação conjunta de neurologia e psiquiatria. A desorientação e as pausas com amnésia impedem encerrar a investigação como psicose primária. Inicia-se aciclovir empírico enquanto se investiga encefalite infecciosa.',
@@ -221,7 +219,7 @@ ETAPAS = [
     bifurcacao('b1', 'Decisão', 'Avaliar a redução da fala',
       'Após retirar haloperidol e iniciar suporte, persistem mutismo e posturas mantidas. Qual estratégia acrescentar à avaliação especializada?', [
       caminho('Prova com lorazepam intravenoso monitorizada', 'prova_lorazepam',
-              'Pode ajudar a avaliar componente catatônico, com observação de resposta e da ventilação; não define a etiologia da encefalite.'),
+              'Pode ajudar a avaliar componente catatônico, com observação de resposta e da ventilação; não define a causa da encefalite.'),
       caminho('Exame neurológico seriado sem sedativo adicional', 'exame_sem_sedativo',
               'Preserva a leitura do exame e evita depressão respiratória, mas ausência de prova não resolve a hipótese de catatonia.'),
     ]),
@@ -248,7 +246,7 @@ ETAPAS = [
        'piano. À tarde tem uma crise tônico-clônica generalizada de dois minutos, '
        'tratada com diazepam e levetiracetam; depois dela, não abre mais os olhos '
        'ao chamado.',
-       'O aparecimento de discinesias e crise, apesar da queda da CK e da febre, amplia a síndrome cerebral. A neurologia repete o líquor e a PCR para HSV, mantém aciclovir com dose revista pela função renal e realiza RM e vídeo-EEG. Os anticorpos já foram enviados na primeira noite.'),
+       'O aparecimento de discinesias e crise, apesar da queda da CK e da febre, amplia a síndrome cerebral. A neurologia repete o líquor e o teste molecular para herpes (PCR), mantém aciclovir com dose revista pela função renal e realiza RM e vídeo-EEG. Os anticorpos já foram enviados na primeira noite para um laboratório de referência. Se esse exame não for feito no hospital, a equipe organiza o envio da amostra e discute o tratamento pela suspeita clínica, sem aguardar sua confirmação.'),
 
     painel('lcr', 'Quinto dia', 'Líquor', [
         ex('Aspecto / pressão de abertura', 'Límpido · 18 cmH₂O', 'límpido · até 20'),
@@ -259,7 +257,6 @@ ETAPAS = [
         ex('Lactato', '2,1 mmol/L', 'até 2,8 mmol/L'),
         ex('Gram e cultura', 'Sem bactérias · cultura negativa em 48 horas', '—'),
         ex('PCR para herpes-vírus simples 1 e 2', 'Não detectado', 'não detectado'),
-        ex('Bandas oligoclonais', 'Presentes no líquor, ausentes no soro', 'ausentes', True),
     ]),
 
     estudo('rm', 'Ressonância de encéfalo',
@@ -279,9 +276,7 @@ ETAPAS = [
         ['Encéfalo sem alterações de sinal em FLAIR, T2 e difusão, sem realce '
          'anormal pelo contraste. Lobos temporais mediais, núcleos da base e '
          'tronco normais.',
-         'Com crise, movimentos anormais e líquor inflamatório, a ressonância '
-         'normal não tranquiliza: diz só que a doença ainda não deixou marca '
-         'visível na estrutura.']),
+         'Sem lesão estrutural identificada nas sequências descritas.']),
 
     estudo('eeg', 'Eletroencefalograma',
            'Registro de 40 minutos no sexto dia, com Camila sob sedação leve, '
@@ -301,23 +296,24 @@ ETAPAS = [
         ['Atividade delta rítmica e generalizada, de 1 a 3 Hz, com atividade beta '
          'sobreposta e sincronizada a cada onda delta. Sem descargas '
          'epileptiformes durante os movimentos orofaciais.',
-         'Os movimentos da boca não têm correlato epiléptico neste registro, favorecendo discinesias; isso não exclui outros episódios epilépticos.']),
+         'Não foi registrado correlato eletrográfico ictal durante os movimentos orofaciais observados.']),
 
     Q('p3', 3,
-      'Com progressão para mutismo, discinesias e crise, quais dois exames etiológicos merecem ser acompanhados ou acrescentados agora?', [
+      'Com progressão para mutismo, discinesias e crise, quais dois exames para investigar a causa merecem ser acompanhados ou acrescentados agora?', [
       ('IgG anti-GluN1 no líquor', True),
       ('Ultrassonografia da pelve', True),
       ('PCR para enterovírus no líquor', False),
       ('Pesquisa de micobactérias no líquor', False),
       ('Sorologia para arboviroses no soro', False),
      ], [
-      ('Hipóteses prioritárias', 'A pesquisa de IgG anti-GluN1 no líquor já enviada tem prioridade neste fenótipo, com interpretação conjunta ao soro. A imagem da pelve procura tumor associado e revisita o cisto antigo antes de haver confirmação sorológica.'),
-      ('Infecção em paralelo', 'A segunda PCR para HSV foi colhida no quinto dia, após a primeira negativa. Aciclovir permanece até reavaliação do resultado e das hipóteses. Outros agentes dependem de exposição e fenótipo; a investigação autoimune não substitui essa avaliação.'),
+      ('Limites de imagem e EEG', 'TC e RM normais não excluem encefalite ou disfunção sináptica. A falta de correlato ictal durante a mastigação favorece discinesia naquele episódio, sem excluir outras crises.'),
+      ('Hipóteses prioritárias', 'A pesquisa de IgG anti-GluN1 no líquor já enviada tem prioridade neste conjunto de manifestações, com interpretação conjunta ao soro. A imagem da pelve procura tumor associado e revisita o cisto antigo antes de haver confirmação sorológica.'),
+      ('Infecção em paralelo', 'A segunda PCR para HSV foi colhida no quinto dia, após a primeira negativa. Aciclovir permanece até reavaliação do resultado e das hipóteses. Outros agentes dependem de exposição e conjunto de manifestações; a investigação autoimune não substitui essa avaliação.'),
      ]),
 
     pg('hipovent', 'Sétimo dia',
        'Mesmo após reduzir os sedativos e sem novas crises no vídeo-EEG, a respiração fica lenta e superficial, com pausas: pCO₂ de 62 mmHg e pH de 7,26. Camila é intubada. Não há alteração pulmonar ou metabólica que explique o padrão; hipoventilação central ganha peso, sem ignorar contribuição farmacológica.',
-       'Os movimentos da boca persistem e a frequência cardíaca oscila entre 48 e 140. A queda da CK não acompanhou a evolução neurológica. A equipe explica à mãe que agora é necessário sustentar ventilação e tratar uma doença cerebral provável, ainda sem confirmação etiológica.'),
+       'Os movimentos da boca persistem e a frequência cardíaca oscila entre 48 e 140. A queda da CK não acompanhou a evolução neurológica. A equipe explica à mãe que agora é necessário sustentar ventilação e tratar uma doença cerebral provável, ainda sem confirmação da causa.'),
 
     pg('probabilidade', 'Antes do anticorpo',
        'Há alteração comportamental e cognitiva, redução da fala, crise, discinesias, redução da consciência e disfunção autonômica/respiratória, além de líquor e EEG alterados. A segunda PCR para HSV é negativa. Após exclusão razoável das infecções prioritárias, o conjunto preenche critérios clínicos de provável encefalite anti-NMDAR; o anticorpo ainda não retornou.',
@@ -384,12 +380,12 @@ ETAPAS = [
 
     pg('virada', 'Nono dia',
        'O laboratório de referência informa IgG contra a subunidade GluN1 do receptor NMDA detectada no líquor por ensaio em células, título 1:32; no soro, 1:100. A segunda PCR para HSV, colhida no quinto dia, também foi negativa. Após revisão das alternativas infecciosas, o aciclovir é suspenso.',
-       'O tratamento da síndrome provável e a retirada da lesão ovariana já ocorreram. O resultado confirma a etiologia; não foi uma autorização para só agora começar a assistência.'),
+       'O tratamento da síndrome provável e a retirada da lesão ovariana já ocorreram. O resultado confirma a causa; não foi uma autorização para só agora começar a assistência.'),
 
     pg('diagnostico', 'O diagnóstico',
        'É **encefalite contra o receptor NMDA** (anti-NMDAR): síndrome compatível, IgG anti-GluN1 no líquor e exclusão razoável de alternativas. O teratoma maduro com tecido neural é uma associação relevante, na integração da clínica, imagem e anatomopatológico.',
        'Os anticorpos alteram a disponibilidade de receptores sinápticos; a disfunção pode ser importante mesmo sem lesão na RM. Isso ajuda a compreender a possibilidade de recuperação, sem garantir reversibilidade completa. Pródromo, psicose, redução da fala, crises, discinesias e disautonomia podem se sobrepor; não são fases obrigatórias.',
-       'O padrão delta brush extremo no EEG apoia o fenótipo, mas não é isoladamente diagnóstico nem prova que todo movimento seja crise. A reação após haloperidol permanece como provável intolerância neuroléptica sobreposta à encefalite.'),
+       'O padrão delta brush extremo no EEG apoia o conjunto de manifestações, mas não é isoladamente diagnóstico nem prova que todo movimento seja crise. A reação após haloperidol permanece como provável intolerância neuroléptica sobreposta à encefalite.'),
 
     Q('p4', 4,
       'O IgG anti-GluN1 foi detectado no líquor. Quais **duas conclusões** são sustentadas pelos dados de Camila?', [

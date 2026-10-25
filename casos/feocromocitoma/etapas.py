@@ -116,12 +116,14 @@ ETAPAS = [
         ex('Sódio / potássio', '141 / 3,4 mmol/L', 'Na 135–145 · K 3,5–5,0', True),
         ex('Ureia / creatinina', '46 / 0,8 mg/dL {{(TFG 95, CKD-EPI 2021)}}', 'até 42 / 0,6–1,1', True),
         ex('Albumina', '5,2 g/dL', '3,5–5,0 g/dL', True),
-        ex('Troponina I ultrassensível', '1.840 ng/L na chegada · 3.260 ng/L em 3 horas', 'até 16 ng/L em mulheres', True),
-        ex('Gasometria venosa', 'pH 7,34 · bicarbonato 21 mmol/L · lactato 2,8 mmol/L', 'lactato até 2,0', True),
     ], introducao='Colhidos na chegada, com a pressão ainda acima de 200/110 mmHg.'),
 
+    pg('reavaliacao_inicial', 'Reavaliação durante o controle pressórico',
+ 'A pressão começa a cair com a infusão, mas ainda há dor torácica e crepitações. Hemograma, função renal, glicemia e eletrólitos não identificam sozinhos a extensão da lesão de órgãos.',
+ 'Pela dor e congestão, ECG e troponina são solicitados imediatamente, em paralelo aos exames básicos; gasometria e lactato avaliam a repercussão aguda. A separação abaixo organiza os resultados por indicação clínica, sem postergar coleta ou tratamento.'),
+
     estudo('ecg', 'Eletrocardiograma',
-           'Feito na segunda hora, quando a crise já cedia: pressão de 172/100 mmHg e '
+           'O ECG da chegada não mostrou supradesnivelamento de ST. O traçado exibido é o controle da segunda hora, quando a crise já cedia: pressão de 172/100 mmHg e '
            'frequência de 78. Traçado de outro paciente com o mesmo laudo. Olhe a '
            'voltagem das precordiais e o que vem depois do QRS em V5.',
            IMG / 'ecg_admissao.jpg',
@@ -139,11 +141,16 @@ ETAPAS = [
          'ventricular esquerda (S de V2 somada à R de V5 acima de 35 mm), com '
          'infradesnivelamento do ST e T aplainada nas derivações laterais. Sem '
          'supradesnivelamento do ST.',
-         'Hipertrofia do ventrículo esquerdo leva meses a anos para se formar.']),
+         'Voltagens precordiais elevadas e alterações laterais de repolarização, sem supradesnivelamento do ST.']),
 
-    pg('primeira_resposta', 'Ao fim das primeiras duas horas',
+    painel('res1b', 'Exames pela dor torácica e congestão', 'Lesão miocárdica e repercussão aguda', [
+        ex('Troponina I ultrassensível', '1.840 ng/L na chegada · 3.260 ng/L em 3 horas', 'até 16 ng/L em mulheres', True),
+        ex('Gasometria venosa', 'pH 7,34 · bicarbonato 21 mmol/L · lactato 2,8 mmol/L', 'lactato até 2,0', True),
+    ], introducao='Amostras obtidas desde a chegada e troponina repetida em três horas; não são rastreio endócrino. O tratamento começa antes de se completar a série.'),
+
+    pg('primeira_resposta', 'Após a série inicial de três horas',
  'A dor no peito e a cefaleia cedem, pressão 162/96 e frequência 88. As crepitações diminuem. A troponina, entretanto, continua subindo e o ecocardiograma mostra FE de 35%, com acinesia médio-apical além de um único território coronariano e sem obstrução da via de saída.',
- 'A melhora dos sintomas não eliminou lesão miocárdica aguda. A equipe precisa distinguir doença coronariana tratável de causas de disfunção ventricular sem obstrução.'),
+ 'A melhora dos sintomas não eliminou lesão miocárdica aguda. As voltagens do ECG podem refletir sobrecarga anterior; hipertrofia não se desenvolve apenas durante esta crise. A equipe precisa distinguir doença coronariana tratável de causas de disfunção ventricular sem obstrução.'),
 
     Q('p1', 1, 'Após estabilizar pressão e congestão, qual exame priorizar nesta apresentação de alto risco, com troponina dinâmica e disfunção ventricular?', [
  ('Coronariografia invasiva', True), ('Angiotomografia coronariana', False),
@@ -170,15 +177,14 @@ ETAPAS = [
          'esquerdo de 24 mmHg.']),
 
     pg('recuperacao', 'Segundo dia',
- 'Sem dor e sem dispneia em repouso, caminha até a poltrona. Pulmões agora sem crepitações. Não há obstrução coronariana e a distribuição ventricular favorece padrão de takotsubo; a etiologia do estímulo ainda está aberta.',
- 'A equipe considera gatilho emocional, miocardite e excesso de catecolaminas. As crises de meses, a perda de peso e o agravamento após medicações motivam investigação endócrina durante a internação. Não é preciso esperar uma massa incidental para solicitá-la.'),
+ 'Sem dor e sem dispneia em repouso, caminha até a poltrona. Pulmões agora sem crepitações. Não há obstrução coronariana e a distribuição ventricular favorece padrão de takotsubo; a causa do estímulo ainda está aberta.',
+ 'A equipe considera gatilho emocional, miocardite e excesso de catecolaminas. As crises de meses, a perda de peso e o agravamento após medicações motivam investigação endócrina durante a internação. Não é preciso esperar uma massa incidental para solicitá-la. Tremor, emagrecimento e palpitação justificam TSH e T4 livre; a glicemia de chegada motiva jejum e HbA1c. A urina integra a avaliação de lesão hipertensiva e fornecerá contexto se surgir queixa urinária. O cálcio basal participa da avaliação metabólica nesta investigação.'),
 
-    painel('res2', 'Segundo dia', 'Sangue e urina', [
+    painel('res2', 'Segundo dia: avaliação após estabilização', 'Investigação orientada pelos achados', [
         ex('TSH', '1,6 mUI/L', '0,4–4,0 mUI/L'),
         ex('T4 livre', '1,2 ng/dL', '0,9–1,8 ng/dL'),
         ex('Glicemia de jejum', '132 mg/dL', '70–99 mg/dL', True),
         ex('Hemoglobina glicada', '6,2%', 'até 5,6%', True),
-        ex('NT-proBNP', '2.450 pg/mL', 'até 125 pg/mL', True),
         ex('Cálcio total', '9,6 mg/dL', '8,6–10,2 mg/dL'),
         ex('Urina', 'Densidade 1.024 · sangue 1+ · 8 hemácias por campo, de forma normal · sem proteína', '—', True),
     ]),
@@ -194,9 +200,9 @@ ETAPAS = [
  'A recorrência em repouso e o ortostatismo entre crises mudam a segurança de apenas intensificar anti-hipertensivos de longa ação. O diurético não é repetido na ausência de congestão; a reposição de volume será cautelosa pela disfunção ventricular recente.'),
 
     bifurcacao('b1', 'Investigação', 'Primeiro teste bioquímico',
- 'O laboratório dispõe de dois métodos validados. Qual você escolhe para iniciar o rastreio das crises?', [
+ 'O hospital encaminha amostras a um laboratório de referência. Qual coleta você escolhe para investigar as crises?', [
  caminho('Metanefrinas livres plasmáticas', 'coleta_plasma', 'É possível coletar após repouso e registrar interferentes; o resultado deve ser interpretado no contexto da doença aguda.'),
- caminho('Metanefrinas fracionadas urinárias de 24 horas', 'coleta_urina', 'Alternativa válida se a coleta for completa e o método adequado; o prazo de coleta é considerado na avaliação do paciente internado.')]),
+ caminho('Metanefrinas fracionadas urinárias de 24 horas', 'coleta_urina', 'Alternativa à coleta de sangue, conforme o exame disponível na rede. A urina precisa ser recolhida durante todas as 24 horas; o prazo de coleta é considerado na avaliação do paciente internado.')]),
 
     pg('coleta_plasma', 'Preparo da coleta',
  'Com Patrícia estável, colhe-se sangue após 30 minutos de repouso deitada. A amitriptilina havia sido suspensa na admissão, cerca de dois dias antes; o intervalo pode ser insuficiente para eliminar interferência. O laboratório registra método e limites próprios. A avaliação anatômica ocorrerá em paralelo, se indicada pela queixa lombar.', segue='lombar'),

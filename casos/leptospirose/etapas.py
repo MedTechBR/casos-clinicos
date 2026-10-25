@@ -100,22 +100,27 @@ ETAPAS = [
         ex('Plaquetas', '88.000/mm³ {{(145.000 na UPA)}}', '150.000–450.000/mm³', True),
         ex('Ureia / creatinina', '148 / 2,6 mg/dL {{(creatinina 1,0 na UPA)}}', 'até 42 / 1,3 mg/dL', True),
         ex('Sódio / potássio / cloro', '133 / 3,1 / 100 mmol/L', 'Na 135–145 · K 3,5–5,0 · Cl 98–107', True),
-        ex('Bilirrubina total / direta', '6,4 / 5,3 mg/dL', 'até 1,2 / 0,3 mg/dL', True),
-        ex('AST / ALT', '96 / 70 U/L', 'até 40 / 41 U/L', True),
-        ex('Fosfatase alcalina / GGT', '190 / 160 U/L', 'até 129 / 60 U/L', True),
-        ex('Creatinoquinase', '2.380 U/L', 'até 190 U/L', True),
+        ex('Glicemia capilar na chegada', '102 mg/dL', 'sem hipoglicemia'),
     ], introducao='Duas hemoculturas foram colhidas antes de qualquer antibiótico, e '
                   'uma alíquota de sangue da admissão ficou guardada no laboratório.'),
 
     painel('res1b', 'Primeiros exames', 'Gasometria e urina', [
         ex('Gasometria arterial em ar ambiente', 'pH 7,33 · pCO₂ 31 · HCO₃ 16 · pO₂ 58 mmHg · lactato 3,1 mmol/L', '—', True),
         ex('Urina', 'Densidade 1.012 · sangue ++ · proteína + · 3 a 5 hemácias e cilindros granulosos por campo · sem cilindros hemáticos', '—', True),
-        ex('Sódio / creatinina / potássio urinários', '64 mmol/L / 50 mg/dL / 38 mmol/L · FENa 2,5%', '—', True),
-    ]),
+    ], introducao='Gasometria e lactato são precoces pela hipoxemia e hipotensão; a urina integra a avaliação da oligúria e da alteração renal.'),
 
     pg('suporte_inicial', 'Primeiros minutos',
  'Enquanto os exames chegam, ele recebe oxigênio, monitorização e cristaloide em alíquotas pequenas, com reavaliação de perfusão e ausculta. Após 500 mL, a pressão passa a 108/64, sem piora das crepitações; saturação 94% com oxigênio. Ceftriaxona 2 g IV a cada 24 horas e azitromicina são iniciadas após culturas pela suspeita inicial de infecção pulmonar grave.',
- 'A internação em terapia intensiva é organizada pela disfunção respiratória e renal. Não se aguarda uma pergunta nem confirmação etiológica para oferecer suporte e antibiótico. O volume adicional será individualizado; melhora da pressão não autoriza bolus repetidos independentemente do pulmão.'),
+ 'A internação em terapia intensiva é organizada pela disfunção respiratória e renal. Não se aguarda uma pergunta nem confirmação da causa para oferecer suporte e antibiótico. O volume adicional será individualizado; melhora da pressão não autoriza bolus repetidos independentemente do pulmão.',
+ 'Após a melhora da pressão, a icterícia, a pouca urina e a dor muscular continuam. A equipe acrescenta bilirrubinas e enzimas hepáticas pela icterícia, CK pela mialgia com sangue na fita e poucas hemácias, e potássio urinário pela alteração renal com potássio baixo. A complementação usa amostras precoces e não retarda o suporte.'),
+
+    painel('investigacao_dirigida', 'Exames dirigidos', 'Icterícia, mialgia e alteração renal', [
+        ex('Bilirrubina total / direta', '6,4 / 5,3 mg/dL', 'até 1,2 / 0,3 mg/dL', True),
+        ex('AST / ALT', '96 / 70 U/L', 'até 40 / 41 U/L', True),
+        ex('Fosfatase alcalina / GGT', '190 / 160 U/L', 'até 129 / 60 U/L', True),
+        ex('Creatinoquinase', '2.380 U/L', 'até 190 U/L', True),
+        ex('Potássio urinário', '38 mmol/L', 'interpretar com o potássio sanguíneo, a diurese e a reposição', True),
+    ], introducao='Resultados da investigação orientada pelos achados iniciais, ainda nas primeiras horas da admissão.'),
 
     estudo('rx_adm', 'Radiografia de tórax na admissão',
            'Radiografia feita na chegada. Descreva a localização e o tipo da '
@@ -130,8 +135,7 @@ ETAPAS = [
         ],
         ['Consolidação alveolar em base direita, sem derrame pleural e sem '
          'aumento da área cardíaca.',
-         'Com febre, tosse, leucocitose e neutrofilia, é o quadro de uma '
-         'infecção pulmonar; pneumonia comunitária é a hipótese inicial, mas icterícia e lesão renal exigem ampliar a investigação.']),
+         'A opacidade está localizada no pulmão direito nesta imagem inicial.']),
 
     estudo('us_adm', 'Ultrassonografia de abdome',
            'Ultrassonografia feita na chegada, pela icterícia e pela dor no '
@@ -146,8 +150,7 @@ ETAPAS = [
         ['Fígado discretamente aumentado e homogêneo. Vesícula normal, vias '
          'biliares intra e extra-hepáticas sem dilatação. Rins de tamanho '
          'normal, sem hidronefrose.',
-         'Sem obstrução biliar nem urinária: a icterícia e a lesão renal são '
-         'de dentro do fígado e do rim.']),
+         'Não se observam cálculos ou dilatação das vias biliares e dos sistemas coletores.']),
 
     pagina('figado', 'Discussão', 'Icterícia no quadro febril',
  p('Bilirrubina predominantemente direta, com elevação relativamente modesta de transaminases, favorece comprometimento colestático associado à doença sistêmica. Ultrassom sem dilatação reduz o suporte a obstrução evidente, mas não exclui toda obstrução inicial.'),
@@ -160,21 +163,21 @@ ETAPAS = [
       ('Nefropatia por pigmentos como explicação suficiente de todos os achados', False),
       ('Glomerulonefrite como mecanismo predominante', False),
       ('Obstrução urinária com diurese paradoxal', False),
-    ], [('Integração', 'Cilindros granulosos, FENa 2,5% e urina pouco concentrada favorecem lesão tubular. A hipotensão pode contribuir, mas não explica sozinha o padrão urinário. K urinário 38 durante hipocalemia sugere perda renal inadequada, interpretada com diurese e reposição.'), ('Concorrentes', 'CK 2.380 e sangue na fita com poucas hemácias sustentam contribuição de pigmento muscular, sem provar que seja o mecanismo dominante. Pouca proteína e ausência de cilindros hemáticos enfraquecem glomerulonefrite; ultrassom sem dilatação reduz obstrução. FENa não é um divisor infalível na sepse.')]),
+    ], [('Integração', 'Cilindros granulosos e urina pouco concentrada favorecem lesão tubular. A hipotensão pode contribuir, mas não explica sozinha o padrão urinário. K urinário 38 durante hipocalemia sugere perda renal inadequada, interpretada com diurese e reposição.'), ('Concorrentes', 'CK 2.380 e sangue na fita com poucas hemácias sustentam contribuição de pigmento muscular, sem provar que seja o mecanismo dominante. Pouca proteína e ausência de cilindros hemáticos enfraquecem glomerulonefrite; ultrassom sem dilatação reduz obstrução.')]),
 
     pg('exposicao_precoce', 'A história é ampliada na emergência',
  'Após a estabilização inicial, o paciente consegue detalhar o trabalho: é agente de limpeza urbana. Doze dias antes da febre, entrou num canal alagado com uma bota furada, após chuvas fortes. O irmão confirma ratos no depósito da equipe. Esse evento já ocorreu; é informação recuperada, não uma manifestação nova.',
  'O reexame dirigido encontra hiperemia conjuntival sem secreção e dor mais intensa nas panturrilhas. A exposição, a icterícia e a lesão renal tornam prioritária uma infecção sistêmica relacionada à água. A ceftriaxona já cobre uma das principais hipóteses; não há razão para interrompê-la enquanto se investiga.'),
 
-    Q('p_etiologias', 2, 'Quais três hipóteses você prioriza entre estas possibilidades para integrar o quadro atual?',
+    Q('p_causas', 2, 'Quais três hipóteses você prioriza entre estas possibilidades para integrar o quadro atual?',
  [('Leptospirose', True), ('Pneumonia bacteriana com sepse', True), ('Dengue com comprometimento de órgãos', True), ('Hepatite viral isolada', False), ('Cólica biliar não complicada', False), ('Síndrome nefrótica primária isolada', False)],
- [('Integração', 'A exposição à enchente, mialgia, hiperemia conjuntival, icterícia e lesão renal favorecem leptospirose. Pneumonia continua concorrente pela imagem inicial e dengue merece investigação no contexto epidemiológico, sem usar uma hipótese para impedir antibiótico.'),
- ('Proporção', 'Hepatite isolada, cólica biliar e síndrome nefrótica não explicam bem pulmão, plaquetas e lesão tubular. A ausência de exantema não exclui dengue. A seleção hierarquiza as opções, sem exigir que sejam equiprováveis.')]),
+ [('Integração', 'A exposição à enchente, mialgia, hiperemia conjuntival, icterícia e lesão renal favorecem leptospirose. Febre, tosse, neutrofilia e consolidação focal sustentaram a hipótese inicial de pneumonia e o antibiótico precoce; o comprometimento de outros órgãos exige ampliar essa explicação. Dengue também merece investigação no contexto epidemiológico, sem usar uma hipótese para impedir antibiótico.'),
+ ('Proporção', 'Hepatite isolada, cólica biliar e síndrome nefrótica não explicam bem pulmão, plaquetas e lesão tubular. A ausência de exantema não exclui dengue. A seleção ordena por prioridade as opções, sem exigir que sejam equiprováveis.')]),
 
     Q('p5', 3, 'Quais dois testes mais ajudam a confirmar a hipótese ligada à água nesta fase?',
  [('PCR para Leptospira no sangue da admissão', True), ('IgM anti-Leptospira', True), ('Hemocultura convencional para Leptospira', False), ('Cultura urinária para decisão imediata', False), ('Microaglutinação única como único método', False)],
  [('Fase da doença', 'O sangue pré-antibiótico do sexto dia é apropriado para PCR; positivo confirma infecção. IgM inicial pode ser negativa e deve ser interpretada com tempo de sintomas, com nova amostra na convalescença.'),
- ('Resultados e suporte', 'Cultivo específico é lento e hemocultura convencional não identifica adequadamente esse agente. A equipe envia PCR e sorologia independentemente da resposta do aluno; nenhum teste deve atrasar tratamento.')]),
+ ('Resultados e suporte', 'Cultivo específico é lento e hemocultura convencional não identifica adequadamente esse agente. O teste molecular depende de laboratório de referência. Se não estiver disponível, a equipe usa a sorologia conforme o tempo de sintomas e programa nova coleta quando necessário. O antibiótico não depende dessa confirmação.')]),
 
     pg('coletas', 'Coletas e prioridades',
  'PCR para Leptospira e IgM são encaminhadas na amostra da admissão. A investigação de dengue inclui NS1 nesta fase e sorologia conforme janela. A função hepática e o coagulograma serão seriados; não se considera hemocultura convencional negativa como exclusão da infecção suspeitada.',
@@ -190,7 +193,7 @@ ETAPAS = [
 
     pg('hemorragia', 'Doze horas: o quadro torna-se bilateral',
  'A saturação cai a 83% mesmo com máscara com reservatório; frequência respiratória 36, uso de musculatura acessória e cerca de 150 mL de hemoptise nas últimas seis horas. Hemoglobina 9,6 g/dL, plaquetas 38.000/mm³, INR 1,4 e fibrinogênio 390 mg/dL. Bilirrubina total 17,8, creatinina 4,6 e potássio 3,0; o esfregaço não mostra esquizócitos.',
- 'A gasometria mostra pH 7,30, pCO₂ 32 mmHg e HCO₃ 15 mmol/L; lactato 2,0 mmol/L. Diante da hipoxemia persistente e do sangramento, realiza-se intubação na UTI, sem esperar broncoscopia ou resultado etiológico. A deterioração faz parte deste percurso ficcional de doença grave apesar do tratamento; não é consequência obrigatória de uma escolha.'),
+ 'A gasometria mostra pH 7,30, pCO₂ 32 mmHg e HCO₃ 15 mmol/L; lactato 2,0 mmol/L. Diante da hipoxemia persistente e do sangramento, realiza-se intubação na UTI, sem esperar broncoscopia ou resultado dos testes para identificar a causa. A deterioração faz parte deste percurso ficcional de doença grave apesar do tratamento; não é consequência obrigatória de uma escolha.'),
 
     estudo('rx_hemorragia', 'Radiografia de tórax',
            'Radiografia ilustrativa de outro paciente, com o padrão descrito '
@@ -238,7 +241,7 @@ ETAPAS = [
  'A oligúria persiste, com balanço positivo crescente e dificuldade de controlar o volume num pulmão gravemente comprometido. A nefrologia inicia terapia renal substitutiva pela situação clínica, com modalidade e frequência ajustadas à estabilidade, depuração e balanço.',
  'Não se indica diálise apenas pela creatinina de 4,6 nem um calendário diário universal. O potássio baixo exige reposição e ajuste da solução utilizada; insuficiência renal grave não significa obrigatoriamente retenção de potássio.'),
 
-    pg('virada', 'Integração etiológica',
+    pg('virada', 'Integração da causa',
  'O laboratório de referência detecta DNA de Leptospira no sangue pré-antibiótico do sexto dia. IgM na mesma amostra é não reagente; isso não contradiz a PCR positiva nesta fase. A exposição e o conjunto clínico estabelecem leptospirose grave, com comprometimento hepatorrenal e hemorragia pulmonar.',
  'NS1 para dengue é negativo; a sorologia de convalescença ainda será conferida. ANCA e anti-membrana basal glomerular são negativos. A revisão urinária mantém poucas hemácias, sem cilindros hemáticos; não há aumento de bilirrubina indireta, queda de haptoglobina ou esquizócitos que sustentem hemólise microangiopática. Esses negativos não excluem toda doença autoimune, mas a confirmação infecciosa oferece explicação coerente.',
  'A ceftriaxona é mantida para completar sete dias, com revisão do esquema conforme evolução. A azitromicina é suspensa quando a investigação não sustenta coinfecção bacteriana comunitária. Não se atribui uma porcentagem individual de morte ao paciente nem se promete que antibiótico elimina o risco de progressão já instalada.'),

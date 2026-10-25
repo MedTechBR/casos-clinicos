@@ -110,7 +110,7 @@ ETAPAS = [
 
     pg('primeiros_minutos', 'O quadro muda durante a admissão',
  'Enquanto se obtém acesso venoso, Sandra deixa de nomear o relógio e o celular. Obedece a comandos, não tem fraqueza ou hipoglicemia; oito minutos depois volta a falar normalmente. A melhora é documentada, sem encerrar a avaliação de isquemia ou infecção.',
- 'É levada para área monitorizada. TC de crânio, revisão urgente do esfregaço, marcadores de hemólise e coagulação são solicitados em paralelo. A sequência das telas não representa espera entre pedidos. Não há câncer, transplante, prótese valvar, uso de quinina ou medicamento novo associado a microangiopatia; a gestação atual será excluída.'),
+ 'É levada para área monitorizada. Glicemia à beira do leito, hemograma, função renal e urina compõem a avaliação inicial. A TC de crânio é solicitada desde já pela alteração neurológica focal transitória; a investigação será ampliada assim que os primeiros achados forem revistos, ainda na primeira hora. Não há câncer, transplante, prótese valvar, uso de quinina ou medicamento novo associado a microangiopatia; a gestação atual será excluída.'),
 
     estudo('pele', 'As pintas das pernas',
            'Fotografia de outro paciente com plaquetas muito baixas, com o mesmo '
@@ -129,9 +129,7 @@ ETAPAS = [
         ],
         ['No exame de Sandra: petéquias nas pernas e nos antebraços, algumas '
          'confluentes, e sangramento discreto da gengiva.',
-         'Púrpura plana, que não se palpa, é sangramento de capilar por falta '
-         'de plaqueta. A púrpura que se palpa sugere inflamação da parede do '
-         'vaso, e a que vem com necrose central, embolia ou infecção do vaso.']),
+         'Lesões planas, puntiformes, não desaparecendo à pressão; algumas são confluentes.']),
 
     painel('res1', 'Primeiros exames', 'Sangue', [
         ex('Hemoglobina / hematócrito', '7,8 g/dL / 23%', 'Hb 12–16 g/dL', True),
@@ -139,32 +137,40 @@ ETAPAS = [
         ex('Leucócitos', '9.800/mm³ · neutrófilos 72%', '4.000–11.000/mm³'),
         ex('Plaquetas', '14.000/mm³ {{(38.000 na UPA, dois dias antes)}}', '150.000–450.000/mm³', True),
         ex('Volume plaquetário médio', '12,4 fL', '7–11 fL', True),
-        ex('Reticulócitos', '7,8%', '0,5–2,5%', True),
-        ex('Lâmina revista pelo laboratório', 'Plaquetopenia confirmada, sem agregados · anisocitose e policromasia', '—', True),
         ex('Ureia / creatinina', '62 / 1,4 mg/dL {{(TFG 50, CKD-EPI 2021)}}', 'até 42 / 0,6–1,1', True),
         ex('Proteína C reativa', '24 mg/L', 'até 5 mg/L', True),
+        ex('Urina', 'Marrom-escura · sangue +++ · 0 a 2 hemácias por campo · 8 leucócitos por campo · nitrito negativo · proteína +', '—', True),
     ], introducao='Colhidos na chegada. Dois pares de hemoculturas foram colhidos '
                   'antes de qualquer antibiótico.'),
+
+    pg('reavaliacao_inicial', 'Reexame após os primeiros resultados',
+ 'Sandra voltou a nomear os objetos, mas continua cansada e com a urina escura. A hemoglobina de 7,8 e a queda das plaquetas para 14.000 não se explicam pelo pequeno sangramento gengival. A fita marca sangue sem número proporcional de hemácias no sedimento.',
+ 'A equipe associa esses achados à icterícia e solicita marcadores de hemólise, reticulócitos e revisão do esfregaço, além de antiglobulina direta. As coletas são urgentes; recuperar a fala entre episódios não autoriza adiar a investigação.'),
 
     Q('p1', 1, 'Diante de anemia, plaquetopenia e alteração neurológica transitória, quais três exames abaixo mais ajudam a caracterizar rapidamente o mecanismo?', [
  ('Esfregaço periférico com quantificação de esquizócitos', True),
  ('Haptoglobina sérica', True), ('Teste de antiglobulina direto', True),
  ('Mielograma', False), ('Ultrassonografia do baço', False), ('Pesquisa de sangue oculto fecal', False)
  ], [('Prioridade', 'Fragmentação, consumo de haptoglobina e antiglobulina direta ajudam a distinguir microangiopatia, hemólise e mecanismo imune. DHL, bilirrubinas, reticulócitos e coagulação também são obtidos pela equipe; esta é uma seleção limitada entre opções, não um painel completo de prescrição.'),
- ('Menor prioridade', 'Mielograma, ultrassom e pesquisa de sangramento não explicam tão bem a associação de reticulocitose, icterícia e disfunção neurológica. Os resultados indicados chegam independentemente da resposta.')]),
+ ('Menor prioridade', 'Mielograma, ultrassom e pesquisa de sangramento não explicam tão bem a associação de anemia importante, icterícia e disfunção neurológica. Púrpura plana pode acompanhar trombocitopenia; lesões palpáveis ou necróticas mudariam a avaliação de parede vascular e oclusão, sem definir causa pela aparência isolada. Os resultados indicados chegam independentemente da resposta.')]),
 
-    painel('res1b', 'Primeiros exames', 'Hemólise e urina', [
+    painel('res1b', 'Após hemograma e urina', 'Investigação da anemia', [
         ex('Bilirrubina total / indireta', '3,2 / 2,7 mg/dL', 'até 1,2 / 0,9 mg/dL', True),
         ex('Desidrogenase lática (DHL)', '1.480 U/L', '120–246 U/L', True),
         ex('Haptoglobina', 'menor que 10 mg/dL', '30–200 mg/dL', True),
         ex('Teste de antiglobulina direto', 'Negativo', 'negativo'),
         ex('AST / ALT', '58 / 31 U/L', 'até 32 / 33 U/L', True),
         ex('Creatinoquinase', '110 U/L', 'até 170 U/L'),
-        ex('Urina', 'Marrom-escura · sangue +++ · 0 a 2 hemácias por campo · 8 leucócitos por campo · nitrito negativo · proteína +', '—', True),
         ex('Beta-hCG sérico', 'Negativo', 'negativo'),
+        ex('Reticulócitos', '7,8%', '0,5–2,5%', True),
+        ex('Lâmina revista pelo laboratório', 'Plaquetopenia confirmada, sem agregados · anisocitose e policromasia', '—', True),
     ]),
 
-    painel('res1c', 'Primeiros exames', 'Coagulação e outros', [
+    pg('reavaliacao', 'Quarenta minutos depois',
+ 'A temperatura chega a 38,1 °C e ela fica mais sonolenta, ainda sem rigidez de nuca ou déficit fixo. A urina permanece escura e o sangramento gengival é discreto. Não há hipotensão ou oligúria importante.',
+ 'Doença meningocócica precisa de cobertura empírica enquanto é avaliada; ceftriaxona em dose meníngea começa após hemoculturas, sem aguardar líquor. A exposição ocupacional isolada é fraca evidência de causa. Hemólise com plaquetopenia e manifestações neurológicas exige avaliar consumo de fatores e lesão de órgãos: a equipe solicita coagulação, fibrinogênio, lactato e avaliação cardíaca, em paralelo à revisão urgente do esfregaço. ADAMTS13 será colhida antes de qualquer plasma se a suspeita se sustentar, sem aguardar todos os resultados. NS1 negativo isolado não exclui dengue.'),
+
+    painel('res1c', 'Avaliação dirigida na primeira hora', 'Coagulação e lesão de órgãos', [
         ex('Tempo de protrombina / INR', '13,1 s / 1,08', 'INR até 1,2'),
         ex('TTPa (relação)', '29 s (1,0)', 'até 1,25'),
         ex('Fibrinogênio', '340 mg/dL', '200–400 mg/dL'),
@@ -191,12 +197,7 @@ ETAPAS = [
         ],
         ['Sem hemorragia, sem hipodensidade, sem efeito de massa. Ventrículos '
          'e sulcos normais para a idade.',
-         'Uma tomografia normal nas primeiras horas não afasta isquemia '
-         'pequena, transitória ou recente, nem encefalite.']),
-
-    pg('reavaliacao', 'Quarenta minutos depois',
- 'A temperatura chega a 38,1 °C e ela fica mais sonolenta, ainda sem rigidez de nuca ou déficit fixo. A urina permanece escura e o sangramento gengival é discreto. Não há hipotensão, oligúria importante ou lactato elevado.',
- 'Doença meningocócica precisa de cobertura empírica enquanto é avaliada; ceftriaxona em dose meníngea começa após hemoculturas, sem aguardar líquor. A exposição ocupacional isolada é fraca evidência de etiologia. Hemólise com plaquetopenia e coagulação preservada coloca microangiopatia no primeiro plano, ao lado da investigação infecciosa. NS1 negativo isolado não exclui dengue.'),
+         'Não foram identificadas alterações estruturais agudas neste estudo sem contraste.']),
 
     bifurcacao('b1', 'Investigação em paralelo', 'Uma amostra adicional',
  'O esfregaço está em revisão urgente e a avaliação da microangiopatia já foi acionada. Para a hipótese infecciosa ainda aberta, qual exame você prioriza entre estes?', [
@@ -210,7 +211,7 @@ ETAPAS = [
  'É enviada amostra sanguínea para PCR de meningococo. A urocultura também é colhida pela equipe pela queixa lombar, independentemente da prioridade escolhida. O resultado fica pendente. A punção lombar é adiada pela trombocitopenia e pela mudança de prioridade diagnóstica; a ceftriaxona já cobre a hipótese urgente. Não se transfundem plaquetas de rotina para viabilizar esse procedimento.', segue='amostra'),
 
     pg('amostra', 'Amostra antes do plasma',
- 'Ainda na primeira hora, pela combinação de hemólise não imune provável, plaquetas muito baixas e manifestações neurológicas, colhe-se atividade de ADAMTS13. Inibidor funcional e anticorpo anti-ADAMTS13 são solicitados separadamente, usando alíquotas pré-plasma.',
+ 'Ainda na primeira hora, pela combinação de hemólise não imune provável, plaquetas muito baixas e manifestações neurológicas, colhe-se atividade de ADAMTS13, uma enzima que ajuda a controlar a formação de pequenos coágulos. A amostra será enviada ao centro de referência; o resultado não é necessário para iniciar o tratamento de uma suspeita forte. Inibidor funcional e anticorpo anti-ADAMTS13 são solicitados separadamente, usando alíquotas pré-plasma.',
  'Hematologia e centro de aférese são contatados já nessa fase. A transfusão ou infusão de plasma não deve preceder a coleta quando esta pode ser feita de imediato; tampouco a dificuldade de colher justificaria retardar terapia necessária.'),
 
     pg('manha', 'Revisão urgente do esfregaço',
@@ -244,7 +245,7 @@ ETAPAS = [
     Q('p2', 2, 'O regional não tem aférese e o centro de referência já aceitou Sandra. Qual procedimento precisa ser viabilizado nas próximas horas, antes do resultado enzimático?', [
  ('Troca plasmática terapêutica', True), ('Punção lombar', False),
  ('Biópsia renal', False), ('Mielograma', False)
- ], [('Urgência', 'A probabilidade alta de PTT com lesão neurológica exige troca plasmática urgente e corticoide. Transferência e preparo são imediatos; o objetivo não é consumir uma janela de espera. Plasma infundido pode ser ponte se houver atraso inevitável, sob controle de volume, e não substitui a troca na PTT imune.')]),
+ ], [('Urgência', 'A probabilidade alta de PTT com lesão neurológica exige troca plasmática urgente e corticoide. Transferência e preparo são imediatos; o objetivo não é consumir uma janela de espera. Plasma infundido pode ser ponte se houver atraso inevitável, sob controle de volume, e não substitui a troca na PTT imune. A TC sem alterações não afasta isquemia pequena, transitória ou recente, nem encefalite; seu resultado não encerra a avaliação da fala flutuante.')]),
 
     pg('transferencia', 'Durante a transferência',
  'Corticoide é iniciado após discussão com hematologia. O transporte monitorizado sai sem esperar ADAMTS13. Diante do tempo necessário até a aférese, recebe plasma como ponte, com vigilância respiratória e circulatória. Não há sangramento grave que justifique transfusão profilática de plaquetas.',
@@ -296,7 +297,7 @@ ETAPAS = [
  ], [('Prevenir recaída', 'Queda confirmada da enzima pode anteceder recaída clínica e levar à avaliação de imunossupressão preventiva, frequentemente rituximabe. Não equivale automaticamente a indicação de nova troca sem microangiopatia clínica. Consideram-se tendência, método, contexto e decisão especializada.')]),
 
     pg('seguimento', 'Três meses depois',
- 'ADAMTS13 68%, hemograma normal e nenhum déficit focal. Sandra voltou primeiro a atividades leves; cansaço e receio de novo episódio são discutidos antes de retomar plantões noturnos. Orienta-se vigilância prolongada da enzima e procura urgente por petéquias, pigmentúria, confusão ou dor torácica.',
+ 'ADAMTS13 68%, hemograma normal e nenhum déficit focal. Sandra voltou primeiro a atividades leves; cansaço e receio de novo episódio são discutidos antes de retomar plantões noturnos. Orienta-se vigilância prolongada da enzima e procura urgente por pontos vermelhos na pele, urina escura, confusão ou dor torácica.',
  'Contracepção sem estrogênio e eventual gestação são planejadas com hematologia e ginecologia. O DIU de levonorgestrel é uma opção escolhida após avaliação, não uma prescrição obrigatória para toda pessoa com PTT.'),
 
     fim('f1', 'Remissão com seguimento organizado',

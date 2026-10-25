@@ -324,20 +324,19 @@ ETAPAS = [
        'começou na mesma época.'),
 
     Q('q6', 5,
-      'A coleta toxicológica ocorrerá cinco dias após o último uso referido. Quais duas conclusões poderão ser sustentadas pelos testes?', [
+      'Há uso recorrente de cocaína e a coleta será tardia. Quais duas conclusões sobre a toxicologia são adequadas?', [
       ('Benzoilecgonina confirmada documenta exposição à cocaína', True),
-      ('Levamisol não detectado terá pouco poder para excluir a exposição', True),
+      ('Não ter o teste de levamisol não impede reconhecer a associação provável', True),
       ('Benzoilecgonina confirmada identifica a composição do adulterante', False),
       ('A intensidade do ANCA permite datar a última exposição', False),
       ('A histologia cutânea distingue quimicamente cocaína de levamisol', False),
      ], [
-      ('Janela e inferência', 'Benzoilecgonina é metabólito da cocaína, não do adulterante. Levamisol é eliminado rapidamente; coleta tardia tem baixa sensibilidade e resultado negativo não deve ser tratado como refutação.'),
+      ('Janela e inferência', 'Benzoilecgonina é metabólito da cocaína, não do adulterante. O teste de levamisol não está disponível neste serviço e não será necessário para iniciar a conduta. Além disso, a substância é eliminada rapidamente, o que limita o valor de uma coleta tardia.'),
       ('O limite dos marcadores', 'ANCA pode persistir além da exposição e não serve como relógio. Histologia mostra trombose e inflamação, não a molécula causal. Assim, toxicologia de cocaína, padrão clínico e cronologia sustentam associação provável, sem comprovação química do levamisol.'),
      ]),
 
     painel('res4', 'Quarto ao sexto dia', 'Toxicologia e biópsia renal', [
         ex('Benzoilecgonina urinária, confirmada por cromatografia', 'Detectada', 'Não detectada', True),
-        ex('Levamisol urinário (LC-MS/MS)', 'Não detectado', 'Não detectado'),
         ex('Biópsia renal, microscopia', 'Glomerulonefrite necrosante com crescentes celulares em 5 de 18 glomérulos · fibrose intersticial mínima', '—', True),
         ex('Biópsia renal, imunofluorescência', 'Pauci-imune', '—', True),
         ex('Creatinina', '2,6 mg/dL', '0,6–1,1 mg/dL', True),
@@ -353,12 +352,12 @@ ETAPAS = [
       ('Vasculite ANCA primária com agranulocitose por dipirona é a explicação mais provável do conjunto', False),
       ('O componente trombótico da pele favorece microangiopatia trombótica como causa da perda renal', False),
      ], [
-      ('Atividade e atribuição', 'Neutrófilos subiram a 1.100, mas creatinina chegou a 2,6 e há necrose com crescentes celulares em 5/18 glomérulos: predomina uma lesão glomerular ativa, não apenas recuperação lenta de injúria anterior. Benzoilecgonina confirma cocaína; coleta tardia negativa para levamisol deixa a associação provável.'),
+      ('Atividade e atribuição', 'Neutrófilos subiram a 1.100, mas creatinina chegou a 2,6 e há necrose com crescentes celulares em 5/18 glomérulos: predomina uma lesão glomerular ativa, não apenas recuperação lenta de injúria anterior. Benzoilecgonina confirma cocaína; não houve dosagem de levamisol; sua participação permanece provável pelo conjunto clínico.'),
       ('Explicações concorrentes', 'Vasculite primária e agranulocitose por dipirona podem coexistir, mas exigem causas separadas para uma combinação ligada à exposição recorrente, com púrpura auricular e ANCA duplo. Trombos cutâneos não demonstram microangiopatia renal: plaquetas preservadas, ausência de esquizócitos e biópsia necrosante pauci-imune favorecem outro mecanismo.'),
      ]),
 
     pg('diagnostico', 'Discussão clínica',
- 'A integração da exposição recorrente, da agranulocitose, da púrpura retiforme com lesão auricular e da glomerulonefrite pauci-imune sustenta doença vascular associada à cocaína, com provável participação do levamisol. A toxicologia comprova cocaína; a coleta tardia negativa para levamisol não confirma nem exclui o adulterante.',
+ 'A integração da exposição recorrente, da agranulocitose, da púrpura retiforme com lesão auricular e da glomerulonefrite pauci-imune sustenta doença vascular associada à cocaína, com provável participação do levamisol. A toxicologia comprova cocaína; não foi feito teste específico para levamisol, portanto sua participação continua provável, sem confirmação química.',
  'A melhora dos neutrófilos e da pele após a interrupção da exposição não resolveu a inflamação glomerular. Esse comportamento diferente entre órgãos é o motivo para discutir tratamento renal específico, e não apenas prolongar observação.',
  'A dipirona permanece suspensa e registrada como possível contribuinte da agranulocitose. Nenhum exame isolado permite atribuir com certeza toda a neutropenia a uma única substância.'),
 
@@ -520,7 +519,7 @@ ETAPAS = [
             'glomérulo, e o dano renal pode não seguir o curso da pele.',
             'ANCA contra MPO e PR3 ao mesmo tempo sugere vasculite induzida. A '
             'história de exposição precisa ser refeita a sós.',
-            'O levamisol sai da urina em cerca de 48 horas: o negativo tardio '
+            'O teste de levamisol depende de laboratório especializado: sua ausência '
             'não exclui. Abstinência trata a pele e a medula; crescentes '
             'ativos pedem imunossupressão com a infecção vigiada.'),
         so_kicker=True),

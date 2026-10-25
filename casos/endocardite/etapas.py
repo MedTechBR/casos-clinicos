@@ -120,13 +120,26 @@ ETAPAS = [
         ex('VCM / RDW', '76 fL / 17,8%', '80–100 fL / 11,5–14,5%', True),
         ex('Leucócitos', '11.200/mm³ · neutrófilos 78%', '4.000–11.000/mm³', True),
         ex('Plaquetas', '180.000/mm³', '150.000–450.000/mm³'),
-        ex('Ferritina / saturação da transferrina', '18 ng/mL / 7%', '15–150 ng/mL / 20–45%', True),
         ex('VHS / proteína C reativa', '86 mm/h / 74 mg/L', 'até 20 / até 5', True),
         ex('Ureia / creatinina', '48 / 1,3 mg/dL {{(TFG 47, CKD-EPI 2021)}}', 'até 42 / 0,6–1,1', True),
         ex('Proteínas totais / albumina', '7,8 / 3,0 g/dL {{(globulinas 4,8)}}', '6,0–8,0 / 3,5–5,0', True),
         ex('AST / ALT / bilirrubina total', '28 / 24 U/L / 0,6 mg/dL', 'até 40 / 41 / 1,2'),
     ], introducao='Colhidos na primeira consulta. Três pares de hemoculturas foram '
                   'colhidos por punções separadas, antes de qualquer antibiótico.'),
+
+    painel('res1b', 'Primeiros exames', 'Urina e eletrocardiograma', [
+        ex('Urina, tira e leitura inicial', 'Densidade 1.018 · 15 hemácias por campo · proteína 1+ · sem leucocitúria', '—', True),
+        ex('Eletrocardiograma', 'Ritmo sinusal, 96 bpm · PR 180 ms · sem outras alterações', '—'),
+    ]),
+
+    pg('reavaliacao_rotina', 'Após os primeiros resultados',
+       'Lúcia continua febril, sem hipotensão ou dispneia. O hemograma mostra anemia microcítica, e a creatinina de 1,3 vem acompanhada de sangue e proteína na urina. A equipe separa duas questões: investigar a anemia anterior à febre e esclarecer a alteração urinária atual.',
+       'Solicita ferritina e saturação da transferrina, revisão manual do sedimento, quantificação da proteinúria e complemento. Pela febre com artralgia e alteração renal, acrescenta FAN e fator reumatoide como investigação dirigida, sem tomá-los como rastreio automático.',
+       'Em paralelo, a febre prolongada numa valva previamente doente já motivou três pares de hemoculturas. Lúcia é internada, inicia antibiótico empírico endovenoso após a coleta e tem ecocardiografia solicitada; essas medidas não aguardam ferro, complemento ou autoanticorpos.'),
+
+    painel('dirigidos_anemia', 'Investigação dirigida', 'Anemia', [
+        ex('Ferritina / saturação da transferrina', '18 ng/mL / 7%', '15–150 ng/mL / 20–45%', True),
+    ], introducao='Resultados solicitados após reconhecer microcitose e recuperar a cronologia da anemia, ainda na avaliação inicial.'),
 
     Q('p1', 1,
       'Ferritina 18 e saturação 7%, com PCR 74 e anemia há seis meses. Quais duas conclusões orientam a investigação?', [
@@ -137,15 +150,13 @@ ETAPAS = [
       ('Microcitose e RDW elevado priorizam hemoglobinopatia sobre perda de ferro', False),
     ], [('Integração', 'A ferritina deveria subir com a inflamação; 18 torna estoques reduzidos muito prováveis. Saturação baixa e microcitose reforçam a falta de ferro, sem excluir um componente inflamatório associado.'), ('Cronologia', 'A anemia precede a febre e não deve ser atribuída integralmente à doença atual. Na mulher após a menopausa, investigar trato gastrointestinal, em geral com endoscopia alta e colonoscopia. Hemoglobinopatia pode dar microcitose, mas explica pior o conjunto de estoques baixos e cronologia.')]),
 
-    painel('res1b', 'Primeiros exames', 'Urina e outros', [
-        ex('Urina', 'Densidade 1.018 · 15 hemácias por campo, 40% dismórficas · proteína 1+ · sem leucocitúria', '—', True),
+    painel('dirigidos_rim', 'Investigação dirigida', 'Urina e mecanismo renal', [
+        ex('Sedimento, revisão manual', '15 hemácias por campo, 40% dismórficas', '—', True),
         ex('Proteína / creatinina na urina', '0,8 g/g', 'até 0,2 g/g', True),
         ex('Fator antinuclear', 'Não reagente', 'não reagente'),
         ex('Fator reumatoide', '64 UI/mL', 'até 14 UI/mL', True),
         ex('Complemento C3 / C4', '58 / 22 mg/dL', '90–180 / 10–40', True),
-        ex('TSH', '1,8 mUI/L', '0,4–4,0 mUI/L'),
-        ex('Eletrocardiograma', 'Ritmo sinusal, 96 bpm · PR 180 ms · sem outras alterações', '—'),
-    ]),
+    ], introducao='A hematúria e a proteína na urina motivaram estes pedidos; os resultados chegam ao longo do primeiro dia, com a investigação cardíaca já em curso.'),
 
     Q('p2', 2,
       'Qual mecanismo renal melhor integra o sedimento, C3 baixo, C4 preservado e cinco semanas de febre?', [
@@ -168,13 +179,11 @@ ETAPAS = [
          ((455, 300), (620, 150), '**Traqueia** central, sem desvio; mediastino superior sem alargamento.', 12),
         ],
         ['Pulmões sem infiltrado, cavidade ou nódulo. Hilos e mediastino sem '
-         'alargamento. Sem derrame pleural.',
-         'Uma radiografia normal não afasta tuberculose extrapulmonar ou '
-         'disseminada, nem linfoma restrito ao abdome.']),
+         'alargamento. Sem derrame pleural.']),
 
     pg('plano', 'Plano inicial',
  'Lúcia é internada. A equipe considera infecção persistente com repercussão renal, doença linfoproliferativa e infecções endêmicas. A valvopatia, a febre e o sedimento mantêm a possibilidade de foco cardíaco desde esta etapa; ausência de lesões típicas na pele não a afasta.',
- 'As três hemoculturas já foram colhidas. Pela suspeita de infecção valvar, inicia-se antibioticoterapia empírica endovenosa, conforme o protocolo local e a função renal, sem aguardar identificação do agente. São solicitados ecocardiografia e teste rK39. Não há instabilidade, edema pulmonar nem sinal neurológico focal. A ferropenia também requer investigação gastrointestinal, organizada conforme a estabilidade.'),
+ 'As três hemoculturas já foram colhidas. Pela suspeita de infecção valvar, mantém-se a antibioticoterapia empírica endovenosa já iniciada, conforme o protocolo local e a função renal, sem aguardar identificação do agente. A ecocardiografia já solicitada segue prioritária; acrescenta-se teste rK39. Não há instabilidade, edema pulmonar nem sinal neurológico focal. A ferropenia também requer investigação gastrointestinal, organizada conforme a estabilidade.'),
 
     pg('investiga', 'Primeiro dia, à tarde',
  'O teste rK39 não é reagente. Lúcia permanece sem hipotensão e conversa normalmente, mas ainda tem pouca disposição para comer. A filha percebe que ela se levanta menos do leito por cansaço.',
@@ -260,9 +269,7 @@ ETAPAS = [
           'pontual, não uma mancha difusa.', 12),
         ],
         ['No exame de Lúcia: três hemorragias lineares, finas e avermelhadas, sob as '
-         'unhas do segundo e do terceiro dedos da mão direita.',
-         'São capilares do leito ungueal que se rompem. Trauma das mãos, comum em '
-         'quem costura, produz o mesmo traço; sozinho, o achado pesa pouco.']),
+         'unhas do segundo e do terceiro dedos da mão direita.']),
 
     estudo('plantas', 'Máculas sem dor',
            'Fotografia de outro paciente, na palma da mão, com o mesmo tipo de '

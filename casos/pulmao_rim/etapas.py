@@ -160,22 +160,29 @@ ETAPAS = [
 
     painel('res1', 'Primeiros exames', 'Sangue', [
         ex('Hemoglobina / hematócrito', '7,8 g/dL / 23,6% {{(13,9 g/dL há dois meses)}}', 'Hb 13,5–17,5 g/dL', True),
-        ex('VCM / reticulócitos', '88 fL / 2,1%', '80–100 fL · 0,5–2,5%'),
+        ex('VCM', '88 fL', '80–100 fL'),
         ex('Leucócitos', '14.200/mm³ · neutrófilos 82%', '4.000–11.000/mm³', True),
         ex('Plaquetas', '468.000/mm³', '150.000–450.000/mm³', True),
         ex('Ureia / creatinina', '118 / 3,8 mg/dL {{(creatinina 1,4 há seis semanas)}}', 'até 42 / 1,3 mg/dL', True),
         ex('Sódio / potássio / cloro', '136 / 5,4 / 104 mmol/L', 'Na 135–145 · K 3,5–5,0 · Cl 98–107', True),
         ex('Albumina', '2,9 g/dL', '3,5–5,0 g/dL', True),
-        ex('Proteína C reativa / procalcitonina', '186 mg/L / 0,4 ng/mL', 'até 5 mg/L / abaixo de 0,5 ng/mL', True),
-        ex('DHL / bilirrubina total', '210 U/L / 0,6 mg/dL', 'até 250 U/L / até 1,2 mg/dL'),
+        ex('Proteína C reativa', '186 mg/L', 'até 5 mg/L', True),
     ], introducao='Três pares de hemoculturas foram colhidos antes de qualquer '
                   'antibiótico.'),
 
     painel('res1b', 'Primeiros exames', 'Gasometria, urina e outros', [
         ex('Gasometria arterial em ar ambiente', 'pH 7,29 · pCO₂ 32 · pO₂ 56 mmHg · HCO₃ 15 mmol/L · lactato 1,6 mmol/L', '—', True),
         ex('Urina, tira e sedimento automatizado', 'Densidade 1.018 · sangue +++ · proteína ++ · 60 hemácias e 6 leucócitos por campo · sem bacteriúria · sem cilindros na leitura automatizada', '—', True),
+    ]),
+
+    pg('reavaliacao_rotina', 'Reavaliação na emergência',
+       'A equipe revê o hemograma e os exames de dois meses antes: a hemoglobina caiu para 7,8 e a creatinina subiu para 3,8. A urina inicial mostra sangue e proteína. Ele permanece dispneico; oxigênio e monitorização já estão em curso, com avaliação seriada da via aérea, da perfusão e da necessidade de transfusão.',
+       'A anemia e a lesão renal motivam reticulócitos, esfregaço, DHL, bilirrubina e Coombs, para avaliar produção e possíveis sinais de hemólise. A proteína na tira leva à quantificação urinária. Esses pedidos dirigidos são feitos nas primeiras horas, sem interromper o suporte ou aguardar resultados para tratar a suspeita infecciosa; a radiografia é realizada em paralelo.'),
+
+    painel('dirigidos_anemia_rim', 'Investigação dirigida', 'Resultados nas primeiras horas', [
+        ex('Reticulócitos', '2,1%', '0,5–2,5%'),
+        ex('DHL / bilirrubina total', '210 U/L / 0,6 mg/dL', 'até 250 U/L / até 1,2 mg/dL'),
         ex('Relação proteína/creatinina urinária', '1,4 g/g', 'abaixo de 0,2 g/g', True),
-        ex('Sódio / creatinina urinários', '28 mmol/L / 98 mg/dL · FENa 0,8%', '—'),
         ex('Esfregaço de sangue periférico', 'Hemácias normocíticas, sem esquizócitos', 'sem esquizócitos'),
         ex('Coombs direto', 'Negativo', 'negativo'),
     ]),
@@ -192,9 +199,7 @@ ETAPAS = [
          ((620, 160), (760, 60), '**Ápices relativamente poupados**: o predomínio é central e inferior.', 12),
         ],
         ['Opacidades alveolares bilaterais, em campos médios e inferiores, sem '
-         'derrame pleural e sem aumento da área cardíaca.',
-         'Com febre, leucocitose e proteína C reativa de 186 mg/L, a equipe lê '
-         'como pneumonia multilobar.']),
+         'derrame pleural e sem aumento da área cardíaca.']),
 
     Q('p1', 1,
       'Com pH 7,29, HCO₃ 15, pCO₂ 32 e albumina 2,9, selecione as duas interpretações sustentadas pelos dados.', [
@@ -223,21 +228,19 @@ ETAPAS = [
          ((447, 400), (720, 550), '**Seio renal** (quatro asteriscos), ecogênico, sem dilatação do sistema coletor.', -12),
         ],
         ['Rins de 11,2 e 11,0 cm, córtex de espessura preservada, sem '
-         'hidronefrose (laudo do caso).',
-         'Sem obstrução e sem sinal de doença renal antiga: a lesão é do rim, '
-         'e recente.']),
+         'hidronefrose (laudo do caso).']),
 
     Q('p2', 2,
-      'FENa 0,8%, hematúria e proteinúria de 1,4 g/g, com creatinina em ascensão há seis semanas. Quais dois exames priorizar para localizar a lesão e investigar o foco nasal persistente?', [
+      'Hematúria e proteinúria de 1,4 g/g, com creatinina em ascensão há seis semanas. Quais dois exames priorizar para localizar a lesão e investigar o foco nasal persistente?', [
       ('Sedimento urinário com microscopia manual', True),
       ('Tomografia dos seios da face', True),
-      ('Nova FENa antes de investigar o sedimento', False),
+      ('FENa como primeiro teste localizatório', False),
       ('Cintilografia renal para obstrução', False),
       ('Eletroforese de proteínas como primeiro exame renal', False),
       ('Angiotomografia das artérias renais', False),
      ], [
-      ('Os dois pedidos', 'Sedimento manual: procura acantócitos e cilindros que a leitura automatizada pode perder, distinguindo sangramento glomerular de causas urológicas. TC dos seios: sintomas persistentes após dois antibióticos justificam avaliar extensão e complicação, sem atribuir etiologia apenas pelo velamento.'),
-      ('Por que adiar os demais', 'Nova FENa: não resolve a localização; valores baixos também ocorrem na glomerulonefrite. Cintilografia: sem dilatação no ultrassom ou outra pista de obstrução, tem baixo rendimento agora. Eletroforese: não é a primeira resposta à hematúria de evolução rápida. Angio-TC renal: não há quadro de infarto ou doença renovascular, e o contraste acrescenta risco na lesão renal.'),
+      ('Os dois pedidos', 'Sedimento manual: procura acantócitos e cilindros que a leitura automatizada pode perder, distinguindo sangramento glomerular de causas urológicas. TC dos seios: sintomas persistentes após dois antibióticos justificam avaliar extensão e complicação, sem atribuir causa apenas pelo velamento.'),
+      ('Por que adiar os demais', 'FENa: isoladamente não localiza esta lesão; valores baixos também ocorrem na glomerulonefrite. Cintilografia: sem dilatação no ultrassom ou outra pista de obstrução, tem baixo rendimento agora. Eletroforese: não é a primeira resposta à hematúria de evolução rápida. Angio-TC renal: não há quadro de infarto ou doença renovascular, e o contraste acrescenta risco na lesão renal.'),
      ]),
 
     estudo('sedimento', 'Sedimento urinário, leitura manual',
@@ -253,9 +256,7 @@ ETAPAS = [
          ((745, 262), (880, 110), '**Extremidade** arredondada, onde o molde se desprendeu do túbulo.', 12),
         ],
         ['Hemácias dismórficas em 40%, com acantócitos, e cilindros hemáticos '
-         '(laudo do caso).',
-         'A hemácia que se deforma ao atravessar o glomérulo e o cilindro '
-         'formado dentro do túbulo localizam o sangramento no glomérulo.']),
+         '(laudo do caso).']),
 
     estudo('tc_seios', 'Tomografia dos seios da face',
         'Pela obstrução nasal de oito semanas que não cedeu a dois '
@@ -271,16 +272,14 @@ ETAPAS = [
          ((504, 143), (560, 30), '**Septo nasal** íntegro, sem perfuração.', 12),
         ],
         ['Velamento do seio maxilar esquerdo, sem erosão das paredes ósseas. '
-         'Septo nasal íntegro.',
-         'A equipe lê como sinusite maxilar crônica, e ela reforça a hipótese '
-         'de infecção.']),
+         'Septo nasal íntegro.']),
 
     pg('hipotese', 'A hipótese da equipe',
        'Febre, infiltrado bilateral, leucocitose e proteína C reativa de 186 '
        'mg/L num homem com sinusite arrastada. No rim, glomerulonefrite com '
        'cilindros hemáticos. A equipe registra pneumonia grave multilobar com '
        'glomerulonefrite associada à infecção, e endocardite a afastar.',
-       'Desde a chegada recebe oxigênio e monitorização, com avaliação imediata da necessidade de suporte ventilatório. Inicia ceftriaxona 2 g e azitromicina 500 mg ao dia, oxigênio por '
+       'Desde a chegada recebe oxigênio e monitorização, com avaliação imediata da necessidade de suporte ventilatório. Sem aguardar a rodada dirigida, inicia ceftriaxona 2 g e azitromicina 500 mg ao dia, oxigênio por '
        'cateter nasal a 4 L/min, e pede ecocardiograma transtorácico, '
        'complemento e antígenos urinários de pneumococo e legionela.'),
 
@@ -352,9 +351,7 @@ ETAPAS = [
          ((533, 235), (640, 70), 'Na reconstrução coronal, o **pulmão direito** tomado do ápice à base.', -12),
         ],
         ['Opacidades em vidro fosco difusas e bilaterais, com áreas de '
-         'consolidação. Sem nódulos escavados e sem derrame pleural.',
-         'No vidro fosco cabem sangue, água, pus e células; quem escolhe é a '
-         'clínica.']),
+         'consolidação. Sem nódulos escavados e sem derrame pleural.']),
 
     pagina('alveolo', 'Discussão', 'O sangue que não saiu',
         p('A equipe junta a tomografia à evolução do segundo dia e registra '
@@ -378,7 +375,7 @@ ETAPAS = [
         "Piora respiratória no segundo dia",
         "Trinta e seis horas de ceftriaxona e azitromicina, mais oxigênio, mais "
         "hemoptise e 0,9 g/dL a menos de hemoglobina. As culturas ainda não "
-        "têm resultado final. O suporte respiratório e transfusional já está em curso. Qual prioridade etiológica orienta sua conduta?",
+        "têm resultado final. O suporte respiratório e transfusional já está em curso. Qual investigação você prioriza?",
         [
             caminho("Ampliar a cobertura antibiótica",
                     "r_escalona",
@@ -454,7 +451,7 @@ ETAPAS = [
       ('Biópsia do nervo como primeiro tecido', False),
       ('Difusão pulmonar de monóxido de carbono', False),
      ], [
-      ('Exames que mudam o caminho', 'Anti-MBG: identifica uma sobreposição em que a troca plasmática ganha prioridade. Biópsia renal com IF: separa depósitos lineares, granulares e padrão pauci-imune, além de medir atividade e cronicidade. MPO/PR3: acrescentam suporte etiológico ao fenótipo; ANCA isolado não substitui contexto e tecido.'),
+      ('Exames que mudam o caminho', 'Anti-MBG (anticorpo contra a membrana basal glomerular): identifica uma sobreposição em que a troca plasmática ganha prioridade. Biópsia renal com IF: separa depósitos lineares, granulares e padrão pauci-imune, além de medir atividade e cronicidade. MPO/PR3: anticorpos contra proteínas dos neutrófilos, que ajudam a interpretar o conjunto de manifestações; ANCA isolado não substitui contexto e tecido.'),
       ('Exames de menor rendimento agora', 'Repetir C3/C4: já normais, não diferencia com segurança os mecanismos nem exclui imunocomplexos. Biópsia de nervo: pode demonstrar vasculite, mas o rim oferece tecido do órgão ameaçado e classificação por IF. DLCO: pode subir com sangue alveolar, mas não identifica a causa e é pouco viável nesta insuficiência respiratória.'),
      ]),
 
@@ -549,7 +546,7 @@ ETAPAS = [
 
     pagina("diagnostico", "O diagnóstico", "",
         p("Glomerulonefrite crescêntica pauci-imune, anti-MPO de 148 U/mL e "
-          "hemorragia alveolar: é **vasculite associada ao ANCA**, no fenótipo "
+          "hemorragia alveolar: é **vasculite associada ao ANCA**, no conjunto de manifestações "
           "de **poliangiite microscópica**, com síndrome pulmão-rim. A púrpura "
           "das pernas e a mononeurite múltipla são a mesma inflamação na pele e "
           "nos vasos do nervo. O anticorpo ativa neutrófilos já estimulados, "
@@ -874,8 +871,7 @@ ETAPAS = [
             'A creatinina se lê contra o basal do paciente: de 1,0 para 1,4 '
             'mg/dL é perder um terço da filtração (por CKD-EPI 2021, de 85 '
             'para 56 mL/min/1,73 m²), mesmo perto da referência.',
-            'FENa baixa com hematúria, proteinúria e cilindros hemáticos não '
-            'é pré-renal: na glomerulonefrite o túbulo ainda reabsorve sódio.',
+            'Hematúria, proteinúria e cilindros hemáticos exigem investigação glomerular. A FENa isolada não substitui o sedimento nem confirma mecanismo pré-renal.',
             'Hemoglobina caindo sem sangramento externo, hipoxemia que '
             'responde mal ao oxigênio e vidro fosco difuso são hemorragia '
             'alveolar até prova em contrário; a hemoptise falta em um terço.',

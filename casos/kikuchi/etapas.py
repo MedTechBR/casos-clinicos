@@ -117,31 +117,36 @@ ETAPAS = [
         ex('Leucócitos', '2.900/mm³', '4.000–11.000/mm³', True),
         ex('Neutrófilos / linfócitos / monócitos', '1.450 / 1.100 / 260 por mm³',
            'N 1.800–7.500 · L 1.000–4.000', True),
-        ex('Esfregaço', 'Linfócitos reativos ocasionais, 4% · sem blastos',
-           '—'),
         ex('Plaquetas', '188.000/mm³', '150.000–450.000/mm³'),
-        ex('VHS / proteína C reativa', '46 mm/h / 24 mg/L', 'até 20 mm/h · até 5 mg/L', True),
-        ex('Desidrogenase láctica', '330 U/L', '120–250 U/L', True),
+        ex('Proteína C reativa', '24 mg/L', 'até 5 mg/L', True),
     ], introducao='Colhidos na primeira consulta, no mesmo dia da '
                   'ultrassonografia do pescoço e da radiografia de tórax.'),
 
     painel('res1b', 'Primeiros exames', 'Bioquímica e urina', [
-        ex('AST / ALT', '42 / 47 U/L', 'até 32 / 33 U/L', True),
-        ex('Fosfatase alcalina / GGT', '88 / 30 U/L', 'até 104 / 40 U/L'),
         ex('Creatinina', '0,7 mg/dL', '0,5–1,1 mg/dL'),
         ex('Urina tipo 1', 'Densidade 1.018 · sem proteína, hemácias ou leucócitos', 'normal'),
     ]),
+
+    pg('reexame_inicial', 'Depois dos exames básicos',
+ 'Enquanto o hemograma fica disponível, Bianca continua com febre ao fim da tarde e desconforto para virar o pescoço. Permanece hidratada, sem dificuldade para engolir ou respirar. A equipe revê pele, articulações e focos locais, sem encontrar uma explicação nova.',
+ 'A anemia leve associada à leucopenia muda a pergunta: além da adenopatia, é preciso investigar as duas linhagens. O esfregaço, a LDH, as transaminases e a avaliação infecciosa e autoimune são acrescentados agora, na mesma etapa de atendimento; não se espera uma manifestação cutânea para justificar FAN e complemento.'),
 
     Q('p2', 2, 'Quais três exames melhor investigam causas distintas deste quadro agora?',
  [('FAN', True), ('HIV de quarta geração', True), ('EBV anti-VCA IgM', True),
   ('Anti-CCP', False), ('ANCA', False), ('PET-CT', False)],
  [('FAN', 'A anemia associada à leucopenia, febre e adenopatia justifica investigar autoimunidade desde agora, mesmo sem artrite ou lesão cutânea. C3 e C4, urina e função renal compõem a avaliação clínica; essa avaliação deve ocorrer em paralelo à investigação infecciosa.'),
   ('HIV e EBV', 'São causas possíveis de adenopatia com alterações hematológicas. O teste de HIV deve considerar a janela de exposição. No EBV, a IgM precisa ser interpretada com IgG e EBNA: um anticorpo positivo isolado não estabelece a causa da febre.'),
-  ('Outras opções', 'Anti-CCP responde a uma suspeita de artrite reumatoide que não se apresenta aqui. ANCA tem maior valor diante de manifestações compatíveis com vasculite, ausentes até agora. PET-CT mostra atividade tanto em inflamação quanto em neoplasia e não define a etiologia do linfonodo. Toxoplasmose e CMV também podem justificar investigação dirigida.')]),
+  ('Outras opções', 'Anti-CCP responde a uma suspeita de artrite reumatoide que não se apresenta aqui. ANCA tem maior valor diante de manifestações compatíveis com vasculite, ausentes até agora. PET-CT mostra atividade tanto em inflamação quanto em neoplasia e não define a causa do linfonodo. Toxoplasmose e CMV também podem justificar investigação dirigida.')]),
 
     pg('coleta_dirigida', 'Investigação',
- 'A equipe colhe os exames selecionados. Acrescenta C3 e C4, sorologias para CMV e toxoplasmose e os marcadores complementares de EBV. A anemia é investigada com reticulócitos, bilirrubinas, haptoglobina e Coombs direto; LDH elevada não demonstra hemólise.',
+ 'A equipe colhe os exames selecionados. Acrescenta C3 e C4, sorologias para CMV e toxoplasmose e os marcadores complementares de EBV. Solicita revisão do esfregaço, LDH e transaminases. A anemia é investigada com reticulócitos, bilirrubinas, haptoglobina e Coombs direto; LDH isolada não demonstra hemólise.',
  'A ultrassonografia cervical e a radiografia de tórax, pedidas na primeira consulta, ficam disponíveis. Bianca continua com febre ao final do dia, mas não há instabilidade nem dificuldade para engolir.'),
+
+    painel('complemento_hematologico', 'Exames dirigidos', 'Após as citopenias', [
+        ex('Esfregaço', 'Linfócitos reativos ocasionais, 4% · sem blastos', '—'),
+        ex('Desidrogenase láctica', '330 U/L', '120–250 U/L', True),
+        ex('AST / ALT', '42 / 47 U/L', 'até 32 / 33 U/L', True),
+    ], introducao='Primeiros resultados da complementação. Sorologias, FAN, complemento e marcadores da anemia seguem para conferência no retorno.'),
 
     estudo('us_cervical', 'Ultrassonografia do pescoço',
            'Pedida na primeira consulta para avaliar os linfonodos palpados. '
@@ -160,9 +165,7 @@ ETAPAS = [
          'hipoecoico, hilo central ecogênico preservado e vascularização hilar '
          'ao Doppler. Não há área de liquefação visível neste linfonodo. '
          'A imagem não apresenta medidas assinaladas.',
-         'Forma oval, hilo preservado e fluxo hilar são o aspecto de um '
-         'linfonodo reacional. O ultrassom tranquiliza, mas não afasta linfoma '
-         'nem tuberculose no início.']),
+         'Neste corte, o eixo longo predomina sobre o curto e o hilo permanece visível.']),
 
     estudo('rx_torax', 'Radiografia de tórax',
            'Pedida na mesma consulta pela febre com sudorese e perda de peso: '
@@ -177,18 +180,16 @@ ETAPAS = [
         ],
         ['Pulmões sem opacidades, mediastino e hilos normais, seios '
          'costofrênicos livres.',
-         'Não há adenomegalia mediastinal visível nem lesão pulmonar que '
-         'aponte tuberculose ou linfoma. A radiografia simples não vê '
-         'linfonodos pequenos.']),
+         'Não há alargamento mediastinal ou hilar visível nesta radiografia.']),
 
     bifurcacao('b_inicial', 'Decisão', 'Continuação da investigação',
- 'Os exames etiológicos ainda estão em processamento. Qual estratégia de imagem você escolhe?', [
- caminho('Tomografia de tórax', 'tc_precoce', 'Pode procurar adenopatias profundas não visíveis na radiografia. A utilidade deve ser ponderada com a evolução, a radiação e a possibilidade de esclarecer primeiro os exames já colhidos.'),
- caminho('Reavaliação clínica em uma semana', 'retorno_programado', 'Um retorno curto é possível em paciente estável, com investigação em andamento. Crescimento, piora do estado geral ou sintomas compressivos antecipam a avaliação; observar não significa encerrar o caso.')]),
+ 'Os exames para investigar a causa ainda estão em processamento. Qual estratégia de imagem você escolhe?', [
+ caminho('Tomografia de tórax', 'tc_precoce', 'Pode procurar adenopatias profundas não visíveis na radiografia. Forma oval, hilo preservado e fluxo hilar favorecem morfologia reacional, mas não excluem linfoma ou tuberculose. A utilidade da TC depende da evolução, da radiação e dos exames em andamento.'),
+ caminho('Reavaliação clínica em uma semana', 'retorno_programado', 'Um retorno curto é possível em paciente estável, com investigação em andamento. A aparência reacional ao ultrassom e uma radiografia normal não excluem linfoma ou tuberculose. Crescimento, piora do estado geral ou sintomas compressivos antecipam a avaliação; observar não significa encerrar o caso.')]),
 
     pg('tc_precoce', 'Tomografia de tórax',
  'A tomografia não mostra linfonodos mediastinais ou hilares aumentados, lesões pulmonares ou derrame. O exame não identifica outra área para amostragem. Os linfonodos cervicais permanecem palpáveis e dolorosos.',
- 'Bianca pergunta se isso afasta câncer. A ausência de alterações torácicas não exclui uma doença restrita ao pescoço. A equipe mantém a investigação etiológica e o retorno combinado.', segue='hipotese'),
+ 'Bianca pergunta se isso afasta câncer. A ausência de alterações torácicas não exclui uma doença restrita ao pescoço. A equipe mantém a investigação da causa e o retorno combinado.', segue='hipotese'),
 
     pg('retorno_programado', 'Retorno combinado',
  'A equipe combina retorno em uma semana, conferência dos exames e reexame das cadeias linfonodais. Orienta Bianca a antecipar a consulta se houver piora importante, dificuldade para engolir ou respirar, sangramento ou aumento rápido do pescoço.',
@@ -206,7 +207,6 @@ ETAPAS = [
         ex('CMV: IgM / IgG', 'Não reagente / reagente', '—', True),
         ex('Toxoplasmose: IgM / IgG', 'Não reagente / não reagente', 'não reagente'),
         ex('HIV, teste de quarta geração', 'Não reagente', 'não reagente'),
-        ex('VDRL', 'Não reagente', 'não reagente'),
     ], introducao='Coleta na segunda semana de febre; resultados revistos no retorno, no 19.º dia.'),
 
     painel('citopenias_iniciais', 'Investigação complementar', 'Autoimunidade e anemia', [
@@ -253,7 +253,7 @@ ETAPAS = [
   ('Reação medicamentosa', False)],
  [('Persistência e progressão', 'Linfoma e tuberculose ganglionar continuam relevantes pelo crescimento e pelos sintomas constitucionais. A prova tuberculínica não demonstra doença ativa, e linfonodo doloroso não exclui linfoma.'),
   ('Novo componente articular', 'Artralgias, febre e citopenias justificam rever LES. FAN não reagente, complemento preservado e urina normal reduzem o suporte atual, mas uma mudança clínica exige nova avaliação. As artralgias sem sinovite não confirmam doença autoimune.'),
-  ('Demais hipóteses', 'O padrão sorológico enfraquece uma infecção primária recente por EBV. Não há coleção ou foco local que favoreça supuração. A febre e a adenopatia começaram antes da amoxicilina; uma reação ao fármaco poderia explicar sintomas superpostos, mas não integra bem a trajetória inteira. A seleção hierarquiza as opções apresentadas, sem excluir outras infecções ou causas inflamatórias.')]),
+  ('Demais hipóteses', 'O padrão sorológico enfraquece uma infecção primária recente por EBV. Não há coleção ou foco local que favoreça supuração. A febre e a adenopatia começaram antes da amoxicilina; uma reação ao fármaco poderia explicar sintomas superpostos, mas não integra bem a trajetória inteira. A seleção ordena por prioridade as opções apresentadas, sem excluir outras infecções ou causas inflamatórias.')]),
 
     pg('reavaliacao_articular', 'Reavaliação',
  'A equipe revê os exames colhidos: FAN não reagente, C3 e C4 preservados e ausência de sinais laboratoriais de hemólise. A urina e a creatinina continuam normais. Pelo novo componente articular, complementa a avaliação com anti-DNA nativo, que não é reagente.',
@@ -310,7 +310,7 @@ ETAPAS = [
 
     pg('tecido2', 'Amostra do linfonodo',
        'O cirurgião retira o linfonodo cervical mais representativo. A amostra é distribuída conforme o plano acordado: histologia e imuno-histoquímica, citometria de fluxo e investigação microbiológica.',
-       'A citometria não identifica população clonal no material analisado; o TRM-TB não detecta micobactéria. Esses resultados, isoladamente, não excluem linfoma nem tuberculose ganglionar. O patologista pede correlação com a arquitetura e a microbiologia.'),
+       'A citometria não identifica população clonal no material analisado; o TRM-TB não detecta micobactéria. Esses resultados, isoladamente, não excluem linfoma nem tuberculose ganglionar. O patologista precisa avaliar como as células estão organizadas no linfonodo e reunir esse dado à pesquisa de infecção. Se esses estudos não forem feitos no serviço, a peça será encaminhada a um laboratório de referência.'),
 
     estudo('arquitetura', 'Biópsia: pequeno aumento',
            'Lâmina de referência de outro paciente, com o padrão que o '
@@ -340,7 +340,7 @@ ETAPAS = [
          ((655, 518), (860, 430), '**Histiócito** de núcleo claro, ovalado ou reniforme, com citoplasma pálido.', -12),
          ((845, 345), (760, 250), 'Fundo **eosinofílico e granular** de necrose, sem neutrófilos.', -12),
         ],
-        ['Necrose paracortical com abundante cariorrexe e histiócitos, sem '
+        ['Áreas de morte celular na região paracortical, com muitos fragmentos de núcleos (cariorrexe) e histiócitos, sem '
          'neutrófilos e sem granulomas.',
          'Não apresenta o padrão granulomatoso caseoso típico. Isso enfraquece, mas não exclui tuberculose; a conclusão depende da amostra completa e da microbiologia.']),
 
@@ -349,7 +349,7 @@ ETAPAS = [
   ('PET-CT', False), ('Nova sorologia para EBV', False), ('Biópsia de medula óssea', False)],
  [('Tecido', 'O painel imuno-histoquímico ajuda a caracterizar as células junto às áreas de necrose. A cultura mantém aberta a investigação de tuberculose: ausência de granulomas e testes negativos isolados não a excluem. Nenhum marcador imuno-histoquímico confirma sozinho a doença rara.'),
   ('Correlação clínica', 'A linfadenite do lúpus também pode ter necrose. FAN e complemento já foram investigados diante das citopenias; a amostra será correlacionada com essa avaliação e com pele, articulações e urina. Não se espera uma nova manifestação para começar a pensar em autoimunidade.'),
-  ('Demais exames', 'PET-CT é inespecífico para essa distinção. Sem nova exposição ou mudança de cronologia, repetir EBV não resolve o padrão do tecido. A leucopenia segue em acompanhamento, mas sem sinais novos de doença medular a medula não substitui a integração da amostra excisional.')]),
+  ('Demais exames', 'PET-CT é inespecífico para essa distinção. Sem nova exposição ou mudança de cronologia, repetir EBV não resolve o padrão do tecido. A leucopenia segue em acompanhamento, mas sem sinais novos de doença medular a medula não substitui a integração do linfonodo retirado por cirurgia.')]),
 
     painel('res3', 'Complemento da biópsia', 'Tecido e autoanticorpos', [
         ex('Imuno-histoquímica', 'Histiócitos CD68 e mieloperoxidase positivos · '
@@ -361,7 +361,7 @@ ETAPAS = [
     ], introducao='FAN e C3/C4 já haviam sido avaliados na investigação das citopenias. O anti-DNA, acrescentado após o aparecimento das artralgias, também não foi reagente. As culturas ainda estão em andamento.'),
 
     pg('diagnostico', 'Discussão anatomoclínica',
-       'O hematopatologista integra a amostra excisional à evolução e conclui que o conjunto é compatível com doença de Kikuchi–Fujimoto, também chamada linfadenite necrosante histiocítica. A conclusão depende da amostra completa e de sua correlação com a avaliação clínica.',
+       'O hematopatologista integra o linfonodo retirado por cirurgia à evolução e conclui que o conjunto é compatível com doença de Kikuchi–Fujimoto, também chamada linfadenite necrosante histiocítica. A conclusão depende da amostra completa e de sua correlação com a avaliação clínica.',
        'O diagnóstico reúne três componentes: febre oscilante, linfonodos cervicais dolorosos e artralgias transitórias; leucopenia e investigação inicial sem causa definida; e necrose com fragmentos nucleares e histiócitos, sem padrão supurativo. Nenhum desses componentes clínicos é específico. A arquitetura e os estudos complementares do tecido dão sustentação ao diagnóstico.',
        'A investigação não sustenta infecção supurativa, linfoma ou linfadenite tuberculosa. As culturas ainda serão acompanhadas. FAN e anti-DNA não reagentes, complemento preservado e ausência de outros achados específicos reduzem o suporte a LES, sem representar exclusão definitiva.',
        'A conclusão é de alta compatibilidade anatomoclínica, não um diagnóstico por exclusão nem um marcador exclusivo. Ela orienta o acompanhamento enquanto as culturas terminam. Piora, progressão das citopenias ou manifestações novas exigem reavaliação.'),

@@ -115,14 +115,10 @@ ETAPAS = [
                   'da unidade básica de três semanas antes. Depois de 50 mL de '
                   'glicose a 50%, ela fica desperta e conversa.'),
 
-    painel('res1b', 'Primeiros exames', 'Gasometria e urina', [
+    painel('res1b', 'Avaliação inicial do choque', 'Gasometria e urina', [
         ex('Gasometria arterial em ar ambiente', 'pH 7,31 · pCO₂ 33 mmHg · HCO₃ 16 mmol/L · pO₂ 92 mmHg · lactato 2,4 mmol/L', '—', True),
-        ex('Osmolalidade sérica', '264 mOsm/kg', '275–295 mOsm/kg', True),
         ex('Urina', 'Densidade 1.022 · sem proteína, sangue ou leucócitos · raros cilindros hialinos', '—'),
-        ex('Osmolalidade urinária', '418 mOsm/kg', '—'),
-        ex('Sódio / potássio / cloro urinários', '62 / 14 / 58 mmol/L', '—'),
-        ex('Creatinina urinária · FENa', '64 mg/dL · 1,4%', '—'),
-    ]),
+    ], introducao='Gasometria e lactato pela hipoperfusão; urina na avaliação da função renal. Não se espera este painel para repor glicose e volume.'),
 
     estudo('ecg', 'Eletrocardiograma',
            'Feito à beira do leito pelo potássio de 6,1, com ela em taquicardia '
@@ -138,20 +134,25 @@ ETAPAS = [
         ],
         ['Ondas T altas, simétricas e de base estreita, mais evidentes de V3 a '
          'V5, com QRS estreito.',
-         'É a primeira alteração da hipercalemia. Com potássio de 6,1 e '
-         'alteração no traçado, o cálcio endovenoso protege a membrana '
-         'cardíaca enquanto a causa é tratada.']),
+         'O laudo descreve alterações de repolarização, com duração do QRS preservada.']),
 
     pg('primeira_resposta', 'Vinte minutos depois',
  'Após o primeiro litro de salina, a pressão chega a 92/58, a perfusão melhora e Marta conversa; ainda não consegue ficar em pé. O ECG da chegada motivou gluconato de cálcio a 10%, 30 mL EV em 10 minutos, com monitorização. A glicose segue em infusão.',
- 'Para reduzir o potássio, recebe insulina regular com glicose após corrigir a hipoglicemia, conforme protocolo local. A glicemia é medida repetidamente por pelo menos seis horas, com reposição adicional de glicose pelo alto risco de nova queda. Insulina não é um erro por si: exige proteção e vigilância. O cálcio protege o coração, mas não remove potássio.'),
+ 'Para reduzir o potássio, recebe insulina regular com glicose após corrigir a hipoglicemia, conforme protocolo local. A glicemia é medida repetidamente por pelo menos seis horas, com reposição adicional de glicose pelo alto risco de nova queda. Insulina não é um erro por si: exige proteção e vigilância. O cálcio protege o coração, mas não remove potássio.',
+ 'A melhora circulatória foi parcial. O sódio baixo, a alteração do potássio e a função renal motivam agora estudos de osmolalidade e eletrólitos urinários, além do controle seriado dos valores sanguíneos. Não se presume que todo o distúrbio decorra da diarreia.'),
+
+    painel('res_sodio', 'Investigação dirigida', 'Água e eletrólitos', [
+        ex('Osmolalidade sérica', '264 mOsm/kg', '275–295 mOsm/kg', True),
+        ex('Osmolalidade urinária', '418 mOsm/kg', '—'),
+        ex('Sódio / potássio / cloro urinários', '62 / 14 / 58 mmol/L', '—'),
+    ], introducao='Solicitados após Na 124, K 6,1 e a primeira reavaliação clínica. Para interpretar a perda renal de sal, o laboratório utiliza as amostras iniciais de sangue e urina, anteriores à salina. Estes resultados não condicionam a ressuscitação nem a coleta hormonal indicada na reavaliação seguinte.'),
 
     Q('p1', 1, 'Diarreia recente, Na 124, K 6,1 e hipoglicemia: quais duas hipóteses precisam permanecer prioritárias além da perda intestinal?', [
  ('Insuficiência adrenal primária', True), ('Sepse com foco gastrointestinal', True),
  ('Síndrome de secreção inapropriada de ADH isolada', False),
  ('Efeito isolado da fluoxetina', False), ('Insuficiência cardíaca descompensada', False)
  ], [('Hierarquia', 'Hipovolemia é real, mas hipercalemia, hipoglicemia e distúrbios prévios à diarreia exigem investigar insuficiência adrenal desde já. Infecção pode ser o gatilho e também causa concorrente de choque; colher culturas e avaliar antibiótico conforme suspeita, sem esperar exclusão de uma hipótese para tratar outra.'),
- ('Limites', 'Fluoxetina pode contribuir para hiponatremia, mas não explica este choque com retenção de potássio. Urina concentrada também ocorre por ADH estimulado pela hipovolemia; não basta para chamar SIADH. O gap urinário positivo sugere excreção de amônio inadequada, sem provar isoladamente acidose tubular.')]),
+ ('Limites', 'Fluoxetina pode contribuir para hiponatremia, mas não explica este choque com retenção de potássio. Urina concentrada também ocorre por ADH estimulado pela hipovolemia; não basta para chamar SIADH. O gap urinário de +18 (62 + 14 − 58) sugere excreção de amônio inadequada, sem provar isoladamente acidose tubular.')]),
 
     pg('recorrencia', 'Durante a primeira hora',
  'Os vômitos cessam com o antiemético e a pressão melhorou brevemente, mas cai outra vez a 82/48. Marta fica nauseada ao elevar a cabeceira; glicemia de 62 apesar da reposição. Não há nova evacuação, perda externa importante ou crepitações. A equipe percebe que cessar as perdas não restaurou a circulação.',
@@ -244,7 +245,7 @@ ETAPAS = [
          'dentro, em quem quase não sai de casa.']),
 
     pg('tratado', 'Seis horas depois',
- 'Marta está orientada, pede comida e consegue sentar sem a sensação de desmaio. Pressão 108/64, sem vasopressor; a infusão de glicose pode ser reduzida. O abdome já não dói. A resposta favorece a hipótese, sem confirmar sozinha sua etiologia.',
+ 'Marta está orientada, pede comida e consegue sentar sem a sensação de desmaio. Pressão 108/64, sem vasopressor; a infusão de glicose pode ser reduzida. O abdome já não dói. A resposta favorece a hipótese, sem confirmar sozinha sua causa.',
  'A diurese começa a aumentar. A prioridade passa da restauração da perfusão para acompanhar água, sódio e potássio; a equipe não mantém automaticamente o mesmo volume de soro da chegada.'),
 
     painel('res2', 'Resultados', 'A amostra basal da crise', [
@@ -252,7 +253,7 @@ ETAPAS = [
         ex('ACTH', '**480 pg/mL**', '7–63 pg/mL', True),
     ], introducao='Amostra colhida antes da primeira dose de hidrocortisona.'),
 
-    Q('p2', 2, 'Cortisol 2,1 µg/dL em choque e ACTH 480 pg/mL. Quais três dosagens complementares têm prioridade para etiologia e função mineralocorticoide?', [
+    Q('p2', 2, 'Cortisol 2,1 µg/dL em choque e ACTH 480 pg/mL. Quais três dosagens complementares têm prioridade para causa e função mineralocorticoide?', [
  ('Renina plasmática', True), ('Aldosterona plasmática', True), ('Anticorpo anti-21-hidroxilase', True),
  ('Prolactina', False), ('Metanefrinas livres plasmáticas', False), ('Novo cortisol sob hidrocortisona', False)
  ], [('Perguntas diferentes', 'Renina e aldosterona devem ser interpretadas em conjunto, considerando postura, potássio, volume, medicações e momento da coleta. O anticorpo pesquisa autoimunidade; vitiligo e história familiar a favorecem. As três dosagens aparecem na narrativa mesmo se não foram selecionadas.'),
@@ -264,7 +265,7 @@ ETAPAS = [
  ex('Anticorpo anti-21-hidroxilase', 'Reagente', 'não reagente', True),
  ex('TSH / T4 livre', '6,8 µUI/mL / 1,0 ng/dL', '0,4–4,0 / 0,9–1,7', True),
  ex('Anti-TPO', '340 UI/mL', 'até 35 UI/mL', True)
- ], introducao='Resumo etiológico com laudos liberados ao longo dos dias seguintes; depois retomaremos a evolução das primeiras 24 horas. Renina e aldosterona vieram de alíquotas colhidas antes da reposição hormonal, sem atrasá-la; a reavaliação longitudinal considerará o tratamento e o estado volêmico.'),
+ ], introducao='Resumo da causa com laudos liberados ao longo dos dias seguintes; depois retomaremos a evolução das primeiras 24 horas. Renina e aldosterona vieram de alíquotas colhidas antes da reposição hormonal, sem atrasá-la; a reavaliação longitudinal considerará o tratamento e o estado volêmico.'),
 
     pg('virada', 'Integração diagnóstica',
  'O conjunto estabelece insuficiência adrenal primária autoimune, doença de Addison, descompensada por provável gastroenterite. Sem cortisol, há menor resposta vascular, tendência à hipoglicemia e maior estímulo de ADH; sem aldosterona, perda renal de sal e dificuldade de eliminar potássio. O ACTH elevado ajuda a explicar pigmentação progressiva.',

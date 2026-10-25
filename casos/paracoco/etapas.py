@@ -117,21 +117,27 @@ ETAPAS = [
         ex('Hemoglobina / hematócrito', '11,6 g/dL / 35% · VCM 86 fL', 'Hb 13,5–17,5 g/dL', True),
         ex('Leucócitos', '9.400/mm³ · neutrófilos 68% · eosinófilos 6% {{(564/mm³)}}', '4.000–11.000 · eos até 500', True),
         ex('Plaquetas', '412.000/mm³', '150.000–450.000/mm³'),
-        ex('VHS / proteína C reativa', '62 mm/h / 38 mg/L', 'até 20 / até 5', True),
+        ex('Proteína C reativa', '38 mg/L', 'até 5 mg/L', True),
         ex('Sódio / potássio', '133 / 5,0 mmol/L', '135–145 / 3,5–5,1', True),
         ex('Ureia / creatinina', '30 / 0,9 mg/dL {{(TFG 103, CKD-EPI 2021)}}', 'até 42 / 0,7–1,3'),
-        ex('Proteínas totais / albumina', '7,9 / 3,1 g/dL {{(globulinas 4,8)}}', '6,0–8,0 / 3,5–5,0', True),
-        ex('AST / ALT / fosfatase alcalina', '28 / 22 / 96 U/L', 'até 40 / 41 / 129'),
         ex('Glicemia de jejum', '84 mg/dL', '70–99 mg/dL'),
     ], introducao='Colhidos na primeira consulta, com a nova amostra de escarro '
                   'para cultura de micobactérias.'),
 
-    painel('res1b', 'Primeiros exames', 'Gasometria e outros', [
+    painel('res1b', 'Primeiros exames', 'Urina', [
+        ex('Urina', 'Sem alterações', '—'),
+    ]),
+
+    pg('reavaliacao_basica', 'Reavaliação após a rotina',
+ 'Valdir continua precisando parar ao atravessar o corredor, e a oximetria repetida em repouso permanece em 93%. A equipe revê os estertores e a perda de peso; a anemia leve, sozinha, não explica toda a limitação. Não há instabilidade ou estridor.',
+ 'A dispneia com saturação reduzida justifica gasometria e radiografia na mesma avaliação. Pela associação de doença respiratória crônica, emagrecimento e lesões mucosas, solicita-se HIV. Proteínas séricas e enzimas hepáticas complementam a avaliação nutricional e sistêmica. A investigação de micobactérias já começou na unidade básica e continua em paralelo.'),
+
+    painel('avaliacao_dirigida', 'Exames dirigidos', 'Respiração e doença sistêmica', [
         ex('Gasometria arterial em ar ambiente', 'pH 7,45 · pCO₂ 33 · pO₂ 64 mmHg · HCO₃ 22,5 · SatO₂ 93%', '—', True),
         ex('Teste rápido para HIV', 'Não reagente', 'não reagente'),
-        ex('Urina', 'Sem alterações', '—'),
-        ex('Eletrocardiograma', 'Ritmo sinusal, 92 bpm, sem alterações', '—'),
-    ]),
+        ex('Proteínas totais / albumina', '7,9 / 3,1 g/dL {{(globulinas 4,8)}}', '6,0–8,0 / 3,5–5,0', True),
+        ex('AST / ALT / fosfatase alcalina', '28 / 22 / 96 U/L', 'até 40 / 41 / 129'),
+    ], introducao='Complementação pedida após o reexame, ainda na primeira avaliação; sem aguardar progressão da dispneia.'),
 
     Q('p1', 1,
       'Qual conclusão a gasometria permite antes de atribuir a hipoxemia a uma doença específica?', [
@@ -167,7 +173,7 @@ ETAPAS = [
  'Com analgesia e alimentação macia, Valdir consegue terminar uma refeição. A ferida continua endurecida e sangra ao escovar os dentes. Ao atravessar o corredor, precisa parar para recuperar o fôlego; a melhora da boca não recuperou sua capacidade de esforço.',
  'Na revisão do atendimento anterior, conta que a nistatina não mudou a lesão. A equipe organiza avaliação em hospital-dia, orientação nutricional e vigilância respiratória, sem atribuir todos os sintomas à dor ao comer. A hidroclorotiazida é suspensa diante do sódio baixo e da pressão sem elevação.'),
 
-    Q('p2', 2, 'Quais dois exames etiológicos você prioriza com escarro disponível e lesão oral acessível?',
+    Q('p2', 2, 'Quais dois exames para investigar a causa você prioriza com escarro disponível e lesão oral acessível?',
  [('Exame micológico direto do escarro', True), ('Biópsia da lesão oral', True), ('Lavado broncoalveolar', False), ('Biópsia laríngea sob anestesia geral', False), ('Tomografia de tórax', False)],
  [('Amostras', 'Exame direto pode identificar fungos; a biópsia oral discrimina infecção e neoplasia e permite pesquisa microbiológica. A cultura de micobactérias já está em curso. Patologia e laboratório combinam a distribuição e o transporte antes da coleta.'),
  ('Prioridade relativa', 'Lavado ou tecido laríngeo podem ser necessários se houver discordância ou amostras insuficientes. A lesão oral oferece acesso menos complexo agora. TC caracteriza extensão, mas não substitui identificação do agente. Os exames indicados serão feitos mesmo que a seleção do aluno seja incompleta.')]),
@@ -217,7 +223,7 @@ ETAPAS = [
  ], introducao='Coletas realizadas antes da hidrocortisona. O serviço interpreta o pico pelo ensaio utilizado, sem aplicar um corte universal de 18 a qualquer método.'),
 
     pg('reposicao', 'Uma disfunção tratada, causa ainda em investigação',
- 'A combinação de resposta inadequada ao estímulo e ACTH alto sustenta insuficiência adrenal primária. Inicia-se hidrocortisona oral em dose ajustada ao estresse da doença, com plano de redução para reposição fisiológica, usualmente 15–25 mg/dia fracionados. A endocrinologia acrescenta fludrocortisona 0,05 mg/dia pela deficiência mineralocorticoide, com controle de pressão, sódio e potássio.',
+ 'A combinação de resposta inadequada ao estímulo e ACTH alto sustenta insuficiência adrenal primária. O teste de estímulo foi realizado no centro de referência. Se não houver acesso, a equipe usa cortisol da manhã e ACTH, discute a necessidade de confirmação com endocrinologia e não espera por esse teste para tratar uma possível crise. Inicia-se hidrocortisona oral em dose ajustada ao estresse da doença, com plano de redução para reposição fisiológica, usualmente 15–25 mg/dia fracionados. A endocrinologia acrescenta fludrocortisona 0,05 mg/dia pela deficiência mineralocorticoide, com controle de pressão, sódio e potássio.',
  'No dia seguinte, Valdir levanta sem tontura e volta a beber água com facilidade. As lesões, a rouquidão e a limitação respiratória continuam. A resposta à reposição não identifica a causa da adrenal; tuberculose e micose sistêmica permanecem em avaliação. Se houver deterioração, o local de cuidado será revisto.'),
 
     bifurcacao('b1', 'Decisão', 'Qual tecido primeiro?',
@@ -255,7 +261,7 @@ ETAPAS = [
          'A morfologia é característica de Paracoccidioides spp. no contexto clínico; não identifica a espécie dentro do gênero.']),
 
     pg('virada', 'Integração diagnóstica',
- 'Exame direto e histologia estabelecem paracoccidioidomicose crônica multifocal: pulmão, mucosas, pele e linfonodos. A insuficiência adrenal primária é compatível com acometimento associado, embora a etiologia adrenal não tenha sido comprovada por biópsia própria.',
+ 'Exame direto e histologia estabelecem paracoccidioidomicose crônica multifocal: pulmão, mucosas, pele e linfonodos. A insuficiência adrenal primária é compatível com acometimento associado, embora a causa adrenal não tenha sido comprovada por biópsia própria.',
  'Exposição ao solo e atividade rural sustentam a epidemiologia; a data da infecção não pode ser deduzida da lembrança de uma derrubada. A identificação morfológica não distingue as espécies. Sorologia pode ajudar a acompanhar, mas depende do antígeno e tem limitações, inclusive nas infecções por P. lutzii.',
  'O agente no tecido não exclui coinfecção por tuberculose nem carcinoma concomitante. A cultura respiratória para micobactérias segue em andamento e uma lesão residual ou discordante requer nova avaliação.'),
 
@@ -315,7 +321,7 @@ ETAPAS = [
     pagina('retrospectiva', 'Pontos de ensino', '', pontos(
  'Pulmão, boca e laringe exigem integrar micose, tuberculose e neoplasia; uma hipótese pode não explicar todos os sítios.',
  'Melhorar a alimentação não recupera automaticamente a troca gasosa. Odinófagia nova exige examinar a via aérea.',
- 'Hiperpigmentação, ortostatismo e alterações eletrolíticas motivam avaliar a adrenal antes da confirmação etiológica.',
+ 'Hiperpigmentação, ortostatismo e alterações eletrolíticas motivam avaliar a adrenal antes da confirmação da causa.',
  'Amostra acessível e exame direto podem antecipar o diagnóstico. Cultura pendente não deve adiar tratamento quando há agente demonstrado.',
  'A resposta das lesões, da voz, do peso e da função pulmonar ocorre em ritmos diferentes. Interações e critérios de suspensão precisam de acompanhamento.'), so_kicker=True),
 

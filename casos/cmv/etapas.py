@@ -113,33 +113,37 @@ ETAPAS = [
         ex('Proteína C-reativa', '8,6 mg/dL', 'até 0,5 mg/dL', True),
     ], introducao='Duas hemoculturas são colhidas na chegada.'),
 
-    painel('res1b', 'Primeiros exames', 'Fezes, urina e nível do tacrolimo', [
-        ex('Tacrolimo, nível de vale', '14 ng/mL', 'alvo da equipe 5–8 ng/mL', True),
+    painel('res1b', 'Primeiros exames', 'Urina', [
         ex('Urina', 'Densidade 1.024 · sem proteína, sangue ou leucócitos · sedimento sem cilindros', '—'),
-        ex('Sódio / creatinina urinários', '18 mmol/L / 90 mg/dL · FENa 0,3%', '—', True),
-        ex('Sódio / potássio fecais', '90 / 35 mmol/L', '—', True),
-        ex('Calprotectina fecal', '640 µg/g', 'até 50 µg/g', True),
+    ], introducao='Urina avaliada diante da menor diurese e disfunção do enxerto.'),
+
+    pg('reavaliacao_perdas', 'Reavaliação durante a hidratação',
+       'Após a reposição inicial, a pressão sobe e a tontura diminui, mas Helena volta a evacuar e tem cólica. Mantém mucosas secas e não consegue compensar todas as perdas por boca. A creatinina acima da basal torna necessária a revisão da exposição ao tacrolimo.',
+       'Solicitam-se nível de vale do tacrolimo e investigação de fezes, pela diarreia febril sob imunossupressão e exposição recente a antibiótico. A febre e as citopenias também justificam investigação viral dirigida desde o primeiro atendimento; esses pedidos são feitos em paralelo, sem esperar os exames fecais.'),
+
+    painel('diarreia_dirigida', 'Investigação dirigida', 'Fezes e exposição ao tacrolimo', [
+        ex('Tacrolimo, nível de vale', '14 ng/mL', 'alvo da equipe 5–8 ng/mL', True),
         ex('//Clostridioides difficile//: GDH e toxina', 'Negativos', 'negativos'),
         ex('Painel molecular gastrointestinal', 'Nenhum agente detectado', 'negativo'),
-    ]),
+    ], introducao='A interpretação considera quais agentes o painel local efetivamente pesquisa. Os resultados chegam ao longo do primeiro dia, com hidratação e vigilância do enxerto em curso.'),
 
     Q('p1', 1,
-      'Diarreia noturna que persiste em jejum, Na/K fecais 90/35 e calprotectina 640. Quais duas hipóteses de mecanismo permanecem prioritárias?', [
+      'Diarreia noturna com febre e perda de peso em receptora de transplante, com testes fecais iniciais negativos. Quais duas causas devem permanecer prioritárias?', [
       ('Colite infecciosa não inteiramente coberta pelo painel de fezes', True),
       ('Lesão intestinal relacionada ao micofenolato', True),
       ('Diarreia osmótica isolada por carboidrato não absorvido', False),
       ('Síndrome funcional como explicação principal', False),
       ('Insuficiência pancreática exócrina como mecanismo dominante', False),
      ], [
-      ('Integração', 'Hiato fecal = 290 − 2 × (90 + 35) = 40, com persistência em jejum: predomina secreção. Febre e calprotectina elevada sustentam inflamação, compatível com infecção ou lesão medicamentosa; calprotectina não as separa.'),
-      ('Concorrentes', 'Painel negativo não pesquisa toda infecção nem substitui tecido. Diarreia osmótica isolada deveria diminuir em jejum e ter hiato maior. Sintomas noturnos, febre e inflamação pesam contra causa funcional. Não há esteatorreia ou contexto que priorize insuficiência pancreática.'),
+      ('Integração', 'Febre, sintomas noturnos, perda de peso e imunossupressão sustentam doença orgânica. Infecção e lesão por micofenolato continuam prioritárias; esses dados não distinguem as duas nem definem sozinhos um mecanismo secretor puro.'),
+      ('Concorrentes', 'Painel negativo não pesquisa toda infecção nem substitui tecido. Diarreia causada apenas por carboidrato não absorvido costuma diminuir com o jejum. Sintomas noturnos, febre e inflamação pesam contra causa funcional. Não há esteatorreia ou contexto que priorize insuficiência pancreática.'),
      ]),
 
     pagina('colite_tx', 'Discussão', 'Colite no transplantado',
            p('No receptor de órgão sólido, as causas de colite se dividem em dois '
              'grupos: infecção e fármaco. A imunossupressão amplia o primeiro e '
              'muda a apresentação do segundo.'),
-           p('Entre as infecções, os testes de fezes de Helena afastaram '
+           p('Entre as infecções, os testes de fezes de Helena reduziram a probabilidade de '
              '//C. difficile// e os agentes do painel molecular. Isso reduz a '
              'lista, mas não a esgota: o painel não cobre todos os agentes, e '
              'alguns só se mostram na mucosa.'),
@@ -149,14 +153,14 @@ ETAPAS = [
              'da biópsia.')),
 
     Q('p2', 2,
-      'Oito evacuações/dia, creatinina 2,1, FENa 0,3%, sedimento inativo e tacrolimo 14 ng/mL. Qual combinação explica melhor a disfunção inicial do enxerto?', [
+      'Oito evacuações/dia, creatinina 2,1, sedimento inativo e tacrolimo 14 ng/mL. Qual combinação explica melhor a disfunção inicial do enxerto?', [
       ('Depleção de volume somada à vasoconstrição pelo tacrolimo', True),
       ('Rejeição celular somada à nefrite por amoxicilina', False),
       ('Toxicidade tubular comprovada pelo sedimento inativo', False),
       ('Elevação isolada da creatinina pela trimetoprima crônica', False),
       ('Glomerulonefrite com retenção tubular de sódio', False),
      ], [
-      ('Dois mecanismos convergentes', 'Perdas digestivas, mucosas secas e taquicardia favorecem depleção. Tacrolimo acima do alvo pode somar vasoconstrição renal, mesmo sem alteração da dose; a diarreia muda sua exposição. FENa baixa apoia retenção de sódio, mas não comprova causa pré-renal.'),
+      ('Dois mecanismos convergentes', 'Perdas digestivas, mucosas secas e taquicardia favorecem depleção. Tacrolimo acima do alvo pode somar vasoconstrição renal, mesmo sem alteração da dose; a diarreia muda sua exposição.'),
       ('O que falta às concorrentes', 'Rejeição não está excluída e merece avaliação se a disfunção persistir após correção. Sedimento inativo não comprova nem exclui toxicidade tubular. Trimetoprima já era usada com creatinina basal normal; não integra a mudança aguda. Ausência de hematúria/proteinúria torna glomerulonefrite menos provável.'),
      ]),
 
@@ -167,7 +171,7 @@ ETAPAS = [
              'dose.'),
            p('A diarreia reduz o metabolismo do tacrolimo na parede do '
              'intestino, e o nível sobe. Acima do alvo, ele contrai a arteríola '
-             'aferente e também baixa a FENa.'),
+             'aferente, podendo agravar a disfunção hemodinâmica.'),
            p('O enxerto é avaliado desde a admissão; disfunção persistente após corrigir volume e exposição ao tacrolimo reforça a indicação de biópsia. Não é preciso esperar se houver suspeita independente de rejeição. A trimetoprima, que bloqueia a secreção '
              'de creatinina, já era usada com creatinina de 1,2. A exposição à amoxicilina '
              'de cinco semanas atrás é menos convincente como causa principal, mas ausência de exantema ou leucocitúria não exclui nefrite intersticial.')),
@@ -181,7 +185,7 @@ ETAPAS = [
       ('Biópsia do enxerto antes de investigar a mucosa', False),
       ('Nova tomografia abdominal para definir o agente', False),
      ], [
-      ('Doença local e replicação', 'Colonoscopia com tecido: após testes fecais negativos e persistência clínica, distingue lesão medicamentosa e infecção invasiva; histologia e IHQ procuram o agente na mucosa. PCR plasmática: pesquisa replicação sistêmica e oferece linha de base se houver doença por CMV; não substitui biópsia e pode ser baixa na doença intestinal.'),
+      ('Doença local e replicação', 'Colonoscopia com tecido: após testes fecais negativos e persistência clínica, distingue lesão medicamentosa e infecção invasiva; o estudo do tecido e a imuno-histoquímica (coloração que procura proteínas do agente na amostra) ajudam a demonstrar infecção na mucosa. PCR plasmática: pesquisa replicação sistêmica e oferece linha de base se houver doença por CMV; não substitui biópsia e pode ser baixa na doença intestinal.'),
       ('Por que não os demais', 'Mesmo painel de fezes: sem nova pista, repete as limitações do primeiro. IgM anti-CMV: não comprova invasão tecidual, sobretudo no transplantado. Biópsia do enxerto: pode ser necessária conforme a evolução renal, mas não esclarece a causa da colite; a avaliação renal corre em paralelo. Nova TC: indicada se houver suspeita de complicação, mas não determina o agente nesta pancolite estável.'),
      ]),
 
@@ -191,7 +195,7 @@ ETAPAS = [
 
     pg('evolucao_local', 'Segundo dia: muda o padrão da dor',
        'Helena passa a sentir dor também entre as evacuações, localizada no lado esquerdo. Há sensibilidade mais nítida nesse local, sem defesa ou distensão; mantém eliminação de gases e lactato normal. A mudança exige procurar complicação, embora ainda não indique cirurgia.',
-       'A PCR plasmática de CMV colhida na admissão retorna em 18.600 UI/mL. O registro pré-transplante já mostra D+/R+. A DNAemia aumenta a suspeita, mas não separa colite invasiva de outra causa coexistente. A endoscopia com biópsia foi solicitada desde o primeiro dia.'),
+       'A PCR plasmática de CMV colhida na admissão retorna em 18.600 UI/mL. O registro pré-transplante já mostra D+/R+. A presença de DNA do vírus no sangue aumenta a suspeita, mas não separa colite invasiva de outra causa coexistente. A endoscopia com biópsia foi solicitada desde o primeiro dia. A medida da quantidade de vírus no sangue depende da rede do transplante; o envio da amostra não substitui a avaliação do intestino.'),
 
     estudo('tc_abdome', 'Tomografia de abdome',
            'Segundo dia. Tomografia com contraste venoso, depois da '
@@ -211,8 +215,7 @@ ETAPAS = [
         ['Espessamento parietal difuso do cólon, nos segmentos ascendente, '
          'transverso e descendente, com edema da mucosa. Intestino delgado sem '
          'alterações. Sem pneumatose, sem ar fora das alças, sem coleção.',
-         'É uma pancolite sem complicação. A tomografia localiza a doença no '
-         'cólon, mas não diz a causa.']),
+         'Espessamento envolvendo múltiplos segmentos colônicos, sem os sinais de complicação descritos acima.']),
 
     pagina('sinais_cirurgicos', 'Discussão', 'Quando a colite é cirúrgica',
            topicos(('Sinais que pedem cirurgião', 'Ar livre na cavidade é '
@@ -236,7 +239,7 @@ ETAPAS = [
        'Leucócitos 1.800/mm³, neutrófilos 950/mm³ e plaquetas 98.000/mm³; AST/ALT 88/94 U/L. A piora local, apesar de melhor hidratação e menor micofenolato, torna inadequado apenas aguardar a resposta à redução do fármaco. Infecção e toxicidade podem coexistir.'),
 
     bifurcacao('b_amostra', 'Decisão', 'Como obter o tecido',
-      'Com pancolite sem complicação na TC, DNAemia e piora intestinal, qual procedimento priorizar para a amostragem?', [
+      'Com pancolite sem complicação na TC, DNA do vírus no sangue e piora intestinal, qual procedimento priorizar para a amostragem?', [
       caminho('Colonoscopia com biópsias dirigidas', 'amostra_completa',
               'Permite mapear segmentos e colher tecido das úlceras, ponderando preparo e risco com a endoscopia.'),
       caminho('Retossigmoidoscopia com biópsias dirigidas', 'amostra_distal',
@@ -318,12 +321,13 @@ ETAPAS = [
       'IHQ positiva no cólon, PCR plasmática 18.600 e doador/receptora soropositivas. Quais duas interpretações melhor orientam a avaliação inicial?', [
       ('A imunossupressão permite doença intestinal por CMV em receptora previamente soropositiva', True),
       ('A PCR seriada no mesmo ensaio ajuda a medir resposta ao tratamento', True),
-      ('A DNAemia favorece atribuir as citopenias ao vírus e manter os mielotóxicos na dose atual', False),
+      ('A presença de DNA do vírus no sangue favorece atribuir as citopenias ao vírus e manter os mielotóxicos na dose atual', False),
       ('A soropositividade do doador favorece transmissão pelo enxerto em relação à reativação da receptora', False),
       ('A profilaxia prévia e a carga atual favorecem resistência como explicação principal da doença', False),
      ], [
+      ('Integração do tecido', 'A TC localiza alterações, mas não determina a causa. Distorção de criptas também pode ocorrer por fármacos; a integração de efeito citopático, IHQ e clínica sustenta doença invasiva.'),
       ('Doença e seguimento', 'Clínica e IHQ na lesão comprovam doença intestinal, possível por reativação ou reinfecção em receptora soropositiva sob imunossupressão. A PCR no mesmo ensaio e tipo de amostra oferece linha de base e permite seguir a resposta.'),
-      ('Inferências concorrentes', 'Vírus e fármacos podem somar mielotoxicidade; a DNAemia não discrimina suas contribuições nem justifica manter doses sem revisão. D+/R+ não permite priorizar transmissão pelo enxerto sobre reativação. Exposição prévia ao antiviral entra na avaliação de resistência, mas doença após o fim da profilaxia, antes de observar a resposta terapêutica, favorece inicialmente doença pós-profilaxia, não resistência como causa principal.'),
+      ('Conclusões concorrentes', 'Vírus e fármacos podem somar supressão da produção de células do sangue; a presença de DNA do vírus no sangue não discrimina suas contribuições nem justifica manter doses sem revisão. D+/R+ não permite priorizar transmissão pelo enxerto sobre reativação. Exposição prévia ao antiviral entra na avaliação de resistência, mas doença após o fim da profilaxia, antes de observar a resposta terapêutica, favorece inicialmente doença pós-profilaxia, não resistência como causa principal.'),
      ]),
 
     pg('visita7', 'Quarto dia: repercussão da colite',
@@ -402,15 +406,13 @@ ETAPAS = [
 
     pagina('retrospectiva', 'Pontos de ensino', '',
         pontos(
-            'Diarreia que continua em jejum, com hiato osmótico fecal abaixo de '
-            '50 e calprotectina alta, é secretora e inflamatória: no '
-            'transplantado, colite por infecção ou por fármaco.',
-            'Na piora do enxerto durante diarreia, FENa baixa e tacrolimo acima '
+            'Diarreia noturna com febre e perda de peso justifica investigação orgânica no transplantado; testes fecais negativos não separam toda infecção de lesão medicamentosa.',
+            'Na piora do enxerto durante diarreia, perdas de volume e tacrolimo acima '
             'do alvo apontam para volume e droga; a avaliação do enxerto ocorre em paralelo e disfunção persistente reforça investigar rejeição.',
             'Resposta circulatória à hidratação com progressão de dor, urgência e sangue exige rever a colite; PCR para CMV e avaliação de mucosa já têm indicação na apresentação.',
             'O fim da profilaxia com valganciclovir abre a janela da doença por '
-            'citomegalovírus; sintomas e tecido distinguem DNAemia de doença intestinal.',
-            'A DNAemia no plasma acompanha a infecção e guia o tratamento; a doença '
+            'citomegalovírus; sintomas e tecido distinguem DNA do vírus no sangue de doença intestinal.',
+            'A presença de DNA do vírus no plasma acompanha a infecção e guia o tratamento; a doença '
             'intestinal se comprova no tecido, e pode ter carga baixa.',
             'No tratamento: ganciclovir endovenoso na doença grave, retirar '
             'mielotóxicos em vez de reduzir o antiviral, e terminar só com '

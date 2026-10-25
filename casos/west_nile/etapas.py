@@ -111,33 +111,15 @@ ETAPAS = [
         ex('Ureia / creatinina', '26 / 1,1 mg/dL {{(TFGe 72 mL/min/1,73 m², CKD-EPI 2021)}}',
            'até 42 / 0,7–1,3 mg/dL'),
         ex('Glicose', '138 mg/dL', '70–99 mg/dL em jejum', True),
-        ex('Osmolalidade sérica', '270 mOsm/kg', '275–295 mOsm/kg', True),
-        ex('Ácido úrico', '2,6 mg/dL', '3,4–7,0 mg/dL', True),
         ex('Proteína C reativa', '38 mg/L', 'até 5 mg/L', True),
-    ], introducao='Duas hemoculturas foram colhidas na chegada.'),
+    ], introducao='Coleta inicial de rotina. Pela síndrome neurofebril, hemoculturas e tratamento empírico são providenciados em paralelo; as telas não representam espera entre essas medidas.'),
 
-    painel('res1b', 'Primeiros exames', 'Urina e outros', [
+    painel('res1b', 'Primeiros exames', 'Urina e bioquímica', [
         ex('Urina', 'Densidade 1.018 · sem leucócitos · nitrito negativo · sem '
            'sangue · sem glicose'),
-        ex('Osmolalidade urinária', '456 mOsm/kg', '—', True),
-        ex('Sódio urinário', '52 mmol/L', '—', True),
         ex('AST / ALT', '34 / 29 U/L', 'até 40 / 41 U/L'),
-        ex('Creatinoquinase', '160 U/L', 'até 190 U/L'),
         ex('Lactato', '1,3 mmol/L', 'até 2,0 mmol/L'),
-        ex('TSH', '2,1 µUI/mL', '0,4–4,5 µUI/mL'),
     ]),
-
-    Q('p1', 1,
-      'Na 129, osmolalidade sérica 270 e urinária 456, Na urinário 52, sem diurético ou sinais de depleção. Quais duas hipóteses ainda explicam esse padrão?', [
-      ('Antidiurese inapropriada associada à doença aguda', True),
-      ('Deficiência de cortisol', True),
-      ('Hiponatremia translocacional pela glicose de 138', False),
-      ('Polidipsia primária como mecanismo isolado', False),
-      ('Baixo volume arterial efetivo por insuficiência cardíaca', False),
-     ], [
-      ('Duas possibilidades', 'A hipotonicidade com urina não diluída e Na urinário alto, em aparente euvolemia, favorece SIAD na doença neurológica aguda. Deficiência de cortisol pode produzir o mesmo padrão e ainda não foi investigada; não se pode fechar SIAD só com esses números.'),
-      ('O que pesa contra as demais', 'Glicose 138 altera pouco o sódio e não explica osmolalidade baixa. Polidipsia isolada deveria permitir urina muito diluída. Insuficiência cardíaca não encontra congestão no exame. TSH normal torna hipotireoidismo primário grave improvável, mas não substitui avaliação adrenal.'),
-     ]),
 
     estudo('rx_adm', 'Radiografia de tórax',
            'Radiografia feita na chegada, à procura de um foco para a febre e a '
@@ -152,8 +134,7 @@ ETAPAS = [
         ],
         ['Campos pulmonares limpos, seios costofrênicos livres, área cardíaca '
          'normal.',
-         'Sem foco pulmonar e com urina normal, a febre continua sem origem fora '
-         'do sistema nervoso.']),
+         'Sem opacidade focal ou derrame pleural visível.']),
 
     *ecg('ecg_evolucao',
          'A frequência cardíaca segue em 124 depois do antitérmico. A equipe '
@@ -164,7 +145,7 @@ ETAPAS = [
 
     pg('cobertura', 'Enquanto se organiza a punção',
        'Após hemoculturas, iniciam-se ceftriaxona, ampicilina e aciclovir intravenosos, com avaliação de dexametasona junto à primeira dose antibacteriana enquanto meningite bacteriana permanece possível. A imagem precede a punção pelo déficit focal; o tratamento não espera a tomografia.',
-       'A hiponatremia moderada não explica sozinha a paresia. A amostra de cortisol, colhida antes de eventual corticoide, retorna em 19 µg/dL; o contexto clínico e esse resultado tornam insuficiência adrenal importante menos provável, sem usar um valor isolado como exclusão universal. Monitoram-se sódio, diurese e balanço, evitando líquidos hipotônicos e restrição que comprometa a hidratação. Não se atribui toda a alteração mental ao sódio.'),
+       'O sódio de 129 não explica sozinho o déficit focal. Monitoram-se sódio, diurese e balanço. A investigação da hiponatremia corre em paralelo à assistência neurológica; não se espera sua conclusão para colher líquor ou tratar.'),
 
     estudo('tc_evolucao', 'Tomografia de crânio',
         'Tomografia sem contraste antes da punção, pelo déficit focal e pela '
@@ -178,8 +159,7 @@ ETAPAS = [
          ((766, 466), (560, 250), '**Localizador**: a linha amarela marca o nível do corte, que passa pelos ventrículos laterais.', 12),
         ],
         ['Sem hemorragia, hidrocefalia, efeito de massa ou desvio da linha média.',
-         'Sem contraindicação clínica adicional, a equipe procede à punção; uma TC normal não afasta encefalite nem isquemia '
-         'recente.']),
+         'Sem alteração estrutural aguda identificada neste estudo.']),
 
     bifurcacao('b1', 'Decisão', 'Avaliação neurológica',
       'A TC não mostra lesão expansiva. A confusão oscila e a paresia persiste. Qual exame você prioriza?', [
@@ -191,7 +171,7 @@ ETAPAS = [
 
     pg('lcr_prioritario', 'Coleta inicial',
        'A punção é realizada após revisão das contraindicações. Solicitam-se celularidade, glicose, proteína, Gram e cultura, além de investigação viral. Soro e alíquotas de líquor são reservados para estudos dirigidos pela exposição, em articulação com o laboratório de referência.',
-       'A viagem e as picadas ampliam as possibilidades; não estabelecem uma etiologia. O histórico de dengue e vacina de febre amarela acompanha as amostras para orientar a interpretação sorológica.',
+       'A viagem e as picadas ampliam as possibilidades; não estabelecem uma causa. O histórico de dengue e vacina de febre amarela acompanha as amostras para orientar a interpretação sorológica.',
        segue='lcr'),
 
     pg('eeg_prioritario', 'Avaliação à beira do leito',
@@ -209,17 +189,40 @@ ETAPAS = [
         ex('Gram', 'Sem bactérias'),
     ], introducao='Punção lombar feita logo depois da tomografia.'),
 
-    Q('p2', 2,
+    Q('p2', 1,
       'Líquor com 86 células, 58% neutrófilos, proteína 92 e relação glicose 0,54. Qual interpretação melhor pondera as hipóteses infecciosas nesta fase?', [
-      ('Perfil compatível com virose inicial, mantendo cobertura bacteriana enquanto se esclarece a etiologia', True),
+      ('Perfil compatível com virose inicial, mantendo cobertura bacteriana enquanto se esclarece a causa', True),
       ('Perfil predominantemente piogênico, tornando a investigação viral uma prioridade posterior', False),
       ('Perfil sugestivo de meningite tuberculosa, pela combinação de proteína elevada e pleocitose moderada', False),
       ('Perfil favorece Listeria sobre virose, pelo predomínio neutrofílico no paciente idoso', False),
       ('Perfil favorece infecção fúngica crônica, pela glicorraquia de 74 mg/dL', False),
      ], [
-      ('Probabilidade e cobertura', 'Pleocitose moderada, proteína elevada e glicose relativamente preservada cabem em virose inicial, inclusive com neutrófilos. O conjunto não exclui bactéria: idade, quadro clínico e antibiótico pré-punção justificam manter cobertura enquanto se obtêm testes etiológicos.'),
+      ('Probabilidade e cobertura', 'A TC sem alteração aguda não exclui encefalite nem isquemia recente; após revisão das contraindicações clínicas, permite prosseguir com a punção. A radiografia não mostrou foco pulmonar. Pleocitose moderada, proteína elevada e glicose relativamente preservada cabem em virose inicial, inclusive com neutrófilos. O conjunto não exclui bactéria: idade, quadro clínico e antibiótico pré-punção justificam manter cobertura enquanto se obtêm testes para investigar a causa.'),
       ('Concorrentes', 'Meningite piogênica costuma ter maior celularidade e menor relação de glicose, embora haja sobreposição. Idade justifica cobrir Listeria, mas 58% de neutrófilos não a distingue de virose. TB e fungos permanecem diferenciais conforme contexto, porém evolução aguda e relação de glicose 0,54 não os priorizam; proteína 92 isoladamente também não os separa.'),
      ]),
+    pg('reavaliacao_sodio', 'Reavaliação nas primeiras horas',
+       'Após antitérmico, a frequência cai para 108, mas ele continua desorientado e a perna direita segue fraca. Não aparecem sinais de hipovolemia ou congestão, e a glicemia não explica a hiponatremia. O exame neurológico mantém prioridade, com tratamento e punção já realizados.',
+       'Para classificar o sódio baixo, a equipe solicita osmolalidade sérica, osmolalidade e sódio urinários. TSH complementa a investigação; eventual avaliação adrenal considera horário de coleta e exposição a corticoide, sem retardar tratamento indicado.'),
+
+    painel('sodio_dirigido', 'Investigação dirigida', 'Hiponatremia', [
+        ex('Osmolalidade sérica', '270 mOsm/kg', '275–295 mOsm/kg', True),
+        ex('Osmolalidade urinária', '456 mOsm/kg', '—', True),
+        ex('Sódio urinário', '52 mmol/L', '—', True),
+        ex('TSH', '2,1 µUI/mL', '0,4–4,5 µUI/mL'),
+    ], introducao='Exames dirigidos pela hiponatremia identificada no painel básico, não um rastreio indiscriminado na admissão.'),
+
+    Q('p1', 2,
+      'Na 129, osmolalidade sérica 270 e urinária 456, Na urinário 52, sem diurético ou sinais de depleção. Quais duas hipóteses ainda explicam esse padrão?', [
+      ('Antidiurese inapropriada associada à doença aguda', True),
+      ('Deficiência de cortisol', True),
+      ('Hiponatremia translocacional pela glicose de 138', False),
+      ('Polidipsia primária como mecanismo isolado', False),
+      ('Baixo volume arterial efetivo por insuficiência cardíaca', False),
+     ], [
+      ('Duas possibilidades', 'A hipotonicidade com urina não diluída e Na urinário alto, em aparente euvolemia, favorece SIAD na doença neurológica aguda. Deficiência de cortisol pode produzir o mesmo padrão e ainda não foi investigada; não se pode fechar SIAD só com esses números.'),
+      ('O que pesa contra as demais', 'Glicose 138 altera pouco o sódio e não explica osmolalidade baixa. Polidipsia isolada deveria permitir urina muito diluída. Insuficiência cardíaca não encontra congestão no exame. TSH normal torna hipotireoidismo primário grave improvável, mas não substitui avaliação adrenal.'),
+     ]),
+
     pg('reexame', 'Na manhã seguinte',
        'Na manhã seguinte, a cefaleia e a desorientação diminuem, o sódio está em 132 e a febre é menos alta. Apesar disso, agora ele não consegue dobrar o joelho direito nem elevar o braço direito como fazia na admissão. Não é apenas um exame mais confiável: a esposa e a enfermagem observaram perda motora durante a noite.',
        'Mais acordado, ele colabora com o exame. Força grau 1 na perna direita, '
@@ -234,12 +237,12 @@ ETAPAS = [
       ('Ressonância do encéfalo', True),
       ('Ressonância da medula', True),
       ('Eletroneuromiografia com conduções motoras e sensitivas', True),
-      ('Repetir CK como principal teste localizatório', False),
+      ('Creatinoquinase como principal teste localizatório', False),
       ('Anticorpo antirreceptor de acetilcolina', False),
       ('Nova tomografia de crânio sem contraste', False),
      ], [
       ('Localizações a testar', 'RM de encéfalo: investiga a encefalite e o tremor, que uma neuropatia isolada não explica. RM de medula: procura acometimento de substância cinzenta e exclui compressão. ENMG: distingue padrão motor axonal de desmielinização e testa a preservação sensitiva; sozinha não separa sempre corno anterior de neuropatia motora axonal.'),
-      ('Por que não estes agora', 'CK repetida: a inicial normal e o padrão focal/arreflexo tornam miopatia menos provável. Anti-AChR: miastenia não integra febre, pleocitose e arreflexia assimétrica. Nova TC: sem mudança aguda sugestiva de hemorragia, acrescenta menos que RM para estas localizações.'),
+      ('Por que não estes agora', 'CK: pode investigar lesão muscular, mas não localiza adequadamente este padrão motor assimétrico com pleocitose. Anti-AChR: miastenia não integra febre, pleocitose e arreflexia assimétrica. Nova TC: sem mudança aguda sugestiva de hemorragia, acrescenta menos que RM para estas localizações.'),
      ]),
 
     estudo('rm_encefalo', 'Ressonância de encéfalo',
@@ -277,7 +280,7 @@ ETAPAS = [
     Q('p4', 4,
       'A RM reúne substância negra, tálamo, discreto temporal mesial e substância cinzenta medular. Quais duas interpretações melhor integram imagem, exame e cronologia?', [
       ('Encefalomielite infecciosa integra a encefalopatia, o tremor e a paresia assimétrica', True),
-      ('O acometimento temporal mantém HSV como concorrente enquanto se amplia a investigação etiológica', True),
+      ('O acometimento temporal mantém HSV como concorrente enquanto se amplia a investigação da causa', True),
       ('Encefalite temporal por HSV com paresia de origem hemisférica é a melhor localização unificadora', False),
       ('Polirradiculoneuropatia pós-infecciosa explica melhor a fraqueza durante a fase febril', False),
       ('Mielite transversa inflamatória explica melhor a paresia pela alteração intramedular', False),
@@ -351,16 +354,16 @@ ETAPAS = [
        'A PCR do primeiro líquor para HSV, colhido no quinto dia de sintomas, é negativa; VZV e enterovírus também negativos. Pela alteração temporal discreta, mantém-se aciclovir até reavaliação e uma nova PCR para HSV, três dias após a primeira, também negativa. IgM para arbovírus está em processamento desde a admissão.'),
 
     Q('p6', 6,
-      'As PCR para HSV/VZV/enterovírus são negativas e a investigação para arbovírus já foi iniciada. Quais dois exames têm maior valor para sustentar a etiologia e enfrentar a reatividade cruzada neste imunocompetente?', [
+      'Os testes para herpes e enterovírus são negativos. Quais dois exames você prioriza para investigar Nilo Ocidental nesta fase?', [
       ('IgM para Nilo Ocidental no líquor', True),
-      ('Neutralização por redução de placas em laboratório de referência', True),
+      ('IgM para Nilo Ocidental no sangue', True),
       ('RT-PCR de Nilo Ocidental no sangue como teste principal', False),
       ('IgG isolada para Nilo Ocidental no soro', False),
       ('Repetição imediata da PCR de enterovírus no mesmo material', False),
-      ('NS1 de dengue como confirmação da etiologia neurológica', False),
+      ('NS1 de dengue como confirmação da causa neurológica', False),
      ], [
-      ('Rendimento e especificidade', 'IgM no líquor e soro: maior rendimento nesta fase; no líquor apoia neuroinvasão, mas exige interpretação clínica. Neutralização: ajuda a discriminar reatividade entre flavivírus diante de dengue prévia e vacinação; o laboratório de referência integra títulos, amostras e epidemiologia.'),
-      ('Por que não os demais', 'IgM sérica complementar também é colhida pela equipe. RT-PCR sanguínea: baixa sensibilidade após a viremia curta no imunocompetente; negativa não exclui. IgG isolada: não data infecção nem resolve reatividade cruzada. Repetir enterovírus no mesmo material: sem falha técnica ou nova informação, rende menos que ampliar a etiologia. NS1: pesquisa dengue aguda, não confirma Nilo Ocidental nem neuroinvasão.'),
+      ('Rendimento e especificidade', 'A pesquisa de IgM no sangue e no líquor é o primeiro passo nesta fase. Como o paciente já teve dengue e recebeu vacina contra febre amarela, um resultado positivo pode precisar de confirmação. O laboratório de referência escolhe o teste confirmatório; não é necessário conhecer sua técnica para reconhecer a suspeita e enviar as amostras.'),
+      ('Por que não os demais', 'O envio é organizado com a rede de referência, conforme a disponibilidade local. O tratamento de suporte não espera esses resultados. Teste molecular no sangue (RT-PCR): baixa sensibilidade após a viremia curta no imunocompetente; negativa não exclui. IgG isolada: não data infecção nem resolve reatividade cruzada. Repetir enterovírus no mesmo material: sem falha técnica ou nova informação, rende menos que investigar outras causas. NS1: pesquisa dengue aguda, não confirma Nilo Ocidental nem infecção do sistema nervoso.'),
      ]),
 
     pg('virada', 'O diagnóstico',
@@ -377,8 +380,8 @@ ETAPAS = [
        'O vínculo epidemiológico é a viagem recente, com exposição a mosquitos. Não se deduz o local de transmissão apenas do lugar de residência. A confirmação é discutida com o laboratório de referência, considerando reatividade cruzada entre flavivírus.'),
 
     pg('tratamento', 'O tratamento a partir de agora',
-       'Com duas PCR para HSV negativas, reavaliação do achado temporal e etiologia alternativa sustentada, o aciclovir é suspenso. '
-       'Culturas de sangue e líquor negativas, evolução, perfil liquórico e etiologia alternativa sustentada permitem suspender ceftriaxona e ampicilina após revisão conjunta; antibiótico antes da punção limita a sensibilidade da cultura.',
+       'Com duas PCR para HSV negativas, reavaliação do achado temporal e causa alternativa sustentada, o aciclovir é suspenso. '
+       'Culturas de sangue e líquor negativas, evolução, perfil liquórico e causa alternativa sustentada permitem suspender ceftriaxona e ampicilina após revisão conjunta; antibiótico antes da punção limita a sensibilidade da cultura.',
        'Não há antiviral específico. Ribavirina, interferon, corticoide e '
        'imunoglobulina foram usados sem benefício conclusivo; o único ensaio '
        'randomizado de imunoglobulina rica em anticorpos contra o vírus foi '
@@ -392,7 +395,7 @@ ETAPAS = [
        'A febre acaba no sexto dia de internação. O tremor diminui, e ele volta '
        'a conversar, lúcido. O braço direito recupera força; a perna direita '
        'continua sem vencer a gravidade. A eletroneuromiografia da terceira '
-       'semana mostra fibrilações na perna direita, sinal de denervação. A neutralização solicitada ao laboratório de referência retorna no seguimento, com título oito vezes maior para Nilo Ocidental que para os demais flavivírus testados em paralelo, reforçando a identificação etiológica.'),
+       'semana mostra fibrilações na perna direita, sinal de denervação. A neutralização solicitada ao laboratório de referência retorna no seguimento, com título oito vezes maior para Nilo Ocidental que para os demais flavivírus testados em paralelo, reforçando a identificação da causa.'),
 
     pg('vigilancia', 'Vigilância e orientação na alta',
        'A febre do Nilo Ocidental é de notificação compulsória imediata no '
@@ -429,7 +432,7 @@ ETAPAS = [
             'antibiótico e o aciclovir vêm antes da tomografia.',
             'Paresia flácida, arrefléxica e assimétrica, com sensibilidade '
             'normal e sem nível, sugere acometimento motor, inclusive de corno anterior; a localização exige integrar exame, imagem e ENMG.',
-            'O padrão de núcleos profundos e substância cinzenta medular amplia a etiologia além de HSV; a história de exposição precisa ser colhida desde a admissão.',
+            'O padrão de núcleos profundos e substância cinzenta medular amplia a causa além de HSV; a história de exposição precisa ser colhida desde a admissão.',
             'Na fraqueza neuromuscular, tendência da força ventilatória, tosse e proteção da via aérea orientam o suporte; números isolados não substituem a reavaliação.',
             'Na doença neuroinvasiva pelo vírus do Nilo Ocidental, a IgM no '
             'líquor sustenta o diagnóstico; dengue prévia e vacina de febre '
@@ -441,7 +444,7 @@ ETAPAS = [
        p('Paciente, valores e percursos são ficcionais. A cena de abertura é '
          'uma ilustração gerada por inteligência artificial para este caso; não '
          'é fotografia nem documentação clínica.'),
-       p('Revisão em 23/10/2026: CDC, diagnóstico, manifestações e suporte; Ministério da Saúde, Nota Técnica 79/2026, notificação e classificação de caso. OMS, diretriz de meningite 2025, assistência inicial. Sejvar et al., 2003, PMID 12890318, série histórica sobre paralisia flácida; não é guideline atual. Gnann et al., 2019, ensaio de imunoglobulina. A classificação da hiponatremia usa osmolalidades, contexto e exclusões clínicas; não transforma SIAD em diagnóstico etiológico.'),
+       p('Revisão em 23/10/2026: CDC, diagnóstico, manifestações e suporte; Ministério da Saúde, Nota Técnica 79/2026, notificação e classificação de caso. OMS, diretriz de meningite 2025, assistência inicial. Sejvar et al., 2003, PMID 12890318, série histórica sobre paralisia flácida; não é guideline atual. Gnann et al., 2019, ensaio de imunoglobulina. A classificação da hiponatremia usa osmolalidades, contexto e exclusões clínicas; não transforma SIAD em diagnóstico da causa.'),
        '<p><a href="https://www.cdc.gov/west-nile-virus/hcp/diagnosis-testing/index.html" '
        'target="_blank" rel="noopener">CDC: diagnóstico</a> · '
        '<a href="https://www.cdc.gov/west-nile-virus/hcp/treatment-prevention/index.html" '
