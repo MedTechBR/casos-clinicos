@@ -82,8 +82,10 @@ def caso(*, slug, titulo, subtitulo, especialidade, minutos, decisoes,
 
 def montar(*, titulo, subtitulo, casos, img_dir: Path, rodape="") -> str:
     raiz = Path(__file__).parent
-    css = (raiz / "biblioteca.css").read_text(encoding="utf-8")
-    js = (raiz / "biblioteca.js").read_text(encoding="utf-8")
+    css = "\n".join((raiz / f).read_text(encoding="utf-8")
+                    for f in ("biblioteca.css", "apresentacao.css"))
+    js = "\n".join((raiz / f).read_text(encoding="utf-8")
+                   for f in ("biblioteca.js", "apresentacao.js"))
 
     cache: dict[str, str] = {}
 

@@ -526,9 +526,9 @@ def _nome_publico(modulo):
 def montar(caso) -> str:
     raiz = Path(__file__).parent
     css = "\n".join((raiz / f).read_text(encoding="utf-8")
-                     for f in ("etapas.css", "editorial.css", "viva.css"))
+                     for f in ("etapas.css", "editorial.css", "viva.css", "apresentacao.css"))
     js = "\n".join((raiz / f).read_text(encoding="utf-8")
-                    for f in ("paginas.js", "etapas.js", "viva.js"))
+                    for f in ("paginas.js", "etapas.js", "viva.js", "apresentacao.js"))
 
     cache: dict[str, str] = {}
 
