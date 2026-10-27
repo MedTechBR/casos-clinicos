@@ -24,3 +24,11 @@ Dificuldade não é medida apenas pelo tamanho do enunciado. Esta revisão reduz
 - Endocrine Society, [insuficiência adrenal primária](https://www.endocrine.org/clinical-practice-guidelines/primary-adrenal-insufficiency) e [avaliação bioquímica de feocromocitoma](https://www.endocrine.org/journals/endocrine-reviews/biochemical-assessment-of-ppgl).
 - [Manifestações autoimunes associadas à cocaína e ao levamisol](https://pmc.ncbi.nlm.nih.gov/articles/PMC11396482/).
 - ESC, [endocardite, 2023](https://academic.oup.com/eurheartj/article/44/39/3948/7243107).
+
+## Correção da sequência de «O sexto dia»
+
+A primeira revisão dos enunciados não corrigia uma pista nas alternativas: os cinco testes da pergunta 3 apontavam para leptospirose. A etapa agora oferece seis exames relacionados a hipóteses distintas e pede duas prioridades: PCR de Leptospira no sangue da admissão e NS1 para dengue. As hemoculturas já estavam colhidas; sorologias complementares são explicitadas na página de coletas, com interpretação por fase da doença. Os demais testes são discutidos por prioridade relativa, sem afirmar exclusão de hepatite ou doença imune.
+
+O relato de exposição passa a apresentar fatos, sem declarar uma causa prioritária. O reexame dirigido aparece durante a evolução. A hipótese de reação de Jarisch–Herxheimer foi deslocada para uma discussão após o resultado confirmatório; não antecede a investigação como pista para a etiologia. A pergunta de hipóteses também passa a comparar alternativas infecciosas plausíveis, retirando os distratores de cólica biliar simples e síndrome nefrótica isolada.
+
+Verificação: 4 percursos em dois tamanhos de desktop, 262 estados de layout em desktop/celular, 28 estados de seleção/correção. Conferidas a explicação oculta antes da resposta, a correspondência com as coletas e a posição da discussão pós-confirmação.

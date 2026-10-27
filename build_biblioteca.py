@@ -47,7 +47,7 @@ CASOS = [
     caso(slug="leptospirose", titulo="O sexto dia",
          subtitulo="Um homem de 38 anos chega à emergência no sexto dia de febre, com tosse com sangue e falta de ar.",
          especialidade="Clínica médica · Emergência", minutos=45, decisoes=6,
-         desfechos=3, nivel="os dois", cor="azul", capa="../../leptospirose/img/cena.png", arquivo="o-sexto-dia.html?v=20261027-discussao"),
+         desfechos=3, nivel="os dois", cor="azul", capa="../../leptospirose/img/cena.png", arquivo="o-sexto-dia.html?v=20261027-investigacao"),
     caso(slug="endocardite", titulo="Pequenos sinais",
          subtitulo="Uma costureira de 59 anos perdeu 5 kg em cinco semanas de febre no fim da tarde.",
          especialidade="Clínica médica · Ambulatório", minutos=45, decisoes=6,
