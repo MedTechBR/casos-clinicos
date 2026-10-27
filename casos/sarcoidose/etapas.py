@@ -134,7 +134,7 @@ ETAPAS = [
     ], introducao='O exame de urina pertence à coleta inicial. Os demais exames foram acrescentados após o resultado do cálcio; o PTH ainda está em processamento.'),
 
     Q('p1', 1,
-      'Poliúria, urina com densidade 1.004, glicemia 98 e cálcio 13,6. Qual mecanismo é mais provável?', [
+      'Qual mecanismo explica melhor os dados da admissão?', [
       ('Diurese aquosa por defeito de concentração, com perda de volume', True),
       ('Diurese osmótica por solutos filtrados, com lesão renal secundária', False),
       ('Polidipsia primária, com hipercalcemia por hemoconcentração', False),
@@ -150,10 +150,9 @@ ETAPAS = [
  'Rafael fica mais atento e consegue tomar o café da manhã sem náusea. A sede diminui e ele deixa de pedir água a cada poucos minutos. A tosse e a limitação ao caminhar pelo corredor continuam.',
  'Cálcio 12,4 mg/dL, creatinina 1,6 mg/dL e sódio 141 mmol/L. O PTH colhido na chegada é 6 pg/mL (15–65). A melhora com volume não demonstra que o suplemento fosse a causa única.'),
 
-    Q('p3', 2, 'PTH baixo, uso de vitamina D, anemia e alteração renal. Quais dois exames você prioriza agora?',
+    Q('p3', 2, 'Quais dois exames você acrescenta à investigação inicial?',
  [('25-hidroxivitamina D', True), ('Eletroforese de proteínas séricas', True), ('Repetição imediata do PTH', False), ('Cintilografia de paratireoides', False), ('Enzima conversora de angiotensina', False)],
- [('Mecanismos', '25-OH-D avalia se o suplemento elevou o estoque de vitamina D. A eletroforese procura um padrão de proteínas que pode sugerir doença de células produtoras de anticorpos, diante da associação de cálcio alto, anemia e alteração renal. Exames mais específicos serão considerados conforme esses resultados e a imagem.'),
- ('Limites', 'O PTH já está baixo; repeti-lo imediatamente não responde à causa. Cintilografia de paratireoides localiza doença já caracterizada pelos exames de sangue; não explica este PTH suprimido. ECA tem sensibilidade e especificidade limitadas, não substitui a investigação da causa nem confirma doença granulomatosa.')]),
+ [('Mecanismos', '25-OH-D avalia se o suplemento elevou o estoque de vitamina D. A eletroforese procura um padrão de proteínas que pode sugerir doença de células produtoras de anticorpos, diante da associação de cálcio alto, anemia e alteração renal. Exames mais específicos serão considerados conforme esses resultados e a imagem.'), ('Limites', 'O PTH já está baixo; repeti-lo imediatamente não responde à causa. Cintilografia de paratireoides localiza doença já caracterizada pelos exames de sangue; não explica este PTH suprimido. ECA tem sensibilidade e especificidade limitadas, não substitui a investigação da causa nem confirma doença granulomatosa.'), ('Como organizar a hipercalcemia', 'Primeiro separe causas dependentes de PTH das demais. Com PTH reduzido, medicamentos, excesso de vitamina D e neoplasias entram na comparação. Anemia e alteração renal justificam pesquisar proteína monoclonal; o resultado será integrado à imagem e à evolução.')]),
 
     pg('pedidos', 'Investigações em paralelo',
  'São pedidos os dois exames. A radiografia solicitada pela tosse e perda de peso é revista. A investigação pode avançar com esses dados enquanto exames que dependam de outro laboratório são organizados.'),
@@ -167,7 +166,7 @@ ETAPAS = [
            'Radiografia feita na chegada, pela tosse de dois meses e pela perda '
            'de peso. Olhe os hilos nas duas incidências antes de ler os achados.',
            IMG / 'rx_hilos.jpg',
-           'Radiografia frontal e lateral de outro paciente · comparação didática.',
+           'Radiografia frontal e lateral.',
            credito_meta(IMG / 'rx_hilos.jpg.json'),
         [
          ((176, 280), (70, 180), '**Hilo direito** aumentado, de contorno lobulado.', 12),
@@ -183,7 +182,7 @@ ETAPAS = [
  'Se a dosagem não estiver disponível, a investigação da alteração no tórax e a coleta de tecido não precisam esperar por ela. Neste caso, o resultado acrescenta informação sobre o mecanismo do cálcio alto.'),
 
     Q('p4', 3,
-      'Calcitriol 104, 25-OH-D 38 e PTH baixo. Quais duas hipóteses ainda integram hipercalcemia e adenopatia?', [
+      'Quais duas hipóteses melhor integram os novos resultados?', [
       ('Doença granulomatosa com produção extrarrenal de calcitriol', True),
       ('Linfoma com produção aumentada de calcitriol', True),
       ('Intoxicação por colecalciferol como explicação unificadora', False),
@@ -198,7 +197,7 @@ ETAPAS = [
     estudo('tc', 'Tomografia de tórax',
            'Após a radiografia, a equipe pede tomografia para delimitar os linfonodos e escolher um local de coleta. No quarto dia, a creatinina está em 1,3 mg/dL; o exame é realizado após avaliação do risco do contraste.',
            IMG / 'tc_mediastino.jpg',
-           'Tomografia com contraste de outro paciente, janela de mediastino · comparação didática.',
+           'Tomografia com contraste, janela de mediastino.',
            credito_meta(IMG / 'tc_mediastino.jpg.json'),
         [
          ((357, 336), (250, 262), 'Linfonodos **hilares direitos** aumentados e confluentes, sem necrose central.', 12),
@@ -215,7 +214,7 @@ ETAPAS = [
  'Enquanto aguarda a coleta, Rafael passa a fechar os olhos ao olhar pela janela. O ardor antigo agora vem com fotofobia e dor, sem secreção. A acuidade à beira do leito parece preservada. Não se trata apenas de revelar o colírio da ficha: a fotofobia começou nesta internação.',
  'A avaliação oftalmológica é organizada no mesmo dia, antes da conclusão do tecido. Não se espera confirmar uma doença sistêmica para examinar um olho doloroso.'),
 
-    Q('p_olho', 4, 'Qual avaliação responde melhor à mudança ocular?',
+    Q('p_olho', 4, 'Qual exame você solicita diante da nova queixa?',
  [('Exame à lâmpada de fenda', True), ('Dosagem de cálcio', False), ('Fundo de olho isoladamente', False), ('Teste de Schirmer isoladamente', False)],
  [('Novo compartimento', 'Fotofobia e dor exigem pesquisar inflamação intraocular. Lágrima artificial insuficiente não estabelece a causa; a lâmpada de fenda permite examinar a câmara anterior. Fundo, pressão e acuidade também serão avaliados pelo especialista.'),
  ('Limites', 'Cálcio normal não exclui doença ocular. Fundo ou teste de lágrima isolados não avaliam adequadamente uma possível uveíte anterior.')]),
@@ -251,9 +250,9 @@ ETAPAS = [
  'Os resultados são integrados ao tipo e à qualidade da amostra obtida. A equipe mantém acompanhamento das culturas e reúne os dados do tórax, do olho e da alteração metabólica.'),
 
     estudo('granuloma', 'O granuloma',
-           'Microfotografia de outro paciente para comparação com o padrão descrito no material obtido. Observe a organização das células e a região central do agregado.',
+           'Microfotografia do tecido. Observe a organização das células e a região central do agregado.',
            IMG / 'granuloma.jpg',
-           'Tecido de outro paciente · comparação morfológica.',
+           'Tecido.',
            credito_meta(IMG / 'granuloma.jpg.json'),
         [
          ((420, 330), (330, 55), '**Histiócitos epitelioides**: citoplasma amplo e pálido, núcleo oval, agrupados de forma compacta.', -12),
@@ -264,10 +263,9 @@ ETAPAS = [
          'epitelioides com coroa linfocitária, sem necrose central.',
          'Não se observa área central acelular de necrose nesta figura.']),
 
-    Q('p5', 5, 'Quais duas conclusões são sustentadas pelo tecido e pela evolução?',
+    Q('p5', 5, 'Quais duas conclusões a biópsia permite neste momento?',
  [('Há inflamação granulomatosa não necrosante', True), ('Ainda é necessário integrar a investigação microbiológica', True), ('A citometria negativa exclui linfoma', False), ('A melhora com hidratação confirma causa medicamentosa', False), ('Granuloma sem necrose exclui tuberculose', False)],
- [('Integração', 'O padrão torácico, a uveíte e o mecanismo do cálcio favorecem doença granulomatosa sistêmica. A histologia não nomeia a causa; microbiologia e evolução continuam necessárias.'),
- ('Incerteza', 'Granulomas podem ocorrer em infecção ou junto de neoplasia. Citometria tem limitações, especialmente para Hodgkin. Piora discordante exige revisão da amostra, não uma certeza construída de negativos.')]),
+ [('Integração', 'O padrão torácico, a uveíte e o mecanismo do cálcio favorecem doença granulomatosa sistêmica. A histologia não nomeia a causa; microbiologia e evolução continuam necessárias.'), ('Incerteza', 'Granulomas podem ocorrer em infecção ou junto de neoplasia. Citometria tem limitações, especialmente para Hodgkin. Piora discordante exige revisão da amostra, não uma certeza construída de negativos.'), ('Granuloma não define a causa', 'Tuberculose, micoses, reações a substâncias e doenças inflamatórias podem formar granulomas. A ausência de necrose não exclui infecção. A citometria sem clone reduz algumas suspeitas, mas amostra pequena pode não representar todo o processo.')]),
 
     pg('virada', 'O diagnóstico',
        'O conjunto de manifestações clínicas, distribuição torácica e granulomas não necrosantes favorece sarcoidose. A investigação das alternativas não encontrou outra causa mais consistente até aqui; a equipe acompanhará as culturas e reavaliará o diagnóstico se houver evolução discordante.',
@@ -282,7 +280,7 @@ ETAPAS = [
        'hilar simétrica com nódulos ao longo dos feixes. O colecalciferol deu '
        'substrato para essa via, e o tiazídico pode reduzir a excreção renal de cálcio. Ambos podem ter agravado a hipercalcemia, sem explicar sozinhos a doença do tórax.'),
 
-    Q('p6', 6, 'Quais três exames completam melhor a referência funcional e o rastreio ainda não documentados?',
+    Q('p6', 6, 'Quais três exames você solicita para completar a avaliação inicial?',
  [('Espirometria', True), ('Difusão de monóxido de carbono', True), ('Fosfatase alcalina', True), ('PET-CT cardíaco', False), ('Holter de rotina', False), ('ECA seriada', False)],
  [('Referência', 'Tosse e falta de ar justificam medir função pulmonar. A difusão avalia a passagem de gás do pulmão para o sangue e pode exigir encaminhamento; não deve atrasar o tratamento do cálcio alto ou do olho. Fosfatase alcalina pode revelar acometimento hepático pouco sintomático. ECG, cálcio, creatinina e hemograma já estão disponíveis; o olho já foi examinado por indicação urgente.'),
  ('Seleção', 'Sem palpitação, síncope ou alteração eletrocardiográfica, exames cardíacos avançados não são rastreio universal inicial. ECA isolada não deve dirigir o tratamento.')]),
@@ -300,9 +298,9 @@ ETAPAS = [
  'Não se atribui automaticamente a recidiva a resistência nem se escala o tratamento por um episódio de falta de colírio. A necessidade e a dose do tratamento sistêmico são revistas ao longo do seguimento.'),
 
     estudo('rx_tc', 'Comparação: acometimento pulmonar mais extenso',
-           'Comparação didática de outro paciente com acometimento pulmonar mais extenso. Não é um exame novo de Rafael nem documenta progressão no seu seguimento.',
+           'Acometimento pulmonar extenso: observe a radiografia e a tomografia coronal.',
            IMG / 'rx_tc.jpg',
-           'Radiografia e TC coronal de outro paciente · comparação didática.',
+           'Radiografia e TC coronal.',
            credito_meta(IMG / 'rx_tc.jpg.json'),
         [
          ((360, 110), (470, 35), '**Opacidades reticulonodulares** densas, que predominam nos campos superiores.', -12),
@@ -337,15 +335,13 @@ ETAPAS = [
        'criteria of the International Workshop on Ocular Sarcoidosis, 2019. '
        'Walker e Shane. Hypercalcemia: a review, JAMA, 2022. Tebben e cols. '
        'Vitamin D-mediated hypercalcemia, Endocrine Reviews, 2016.',
-       'Imagens de outros pacientes, todas do Wikimedia Commons e com setas '
-       'adicionadas: radiografia dos hilos e radiografia com TC coronal, '
-       'Hellerhoff, CC BY-SA 4.0 ('
+       'Imagens do Wikimedia Commons e com setas adicionadas: radiografia dos hilos e radiografia com TC coronal, Hellerhoff, CC BY-SA 4.0 ('
        + _fonte(IMG / 'rx_hilos.jpg.json', 'hilos') + '; '
        + _fonte(IMG / 'rx_tc.jpg.json', 'radiografia e TC') + '); tomografia '
        'do mediastino e granuloma, Yale Rosen, CC BY-SA 2.0 ('
        + _fonte(IMG / 'tc_mediastino.jpg.json', 'tomografia') + '; '
        + _fonte(IMG / 'granuloma.jpg.json', 'granuloma') + ').',
- 'Revisão de 23/10/2026: <a href="https://pubmed.ncbi.nlm.nih.gov/32293205/">ATS 2020, diagnóstico e rastreio</a>; <a href="https://doi.org/10.1183/13993003.04079-2020">ERS 2021, tratamento</a>. A evolução diária é ficcional; não representa uma sequência obrigatória. A prancha de acometimento pulmonar extenso é comparação didática, não um exame de Rafael.')
+ 'Revisão de 23/10/2026: <a href="https://pubmed.ncbi.nlm.nih.gov/32293205/">ATS 2020, diagnóstico e rastreio</a>; <a href="https://doi.org/10.1183/13993003.04079-2020">ERS 2021, tratamento</a>. A evolução diária é ficcional; não representa uma sequência obrigatória.')
 ]
 
 REVISAO = []

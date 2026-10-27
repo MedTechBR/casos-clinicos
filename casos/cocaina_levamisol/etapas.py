@@ -95,11 +95,9 @@ ETAPAS = [
            so_kicker=True),
 
     estudo('pele', 'Fotografia de pele',
-           'A equipe fotografa as placas para acompanhar a evolução. Esta '
-           'fotografia é de outro paciente, com o mesmo tipo de lesão, de outra '
-           'causa e em outra região do corpo; a régua está em centímetros.',
+           'Observe as placas e seus limites. A régua está em centímetros.',
            IMG / 'pele_placa.jpg',
-           'Fotografia de outro paciente, com lesão do mesmo tipo · régua em centímetros.',
+           'Fotografia da lesão · régua em centímetros.',
            'Niels Olson · Wikimedia Commons · CC BY-SA 3.0 · setas adicionadas',
         [
          ((336, 71), (215, 175), '**Desenho em rede** na periferia: traços violáceos finos e ramificados, que seguem a malha de vasos da derme.', 12),
@@ -112,11 +110,10 @@ ETAPAS = [
          '6 cm, dolorosas, que não clareiam, com bordas anguladas e '
          'ramificadas, duas com centro enegrecido.']),
 
-    Q('q1', 1, 'Quais três hipóteses você precisa diferenciar inicialmente?', [
+    Q('q1', 1, 'Quais três diagnósticos você prioriza na admissão?', [
  ('Vasculite cutânea', True), ('Ectima gangrenoso', True), ('Síndrome antifosfolípide', True),
  ('Púrpura trombocitopênica imune', False), ('Eritema nodoso', False), ('Calcifilaxia urêmica', False)],
- [('Mecanismos concorrentes', 'O desenho ramificado com necrose sugere comprometimento vascular. Inflamação do vaso, invasão infecciosa e trombose imune precisam ser diferenciadas; a pele sozinha não define qual delas está presente.'),
- ('Por que as outras pesam menos', 'Trombocitopenia costuma produzir petéquias e sangramento, sem explicar bem a necrose em rede. Eritema nodoso é uma paniculite nodular, de outra morfologia. Calcifilaxia urêmica integra pior a ausência de doença renal conhecida; uma forma não urêmica não é impossível, mas não é a prioridade entre estas opções.')]),
+ [('Mecanismos concorrentes', 'O desenho ramificado com necrose sugere comprometimento vascular. Inflamação do vaso, invasão infecciosa e trombose imune precisam ser diferenciadas; a pele sozinha não define qual delas está presente.'), ('Por que as outras pesam menos', 'Trombocitopenia costuma produzir petéquias e sangramento, sem explicar bem a necrose em rede. Eritema nodoso é uma paniculite nodular, de outra morfologia. Calcifilaxia urêmica integra pior a ausência de doença renal conhecida; uma forma não urêmica não é impossível, mas não é a prioridade entre estas opções.'), ('Como organizar o diferencial', 'Separe lesões por queda de plaquetas, inflamação vascular e oclusão dos vasos. O hemograma, a distribuição e a biópsia respondem a perguntas diferentes. Necrose não distingue, sozinha, trombose de invasão infecciosa.')]),
 
     painel('res1', 'Primeiros exames', 'Sangue', [
         ex('Hemoglobina / hematócrito', '12,1 g/dL / 36%', 'Hb 12–16 g/dL'),
@@ -144,7 +141,7 @@ ETAPAS = [
            'Radiografia feita na chegada, à procura de um foco para a febre '
            'numa paciente com poucos neutrófilos.',
            IMG / 'rx_torax_normal.jpg',
-           'Radiografia de outro adulto · comparação didática.',
+           'Radiografia.',
            'Mikael Häggström · Wikimedia Commons · CC0 · setas adicionadas',
         [
          ((250, 560), (90, 440), '**Pulmão direito** transparente, sem consolidação.', 12),
@@ -162,7 +159,7 @@ ETAPAS = [
          'Febre e dor podem contribuir para a frequência, mas volume, '
          'oxigenação e eletrólitos também precisam ser reavaliados.'),
 
-    Q('q2', 2, 'Quais três estudos da pele você solicita sem atrasar o antibiótico?', [
+    Q('q2', 2, 'Quais três exames você solicita para esclarecer as lesões?', [
  ('Histologia de biópsia profunda', True), ('Cultura bacteriana do tecido', True), ('Pesquisa de fungos no tecido', True),
  ('Mielograma', False), ('Angiografia dos membros inferiores', False), ('Novo fibrinogênio', False)],
  [('Amostra da lesão', 'A histologia compara trombose, inflamação e possível invasão vascular. Cultura bacteriana e pesquisa micológica, com colorações e cultura conforme o laboratório, procuram uma infecção que mudaria o tratamento. Planejar fragmentos adequados antes de colocar todo o material em formol.'),
@@ -257,9 +254,7 @@ ETAPAS = [
         'ultrassonografia dos rins para afastar obstrução e medir o tamanho '
         'deles.',
         IMG / 'us_rim.jpg',
-        'Rim de outro adulto. Asteriscos da fonte: um, coluna de Bertin; '
-        'dois, pirâmide; três, córtex; quatro, seio renal. Os cálipers também '
-        'são da fonte.',
+        'Rim. Asteriscos da fonte: um, coluna de Bertin; dois, pirâmide; três, córtex; quatro, seio renal. Os cálipers também são da fonte.',
         'Hansen, Nielsen e Ewertsen · Wikimedia Commons · CC BY 4.0 · setas adicionadas',
         [
          ((495, 288), (620, 105), '**Córtex** renal (três asteriscos), de espessura preservada.', 12),
@@ -270,7 +265,7 @@ ETAPAS = [
          'Sem obstrução e sem rim pequeno de doença antiga: a lesão é aguda e '
          'está dentro do rim.']),
 
-    Q('q4', 3, 'Quais quatro exames mais ajudam a distinguir os mecanismos possíveis?', [
+    Q('q4', 3, 'Na reavaliação, quais quatro exames você acrescenta?', [
  ('Anti-MPO', True), ('Anti-PR3', True), ('Anticorpo anti-membrana basal glomerular', True), ('Complemento C3', True),
  ('Novo nível sérico de vancomicina', False), ('Nova creatinoquinase', False), ('Novo ultrassom renal', False)],
  [('Mecanismos', 'MPO e PR3 avaliam duas especificidades do ANCA; positividade não estabelece sozinha uma vasculite primária. Anti-MBG pesquisa um mecanismo de glomerulonefrite com consequências terapêuticas importantes. C3 ajuda a avaliar a hipótese de imunocomplexos; a equipe complementa com C4 e crioglobulinas.'),
@@ -302,16 +297,13 @@ ETAPAS = [
     ]),
 
     Q('q5', 4,
-      'MPO e PR3 positivos, agranulocitose, lesão auricular e sedimento nefrítico. Qual hipótese ganha mais peso para integrar o quadro?', [
+      'Qual hipótese melhor integra a evolução até aqui?', [
       ('Doença vascular associada a exposição medicamentosa ou recreativa', True),
       ('Vasculite primária associada ao ANCA', False),
       ('Endocardite infecciosa', False),
       ('Síndrome antifosfolípide', False),
       ('Vasculite crioglobulinêmica', False),
-     ], [
-      ('A combinação', 'Dupla especificidade ANCA, neutropenia profunda e púrpura auricular favorecem exposição como mecanismo comum. Nenhum desses achados isoladamente comprova a substância; é necessário rever medicamentos e uso recreativo a sós.'),
-      ('Concorrentes', 'Vasculite primária pode ter perfis atípicos, mas MPO não basta para classificá-la. Endocardite pode positivar ANCA; culturas pré-antibiótico negativas e ausência de outros sinais reduzem, sem zerar, essa possibilidade. Antifosfolípides negativos e sedimento glomerular inflamatório pesam contra SAF. Crioglobulinas não detectadas e C4 normal diminuem a probabilidade de crioglobulinemia.'),
-     ]),
+     ], [('A combinação', 'Dupla especificidade ANCA, neutropenia profunda e púrpura auricular favorecem exposição como mecanismo comum. Nenhum desses achados isoladamente comprova a substância; é necessário rever medicamentos e uso recreativo a sós.'), ('Concorrentes', 'Vasculite primária pode ter perfis atípicos, mas MPO não basta para classificá-la. Endocardite pode positivar ANCA; culturas pré-antibiótico negativas e ausência de outros sinais reduzem, sem zerar, essa possibilidade. Antifosfolípides negativos e sedimento glomerular inflamatório pesam contra SAF. Crioglobulinas não detectadas e C4 normal diminuem a probabilidade de crioglobulinemia.'), ('O que ainda falta', 'Um ANCA positivo não define a causa. Medicamentos, infecção e exposição recreativa podem produzir quadros semelhantes aos de uma vasculite primária. Rever a história a sós e confrontá-la com o tecido evita atribuir todo resultado positivo à mesma doença.')]),
 
     pg('entrevista', 'Entrevista a sós',
        'A médica volta ao quarto no fim da tarde, quando a irmã saiu. Explica '
@@ -324,7 +316,7 @@ ETAPAS = [
        'começou na mesma época.'),
 
     Q('q6', 5,
-      'Há uso recorrente de cocaína e a coleta será tardia. Quais duas conclusões sobre a toxicologia são adequadas?', [
+      'Quais duas conclusões a investigação toxicológica permite?', [
       ('Benzoilecgonina confirmada documenta exposição à cocaína', True),
       ('Não ter o teste de levamisol não impede reconhecer a associação provável', True),
       ('Benzoilecgonina confirmada identifica a composição do adulterante', False),
@@ -345,7 +337,7 @@ ETAPAS = [
                   'coagulação normais.'),
 
     Q('q7', 6,
-      'Após toxicologia e biópsia renal, quais duas interpretações melhor ponderam causa e atividade da doença?', [
+      'Quais duas conclusões orientam sua conduta após a biópsia?', [
       ('A biópsia demonstra doença glomerular ativa apesar da melhora dos neutrófilos', True),
       ('A toxicologia confirma cocaína, mantendo levamisol como associação provável', True),
       ('A creatinina em alta reflete sobretudo recuperação renal tardia após a fase infecciosa', False),
@@ -548,14 +540,7 @@ ETAPAS = [
        'cols., 2020). O manejo antimicrobiano é extrapolado da neutropenia '
        'febril oncológica; não há ensaio que compare imunossupressores nesta '
        'síndrome.',
-       'Imagens de outros pacientes, com setas adicionadas: fotografia de '
-       'pele, placa por calcifilaxia no abdome, Niels Olson, '
-       '<a href="https://commons.wikimedia.org/wiki/File:Calciphylaxis.png" '
-       'target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 3.0; '
-       'radiografia de tórax, Mikael '
-       'Häggström, Wikimedia Commons, CC0; eletrocardiograma, Ewingdo, '
-       'Wikimedia Commons, CC BY-SA 4.0; ultrassonografia renal, Hansen, '
-       'Nielsen e Ewertsen, Wikimedia Commons, CC BY 4.0.'),
+       'Imagens, com setas adicionadas: fotografia de pele, placa por calcifilaxia no abdome, Niels Olson, <a href="https://commons.wikimedia.org/wiki/File:Calciphylaxis.png" target="_blank" rel="noopener">Wikimedia Commons</a>, CC BY-SA 3.0; radiografia de tórax, Mikael Häggström, Wikimedia Commons, CC0; eletrocardiograma, Ewingdo, Wikimedia Commons, CC BY-SA 4.0; ultrassonografia renal, Hansen, Nielsen e Ewertsen, Wikimedia Commons, CC BY 4.0.'),
 ]
 
 REVISAO = []

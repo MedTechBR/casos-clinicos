@@ -142,13 +142,13 @@ ETAPAS = [
     ], introducao='Resultados solicitados após reconhecer microcitose e recuperar a cronologia da anemia, ainda na avaliação inicial.'),
 
     Q('p1', 1,
-      'Ferritina 18 e saturação 7%, com PCR 74 e anemia há seis meses. Quais duas conclusões orientam a investigação?', [
+      'Quais duas conclusões você tira da avaliação da anemia?', [
       ('Há deficiência absoluta de ferro, mesmo com inflamação concomitante', True),
       ('A investigação gastrointestinal continua indicada após a menopausa', True),
       ('A faixa de referência da ferritina favorece inflamação isolada', False),
       ('A febre de cinco semanas explica satisfatoriamente toda a cronologia da anemia', False),
       ('Microcitose e RDW elevado priorizam hemoglobinopatia sobre perda de ferro', False),
-    ], [('Integração', 'A ferritina deveria subir com a inflamação; 18 torna estoques reduzidos muito prováveis. Saturação baixa e microcitose reforçam a falta de ferro, sem excluir um componente inflamatório associado.'), ('Cronologia', 'A anemia precede a febre e não deve ser atribuída integralmente à doença atual. Na mulher após a menopausa, investigar trato gastrointestinal, em geral com endoscopia alta e colonoscopia. Hemoglobinopatia pode dar microcitose, mas explica pior o conjunto de estoques baixos e cronologia.')]),
+    ], [('Integração', 'A ferritina deveria subir com a inflamação; 18 torna estoques reduzidos muito prováveis. Saturação baixa e microcitose reforçam a falta de ferro, sem excluir um componente inflamatório associado.'), ('Cronologia', 'A anemia precede a febre e não deve ser atribuída integralmente à doença atual. Na mulher após a menopausa, investigar trato gastrointestinal, em geral com endoscopia alta e colonoscopia. Hemoglobinopatia pode dar microcitose, mas explica pior o conjunto de estoques baixos e cronologia.'), ('Como comparar as anemias', 'Inflamação pode elevar a ferritina e esconder deficiência de ferro. Uma ferritina baixa, mesmo nesse contexto, pesa a favor de deficiência real. A cronologia impede atribuir seis meses de anemia apenas à febre recente; causas coexistentes precisam ser procuradas.')]),
 
     painel('dirigidos_rim', 'Investigação dirigida', 'Urina e mecanismo renal', [
         ex('Sedimento, revisão manual', '15 hemácias por campo, 40% dismórficas', '—', True),
@@ -159,19 +159,19 @@ ETAPAS = [
     ], introducao='A hematúria e a proteína na urina motivaram estes pedidos; os resultados chegam ao longo do primeiro dia, com a investigação cardíaca já em curso.'),
 
     Q('p2', 2,
-      'Qual mecanismo renal melhor integra o sedimento, C3 baixo, C4 preservado e cinco semanas de febre?', [
+      'Qual mecanismo melhor explica a alteração renal?', [
       ('Glomerulonefrite relacionada a infecção persistente', True),
       ('Nefrite intersticial pelos antibióticos recentes', False),
       ('Hipoperfusão com hematúria incidental de via baixa', False),
       ('Vasculite pauci-imune como hipótese prioritária', False),
       ('Crioglobulinemia como hipótese prioritária', False),
-    ], [('Integração', 'Dismorfismo e proteinúria favorecem origem glomerular. C3 baixo com febre prolongada sustenta mecanismo associado a infecção e imunocomplexos; fator reumatoide pode acompanhar esse processo, sem provar artrite reumatoide.'), ('Comparação', 'Antibióticos tornam nefrite intersticial possível, mas ela integra pior o complemento e o sedimento. Pauci-imune costuma preservar complemento; crioglobulinemia costuma reduzir C4. São diferenças de probabilidade, não exclusões. A TFG calculada é estimativa pontual e não estabelece doença renal crônica.')]),
+    ], [('Integração', 'Dismorfismo e proteinúria favorecem origem glomerular. C3 baixo com febre prolongada sustenta mecanismo associado a infecção e imunocomplexos; fator reumatoide pode acompanhar esse processo, sem provar artrite reumatoide.'), ('Comparação', 'Antibióticos tornam nefrite intersticial possível, mas ela integra pior o complemento e o sedimento. Pauci-imune costuma preservar complemento; crioglobulinemia costuma reduzir C4. São diferenças de probabilidade, não exclusões. A TFG calculada é estimativa pontual e não estabelece doença renal crônica.'), ('Como comparar as lesões renais', 'Infecção persistente pode causar lesão glomerular por resposta imune. Vasculite primária, nefrite por medicamento e hipoperfusão permanecem alternativas. Sedimento, complemento, culturas e cronologia ajudam a distingui-las; nenhum deles encerra o diferencial sozinho.')]),
 
     estudo('rx_adm', 'Radiografia de tórax',
            'Radiografia da primeira consulta, parte da rodada inicial de febre '
            'prolongada: procura infiltrado, cavidade e linfonodos no mediastino.',
            IMG / 'rx_torax_normal.jpg',
-           'Radiografia de outro paciente · comparação didática.',
+           'Radiografia.',
            credito_meta(IMG / 'rx_torax_normal.jpg.json'),
         [
          ((300, 180), (130, 105), '**Ápice direito** sem opacidade nem cavidade.', 12),
@@ -219,13 +219,13 @@ ETAPAS = [
        'da investigação que estava programada.'),
 
     Q('p4', 3,
-      'Quais dois estudos mais ajudam agora a definir o foco cardíaco e a terapia?', [
+      'Após os novos resultados, quais dois exames você prioriza?', [
       ('Ecocardiograma transesofágico', True),
-      ('Colonoscopia para localizar o foco da bacteremia antes da identificação', False),
+      ('Colonoscopia', False),
       ('Antibiograma das hemoculturas positivas', True),
       ('Nova punção de medula para leishmaniose', False),
-      ('PET-CT como primeiro exame de valva nativa', False),
-      ('Procalcitonina para decidir se as culturas representam infecção', False),
+      ('PET-CT', False),
+      ('Procalcitonina', False),
     ], [('Prioridades', 'O transesofágico é indicado para esclarecer a suspeita, sobretudo quando o estudo transtorácico é limitado. Bacteremia concordante, valvopatia e possível embolia justificam prosseguir. A imagem ilustrativa adiante é transtorácica; o resultado do transesofágico é descrito na evolução. O antibiograma orienta o tratamento dirigido, sem deduzir espécie apenas do Gram.'), ('Alternativas', 'Colonoscopia continua indicada pela ferropenia, mas não é o exame para localizar o foco cardíaco agora; a identificação posterior reforçará sua prioridade. Punção de medula repete investigação de menor rendimento diante deste dado novo. PET-CT não substitui ecocardiografia inicial de valva nativa. Procalcitonina não invalida três coletas concordantes. O tempo de positividade sozinho não prova foco intravascular.')]),
 
     pg('identificacao', 'Terceiro dia',
@@ -254,11 +254,9 @@ ETAPAS = [
            so_kicker=True),
 
     estudo('unhas', 'Hemorragias sob a unha',
-           'Fotografia de outro paciente, com o mesmo tipo de lesão que o '
-           'residente encontrou sob as unhas de Lúcia. Olhe a direção dos traços '
-           'e onde eles ficam no leito ungueal.',
+           'Observe a região sob as unhas. Olhe a direção dos traços e onde eles ficam no leito ungueal.',
            IMG / 'unhas_hemorragia.jpg',
-           'Fotografia de outro paciente · comparação didática · recortada na unha.',
+           'Fotografia · recortada na unha.',
            credito_meta(IMG / 'unhas_hemorragia.jpg.json'),
         [
          ((437, 690), (215, 560), '**Traços finos**, vermelho-escuros, no terço distal do leito '
@@ -272,11 +270,9 @@ ETAPAS = [
          'unhas do segundo e do terceiro dedos da mão direita.']),
 
     estudo('plantas', 'Máculas sem dor',
-           'Fotografia de outro paciente, na palma da mão, com o mesmo tipo de '
-           'lesão que Lúcia tem na planta do pé esquerdo. Repare no relevo e na '
-           'cor, e lembre que ela não sente dor ao apertá-las.',
+           'Observe as lesões na palma da mão. Repare no relevo e na cor, e lembre que ela não sente dor ao apertá-las.',
            IMG / 'palma_maculas.jpg',
-           'Fotografia de outro paciente · comparação didática.',
+           'Fotografia.',
            credito_meta(IMG / 'palma_maculas.jpg.json'),
         [
          ((421, 346), (200, 225), '**Mácula eritematosa** de poucos milímetros, plana, de borda '
@@ -297,7 +293,7 @@ ETAPAS = [
            'o estudo detalhado da valva é feito pela equipe de ecocardiografia. Corte apical de quatro '
            'câmaras.',
            IMG / 'eco_4c.jpg',
-           'Quadro de vídeo de outro paciente · comparação didática.',
+           'Quadro de vídeo.',
            credito_meta(IMG / 'eco_4c.jpg.json'),
         [
          ((743, 655), (900, 520), '**Massa ecogênica** presa à valva mitral, que no vídeo se move com os folhetos.', 12),
@@ -308,7 +304,7 @@ ETAPAS = [
          'mitral importante ao Doppler, com jato excêntrico. Ventrículo esquerdo '
          'de tamanho normal, fração de ejeção de 62%. Sem derrame pericárdico.']),
 
-    Q('p6', 4, 'Após identificar S. gallolyticus, quais dois exames priorizar para depuração e porta de entrada?', [('Hemoculturas de controle após terapia dirigida', True), ('Colonoscopia quando clinicamente estabilizada', True), ('Novo fator reumatoide para documentar esterilização', False), ('Sangue oculto fecal como condição para endoscopia', False), ('Tomografia abdominal como substituta da colonoscopia', False), ('Biópsia renal antes de iniciar betalactâmico', False)], [('Prioridades', 'Hemoculturas de controle documentam depuração e revelam persistência sob terapia. Colonoscopia pesquisa lesão colorretal associada a este agente; a ferropenia já era indicação independente. A sequência mostra culturas negativas e o resultado endoscópico.'), ('Comparação', 'Fator reumatoide pode persistir e não documenta esterilização. Sangue oculto negativo não descarta fonte intermitente nem deve condicionar endoscopia. Tomografia não substitui avaliação mucosa com possibilidade de biópsia. Biópsia renal pode ser útil em evolução discordante, mas não precede tratar esta infecção.')]),
+    Q('p6', 4, 'Quais dois exames você solicita após identificar a bactéria?', [('Hemoculturas de controle após terapia dirigida', True), ('Colonoscopia quando clinicamente estabilizada', True), ('Fator reumatoide', False), ('Pesquisa de sangue oculto nas fezes', False), ('Tomografia de abdome', False), ('Biópsia renal antes de iniciar betalactâmico', False)], [('Prioridades', 'Hemoculturas de controle documentam depuração e revelam persistência sob terapia. Colonoscopia pesquisa lesão colorretal associada a este agente; a ferropenia já era indicação independente. A sequência mostra culturas negativas e o resultado endoscópico.'), ('Comparação', 'Fator reumatoide pode persistir e não documenta esterilização. Sangue oculto negativo não descarta fonte intermitente nem deve condicionar endoscopia. Tomografia não substitui avaliação mucosa com possibilidade de biópsia. Biópsia renal pode ser útil em evolução discordante, mas não precede tratar esta infecção.')]),
 
     pg('virada', 'O diagnóstico',
        'É **endocardite infecciosa** de valva mitral nativa, sobre cardiopatia '
@@ -356,7 +352,7 @@ ETAPAS = [
        'A radiografia é feita no leito.'),
 
     Q('p7', 5,
-      'Culturas negativas no terceiro dia, dispneia súbita no sexto e PR inalterado. Qual mecanismo deve orientar a avaliação urgente?', [
+      'Qual mecanismo melhor explica a intercorrência do sexto dia?', [
       ('Disfunção mecânica mitral com insuficiência cardíaca aguda', True),
       ('Abscesso perivalvar como mecanismo mais sustentado pelo ECG', False),
       ('Falha microbiológica como explicação principal, apesar da depuração', False),
@@ -368,7 +364,7 @@ ETAPAS = [
            'Incidência anteroposterior, feita no leito na madrugada do sexto dia. '
            'Compare com a radiografia da admissão, que não tinha opacidades.',
            IMG / 'rx_edema.jpg',
-           'Radiografia de outro paciente · comparação didática.',
+           'Radiografia.',
            credito_meta(IMG / 'rx_edema.jpg.json'),
         [
          ((290, 540), (95, 440), '**Opacidades alveolares** confluentes no pulmão direito, a partir do hilo.', 12),
@@ -436,7 +432,7 @@ ETAPAS = [
            'Peça da mucosectomia em hematoxilina-eosina, pequeno aumento. A '
            'pergunta é o tipo de lesão e o grau de displasia.',
            IMG / 'adenoma_histo.jpg',
-           'Lâmina de outro paciente · comparação didática.',
+           'Lâmina.',
            credito_meta(IMG / 'adenoma_histo.jpg.json'),
         [
          ((445, 75), (250, 30), '**Superfície com displasia de alto grau**: núcleos que perdem a polaridade.', 12),
@@ -450,7 +446,7 @@ ETAPAS = [
          'fezes escuras vinham dele.']),
 
     Q('p8', 6,
-      'Após completar o tratamento, Lúcia fará procedimentos eletivos, sem infecção ativa. Segundo a AHA, em quais dois indicar profilaxia de endocardite?', [
+      'Após a alta, em quais dois procedimentos você indica profilaxia de endocardite, segundo a AHA?', [
       ('Raspagem periodontal subgengival', True),
       ('Extração de dente permanente', True),
       ('Ajuste da prótese dentária removível sem lesão de mucosa', False),
@@ -529,16 +525,7 @@ ETAPAS = [
        'iron deficiency anaemia in adults, Gut 2021. Haidar e Singh. Fever of '
        'Unknown Origin, N Engl J Med 2022. Ministério da Saúde, Manual de '
        'Vigilância e Controle da Leishmaniose Visceral.',
-       'Imagens, todas de outros pacientes, com setas adicionadas: radiografia '
-       'de tórax normal, Mikael Häggström, Wikimedia Commons, CC0; '
-       'ecocardiograma apical de quatro câmaras, CardioNetworks ECHOpedia (AMC '
-       'Echolab), Wikimedia Commons, CC BY-SA 3.0, quadro extraído do vídeo '
-       'E00405; hemorragias sob a unha, Splarka, Wikimedia Commons, domínio '
-       'público, recortada (commons.wikimedia.org/wiki/File:Splinter_hemorrhage.jpg); '
-       'máculas palmares, Warfieldian, Wikimedia Commons, CC BY-SA 4.0 '
-       '(commons.wikimedia.org/wiki/File:Janeway_lesion.JPG); radiografia de tórax no leito, Jeremy Jones (Radiopaedia), '
-       'Wikimedia Commons, CC BY-SA 3.0; micrografia de adenoma tubuloviloso, '
-       'Mikael Häggström, Wikimedia Commons, CC0.'),
+       'Imagens, com setas adicionadas: radiografia de tórax normal, Mikael Häggström, Wikimedia Commons, CC0; ecocardiograma apical de quatro câmaras, CardioNetworks ECHOpedia (AMC Echolab), Wikimedia Commons, CC BY-SA 3.0, quadro extraído do vídeo E00405; hemorragias sob a unha, Splarka, Wikimedia Commons, domínio público, recortada (commons.wikimedia.org/wiki/File:Splinter_hemorrhage.jpg); máculas palmares, Warfieldian, Wikimedia Commons, CC BY-SA 4.0 (commons.wikimedia.org/wiki/File:Janeway_lesion.JPG); radiografia de tórax no leito, Jeremy Jones (Radiopaedia), Wikimedia Commons, CC BY-SA 3.0; micrografia de adenoma tubuloviloso, Mikael Häggström, Wikimedia Commons, CC0.'),
 ]
 
 REVISAO = []

@@ -125,7 +125,7 @@ ETAPAS = [
            'Radiografia feita na chegada, à procura de um foco para a febre e a '
            'confusão.',
            IMG / 'rx_torax_normal.jpg',
-           'Radiografia de outro paciente · comparação didática.',
+           'Radiografia.',
            'Mikael Häggström · Wikimedia Commons · CC0 · setas adicionadas',
         [
          ((112, 972), (60, 820), '**Seio costofrênico** direito agudo e livre: sem derrame.', 12),
@@ -151,7 +151,7 @@ ETAPAS = [
         'Tomografia sem contraste antes da punção, pelo déficit focal e pela '
         'sonolência.',
         IMG / 'tc_cranio.png',
-        'Corte axial e localizador de outro adulto · comparação didática.',
+        'Corte axial e localizador.',
         'Mikael Häggström · Wikimedia Commons · CC0 · setas adicionadas',
         [
          ((268, 380), (35, 340), '**Ventrículos laterais**, escuros neste corte, sem dilatação.', 12),
@@ -190,16 +190,13 @@ ETAPAS = [
     ], introducao='Punção lombar feita logo depois da tomografia.'),
 
     Q('p2', 1,
-      'Líquor com 86 células, 58% neutrófilos, proteína 92 e relação glicose 0,54. Qual interpretação melhor pondera as hipóteses infecciosas nesta fase?', [
+      'Como você interpreta o primeiro líquor?', [
       ('Perfil compatível com virose inicial, mantendo cobertura bacteriana enquanto se esclarece a causa', True),
       ('Perfil predominantemente piogênico, tornando a investigação viral uma prioridade posterior', False),
       ('Perfil sugestivo de meningite tuberculosa, pela combinação de proteína elevada e pleocitose moderada', False),
       ('Perfil favorece Listeria sobre virose, pelo predomínio neutrofílico no paciente idoso', False),
       ('Perfil favorece infecção fúngica crônica, pela glicorraquia de 74 mg/dL', False),
-     ], [
-      ('Probabilidade e cobertura', 'A TC sem alteração aguda não exclui encefalite nem isquemia recente; após revisão das contraindicações clínicas, permite prosseguir com a punção. A radiografia não mostrou foco pulmonar. Pleocitose moderada, proteína elevada e glicose relativamente preservada cabem em virose inicial, inclusive com neutrófilos. O conjunto não exclui bactéria: idade, quadro clínico e antibiótico pré-punção justificam manter cobertura enquanto se obtêm testes para investigar a causa.'),
-      ('Concorrentes', 'Meningite piogênica costuma ter maior celularidade e menor relação de glicose, embora haja sobreposição. Idade justifica cobrir Listeria, mas 58% de neutrófilos não a distingue de virose. TB e fungos permanecem diferenciais conforme contexto, porém evolução aguda e relação de glicose 0,54 não os priorizam; proteína 92 isoladamente também não os separa.'),
-     ]),
+     ], [('Probabilidade e cobertura', 'A TC sem alteração aguda não exclui encefalite nem isquemia recente; após revisão das contraindicações clínicas, permite prosseguir com a punção. A radiografia não mostrou foco pulmonar. Pleocitose moderada, proteína elevada e glicose relativamente preservada cabem em virose inicial, inclusive com neutrófilos. O conjunto não exclui bactéria: idade, quadro clínico e antibiótico pré-punção justificam manter cobertura enquanto se obtêm testes para investigar a causa.'), ('Concorrentes', 'Meningite piogênica costuma ter maior celularidade e menor relação de glicose, embora haja sobreposição. Idade justifica cobrir Listeria, mas 58% de neutrófilos não a distingue de virose. TB e fungos permanecem diferenciais conforme contexto, porém evolução aguda e relação de glicose 0,54 não os priorizam; proteína 92 isoladamente também não os separa.'), ('Diagnósticos a comparar', 'Líquor inflamatório pode acompanhar infecção viral, bacteriana e outras inflamações. Neutrófilos podem predominar no início de uma virose. A duração dos sintomas, a glicose pareada com o sangue e a evolução ajudam; uma única proporção celular não decide a causa.')]),
     pg('reavaliacao_sodio', 'Reavaliação nas primeiras horas',
        'Após antitérmico, a frequência cai para 108, mas ele continua desorientado e a perna direita segue fraca. Não aparecem sinais de hipovolemia ou congestão, e a glicemia não explica a hiponatremia. O exame neurológico mantém prioridade, com tratamento e punção já realizados.',
        'Para classificar o sódio baixo, a equipe solicita osmolalidade sérica, osmolalidade e sódio urinários. TSH complementa a investigação; eventual avaliação adrenal considera horário de coleta e exposição a corticoide, sem retardar tratamento indicado.'),
@@ -212,7 +209,7 @@ ETAPAS = [
     ], introducao='Exames dirigidos pela hiponatremia identificada no painel básico, não um rastreio indiscriminado na admissão.'),
 
     Q('p1', 2,
-      'Na 129, osmolalidade sérica 270 e urinária 456, Na urinário 52, sem diurético ou sinais de depleção. Quais duas hipóteses ainda explicam esse padrão?', [
+      'Quais duas causas você mantém para a alteração do sódio?', [
       ('Antidiurese inapropriada associada à doença aguda', True),
       ('Deficiência de cortisol', True),
       ('Hiponatremia translocacional pela glicose de 138', False),
@@ -233,24 +230,20 @@ ETAPAS = [
        'espontaneamente. Há tremor de ação nas duas mãos.'),
 
     Q('p3', 3,
-      'Fraqueza flácida muito assimétrica, arreflexia, sensibilidade preservada, tremor e pleocitose. Quais três exames melhor localizam o processo?', [
+      'Quais três exames você prioriza após o novo exame neurológico?', [
       ('Ressonância do encéfalo', True),
       ('Ressonância da medula', True),
       ('Eletroneuromiografia com conduções motoras e sensitivas', True),
-      ('Creatinoquinase como principal teste localizatório', False),
+      ('Creatinoquinase', False),
       ('Anticorpo antirreceptor de acetilcolina', False),
       ('Nova tomografia de crânio sem contraste', False),
-     ], [
-      ('Localizações a testar', 'RM de encéfalo: investiga a encefalite e o tremor, que uma neuropatia isolada não explica. RM de medula: procura acometimento de substância cinzenta e exclui compressão. ENMG: distingue padrão motor axonal de desmielinização e testa a preservação sensitiva; sozinha não separa sempre corno anterior de neuropatia motora axonal.'),
-      ('Por que não estes agora', 'CK: pode investigar lesão muscular, mas não localiza adequadamente este padrão motor assimétrico com pleocitose. Anti-AChR: miastenia não integra febre, pleocitose e arreflexia assimétrica. Nova TC: sem mudança aguda sugestiva de hemorragia, acrescenta menos que RM para estas localizações.'),
-     ]),
+     ], [('Localizações a testar', 'RM de encéfalo: investiga a encefalite e o tremor, que uma neuropatia isolada não explica. RM de medula: procura acometimento de substância cinzenta e exclui compressão. ENMG: distingue padrão motor axonal de desmielinização e testa a preservação sensitiva; sozinha não separa sempre corno anterior de neuropatia motora axonal.'), ('Por que não estes agora', 'CK: pode investigar lesão muscular, mas não localiza adequadamente este padrão motor assimétrico com pleocitose. Anti-AChR: miastenia não integra febre, pleocitose e arreflexia assimétrica. Nova TC: sem mudança aguda sugestiva de hemorragia, acrescenta menos que RM para estas localizações.'), ('Onde está a lesão', 'Fraqueza pode vir do cérebro, da medula, dos nervos ou do músculo. Distribuição da força, reflexos, sensibilidade e líquor orientam a localização. A eletroneuromiografia e as imagens testam essa localização antes de definir o agente.')]),
 
     estudo('rm_encefalo', 'Ressonância de encéfalo',
            'Ressonância feita à tarde, à procura do lobo temporal da encefalite '
            'herpética e de uma causa para a paresia. Sequência FLAIR.',
            IMG / 'rm_encefalo_flair.png',
-           'Ressonância de outro paciente · FLAIR axial · as setas brancas são '
-           'do original.',
+           'Ressonância · FLAIR axial · as setas brancas são do original.',
            credito_meta(IMG / 'rm_encefalo_flair.png.json'),
         [
          ((288, 300), (300, 170), '**Substância negra** com hipersinal, dos dois lados do mesencéfalo.', -12),
@@ -265,8 +258,7 @@ ETAPAS = [
            'No mesmo exame, cortes da medula cervical e lombar, pela paresia de '
            'neurônio motor inferior.',
            IMG / 'rm_medula_t2.jpg',
-           'Ressonância de outro paciente · T2 axial da medula cervical · os '
-           'círculos são do original.',
+           'Ressonância · T2 axial da medula cervical · os círculos são do original.',
            credito_meta(IMG / 'rm_medula_t2.jpg.json'),
         [
          ((497, 835), (230, 760), '**Hipersinal central** na medula: a substância cinzenta está acometida.', 12),
@@ -278,7 +270,7 @@ ETAPAS = [
          'cone medular, fora destes cortes.']),
 
     Q('p4', 4,
-      'A RM reúne substância negra, tálamo, discreto temporal mesial e substância cinzenta medular. Quais duas interpretações melhor integram imagem, exame e cronologia?', [
+      'Quais duas hipóteses melhor integram a evolução e as imagens?', [
       ('Encefalomielite infecciosa integra a encefalopatia, o tremor e a paresia assimétrica', True),
       ('O acometimento temporal mantém HSV como concorrente enquanto se amplia a investigação da causa', True),
       ('Encefalite temporal por HSV com paresia de origem hemisférica é a melhor localização unificadora', False),
@@ -297,7 +289,7 @@ ETAPAS = [
        'cmH₂O.'),
 
     Q('p5', 5,
-      'Capacidade vital caiu de 24 para 17 mL/kg em oito horas, com engasgos; SpO₂ 96% e pCO₂ 38. Quais duas interpretações devem orientar o suporte?', [
+      'Quais duas conclusões orientam o suporte neste momento?', [
       ('A tendência da capacidade vital indica reserva ventilatória em deterioração', True),
       ('A disfunção bulbar reduz a segurança do suporte por máscara', True),
       ('A pCO₂ normal demonstra reserva ventilatória suficiente para a noite', False),
@@ -354,13 +346,13 @@ ETAPAS = [
        'A PCR do primeiro líquor para HSV, colhido no quinto dia de sintomas, é negativa; VZV e enterovírus também negativos. Pela alteração temporal discreta, mantém-se aciclovir até reavaliação e uma nova PCR para HSV, três dias após a primeira, também negativa. IgM para arbovírus está em processamento desde a admissão.'),
 
     Q('p6', 6,
-      'Os testes para herpes e enterovírus são negativos. Quais dois exames você prioriza para investigar Nilo Ocidental nesta fase?', [
+      'Após rever a viagem e os resultados, quais dois exames você acrescenta?', [
       ('IgM para Nilo Ocidental no líquor', True),
       ('IgM para Nilo Ocidental no sangue', True),
-      ('RT-PCR de Nilo Ocidental no sangue como teste principal', False),
-      ('IgG isolada para Nilo Ocidental no soro', False),
+      ('RT-PCR para Nilo Ocidental no sangue', False),
+      ('IgG para Nilo Ocidental no soro', False),
       ('Repetição imediata da PCR de enterovírus no mesmo material', False),
-      ('NS1 de dengue como confirmação da causa neurológica', False),
+      ('Antígeno NS1 de dengue', False),
      ], [
       ('Rendimento e especificidade', 'A pesquisa de IgM no sangue e no líquor é o primeiro passo nesta fase. Como o paciente já teve dengue e recebeu vacina contra febre amarela, um resultado positivo pode precisar de confirmação. O laboratório de referência escolhe o teste confirmatório; não é necessário conhecer sua técnica para reconhecer a suspeita e enviar as amostras.'),
       ('Por que não os demais', 'O envio é organizado com a rede de referência, conforme a disponibilidade local. O tratamento de suporte não espera esses resultados. Teste molecular no sangue (RT-PCR): baixa sensibilidade após a viremia curta no imunocompetente; negativa não exclui. IgG isolada: não data infecção nem resolve reatividade cruzada. Repetir enterovírus no mesmo material: sem falha técnica ou nova informação, rende menos que investigar outras causas. NS1: pesquisa dengue aguda, não confirma Nilo Ocidental nem infecção do sistema nervoso.'),
@@ -451,12 +443,7 @@ ETAPAS = [
        'target="_blank" rel="noopener">CDC: tratamento</a> · '
        '<a href="https://www.gov.br/saude/pt-br/centrais-de-conteudo/publicacoes/notas-tecnicas/2026/nota-tecnica-no-79-2026.pdf" '
        'target="_blank" rel="noopener">Nota Técnica 79/2026</a></p>',
-       p('Imagens, todas de outros pacientes, com setas adicionadas: '
-         'radiografia de tórax e tomografia de crânio, Mikael Häggström, '
-         'Wikimedia Commons, CC0; ressonância de encéfalo, James J. Sejvar '
-         '(//Viruses// 2014), Wikimedia Commons, CC BY 3.0; ressonância da '
-         'medula, JasonRobertYoungMD, Wikimedia Commons, CC BY-SA 4.0; '
-         'eletrocardiograma, Ewingdo, Wikimedia Commons, CC BY-SA 4.0.'),
+       p('Imagens, com setas adicionadas: radiografia de tórax e tomografia de crânio, Mikael Häggström, Wikimedia Commons, CC0; ressonância de encéfalo, James J. Sejvar (//Viruses// 2014), Wikimedia Commons, CC BY 3.0; ressonância da medula, JasonRobertYoungMD, Wikimedia Commons, CC BY-SA 4.0; eletrocardiograma, Ewingdo, Wikimedia Commons, CC BY-SA 4.0.'),
        so_kicker=True),
 ]
 

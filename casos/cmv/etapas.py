@@ -128,16 +128,13 @@ ETAPAS = [
     ], introducao='A interpretação considera quais agentes o painel local efetivamente pesquisa. Os resultados chegam ao longo do primeiro dia, com hidratação e vigilância do enxerto em curso.'),
 
     Q('p1', 1,
-      'Diarreia noturna com febre e perda de peso em receptora de transplante, com testes fecais iniciais negativos. Quais duas causas devem permanecer prioritárias?', [
+      'Quais duas causas você prioriza na investigação inicial?', [
       ('Colite infecciosa não inteiramente coberta pelo painel de fezes', True),
       ('Lesão intestinal relacionada ao micofenolato', True),
       ('Diarreia osmótica isolada por carboidrato não absorvido', False),
       ('Síndrome funcional como explicação principal', False),
       ('Insuficiência pancreática exócrina como mecanismo dominante', False),
-     ], [
-      ('Integração', 'Febre, sintomas noturnos, perda de peso e imunossupressão sustentam doença orgânica. Infecção e lesão por micofenolato continuam prioritárias; esses dados não distinguem as duas nem definem sozinhos um mecanismo secretor puro.'),
-      ('Concorrentes', 'Painel negativo não pesquisa toda infecção nem substitui tecido. Diarreia causada apenas por carboidrato não absorvido costuma diminuir com o jejum. Sintomas noturnos, febre e inflamação pesam contra causa funcional. Não há esteatorreia ou contexto que priorize insuficiência pancreática.'),
-     ]),
+     ], [('Integração', 'Febre, sintomas noturnos, perda de peso e imunossupressão sustentam doença orgânica. Infecção e lesão por micofenolato continuam prioritárias; esses dados não distinguem as duas nem definem sozinhos um mecanismo secretor puro.'), ('Concorrentes', 'Painel negativo não pesquisa toda infecção nem substitui tecido. Diarreia causada apenas por carboidrato não absorvido costuma diminuir com o jejum. Sintomas noturnos, febre e inflamação pesam contra causa funcional. Não há esteatorreia ou contexto que priorize insuficiência pancreática.'), ('Como organizar a diarreia', 'No transplantado, infecção e toxicidade de medicamentos podem coexistir. O painel de fezes não cobre todas as causas e resultado negativo não prova efeito do micofenolato. Duração, febre, citopenias e endoscopia mudam a investigação.')]),
 
     pagina('colite_tx', 'Discussão', 'Colite no transplantado',
            p('No receptor de órgão sólido, as causas de colite se dividem em dois '
@@ -153,7 +150,7 @@ ETAPAS = [
              'da biópsia.')),
 
     Q('p2', 2,
-      'Oito evacuações/dia, creatinina 2,1, sedimento inativo e tacrolimo 14 ng/mL. Qual combinação explica melhor a disfunção inicial do enxerto?', [
+      'Qual mecanismo melhor explica a alteração da função do enxerto?', [
       ('Depleção de volume somada à vasoconstrição pelo tacrolimo', True),
       ('Rejeição celular somada à nefrite por amoxicilina', False),
       ('Toxicidade tubular comprovada pelo sedimento inativo', False),
@@ -177,17 +174,14 @@ ETAPAS = [
              'de cinco semanas atrás é menos convincente como causa principal, mas ausência de exantema ou leucocitúria não exclui nefrite intersticial.')),
 
     Q('p5', 3,
-      'Na admissão, diarreia febril, citopenias e fim recente da profilaxia coexistem com uso de micofenolato. Quais dois exames devem integrar a investigação da causa?', [
+      'Após a avaliação inicial, quais dois exames você solicita?', [
       ('Biópsia de mucosa colônica', True),
       ('PCR quantitativa de CMV no plasma', True),
       ('Repetir o mesmo painel molecular gastrointestinal sem nova exposição', False),
-      ('IgM anti-CMV para comprovar invasão intestinal', False),
+      ('IgM anti-CMV', False),
       ('Biópsia do enxerto antes de investigar a mucosa', False),
-      ('Nova tomografia abdominal para definir o agente', False),
-     ], [
-      ('Doença local e replicação', 'Colonoscopia com tecido: após testes fecais negativos e persistência clínica, distingue lesão medicamentosa e infecção invasiva; o estudo do tecido e a imuno-histoquímica (coloração que procura proteínas do agente na amostra) ajudam a demonstrar infecção na mucosa. PCR plasmática: pesquisa replicação sistêmica e oferece linha de base se houver doença por CMV; não substitui biópsia e pode ser baixa na doença intestinal.'),
-      ('Por que não os demais', 'Mesmo painel de fezes: sem nova pista, repete as limitações do primeiro. IgM anti-CMV: não comprova invasão tecidual, sobretudo no transplantado. Biópsia do enxerto: pode ser necessária conforme a evolução renal, mas não esclarece a causa da colite; a avaliação renal corre em paralelo. Nova TC: indicada se houver suspeita de complicação, mas não determina o agente nesta pancolite estável.'),
-     ]),
+      ('Tomografia de abdome', False),
+     ], [('Doença local e replicação', 'Colonoscopia com tecido: após testes fecais negativos e persistência clínica, distingue lesão medicamentosa e infecção invasiva; o estudo do tecido e a imuno-histoquímica (coloração que procura proteínas do agente na amostra) ajudam a demonstrar infecção na mucosa. PCR plasmática: pesquisa replicação sistêmica e oferece linha de base se houver doença por CMV; não substitui biópsia e pode ser baixa na doença intestinal.'), ('Por que não os demais', 'Mesmo painel de fezes: sem nova pista, repete as limitações do primeiro. IgM anti-CMV: não comprova invasão tecidual, sobretudo no transplantado. Biópsia do enxerto: pode ser necessária conforme a evolução renal, mas não esclarece a causa da colite; a avaliação renal corre em paralelo. Nova TC: indicada se houver suspeita de complicação, mas não determina o agente nesta pancolite estável.'), ('Sangue e tecido respondem a perguntas diferentes', 'Detectar DNA viral no sangue demonstra replicação, mas não comprova que ele explique a lesão intestinal. Histologia e imuno-histoquímica procuram o vírus no órgão afetado. Essa distinção evita tratar uma carga detectável como explicação automática para toda diarreia.')]),
 
     pg('ancora', 'Primeiras 24 horas: melhora incompleta',
        'Cristaloide e reposição de potássio melhoram sede, tontura ao levantar e diurese. Pressão 118/70, frequência 88 e creatinina 1,6 mg/dL. A ultrassonografia com Doppler não mostra obstrução ou alteração vascular. A equipe ajusta tacrolimo e reduz micofenolato, considerando toxicidade associada.',
@@ -198,12 +192,9 @@ ETAPAS = [
        'A PCR plasmática de CMV colhida na admissão retorna em 18.600 UI/mL. O registro pré-transplante já mostra D+/R+. A presença de DNA do vírus no sangue aumenta a suspeita, mas não separa colite invasiva de outra causa coexistente. A endoscopia com biópsia foi solicitada desde o primeiro dia. A medida da quantidade de vírus no sangue depende da rede do transplante; o envio da amostra não substitui a avaliação do intestino.'),
 
     estudo('tc_abdome', 'Tomografia de abdome',
-           'Segundo dia. Tomografia com contraste venoso, depois da '
-           'hidratação, para procurar complicação da colite. A imagem é de '
-           'outro paciente, com o padrão descrito no laudo de Helena. Onde '
-           'está a doença?',
+           'Segundo dia. Tomografia com contraste venoso, depois da hidratação, para procurar complicação da colite. Onde está a doença?',
            IMG / 'tc_colite.jpg',
-           'Tomografia de outro paciente, corte axial · comparação didática.',
+           'Tomografia, corte axial.',
            credito_meta(IMG / 'tc_colite.jpg.json'),
         [
          ((430, 150), (400, 32), '**Cólon transverso** com parede espessada e mucosa '
@@ -259,11 +250,9 @@ ETAPAS = [
        'A estabilidade permite colher tecido antes do antiviral com laudo prioritário. Se surgisse instabilidade ou atraso relevante na amostragem, o tratamento seria iniciado diante da forte suspeita. No exame completo, avaliam-se também os outros segmentos; a amostra deve representar a lesão.'),
 
     estudo('histologia_baixo', 'Biópsia do cólon: aumento intermediário',
-           'A lâmina do fundo de uma úlcera. A imagem é de outro paciente com '
-           'o mesmo laudo. Descreva a mucosa antes de procurar a célula que '
-           'decide.',
+           'A lâmina do fundo de uma úlcera. Descreva a mucosa antes de procurar a célula que decide.',
            IMG / 'colon_baixo.jpg',
-           'Mucosa colônica em hematoxilina-eosina · outro paciente.',
+           'Mucosa colônica em hematoxilina-eosina.',
            credito_meta(IMG / 'colon_baixo.jpg.json'),
         [
          ((300, 229), (230, 90), '**Lâmina própria** tomada por infiltrado inflamatório denso, sem criptas nessa região.', 12),
@@ -278,7 +267,7 @@ ETAPAS = [
     estudo('histologia_alto', 'Biópsia do cólon: grande aumento',
            'A mesma úlcera em grande aumento. Que alteração celular aparece?',
            IMG / 'colon_alto.jpg',
-           'Hematoxilina-eosina, grande aumento · outro paciente.',
+           'Hematoxilina-eosina, grande aumento.',
            credito_meta(IMG / 'colon_alto.jpg.json'),
         [
          ((743, 551), (930, 640), '**Inclusão intranuclear** grande e densa, que ocupa quase todo o núcleo.', 12),
@@ -318,7 +307,7 @@ ETAPAS = [
     ], introducao='A equipe revê a PCR e a sorologia já disponíveis junto ao tecido. A perda intestinal continua e a creatinina voltou a subir.'),
 
     Q('p6', 4,
-      'IHQ positiva no cólon, PCR plasmática 18.600 e doador/receptora soropositivas. Quais duas interpretações melhor orientam a avaliação inicial?', [
+      'Quais duas conclusões os resultados permitem?', [
       ('A imunossupressão permite doença intestinal por CMV em receptora previamente soropositiva', True),
       ('A PCR seriada no mesmo ensaio ajuda a medir resposta ao tratamento', True),
       ('A presença de DNA do vírus no sangue favorece atribuir as citopenias ao vírus e manter os mielotóxicos na dose atual', False),
@@ -363,7 +352,7 @@ ETAPAS = [
     ], introducao='A carga caiu quase seis vezes. Helena já dorme a noite inteira, a urgência e o sangue desapareceram, mas ainda tem quatro evacuações amolecidas e apetite parcial. Há resposta clínica em curso, com nova limitação hematológica.'),
 
     Q('p7', 5,
-      'No D7 de ganciclovir, carga 18.600 → 3.200 e neutrófilos 900 → 700/mm³, com melhora clínica. Quais duas medidas são mais adequadas agora?', [
+      'No sétimo dia, quais duas medidas você adota?', [
       ('Reavaliar o micofenolato', True),
       ('Manter dose antiviral de tratamento revista pela função renal atual', True),
       ('Reduzir ganciclovir pela metade apenas pela contagem de neutrófilos', False),
@@ -379,12 +368,12 @@ ETAPAS = [
        'Agora afebril, sem dor ou urgência, Helena volta a comer normalmente e tem uma a duas evacuações formadas por dia. Creatinina 1,3 mg/dL. A PCR semanal ainda é 620 UI/mL: o intestino melhorou antes de atingir a meta virológica.'),
 
     Q('p8', 6,
-      'D14: PCR 18.600 → 3.200 → 620 UI/mL no mesmo ensaio. Quais três exames priorizar no seguimento para decidir dose, segurança e término?', [
+      'Quais três exames você solicita na reavaliação do 14.º dia?', [
       ('PCR quantitativa semanal no mesmo ensaio', True),
       ('Hemograma com diferencial', True),
       ('Creatinina seriada para rever a função renal', True),
       ('Genotipagem de resistência agora', False),
-      ('Nova colonoscopia para comprovar cura antes da avaliação clínica', False),
+      ('Colonoscopia de controle', False),
       ('IgM anti-CMV seriada', False),
      ], [
       ('O que cada exame decide', 'PCR semanal: verifica supressão até o limiar do serviço, além da resolução clínica; a curva atual é de resposta. Hemograma: acompanha neutropenia e efeito da revisão de mielotóxicos. Creatinina: função renal em recuperação exige revisar a dose, evitando subexposição ou toxicidade.'),
@@ -429,11 +418,7 @@ ETAPAS = [
        'Management of Cytomegalovirus in Solid Organ Transplantation. '
        'Transplantation 2025;109(7):1066–1110 (diagnóstico, duração do '
        'tratamento, neutropenia e critérios de genotipagem).',
-       'Tomografia: Hellerhoff, Wikimedia Commons, CC BY-SA 4.0, painel axial '
-       'recortado de "Clostridien Colitis 68M - CT KM pv - 001". Histologia: '
-       'Nephron, Wikimedia Commons, CC BY-SA 3.0 ("CMV colitis - intermed '
-       'mag" e "CMV colitis - high mag - cropped"). Todas de outros pacientes, '
-       'com setas adicionadas.'),
+       'Tomografia: Hellerhoff, Wikimedia Commons, CC BY-SA 4.0, painel axial recortado de "Clostridien Colitis 68M - CT KM pv - 001". Histologia: Nephron, Wikimedia Commons, CC BY-SA 3.0 ("CMV colitis - intermed mag" e "CMV colitis - high mag - cropped"). Setas adicionadas.'),
 ]
 
 REVISAO = []

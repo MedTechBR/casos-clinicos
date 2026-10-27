@@ -52,13 +52,11 @@ def inserir_antes(etapas, destino, novas):
 def ecg(ident, contexto, img, discussao):
     return sequencia(ident, 'Eletrocardiograma', contexto, img / 'ecg_taquicardia.jpg',
         'Ewingdo · Wikimedia Commons · CC BY-SA 4.0. Setas adicionadas sob a mesma licença.',
-        'Traçado ilustrativo de outro paciente; não é um registro deste caso. 25 mm/s; 10 mm/mV.',
+        '25 mm/s; 10 mm/mV.',
         [((579, 386), (520, 300), '**S profunda em V3**: voltagem precordial elevada.', -12),
          ((832, 238), (920, 310), '**R alta em V6**, compondo o padrão de grandes voltagens.', 12),
          ((596, 159), (470, 92), '**T proeminente em V2**; também chama atenção em V3–V4.', 8)],
         ['Taquicardia regular, provável origem sinusal, cerca de 125 bpm; '
          'QRS estreito. Altas voltagens, T anteriores proeminentes e discreto '
          'desnível de J/ST lateral.',
-         'Correlacionar com clínica, eletrólitos e ECG prévio; não concluir '
-         'hipertrofia ou isquemia pela imagem isolada. Os achados deste '
-         'traçado comparativo não são automaticamente do paciente ficcional.', discussao])
+         'Correlacionar com clínica, eletrólitos e ECG prévio; não concluir hipertrofia ou isquemia pela imagem isolada.', discussao])

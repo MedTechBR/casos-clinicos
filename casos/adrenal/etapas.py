@@ -121,11 +121,9 @@ ETAPAS = [
     ], introducao='Gasometria e lactato pela hipoperfusão; urina na avaliação da função renal. Não se espera este painel para repor glicose e volume.'),
 
     estudo('ecg', 'Eletrocardiograma',
-           'Feito à beira do leito pelo potássio de 6,1, com ela em taquicardia '
-           'sinusal de 118. O traçado mostrado é de outro paciente, com o mesmo '
-           'achado. Olhe a forma da onda T antes de abrir os achados.',
+           'Feito à beira do leito pelo potássio de 6,1, com ela em taquicardia sinusal de 118. Olhe a forma da onda T antes de abrir os achados.',
            IMG / 'ecg_hipercalemia.jpg',
-           'Eletrocardiograma de outro paciente, com hipercalemia mais intensa · comparação didática.',
+           'Eletrocardiograma.',
            credito_meta(IMG / 'ecg_hipercalemia.jpg.json'),
         [
          ((807, 316), (930, 250), '**Onda T** alta, pontiaguda e de base estreita em V4.', -12),
@@ -147,12 +145,11 @@ ETAPAS = [
         ex('Sódio / potássio / cloro urinários', '62 / 14 / 58 mmol/L', '—'),
     ], introducao='Solicitados após Na 124, K 6,1 e a primeira reavaliação clínica. Para interpretar a perda renal de sal, o laboratório utiliza as amostras iniciais de sangue e urina, anteriores à salina. Estes resultados não condicionam a ressuscitação nem a coleta hormonal indicada na reavaliação seguinte.'),
 
-    Q('p1', 1, 'Diarreia recente, Na 124, K 6,1 e hipoglicemia: quais duas hipóteses precisam permanecer prioritárias além da perda intestinal?', [
+    Q('p1', 1, 'Quais duas hipóteses você prioriza na admissão?', [
  ('Insuficiência adrenal primária', True), ('Sepse com foco gastrointestinal', True),
  ('Síndrome de secreção inapropriada de ADH isolada', False),
  ('Efeito isolado da fluoxetina', False), ('Insuficiência cardíaca descompensada', False)
- ], [('Hierarquia', 'Hipovolemia é real, mas hipercalemia, hipoglicemia e distúrbios prévios à diarreia exigem investigar insuficiência adrenal desde já. Infecção pode ser o gatilho e também causa concorrente de choque; colher culturas e avaliar antibiótico conforme suspeita, sem esperar exclusão de uma hipótese para tratar outra.'),
- ('Limites', 'Fluoxetina pode contribuir para hiponatremia, mas não explica este choque com retenção de potássio. Urina concentrada também ocorre por ADH estimulado pela hipovolemia; não basta para chamar SIADH. O gap urinário de +18 (62 + 14 − 58) sugere excreção de amônio inadequada, sem provar isoladamente acidose tubular.')]),
+ ], [('Hierarquia', 'Hipovolemia é real, mas hipercalemia, hipoglicemia e distúrbios prévios à diarreia exigem investigar insuficiência adrenal desde já. Infecção pode ser o gatilho e também causa concorrente de choque; colher culturas e avaliar antibiótico conforme suspeita, sem esperar exclusão de uma hipótese para tratar outra.'), ('Limites', 'Fluoxetina pode contribuir para hiponatremia, mas não explica este choque com retenção de potássio. Urina concentrada também ocorre por ADH estimulado pela hipovolemia; não basta para chamar SIADH. O gap urinário de +18 (62 + 14 − 58) sugere excreção de amônio inadequada, sem provar isoladamente acidose tubular.'), ('Como comparar as hipóteses', 'Diarreia e sepse podem produzir hipotensão e alteração renal. A combinação com sódio baixo, potássio alto e hipoglicemia pede considerar deficiência hormonal. Essa combinação aumenta a suspeita, mas a confirmação depende da avaliação hormonal e da evolução.')]),
 
     pg('recorrencia', 'Durante a primeira hora',
  'Os vômitos cessam com o antiemético e a pressão melhorou brevemente, mas cai outra vez a 82/48. Marta fica nauseada ao elevar a cabeceira; glicemia de 62 apesar da reposição. Não há nova evacuação, perda externa importante ou crepitações. A equipe percebe que cessar as perdas não restaurou a circulação.',
@@ -188,7 +185,7 @@ ETAPAS = [
            'Pedida na sala vermelha, antes de mais volume, para procurar '
            'congestão, derrame ou um foco de infecção que explique o choque.',
            IMG / 'rx_torax.jpg',
-           'Radiografia de outra pessoa · comparação didática.',
+           'Radiografia.',
            credito_meta(IMG / 'rx_torax.jpg.json'),
         [
          ((236, 500), (110, 420), '**Vasos pulmonares** de calibre normal: sem congestão.', 12),
@@ -200,12 +197,9 @@ ETAPAS = [
          'Não há foco pulmonar evidente ou congestão radiográfica. A imagem isolada não decide tolerância a mais volume; perfusão, exame e medidas dinâmicas orientam a reposição. A resposta incompleta já motivou tratamento hormonal.']),
 
     estudo('foto_gengiva', 'A boca',
-           'Com a lanterna, a residente afasta os lábios de Marta e encontra '
-           'manchas acastanhadas na gengiva e na face interna das bochechas. A '
-           'fotografia é de outra pessoa, com o mesmo tipo de pigmento na '
-           'gengiva. Procure onde a cor muda antes de abrir os achados.',
+           'Com a lanterna, a residente afasta os lábios de Marta e encontra manchas acastanhadas na gengiva e na face interna das bochechas. Procure onde a cor muda antes de abrir os achados.',
            IMG / 'gengiva_pigmento.jpg',
-           'Gengiva de outra pessoa, com pigmento acastanhado · comparação didática.',
+           'Gengiva, com pigmento acastanhado.',
            credito_meta(IMG / 'gengiva_pigmento.jpg.json'),
         [
          ((307, 150), (190, 50), '**Faixa acastanhada** na gengiva inserida acima '
@@ -223,12 +217,9 @@ ETAPAS = [
          'meses, junto do resto.']),
 
     estudo('foto_palmas', 'As mãos',
-           'Marta abre as mãos: os sulcos palmares estão escurecidos, em '
-           'contraste com as manchas acrômicas do dorso. A fotografia é de outra '
-           'paciente, com o mesmo achado nas palmas. Olhe as linhas da mão, não '
-           'a cor de fundo.',
+           'Marta abre as mãos: os sulcos palmares estão escurecidos, em contraste com as manchas acrômicas do dorso. Olhe as linhas da mão, não a cor de fundo.',
            IMG / 'sulcos_palmares.jpg',
-           'Palmas de outra paciente, com os sulcos escurecidos · comparação didática.',
+           'Palmas, com os sulcos escurecidos.',
            credito_meta(IMG / 'sulcos_palmares.jpg.json'),
         [
          ((283, 478), (90, 380), '**Sulco da eminência tenar** escurecido na mão '
@@ -253,11 +244,10 @@ ETAPAS = [
         ex('ACTH', '**480 pg/mL**', '7–63 pg/mL', True),
     ], introducao='Amostra colhida antes da primeira dose de hidrocortisona.'),
 
-    Q('p2', 2, 'Cortisol 2,1 µg/dL em choque e ACTH 480 pg/mL. Quais três dosagens complementares têm prioridade para causa e função mineralocorticoide?', [
+    Q('p2', 2, 'Quais três dosagens você solicita após os primeiros resultados hormonais?', [
  ('Renina plasmática', True), ('Aldosterona plasmática', True), ('Anticorpo anti-21-hidroxilase', True),
  ('Prolactina', False), ('Metanefrinas livres plasmáticas', False), ('Novo cortisol sob hidrocortisona', False)
- ], [('Perguntas diferentes', 'Renina e aldosterona devem ser interpretadas em conjunto, considerando postura, potássio, volume, medicações e momento da coleta. O anticorpo pesquisa autoimunidade; vitiligo e história familiar a favorecem. As três dosagens aparecem na narrativa mesmo se não foram selecionadas.'),
- ('Confirmação', 'Cortisol muito baixo com ACTH marcadamente alto sustenta falência primária. Estímulo pode ser organizado quando seguro se persistir dúvida; não se interrompe cobertura necessária para obter um teste. Dosar cortisol durante hidrocortisona não recupera o basal.')]),
+ ], [('Perguntas diferentes', 'Renina e aldosterona devem ser interpretadas em conjunto, considerando postura, potássio, volume, medicações e momento da coleta. O anticorpo pesquisa autoimunidade; vitiligo e história familiar a favorecem. As três dosagens aparecem na narrativa mesmo se não foram selecionadas.'), ('Confirmação', 'Cortisol muito baixo com ACTH marcadamente alto sustenta falência primária. Estímulo pode ser organizado quando seguro se persistir dúvida; não se interrompe cobertura necessária para obter um teste. Dosar cortisol durante hidrocortisona não recupera o basal.'), ('Localizar antes de procurar a causa', 'Cortisol baixo com ACTH muito elevado aponta para falha da adrenal. Deficiência central costuma preservar a aldosterona. Renina e aldosterona avaliam esse componente; o anticorpo investiga uma causa possível, sem substituir a avaliação funcional.')]),
 
     painel('res2_complemento', 'Investigação complementar', 'Etiologia e eixos associados', [
  ex('Renina plasmática', '185 µUI/mL', '4–46 µUI/mL', True),
@@ -275,7 +265,7 @@ ETAPAS = [
  'Está lúcida, sem vômitos e com pressão sustentada. Nas últimas duas horas urinou 350 mL/h; a urina tem osmolalidade de 90 mOsm/kg. O sódio passou de 124 para 132 mmol/L e o potássio caiu para 4,6. A bolsa de salina ainda corre a 150 mL/h.',
  'A melhora circulatória veio acompanhada de nova perda de água livre. Ausência de sintomas não demonstra segurança para continuar corrigindo no mesmo ritmo.'),
 
-    Q('p3', 3, 'Com circulação estável e esta trajetória do sódio, qual medida deve ser tomada agora?', [
+    Q('p3', 3, 'Na reavaliação da hidratação, qual ajuste você faz?', [
  ('Suspender a infusão de salina a 150 mL/h', True), ('Suspender a hidrocortisona de estresse', False),
  ('Aumentar a infusão de salina para 250 mL/h', False), ('Reduzir o controle de sódio para uma vez ao dia', False)
  ], [('Prioridade', 'A reposição de salina nessa velocidade deve ser interrompida e revista. Aumento de 8 mmol/L em 12 horas com aquarese ameaça ultrapassar um limite diário conservador. Vigiar sódio e diurese permite considerar água livre e desmopressina com equipe experiente.'),
@@ -289,7 +279,7 @@ ETAPAS = [
  'Sem vômitos, Marta come e caminha alguns passos. Ao reduzir a dose de estresse e passar para via oral, volta a ter tontura ao levantar; pressão 112/70 deitada e 92/60 em pé, sem congestão. O potássio é 5,1. Não há nova diarreia.',
  'A equipe distingue absorção oral preservada de reposição mineralocorticoide ainda necessária. A hidrocortisona em dose alta tinha atividade mineralocorticoide suficiente para a fase aguda; isso muda ao chegar à manutenção.'),
 
-    Q('p4', 4, 'Na transição para hidrocortisona 20 mg/dia, qual medicamento deve ser acrescentado para esta deficiência já documentada?', [
+    Q('p4', 4, 'Qual medicamento você acrescenta na transição para a manutenção?', [
  ('Fludrocortisona', True), ('Midodrina', False), ('Espironolactona', False), ('Levotiroxina', False)
  ], [('Reposição', 'Fludrocortisona repõe a deficiência de aldosterona, com ajuste por sintomas, pressão deitada/em pé, eletrólitos e renina. Midodrina pode elevar pressão, mas não corrige a deficiência. Espironolactona antagoniza o eixo já insuficiente; levotiroxina não trata esta hipotensão.')]),
 
@@ -297,7 +287,7 @@ ETAPAS = [
  'Com fludrocortisona 0,1 mg pela manhã e hidrocortisona 10 mg ao acordar, 5 mg ao meio-dia e 5 mg à tarde, consegue caminhar sem tontura. Potássio 4,4, sódio 136 e pressão em pé 108/68. As doses serão individualizadas; cortisol e ACTH não são alvos de titulação rotineira.',
  'Recebe cartão de emergência, prescrição e treinamento do kit intramuscular de hidrocortisona 100 mg. Marta e o marido ensaiam preparo e aplicação com a enfermagem. Vômitos que impedem comprimidos exigem via parenteral e atendimento urgente.'),
 
-    Q('p5', 5, 'Em casa, febre de 38,5 °C, sem vômitos ou hipotensão e tolerando comprimidos: qual dose oral diária deve constar no plano escrito?', [
+    Q('p5', 5, 'No episódio febril descrito, qual dose oral diária deve constar no plano domiciliar?', [
  ('Hidrocortisona 40 mg em tomadas divididas', True), ('Hidrocortisona 20 mg em tomadas divididas', False),
  ('Hidrocortisona 30 mg em tomadas divididas', False), ('Hidrocortisona 40 mg apenas no primeiro dia, mesmo permanecendo febril', False)
  ], [('Dia de doença', 'Neste esquema basal de 20 mg, 40 mg/dia divididos é a dose de estresse prevista enquanto durar a intercorrência, com revisão se não melhorar. Se não retiver a medicação, não basta aumentar comprimidos: usar o kit e procurar emergência. A orientação escrita deve ser adaptada pela equipe assistente.')]),

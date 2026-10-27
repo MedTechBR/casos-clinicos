@@ -131,16 +131,13 @@ ETAPAS = [
        'A equipe acrescenta exames dirigidos para causas tóxicas, endócrinas e infecciosas tratáveis. O ECG orienta a segurança do manejo da agitação; CK basal é colhida pela agitação persistente antes de eventual antipsicótico. A investigação neurológica corre em paralelo.'),
 
     Q('p1', 1,
-      'Pelas pausas sem lembrança e pela desorientação após pródromo febril, quais **três exames** priorizar na investigação neurológica?', [
+      'Após a avaliação inicial, quais três exames você prioriza?', [
       ('Eletroencefalograma', True),
       ('Punção lombar diagnóstica', True),
       ('Ressonância de encéfalo', True),
       ('FAN sérico', False),
       ('Vitamina B12 sérica', False),
-     ], [
-      ('Investigar função, inflamação e estrutura', '**EEG** procura atividade epiléptica nas pausas estereotipadas. **Líquor** investiga inflamação e infecção após avaliação de segurança. **RM** pesquisa lesões não identificadas pela TC e pode apoiar uma causa; seu resultado normal não encerra a investigação.'),
-      ('Outros exames possíveis', '**FAN/complemento** ganham prioridade com manifestações sistêmicas de autoimunidade, não descritas. **B12/folato** entram na avaliação de causas reversíveis, mas a evolução em dez dias, o pródromo e os episódios breves tornam a investigação direta do cérebro mais urgente.'),
-     ]),
+     ], [('Investigar função, inflamação e estrutura', '**EEG** procura atividade epiléptica nas pausas estereotipadas. **Líquor** investiga inflamação e infecção após avaliação de segurança. **RM** pesquisa lesões não identificadas pela TC e pode apoiar uma causa; seu resultado normal não encerra a investigação.'), ('Outros exames possíveis', '**FAN/complemento** ganham prioridade com manifestações sistêmicas de autoimunidade, não descritas. **B12/folato** entram na avaliação de causas reversíveis, mas a evolução em dez dias, o pródromo e os episódios breves tornam a investigação direta do cérebro mais urgente.'), ('Como organizar a alteração de comportamento', 'Quadro psiquiátrico primário, intoxicação, distúrbio metabólico e doença cerebral entram na comparação. Desorientação, episódios estereotipados e progressão rápida justificam investigação neurológica. Uma imagem normal não basta para atribuir os sintomas a uma causa psiquiátrica.')]),
 
     painel('rastreio_dirigido', 'Investigação dirigida', 'Contexto neuropsiquiátrico', [
         ex('TSH', '1,9 mUI/L', '0,4–4,0 mUI/L'),
@@ -155,7 +152,7 @@ ETAPAS = [
            'Feita na emergência, pela desorientação. Corte axial na altura dos '
            'átrios dos ventrículos laterais.',
            IMG / 'tc_cranio.jpg',
-           'Tomografia de outro paciente · comparação didática · recortada no corte axial.',
+           'Tomografia · recortada no corte axial.',
            credito_meta(IMG / 'tc_cranio.jpg.json'),
         [
          ((335, 345), (130, 420), '**Parênquima frontal** com diferenciação normal entre '
@@ -198,16 +195,13 @@ ETAPAS = [
            so_kicker=True),
 
     Q('p2', 2,
-      'A psicose precedeu o haloperidol; febre, rigidez e CK de 4.800 surgiram depois. Qual interpretação integra melhor essa sequência?', [
+      'Qual interpretação melhor explica a mudança do quadro?', [
       ('Reação ao bloqueio dopaminérgico sobre quadro cerebral ainda não esclarecido', True),
       ('Síndrome serotoninérgica como explicação da piora', False),
       ('Abstinência de clonazepam como explicação do quadro inteiro', False),
       ('Catatonia maligna primária demonstrada pela elevação de CK', False),
       ('Sepse como explicação única da alteração mental e da rigidez', False),
-     ], [
-      ('A cronologia discrimina', 'A exposição recente ao haloperidol, a rigidez difusa e a lesão muscular sustentam síndrome neuroléptica maligna. Ela explica a piora, mas não os dez dias anteriores de psicose, desorientação e pausas.'),
-      ('O concorrente próximo', 'Catatonia maligna pode se sobrepor e CK não a distingue sozinha. Não há exposição serotoninérgica convincente nem clônus descrito; o uso breve de clonazepam e sua suspensão tampouco explicam a síndrome inteira. Infecção permanece investigável, sem apagar a associação temporal com o antipsicótico.'),
-     ]),
+     ], [('A cronologia discrimina', 'A exposição recente ao haloperidol, a rigidez difusa e a lesão muscular sustentam síndrome neuroléptica maligna. Ela explica a piora, mas não os dez dias anteriores de psicose, desorientação e pausas.'), ('O concorrente próximo', 'Catatonia maligna pode se sobrepor e CK não a distingue sozinha. Não há exposição serotoninérgica convincente nem clônus descrito; o uso breve de clonazepam e sua suspensão tampouco explicam a síndrome inteira. Infecção permanece investigável, sem apagar a associação temporal com o antipsicótico.'), ('Doença de base ou complicação', 'Uma reação ao antipsicótico pode explicar a piora sem explicar o início do caso. Sepse, catatonia e reações a medicamentos compartilham sinais. A relação temporal, a lista de medicamentos e o exame neurológico ajudam a separar processos que podem coexistir.')]),
 
     pg('nms', 'Duas hipóteses que podem se sobrepor',
        'A equipe considera reação neuroléptica grave e catatonia associada à doença cerebral. A temporalidade com haloperidol favorece síndrome neuroléptica maligna, mas não prova que toda a rigidez e disautonomia tenham uma única causa. CK elevada mede lesão muscular, não distingue sozinha essas síndromes.',
@@ -264,7 +258,7 @@ ETAPAS = [
            'lobos temporais e do mesencéfalo, onde as infecções virais do cérebro '
            'costumam deixar marca.',
            IMG / 'rm_flair.jpg',
-           'Ressonância de outro paciente · comparação didática · recortada na cabeça.',
+           'Ressonância · recortada na cabeça.',
            credito_meta(IMG / 'rm_flair.jpg.json'),
         [
          ((660, 790), (870, 640), '**Lobo temporal medial** esquerdo com sinal normal, '
@@ -283,7 +277,7 @@ ETAPAS = [
            'durante os movimentos da boca. Repare no ritmo de base e no que se '
            'sobrepõe a ele.',
            IMG / 'eeg_uti.jpg',
-           'Traçado de outro paciente · comparação didática · quadros e ampliação do original.',
+           'Traçado · quadros e ampliação do original.',
            credito_meta(IMG / 'eeg_uti.jpg.json'),
         [
          ((309, 16), (200, 120), '**Onda delta** lenta e ampla em Fp1: o ritmo de base '
@@ -299,7 +293,7 @@ ETAPAS = [
          'Não foi registrado correlato eletrográfico ictal durante os movimentos orofaciais observados.']),
 
     Q('p3', 3,
-      'Com progressão para mutismo, discinesias e crise, quais dois exames para investigar a causa merecem ser acompanhados ou acrescentados agora?', [
+      'Quais dois exames você prioriza após a nova avaliação neurológica?', [
       ('IgG anti-GluN1 no líquor', True),
       ('Ultrassonografia da pelve', True),
       ('PCR para enterovírus no líquor', False),
@@ -342,7 +336,7 @@ ETAPAS = [
            'Feita na UTI, com Camila intubada, para complementar a ultrassonografia inconclusiva. Corte axial na altura das asas do ilíaco. Compare a '
            'densidade do conteúdo da lesão com a da gordura do subcutâneo.',
            IMG / 'tc_pelve.jpg',
-           'Tomografia de outro paciente · comparação didática.',
+           'Tomografia.',
            credito_meta(IMG / 'tc_pelve.jpg.json'),
         [
          ((544, 209), (700, 90), '**Conteúdo com densidade de gordura**, igual à do '
@@ -363,7 +357,7 @@ ETAPAS = [
            'quase todo o ovário. Lâmina da parede do cisto em hematoxilina-eosina, '
            'pequeno aumento. Procure tecidos que não deveriam estar num ovário.',
            IMG / 'peca.jpg',
-           'Lâmina de outro paciente · comparação didática.',
+           'Lâmina.',
            credito_meta(IMG / 'peca.jpg.json'),
         [
          ((464, 187), (560, 70), '**Epitélio escamoso** queratinizado, como a pele, '
@@ -388,7 +382,7 @@ ETAPAS = [
        'O padrão delta brush extremo no EEG apoia o conjunto de manifestações, mas não é isoladamente diagnóstico nem prova que todo movimento seja crise. A reação após haloperidol permanece como provável intolerância neuroléptica sobreposta à encefalite.'),
 
     Q('p4', 4,
-      'O IgG anti-GluN1 foi detectado no líquor. Quais **duas conclusões** são sustentadas pelos dados de Camila?', [
+      'Quais duas conclusões melhor integram os resultados disponíveis?', [
       ('O resultado no líquor tem maior peso diagnóstico que o título sérico isolado', True),
       ('A RM normal é compatível com disfunção neuronal mediada por anticorpos', True),
       ('A ausência de descarga durante a mastigação exclui as crises já observadas', False),
@@ -400,12 +394,12 @@ ETAPAS = [
      ]),
 
     Q('p5', 5,
-      'Após a retirada do tumor, os movimentos diminuem sob sedação maior. Quais dois registros permitem avaliar melhor se há recuperação?', [
+      'Quais dois registros você prioriza para avaliar a resposta?', [
       ('Exame neurológico seriado sob sedação comparável', True),
       ('Vídeo-EEG durante eventos motores duvidosos', True),
-      ('Título sérico de anti-GluN1 como medida principal', False),
+      ('Título sérico de anti-GluN1', False),
       ('Contagem de movimentos sem registrar a sedação', False),
-      ('Nova RM como medida principal de função cognitiva', False),
+      ('Ressonância de encéfalo de controle', False),
      ], [
       ('Resposta observável', 'Contato, comandos, linguagem e autonomia respiratória precisam ser comparados com exposição conhecida a sedativos. Vídeo-EEG ajuda quando surge evento diferente ou há dúvida entre discinesia e crise; não implica monitorização indefinida de toda discinesia.'),
       ('Limites', 'Anticorpos podem persistir e a RM inicial já era normal. Menos movimentos sob mais sedação não demonstra, isoladamente, resposta imunológica.'),
@@ -437,7 +431,7 @@ ETAPAS = [
        'antipsicótico.'),
 
     Q('p6', 6,
-      'Na 12.ª semana Camila melhora e vai à enfermaria, ainda com dificuldade cognitiva. Qual interpretação melhor orienta a próxima etapa?', [
+      'Na 12.ª semana, como você interpreta a evolução?', [
       ('Recuperação incompleta em curso, a acompanhar com avaliação cognitiva e funcional seriada', True),
       ('Resposta insuficiente à segunda linha, a reavaliar para outro ciclo de imunoterapia', False),
       ('Recorrência da doença após a resposta, a investigar com nova punção lombar', False),
@@ -496,18 +490,7 @@ ETAPAS = [
        'of encephalitis (International Encephalitis Consortium), Clin Infect '
        'Dis 2013. Gurrera e cols. International consensus on neuroleptic '
        'malignant syndrome diagnostic criteria, J Clin Psychiatry 2011.',
-       'Imagens, todas de outros pacientes, com setas adicionadas: tomografia de '
-       'crânio, Mikael Häggström, CC0, recortada '
-       '(commons.wikimedia.org/wiki/File:CT_of_a_normal_brain,_axial_21.png); '
-       'ressonância FLAIR, 511KeV, CC BY-SA 4.0, recortada '
-       '(commons.wikimedia.org/wiki/File:Mri_Brain_Flair_Axial_(7).jpg); '
-       'eletroencefalograma, Mizoguchi, Hara, Hirose e Nakajima, CC BY 4.0 '
-       '(commons.wikimedia.org/wiki/File:Extreme_delta_brush_in_anti-NMDAr_encephalitis.png); '
-       'tomografia da pelve, Hellerhoff, CC BY-SA 4.0 '
-       '(commons.wikimedia.org/wiki/File:Reifes_zystisches_Teratom_des_Ovars_Dermoidzyste_46W_-_CT_axial_KM_-_001.jpg); '
-       'lâmina, Librepath, CC BY-SA 3.0 '
-       '(commons.wikimedia.org/wiki/File:Mature_ovarian_teratoma_with_mature_neural_elements_--_low_mag.jpg). '
-       'Todas pelo Wikimedia Commons.'),
+       'Imagens, com setas adicionadas: tomografia de crânio, Mikael Häggström, CC0, recortada (commons.wikimedia.org/wiki/File:CT_of_a_normal_brain,_axial_21.png); ressonância FLAIR, 511KeV, CC BY-SA 4.0, recortada (commons.wikimedia.org/wiki/File:Mri_Brain_Flair_Axial_(7).jpg); eletroencefalograma, Mizoguchi, Hara, Hirose e Nakajima, CC BY 4.0 (commons.wikimedia.org/wiki/File:Extreme_delta_brush_in_anti-NMDAr_encephalitis.png); tomografia da pelve, Hellerhoff, CC BY-SA 4.0 (commons.wikimedia.org/wiki/File:Reifes_zystisches_Teratom_des_Ovars_Dermoidzyste_46W_-_CT_axial_KM_-_001.jpg); lâmina, Librepath, CC BY-SA 3.0 (commons.wikimedia.org/wiki/File:Mature_ovarian_teratoma_with_mature_neural_elements_--_low_mag.jpg). Todas pelo Wikimedia Commons.'),
 ]
 
 REVISAO = []

@@ -191,7 +191,7 @@ ETAPAS = [
         'Radiografia feita na chegada, com ele sentado no leito. Descreva a '
         'distribuição das opacidades antes de ler os achados.',
         IMG / 'rx_torax_alveolar.jpg',
-        'Radiografia de outro paciente · comparação didática.',
+        'Radiografia.',
         'Samir · Wikimedia Commons · CC BY-SA 3.0 · recorte prévio e setas adicionadas',
         [
          ((308, 427), (110, 345), '**Opacidades alveolares** no pulmão direito, mais densas nos campos médio e inferior.', 12),
@@ -202,7 +202,7 @@ ETAPAS = [
          'derrame pleural e sem aumento da área cardíaca.']),
 
     Q('p1', 1,
-      'Com pH 7,29, HCO₃ 15, pCO₂ 32 e albumina 2,9, selecione as duas interpretações sustentadas pelos dados.', [
+      'Como você interpreta a gasometria da admissão? Selecione duas conclusões.', [
       ('Acidose metabólica com hiato aumentado e compensação esperada', True),
       ('Defeito de troca gasosa além do distúrbio ácido-básico', True),
       ('Acidose metabólica hiperclorêmica isolada', False),
@@ -218,9 +218,7 @@ ETAPAS = [
         'Pedida na chegada, pela creatinina de 3,8 mg/dL. Antes de interpretar '
         'a urina, a pergunta é se há obstrução ou rim pequeno de doença antiga.',
         IMG / 'us_rim.jpg',
-        'Rim de outro adulto. Asteriscos da fonte: um, coluna de Bertin; '
-        'dois, pirâmide; três, córtex; quatro, seio renal. Os cálipers também '
-        'são da fonte e não medem este paciente.',
+        'Rim. Asteriscos da fonte: um, coluna de Bertin; dois, pirâmide; três, córtex; quatro, seio renal. Cálipers da imagem original.',
         'Hansen, Nielsen e Ewertsen · Wikimedia Commons · CC BY 4.0 · recorte prévio e setas adicionadas',
         [
          ((495, 288), (620, 105), '**Córtex** renal (três asteriscos), de espessura preservada.', 12),
@@ -231,24 +229,20 @@ ETAPAS = [
          'hidronefrose (laudo do caso).']),
 
     Q('p2', 2,
-      'Hematúria e proteinúria de 1,4 g/g, com creatinina em ascensão há seis semanas. Quais dois exames priorizar para localizar a lesão e investigar o foco nasal persistente?', [
+      'Na primeira reavaliação, quais dois exames você prioriza?', [
       ('Sedimento urinário com microscopia manual', True),
       ('Tomografia dos seios da face', True),
-      ('FENa como primeiro teste localizatório', False),
-      ('Cintilografia renal para obstrução', False),
-      ('Eletroforese de proteínas como primeiro exame renal', False),
+      ('Fração de excreção de sódio', False),
+      ('Cintilografia renal', False),
+      ('Eletroforese de proteínas séricas', False),
       ('Angiotomografia das artérias renais', False),
-     ], [
-      ('Os dois pedidos', 'Sedimento manual: procura acantócitos e cilindros que a leitura automatizada pode perder, distinguindo sangramento glomerular de causas urológicas. TC dos seios: sintomas persistentes após dois antibióticos justificam avaliar extensão e complicação, sem atribuir causa apenas pelo velamento.'),
-      ('Por que adiar os demais', 'FENa: isoladamente não localiza esta lesão; valores baixos também ocorrem na glomerulonefrite. Cintilografia: sem dilatação no ultrassom ou outra pista de obstrução, tem baixo rendimento agora. Eletroforese: não é a primeira resposta à hematúria de evolução rápida. Angio-TC renal: não há quadro de infarto ou doença renovascular, e o contraste acrescenta risco na lesão renal.'),
-     ]),
+     ], [('Os dois pedidos', 'Sedimento manual: procura acantócitos e cilindros que a leitura automatizada pode perder, distinguindo sangramento glomerular de causas urológicas. TC dos seios: sintomas persistentes após dois antibióticos justificam avaliar extensão e complicação, sem atribuir causa apenas pelo velamento.'), ('Por que adiar os demais', 'FENa: isoladamente não localiza esta lesão; valores baixos também ocorrem na glomerulonefrite. Cintilografia: sem dilatação no ultrassom ou outra pista de obstrução, tem baixo rendimento agora. Eletroforese: não é a primeira resposta à hematúria de evolução rápida. Angio-TC renal: não há quadro de infarto ou doença renovascular, e o contraste acrescenta risco na lesão renal.'), ('Diagnósticos a comparar', 'Hematúria pode vir do glomérulo ou das vias urinárias. Cilindros hemáticos e acantócitos favorecem origem glomerular; sua ausência não a exclui. O sedimento orienta a investigação, mas ainda não separa infecção, autoimunidade e outras causas.')]),
 
     estudo('sedimento', 'Sedimento urinário, leitura manual',
         'A leitura automatizada não procura dismorfismo nem cilindro. A equipe '
         'pede a leitura manual do sedimento da admissão.',
         IMG / 'sedimento_cilindro.jpg',
-        'Sedimento de outro paciente. A fonte identifica o cilindro como '
-        'hemático; ampliada, a foto não resolve hemácias uma a uma.',
+        'Sedimento. A fonte identifica o cilindro como hemático; ampliada, a foto não resolve hemácias uma a uma.',
         'Rian Kabir · Wikimedia Commons · CC BY 2.0 · setas adicionadas',
         [
          ((457, 493), (200, 380), '**Borda** lisa e paralela: o cilindro é o molde do lúmen de um túbulo.', 12),
@@ -263,8 +257,7 @@ ETAPAS = [
         'antibióticos, a equipe pede tomografia dos seios da face, à procura '
         'de um foco de infecção.',
         IMG / 'tc_seio_maxilar.jpg',
-        'Corte axial de outro paciente, em janela óssea. O lado esquerdo do '
-        'paciente está à direita da imagem.',
+        'Corte axial, em janela óssea. O lado esquerdo do paciente está à direita da imagem.',
         credito_meta(IMG / 'tc_seio_maxilar.jpg.json'),
         [
          ((596, 176), (820, 90), '**Seio maxilar esquerdo** velado por conteúdo de partes moles, com pequena bolha de ar.', -12),
@@ -304,8 +297,7 @@ ETAPAS = [
         'Feito no primeiro dia, à procura de vegetação. Localize o septo e as '
         'duas valvas atrioventriculares antes de ler o laudo.',
         IMG / 'eco_4camaras.jpg',
-        'Corte apical de quatro câmaras de outra pessoa, na orientação da '
-        'fonte: ápice para baixo, coração esquerdo à direita da imagem.',
+        'Corte apical de quatro câmaras, na orientação da fonte: ápice para baixo, coração esquerdo à direita da imagem.',
         credito_meta(IMG / 'eco_4camaras.jpg.json'),
         [
          ((432, 430), (270, 560), '**Septo interventricular**, entre o ventrículo direito, à esquerda da imagem, e o esquerdo.', 12),
@@ -342,8 +334,7 @@ ETAPAS = [
         'Tomografia do segundo dia, pela piora da oxigenação. Descreva o '
         'padrão e a distribuição antes de propor o que ocupa o alvéolo.',
         IMG / 'tc_torax_vidro_fosco.jpg',
-        'Cortes axiais e reconstruções de outro paciente, em janela de '
-        'pulmão · comparação didática.',
+        'Cortes axiais e reconstruções, em janela de pulmão.',
         'Hellerhoff · Wikimedia Commons · CC BY-SA 4.0 · setas adicionadas',
         [
          ((100, 186), (330, 40), '**Vidro fosco** no lobo superior direito, entremeado de pulmão aerado.', -12),
@@ -421,13 +412,9 @@ ETAPAS = [
         ), so_kicker=True),
 
     estudo('purpura', 'A pele das pernas',
-        'Fotografia de outro paciente, com lesões do mesmo tipo das dele. Antes '
-        'de ler os achados, descreva o tamanho, o centro das lesões e onde '
-        'elas se concentram.',
+        'Antes de ler os achados, descreva o tamanho, o centro das lesões e onde elas se concentram.',
         IMG / 'purpura_perna.jpg',
-        'Outro paciente, de outra causa. A foto não mostra o relevo nem o teste '
-        'da pressão: a elevação se sente com a polpa do dedo, e a lesão que não '
-        'empalidece sob uma lâmina de vidro é sangue fora do vaso.',
+        'Lesões cutâneas nas pernas e no dorso do pé.',
         credito_meta(IMG / 'purpura_perna.jpg.json'),
         [
          ((809, 207), (450, 200), 'Na perna, **pápulas isoladas** de poucos milímetros, com pele normal entre elas.', 12),
@@ -442,13 +429,13 @@ ETAPAS = [
          'predileção pelas pernas acompanha a pressão hidrostática.']),
 
     Q('p5', 3,
-      'Hemorragia alveolar, sedimento nefrítico, púrpura e déficit em territórios nervosos distintos. Quais quatro exames têm maior impacto na definição do mecanismo e da indução?', [
+      'Após a broncoscopia e a reavaliação clínica, quais quatro exames você solicita?', [
       ('Anti-membrana basal glomerular', True),
       ('Biópsia renal com imunofluorescência', True),
       ('Anti-MPO', True),
       ('Anti-PR3', True),
       ('Repetir C3', False),
-      ('Biópsia do nervo como primeiro tecido', False),
+      ('Biópsia de nervo periférico', False),
       ('Difusão pulmonar de monóxido de carbono', False),
      ], [
       ('Exames que mudam o caminho', 'Anti-MBG (anticorpo contra a membrana basal glomerular): identifica uma sobreposição em que a troca plasmática ganha prioridade. Biópsia renal com IF: separa depósitos lineares, granulares e padrão pauci-imune, além de medir atividade e cronicidade. MPO/PR3: anticorpos contra proteínas dos neutrófilos, que ajudam a interpretar o conjunto de manifestações; ANCA isolado não substitui contexto e tecido.'),
@@ -493,11 +480,9 @@ ETAPAS = [
         kicker="Discussão visual"),
 
     estudo("crescente_histologia", "Biópsia renal",
-        "Microfotografia de outro paciente, com a mesma lesão descrita no "
-        "laudo. Localize o tufo, a cápsula e o que ocupa o espaço entre eles.",
+        'Localize o tufo, a cápsula e o que ocupa o espaço entre eles.',
         IMG / "glomerulo_crescente.jpg",
-        "PAS. Microfotografia ilustrativa de outro paciente; não permite contar "
-        "os glomérulos do laudo do caso.",
+        'Coloração PAS.',
         "Nephron · Wikimedia Commons · CC BY-SA 3.0 · setas adicionadas",
         [((795, 285), (750, 110), "**Tufo glomerular**: alças capilares, à direita da "
           "proliferação extracapilar.", 14),
@@ -518,7 +503,7 @@ ETAPAS = [
         'paciente e um anticorpo antiglobulina marcado: onde a fluorescência '
         'se acumula, está o alvo.',
         IMG / 'panca_imunofluorescencia.jpg',
-        'Neutrófilos de outro paciente · imagem ilustrativa.',
+        'Neutrófilos · imagem ilustrativa.',
         'Simon Caulton · Wikimedia Commons · CC BY-SA 3.0 · setas adicionadas',
         [
          ((468, 514), (330, 640), 'A fluorescência **contorna os lóbulos do núcleo** e deixa o citoplasma escuro.', 12),
@@ -532,7 +517,7 @@ ETAPAS = [
          'alvo é o ELISA.']),
 
     Q('p6', 4,
-      'Crescentes em 15/24 glomérulos, IF pauci-imune, anti-MPO 148 e anti-MBG negativo. Quais duas conclusões melhor integram os resultados à evolução?', [
+      'Quais duas conclusões você tira da biópsia e dos resultados disponíveis?', [
       ('Vasculite associada ao ANCA integra rim, pulmão, pele e nervos', True),
       ('Crescentes celulares e pouca fibrose indicam componente potencialmente reversível', True),
       ('Glomerulonefrite associada à infecção permanece a explicação principal pela febre e PCR elevada', False),
@@ -651,7 +636,7 @@ ETAPAS = [
     ),
 
     Q('p7', 5,
-      'Antes da indução, quais duas estratégias preventivas são mais bem sustentadas pelo risco deste paciente?', [
+      'Quais duas medidas preventivas você inclui na prescrição?', [
       ('Tratar presuntivamente estrongiloidíase pela exposição ao solo e pelo corticoide urgente', True),
       ('Iniciar prevenção de pneumocistose considerando função renal e potássio', True),
       ('Reservar prevenção de pneumocistose para linfopenia após o primeiro ciclo', False),
@@ -690,16 +675,13 @@ ETAPAS = [
        "está em 3,1 ng/mL."),
 
     Q('p8', 6,
-      'No D5 da indução, febre e hipotensão reaparecem, com cateter doloroso e pulmão em melhora. Qual hipótese deve orientar a investigação imediata?', [
+      'Qual hipótese explica melhor a intercorrência do quinto dia?', [
       ('Infecção de corrente sanguínea relacionada ao cateter', True),
       ('Recidiva de capilarite pulmonar', False),
       ('Hemólise transfusional tardia', False),
       ('Tromboembolismo pulmonar', False),
       ('Toxicidade medular da ciclofosfamida como causa já demonstrada', False),
-     ], [
-      ('O que discrimina', 'Calafrios, hipotensão e inflamação no sítio do cateter priorizam infecção relacionada ao dispositivo; a procalcitonina reforça, mas não comprova. Culturas periféricas e do cateter ajudam a confirmar sem atrasar tratamento.'),
-      ('Concorrentes', 'Capilarite perde força com hemoptise cessada e oxigenação estável. Hemólise tardia é temporalmente possível após a transfusão, mas faltam nova anemia ou sinais de hemólise. TEP permanece possível pela imobilidade, sem explicar tão bem o foco local. O D5 não demonstra nadir por ciclofosfamida e essa exposição varia entre os caminhos; seria necessário hemograma.'),
-     ]),
+     ], [('O que discrimina', 'Calafrios, hipotensão e inflamação no sítio do cateter priorizam infecção relacionada ao dispositivo; a procalcitonina reforça, mas não comprova. Culturas periféricas e do cateter ajudam a confirmar sem atrasar tratamento.'), ('Concorrentes', 'Capilarite perde força com hemoptise cessada e oxigenação estável. Hemólise tardia é temporalmente possível após a transfusão, mas faltam nova anemia ou sinais de hemólise. TEP permanece possível pela imobilidade, sem explicar tão bem o foco local. O D5 não demonstra nadir por ciclofosfamida e essa exposição varia entre os caminhos; seria necessário hemograma.'), ('Como rever a hipótese', 'Febre durante imunossupressão exige comparar infecção, atividade da doença e reação ao tratamento. O exame do acesso, a evolução pulmonar e o hemograma mudam o peso dessas hipóteses; nenhuma se confirma apenas pelo dia em que a febre apareceu.')]),
 
     pagina('calendario', 'Discussão', 'O calendário da infecção na indução',
         p('Cada complicação infecciosa da imunossupressão tem a sua janela. Nas '
@@ -943,16 +925,7 @@ ETAPAS = [
        '2010;21:1628-36)//; Nasr e cols. //(Kidney Int. 2013;83:792-803)// '
        'para a glomerulonefrite associada à infecção no adulto; Surviving Sepsis Campaign 2026 (antibiótico imediato pela suspeita clínica, sem depender da procalcitonina); CDC, '
        'tratamento da estrongiloidíase (ivermectina 200 µg/kg por dois dias).',
-       'Imagens de outros pacientes, de licença aberta, com setas '
-       'adicionadas: radiografia, Samir, CC BY-SA 3.0; ultrassom renal, '
-       'Hansen, Nielsen e Ewertsen, CC BY 4.0; sedimento, Rian Kabir, CC BY '
-       '2.0; tomografia dos seios, 511KeV, CC BY-SA 4.0; ecocardiograma, '
-       'Kjetil Lenes, domínio público; tomografia de tórax, Hellerhoff, CC '
-       'BY-SA 4.0; glomérulo, Nephron, CC BY-SA 3.0; imunofluorescência, Simon '
-       'Caulton, CC BY-SA 3.0; corpúsculo renal, Michał Komorniczak, CC BY-SA '
-       '3.0, números originais retirados; pele das pernas, James Heilman, MD, '
-       'CC BY-SA 3.0. Todas no Wikimedia Commons, com setas adicionadas; '
-       'endereços completos em img/CREDITOS.md.'),
+       'Imagens, de licença aberta, com setas adicionadas: radiografia, Samir, CC BY-SA 3.0; ultrassom renal, Hansen, Nielsen e Ewertsen, CC BY 4.0; sedimento, Rian Kabir, CC BY 2.0; tomografia dos seios, 511KeV, CC BY-SA 4.0; ecocardiograma, Kjetil Lenes, domínio público; tomografia de tórax, Hellerhoff, CC BY-SA 4.0; glomérulo, Nephron, CC BY-SA 3.0; imunofluorescência, Simon Caulton, CC BY-SA 3.0; corpúsculo renal, Michał Komorniczak, CC BY-SA 3.0, números originais retirados; pele das pernas, James Heilman, MD, CC BY-SA 3.0. Todas no Wikimedia Commons, com setas adicionadas; endereços completos em img/CREDITOS.md.'),
 ]
 
 

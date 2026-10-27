@@ -140,7 +140,7 @@ ETAPAS = [
     ], introducao='Complementação pedida após o reexame, ainda na primeira avaliação; sem aguardar progressão da dispneia.'),
 
     Q('p1', 1,
-      'Qual conclusão a gasometria permite antes de atribuir a hipoxemia a uma doença específica?', [
+      'Como você interpreta a gasometria da admissão?', [
       ('Há defeito de troca gasosa; a gasometria isolada não separa V/Q, difusão e shunt', True),
       ('Hipoventilação isolada explica pO₂ de 64 com pCO₂ de 33', False),
       ('A anemia de 11,6 g/dL explica a redução da pO₂', False),
@@ -156,7 +156,7 @@ ETAPAS = [
            'consulta. Antes de abrir os achados, compare a extensão da imagem '
            'com a saturação de 93% e os estertores discretos.',
            IMG / 'rx_torax.jpg',
-           'Radiografia de outro paciente · comparação didática.',
+           'Radiografia.',
            credito_meta(IMG / 'rx_torax.jpg.json'),
         [
          ((300, 650), (90, 560), '**Linhas finas e pequenos nódulos** que se somam junto ao hilo '
@@ -173,17 +173,15 @@ ETAPAS = [
  'Com analgesia e alimentação macia, Valdir consegue terminar uma refeição. A ferida continua endurecida e sangra ao escovar os dentes. Ao atravessar o corredor, precisa parar para recuperar o fôlego; a melhora da boca não recuperou sua capacidade de esforço.',
  'Na revisão do atendimento anterior, conta que a nistatina não mudou a lesão. A equipe organiza avaliação em hospital-dia, orientação nutricional e vigilância respiratória, sem atribuir todos os sintomas à dor ao comer. A hidroclorotiazida é suspensa diante do sódio baixo e da pressão sem elevação.'),
 
-    Q('p2', 2, 'Quais dois exames para investigar a causa você prioriza com escarro disponível e lesão oral acessível?',
+    Q('p2', 2, 'Após a avaliação inicial, quais dois exames você solicita?',
  [('Exame micológico direto do escarro', True), ('Biópsia da lesão oral', True), ('Lavado broncoalveolar', False), ('Biópsia laríngea sob anestesia geral', False), ('Tomografia de tórax', False)],
  [('Amostras', 'Exame direto pode identificar fungos; a biópsia oral discrimina infecção e neoplasia e permite pesquisa microbiológica. A cultura de micobactérias já está em curso. Patologia e laboratório combinam a distribuição e o transporte antes da coleta.'),
  ('Prioridade relativa', 'Lavado ou tecido laríngeo podem ser necessários se houver discordância ou amostras insuficientes. A lesão oral oferece acesso menos complexo agora. TC caracteriza extensão, mas não substitui identificação do agente. Os exames indicados serão feitos mesmo que a seleção do aluno seja incompleta.')]),
 
     estudo('lesoes', 'As lesões do rosto',
-           'Fotografia de outro paciente, com lesões do mesmo tipo das de '
-           'Valdir, porém mais numerosas. A lesão do lábio dele, as duas da face '
-           'e a área da gengiva têm essa mesma superfície.',
+           'Observe a superfície das lesões do lábio, da face e da gengiva.',
            IMG / 'lesoes_periorais.jpg',
-           'Fotografia de outro paciente · recortada na região da boca.',
+           'Fotografia · recortada na região da boca.',
            credito_meta(IMG / 'lesoes_periorais.jpg.json'),
         [
          ((370, 260), (230, 110), '**Fundo granuloso**, salpicado de pontos vermelho-escuros e '
@@ -197,10 +195,9 @@ ETAPAS = [
          'No caso de Valdir: uma lesão de 1,5 cm no lábio, duas menores na face '
          'e uma área granulosa na gengiva, todas com meses de evolução.']),
 
-    Q('p3', 3, 'Quais duas hipóteses merecem investigação prioritária entre estas alternativas?',
+    Q('p3', 3, 'Quais duas hipóteses você prioriza após o exame das lesões?',
  [('Micose sistêmica endêmica', True), ('Carcinoma epidermoide de via aerodigestiva', True), ('Candidíase oral isolada', False), ('Doença pulmonar obstrutiva como explicação única', False), ('Aftose recorrente isolada', False)],
- [('Integração e concorrência', 'A exposição rural, a doença pulmonar e as múltiplas lesões granulosas favorecem micose sistêmica. Fumo, álcool e lesão endurecida impõem investigar carcinoma, inclusive doença coexistente. A amostra deve responder às duas perguntas.'),
- ('Limites', 'Tuberculose continua no diferencial e a cultura será acompanhada; não foi excluída por testes iniciais negativos. Candidíase, obstrução e aftas isoladas não integram o padrão pulmonar, os linfonodos e a lesão crônica infiltrada.')]),
+ [('Integração e concorrência', 'A exposição rural, a doença pulmonar e as múltiplas lesões granulosas favorecem micose sistêmica. Fumo, álcool e lesão endurecida impõem investigar carcinoma, inclusive doença coexistente. A amostra deve responder às duas perguntas.'), ('Limites', 'Tuberculose continua no diferencial e a cultura será acompanhada; não foi excluída por testes iniciais negativos. Candidíase, obstrução e aftas isoladas não integram o padrão pulmonar, os linfonodos e a lesão crônica infiltrada.'), ('Como comparar as hipóteses', 'Lesão oral persistente pode ser infecciosa ou neoplásica. A doença pulmonar associada ajuda a reunir o quadro, mas não prova que todas as lesões tenham a mesma causa. A biópsia deve permitir avaliar tanto infecção quanto neoplasia.')]),
 
     pg('mudanca_laringea', 'No dia seguinte: engolir também passa a doer',
  'Desde a noite anterior, Valdir sente dor ao engolir sólidos e a voz fica mais fraca. Continua engolindo líquidos e saliva, sem estridor ou esforço respiratório em repouso. É uma mudança em relação à ausência de disfagia na apresentação.',
@@ -210,10 +207,9 @@ ETAPAS = [
  'Ao levantar após o exame, Valdir refere tontura. Deitado, pressão 110/70; em pé, 88/58, com reprodução do sintoma. Não há febre ou sangramento volumoso. Com hidratação supervisionada, a tontura diminui, mas a fraqueza persiste. Sódio 131 e potássio 5,2 mmol/L, creatinina 0,9.',
  'Baixa ingestão e tiazida podem contribuir, mas hiperpigmentação, perda de peso e alterações eletrolíticas exigem avaliar reserva adrenal agora. A investigação não pode esperar confirmar a micose. Não há choque ou vômitos; se surgissem, a hidrocortisona de emergência não aguardaria testes.'),
 
-    Q('p_adrenal', 4, 'Qual exame inicial mais ajuda a avaliar a hipótese endócrina levantada pela evolução?',
+    Q('p_adrenal', 4, 'Diante da nova queixa, qual exame você solicita primeiro?',
  [('Cortisol sérico matinal', True), ('Tomografia das adrenais', False), ('Aldosterona isolada', False), ('TSH isolado', False)],
- [('Função antes de anatomia', 'Cortisol matinal é interpretado com ACTH, colhido junto, e com o contexto. Resultado indeterminado requer teste de estímulo se o paciente estiver estável. Imagem não mede reserva hormonal.'),
- ('Segurança', 'Não se deve retardar tratamento de crise adrenal para obter uma prova dinâmica. Neste paciente estável, é possível colher as amostras e realizar o teste sem adiar a reposição necessária.')]),
+ [('Função antes de anatomia', 'Cortisol matinal é interpretado com ACTH, colhido junto, e com o contexto. Resultado indeterminado requer teste de estímulo se o paciente estiver estável. Imagem não mede reserva hormonal.'), ('Segurança', 'Não se deve retardar tratamento de crise adrenal para obter uma prova dinâmica. Neste paciente estável, é possível colher as amostras e realizar o teste sem adiar a reposição necessária.'), ('Como investigar a nova queixa', 'Fraqueza e perda de peso podem vir da doença sistêmica; hipotensão e alterações de sódio e potássio pedem rever causas hormonais e perdas de volume. Teste funcional e imagem têm finalidades distintas. Em instabilidade, a coleta não pode atrasar o tratamento.')]),
 
     painel('reserva_adrenal', 'Avaliação precoce', 'Antes do antifúngico', [
  ex('Cortisol às 8 h', '7,4 µg/dL', 'interpretação clínica; faixa basal do laboratório 5–25'),
@@ -242,11 +238,9 @@ ETAPAS = [
  'No tecido, há hiperplasia pseudoepiteliomatosa sem atipia neoplásica identificada, granulomas e microabscessos com estruturas fúngicas. A coloração pela prata confirma o padrão do exame direto. A lesão escolhida foi diagnóstica; a resposta das demais será conferida.'),
 
     estudo('lamina', 'Coloração pela prata',
-           'Lâmina de outro paciente, com o mesmo achado da biópsia de Valdir, '
-           'em aumento maior. A prata (Grocott) cora de preto a parede dos '
-           'fungos.',
+           'Biópsia em maior aumento. A prata (Grocott) cora de preto a parede dos fungos.',
            IMG / 'lamina_prata.jpg',
-           'Lâmina de outro paciente · comparação didática.',
+           'Lâmina.',
            credito_meta(IMG / 'lamina_prata.jpg.json'),
         [
          ((447, 470), (250, 600), '**Célula-mãe** grande, de parede espessa, com o centro '
@@ -272,7 +266,7 @@ ETAPAS = [
  ex('Cultura para micobactérias', 'Em incubação', 'resultado final será conferido'),
  ], introducao='A investigação funcional e sorológica ocorre em paralelo à terapia. Dispneia não será atribuída apenas à micose num tabagista com obstrução.'),
 
-    Q('p_tratamento', 5, 'Com ingestão oral preservada e estabilidade após reposição adrenal, qual antifúngico é a opção inicial mais apropriada neste percurso?',
+    Q('p_tratamento', 5, 'Qual antifúngico você escolhe para iniciar o tratamento neste momento?',
  [('Itraconazol oral', True), ('Anfotericina B lipossomal', False), ('Fluconazol oral', False), ('Nistatina tópica', False)],
  [('Escolha contextual', 'Após avaliação especializada, a doença é conduzida como forma crônica sem instabilidade ou insuficiência respiratória grave, com absorção oral viável. Itraconazol é opção de primeira linha para formas leves a moderadas. A perda ponderal e a adrenal exigem monitorização próxima e não podem ser banalizadas por um rótulo.'),
  ('Alternativas', 'Anfotericina é apropriada para doença grave, deterioração ou impossibilidade de terapia oral; não é um erro absoluto nem necessariamente causa lesão renal. Nistatina não trata doença sistêmica e fluconazol não é a primeira escolha habitual. A classificação e o local de cuidado serão revistos se a evolução mudar.')]),
@@ -282,7 +276,7 @@ ETAPAS = [
  'A duração será guiada pelos critérios de resposta e cura: a diretriz global de 2021 usa em geral 9–12 meses nas formas leves/moderadas; o consenso brasileiro admite 9–18 meses. Não se promete um prazo universal. Progressão ou má absorção pode exigir internação e terapia intravenosa.',
  'Ele recebe orientação sobre doses de estresse da hidrocortisona, cartão de alerta e reposição parenteral se não conseguir reter comprimidos. Tratamento antifúngico não autoriza interromper a reposição adrenal por conta própria.'),
 
-    Q('p6', 6, 'Se a cultura posteriormente confirmar tuberculose e houver indicação de rifampicina, qual ação é mais apropriada?',
+    Q('p6', 6, 'Se a cultura confirmar tuberculose e houver indicação de rifampicina, como você ajustará o antifúngico?',
  [('Reorganizar o esquema antifúngico', True), ('Separar as doses por duas horas', False), ('Dobrar empiricamente o itraconazol', False), ('Manter o esquema sem revisão', False)],
  [('Interação', 'A indução enzimática pela rifampicina reduz muito a exposição ao itraconazol. A equipe precisa escolher estratégia antifúngica alternativa, conforme gravidade e função renal. Não se corrige essa interação apenas com horário ou aumento empírico. Também é necessário rever a reposição adrenal: rifampicina acelera a depuração de glicocorticoides e pode exigir ajuste da hidrocortisona.'),
  ('Outra interação', 'Supressores de acidez reduzem absorção das cápsulas convencionais e devem ser revistos; outras formulações têm instruções distintas. As culturas serão acompanhadas mesmo após a confirmação da micose.')]),
@@ -300,7 +294,7 @@ ETAPAS = [
            'Corte axial nos lobos superiores, em janela de pulmão. A pergunta é '
            'como interpretar alterações residuais junto da evolução clínica e funcional; a TC isolada não confirma cura nem atividade.',
            IMG / 'tc_controle.jpg',
-           'Tomografia de outro paciente · comparação didática.',
+           'Tomografia.',
            credito_meta(IMG / 'tc_controle.jpg.json'),
         [
          ((246, 399), (110, 610), 'Parênquima salpicado de **pequenas áreas escuras, sem '
@@ -337,18 +331,7 @@ ETAPAS = [
        'Endocrinol Metab 2016. Ministério da Saúde. Manual de Recomendações '
        'para o Controle da Tuberculose no Brasil, 2.ª ed., 2019. Inker e cols. '
        'CKD-EPI 2021, N Engl J Med 2021.',
-       'Capa: ilustração original do paciente ficcional, gerada com OpenAI '
-       'imagegen para este projeto em 24/10/2026. Imagens clínicas de outros '
-       'pacientes, com setas adicionadas. Radiografia: CDC/M. Renz, domínio '
-       'público, commons.wikimedia.org/wiki/'
-       'File:Chest_X-ray_acute_pulmonary_histoplasmosis_PHIL_3954.jpg (usada '
-       'pelo padrão intersticial). Lesões da face: CDC/Dr. Martins Castro e Dr. '
-       'Lucille K. Georg, domínio público, recortada na região da boca, '
-       'commons.wikimedia.org/wiki/File:Paracoccidioidomycosis_lesions.png. '
-       'Prata: CDC/Dr. Lucille K. Georg, domínio público, '
-       'commons.wikimedia.org/wiki/File:Paracoccidioides_brasiliensis_01.jpg. '
-       'Tomografia: Hellerhoff, CC BY-SA 4.0, commons.wikimedia.org/wiki/'
-       'File:Zentrilobulaeres_Lungenemphysem_61W_-_CT_axial_-_001.jpg.',
+       'Capa: ilustração original do paciente ficcional, gerada com OpenAI imagegen para este projeto em 24/10/2026. Imagens clínicas, com setas adicionadas. Radiografia: CDC/M. Renz, domínio público, commons.wikimedia.org/wiki/File:Chest_X-ray_acute_pulmonary_histoplasmosis_PHIL_3954.jpg (usada pelo padrão intersticial). Lesões da face: CDC/Dr. Martins Castro e Dr. Lucille K. Georg, domínio público, recortada na região da boca, commons.wikimedia.org/wiki/File:Paracoccidioidomycosis_lesions.png. Prata: CDC/Dr. Lucille K. Georg, domínio público, commons.wikimedia.org/wiki/File:Paracoccidioides_brasiliensis_01.jpg. Tomografia: Hellerhoff, CC BY-SA 4.0, commons.wikimedia.org/wiki/File:Zentrilobulaeres_Lungenemphysem_61W_-_CT_axial_-_001.jpg.',
  'Revisão de 23/10/2026: <a href="https://pubmed.ncbi.nlm.nih.gov/34364529/">ECMM/ISHAM 2021, micoses endêmicas</a>; <a href="https://pubmed.ncbi.nlm.nih.gov/30133688/">consenso brasileiro publicado em 2018</a>; <a href="https://www.endocrine.org/clinical-practice-guidelines/primary-adrenal-insufficiency">Endocrine Society, diretriz de insuficiência adrenal primária de 2016</a>. A data de cada documento é explícita; a cronologia individual é ficcional. Não se pretende demonstrar uma nova diretriz de 2026.')
 ]
 

@@ -104,13 +104,11 @@ ETAPAS = [
                     'sinovite.')),
            so_kicker=True),
 
-    Q('p1', 1, 'Entre as alternativas, quais três hipóteses você prioriza inicialmente?',
+    Q('p1', 1, 'Na primeira consulta, quais três diagnósticos você prioriza?',
  [('Mononucleose por EBV', True), ('Toxoplasmose', True), ('Linfoma', True),
   ('Linfadenite bacteriana supurativa', False), ('Metástase de carcinoma de orofaringe', False),
   ('Reação a medicamento', False)],
- [('Hipóteses selecionadas', 'EBV e toxoplasmose podem causar adenopatia cervical subaguda. A faringite inicial favorece EBV, mas não o confirma. Linfoma deve permanecer pela sudorese e perda de peso; dor e mobilidade não o excluem. Não é necessário escolher agora uma única causa.'),
-  ('Menor apoio nesta apresentação', 'Não há coleção, rubor nem lesão dentária ou de orofaringe que sustentem supuração. A idade, o exame e a ausência de lesão mucosa tornam metástase menos provável. O linfonodo precedeu a amoxicilina, e não houve medicamento novo antes dos sintomas. Essas comparações organizam prioridades, sem exclusões absolutas.'),
-  ('Investigação aberta', 'HIV, tuberculose e doenças autoimunes também podem entrar no diferencial. Os primeiros exames e a evolução decidirão o peso dessas possibilidades; esta seleção não é uma lista completa de causas.')]),
+ [('Hipóteses selecionadas', 'EBV e toxoplasmose podem causar adenopatia cervical subaguda. A faringite inicial favorece EBV, mas não o confirma. Linfoma deve permanecer pela sudorese e perda de peso; dor e mobilidade não o excluem. Não é necessário escolher agora uma única causa.'), ('Menor apoio nesta apresentação', 'Não há coleção, rubor nem lesão dentária ou de orofaringe que sustentem supuração. A idade, o exame e a ausência de lesão mucosa tornam metástase menos provável. O linfonodo precedeu a amoxicilina, e não houve medicamento novo antes dos sintomas. Essas comparações organizam prioridades, sem exclusões absolutas.'), ('Investigação aberta', 'HIV, tuberculose e doenças autoimunes também podem entrar no diferencial. Os primeiros exames e a evolução decidirão o peso dessas possibilidades; esta seleção não é uma lista completa de causas.'), ('Como organizar o diferencial', 'Adenopatia cervical pode acompanhar infecções, doenças inflamatórias e neoplasias. Dor e início recente favorecem inflamação, mas não encerram a investigação. Distribuição dos linfonodos, sintomas gerais e reavaliação são mais úteis que um achado isolado.')]),
 
     painel('res1', 'Primeiros exames', 'Sangue', [
         ex('Hemoglobina / VCM', '11,7 g/dL / 86 fL', 'Hb 12–16 g/dL · VCM 80–100 fL', True),
@@ -131,12 +129,10 @@ ETAPAS = [
  'Enquanto o hemograma fica disponível, Bianca continua com febre ao fim da tarde e desconforto para virar o pescoço. Permanece hidratada, sem dificuldade para engolir ou respirar. A equipe revê pele, articulações e focos locais, sem encontrar uma explicação nova.',
  'A anemia leve associada à leucopenia muda a pergunta: além da adenopatia, é preciso investigar as duas linhagens. O esfregaço, a LDH, as transaminases e a avaliação infecciosa e autoimune são acrescentados agora, na mesma etapa de atendimento; não se espera uma manifestação cutânea para justificar FAN e complemento.'),
 
-    Q('p2', 2, 'Quais três exames melhor investigam causas distintas deste quadro agora?',
+    Q('p2', 2, 'Após os exames iniciais, quais três testes você acrescenta?',
  [('FAN', True), ('HIV de quarta geração', True), ('EBV anti-VCA IgM', True),
   ('Anti-CCP', False), ('ANCA', False), ('PET-CT', False)],
- [('FAN', 'A anemia associada à leucopenia, febre e adenopatia justifica investigar autoimunidade desde agora, mesmo sem artrite ou lesão cutânea. C3 e C4, urina e função renal compõem a avaliação clínica; essa avaliação deve ocorrer em paralelo à investigação infecciosa.'),
-  ('HIV e EBV', 'São causas possíveis de adenopatia com alterações hematológicas. O teste de HIV deve considerar a janela de exposição. No EBV, a IgM precisa ser interpretada com IgG e EBNA: um anticorpo positivo isolado não estabelece a causa da febre.'),
-  ('Outras opções', 'Anti-CCP responde a uma suspeita de artrite reumatoide que não se apresenta aqui. ANCA tem maior valor diante de manifestações compatíveis com vasculite, ausentes até agora. PET-CT mostra atividade tanto em inflamação quanto em neoplasia e não define a causa do linfonodo. Toxoplasmose e CMV também podem justificar investigação dirigida.')]),
+ [('FAN', 'A anemia associada à leucopenia, febre e adenopatia justifica investigar autoimunidade desde agora, mesmo sem artrite ou lesão cutânea. C3 e C4, urina e função renal compõem a avaliação clínica; essa avaliação deve ocorrer em paralelo à investigação infecciosa.'), ('HIV e EBV', 'São causas possíveis de adenopatia com alterações hematológicas. O teste de HIV deve considerar a janela de exposição. No EBV, a IgM precisa ser interpretada com IgG e EBNA: um anticorpo positivo isolado não estabelece a causa da febre.'), ('Outras opções', 'Anti-CCP responde a uma suspeita de artrite reumatoide que não se apresenta aqui. ANCA tem maior valor diante de manifestações compatíveis com vasculite, ausentes até agora. PET-CT mostra atividade tanto em inflamação quanto em neoplasia e não define a causa do linfonodo. Toxoplasmose e CMV também podem justificar investigação dirigida.'), ('Infecção ou autoimunidade', 'Na jovem com febre, adenopatia e alterações em duas séries do hemograma, infecções e lúpus merecem investigação paralela. FAN é uma entrada para essa avaliação; complemento, urina e anticorpos específicos ganham sentido com a suspeita clínica. Nenhum teste isolado confirma lúpus.')]),
 
     pg('coleta_dirigida', 'Investigação',
  'A equipe colhe os exames selecionados. Acrescenta C3 e C4, sorologias para CMV e toxoplasmose e os marcadores complementares de EBV. Solicita revisão do esfregaço, LDH e transaminases. A anemia é investigada com reticulócitos, bilirrubinas, haptoglobina e Coombs direto; LDH isolada não demonstra hemólise.',
@@ -154,7 +150,7 @@ ETAPAS = [
            'forma do linfonodo e o que há no centro dele antes de abrir os '
            'achados.',
            IMG / 'us_linfonodo_cervical.jpg',
-           'Ultrassonografia com Doppler colorido de outro paciente · comparação didática.',
+           'Ultrassonografia com Doppler colorido.',
            credito_meta(IMG / 'us_linfonodo_cervical.jpg.json'),
         [
          ((442, 215), (330, 150), '**Córtex** hipoecoico, regular, em volta de todo o linfonodo.', 12),
@@ -171,7 +167,7 @@ ETAPAS = [
            'Pedida na mesma consulta pela febre com sudorese e perda de peso: '
            'procurar linfonodos no mediastino e lesão no pulmão.',
            IMG / 'rx_torax_normal.jpg',
-           'Radiografia de outra pessoa · comparação didática.',
+           'Radiografia.',
            credito_meta(IMG / 'rx_torax_normal.jpg.json'),
         [
          ((350, 500), (170, 450), '**Hilo direito** de tamanho e densidade normais.', 12),
@@ -218,7 +214,7 @@ ETAPAS = [
         ex('Coombs direto', 'Negativo', 'negativo'),
     ], introducao='Colhidos na mesma etapa das sorologias, após o hemograma inicial.'),
 
-    Q('sorologias_leitura', 1, 'Qual interpretação integra melhor os resultados para EBV?',
+    Q('sorologias_leitura', 1, 'O que a sorologia para EBV permite concluir?',
 [('Infecção passada, sem evidência sorológica de infecção primária recente', True),
  ('Infecção primária em fase tardia, com IgM já desaparecida', False),
  ('Reativação como explicação mais provável para a febre atual', False),
@@ -247,7 +243,7 @@ ETAPAS = [
  'No reexame, há dor à movimentação dos punhos, sem calor, derrame ou sinovite. O pescoço continua doloroso. Não há eritema no rosto, úlceras orais, lesões no tronco, dor pleurítica ou edema. A pressão permanece normal.',
  'O quadro já não se limita ao pescoço. A equipe retoma as hipóteses à luz dessa mudança, levando em conta que FAN e complemento já foram avaliados, mas não substituem a observação clínica.'),
 
-    Q('p_probabilidade', 4, 'Quais três hipóteses você prioriza agora?',
+    Q('p_probabilidade', 4, 'Na nova consulta, quais três diagnósticos permanecem prioritários?',
  [('Linfoma', True), ('Linfadenite tuberculosa', True), ('Lúpus eritematoso sistêmico', True),
   ('Mononucleose primária por EBV', False), ('Linfadenite bacteriana supurativa', False),
   ('Reação medicamentosa', False)],
@@ -264,7 +260,7 @@ ETAPAS = [
  'A equipe discute o caso com cirurgia e hematologia. Bianca mantém febre, perda de peso e crescimento cervical, sem diagnóstico nos exames iniciais. O linfonodo é superficial e acessível; não há contraindicação cirúrgica identificada.',
  'A prova tuberculínica não basta para iniciar tratamento de doença ativa. Antes da coleta, patologia e microbiologia combinam como receber o material, incluindo amostra adequada para pesquisa e cultura de micobactérias.'),
 
-    Q('p_amostra', 5, 'Qual exame tem maior chance de esclarecer a causa nesta situação?',
+    Q('p_amostra', 5, 'Qual exame você solicita para esclarecer a causa agora?',
  [('Biópsia excisional do linfonodo', True), ('Punção aspirativa por agulha fina', False),
   ('PET-CT', False), ('Biópsia de medula óssea', False), ('Ultrassom cervical de controle', False)],
  [('Excisão', 'O linfonodo é acessível e as hipóteses incluem doenças em que a arquitetura importa. A excisão permite estudar a distribuição da lesão e obter material para os exames complementares planejados. O benefício deve ser ponderado com os riscos do procedimento.'),
@@ -313,11 +309,9 @@ ETAPAS = [
        'A citometria não identifica população clonal no material analisado; o TRM-TB não detecta micobactéria. Esses resultados, isoladamente, não excluem linfoma nem tuberculose ganglionar. O patologista precisa avaliar como as células estão organizadas no linfonodo e reunir esse dado à pesquisa de infecção. Se esses estudos não forem feitos no serviço, a peça será encaminhada a um laboratório de referência.'),
 
     estudo('arquitetura', 'Biópsia: pequeno aumento',
-           'Lâmina de referência de outro paciente, com o padrão que o '
-           'patologista mostra na de Bianca. Descreva a distribuição das áreas '
-           'claras e das áreas celulares antes de abrir os achados.',
+           'Observe a lâmina do linfonodo. Descreva a distribuição das áreas claras e das áreas celulares antes de abrir os achados.',
            IMG / 'linfonodo_baixo.jpg',
-           'Hematoxilina-eosina, pequeno aumento · outro paciente.',
+           'Hematoxilina-eosina, pequeno aumento.',
            credito_meta(IMG / 'linfonodo_baixo.jpg.json'),
         [
          ((560, 560), (820, 430), '**Área pálida e eosinofílica**, ampla e mal delimitada, que substitui o tecido linfoide.', 12),
@@ -333,7 +327,7 @@ ETAPAS = [
            'A mesma lâmina de referência em grande aumento. Que células povoam '
            'a área pálida, e que célula chama a atenção pela ausência?',
            IMG / 'linfonodo_alto.jpg',
-           'Hematoxilina-eosina, grande aumento · outro paciente.',
+           'Hematoxilina-eosina, grande aumento.',
            credito_meta(IMG / 'linfonodo_alto.jpg.json'),
         [
          ((325, 452), (150, 330), '**Cariorrexe**: fragmentos nucleares escuros, pequenos e irregulares, espalhados pela área pálida.', 12),
@@ -344,12 +338,10 @@ ETAPAS = [
          'neutrófilos e sem granulomas.',
          'Não apresenta o padrão granulomatoso caseoso típico. Isso enfraquece, mas não exclui tuberculose; a conclusão depende da amostra completa e da microbiologia.']),
 
-    Q('p5', 6, 'Quais duas informações ainda precisam ser integradas à histologia?',
+    Q('p5', 6, 'Quais dois exames você acrescenta após a primeira leitura da biópsia?',
  [('Imuno-histoquímica do linfonodo', True), ('Cultura de micobactérias do tecido', True),
   ('PET-CT', False), ('Nova sorologia para EBV', False), ('Biópsia de medula óssea', False)],
- [('Tecido', 'O painel imuno-histoquímico ajuda a caracterizar as células junto às áreas de necrose. A cultura mantém aberta a investigação de tuberculose: ausência de granulomas e testes negativos isolados não a excluem. Nenhum marcador imuno-histoquímico confirma sozinho a doença rara.'),
-  ('Correlação clínica', 'A linfadenite do lúpus também pode ter necrose. FAN e complemento já foram investigados diante das citopenias; a amostra será correlacionada com essa avaliação e com pele, articulações e urina. Não se espera uma nova manifestação para começar a pensar em autoimunidade.'),
-  ('Demais exames', 'PET-CT é inespecífico para essa distinção. Sem nova exposição ou mudança de cronologia, repetir EBV não resolve o padrão do tecido. A leucopenia segue em acompanhamento, mas sem sinais novos de doença medular a medula não substitui a integração do linfonodo retirado por cirurgia.')]),
+ [('Tecido', 'O painel imuno-histoquímico ajuda a caracterizar as células junto às áreas de necrose. A cultura mantém aberta a investigação de tuberculose: ausência de granulomas e testes negativos isolados não a excluem. Nenhum marcador imuno-histoquímico confirma sozinho a doença rara.'), ('Correlação clínica', 'A linfadenite do lúpus também pode ter necrose. FAN e complemento já foram investigados diante das citopenias; a amostra será correlacionada com essa avaliação e com pele, articulações e urina. Não se espera uma nova manifestação para começar a pensar em autoimunidade.'), ('Demais exames', 'PET-CT é inespecífico para essa distinção. Sem nova exposição ou mudança de cronologia, repetir EBV não resolve o padrão do tecido. A leucopenia segue em acompanhamento, mas sem sinais novos de doença medular a medula não substitui a integração do linfonodo retirado por cirurgia.'), ('Limite da biópsia', 'Necrose no linfonodo não é um diagnóstico. Infecções, lúpus e linfadenites inflamatórias podem compartilhar achados. A distribuição da necrose, as células presentes e os testes no tecido precisam ser reunidos à evolução antes de nomear a doença.')]),
 
     painel('res3', 'Complemento da biópsia', 'Tecido e autoanticorpos', [
         ex('Imuno-histoquímica', 'Histiócitos CD68 e mieloperoxidase positivos · '
@@ -411,12 +403,9 @@ ETAPAS = [
        '124/80 mmHg, sem edema.'),
 
     estudo('eritema_face', 'Fotografia: o rosto',
-           'Fotografia de outra paciente com o mesmo tipo de lesão que Bianca '
-           'tem no rosto, com os olhos cobertos. Descreva onde fica o eritema '
-           'e o que acontece com a pele dos sulcos nasolabiais antes de abrir '
-           'os achados.',
+           'Observe as lesões do rosto. Descreva onde fica o eritema e o que acontece com a pele dos sulcos nasolabiais antes de abrir os achados.',
            IMG / 'eritema_facial.jpg',
-           'Fotografia de outra paciente · olhos cobertos · comparação didática.',
+           'Fotografia · olhos cobertos.',
            credito_meta(IMG / 'eritema_facial.jpg.json').replace(
                'setas adicionadas', 'olhos cobertos, recorte e setas adicionadas'),
         [
@@ -467,12 +456,7 @@ ETAPAS = [
        'Blood Cancer, 2007 (HLH-2004). CDC, Epstein-Barr Virus: Laboratory '
        'Testing. KDIGO 2024 Clinical Practice Guideline for the Management of '
        'Lupus Nephritis.',
-       'Imagens de outros pacientes, com setas adicionadas: ultrassonografia, '
-       'Nevit Dilmen, Wikimedia Commons, CC BY-SA 3.0; radiografia, Mikael '
-       'Häggström, Wikimedia Commons, CC0; lâminas, Nephron, Wikimedia '
-       'Commons, CC BY-SA 3.0; fotografia do rosto, Doktorinternet, Wikimedia '
-       'Commons, CC BY-SA 4.0, com olhos cobertos e recorte '
-       '(commons.wikimedia.org/wiki/File:Lupusfoto.jpg).')
+       'Imagens, com setas adicionadas: ultrassonografia, Nevit Dilmen, Wikimedia Commons, CC BY-SA 3.0; radiografia, Mikael Häggström, Wikimedia Commons, CC0; lâminas, Nephron, Wikimedia Commons, CC BY-SA 3.0; fotografia do rosto, Doktorinternet, Wikimedia Commons, CC BY-SA 4.0, com olhos cobertos e recorte (commons.wikimedia.org/wiki/File:Lupusfoto.jpg).')
 ]
 
 REVISAO = []

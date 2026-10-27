@@ -126,7 +126,7 @@ ETAPAS = [
            'Radiografia feita na chegada. Descreva a localização e o tipo da '
            'opacidade antes de ler os achados.',
            IMG / 'rx_consolidacao.jpg',
-           'Radiografia de outro paciente · comparação didática.',
+           'Radiografia.',
            CREDITO_RX_ADM,
         [
          ((190, 478), (70, 330), '**Consolidação alveolar** no terço inferior do pulmão direito.', 12),
@@ -141,7 +141,7 @@ ETAPAS = [
            'Ultrassonografia feita na chegada, pela icterícia e pela dor no '
            'hipocôndrio direito.',
            IMG / 'us_vias_biliares.jpg',
-           'Ultrassonografia de outro paciente · comparação didática.',
+           'Ultrassonografia.',
            credito_meta(IMG / 'us_vias_biliares.jpg.json'),
         [
          ((447, 150), (330, 60), '**Parênquima hepático** de ecotextura homogênea.', 12),
@@ -157,7 +157,7 @@ ETAPAS = [
  p('Sepse, infecção sistêmica e lesão por fármacos podem produzir esse padrão. Transaminases abaixo de três vezes o limite não excluem absolutamente hepatite viral ou tóxica; o curso, exposições e exames dirigidos determinam a investigação. Não se deduz necrose ou sua ausência apenas desses valores.')),
 
     Q('p3', 1,
-      'Qual interpretação integra creatinina 2,6, cilindros granulosos e hipocalemia com K urinário 38?', [
+      'Qual mecanismo melhor explica a alteração renal?', [
       ('Lesão tubular com perda de eletrólitos, possivelmente somada à hipoperfusão', True),
       ('Hipoperfusão isolada com túbulos preservados', False),
       ('Nefropatia por pigmentos como explicação suficiente de todos os achados', False),
@@ -169,13 +169,12 @@ ETAPAS = [
  'Após a estabilização inicial, o paciente consegue detalhar o trabalho: é agente de limpeza urbana. Doze dias antes da febre, entrou num canal alagado com uma bota furada, após chuvas fortes. O irmão confirma ratos no depósito da equipe. Esse evento já ocorreu; é informação recuperada, não uma manifestação nova.',
  'O reexame dirigido encontra hiperemia conjuntival sem secreção e dor mais intensa nas panturrilhas. A exposição, a icterícia e a lesão renal tornam prioritária uma infecção sistêmica relacionada à água. A ceftriaxona já cobre uma das principais hipóteses; não há razão para interrompê-la enquanto se investiga.'),
 
-    Q('p_causas', 2, 'Quais três hipóteses você prioriza entre estas possibilidades para integrar o quadro atual?',
+    Q('p_causas', 2, 'Quais três diagnósticos você prioriza nesta reavaliação?',
  [('Leptospirose', True), ('Pneumonia bacteriana com sepse', True), ('Dengue com comprometimento de órgãos', True), ('Hepatite viral isolada', False), ('Cólica biliar não complicada', False), ('Síndrome nefrótica primária isolada', False)],
- [('Integração', 'A exposição à enchente, mialgia, hiperemia conjuntival, icterícia e lesão renal favorecem leptospirose. Febre, tosse, neutrofilia e consolidação focal sustentaram a hipótese inicial de pneumonia e o antibiótico precoce; o comprometimento de outros órgãos exige ampliar essa explicação. Dengue também merece investigação no contexto epidemiológico, sem usar uma hipótese para impedir antibiótico.'),
- ('Proporção', 'Hepatite isolada, cólica biliar e síndrome nefrótica não explicam bem pulmão, plaquetas e lesão tubular. A ausência de exantema não exclui dengue. A seleção ordena por prioridade as opções, sem exigir que sejam equiprováveis.')]),
+ [('Integração', 'A exposição à enchente, mialgia, hiperemia conjuntival, icterícia e lesão renal favorecem leptospirose. Febre, tosse, neutrofilia e consolidação focal sustentaram a hipótese inicial de pneumonia e o antibiótico precoce; o comprometimento de outros órgãos exige ampliar essa explicação. Dengue também merece investigação no contexto epidemiológico, sem usar uma hipótese para impedir antibiótico.'), ('Proporção', 'Hepatite isolada, cólica biliar e síndrome nefrótica não explicam bem pulmão, plaquetas e lesão tubular. A ausência de exantema não exclui dengue. A seleção ordena por prioridade as opções, sem exigir que sejam equiprováveis.'), ('Como comparar as hipóteses', 'Sepse bacteriana, arbovirose e leptospirose podem compartilhar febre, plaquetas baixas e lesão de órgãos. Compare a exposição, o dia da doença e a combinação de achados renais, hepáticos e respiratórios. Um achado típico aumenta a suspeita, mas não substitui a investigação.')]),
 
-    Q('p5', 3, 'Quais dois testes mais ajudam a confirmar a hipótese ligada à água nesta fase?',
- [('PCR para Leptospira no sangue da admissão', True), ('IgM anti-Leptospira', True), ('Hemocultura convencional para Leptospira', False), ('Cultura urinária para decisão imediata', False), ('Microaglutinação única como único método', False)],
+    Q('p5', 3, 'Quais dois testes você prioriza para esclarecer a causa nesta fase?',
+ [('PCR para Leptospira no sangue da admissão', True), ('IgM anti-Leptospira', True), ('Hemocultura convencional para Leptospira', False), ('Cultura de urina para Leptospira', False), ('Microaglutinação em amostra única', False)],
  [('Fase da doença', 'O sangue pré-antibiótico do sexto dia é apropriado para PCR; positivo confirma infecção. IgM inicial pode ser negativa e deve ser interpretada com tempo de sintomas, com nova amostra na convalescença.'),
  ('Resultados e suporte', 'Cultivo específico é lento e hemocultura convencional não identifica adequadamente esse agente. O teste molecular depende de laboratório de referência. Se não estiver disponível, a equipe usa a sorologia conforme o tempo de sintomas e programa nova coleta quando necessário. O antibiótico não depende dessa confirmação.')]),
 
@@ -196,11 +195,9 @@ ETAPAS = [
  'A gasometria mostra pH 7,30, pCO₂ 32 mmHg e HCO₃ 15 mmol/L; lactato 2,0 mmol/L. Diante da hipoxemia persistente e do sangramento, realiza-se intubação na UTI, sem esperar broncoscopia ou resultado dos testes para identificar a causa. A deterioração faz parte deste percurso ficcional de doença grave apesar do tratamento; não é consequência obrigatória de uma escolha.'),
 
     estudo('rx_hemorragia', 'Radiografia de tórax',
-           'Radiografia ilustrativa de outro paciente, com o padrão descrito '
-           'no laudo dele após a mudança respiratória. Compare com a da admissão, que '
-           'mostrava consolidação só na base direita.',
+           'Radiografia após a mudança respiratória. Compare com a da admissão, que mostrava consolidação só na base direita.',
            IMG / 'rx_torax_alveolar.jpg',
-           'Radiografia de outro paciente · comparação didática.',
+           'Radiografia.',
            CREDITO_RX,
         [
          ((308, 427), (110, 345), '**Opacidades alveolares** no pulmão direito, em mancha e confluentes.', 12),
@@ -212,7 +209,7 @@ ETAPAS = [
          'Com hemoptise e queda da hemoglobina, há forte suspeita de hemorragia alveolar. A radiografia isolada não distingue sangue, edema e outras causas de preenchimento alveolar.']),
 
     Q('p4', 2,
-      'Hemoptise, Hb em queda e plaquetas 38.000, com INR 1,4 e fibrinogênio 390. Quais duas interpretações se sustentam?', [
+      'Quais duas interpretações melhor explicam a piora respiratória?', [
       ('Lesão da barreira alveolocapilar pode somar-se à trombocitopenia', True),
       ('CIVD permanece possível, mas não demonstrada por estes dados', True),
       ('Consumo sistêmico de fatores é o mecanismo comprovado do sangramento', False),
@@ -247,19 +244,19 @@ ETAPAS = [
  'A ceftriaxona é mantida para completar sete dias, com revisão do esquema conforme evolução. A azitromicina é suspensa quando a investigação não sustenta coinfecção bacteriana comunitária. Não se atribui uma porcentagem individual de morte ao paciente nem se promete que antibiótico elimina o risco de progressão já instalada.'),
 
     Q('p6', 4,
-      'Antes da diálise, creatinina 4,6 e K 3,0, após K 3,1 com K urinário 38 na admissão. Qual interpretação integra melhor essa evolução?', [
+      'Como você interpreta a evolução da função renal e dos eletrólitos?', [
       ('Redução da filtração coexistindo com perda tubular de potássio', True),
       ('Perda digestiva de potássio com conservação renal apropriada', False),
       ('Liberação muscular de potássio como mecanismo predominante', False),
       ('Redistribuição intracelular isolada, sem perda corporal relevante', False),
       ('Recuperação da filtração já estabelecida pela queda do potássio', False),
-    ], [('Integração', 'K urinário de 38 durante hipocalemia sugere excreção renal inadequada, embora a concentração isolada dependa do fluxo urinário. Lesão tubular pode produzir perda de K mesmo com filtração muito reduzida; creatinina alta não garante hipercalemia.'), ('Comparação', 'Perda digestiva e redistribuição podem contribuir, mas isoladamente explicam pior a excreção urinária descrita. Miosite com lise celular tende a liberar K, não explica a hipocalemia persistente. Potássio baixo não documenta recuperação da filtração: pode persistir perda tubular durante lesão renal grave.')]),
+    ], [('Integração', 'K urinário de 38 durante hipocalemia sugere excreção renal inadequada, embora a concentração isolada dependa do fluxo urinário. Lesão tubular pode produzir perda de K mesmo com filtração muito reduzida; creatinina alta não garante hipercalemia.'), ('Comparação', 'Perda digestiva e redistribuição podem contribuir, mas isoladamente explicam pior a excreção urinária descrita. Miosite com lise celular tende a liberar K, não explica a hipocalemia persistente. Potássio baixo não documenta recuperação da filtração: pode persistir perda tubular durante lesão renal grave.'), ('Filtração e função tubular', 'Creatinina estima perda de filtração; potássio depende também do transporte tubular, da ingestão e de perdas fora do rim. Por isso, lesão renal importante pode coexistir com hipocalemia. A interpretação pede evolução seriada e contexto das reposições.')]),
 
     pg('recuperacao', 'Segunda semana: o rim muda de fase',
  'A hemoptise diminui no terceiro dia e o suporte respiratório é reduzido progressivamente. No nono dia, a diálise pode ser suspensa pela recuperação conjunta de diurese, controle de volume e depuração. A decisão não depende de um número isolado.',
  'A diurese chega a 4 L/dia. Apesar de reposição de potássio, ele cai a 2,9 mmol/L e o magnésio a 1,4 mg/dL. A icterícia ainda é evidente, embora a bilirrubina comece a cair. A amostra colhida no 14.º dia de doença, oitavo dia de internação, retorna com IgM reagente e microaglutinação 1:1.600; o resultado apoia a infecção, sem identificar com certeza o sorovar infectante.'),
 
-    Q('p7', 6, 'Qual medida adicional é prioritária para a hipocalemia persistente com Mg 1,4 e poliúria?',
+    Q('p7', 6, 'Qual medida você acrescenta à prescrição neste momento?',
  [('Reposição de magnésio', True), ('Furosemida para acelerar recuperação tubular', False), ('Suspensão da reposição de potássio', False), ('Diálise diária apenas pela poliúria', False)],
  [('Mecanismo', 'Hipomagnesemia favorece perda renal de potássio e dificulta sua correção. Repor magnésio é uma medida adicional; o potássio continua sendo titulado com controles frequentes conforme a função renal se modifica.'),
  ('Segurança', 'Poliúria exige acompanhar balanço e eletrólitos, não diurético automático nem diálise por calendário. A necessidade anterior de diálise não prova retenção atual de potássio.')]),
@@ -269,7 +266,7 @@ ETAPAS = [
  'Corrigidos magnésio e potássio, a força melhora e a reposição é reduzida conforme a poliúria cede. A bilirrubina cai mais devagar que a febre. Antes da alta, ele caminha sem oxigênio, mas ainda se cansa ao tomar banho.'),
 
     Q('p8', 6,
-      'Qual interpretação deve orientar a investigação dos colegas e a orientação ao irmão?', [
+      'Qual interpretação orienta a avaliação dos colegas e do irmão?', [
       ('Os colegas podem compartilhar a exposição ambiental; cuidar do paciente raramente transmite a doença', True),
       ('A negatividade das hemoculturas indica baixo risco ocupacional para os colegas', False),
       ('O título de microaglutinação define quais colegas devem receber antibiótico', False),
@@ -293,16 +290,7 @@ ETAPAS = [
 
     pg('referencias', 'Fontes e limites',
        'Paciente, valores e percursos são ficcionais. A cena de abertura é uma ilustração autoral gerada por inteligência artificial para este caso; não é fotografia nem documentação clínica.',
-       'Ministério da Saúde. Guia de Vigilância em Saúde, 6.ª edição '
-       'revisada, 2024, volume 3, capítulo de leptospirose (critérios de '
-       'confirmação e antibioticoterapia), e Leptospirose: diagnóstico e '
-       'manejo clínico, 2014. Andrade e cols., Clin J Am Soc Nephrol 2007 '
-       '(diálise diária). Spichler e cols., Am J Trop Med Hyg 2008 '
-       '(preditores de mortalidade). Radiografias: Mikael Häggström, '
-       'Wikimedia Commons, CC0 (admissão), e Samir, Wikimedia Commons, CC '
-       'BY-SA 3.0 (segundo dia). Ultrassonografia: Ptrump16, Wikimedia '
-       'Commons, CC BY-SA 4.0. Todas de outros pacientes, com setas '
-       'adicionadas.',
+       'Ministério da Saúde. Guia de Vigilância em Saúde, 6.ª edição revisada, 2024, volume 3, capítulo de leptospirose (critérios de confirmação e antibioticoterapia), e Leptospirose: diagnóstico e manejo clínico, 2014. Andrade e cols., Clin J Am Soc Nephrol 2007 (diálise diária). Spichler e cols., Am J Trop Med Hyg 2008 (preditores de mortalidade). Radiografias: Mikael Häggström, Wikimedia Commons, CC0 (admissão), e Samir, Wikimedia Commons, CC BY-SA 3.0 (segundo dia). Ultrassonografia: Ptrump16, Wikimedia Commons, CC BY-SA 4.0. Setas adicionadas.',
  'Revisão de 23/10/2026: <a href="https://www.cdc.gov/yellow-book/hcp/travel-associated-infections-diseases/leptospirosis.html">CDC Yellow Book 2026, capítulo atualizado em 2025</a>; <a href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/l/leptospirose/notas-tecnicas/nota-tecnica-no-16-2024-cgzv-dedt-svsa-ms">Ministério da Saúde, Nota Técnica 16/2024</a>; <a href="https://pubmed.ncbi.nlm.nih.gov/17699490/">Andrade et al., 2007</a>, estudo histórico pequeno de períodos assistenciais, não regra universal de diálise; <a href="https://www.nice.org.uk/guidance/ng148/chapter/Recommendations">NICE NG148, indicações clínicas de terapia renal substitutiva</a>. A hemorragia grave já integrava o caso; não foi criada como consequência de respostas erradas.')
 ]
 

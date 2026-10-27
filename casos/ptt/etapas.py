@@ -113,11 +113,9 @@ ETAPAS = [
  'É levada para área monitorizada. Glicemia à beira do leito, hemograma, função renal e urina compõem a avaliação inicial. A TC de crânio é solicitada desde já pela alteração neurológica focal transitória; a investigação será ampliada assim que os primeiros achados forem revistos, ainda na primeira hora. Não há câncer, transplante, prótese valvar, uso de quinina ou medicamento novo associado a microangiopatia; a gestação atual será excluída.'),
 
     estudo('pele', 'As pintas das pernas',
-           'Fotografia de outro paciente com plaquetas muito baixas, com o mesmo '
-           'tipo de lesão que Sandra tem nas pernas. Observe o tamanho, o relevo '
-           'e o que acontece onde as lesões se juntam.',
+           'Observe as lesões nas pernas. Observe o tamanho, o relevo e o que acontece onde as lesões se juntam.',
            IMG / 'pele_perna.jpg',
-           'Fotografia de outro paciente · comparação didática.',
+           'Fotografia.',
            credito_meta(IMG / 'pele_perna.jpg.json'),
         [
          ((361, 474), (205, 560), '**Petéquia**: ponto vermelho-escuro de 1 a 2 mm, plano, '
@@ -147,12 +145,11 @@ ETAPAS = [
  'Sandra voltou a nomear os objetos, mas continua cansada e com a urina escura. A hemoglobina de 7,8 e a queda das plaquetas para 14.000 não se explicam pelo pequeno sangramento gengival. A fita marca sangue sem número proporcional de hemácias no sedimento.',
  'A equipe associa esses achados à icterícia e solicita marcadores de hemólise, reticulócitos e revisão do esfregaço, além de antiglobulina direta. As coletas são urgentes; recuperar a fala entre episódios não autoriza adiar a investigação.'),
 
-    Q('p1', 1, 'Diante de anemia, plaquetopenia e alteração neurológica transitória, quais três exames abaixo mais ajudam a caracterizar rapidamente o mecanismo?', [
+    Q('p1', 1, 'Quais três exames você prioriza na admissão?', [
  ('Esfregaço periférico com quantificação de esquizócitos', True),
  ('Haptoglobina sérica', True), ('Teste de antiglobulina direto', True),
  ('Mielograma', False), ('Ultrassonografia do baço', False), ('Pesquisa de sangue oculto fecal', False)
- ], [('Prioridade', 'Fragmentação, consumo de haptoglobina e antiglobulina direta ajudam a distinguir microangiopatia, hemólise e mecanismo imune. DHL, bilirrubinas, reticulócitos e coagulação também são obtidos pela equipe; esta é uma seleção limitada entre opções, não um painel completo de prescrição.'),
- ('Menor prioridade', 'Mielograma, ultrassom e pesquisa de sangramento não explicam tão bem a associação de anemia importante, icterícia e disfunção neurológica. Púrpura plana pode acompanhar trombocitopenia; lesões palpáveis ou necróticas mudariam a avaliação de parede vascular e oclusão, sem definir causa pela aparência isolada. Os resultados indicados chegam independentemente da resposta.')]),
+ ], [('Prioridade', 'Fragmentação, consumo de haptoglobina e antiglobulina direta ajudam a distinguir microangiopatia, hemólise e mecanismo imune. DHL, bilirrubinas, reticulócitos e coagulação também são obtidos pela equipe; esta é uma seleção limitada entre opções, não um painel completo de prescrição.'), ('Menor prioridade', 'Mielograma, ultrassom e pesquisa de sangramento não explicam tão bem a associação de anemia importante, icterícia e disfunção neurológica. Púrpura plana pode acompanhar trombocitopenia; lesões palpáveis ou necróticas mudariam a avaliação de parede vascular e oclusão, sem definir causa pela aparência isolada. Os resultados indicados chegam independentemente da resposta.'), ('Como organizar as citopenias', 'Anemia com plaquetas baixas pode decorrer de baixa produção, destruição imune, consumo ou fragmentação das hemácias. Esfregaço e marcadores de hemólise testam esses mecanismos. Esquizócitos indicam fragmentação, mas ainda é necessário diferenciar suas causas.')]),
 
     painel('res1b', 'Após hemograma e urina', 'Investigação da anemia', [
         ex('Bilirrubina total / indireta', '3,2 / 2,7 mg/dL', 'até 1,2 / 0,9 mg/dL', True),
@@ -185,7 +182,7 @@ ETAPAS = [
            'decidir se é seguro puncionar o líquor. Corte axial na altura dos '
            'ventrículos laterais.',
            IMG / 'tc_cranio.jpg',
-           'Tomografia de outro paciente · comparação didática.',
+           'Tomografia.',
            credito_meta(IMG / 'tc_cranio.jpg.json'),
         [
          ((508, 522), (120, 300), '**Corno frontal** do ventrículo lateral, de tamanho normal '
@@ -219,11 +216,9 @@ ETAPAS = [
  'Os achados conectam a anemia e a queda plaquetária à síndrome de microangiopatia trombótica. A imagem didática abaixo explica o achado, sem pedir que se adivinhe sua causa apenas pela morfologia.'),
 
     estudo('esfregaco', 'Esfregaço de sangue periférico',
-           'Lâmina de outro paciente, com o mesmo achado que a hematologista '
-           'contou na de Sandra. Compare o contorno das células marcadas com o '
-           'de uma hemácia íntegra.',
+           'Esfregaço de sangue periférico. Compare o contorno das células marcadas com o de uma hemácia íntegra.',
            IMG / 'esfregaco.jpg',
-           'Lâmina de outro paciente · comparação didática · região recortada.',
+           'Lâmina · região recortada.',
            credito_meta(IMG / 'esfregaco.jpg.json'),
         [
          ((336, 653), (175, 760), '**Hemácia em capacete**: perdeu um pedaço e ficou com '
@@ -242,7 +237,7 @@ ETAPAS = [
  'PLASMIC 7: plaquetas <30.000, hemólise, ausência de câncer ativo, ausência de transplante, VCM <90, INR <1,5 e creatinina <2. O escore estima probabilidade de deficiência grave de ADAMTS13, sem substituir julgamento ou confirmação.',
  'PTT é a hipótese prioritária. Microangiopatia por complemento, infecção com CIVD inicial e outras causas permanecem possíveis; INR e fibrinogênio preservados pesam contra CIVD manifesta. A amostra pré-plasma está guardada, e não se espera seu resultado para tratar.'),
 
-    Q('p2', 2, 'O regional não tem aférese e o centro de referência já aceitou Sandra. Qual procedimento precisa ser viabilizado nas próximas horas, antes do resultado enzimático?', [
+    Q('p2', 2, 'Qual procedimento você solicita neste momento?', [
  ('Troca plasmática terapêutica', True), ('Punção lombar', False),
  ('Biópsia renal', False), ('Mielograma', False)
  ], [('Urgência', 'A probabilidade alta de PTT com lesão neurológica exige troca plasmática urgente e corticoide. Transferência e preparo são imediatos; o objetivo não é consumir uma janela de espera. Plasma infundido pode ser ponte se houver atraso inevitável, sob controle de volume, e não substitui a troca na PTT imune. A TC sem alterações não afasta isquemia pequena, transitória ou recente, nem encefalite; seu resultado não encerra a avaliação da fala flutuante.')]),
@@ -272,11 +267,11 @@ ETAPAS = [
  'O ecocardiograma mostra FE 60%, sem alteração segmentar ou derrame. O resultado não exclui lesão microvascular. Durante nova palpitação breve, ECG mostra taquicardia sinusal a 112 bpm sem alteração nova de ST, e a troponina permanece em queda.',
  'Sem arritmia sustentada na telemetria, a equipe mantém vigilância e reavaliaria imediatamente dor, síncope ou piora dos marcadores.', segue='p3'),
 
-    Q('p3', 3, 'Melhora neurológica com plaquetas ainda em 58.000 e hemólise residual: quais duas medidas mantêm prioridade?', [
+    Q('p3', 3, 'Na reavaliação, quais duas medidas você mantém?', [
  ('Manter troca plasmática diária', True), ('Manter monitorização cardíaca', True),
  ('Suspender troca após desaparecer a confusão', False), ('Iniciar anticoagulação plena sem outra indicação', False),
  ('Transfundir plaquetas para normalizar a contagem', False)
- ], [('Resposta ainda incompleta', 'A resolução dos sintomas neurológicos pode anteceder a resposta hematológica. Troca diária e vigilância de órgãos permanecem indicadas; a troponina exige contexto e tendência. Anticoagulação plena não é tratamento rotineiro da microtrombose da PTT. Plaquetas são reservadas a situações excepcionais, como sangramento ameaçador, com avaliação especializada.')]),
+ ], [('Resposta ainda incompleta', 'A resolução dos sintomas neurológicos pode anteceder a resposta hematológica. Troca diária e vigilância de órgãos permanecem indicadas; a troponina exige contexto e tendência. Anticoagulação plena não é tratamento rotineiro da microtrombose da PTT. Plaquetas são reservadas a situações excepcionais, como sangramento ameaçador, com avaliação especializada.'), ('Resposta de um órgão não é resposta completa', 'Melhora neurológica e recuperação hematológica podem ocorrer em momentos diferentes. A decisão precisa reunir plaquetas, hemólise e órgãos afetados. Um único parâmetro em melhora não substitui a comparação de toda a trajetória.')]),
 
     pg('resultado', 'Terceiro dia',
  'Atividade de ADAMTS13 <5%, IgG anti-ADAMTS13 presente e inibidor de 1,8 unidade Bethesda na amostra pré-plasma: confirma PTT imune. Não é preciso esperar a pêntade completa. Rituximabe 375 mg/m² semanal por quatro doses é iniciado pelo centro, com cuidados de infusão e prevenção conforme risco.',
@@ -290,7 +285,7 @@ ETAPAS = [
  'Nos dias seis e sete, plaquetas 188.000 e 215.000/mm³, DHL 240 e 215 U/L, sem nova isquemia. Após essa resposta sustentada, o centro encerra a troca no oitavo dia. Não exige normalização da ADAMTS13 para interrompê-la. Sandra recebe alta no 12.º dia e completa as doses semanais de rituximabe em acompanhamento.',
  'Aos 30 dias da última troca, sem caplacizumabe neste percurso, mantém resposta clínica; plaquetas 245.000/mm³ e ADAMTS13 34%. A atividade enzimática se recupera em ritmo diferente do hemograma. Remissão clínica e remissão da ADAMTS13 são dimensões distintas.'),
 
-    Q('p4', 4, 'Em seguimento, sem sintomas e com plaquetas normais, qual mudança laboratorial merece contato precoce com o centro, mesmo antes de recaída hematológica?', [
+    Q('p4', 4, 'Qual resultado do seguimento exige reavaliação precoce?', [
  ('Queda confirmada da ADAMTS13 para menos de 20%', True),
  ('VCM isolado de 91 fL', False), ('D-dímero discretamente elevado isolado', False),
  ('Anti-TPO ainda positivo', False)
@@ -315,7 +310,7 @@ ETAPAS = [
     pg('referencias', 'Fontes e limites',
  'Paciente, cronologia e percursos ficcionais. A indisponibilidade imediata de caplacizumabe é condição deste cenário, não afirmação sobre incorporação ou acesso atuais em todo o SUS. As escolhas de investigação infecciosa e cardíaca preservam tratamento e dados essenciais em todos os percursos.',
  'Revisão: <a href="https://pubmed.ncbi.nlm.nih.gov/40533296/">ISTH, atualização focada de 2025</a>, que mantém recomendações para PTT imune; <a href="https://pubmed.ncbi.nlm.nih.gov/37586700/">BSH, 2023</a>; ISTH, diagnóstico e tratamento, 2020; Cuker et al., definições de resposta, Blood 2021; Bendapudi et al., PLASMIC, 2017; Zini et al., ICSH, esquizócitos, 2021. Não se extrapola reposição de ADAMTS13 da doença congênita para esta apresentação imune.',
- 'Imagens de outros pacientes, setas preservadas, Wikimedia Commons: petéquias, James Heilman, CC BY-SA 4.0 (File:Petechia_lower_leg.jpg); TC, Mikael Häggström, CC0, recortada (File:CT_of_a_normal_brain,_axial_17.png); esfregaço, Osaro Erhabor, CC0, recortado (File:Schistocytes.jpg). Abertura: ilustração original da paciente ficcional, gerada com OpenAI imagegen para o projeto em 24/10/2026; não é fotografia clínica.')
+ 'Imagens, setas preservadas, Wikimedia Commons: petéquias, James Heilman, CC BY-SA 4.0 (File:Petechia_lower_leg.jpg); TC, Mikael Häggström, CC0, recortada (File:CT_of_a_normal_brain,_axial_17.png); esfregaço, Osaro Erhabor, CC0, recortado (File:Schistocytes.jpg). Abertura: ilustração original da paciente ficcional, gerada com OpenAI imagegen para o projeto em 24/10/2026; não é fotografia clínica.')
 ]
 
 REVISAO = []
