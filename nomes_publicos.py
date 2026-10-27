@@ -7,6 +7,9 @@ viram páginas de redirecionamento (ver `publicar_local`).
 from pathlib import Path
 
 PUBLICO = {
+    'lupus_abdominal': 'entre-uma-refeicao-e-outra',
+    'tb_peritoneal': 'o-espaco-entre-os-dias',
+    'b12_microangiopatia': 'os-passos-de-volta',
     'pulmao_rim': 'o-sangue-que-nao-saiu',
     'cocaina_levamisol': 'a-flor-da-pele',
     'west_nile': 'o-peso-dos-dias',

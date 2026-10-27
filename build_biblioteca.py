@@ -76,6 +76,19 @@ CASOS = [
          subtitulo="Uma contadora de 41 anos, tratada há seis meses por crises de pânico, chega à emergência com dor no peito e a pressão em 228/124.",
          especialidade="Clínica médica · Endocrinologia", minutos=40, decisoes=6,
          desfechos=4, nivel="os dois", cor="laranja", capa="../../feocromocitoma/img/cena-paciente.png", arquivo="pressao-de-nervoso.html?v=20261027-discussao"),
+    caso(slug="lupus_abdominal", titulo="Entre uma refeição e outra",
+         subtitulo="Marina deixa de tolerar as refeições depois de semanas de cólicas e distensão abdominal.",
+         especialidade="Clínica médica · Emergência", minutos=55, decisoes=7,
+         desfechos=2, nivel="residente", cor="verde", capa="../../lupus_abdominal/img/cena.png", arquivo="entre-uma-refeicao-e-outra.html?v=20261027-novos"),
+    caso(slug="tb_peritoneal", titulo="O espaço entre os dias",
+         subtitulo="Elisa perde peso enquanto o abdome aumenta e passa a precisar de roupas mais largas.",
+         especialidade="Clínica médica", minutos=55, decisoes=7,
+         desfechos=2, nivel="residente", cor="ocre", capa="../../tb_peritoneal/img/cena.png", arquivo="o-espaco-entre-os-dias.html?v=20261027-novos"),
+    caso(slug="b12_microangiopatia", titulo="Os passos de volta",
+         subtitulo="Antônio precisa parar para descansar ao atravessar o estacionamento do hospital.",
+         especialidade="Clínica médica · Emergência", minutos=50, decisoes=6,
+         desfechos=2, nivel="residente", cor="roxo", capa="../../b12_microangiopatia/img/cena.png", arquivo="os-passos-de-volta.html?v=20261027-novos"),
+
 ]
 
 RODAPE = (
@@ -84,7 +97,7 @@ RODAPE = (
     "não extração de artigo. As capas são ilustrações geradas por inteligência "
     "artificial a partir da descrição clínica ou fotografias de licença aberta. As imagens de "
     "radiologia, ultrassom, microscopia e anatomia patológica são reais, "
-    "ilustrativas, de repositórios de licença aberta, e não pertencem aos "
+    "ilustrativas, de repositórios de licença aberta e do acervo didático fornecido, e não pertencem aos "
     "pacientes dos casos — crédito e licença ao pé de cada figura. "
     "Cada caso abre e roda no próprio navegador, sem servidor e sem internet."
 )

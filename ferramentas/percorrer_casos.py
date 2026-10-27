@@ -44,7 +44,8 @@ CONFIG = {
 }
 
 for _c in ('kikuchi', 'sarcoidose', 'cmv', 'leptospirose', 'endocardite', 'adrenal',
-           'encefalite_nmda', 'ptt', 'paracoco', 'feocromocitoma'):
+           'encefalite_nmda', 'ptt', 'paracoco', 'feocromocitoma',
+           'lupus_abdominal', 'tb_peritoneal', 'b12_microangiopatia'):
   CONFIG.setdefault(_c, dict(full={}))
 args = [a for a in sys.argv[1:] if not a.startswith('--')]
 slugs = args or list(CONFIG)
