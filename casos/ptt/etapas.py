@@ -287,7 +287,7 @@ ETAPAS = [
 
     Q('p4', 4, 'Qual resultado do seguimento exige reavaliação precoce?', [
  ('Queda confirmada da ADAMTS13 para menos de 20%', True),
- ('VCM isolado de 91 fL', False), ('D-dímero discretamente elevado isolado', False),
+ ('VCM de 91 fL', False), ('D-dímero discretamente elevado', False),
  ('Anti-TPO ainda positivo', False)
  ], [('Prevenir recaída', 'Queda confirmada da enzima pode anteceder recaída clínica e levar à avaliação de imunossupressão preventiva, frequentemente rituximabe. Não equivale automaticamente a indicação de nova troca sem microangiopatia clínica. Consideram-se tendência, método, contexto e decisão especializada.')]),
 

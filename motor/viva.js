@@ -277,7 +277,7 @@ mostrarRevisao = function(){
   $('#pe').innerHTML = '<span class="rod">' + CASO.rodape + '</span>'
     + '<span class="nav"><a class="bt" href="index.html">Biblioteca</a><button class="bt forte" id="reiniciar" onclick="recomecar()">Conduzir de novo</button></span>';
   $('#trilho').innerHTML = '<a class="voltar-biblioteca" href="index.html" aria-label="Voltar à biblioteca"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg><span>Biblioteca</span></a><span class="tt">' + CASO.titulo + '</span>';
-  emRevisao = true; parteTela = 0; montarFolhas(); 
+  emRevisao = true; parteTela = 0; montarFolhas();
   document.querySelectorAll('#palco .vv-fim, #palco .rev .li').forEach((el, n) => { el.style.setProperty('--i', n); el.classList.add('vv-entra'); });
   requestAnimationFrame(() => {
     const cheio = document.querySelector('.vv-anel .cheio');

@@ -131,9 +131,9 @@ ETAPAS = [
       'Quais duas causas você prioriza na investigação inicial?', [
       ('Colite infecciosa não inteiramente coberta pelo painel de fezes', True),
       ('Lesão intestinal relacionada ao micofenolato', True),
-      ('Diarreia osmótica isolada por carboidrato não absorvido', False),
-      ('Síndrome funcional como explicação principal', False),
-      ('Insuficiência pancreática exócrina como mecanismo dominante', False),
+      ('Diarreia osmótica por má absorção de carboidratos', False),
+      ('Síndrome funcional', False),
+      ('Insuficiência pancreática exócrina', False),
      ], [('Integração', 'Febre, sintomas noturnos, perda de peso e imunossupressão sustentam doença orgânica. Infecção e lesão por micofenolato continuam prioritárias; esses dados não distinguem as duas nem definem sozinhos um mecanismo secretor puro.'), ('Concorrentes', 'Painel negativo não pesquisa toda infecção nem substitui tecido. Diarreia causada apenas por carboidrato não absorvido costuma diminuir com o jejum. Sintomas noturnos, febre e inflamação pesam contra causa funcional. Não há esteatorreia ou contexto que priorize insuficiência pancreática.'), ('Como organizar a diarreia', 'No transplantado, infecção e toxicidade de medicamentos podem coexistir. O painel de fezes não cobre todas as causas e resultado negativo não prova efeito do micofenolato. Duração, febre, citopenias e endoscopia mudam a investigação.')]),
 
     pagina('colite_tx', 'Discussão', 'Colite no transplantado',
@@ -154,7 +154,7 @@ ETAPAS = [
       ('Depleção de volume somada à vasoconstrição pelo tacrolimo', True),
       ('Rejeição celular somada à nefrite por amoxicilina', False),
       ('Toxicidade tubular comprovada pelo sedimento inativo', False),
-      ('Elevação isolada da creatinina pela trimetoprima crônica', False),
+      ('Inibição da secreção de creatinina pela trimetoprima', False),
       ('Glomerulonefrite com retenção tubular de sódio', False),
      ], [
       ('Dois mecanismos convergentes', 'Perdas digestivas, mucosas secas e taquicardia favorecem depleção. Tacrolimo acima do alvo pode somar vasoconstrição renal, mesmo sem alteração da dose; a diarreia muda sua exposição.'),
@@ -312,7 +312,7 @@ ETAPAS = [
       ('A PCR seriada no mesmo ensaio ajuda a medir resposta ao tratamento', True),
       ('A presença de DNA do vírus no sangue favorece atribuir as citopenias ao vírus e manter os mielotóxicos na dose atual', False),
       ('A soropositividade do doador favorece transmissão pelo enxerto em relação à reativação da receptora', False),
-      ('A profilaxia prévia e a carga atual favorecem resistência como explicação principal da doença', False),
+      ('A profilaxia prévia e a carga atual favorecem resistência ao antiviral', False),
      ], [
       ('Integração do tecido', 'A TC localiza alterações, mas não determina a causa. Distorção de criptas também pode ocorrer por fármacos; a integração de efeito citopático, IHQ e clínica sustenta doença invasiva.'),
       ('Doença e seguimento', 'Clínica e IHQ na lesão comprovam doença intestinal, possível por reativação ou reinfecção em receptora soropositiva sob imunossupressão. A PCR no mesmo ensaio e tipo de amostra oferece linha de base e permite seguir a resposta.'),
@@ -355,7 +355,7 @@ ETAPAS = [
       'No sétimo dia, quais duas medidas você adota?', [
       ('Reavaliar o micofenolato', True),
       ('Manter dose antiviral de tratamento revista pela função renal atual', True),
-      ('Reduzir ganciclovir pela metade apenas pela contagem de neutrófilos', False),
+      ('Reduzir ganciclovir pela metade diante da neutropenia', False),
       ('Trocar para foscarnet por presumida resistência virológica', False),
       ('Encerrar o antiviral após a primeira queda de carga', False),
      ], [

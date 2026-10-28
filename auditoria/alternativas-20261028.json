@@ -1,0 +1,327 @@
+[
+  {
+    "arquivo": "casos/adrenal/etapas.py",
+    "antes": "Síndrome de secreção inapropriada de ADH isolada",
+    "depois": "Síndrome de secreção inapropriada de ADH"
+  },
+  {
+    "arquivo": "casos/adrenal/etapas.py",
+    "antes": "Efeito isolado da fluoxetina",
+    "depois": "Hiponatremia associada à fluoxetina"
+  },
+  {
+    "arquivo": "casos/adrenal/etapas.py",
+    "antes": "Hidrocortisona 40 mg apenas no primeiro dia, mesmo permanecendo febril",
+    "depois": "Hidrocortisona 40 mg pela manhã"
+  },
+  {
+    "arquivo": "casos/b12_microangiopatia/etapas.py",
+    "antes": "Ferritina como único exame adicional",
+    "depois": "Ferritina"
+  },
+  {
+    "arquivo": "casos/b12_microangiopatia/etapas.py",
+    "antes": "Sangue oculto nas fezes como primeira explicação",
+    "depois": "Pesquisa de sangue oculto nas fezes"
+  },
+  {
+    "arquivo": "casos/b12_microangiopatia/etapas.py",
+    "antes": "Hemólise autoimune isolada",
+    "depois": "Hemólise autoimune"
+  },
+  {
+    "arquivo": "casos/b12_microangiopatia/etapas.py",
+    "antes": "Sangramento digestivo isolado",
+    "depois": "Sangramento digestivo"
+  },
+  {
+    "arquivo": "casos/b12_microangiopatia/etapas.py",
+    "antes": "Coagulação intravascular disseminada como hipótese principal",
+    "depois": "Coagulação intravascular disseminada"
+  },
+  {
+    "arquivo": "casos/b12_microangiopatia/etapas.py",
+    "antes": "Ácido fólico isolado",
+    "depois": "Ácido fólico"
+  },
+  {
+    "arquivo": "casos/b12_microangiopatia/etapas.py",
+    "antes": "Pesquisa de sangue oculto como única investigação",
+    "depois": "Pesquisa de sangue oculto nas fezes"
+  },
+  {
+    "arquivo": "casos/b12_microangiopatia/etapas.py",
+    "antes": "Usar B12 sérica logo após a injeção como principal alvo",
+    "depois": "Ajustar o intervalo das aplicações pela B12 sérica pós-injeção"
+  },
+  {
+    "arquivo": "casos/b12_microangiopatia/etapas.py",
+    "antes": "Liberar seguimento apenas porque o hemograma normalizou",
+    "depois": "Encerrar o acompanhamento após normalização do hemograma"
+  },
+  {
+    "arquivo": "casos/cmv/etapas.py",
+    "antes": "Síndrome funcional como explicação principal",
+    "depois": "Síndrome funcional"
+  },
+  {
+    "arquivo": "casos/cmv/etapas.py",
+    "antes": "Diarreia osmótica isolada por carboidrato não absorvido",
+    "depois": "Diarreia osmótica por má absorção de carboidratos"
+  },
+  {
+    "arquivo": "casos/cmv/etapas.py",
+    "antes": "Elevação isolada da creatinina pela trimetoprima crônica",
+    "depois": "Inibição da secreção de creatinina pela trimetoprima"
+  },
+  {
+    "arquivo": "casos/cmv/etapas.py",
+    "antes": "A profilaxia prévia e a carga atual favorecem resistência como explicação principal da doença",
+    "depois": "A profilaxia prévia e a carga atual favorecem resistência ao antiviral"
+  },
+  {
+    "arquivo": "casos/cmv/etapas.py",
+    "antes": "Reduzir ganciclovir pela metade apenas pela contagem de neutrófilos",
+    "depois": "Reduzir ganciclovir pela metade diante da neutropenia"
+  },
+  {
+    "arquivo": "casos/cmv/etapas.py",
+    "antes": "Insuficiência pancreática exócrina como mecanismo dominante",
+    "depois": "Insuficiência pancreática exócrina"
+  },
+  {
+    "arquivo": "casos/cocaina_levamisol/etapas.py",
+    "antes": "Iniciar filgrastim como única intervenção",
+    "depois": "Iniciar filgrastim"
+  },
+  {
+    "arquivo": "casos/cocaina_levamisol/etapas.py",
+    "antes": "Só filgrastim",
+    "depois": "Filgrastim"
+  },
+  {
+    "arquivo": "casos/encefalite_nmda/etapas.py",
+    "antes": "Sepse como explicação única da alteração mental e da rigidez",
+    "depois": "Encefalopatia associada à sepse"
+  },
+  {
+    "arquivo": "casos/encefalite_nmda/etapas.py",
+    "antes": "O resultado no líquor tem maior peso diagnóstico que o título sérico isolado",
+    "depois": "O resultado no líquor tem maior peso diagnóstico que o título sérico"
+  },
+  {
+    "arquivo": "casos/encefalite_nmda/etapas.py",
+    "antes": "Sequela cognitiva estabilizada, a usar como referência definitiva para o retorno ao curso",
+    "depois": "Sequela cognitiva estabilizada, a orientar adaptação permanente das atividades"
+  },
+  {
+    "arquivo": "casos/encefalite_nmda/etapas.py",
+    "antes": "Abstinência de clonazepam como explicação do quadro inteiro",
+    "depois": "Síndrome de abstinência de clonazepam"
+  },
+  {
+    "arquivo": "casos/endocardite/etapas.py",
+    "antes": "A faixa de referência da ferritina favorece inflamação isolada",
+    "depois": "A ferritina favorece anemia da inflamação sem deficiência de ferro"
+  },
+  {
+    "arquivo": "casos/endocardite/etapas.py",
+    "antes": "Glomerulonefrite isolada como explicação suficiente da descompensação",
+    "depois": "Glomerulonefrite com sobrecarga de volume"
+  },
+  {
+    "arquivo": "casos/endocardite/etapas.py",
+    "antes": "Falha microbiológica como explicação principal, apesar da depuração",
+    "depois": "Infecção valvar persistente com descompensação clínica"
+  },
+  {
+    "arquivo": "casos/endocardite/etapas.py",
+    "antes": "A febre de cinco semanas explica satisfatoriamente toda a cronologia da anemia",
+    "depois": "A anemia acompanha o início da síndrome febril"
+  },
+  {
+    "arquivo": "casos/feocromocitoma/etapas.py",
+    "antes": "Interferência farmacológica como explicação suficiente do conjunto",
+    "depois": "Interferência farmacológica na dosagem de metanefrinas"
+  },
+  {
+    "arquivo": "casos/feocromocitoma/etapas.py",
+    "antes": "Elevação transitória explicada suficientemente pela cardiomiopatia",
+    "depois": "Elevação transitória de metanefrinas associada à cardiomiopatia"
+  },
+  {
+    "arquivo": "casos/leptospirose/etapas.py",
+    "antes": "Hipoperfusão isolada com túbulos preservados",
+    "depois": "Lesão pré-renal por hipoperfusão"
+  },
+  {
+    "arquivo": "casos/leptospirose/etapas.py",
+    "antes": "Nefropatia por pigmentos como explicação suficiente de todos os achados",
+    "depois": "Nefropatia por pigmentos"
+  },
+  {
+    "arquivo": "casos/leptospirose/etapas.py",
+    "antes": "A contagem plaquetária permite atribuir a hemorragia apenas à hemostasia primária",
+    "depois": "O sangramento é compatível com trombocitopenia sem lesão alveolocapilar"
+  },
+  {
+    "arquivo": "casos/leptospirose/etapas.py",
+    "antes": "Redistribuição intracelular isolada, sem perda corporal relevante",
+    "depois": "Redistribuição intracelular de potássio"
+  },
+  {
+    "arquivo": "casos/leptospirose/etapas.py",
+    "antes": "Diálise diária apenas pela poliúria",
+    "depois": "Diálise diária"
+  },
+  {
+    "arquivo": "casos/leptospirose/etapas.py",
+    "antes": "Glomerulonefrite como mecanismo predominante",
+    "depois": "Glomerulonefrite"
+  },
+  {
+    "arquivo": "casos/leptospirose/etapas.py",
+    "antes": "Liberação muscular de potássio como mecanismo predominante",
+    "depois": "Liberação muscular de potássio"
+  },
+  {
+    "arquivo": "casos/lupus_abdominal/etapas.py",
+    "antes": "Íleo exclusivamente medicamentoso",
+    "depois": "Íleo induzido por medicamentos"
+  },
+  {
+    "arquivo": "casos/lupus_abdominal/etapas.py",
+    "antes": "O FAN positivo, sozinho, já estabelecia o diagnóstico na primeira coleta",
+    "depois": "Os dados da primeira coleta já permitiam estabelecer lúpus"
+  },
+  {
+    "arquivo": "casos/lupus_abdominal/etapas.py",
+    "antes": "Definir atividade da doença apenas pelo título do FAN",
+    "depois": "Ajustar o tratamento conforme a variação do título do FAN"
+  },
+  {
+    "arquivo": "casos/lupus_abdominal/etapas.py",
+    "antes": "Persistência de anticorpo isolado em paciente assintomática",
+    "depois": "Persistência de anticorpos em paciente assintomática"
+  },
+  {
+    "arquivo": "casos/paracoco/etapas.py",
+    "antes": "Hipoventilação isolada explica pO₂ de 64 com pCO₂ de 33",
+    "depois": "Hipoxemia por hipoventilação alveolar"
+  },
+  {
+    "arquivo": "casos/paracoco/etapas.py",
+    "antes": "A pCO₂ baixa demonstra causa exclusivamente extrapulmonar",
+    "depois": "Alcalose respiratória com troca gasosa preservada"
+  },
+  {
+    "arquivo": "casos/paracoco/etapas.py",
+    "antes": "Há defeito de troca gasosa; a gasometria isolada não separa V/Q, difusão e shunt",
+    "depois": "Defeito de troca gasosa com mecanismo a esclarecer"
+  },
+  {
+    "arquivo": "casos/paracoco/etapas.py",
+    "antes": "Doença pulmonar obstrutiva como explicação única",
+    "depois": "Doença pulmonar obstrutiva"
+  },
+  {
+    "arquivo": "casos/paracoco/etapas.py",
+    "antes": "Candidíase oral isolada",
+    "depois": "Candidíase oral"
+  },
+  {
+    "arquivo": "casos/paracoco/etapas.py",
+    "antes": "Aftose recorrente isolada",
+    "depois": "Aftose recorrente"
+  },
+  {
+    "arquivo": "casos/paracoco/etapas.py",
+    "antes": "Aldosterona isolada",
+    "depois": "Aldosterona"
+  },
+  {
+    "arquivo": "casos/paracoco/etapas.py",
+    "antes": "TSH isolado",
+    "depois": "TSH"
+  },
+  {
+    "arquivo": "casos/ptt/etapas.py",
+    "antes": "D-dímero discretamente elevado isolado",
+    "depois": "D-dímero discretamente elevado"
+  },
+  {
+    "arquivo": "casos/ptt/etapas.py",
+    "antes": "VCM isolado de 91 fL",
+    "depois": "VCM de 91 fL"
+  },
+  {
+    "arquivo": "casos/pulmao_rim/etapas.py",
+    "antes": "Hipoventilação como principal causa da hipoxemia",
+    "depois": "Hipoxemia por hipoventilação alveolar"
+  },
+  {
+    "arquivo": "casos/pulmao_rim/etapas.py",
+    "antes": "Acidose lática como principal origem do hiato",
+    "depois": "Acidose metabólica por acúmulo de lactato"
+  },
+  {
+    "arquivo": "casos/pulmao_rim/etapas.py",
+    "antes": "Acidose metabólica hiperclorêmica isolada",
+    "depois": "Acidose metabólica com hiato aniônico normal"
+  },
+  {
+    "arquivo": "casos/pulmao_rim/etapas.py",
+    "antes": "Glomerulonefrite associada à infecção permanece a explicação principal pela febre e PCR elevada",
+    "depois": "A biópsia favorece glomerulonefrite associada à infecção"
+  },
+  {
+    "arquivo": "casos/pulmao_rim/etapas.py",
+    "antes": "Doença anti-MBG soronegativa é a principal hipótese pela combinação de hemorragia e crescentes",
+    "depois": "A imunofluorescência favorece doença anti-MBG soronegativa"
+  },
+  {
+    "arquivo": "casos/sarcoidose/etapas.py",
+    "antes": "Teste de Schirmer isoladamente",
+    "depois": "Teste de Schirmer"
+  },
+  {
+    "arquivo": "casos/sarcoidose/etapas.py",
+    "antes": "Fundo de olho isoladamente",
+    "depois": "Fundo de olho"
+  },
+  {
+    "arquivo": "casos/tb_peritoneal/etapas.py",
+    "antes": "Retenção hídrica por hipotireoidismo como principal hipótese",
+    "depois": "Retenção hídrica por hipotireoidismo"
+  },
+  {
+    "arquivo": "casos/tb_peritoneal/etapas.py",
+    "antes": "Cirrose descompensada como explicação principal",
+    "depois": "Cirrose descompensada"
+  },
+  {
+    "arquivo": "casos/tb_peritoneal/etapas.py",
+    "antes": "Insuficiência cardíaca congestiva como explicação principal",
+    "depois": "Insuficiência cardíaca congestiva"
+  },
+  {
+    "arquivo": "casos/tb_peritoneal/etapas.py",
+    "antes": "Síndrome nefrótica como explicação principal",
+    "depois": "Síndrome nefrótica"
+  },
+  {
+    "arquivo": "casos/tb_peritoneal/etapas.py",
+    "antes": "Usar o CA-125 como único critério para interromper tratamento",
+    "depois": "Encerrar o tratamento quando o CA-125 normalizar"
+  },
+  {
+    "arquivo": "casos/west_nile/etapas.py",
+    "antes": "Polidipsia primária como mecanismo isolado",
+    "depois": "Polidipsia primária"
+  },
+  {
+    "arquivo": "casos/west_nile/etapas.py",
+    "antes": "A pCO₂ normal demonstra reserva ventilatória suficiente para a noite",
+    "depois": "A pCO₂ atual favorece manter o suporte sem intubação"
+  }
+]

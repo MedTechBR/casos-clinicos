@@ -215,7 +215,7 @@ ETAPAS = [
  'A avaliação oftalmológica é organizada no mesmo dia, antes da conclusão do tecido. Não se espera confirmar uma doença sistêmica para examinar um olho doloroso.'),
 
     Q('p_olho', 4, 'Qual exame você solicita diante da nova queixa?',
- [('Exame à lâmpada de fenda', True), ('Dosagem de cálcio', False), ('Fundo de olho isoladamente', False), ('Teste de Schirmer isoladamente', False)],
+ [('Exame à lâmpada de fenda', True), ('Dosagem de cálcio', False), ('Fundo de olho', False), ('Teste de Schirmer', False)],
  [('Novo compartimento', 'Fotofobia e dor exigem pesquisar inflamação intraocular. Lágrima artificial insuficiente não estabelece a causa; a lâmpada de fenda permite examinar a câmara anterior. Fundo, pressão e acuidade também serão avaliados pelo especialista.'),
  ('Limites', 'Cálcio normal não exclui doença ocular. Fundo ou teste de lágrima isolados não avaliam adequadamente uma possível uveíte anterior.')]),
 

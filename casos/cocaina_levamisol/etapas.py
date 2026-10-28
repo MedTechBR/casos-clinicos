@@ -184,7 +184,7 @@ ETAPAS = [
 
     bifurcacao('b1', 'Decisão', 'As primeiras horas',
       'Febril, com 180 neutrófilos e placas necróticas nas coxas. As '
-      'hemoculturas já foram colhidas. Como você conduz?', [
+      'hemoculturas já foram colhidas. Qual medida você prioriza na primeira hora?', [
       caminho('Iniciar cefepima endovenosa',
               'protecao',
               'Neutropenia febril pede betalactâmico antipseudomonas na primeira '
@@ -194,10 +194,10 @@ ETAPAS = [
               'espera',
               'Cultura de tecido leva dias; aguardar o resultado deixa uma '
               'possível infecção grave sem tratamento.', rotulo_curto='Esperar'),
-      caminho('Iniciar filgrastim como única intervenção', 'gcsf',
+      caminho('Iniciar filgrastim', 'gcsf',
               'O fator estimulador pode encurtar a agranulocitose, mas não '
               'trata a infecção que já pode estar presente.',
-              rotulo_curto='Só filgrastim'),
+              rotulo_curto='Filgrastim'),
     ]),
 
     pg('espera', 'Doze horas depois',

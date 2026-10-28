@@ -239,9 +239,9 @@ ETAPAS = [
 
     Q('p3', 3, 'Como você interpreta o conjunto de resultados?', [
  ('Forte evidência de tumor produtor de catecolaminas', True),
- ('Interferência farmacológica como explicação suficiente do conjunto', False),
+ ('Interferência farmacológica na dosagem de metanefrinas', False),
  ('Massa não funcionante com crises independentes do achado adrenal', False),
- ('Elevação transitória explicada suficientemente pela cardiomiopatia', False)
+ ('Elevação transitória de metanefrinas associada à cardiomiopatia', False)
  ], [('Probabilidade e limite', 'A magnitude, a elevação de ambos os metabólitos e a concordância clínica e anatômica tornam a secreção tumoral muito provável. Estresse, método e remédios precisam ser reconhecidos: repouso reduz interferência postural, mas não elimina todos os falsos positivos. Não é correto afirmar que tricíclicos nunca geram elevações importantes.'), ('Ação', 'O conjunto permite organizar manejo especializado sem biópsia. Resultado limítrofe ou discordante pediria repetição após recuperação e revisão de interferentes; não é a situação apresentada.'), ('Resultado verdadeiro ou interferência', 'Interferentes de coleta, estresse e medicamentos podem elevar metabólitos. Magnitude, concordância entre testes e contexto clínico-anatômico mudam o peso do resultado. Um achado isolado pede cautela; um conjunto concordante tem interpretação diferente.')]),
 
     pg('diagnostico', 'Integração diagnóstica',

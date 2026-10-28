@@ -145,8 +145,8 @@ ETAPAS = [
       'Quais duas conclusões você tira da avaliação da anemia?', [
       ('Há deficiência absoluta de ferro, mesmo com inflamação concomitante', True),
       ('A investigação gastrointestinal continua indicada após a menopausa', True),
-      ('A faixa de referência da ferritina favorece inflamação isolada', False),
-      ('A febre de cinco semanas explica satisfatoriamente toda a cronologia da anemia', False),
+      ('A ferritina favorece anemia da inflamação sem deficiência de ferro', False),
+      ('A anemia acompanha o início da síndrome febril', False),
       ('Microcitose e RDW elevado priorizam hemoglobinopatia sobre perda de ferro', False),
     ], [('Integração', 'A ferritina deveria subir com a inflamação; 18 torna estoques reduzidos muito prováveis. Saturação baixa e microcitose reforçam a falta de ferro, sem excluir um componente inflamatório associado.'), ('Cronologia', 'A anemia precede a febre e não deve ser atribuída integralmente à doença atual. Na mulher após a menopausa, investigar trato gastrointestinal, em geral com endoscopia alta e colonoscopia. Hemoglobinopatia pode dar microcitose, mas explica pior o conjunto de estoques baixos e cronologia.'), ('Como comparar as anemias', 'Inflamação pode elevar a ferritina e esconder deficiência de ferro. Uma ferritina baixa, mesmo nesse contexto, pesa a favor de deficiência real. A cronologia impede atribuir seis meses de anemia apenas à febre recente; causas coexistentes precisam ser procuradas.')]),
 
@@ -355,9 +355,9 @@ ETAPAS = [
       'Qual mecanismo melhor explica a intercorrência do sexto dia?', [
       ('Disfunção mecânica mitral com insuficiência cardíaca aguda', True),
       ('Abscesso perivalvar como mecanismo mais sustentado pelo ECG', False),
-      ('Falha microbiológica como explicação principal, apesar da depuração', False),
+      ('Infecção valvar persistente com descompensação clínica', False),
       ('Embolia pulmonar séptica da vegetação mitral', False),
-      ('Glomerulonefrite isolada como explicação suficiente da descompensação', False),
+      ('Glomerulonefrite com sobrecarga de volume', False),
     ], [('Dado decisivo', 'Regurgitação importante, novo quadro congestivo, terceira bulha e sopro que encurta favorecem piora mecânica valvar. Cultura negativa mostra controle sanguíneo, sem reparar tecido destruído; avaliação cirúrgica não deve esperar o fim do antibiótico.'), ('Concorrentes', 'PR estável não exclui abscesso, mas não fornece o sinal de extensão sugerido na alternativa. Vegetação esquerda emboliza usualmente para circulação sistêmica, não pulmonar. Não há dado de piora renal suficiente para atribuir o quadro apenas à retenção de volume. A urgência final depende da resposta ao suporte e da estabilidade.')]),
 
     estudo('rx_piora', 'Radiografia de tórax no leito',

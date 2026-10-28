@@ -198,9 +198,9 @@ ETAPAS = [
       'Qual interpretação melhor explica a mudança do quadro?', [
       ('Reação ao bloqueio dopaminérgico sobre quadro cerebral ainda não esclarecido', True),
       ('Síndrome serotoninérgica como explicação da piora', False),
-      ('Abstinência de clonazepam como explicação do quadro inteiro', False),
+      ('Síndrome de abstinência de clonazepam', False),
       ('Catatonia maligna primária demonstrada pela elevação de CK', False),
-      ('Sepse como explicação única da alteração mental e da rigidez', False),
+      ('Encefalopatia associada à sepse', False),
      ], [('A cronologia discrimina', 'A exposição recente ao haloperidol, a rigidez difusa e a lesão muscular sustentam síndrome neuroléptica maligna. Ela explica a piora, mas não os dez dias anteriores de psicose, desorientação e pausas.'), ('O concorrente próximo', 'Catatonia maligna pode se sobrepor e CK não a distingue sozinha. Não há exposição serotoninérgica convincente nem clônus descrito; o uso breve de clonazepam e sua suspensão tampouco explicam a síndrome inteira. Infecção permanece investigável, sem apagar a associação temporal com o antipsicótico.'), ('Doença de base ou complicação', 'Uma reação ao antipsicótico pode explicar a piora sem explicar o início do caso. Sepse, catatonia e reações a medicamentos compartilham sinais. A relação temporal, a lista de medicamentos e o exame neurológico ajudam a separar processos que podem coexistir.')]),
 
     pg('nms', 'Duas hipóteses que podem se sobrepor',
@@ -383,7 +383,7 @@ ETAPAS = [
 
     Q('p4', 4,
       'Quais duas conclusões melhor integram os resultados disponíveis?', [
-      ('O resultado no líquor tem maior peso diagnóstico que o título sérico isolado', True),
+      ('O resultado no líquor tem maior peso diagnóstico que o título sérico', True),
       ('A RM normal é compatível com disfunção neuronal mediada por anticorpos', True),
       ('A ausência de descarga durante a mastigação exclui as crises já observadas', False),
       ('A descrição antiga do cisto estabelecia a natureza da lesão', False),
@@ -436,7 +436,7 @@ ETAPAS = [
       ('Resposta insuficiente à segunda linha, a reavaliar para outro ciclo de imunoterapia', False),
       ('Recorrência da doença após a resposta, a investigar com nova punção lombar', False),
       ('Déficit predominantemente pós-crítico, a manejar intensificando o tratamento anticrise', False),
-      ('Sequela cognitiva estabilizada, a usar como referência definitiva para o retorno ao curso', False),
+      ('Sequela cognitiva estabilizada, a orientar adaptação permanente das atividades', False),
      ], [
       ('Trajetória atual', 'Ela voltou a acompanhar com os olhos, foi extubada e passou a falar frases. Essa melhora progressiva favorece recuperação ainda em curso; o déficit cognitivo pode melhorar durante meses e exige reabilitação e avaliação seriada.'),
       ('O que mudaria a leitura', 'Falha terapêutica pede considerar estagnação ou agravamento relevantes, e recaída pressupõe nova piora após melhora. Não foram descritas novas crises que sustentem déficit pós-crítico predominante. A trajetória recente também não permite declarar que a sequela estabilizou.'),

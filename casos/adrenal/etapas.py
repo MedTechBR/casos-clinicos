@@ -147,8 +147,8 @@ ETAPAS = [
 
     Q('p1', 1, 'Quais duas hipóteses você prioriza na admissão?', [
  ('Insuficiência adrenal primária', True), ('Sepse com foco gastrointestinal', True),
- ('Síndrome de secreção inapropriada de ADH isolada', False),
- ('Efeito isolado da fluoxetina', False), ('Insuficiência cardíaca descompensada', False)
+ ('Síndrome de secreção inapropriada de ADH', False),
+ ('Hiponatremia associada à fluoxetina', False), ('Insuficiência cardíaca descompensada', False)
  ], [('Hierarquia', 'Hipovolemia é real, mas hipercalemia, hipoglicemia e distúrbios prévios à diarreia exigem investigar insuficiência adrenal desde já. Infecção pode ser o gatilho e também causa concorrente de choque; colher culturas e avaliar antibiótico conforme suspeita, sem esperar exclusão de uma hipótese para tratar outra.'), ('Limites', 'Fluoxetina pode contribuir para hiponatremia, mas não explica este choque com retenção de potássio. Urina concentrada também ocorre por ADH estimulado pela hipovolemia; não basta para chamar SIADH. O gap urinário de +18 (62 + 14 − 58) sugere excreção de amônio inadequada, sem provar isoladamente acidose tubular.'), ('Como comparar as hipóteses', 'Diarreia e sepse podem produzir hipotensão e alteração renal. A combinação com sódio baixo, potássio alto e hipoglicemia pede considerar deficiência hormonal. Essa combinação aumenta a suspeita, mas a confirmação depende da avaliação hormonal e da evolução.')]),
 
     pg('recorrencia', 'Durante a primeira hora',
@@ -287,10 +287,10 @@ ETAPAS = [
  'Com fludrocortisona 0,1 mg pela manhã e hidrocortisona 10 mg ao acordar, 5 mg ao meio-dia e 5 mg à tarde, consegue caminhar sem tontura. Potássio 4,4, sódio 136 e pressão em pé 108/68. As doses serão individualizadas; cortisol e ACTH não são alvos de titulação rotineira.',
  'Recebe cartão de emergência, prescrição e treinamento do kit intramuscular de hidrocortisona 100 mg. Marta e o marido ensaiam preparo e aplicação com a enfermagem. Vômitos que impedem comprimidos exigem via parenteral e atendimento urgente.'),
 
-    Q('p5', 5, 'No episódio febril descrito, qual dose oral diária deve constar no plano domiciliar?', [
+    Q('p5', 5, 'Qual esquema de hidrocortisona deve constar no plano para o episódio febril descrito?', [
  ('Hidrocortisona 40 mg em tomadas divididas', True), ('Hidrocortisona 20 mg em tomadas divididas', False),
- ('Hidrocortisona 30 mg em tomadas divididas', False), ('Hidrocortisona 40 mg apenas no primeiro dia, mesmo permanecendo febril', False)
- ], [('Dia de doença', 'Neste esquema basal de 20 mg, 40 mg/dia divididos é a dose de estresse prevista enquanto durar a intercorrência, com revisão se não melhorar. Se não retiver a medicação, não basta aumentar comprimidos: usar o kit e procurar emergência. A orientação escrita deve ser adaptada pela equipe assistente.')]),
+ ('Hidrocortisona 30 mg em tomadas divididas', False), ('Hidrocortisona 40 mg pela manhã', False)
+ ], [('Dia de doença', 'Neste esquema basal de 20 mg, 40 mg/dia em tomadas distribuídas ao longo do dia é o esquema de estresse previsto enquanto durar a intercorrência, com revisão se não melhorar. Concentrar a dose pela manhã não oferece a mesma cobertura ao longo do dia. Se não retiver a medicação, não basta aumentar comprimidos: usar o kit e procurar emergência. A orientação escrita deve ser adaptada pela equipe assistente.')]),
 
     pg('seguimento', 'Oito a doze semanas depois',
  'Marta voltou à escola gradualmente. Apetite e tolerância ao ortostatismo recuperaram antes da pigmentação, que clareia devagar. Não teve novas perdas digestivas. TSH de controle 3,1 µUI/mL com T4 livre normal, sem levotiroxina; mantém vigilância da autoimunidade tireoidiana.',

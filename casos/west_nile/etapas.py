@@ -213,7 +213,7 @@ ETAPAS = [
       ('Antidiurese inapropriada associada à doença aguda', True),
       ('Deficiência de cortisol', True),
       ('Hiponatremia translocacional pela glicose de 138', False),
-      ('Polidipsia primária como mecanismo isolado', False),
+      ('Polidipsia primária', False),
       ('Baixo volume arterial efetivo por insuficiência cardíaca', False),
      ], [
       ('Duas possibilidades', 'A hipotonicidade com urina não diluída e Na urinário alto, em aparente euvolemia, favorece SIAD na doença neurológica aguda. Deficiência de cortisol pode produzir o mesmo padrão e ainda não foi investigada; não se pode fechar SIAD só com esses números.'),
@@ -292,7 +292,7 @@ ETAPAS = [
       'Quais duas conclusões orientam o suporte neste momento?', [
       ('A tendência da capacidade vital indica reserva ventilatória em deterioração', True),
       ('A disfunção bulbar reduz a segurança do suporte por máscara', True),
-      ('A pCO₂ normal demonstra reserva ventilatória suficiente para a noite', False),
+      ('A pCO₂ atual favorece manter o suporte sem intubação', False),
       ('A saturação preservada favorece oxigênio como tratamento da falência da bomba', False),
       ('Aguardar capacidade vital abaixo de 10 mL/kg é seguro com vigilância', False),
      ], [

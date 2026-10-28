@@ -205,10 +205,10 @@ ETAPAS = [
       'Como você interpreta a gasometria da admissão? Selecione duas conclusões.', [
       ('Acidose metabólica com hiato aumentado e compensação esperada', True),
       ('Defeito de troca gasosa além do distúrbio ácido-básico', True),
-      ('Acidose metabólica hiperclorêmica isolada', False),
+      ('Acidose metabólica com hiato aniônico normal', False),
       ('Acidose respiratória somada à metabólica', False),
-      ('Acidose lática como principal origem do hiato', False),
-      ('Hipoventilação como principal causa da hipoxemia', False),
+      ('Acidose metabólica por acúmulo de lactato', False),
+      ('Hipoxemia por hipoventilação alveolar', False),
      ], [
       ('Ácido-básico', 'Hiato = 136 − 104 − 15 = 17; corrigido pela albumina, cerca de 20 mmol/L. Winters prevê pCO₂ de 30,5 ± 2; 32 cabe na faixa, sem acidose respiratória adicional. Lactato 1,6 não sustenta acidose lática como causa principal, embora não exclua infecção.'),
       ('Oxigenação', 'Em ar ambiente e próximo ao nível do mar, PAO₂ ≈ 110 e PaO₂ = 56: gradiente de cerca de 54 mmHg. A pCO₂ baixa indica aumento da ventilação; o gradiente elevado exige alteração de troca gasosa, sem distinguir sozinho sangue, pus ou edema.'),
@@ -520,8 +520,8 @@ ETAPAS = [
       'Quais duas conclusões você tira da biópsia e dos resultados disponíveis?', [
       ('Vasculite associada ao ANCA integra rim, pulmão, pele e nervos', True),
       ('Crescentes celulares e pouca fibrose indicam componente potencialmente reversível', True),
-      ('Glomerulonefrite associada à infecção permanece a explicação principal pela febre e PCR elevada', False),
-      ('Doença anti-MBG soronegativa é a principal hipótese pela combinação de hemorragia e crescentes', False),
+      ('A biópsia favorece glomerulonefrite associada à infecção', False),
+      ('A imunofluorescência favorece doença anti-MBG soronegativa', False),
       ('A perda funcional decorre predominantemente de cicatriz renal, pelo percentual de crescentes', False),
       ('Vasculite restrita ao rim com pneumonia concomitante explica melhor o acometimento pulmonar', False),
      ], [

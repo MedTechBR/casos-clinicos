@@ -159,9 +159,9 @@ ETAPAS = [
     Q('p3', 1,
       'Qual mecanismo melhor explica a alteração renal?', [
       ('Lesão tubular com perda de eletrólitos, possivelmente somada à hipoperfusão', True),
-      ('Hipoperfusão isolada com túbulos preservados', False),
-      ('Nefropatia por pigmentos como explicação suficiente de todos os achados', False),
-      ('Glomerulonefrite como mecanismo predominante', False),
+      ('Lesão pré-renal por hipoperfusão', False),
+      ('Nefropatia por pigmentos', False),
+      ('Glomerulonefrite', False),
       ('Obstrução urinária com diurese paradoxal', False),
     ], [('Integração', 'Cilindros granulosos e urina pouco concentrada favorecem lesão tubular. A hipotensão pode contribuir, mas não explica sozinha o padrão urinário. K urinário 38 durante hipocalemia sugere perda renal inadequada, interpretada com diurese e reposição.'), ('Concorrentes', 'CK 2.380 e sangue na fita com poucas hemácias sustentam contribuição de pigmento muscular, sem provar que seja o mecanismo dominante. Pouca proteína e ausência de cilindros hemáticos enfraquecem glomerulonefrite; ultrassom sem dilatação reduz obstrução.')]),
 
@@ -213,7 +213,7 @@ ETAPAS = [
       ('CIVD permanece possível, mas não demonstrada por estes dados', True),
       ('Consumo sistêmico de fatores é o mecanismo comprovado do sangramento', False),
       ('Microangiopatia trombótica é a explicação mais forte para rim e pulmão', False),
-      ('A contagem plaquetária permite atribuir a hemorragia apenas à hemostasia primária', False),
+      ('O sangramento é compatível com trombocitopenia sem lesão alveolocapilar', False),
     ], [('Limite da inferência', 'A gravidade pulmonar não deve ser atribuída apenas às plaquetas: lesão capilar pode coexistir. Fibrinogênio preservado, reagente de fase aguda, não exclui CIVD; faltam tendência do coagulograma e marcadores de fibrina para caracterizar consumo.'), ('Comparação', 'Sem esquizócitos nem demonstração de hemólise microangiopática, a microangiopatia perde força, sem ser impossibilidade. A hemorragia exige suporte e pode justificar plaquetas; INR 1,4 isolado não fundamenta plasma.')]),
 
     pg('suporte', 'Suporte e investigação do sangramento',
@@ -250,8 +250,8 @@ ETAPAS = [
       'Como você interpreta a evolução da função renal e dos eletrólitos?', [
       ('Redução da filtração coexistindo com perda tubular de potássio', True),
       ('Perda digestiva de potássio com conservação renal apropriada', False),
-      ('Liberação muscular de potássio como mecanismo predominante', False),
-      ('Redistribuição intracelular isolada, sem perda corporal relevante', False),
+      ('Liberação muscular de potássio', False),
+      ('Redistribuição intracelular de potássio', False),
       ('Recuperação da filtração já estabelecida pela queda do potássio', False),
     ], [('Integração', 'K urinário de 38 durante hipocalemia sugere excreção renal inadequada, embora a concentração isolada dependa do fluxo urinário. Lesão tubular pode produzir perda de K mesmo com filtração muito reduzida; creatinina alta não garante hipercalemia.'), ('Comparação', 'Perda digestiva e redistribuição podem contribuir, mas isoladamente explicam pior a excreção urinária descrita. Miosite com lise celular tende a liberar K, não explica a hipocalemia persistente. Potássio baixo não documenta recuperação da filtração: pode persistir perda tubular durante lesão renal grave.'), ('Filtração e função tubular', 'Creatinina estima perda de filtração; potássio depende também do transporte tubular, da ingestão e de perdas fora do rim. Por isso, lesão renal importante pode coexistir com hipocalemia. A interpretação pede evolução seriada e contexto das reposições.')]),
 
@@ -260,7 +260,7 @@ ETAPAS = [
  'A diurese chega a 4 L/dia. Apesar de reposição de potássio, ele cai a 2,9 mmol/L e o magnésio a 1,4 mg/dL. A icterícia ainda é evidente, embora a bilirrubina comece a cair. A amostra colhida no 14.º dia de doença, oitavo dia de internação, retorna com IgM reagente e microaglutinação 1:1.600; o resultado apoia a infecção, sem identificar com certeza o sorovar infectante.'),
 
     Q('p7', 6, 'Qual medida você acrescenta à prescrição neste momento?',
- [('Reposição de magnésio', True), ('Furosemida para acelerar recuperação tubular', False), ('Suspensão da reposição de potássio', False), ('Diálise diária apenas pela poliúria', False)],
+ [('Reposição de magnésio', True), ('Furosemida para acelerar recuperação tubular', False), ('Suspensão da reposição de potássio', False), ('Diálise diária', False)],
  [('Mecanismo', 'Hipomagnesemia favorece perda renal de potássio e dificulta sua correção. Repor magnésio é uma medida adicional; o potássio continua sendo titulado com controles frequentes conforme a função renal se modifica.'),
  ('Segurança', 'Poliúria exige acompanhar balanço e eletrólitos, não diurético automático nem diálise por calendário. A necessidade anterior de diálise não prova retenção atual de potássio.')]),
 

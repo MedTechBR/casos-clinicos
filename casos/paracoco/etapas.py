@@ -141,11 +141,11 @@ ETAPAS = [
 
     Q('p1', 1,
       'Como você interpreta a gasometria da admissão?', [
-      ('Há defeito de troca gasosa; a gasometria isolada não separa V/Q, difusão e shunt', True),
-      ('Hipoventilação isolada explica pO₂ de 64 com pCO₂ de 33', False),
+      ('Defeito de troca gasosa com mecanismo a esclarecer', True),
+      ('Hipoxemia por hipoventilação alveolar', False),
       ('A anemia de 11,6 g/dL explica a redução da pO₂', False),
       ('O gradiente alvéolo-arterial é normal para a idade', False),
-      ('A pCO₂ baixa demonstra causa exclusivamente extrapulmonar', False),
+      ('Alcalose respiratória com troca gasosa preservada', False),
      ], [
       ('O limite do cálculo', 'Em ar ambiente e baixa altitude, PAO₂ estimada em 109 mmHg e PaO₂ de 64 dão gradiente de cerca de 45, acima do esperado para 52 anos. Estertores e doença respiratória crônica favorecem processo pulmonar, mas o gradiente não identifica sozinho o mecanismo preciso.'),
       ('Comparação', 'Hipoventilação isolada elevaria a pCO₂. Anemia reduz conteúdo de oxigênio, sem necessariamente baixar sua pressão arterial. pCO₂ de 33 indica ventilação aumentada, compatível com compensação da doença pulmonar.'),
@@ -196,7 +196,7 @@ ETAPAS = [
          'e uma área granulosa na gengiva, todas com meses de evolução.']),
 
     Q('p3', 3, 'Quais duas hipóteses você prioriza após o exame das lesões?',
- [('Micose sistêmica endêmica', True), ('Carcinoma epidermoide de via aerodigestiva', True), ('Candidíase oral isolada', False), ('Doença pulmonar obstrutiva como explicação única', False), ('Aftose recorrente isolada', False)],
+ [('Micose sistêmica endêmica', True), ('Carcinoma epidermoide de via aerodigestiva', True), ('Candidíase oral', False), ('Doença pulmonar obstrutiva', False), ('Aftose recorrente', False)],
  [('Integração e concorrência', 'A exposição rural, a doença pulmonar e as múltiplas lesões granulosas favorecem micose sistêmica. Fumo, álcool e lesão endurecida impõem investigar carcinoma, inclusive doença coexistente. A amostra deve responder às duas perguntas.'), ('Limites', 'Tuberculose continua no diferencial e a cultura será acompanhada; não foi excluída por testes iniciais negativos. Candidíase, obstrução e aftas isoladas não integram o padrão pulmonar, os linfonodos e a lesão crônica infiltrada.'), ('Como comparar as hipóteses', 'Lesão oral persistente pode ser infecciosa ou neoplásica. A doença pulmonar associada ajuda a reunir o quadro, mas não prova que todas as lesões tenham a mesma causa. A biópsia deve permitir avaliar tanto infecção quanto neoplasia.')]),
 
     pg('mudanca_laringea', 'No dia seguinte: engolir também passa a doer',
@@ -208,7 +208,7 @@ ETAPAS = [
  'Baixa ingestão e tiazida podem contribuir, mas hiperpigmentação, perda de peso e alterações eletrolíticas exigem avaliar reserva adrenal agora. A investigação não pode esperar confirmar a micose. Não há choque ou vômitos; se surgissem, a hidrocortisona de emergência não aguardaria testes.'),
 
     Q('p_adrenal', 4, 'Diante da nova queixa, qual exame você solicita primeiro?',
- [('Cortisol sérico matinal', True), ('Tomografia das adrenais', False), ('Aldosterona isolada', False), ('TSH isolado', False)],
+ [('Cortisol sérico matinal', True), ('Tomografia das adrenais', False), ('Aldosterona', False), ('TSH', False)],
  [('Função antes de anatomia', 'Cortisol matinal é interpretado com ACTH, colhido junto, e com o contexto. Resultado indeterminado requer teste de estímulo se o paciente estiver estável. Imagem não mede reserva hormonal.'), ('Segurança', 'Não se deve retardar tratamento de crise adrenal para obter uma prova dinâmica. Neste paciente estável, é possível colher as amostras e realizar o teste sem adiar a reposição necessária.'), ('Como investigar a nova queixa', 'Fraqueza e perda de peso podem vir da doença sistêmica; hipotensão e alterações de sódio e potássio pedem rever causas hormonais e perdas de volume. Teste funcional e imagem têm finalidades distintas. Em instabilidade, a coleta não pode atrasar o tratamento.')]),
 
     painel('reserva_adrenal', 'Avaliação precoce', 'Antes do antifúngico', [
